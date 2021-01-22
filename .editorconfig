@@ -1,0 +1,8 @@
+﻿# To learn more about .editorconfig see https://aka.ms/editorconfigdocs
+
+# All files
+[*.{c,cpp,cxx,h,hpp,hxx}]
+indent_style = space
+charset = utf-8-bom
+insert_final_newline = true
+trim_trailing_whitespace = true

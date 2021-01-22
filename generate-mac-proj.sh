@@ -1,0 +1,1 @@
+cmake -G "Xcode" -S . -B .build.mac -DBUILD_DEMO=ON -DUSE_SANDBOX=ON

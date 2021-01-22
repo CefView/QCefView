@@ -1,0 +1,8 @@
+---
+BasedOnStyle: Mozilla
+ColumnLimit: 120
+AlignAfterOpenBracket: Align
+BinPackArguments: false
+SortIncludes: false
+FixNamespaceComments: true # add commend at end:
+NamespaceIndentation: None #intend content of namespace
