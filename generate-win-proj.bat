@@ -1,1 +1,1 @@
-cmake -G "Visual Studio 16 2019" -A Win32 -S . -B .build.win -DBUILD_DEMO=ON
+cmake -G "Visual Studio 16 2019" -S . -B .build.win -DBUILD_DEMO=ON

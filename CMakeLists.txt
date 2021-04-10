@@ -7,7 +7,20 @@ project(QCefView)
 # Only generate Debug and Release configuration types.
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
 # Set proejct architecture
-set(PROJECT_ARCH x86_64)
+# Determine the project architecture.
+if(NOT DEFINED PROJECT_ARCH)
+  if(CMAKE_SIZEOF_VOID_P MATCHES 8)
+    set(PROJECT_ARCH "x86_64")
+  else()
+    set(PROJECT_ARCH "x86")
+  endif()
+
+  if(OS_MACOSX)
+    # PROJECT_ARCH should be specified on Mac OS X.
+    message(WARNING "No PROJECT_ARCH value specified, using ${PROJECT_ARCH}")
+  endif()
+endif()
+
 
 # Use folders in the resulting project files.
 set_property(GLOBAL PROPERTY OS_FOLDERS ON)
