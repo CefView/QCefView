@@ -48,7 +48,7 @@ endif()
 
 # Config the QT package
 ###############################################################
-set(QT_SDK_DIR "$ENV{QTDIR}")
+include(QtConfig.cmake)
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT_SDK_DIR})
 ###############################################################
 
