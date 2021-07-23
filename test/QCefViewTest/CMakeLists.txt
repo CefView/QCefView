@@ -6,9 +6,10 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-find_package(Qt5 COMPONENTS Core GUI Widgets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core GUI Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core GUI Widgets REQUIRED)
 
-get_target_property(_qmake_executable Qt5::qmake IMPORTED_LOCATION)
+get_target_property(_qmake_executable Qt${QT_VERSION_MAJOR}::qmake IMPORTED_LOCATION)
 get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
 
 if (OS_WINDOWS)
@@ -110,8 +111,8 @@ if (OS_MACOS)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
-	Qt5::Core
-	Qt5::Gui 
-  Qt5::Widgets
-  QCefView
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Gui
+    Qt${QT_VERSION_MAJOR}::Widgets
+    QCefView
 )

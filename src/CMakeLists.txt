@@ -3,7 +3,8 @@
 set(CMAKE_GLOBAL_AUTOGEN_TARGET OFF)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-find_package(Qt5 COMPONENTS Core GUI Widgets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core GUI Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core GUI Widgets REQUIRED)
 
 file(GLOB_RECURSE QCefView_INCLUDE_FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/../include/*.h"
@@ -110,9 +111,9 @@ add_dependencies(QCefView
 )
 
 target_link_libraries(QCefView PRIVATE
-  Qt5::Core
-  Qt5::Gui 
-  Qt5::Widgets
+  Qt${QT_VERSION_MAJOR}::Core
+  Qt${QT_VERSION_MAJOR}::Gui
+  Qt${QT_VERSION_MAJOR}::Widgets
   CefViewCore
 )
 
