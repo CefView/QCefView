@@ -1,12 +1,8 @@
-#pragma once
+﻿#pragma once
 
 #pragma region stl_headers
 #include <list>
 #pragma endregion stl_headers
-
-#pragma region cef_headers
-#include <include/cef_base.h>
-#pragma endregion cef_headers
 
 /// <summary>
 ///
@@ -34,37 +30,37 @@ public:
   /// <summary>
   ///
   /// </summary>
-  static CefString bridge_object_name;
+  static std::string bridge_object_name;
 
   /// <summary>
   ///
   /// </summary>
-  static CefString browser_sub_process_path;
+  static std::string browser_sub_process_path;
 
   /// <summary>
   ///
   /// </summary>
-  static CefString resource_directory_path;
+  static std::string resource_directory_path;
 
   /// <summary>
   ///
   /// </summary>
-  static CefString locales_directory_path;
+  static std::string locales_directory_path;
 
   /// <summary>
   ///
   /// </summary>
-  static CefString user_agent;
+  static std::string user_agent;
 
   /// <summary>
   ///
   /// </summary>
-  static CefString cache_path;
+  static std::string cache_path;
 
   /// <summary>
   ///
   /// </summary>
-  static CefString user_data_path;
+  static std::string user_data_path;
 
   /// <summary>
   ///
@@ -79,7 +75,7 @@ public:
   /// <summary>
   ///
   /// </summary>
-  static CefString locale;
+  static std::string locale;
 
   /// <summary>
   ///
@@ -89,12 +85,12 @@ public:
   /// <summary>
   ///
   /// </summary>
-  static cef_color_t background_color;
+  static uint32_t background_color;
 
   /// <summary>
   ///
   /// </summary>
-  static CefString accept_language_list;
+  static std::string accept_language_list;
 
   /// <summary>
   ///

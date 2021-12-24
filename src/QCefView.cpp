@@ -1,4 +1,4 @@
-#pragma region std_headers
+﻿#pragma region std_headers
 #include <stdexcept>
 #pragma endregion std_headers
 
@@ -72,14 +72,14 @@ public:
   {
     // Set window info
     CefWindowInfo window_info;
-      
+
 #if defined(OS_WINDOWS)
     RECT rc = { 0 };
     window_info.SetAsChild((CefWindowHandle)(win->winId()), rc);
 #else
     window_info.SetAsChild((CefWindowHandle)(win->winId()), 0, 0, 0, 0);
 #endif
-      
+
     for (auto cookieItem : CCefSetting::global_cookie_list) {
       CCefManager::getInstance().addCookie(cookieItem.name, cookieItem.value, cookieItem.domain, cookieItem.url);
     }
@@ -89,38 +89,46 @@ public:
     browserSettings.plugins = STATE_DISABLED;
 
     // create the delegate
-    pCefDelegate_ = std::make_shared<CCefDelegate>(view, win);
+    auto pCefDelegate = std::make_shared<CCefDelegate>(view, win);
 
     // create the browser
-    pQCefViewHandler_ = new CefViewBrowserHandler(pCefDelegate_);
+    auto pQCefViewHandler = new CefViewBrowserHandler(pCefDelegate);
 
     // add archive mapping
     for (auto archiveMapping : archiveMappingList_) {
-      pQCefViewHandler_->AddArchiveResourceProvider(
+      pQCefViewHandler->AddArchiveResourceProvider(
         archiveMapping.path.toStdString(), archiveMapping.url.toStdString(), archiveMapping.psw.toStdString());
     }
 
     // add local folder mapping
     for (auto folderMapping : folderMappingList_) {
-      pQCefViewHandler_->AddLocalDirectoryResourceProvider(
+      pQCefViewHandler->AddLocalDirectoryResourceProvider(
         folderMapping.path.toStdString(), folderMapping.url.toStdString(), folderMapping.priority);
     }
 
     // create the main browser window.
     if (!CefBrowserHost::CreateBrowser(window_info,       // window info
-                                       pQCefViewHandler_, // handler
+                                       pQCefViewHandler,  // handler
                                        url.toStdString(), // url
                                        browserSettings,   // settings
                                        nullptr,
                                        CefRequestContext::GetGlobalContext())) {
       throw std::exception();
     }
+
+    // hold the browser handler
+    CCefManager::getInstance().registerBrowserHandler(pQCefViewHandler);
+
+    // update members
+    pCefDelegate_ = pCefDelegate;
+    pQCefViewHandler_ = pQCefViewHandler;
   }
 
   ~Implementation()
   {
     if (pQCefViewHandler_) {
       pQCefViewHandler_->CloseAllBrowsers(true);
+      CCefManager::getInstance().removeBrowserHandler(pQCefViewHandler_);
       pQCefViewHandler_ = nullptr;
     }
 

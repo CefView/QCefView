@@ -1,9 +1,13 @@
 ﻿#pragma once
 
 #pragma region std_headers
+#include <atomic>
 #include <mutex>
+#include <set>
+#include <string>
 #pragma endregion std_headers
 
+#include <CefViewBrowserHandler.h>
 #include <CefViewBrowserApp.h>
 
 /// <summary>
@@ -11,17 +15,31 @@
 /// </summary>
 class CCefManager
 {
-
-protected:
+public:
   /// <summary>
   ///
   /// </summary>
-  CCefManager();
+  std::string cacheRootPath;
 
   /// <summary>
   ///
   /// </summary>
-  ~CCefManager(){};
+  std::string cachePath;
+
+  /// <summary>
+  ///
+  /// </summary>
+  std::string bridgeObjectName;
+
+  /// <summary>
+  ///
+  /// </summary>
+  uint32_t backgroundColor;
+
+  /// <summary>
+  ///
+  /// </summary>
+  uint16_t debugPort;
 
 public:
   /// <summary>
@@ -33,28 +51,48 @@ public:
   /// <summary>
   ///
   /// </summary>
-  void initializeCef();
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="name"></param>
-  /// <param name="value"></param>
-  /// <param name="domain"></param>
-  /// <param name="url"></param>
-  /// <returns></returns>
-  bool addCookie(const std::string& name, const std::string& value, const std::string& domain, const std::string& url);
+  bool initializeCef(int argc, const char* argv[]);
 
   /// <summary>
   ///
   /// </summary>
   void uninitializeCef();
 
+  /// <summary>
+  ///
+  /// </summary>
+  bool isInitialized();
+
+  /// <summary>
+  ///
+  /// </summary>
+  bool addCookie(const std::string& name, const std::string& value, const std::string& domain, const std::string& url);
+
+  /// <summary>
+  ///
+  /// </summary>
+  void registerBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler);
+
+  /// <summary>
+  ///
+  /// </summary>
+  void removeBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler);
+
+  /// <summary>
+  ///
+  /// </summary>
+  void closeAllBrowserHandler();
+
 protected:
   /// <summary>
   ///
   /// </summary>
-  void releaseCef();
+  CCefManager();
+
+  /// <summary>
+  ///
+  /// </summary>
+  ~CCefManager() {}
 
 private:
   /// <summary>
@@ -65,10 +103,25 @@ private:
   /// <summary>
   ///
   /// </summary>
-  CefSettings cef_settings_;
+  std::atomic_bool is_initialized_;
 
   /// <summary>
   ///
   /// </summary>
-  int64_t nBrowserRefCount_;
+  std::mutex init_locker_;
+
+  /// <summary>
+  ///
+  /// </summary>
+  std::mutex handler_set_locker_;
+
+  /// <summary>
+  ///
+  /// </summary>
+  std::set<CefRefPtr<CefViewBrowserHandler>> handler_set_;
+
+  /// <summary>
+  ///
+  /// </summary>
+  bool is_exiting_;
 };

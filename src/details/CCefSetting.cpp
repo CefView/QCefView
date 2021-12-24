@@ -1,13 +1,14 @@
-#include "CCefSetting.h"
+﻿#include "CCefSetting.h"
 
 #pragma region qt_headers
 #include <QCoreApplication>
 #include <QDir>
+#include <QString>
 #pragma endregion qt_headers
 
 #include <CefViewCoreProtocol.h>
 
-CefString CCefSetting::bridge_object_name;
+QString CCefSetting::bridge_object_name;
 
 CefString CCefSetting::browser_sub_process_path;
 
