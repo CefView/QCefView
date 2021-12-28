@@ -1,176 +1,166 @@
-﻿#ifndef QCEFSETTINGS_H
-#define QCEFSETTINGS_H
+﻿#ifndef QCEFSETTING_H
+#define QCEFSETTING_H
 #pragma once
 #include <QCefView_global.h>
 
 #pragma region qt_headers
+#include <QObject>
 #include <QString>
-#include <QMetaType>
+#include <QColor>
+#include <QScopedPointer>
 #pragma endregion qt_headers
 
-namespace QCefSetting {
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setBrowserSubProcessPath(const QString& path);
+class CCefSetting;
+// class CCefManager;
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT QString
-browserSubProcessPath();
+class QCEFVIEW_EXPORT QCefSetting : public QObject
+{
+  Q_OBJECT
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setResourceDirectoryPath(const QString& path);
+public:
+  QCefSetting();
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT QString
-resourceDirectoryPath();
+  ~QCefSetting();
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setLocalesDirectoryPath(const QString& path);
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setBrowserSubProcessPath(const QString& path);
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT QString
-localesDirectoryPath();
+  /// <summary>
+  ///
+  /// </summary>
+  const QString browserSubProcessPath();
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setUserAgent(const QString& agent);
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setResourceDirectoryPath(const QString& path);
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT QString
-userAgent();
+  /// <summary>
+  ///
+  /// </summary>
+  const QString resourceDirectoryPath();
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setCachePath(const QString& path);
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setLocalesDirectoryPath(const QString& path);
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT QString
-cachePath();
+  /// <summary>
+  ///
+  /// </summary>
+  const QString localesDirectoryPath();
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setUserDataPath(const QString& path);
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setLocale(const QString& locale);
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT QString
-userDataPath();
+  /// <summary>
+  ///
+  /// </summary>
+  const QString locale();
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setBridgeObjectName(const QString& name);
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setUserAgent(const QString& agent);
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT QString
-bridgeObjectName();
+  /// <summary>
+  ///
+  /// </summary>
+  const QString userAgent();
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setPersistSessionCookies(bool enabled);
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setCachePath(const QString& path);
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT bool
-persistSessionCookies();
+  /// <summary>
+  ///
+  /// </summary>
+  const QString cachePath();
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setPersistUserPreferences(bool enabled);
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setUserDataPath(const QString& path);
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT bool
-persistUserPreferences();
+  /// <summary>
+  ///
+  /// </summary>
+  const QString userDataPath();
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setLocale(const QString& locale);
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setBridgeObjectName(const QString& name);
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT QString
-locale();
+  /// <summary>
+  ///
+  /// </summary>
+  const QString bridgeObjectName();
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setRemoteDebuggingPort(int port);
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setBackgroundColor(const QColor& color);
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT int
-remoteDebuggingPort();
+  /// <summary>
+  ///
+  /// </summary>
+  const QColor backgroundColor();
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setBackgroundColor(const QColor& color);
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setAcceptLanguageList(const QString& languages);
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT QColor
-backgroundColor();
+  /// <summary>
+  ///
+  /// </summary>
+  const QString acceptLanguageList();
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setAcceptLanguageList(const QString& languages);
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setPersistSessionCookies(bool enabled);
 
-/// <summary>
-///
-/// </summary>
-const QCEFVIEW_EXPORT QString
-acceptLanguageList();
+  /// <summary>
+  ///
+  /// </summary>
+  const bool persistSessionCookies();
 
-/// <summary>
-///
-/// </summary>
-void QCEFVIEW_EXPORT
-setGlobalCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setPersistUserPreferences(bool enabled);
 
+  /// <summary>
+  ///
+  /// </summary>
+  const bool persistUserPreferences();
+
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setRemoteDebuggingPort(short port);
+
+  /// <summary>
+  ///
+  /// </summary>
+  const short remoteDebuggingPort();
+
+  /// <summary>
+  ///
+  /// </summary>
+  QCefSetting& setGlobalCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
+
+private:
+  QScopedPointer<CCefSetting> d;
+
+  friend class CCefManager;
 }; // namespace QCefSetting
 
 #endif

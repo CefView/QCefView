@@ -55,6 +55,8 @@ public:
   static QList<ArchiveMapping> archiveMappingList_;
 
 private:
+  CCefManagerPtr pCefManager_;
+
   /// <summary>
   ///
   /// </summary>
@@ -67,7 +69,8 @@ private:
 
 public:
   explicit Implementation(const QString& url, QCefView* view, QCefWindow* win)
-    : pQCefViewHandler_(nullptr)
+    : pCefManager_(CCefManager::getInstance())
+    , pQCefViewHandler_(nullptr)
     , pCefDelegate_(nullptr)
   {
     // Set window info
@@ -80,9 +83,9 @@ public:
     window_info.SetAsChild((CefWindowHandle)(win->winId()), 0, 0, 0, 0);
 #endif
 
-    for (auto cookieItem : CCefSetting::global_cookie_list) {
-      CCefManager::getInstance().addCookie(cookieItem.name, cookieItem.value, cookieItem.domain, cookieItem.url);
-    }
+    // for (auto cookieItem : CCefSetting::global_cookie_list) {
+    //  CCefManager::getInstance().addCookie(cookieItem.name, cookieItem.value, cookieItem.domain, cookieItem.url);
+    //}
 
     CefBrowserSettings browserSettings;
     // disable all plugins
@@ -117,7 +120,7 @@ public:
     }
 
     // hold the browser handler
-    CCefManager::getInstance().registerBrowserHandler(pQCefViewHandler);
+    CCefManager::getInstance()->registerBrowserHandler(pQCefViewHandler);
 
     // update members
     pCefDelegate_ = pCefDelegate;
@@ -128,7 +131,7 @@ public:
   {
     if (pQCefViewHandler_) {
       pQCefViewHandler_->CloseAllBrowsers(true);
-      CCefManager::getInstance().removeBrowserHandler(pQCefViewHandler_);
+      CCefManager::getInstance()->removeBrowserHandler(pQCefViewHandler_);
       pQCefViewHandler_ = nullptr;
     }
 
@@ -386,7 +389,7 @@ QCefView::addArchiveResource(const QString& path, const QString& url, const QStr
 void
 QCefView::addCookie(const QString& name, const QString& value, const QString& domain, const QString& url)
 {
-  CCefManager::getInstance().addCookie(
+  CCefManager::getInstance()->addCookie(
     name.toStdString(), value.toStdString(), domain.toStdString(), url.toStdString());
 }
 

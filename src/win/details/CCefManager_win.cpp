@@ -3,49 +3,49 @@
 #include "../../details/CCefSetting.h"
 
 bool
-CCefManager::initializeCef(int argc, const char* argv[])
+CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 {
-  std::lock_guard<std::mutex> lock(init_locker_);
-
-  // This is not the first time initialization
-  if (is_initialized_)
-    return true;
-
   // Enable High-DPI support on Windows 7 or newer.
   CefEnableHighDPISupport();
 
-  // This is the first time initialization
-  CCefSetting::initializeInstance();
-
   // Build CefSettings
   CefSettings cef_settings;
-  CefString(&cef_settings.browser_subprocess_path) = CCefSetting::browser_sub_process_path;
-  CefString(&cef_settings.resources_dir_path) = CCefSetting::resource_directory_path;
-  CefString(&cef_settings.locales_dir_path) = CCefSetting::locales_directory_path;
-  CefString(&cef_settings.user_agent) = CCefSetting::user_agent;
-  CefString(&cef_settings.cache_path) = CCefSetting::cache_path;
-  CefString(&cef_settings.user_data_path) = CCefSetting::user_data_path;
-  CefString(&cef_settings.locale) = CCefSetting::locale;
-  CefString(&cef_settings.accept_language_list) = CCefSetting::accept_language_list;
+  if (!settings.d->browserSubProcessPath_.empty())
+    CefString(&cef_settings.browser_subprocess_path) = settings.d->browserSubProcessPath_;
+  if (!settings.d->resourceDirectoryPath_.empty())
+    CefString(&cef_settings.resources_dir_path) = settings.d->resourceDirectoryPath_;
+  if (!settings.d->localesDirectoryPath_.empty())
+    CefString(&cef_settings.locales_dir_path) = settings.d->localesDirectoryPath_;
+  if (!settings.d->userAgent_.empty())
+    CefString(&cef_settings.user_agent) = settings.d->userAgent_;
+  if (!settings.d->cachePath_.empty())
+    CefString(&cef_settings.cache_path) = settings.d->cachePath_;
+  if (!settings.d->userDataPath_.empty())
+    CefString(&cef_settings.user_data_path) = settings.d->userDataPath_;
+  if (!settings.d->locale_.empty())
+    CefString(&cef_settings.locale) = settings.d->locale_;
+  if (!settings.d->acceptLanguageList_.empty())
+    CefString(&cef_settings.accept_language_list) = settings.d->acceptLanguageList_;
 
-  cef_settings.persist_session_cookies = CCefSetting::persist_session_cookies;
-  cef_settings.persist_user_preferences = CCefSetting::persist_user_preferences;
-  cef_settings.remote_debugging_port = CCefSetting::remote_debugging_port;
-  cef_settings.background_color = CCefSetting::background_color;
-  cef_settings.no_sandbox = true;
-  cef_settings.pack_loading_disabled = false;
-  cef_settings.multi_threaded_message_loop = true;
+  cef_settings.persist_session_cookies = settings.d->persistSessionCookies_;
+  cef_settings.persist_user_preferences = settings.d->persistUserPreferences_;
+  cef_settings.background_color = settings.d->backgroundColor_;
 
 #ifndef NDEBUG
   cef_settings.log_severity = LOGSEVERITY_DEFAULT;
-  cef_settings.remote_debugging_port = CCefSetting::remote_debugging_port;
+  cef_settings.remote_debugging_port = settings.d->remoteDebuggingport_;
 #else
   cef_settings.log_severity = LOGSEVERITY_DISABLE;
 #endif
 
+  // fixed values
+  cef_settings.no_sandbox = true;
+  cef_settings.pack_loading_disabled = false;
+  cef_settings.multi_threaded_message_loop = true;
+
   // Initialize CEF.
   CefMainArgs main_args(::GetModuleHandle(nullptr));
-  auto app = new CefViewBrowserApp(CCefSetting::bridge_object_name);
+  auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_.ToString());
   void* sandboxInfo = nullptr;
   if (!CefInitialize(main_args, cef_settings, app_, sandboxInfo)) {
     assert(0);
@@ -53,7 +53,6 @@ CCefManager::initializeCef(int argc, const char* argv[])
   }
 
   app_ = app;
-  is_initialized_ = true;
 
   return true;
 }
@@ -61,7 +60,7 @@ CCefManager::initializeCef(int argc, const char* argv[])
 void
 CCefManager::uninitializeCef()
 {
-  if (!isInitialized())
+  if (!app_)
     return;
 
   // Destroy the application
@@ -71,33 +70,6 @@ CCefManager::uninitializeCef()
   CefShutdown();
 }
 
-bool
-CCefManager::isInitialized()
-{
-  std::lock_guard<std::mutex> lock(init_locker_);
-  return is_initialized_;
-}
-
-bool
-CCefManager::addCookie(const std::string& name,
-                       const std::string& value,
-                       const std::string& domain,
-                       const std::string& url)
-{
-  CefCookie cookie;
-  CefString(&cookie.name).FromString(name);
-  CefString(&cookie.value).FromString(value);
-  CefString(&cookie.domain).FromString(domain);
-  return CefCookieManager::GetGlobalManager(nullptr)->SetCookie(CefString(url), cookie, nullptr);
-}
-
-void
-CCefManager::registerBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler)
-{
-  std::lock_guard<std::mutex> lock(handler_set_locker_);
-  handler_set_.insert(handler);
-}
-
 void
 CCefManager::removeBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler)
 {
@@ -105,9 +77,9 @@ CCefManager::removeBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler)
   if (handler_set_.empty())
     return;
 
+  handler->CloseAllBrowsers(true);
+
   handler_set_.erase(handler);
-  if (handler_set_.empty() && is_exiting_) {
-  }
 }
 
 void

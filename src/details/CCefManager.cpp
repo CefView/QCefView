@@ -2,26 +2,15 @@
 
 #include "CCefSetting.h"
 
-CCefManager::CCefManager()
-  : bridgeObjectName()
-  , debugPort(0)
-  , backgroundColor(-1)
-  , is_initialized_(false)
-  , is_exiting_(false)
-{}
-
-CCefManager&
-CCefManager::getInstance()
+CCefManager::CCefManager(int argc, char* argv[], const QCefSetting& settings)
+  : is_exiting_(false)
 {
-  static CCefManager s_instance;
-  return s_instance;
+  initializeCef(argc, argv, settings);
 }
 
-bool
-CCefManager::isInitialized()
+CCefManager::~CCefManager()
 {
-  std::lock_guard<std::mutex> lock(init_locker_);
-  return is_initialized_;
+  uninitializeCef();
 }
 
 bool

@@ -4,103 +4,42 @@
 #include <list>
 #pragma endregion stl_headers
 
-/// <summary>
-///
-/// </summary>
+#pragma region qt_headers
+#pragma endregion qt_headers
+
+#pragma region cef_headers
+#include <include/internal/cef_types_wrappers.h>
+#pragma endregion cef_headers
+
+#include <QCefSetting.h>
+
+typedef struct CookieItem
+{
+  std::string name;
+  std::string value;
+  std::string domain;
+  std::string url;
+} CookieItem;
+
 class CCefSetting
 {
-protected:
-  /// <summary>
-  ///
-  /// </summary>
-  CCefSetting();
-
-  /// <summary>
-  ///
-  /// </summary>
-  ~CCefSetting(){};
-
 public:
-  /// <summary>
-  ///
-  /// </summary>
-  static void initializeInstance();
+  explicit CCefSetting();
 
-public:
-  /// <summary>
-  ///
-  /// </summary>
-  static std::string bridge_object_name;
+  CefString locale_;
+  CefString userAgent_;
+  CefString cachePath_;
+  CefString userDataPath_;
+  CefString bridgeObjectName_;
+  CefString acceptLanguageList_;
+  CefString localesDirectoryPath_;
+  CefString browserSubProcessPath_;
+  CefString resourceDirectoryPath_;
+  uint32_t backgroundColor_;
+  short remoteDebuggingport_;
 
-  /// <summary>
-  ///
-  /// </summary>
-  static std::string browser_sub_process_path;
+  bool persistSessionCookies_;
+  bool persistUserPreferences_;
 
-  /// <summary>
-  ///
-  /// </summary>
-  static std::string resource_directory_path;
-
-  /// <summary>
-  ///
-  /// </summary>
-  static std::string locales_directory_path;
-
-  /// <summary>
-  ///
-  /// </summary>
-  static std::string user_agent;
-
-  /// <summary>
-  ///
-  /// </summary>
-  static std::string cache_path;
-
-  /// <summary>
-  ///
-  /// </summary>
-  static std::string user_data_path;
-
-  /// <summary>
-  ///
-  /// </summary>
-  static int persist_session_cookies;
-
-  /// <summary>
-  ///
-  /// </summary>
-  static int persist_user_preferences;
-
-  /// <summary>
-  ///
-  /// </summary>
-  static std::string locale;
-
-  /// <summary>
-  ///
-  /// </summary>
-  static int remote_debugging_port;
-
-  /// <summary>
-  ///
-  /// </summary>
-  static uint32_t background_color;
-
-  /// <summary>
-  ///
-  /// </summary>
-  static std::string accept_language_list;
-
-  /// <summary>
-  ///
-  /// </summary>
-  typedef struct CookieItem
-  {
-    std::string name;
-    std::string value;
-    std::string domain;
-    std::string url;
-  } CookieItem;
-  static std::list<CookieItem> global_cookie_list;
+  std::list<CookieItem> cookieList_;
 };

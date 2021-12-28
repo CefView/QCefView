@@ -8,23 +8,18 @@
 #include <QDebug>
 #pragma endregion qt_headers
 
-#include "CCefManager.h"
-
 QCefWindow::QCefWindow(QWindow* parent, QCefView* hostView /*= 0*/)
   : QWindow(parent)
   , hwndCefBrowser_(nullptr)
 {
   setFlags(Qt::FramelessWindowHint);
-
-  CCefManager::getInstance().initializeCef();
 }
 
 QCefWindow::~QCefWindow()
 {
-  if (hwndCefBrowser_)
+  if (hwndCefBrowser_) {
     hwndCefBrowser_ = nullptr;
-
-  CCefManager::getInstance().uninitializeCef();
+  }
 }
 
 void

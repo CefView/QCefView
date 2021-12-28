@@ -1,10 +1,8 @@
-#include "qcefviewtest.h"
+﻿#include "qcefviewtest.h"
 
 #include <QDir>
 #include <QCoreApplication>
 #include <QHBoxLayout>
-
-#include <QCefSetting.h>
 
 QCefViewTest::QCefViewTest(QWidget* parent)
   : QMainWindow(parent)
@@ -16,8 +14,6 @@ QCefViewTest::QCefViewTest(QWidget* parent)
 
   connect(ui.btn_changeColor, SIGNAL(clicked()), this, SLOT(onBtnChangeColorClicked()));
   layout->addWidget(ui.nativeContainer);
-
-  QCefSetting::setBridgeObjectName("CallBridge");
 
   QDir dir = QCoreApplication::applicationDirPath();
   QString uri = QDir::toNativeSeparators(dir.filePath("QCefViewTestPage.html"));

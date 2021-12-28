@@ -5,10 +5,13 @@
 #include <mutex>
 #include <set>
 #include <string>
+#include <memory>
 #pragma endregion std_headers
 
 #include <CefViewBrowserHandler.h>
 #include <CefViewBrowserApp.h>
+
+#include <QCefSetting.h>
 
 /// <summary>
 ///
@@ -19,49 +22,37 @@ public:
   /// <summary>
   ///
   /// </summary>
-  std::string cacheRootPath;
+  CCefManager(int argc, char* argv[], const QCefSetting& settings);
 
   /// <summary>
   ///
   /// </summary>
-  std::string cachePath;
+  ~CCefManager();
 
-  /// <summary>
-  ///
-  /// </summary>
-  std::string bridgeObjectName;
+  static void setInstnace(const std::shared_ptr<CCefManager>& s) { s_This = s; }
 
-  /// <summary>
-  ///
-  /// </summary>
-  uint32_t backgroundColor;
-
-  /// <summary>
-  ///
-  /// </summary>
-  uint16_t debugPort;
-
-public:
   /// <summary>
   ///
   /// </summary>
   /// <returns></returns>
-  static CCefManager& getInstance();
+  static std::shared_ptr<CCefManager> getInstance()
+  {
+    if (!s_This.expired()) {
+      auto p = s_This.lock();
+      return p;
+    }
+    return nullptr;
+  }
 
   /// <summary>
   ///
   /// </summary>
-  bool initializeCef(int argc, const char* argv[]);
+  bool initializeCef(int argc, char* argv[], const QCefSetting& settings);
 
   /// <summary>
   ///
   /// </summary>
   void uninitializeCef();
-
-  /// <summary>
-  ///
-  /// </summary>
-  bool isInitialized();
 
   /// <summary>
   ///
@@ -83,32 +74,13 @@ public:
   /// </summary>
   void closeAllBrowserHandler();
 
-protected:
-  /// <summary>
-  ///
-  /// </summary>
-  CCefManager();
-
-  /// <summary>
-  ///
-  /// </summary>
-  ~CCefManager() {}
-
 private:
+  static inline std::weak_ptr<CCefManager> s_This;
+
   /// <summary>
   ///
   /// </summary>
   CefRefPtr<CefViewBrowserApp> app_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  std::atomic_bool is_initialized_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  std::mutex init_locker_;
 
   /// <summary>
   ///
@@ -125,3 +97,5 @@ private:
   /// </summary>
   bool is_exiting_;
 };
+
+typedef std::shared_ptr<CCefManager> CCefManagerPtr;
