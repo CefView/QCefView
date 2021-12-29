@@ -1,7 +1,7 @@
 ﻿#include "QCefSetting.h"
 
 #pragma region qt_headers
-#include <QColor.h>
+#include <QColor>
 #pragma endregion qt_headers
 
 #include "details/CCefSetting.h"

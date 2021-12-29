@@ -77,10 +77,11 @@ public:
     CefWindowInfo window_info;
 
 #if defined(OS_WINDOWS)
-    RECT rc = { 0 };
-    window_info.SetAsChild((CefWindowHandle)(win->winId()), rc);
-#else
+    window_info.SetAsChild((CefWindowHandle)(win->winId()), RECT{ 0, 0, 0, 0 });
+#elif defined(OS_MACOS)
     window_info.SetAsChild((CefWindowHandle)(win->winId()), 0, 0, 0, 0);
+#elif defined(OS_LINUX)
+    window_info.SetAsChild((CefWindowHandle)(win->winId()), CefRect{ 0, 0, 0, 0 });
 #endif
 
     // for (auto cookieItem : CCefSetting::global_cookie_list) {

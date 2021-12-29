@@ -6,6 +6,10 @@ project(QCefView)
 
 # Only generate Debug and Release configuration types.
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
+if (NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Debug")
+endif()
+
 # Set proejct architecture
 # Determine the project architecture.
 if(NOT DEFINED PROJECT_ARCH)

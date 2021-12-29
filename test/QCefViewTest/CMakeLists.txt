@@ -6,8 +6,8 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core GUI Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core GUI Widgets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets REQUIRED)
 
 get_target_property(_qmake_executable Qt${QT_VERSION_MAJOR}::qmake IMPORTED_LOCATION)
 get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
@@ -17,7 +17,8 @@ if (OS_WINDOWS)
 elseif (OS_MACOS)
   find_program(DEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
 elseif (OS_LINUX)
-else ()
+elseif (OS_MACOS)
+else()
 endif()
 
 include_directories(
@@ -75,7 +76,32 @@ if (OS_WINDOWS)
     --no-compiler-runtime 
     $<TARGET_FILE:${PROJECT_NAME}>
   )
-endif()
+endif() # OS_WINDOWS
+
+if (OS_LINUX)
+  file(GLOB_RECURSE _RES_FILES
+    "*.qrc"
+    "*.rc"
+  )
+  source_group("Resource Files" ${_RES_FILES})
+
+  add_executable(${PROJECT_NAME} 
+    ${_SRC_FILES}
+    ${_UI_FILES}
+    ${_RES_FILES}
+  )
+
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    # Copy the TEST HTML file
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/QCefViewTestPage.html $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    # Deploy the Qt Application
+    # COMMAND ${DEPLOYQT_EXECUTABLE} 
+    # --no-svg 
+    # --no-translations 
+    # --no-compiler-runtime 
+    # $<TARGET_FILE:${PROJECT_NAME}>
+  )
+endif() # OS_LINUX
 
 if (OS_MACOS)
   file(GLOB_RECURSE _RES_FILES
@@ -106,7 +132,6 @@ if (OS_MACOS)
     COMMAND ${DEPLOYQT_EXECUTABLE} 
       $<TARGET_BUNDLE_DIR:${PROJECT_NAME}> 
       -codesign="-"
-
   )
 endif()
 

@@ -75,7 +75,7 @@ public:
   void closeAllBrowserHandler();
 
 private:
-  static inline std::weak_ptr<CCefManager> s_This;
+  static std::weak_ptr<CCefManager> s_This;
 
   /// <summary>
   ///

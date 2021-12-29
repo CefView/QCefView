@@ -10,7 +10,7 @@
 
 QCefWindow::QCefWindow(QWindow* parent, QCefView* hostView /*= 0*/)
   : QWindow(parent)
-  , hwndCefBrowser_(nullptr)
+  , hwndCefBrowser_(0)
 {
   setFlags(Qt::FramelessWindowHint);
 }
@@ -18,7 +18,7 @@ QCefWindow::QCefWindow(QWindow* parent, QCefView* hostView /*= 0*/)
 QCefWindow::~QCefWindow()
 {
   if (hwndCefBrowser_) {
-    hwndCefBrowser_ = nullptr;
+    hwndCefBrowser_ = 0;
   }
 }
 

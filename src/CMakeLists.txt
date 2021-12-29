@@ -3,8 +3,8 @@
 set(CMAKE_GLOBAL_AUTOGEN_TARGET OFF)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core GUI Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core GUI Widgets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets REQUIRED)
 
 file(GLOB_RECURSE QCefView_INCLUDE_FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/../include/*.h"
@@ -15,7 +15,7 @@ source_group(
   FILES ${QCefView_INCLUDE_FILES}
 )
 
-file(GLOB_RECURSE QCefView_SRC_FILES
+file(GLOB QCefView_SRC_FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/*.h"
   "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
 )
@@ -25,21 +25,32 @@ source_group(
   FILES ${QCefView_SRC_FILES}
 )
 
+file(GLOB_RECURSE QCefView_details_SRC_FILES
+  "${CMAKE_CURRENT_SOURCE_DIR}/details/*.h"
+  "${CMAKE_CURRENT_SOURCE_DIR}/details/*.cpp"
+)
+source_group(
+  TREE ${CMAKE_CURRENT_SOURCE_DIR} 
+  PREFIX Source 
+  FILES ${QCefView_details_SRC_FILES}
+)
+
 if (OS_WINDOWS)
-  file(GLOB_RECURSE QCefView_windows_SRC_FILES
+  file(GLOB_RECURSE QCefView_Windows_SRC_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/win/*.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/win/*.cpp"
   )
   source_group(
     TREE "${CMAKE_CURRENT_SOURCE_DIR}/win" 
     PREFIX Source 
-    FILES ${QCefView_windows_SRC_FILES}
+    FILES ${QCefView_Windows_SRC_FILES}
   )
 
   add_library(QCefView SHARED
     ${QCefView_INCLUDE_FILES}
     ${QCefView_SRC_FILES}
-    ${QCefView_windows_SRC_FILES}
+    ${QCefView_details_SRC_FILES}
+    ${QCefView_Windows_SRC_FILES}
   )
 
   target_compile_definitions(QCefView PRIVATE
@@ -48,6 +59,29 @@ if (OS_WINDOWS)
     QCEFVIEW_LIB
   )
 endif()  # OS_WINDOWS
+
+if (OS_LINUX)
+  file(GLOB_RECURSE QCefView_Linux_SRC_FILES
+    "${CMAKE_CURRENT_SOURCE_DIR}/linux/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/linux/*.cpp"
+  )
+  source_group(
+    TREE "${CMAKE_CURRENT_SOURCE_DIR}/linux" 
+    PREFIX Source 
+    FILES ${QCefView_Linux_SRC_FILES}
+  )
+
+  add_library(QCefView SHARED
+    ${QCefView_INCLUDE_FILES}
+    ${QCefView_SRC_FILES}
+    ${QCefView_details_SRC_FILES}
+    ${QCefView_Linux_SRC_FILES}
+  )
+
+  target_compile_definitions(QCefView PRIVATE
+    QCEFVIEW_LIB
+  )
+endif()  # OS_LINUX
 
 if (OS_MACOS)
   file(GLOB_RECURSE QCefView_macOS_SRC_FILES
@@ -65,6 +99,7 @@ if (OS_MACOS)
   add_library(QCefView SHARED
     ${QCefView_INCLUDE_FILES}
     ${QCefView_SRC_FILES}
+    ${QCefView_details_SRC_FILES}
     ${QCefView_macOS_SRC_FILES}
     ${QCefView_INFO_PLIST_FILE}
   )

@@ -2,6 +2,8 @@
 
 #include "CCefSetting.h"
 
+std::weak_ptr<CCefManager> CCefManager::s_This;
+
 CCefManager::CCefManager(int argc, char* argv[], const QCefSetting& settings)
   : is_exiting_(false)
 {
