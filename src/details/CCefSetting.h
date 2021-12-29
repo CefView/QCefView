@@ -35,9 +35,9 @@ public:
   CefString localesDirectoryPath_;
   CefString browserSubProcessPath_;
   CefString resourceDirectoryPath_;
-  uint32_t backgroundColor_;
-  short remoteDebuggingport_;
 
+  uint32_t backgroundColor_ = 0;
+  short remoteDebuggingport_ = 0;
   bool persistSessionCookies_;
   bool persistUserPreferences_;
 

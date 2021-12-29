@@ -47,7 +47,7 @@ CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
   CefMainArgs main_args(::GetModuleHandle(nullptr));
   auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_.ToString());
   void* sandboxInfo = nullptr;
-  if (!CefInitialize(main_args, cef_settings, app_, sandboxInfo)) {
+  if (!CefInitialize(main_args, cef_settings, app, sandboxInfo)) {
     assert(0);
     return false;
   }
