@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.4.1)
 project(QCefViewTest)
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets REQUIRED)
 
@@ -81,7 +81,6 @@ endif() # OS_WINDOWS
 if (OS_LINUX)
   file(GLOB_RECURSE _RES_FILES
     "*.qrc"
-    "*.rc"
   )
   source_group("Resource Files" ${_RES_FILES})
 
@@ -135,9 +134,10 @@ if (OS_MACOS)
   )
 endif()
 
-target_link_libraries(${PROJECT_NAME} PUBLIC
-    Qt${QT_VERSION_MAJOR}::Core
-    Qt${QT_VERSION_MAJOR}::Gui
-    Qt${QT_VERSION_MAJOR}::Widgets
-    QCefView
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+      Qt${QT_VERSION_MAJOR}::Core
+      Qt${QT_VERSION_MAJOR}::Gui
+      Qt${QT_VERSION_MAJOR}::Widgets
+      QCefView
 )

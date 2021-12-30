@@ -71,6 +71,12 @@ endif()
 
 if (OS_WINDOWS)
   add_link_options(/DEBUG)
+else()
+  add_compile_options(-g)
+  add_compile_options(
+      "$<$<CONFIG:DEBUG>:-O0>"
+      "$<$<CONFIG:RELEASE>:-O3>"
+  )
 endif()
 
 if (OS_MACOS)
