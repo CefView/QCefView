@@ -2,7 +2,7 @@
 
 BUILD_PROJECT=0
 
-BUILD_DIR="$(pwd)/.build/linux"
+BUILD_DIR="$(pwd)/.build/macOS"
 
 while getopts bi flag
 do
