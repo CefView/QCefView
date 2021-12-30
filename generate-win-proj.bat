@@ -1,1 +1,1 @@
-cmake -S . -B .build.win -DBUILD_DEMO=ON
+cmake -S . -B .build/Windows -DBUILD_DEMO=ON
