@@ -90,6 +90,12 @@ if (OS_LINUX)
     ${_RES_FILES}
   )
 
+  set_target_properties(${PROJECT_NAME} 
+    PROPERTIES 
+      INSTALL_RPATH "$ORIGIN"
+      BUILD_WITH_INSTALL_RPATH TRUE
+  )
+
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     # Copy the TEST HTML file
     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/QCefViewTestPage.html $<TARGET_FILE_DIR:${PROJECT_NAME}>
@@ -136,8 +142,8 @@ endif()
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
+      QCefView
       Qt${QT_VERSION_MAJOR}::Core
       Qt${QT_VERSION_MAJOR}::Gui
       Qt${QT_VERSION_MAJOR}::Widgets
-      QCefView
 )

@@ -81,6 +81,12 @@ if (OS_LINUX)
   target_compile_definitions(QCefView PRIVATE
     QCEFVIEW_LIB
   )
+
+  set_target_properties(${PROJECT_NAME} 
+    PROPERTIES 
+      INSTALL_RPATH "$ORIGIN"
+      BUILD_WITH_INSTALL_RPATH TRUE
+  )
 endif()  # OS_LINUX
 
 if (OS_MACOS)
@@ -146,9 +152,9 @@ add_dependencies(QCefView
 )
 
 target_link_libraries(QCefView PRIVATE
+  CefViewCore
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::Widgets
-  CefViewCore
 )
 
