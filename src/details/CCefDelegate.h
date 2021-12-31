@@ -31,7 +31,7 @@ class CCefDelegate
 public:
   explicit CCefDelegate(QCefView* view, QCefWindow* window);
 
-  virtual void setCefBrowserWindowHandle(CefWindowHandle win) override;
+  virtual void setBrowserWindowId(CefWindowHandle win) override;
 
   virtual void loadingStateChanged(bool isLoading, bool canGoBack, bool canGoForward) override;
 

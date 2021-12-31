@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #pragma region qt_headers
 #include <QWindow>
@@ -46,13 +46,13 @@ public:
   ///
   /// </summary>
   /// <param name="win"></param>
-  void setCefBrowserWindow(CefWindowHandle win);
+  void setBrowserWindowId(CefWindowHandle win);
 
 protected:
   /// <summary>
   ///
   /// </summary>
-  void syncCefBrowserWindow();
+  void syncBrowserWindow();
 
   /// <summary>
   ///
@@ -70,5 +70,5 @@ private:
   /// <summary>
   ///
   /// </summary>
-  CefWindowHandle hwndCefBrowser_;
+  QWindow* browserWindow_;
 };

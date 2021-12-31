@@ -155,7 +155,7 @@ public:
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setGlobalCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
+  QCefSetting& addGlobalCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
 
 private:
   QScopedPointer<CCefSetting> d;

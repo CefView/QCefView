@@ -1,5 +1,9 @@
 ﻿#include "QCefWindow.h"
 
+#pragma region stdc_headers
+#include <math.h>
+#pragma region stdc_headers
+
 #pragma region qt_headers
 #include <QCoreApplication>
 #include <QResizeEvent>
@@ -10,48 +14,48 @@
 
 QCefWindow::QCefWindow(QWindow* parent, QCefView* hostView /*= 0*/)
   : QWindow(parent)
-  , hwndCefBrowser_(0)
+  , browserWindow_(0)
 {
   setFlags(Qt::FramelessWindowHint);
 }
 
 QCefWindow::~QCefWindow()
 {
-  if (hwndCefBrowser_) {
-    hwndCefBrowser_ = 0;
+  if (browserWindow_) {
+    browserWindow_ = 0;
   }
 }
 
 void
-QCefWindow::setCefBrowserWindow(CefWindowHandle win)
+QCefWindow::setBrowserWindowId(CefWindowHandle win)
 {
-  hwndCefBrowser_ = win;
-  syncCefBrowserWindow();
+  if (win) {
+    browserWindow_ = QWindow::fromWinId((WId)win);
+    syncBrowserWindow();
+  }
 }
 
 void
-QCefWindow::syncCefBrowserWindow()
+QCefWindow::syncBrowserWindow()
 {
-#if defined(OS_WINDOWS)
-  double w = width() * devicePixelRatio();
-  double h = height() * devicePixelRatio();
-  if (hwndCefBrowser_)
-    ::SetWindowPos(hwndCefBrowser_, NULL, 0, 0, ceil(w), ceil(h), SWP_NOZORDER | SWP_NOSENDCHANGING | SWP_DEFERERASE);
-#else
+  if (browserWindow_) {
+    double w = width() * devicePixelRatio();
+    double h = height() * devicePixelRatio();
+    browserWindow_->setGeometry(0, 0, ceil(w), ceil(h));
+  }
   return;
-#endif
 }
 
 void
 QCefWindow::exposeEvent(QExposeEvent* e)
 {
-  syncCefBrowserWindow();
+  syncBrowserWindow();
   QWindow::exposeEvent(e);
 }
 
 void
 QCefWindow::resizeEvent(QResizeEvent* e)
 {
-  syncCefBrowserWindow();
+  syncBrowserWindow();
   QWindow::resizeEvent(e);
 }

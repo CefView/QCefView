@@ -182,7 +182,7 @@ QCefSetting::remoteDebuggingPort()
 }
 
 QCefSetting&
-QCefSetting::setGlobalCookie(const QString& name, const QString& value, const QString& domain, const QString& url)
+QCefSetting::addGlobalCookie(const QString& name, const QString& value, const QString& domain, const QString& url)
 {
   d->cookieList_.push_back({ name.toStdString(), value.toStdString(), domain.toStdString(), url.toStdString() });
   return *this;

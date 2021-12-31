@@ -6,10 +6,10 @@ CCefDelegate::CCefDelegate(QCefView* view, QCefWindow* window)
 {}
 
 void
-CCefDelegate::setCefBrowserWindowHandle(CefWindowHandle win)
+CCefDelegate::setBrowserWindowId(CefWindowHandle win)
 {
   if (window_)
-    window_->setCefBrowserWindow(win);
+    window_->setBrowserWindowId(win);
 }
 
 void

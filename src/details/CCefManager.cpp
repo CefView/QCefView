@@ -7,7 +7,11 @@ std::weak_ptr<CCefManager> CCefManager::s_This;
 CCefManager::CCefManager(int argc, char* argv[], const QCefSetting& settings)
   : is_exiting_(false)
 {
-  initializeCef(argc, argv, settings);
+  if (initializeCef(argc, argv, settings)) {
+    for (auto cookieItem : settings.d->cookieList_) {
+      addCookie(cookieItem.name, cookieItem.value, cookieItem.domain, cookieItem.url);
+    }
+  }
 }
 
 CCefManager::~CCefManager()

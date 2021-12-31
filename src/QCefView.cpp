@@ -84,10 +84,6 @@ public:
     window_info.SetAsChild((CefWindowHandle)(win->winId()), CefRect{ 0, 0, 0, 0 });
 #endif
 
-    // for (auto cookieItem : CCefSetting::global_cookie_list) {
-    //  CCefManager::getInstance().addCookie(cookieItem.name, cookieItem.value, cookieItem.domain, cookieItem.url);
-    //}
-
     CefBrowserSettings browserSettings;
     // disable all plugins
     browserSettings.plugins = STATE_DISABLED;
