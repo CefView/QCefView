@@ -78,8 +78,9 @@ if (OS_LINUX)
     ${QCefView_Linux_SRC_FILES}
   )
 
-  target_compile_definitions(QCefView PRIVATE
-    QCEFVIEW_LIB
+  target_compile_definitions(QCefView 
+    PRIVATE
+      QCEFVIEW_LIB
   )
 
   set_target_properties(${PROJECT_NAME} 
@@ -151,10 +152,11 @@ add_dependencies(QCefView
   CefViewCore
 )
 
-target_link_libraries(QCefView PRIVATE
-  CefViewCore
-  Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Gui
-  Qt${QT_VERSION_MAJOR}::Widgets
+target_link_libraries(QCefView 
+  PRIVATE
+    CefViewCore
+    Qt${QT_VERSION_MAJOR}::Gui
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Widgets
 )
 

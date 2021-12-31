@@ -140,10 +140,25 @@ if (OS_MACOS)
   )
 endif()
 
-target_link_libraries(${PROJECT_NAME}
-    PRIVATE
-      QCefView
-      Qt${QT_VERSION_MAJOR}::Core
-      Qt${QT_VERSION_MAJOR}::Gui
-      Qt${QT_VERSION_MAJOR}::Widgets
-)
+if (OS_LINUX)
+  # On linux platform and debug mode, libcef.so MUST be loaded before libc.so.
+  # Gnerally we can achive this by using LD_PRELOAD=libcef.so, but this is not 
+  # convenience for debugging. 
+  Thus, here we do a trick to make sure the load order
+  target_link_libraries(${PROJECT_NAME}
+      PRIVATE
+        -Wl,--no-as-needed libcef_lib
+        QCefView
+        Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Gui
+        Qt${QT_VERSION_MAJOR}::Widgets
+  )
+else()
+  target_link_libraries(${PROJECT_NAME}
+      PRIVATE
+        QCefView
+        Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Gui
+        Qt${QT_VERSION_MAJOR}::Widgets
+  )
+endif()
