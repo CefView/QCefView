@@ -1,6 +1,6 @@
-﻿#include "CCefManager.h"
+﻿#include "../../details/CCefManager.h"
 
-#include "CCefSetting.h"
+#include "../../details/CCefSetting.h"
 
 void
 runMessageLoop()
@@ -86,7 +86,7 @@ freeCefLibrary()
 }
 
 bool
-CCefManager::initializeCef(int argc, const char* argv[])
+CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 {
   // load the cef library
   if (!loadCefLibrary()) {
@@ -119,7 +119,7 @@ CCefManager::initializeCef(int argc, const char* argv[])
 
 #ifndef NDEBUG
   cef_settings.log_severity = LOGSEVERITY_DEFAULT;
-  cef_settings.remote_debugging_port = CCefSetting::remote_debugging_port;
+  cef_settings.remote_debugging_port = settings.d->remoteDebuggingport_;
 #else
   cef_settings.log_severity = LOGSEVERITY_DISABLE;
 #endif
