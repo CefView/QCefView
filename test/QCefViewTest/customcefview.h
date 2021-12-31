@@ -26,6 +26,7 @@ protected:
                                     const QVariantList& arguments) override;
 
 private:
+  QRegion draggableRegion_;
 };
 
 #endif // CUSTOMCEFVIEW_H
