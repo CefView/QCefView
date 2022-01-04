@@ -12,6 +12,7 @@ QCefSetting::QCefSetting()
 
 QCefSetting::~QCefSetting() {}
 
+#if !defined(OS_MACOS)
 QCefSetting&
 QCefSetting::setBrowserSubProcessPath(const QString& path)
 {
@@ -50,6 +51,7 @@ QCefSetting::localesDirectoryPath()
 {
   return QString::fromStdString(d->localesDirectoryPath_);
 }
+#endif
 
 QCefSetting&
 QCefSetting::setLocale(const QString& locale)

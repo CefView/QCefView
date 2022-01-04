@@ -18,10 +18,17 @@ class QCEFVIEW_EXPORT QCefSetting : public QObject
   Q_OBJECT
 
 public:
+  /// <summary>
+  ///
+  /// </summary>
   QCefSetting();
 
+  /// <summary>
+  ///
+  /// </summary>
   ~QCefSetting();
 
+#if !defined(OS_MACOS)
   /// <summary>
   ///
   /// </summary>
@@ -51,6 +58,7 @@ public:
   ///
   /// </summary>
   const QString localesDirectoryPath();
+#endif
 
   /// <summary>
   ///
