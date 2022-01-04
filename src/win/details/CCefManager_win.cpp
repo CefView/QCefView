@@ -39,9 +39,12 @@ CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 #endif
 
   // fixed values
-  cef_settings.no_sandbox = true;
   cef_settings.pack_loading_disabled = false;
   cef_settings.multi_threaded_message_loop = true;
+
+#if !defined(CEF_USE_SANDBOX)
+  cef_settings.no_sandbox = true;
+#endif
 
   // Initialize CEF.
   CefMainArgs main_args(::GetModuleHandle(nullptr));
