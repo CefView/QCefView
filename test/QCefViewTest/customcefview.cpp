@@ -22,9 +22,10 @@ CustomCefView::changeColor()
 }
 
 void
-CustomCefView::onDraggableRegionChanged(const QRegion& region)
+CustomCefView::onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion)
 {
-  draggableRegion_ = region;
+  draggableRegion_ = draggableRegion;
+  nonDraggableRegion_ = nonDraggableRegion;
 }
 
 void

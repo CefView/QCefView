@@ -14,7 +14,7 @@ public:
   void changeColor();
 
 protected:
-  virtual void onDraggableRegionChanged(const QRegion& region) override;
+  virtual void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion) override;
 
   virtual void onQCefUrlRequest(const QString& url) override;
 
@@ -27,6 +27,7 @@ protected:
 
 private:
   QRegion draggableRegion_;
+  QRegion nonDdraggableRegion_;
 };
 
 #endif // CUSTOMCEFVIEW_H
