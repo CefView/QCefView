@@ -9,5 +9,5 @@
 
 CCefSetting::CCefSetting()
 {
-  user_agent.FromString(CEFVIEW_USER_AGENT);
+  userAgent_ = CEFVIEW_USER_AGENT;
 }

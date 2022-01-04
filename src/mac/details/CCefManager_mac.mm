@@ -127,13 +127,9 @@ CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 
   // Build CefSettings
   CefSettings cef_settings;
-  if (!settings.d->browserSubProcessPath_.empty())
-    CefString(&cef_settings.browser_subprocess_path) = settings.d->browserSubProcessPath_;
-    
-  if (!settings.d->resourceDirectoryPath_.empty())
-    CefString(&cef_settings.resources_dir_path) = settings.d->resourceDirectoryPath_;
-  if (!settings.d->localesDirectoryPath_.empty())
-    CefString(&cef_settings.locales_dir_path) = settings.d->localesDirectoryPath_;
+  CefString(&cef_settings.framework_dir_path) = cefFrameworkPath();
+  CefString(&cef_settings.browser_subprocess_path) = cefSubprocessPath();
+
   if (!settings.d->userAgent_.empty())
     CefString(&cef_settings.user_agent) = settings.d->userAgent_;
   if (!settings.d->cachePath_.empty())
@@ -157,13 +153,17 @@ CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 #endif
 
   // fixed values
-  cef_settings.no_sandbox = true;
   cef_settings.pack_loading_disabled = false;
+  cef_settings.external_message_pump = false;
   cef_settings.multi_threaded_message_loop = false;
+
+#if !defined(CEF_USE_SANDBOX)
+  cef_settings.no_sandbox = true;
+#endif
 
   // Initialize CEF.
   CefMainArgs main_args(argc, argv);
-  auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_.ToString());
+  auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_);
   if (!CefInitialize(main_args, cef_settings, app, nullptr)) {
     assert(0);
     return false;

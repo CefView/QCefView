@@ -27,7 +27,7 @@ protected:
 
 private:
   QRegion draggableRegion_;
-  QRegion nonDdraggableRegion_;
+  QRegion nonDraggableRegion_;
 };
 
 #endif // CUSTOMCEFVIEW_H
