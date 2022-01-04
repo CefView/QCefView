@@ -91,6 +91,15 @@ if (OS_LINUX)
 endif()  # OS_LINUX
 
 if (OS_MACOS)
+  file(GLOB_RECURSE QCefView_INCLUDE_HEADERS
+    "${CMAKE_CURRENT_SOURCE_DIR}/../include/*.h"
+  )
+  source_group(
+    TREE "${CMAKE_CURRENT_SOURCE_DIR}/../include"
+    PREFIX Include 
+    FILES ${QCefView_INCLUDE_HEADERS}
+  )
+
   file(GLOB_RECURSE QCefView_macOS_SRC_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/mac/*.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/mac/*.cpp"
@@ -115,9 +124,9 @@ if (OS_MACOS)
     PROPERTIES
       FRAMEWORK TRUE
       COMPILE_FLAGS                                               "-fobjc-arc"
-      PUBLIC_HEADER                                               "${PerduCef_PUBLIC_HEADERS}"
-      MACOSX_FRAMEWORK_INFO_PLIST                                 "${PerduCef_INFO_PLIST_FILE}"
-      MACOSX_FRAMEWORK_IDENTIFIER                                 "com.perducef.perducefview"
+      PUBLIC_HEADER                                               "${QCefView_INCLUDE_HEADERS}"
+      MACOSX_FRAMEWORK_INFO_PLIST                                 "${QCefView_INFO_PLIST_FILE}"
+      MACOSX_FRAMEWORK_IDENTIFIER                                 "com.cefview.qcefview"
       CLANG_ENABLE_OBJC_ARC                                       "YES"
       XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD                 "gnu++11"     # -std=gnu++11
       XCODE_ATTRIBUTE_CLANG_LINK_OBJC_RUNTIME                     "NO"          # -fno-objc-link-runtime

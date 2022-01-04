@@ -66,15 +66,22 @@ if (OS_WINDOWS)
 
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     # Embed the manifest file into the target
-    COMMAND mt.exe -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\${PROJECT_NAME}.manifest\" -inputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\" -outputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\"
+    COMMAND mt.exe 
+      -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\${PROJECT_NAME}.manifest\" 
+      -inputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\" 
+      -outputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\"
+    
     # Copy the TEST HTML file
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/QCefViewTestPage.html $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different 
+      ${CMAKE_CURRENT_SOURCE_DIR}/QCefViewTestPage.html 
+      $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    
     # Deploy the Qt Application
     COMMAND ${DEPLOYQT_EXECUTABLE} 
-    --no-svg 
-    --no-translations 
-    --no-compiler-runtime 
-    $<TARGET_FILE:${PROJECT_NAME}>
+      --no-svg 
+      --no-translations 
+      --no-compiler-runtime 
+      $<TARGET_FILE:${PROJECT_NAME}>
   )
 endif() # OS_WINDOWS
 
@@ -98,7 +105,10 @@ if (OS_LINUX)
 
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     # Copy the TEST HTML file
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/QCefViewTestPage.html $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different 
+      ${CMAKE_CURRENT_SOURCE_DIR}/QCefViewTestPage.html 
+      $<TARGET_FILE_DIR:${PROJECT_NAME}>
+
     # Deploy the Qt Application
     # COMMAND ${DEPLOYQT_EXECUTABLE} 
     # --no-svg 
@@ -130,7 +140,7 @@ if (OS_MACOS)
   )
 
   set(QCefViewTest_INFO_PLIST_FILE 
-    "${CMAKE_CURRENT_LIST_DIR}/mac/info.plist"
+    "${CMAKE_CURRENT_LIST_DIR}/mac/Info.plist"
   )
 
   add_executable(${PROJECT_NAME} MACOSX_BUNDLE 
@@ -146,9 +156,9 @@ if (OS_MACOS)
       LIBRARY_OUTPUT_DIRECTORY                  "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/demo"
       RUNTIME_OUTPUT_DIRECTORY                  "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/demo"
       CLANG_ENABLE_OBJC_ARC                     "YES"
-      MACOSX_BUNDLE_INFO_PLIST                  "${CocoaCefViewDemo_INFO_PLIST_FILE}"
+      MACOSX_BUNDLE_INFO_PLIST                  "${QCefViewTest_INFO_PLIST_FILE}"
       XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS   "@executable_path/../Frameworks"
-      XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "com.cefview.cocoacefviewdemo"
+      XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "com.cefview.qcefviewtest"
       XCODE_LINK_BUILD_PHASE_MODE KNOWN_LOCATION
   )
 
@@ -166,7 +176,10 @@ if (OS_MACOS)
     VERBATIM
   )
 
+  find_library(COCOA_FRAMEWORK Cocoa)
+  find_library(APPKIT_FRAMEWORK Appkit)
   target_link_libraries(${PROJECT_NAME} PRIVATE
+    $<TARGET_FILE:QCefView>
     ${COCOA_FRAMEWORK}
     ${APPKIT_FRAMEWORK}
   )
