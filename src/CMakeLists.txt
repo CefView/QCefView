@@ -130,16 +130,19 @@ if (OS_MACOS)
     TARGET QCefView
     PRE_BUILD
 
+    #sign the cef framework
+    COMMAND codesign --force --sign - 
+    "$<TARGET_BUNDLE_DIR:QCefView>/../Chromium Embedded Framework.framework"
+
     #copy the cef framework to resource directory
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     "$<TARGET_BUNDLE_DIR:QCefView>/../Chromium Embedded Framework.framework"
     "$<TARGET_FILE_DIR:QCefView>/Resources/Chromium Embedded Framework.framework"
 
-    #copy the cef framework to resource directory
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    "$<TARGET_BUNDLE_DIR:QCefView>/../CefViewWing.app"
-    "$<TARGET_FILE_DIR:QCefView>/Resources/CefViewWing.app"
-    VERBATIM
+    #copy the CefViewWing*.app to resource directory
+    COMMAND cp -a
+    \"$<TARGET_BUNDLE_DIR:QCefView>/../CefViewWing\"*.app 
+    "$<TARGET_FILE_DIR:QCefView>/Resources/"
   )
 endif()  # OS_MACOS
 

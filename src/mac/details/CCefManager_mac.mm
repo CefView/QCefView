@@ -1,33 +1,55 @@
 ﻿#include "../../details/CCefManager.h"
 
+#import <Cocoa/Cocoa.h>
+
+#pragma region cef_headers
+#include <include/cef_sandbox_mac.h>
+#include <include/wrapper/cef_library_loader.h>
+#pragma endregion cef_headers
+
 #include "../../details/CCefSetting.h"
 
-void
-runMessageLoop()
-{
-  CefRunMessageLoop();
+#define CEF_BINARY_NAME "Chromium Embedded Framework"
+#define CEF_FRAMEWORK_NAME "Chromium Embedded Framework.framework"
+#define HELPER_BUNDLE_NAME "CefViewWing.app"
+#define HELPER_BINARY_NAME "CefViewWing"
+
+@interface PathFactory : NSObject
++ (NSString*) AppMainBundlePath;
++ (NSString*) CefFrameworkPath;
++ (NSString*) CefSubprocessPath;
+@end
+
+@implementation PathFactory
++ (NSString*) AppMainBundlePath {
+  return [[NSBundle mainBundle] bundlePath];
 }
 
-void
-exitMessageLoop()
-{
-  CefQuitMessageLoop();
++ (NSString*) CefFrameworkPath {
+  NSString* path = [[NSBundle bundleForClass:[PathFactory class]] resourcePath];
+  path = [path stringByAppendingPathComponent:@CEF_FRAMEWORK_NAME];
+  return path;
 }
+
++ (NSString*) CefSubprocessPath {
+  NSString* path = [[NSBundle bundleForClass:[PathFactory class]] resourcePath];
+  path = [path stringByAppendingPathComponent:@HELPER_BUNDLE_NAME];
+  path = [path stringByAppendingPathComponent:@"Contents"];
+  path = [path stringByAppendingPathComponent:@"MacOS"];
+  path = [path stringByAppendingPathComponent:@HELPER_BINARY_NAME];
+  return path;
+}
+@end
 
 const char*
-cefSubprocessPath()
+appMainBundlePath()
 {
   static std::string path;
   if (!path.empty())
     return path.c_str();
 
   @autoreleasepool {
-    NSString* fxPath = [[NSBundle bundleForClass:CocoaCefSetting.class] resourcePath];
-    fxPath = [fxPath stringByAppendingPathComponent:@HELPER_BUNDLE_NAME];
-    fxPath = [fxPath stringByAppendingPathComponent:@"Contents"];
-    fxPath = [fxPath stringByAppendingPathComponent:@"MacOS"];
-    fxPath = [fxPath stringByAppendingPathComponent:@HELPER_BINARY_NAME];
-    path = fxPath.UTF8String;
+    path = [PathFactory AppMainBundlePath].UTF8String;
   }
   return path.c_str();
 }
@@ -40,9 +62,20 @@ cefFrameworkPath()
     return path.c_str();
 
   @autoreleasepool {
-    NSString* fxPath = [[NSBundle bundleForClass:CocoaCefSetting.class] resourcePath];
-    fxPath = [fxPath stringByAppendingPathComponent:@CEF_FRAMEWORK_NAME];
-    path = fxPath.UTF8String;
+    path = [PathFactory CefFrameworkPath].UTF8String;
+  }
+  return path.c_str();
+}
+
+const char*
+cefSubprocessPath()
+{
+  static std::string path;
+  if (!path.empty())
+    return path.c_str();
+
+  @autoreleasepool {
+    path = [PathFactory CefSubprocessPath].UTF8String;
   }
   return path.c_str();
 }
@@ -60,19 +93,6 @@ cefLibraryPath()
   return path.c_str();
 }
 
-const char*
-appMainBundlePath()
-{
-  static std::string path;
-  if (!path.empty())
-    return path.c_str();
-
-  @autoreleasepool {
-    path = [[[NSBundle mainBundle] bundlePath] UTF8String];
-  }
-  return path.c_str();
-}
-
 bool
 loadCefLibrary()
 {
@@ -83,6 +103,18 @@ void
 freeCefLibrary()
 {
   cef_unload_library();
+}
+
+void
+runMessageLoop()
+{
+  CefRunMessageLoop();
+}
+
+void
+exitMessageLoop()
+{
+  CefQuitMessageLoop();
 }
 
 bool
