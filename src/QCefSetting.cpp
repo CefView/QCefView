@@ -15,105 +15,105 @@ QCefSetting::~QCefSetting() {}
 QCefSetting&
 QCefSetting::setBrowserSubProcessPath(const QString& path)
 {
-  d->browserSubProcessPath_.FromString(path.toStdString());
+  d->browserSubProcessPath_ = path.toStdString();
   return *this;
 }
 
 const QString
 QCefSetting::browserSubProcessPath()
 {
-  return QString::fromStdString(d->browserSubProcessPath_.ToString());
+  return QString::fromStdString(d->browserSubProcessPath_);
 }
 
 QCefSetting&
 QCefSetting::setResourceDirectoryPath(const QString& path)
 {
-  d->resourceDirectoryPath_.FromString(path.toStdString());
+  d->resourceDirectoryPath_ = path.toStdString();
   return *this;
 }
 
 const QString
 QCefSetting::resourceDirectoryPath()
 {
-  return QString::fromStdString(d->resourceDirectoryPath_.ToString());
+  return QString::fromStdString(d->resourceDirectoryPath_);
 }
 
 QCefSetting&
 QCefSetting::setLocalesDirectoryPath(const QString& path)
 {
-  d->localesDirectoryPath_.FromString(path.toStdString());
+  d->localesDirectoryPath_ = path.toStdString();
   return *this;
 }
 
 const QString
 QCefSetting::localesDirectoryPath()
 {
-  return QString::fromStdString(d->localesDirectoryPath_.ToString());
+  return QString::fromStdString(d->localesDirectoryPath_);
 }
 
 QCefSetting&
 QCefSetting::setLocale(const QString& locale)
 {
-  d->locale_.FromString(locale.toStdString());
+  d->locale_ = locale.toStdString();
   return *this;
 }
 
 const QString
 QCefSetting::locale()
 {
-  return QString::fromStdString(d->locale_.ToString());
+  return QString::fromStdString(d->locale_);
 }
 
 QCefSetting&
 QCefSetting::setUserAgent(const QString& agent)
 {
-  d->userAgent_.FromString(agent.toStdString());
+  d->userAgent_ = agent.toStdString();
   return *this;
 }
 
 const QString
 QCefSetting::userAgent()
 {
-  return QString::fromStdString(d->userAgent_.ToString());
+  return QString::fromStdString(d->userAgent_);
 }
 
 QCefSetting&
 QCefSetting::setCachePath(const QString& path)
 {
-  d->cachePath_.FromString(path.toStdString());
+  d->cachePath_ = path.toStdString();
   return *this;
 }
 
 const QString
 QCefSetting::cachePath()
 {
-  return QString::fromStdString(d->cachePath_.ToString());
+  return QString::fromStdString(d->cachePath_);
 }
 
 QCefSetting&
 QCefSetting::setUserDataPath(const QString& path)
 {
-  d->userDataPath_.FromString(path.toStdString());
+  d->userDataPath_ = path.toStdString();
   return *this;
 }
 
 const QString
 QCefSetting::userDataPath()
 {
-  return QString::fromStdString(d->userDataPath_.ToString());
+  return QString::fromStdString(d->userDataPath_);
 }
 
 QCefSetting&
 QCefSetting::setBridgeObjectName(const QString& name)
 {
-  d->bridgeObjectName_.FromString(name.toStdString());
+  d->bridgeObjectName_ = name.toStdString();
   return *this;
 }
 
 const QString
 QCefSetting::bridgeObjectName()
 {
-  return QString::fromStdString(d->bridgeObjectName_.ToString());
+  return QString::fromStdString(d->bridgeObjectName_);
 }
 
 QCefSetting&
@@ -132,14 +132,14 @@ QCefSetting::backgroundColor()
 QCefSetting&
 QCefSetting::setAcceptLanguageList(const QString& languages)
 {
-  d->acceptLanguageList_.FromString(languages.toStdString());
+  d->acceptLanguageList_ = languages.toStdString();
   return *this;
 }
 
 const QString
 QCefSetting::acceptLanguageList()
 {
-  return QString::fromStdString(d->acceptLanguageList_.ToString());
+  return QString::fromStdString(d->acceptLanguageList_);
 }
 
 QCefSetting&

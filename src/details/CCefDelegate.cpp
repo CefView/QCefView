@@ -46,15 +46,22 @@ CCefDelegate::loadError(int errorCode, const std::string& errorMsg, const std::s
 void
 CCefDelegate::draggableRegionChanged(const std::vector<CefDraggableRegion>& regions)
 {
-  if (view_) {
-    // Determine new draggable region.
-    QRegion region;
-    std::vector<CefDraggableRegion>::const_iterator it = regions.begin();
-    for (; it != regions.end(); ++it) {
-      region += QRegion(it->bounds.x, it->bounds.y, it->bounds.width, it->bounds.height);
+  if (!view_)
+    return;
+
+  // Determine new draggable region.
+  QRegion draggableRegion;
+  QRegion nonDraggableRegion;
+  std::vector<CefDraggableRegion>::const_iterator it = regions.begin();
+  for (; it != regions.end(); ++it) {
+    if (it->draggable) {
+      draggableRegion += QRegion(it->bounds.x, it->bounds.y, it->bounds.width, it->bounds.height);
+    } else {
+      nonDraggableRegion += QRegion(it->bounds.x, it->bounds.y, it->bounds.width, it->bounds.height);
     }
-    view_->onDraggableRegionChanged(region);
   }
+
+  view_->onDraggableRegionChanged(draggableRegion, nonDraggableRegion);
 }
 
 void

@@ -246,8 +246,9 @@ public:
   /// <summary>
   ///
   /// </summary>
-  /// <param name="region"></param>
-  virtual void onDraggableRegionChanged(const QRegion& region);
+  /// <param name="draggableRegion"></param>
+  /// <param name="nonDraggableRegion"></param>
+  virtual void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
 
   /// <summary>
   ///
@@ -298,12 +299,33 @@ protected:
   /// <returns></returns>
   virtual bool eventFilter(QObject* watched, QEvent* event) override;
 
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="event"></param>
+  virtual void mousePressEvent(QMouseEvent* event) override;
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="event"></param>
+  virtual void mouseMoveEvent(QMouseEvent* event) override;
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="event"></param>
+  virtual void mouseReleaseEvent(QMouseEvent* event) override;
+
 private:
   /// <summary>
   ///
   /// </summary>
   class Implementation;
   std::unique_ptr<Implementation> pImpl_;
+
+  bool bIsDragging_;
+  QPoint mLastMousePosition_;
 };
 
 #endif // QCEFVIEW_H

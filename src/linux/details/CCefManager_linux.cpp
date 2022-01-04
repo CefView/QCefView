@@ -42,7 +42,7 @@ CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 
   // Initialize CEF.
   CefMainArgs main_args(argc, argv);
-  auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_.ToString());
+  auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_);
   if (!CefInitialize(main_args, cef_settings, app, nullptr)) {
     assert(0);
     return false;

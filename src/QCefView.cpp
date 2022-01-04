@@ -554,7 +554,7 @@ QCefView::onLoadError(int errorCode, const QString& errorMsg, const QString& fai
 {}
 
 void
-QCefView::onDraggableRegionChanged(const QRegion& region)
+QCefView::onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion)
 {}
 
 void
@@ -593,9 +593,53 @@ QCefView::changeEvent(QEvent* event)
 bool
 QCefView::eventFilter(QObject* watched, QEvent* event)
 {
-  if (pImpl_ && watched == this->window()) {
-    if (QEvent::Resize == event->type() || QEvent::Move == event->type())
+  if (!pImpl_)
+    return QWidget::eventFilter(watched, event);
+
+  if (watched == this->window()) {
+    if (QEvent::Resize == event->type() || QEvent::Move == event->type()) {
       pImpl_->onToplevelWidgetMoveOrResize();
+    }
   }
+
+  if (watched == this) {
+    if (QEvent::MouseButtonPress == event->type()) {
+      QMouseEvent* e = (QMouseEvent*)event;
+      if (e->button() == Qt::LeftButton) {
+        bIsDragging_ = true;
+        mLastMousePosition_ = e->pos();
+      }
+    }
+  }
+
   return QWidget::eventFilter(watched, event);
+}
+
+void
+QCefView::mousePressEvent(QMouseEvent* event)
+{
+  if (event->button() == Qt::LeftButton) {
+    bIsDragging_ = true;
+    mLastMousePosition_ = event->pos();
+  }
+  QWidget::mousePressEvent(event);
+}
+
+void
+QCefView::mouseMoveEvent(QMouseEvent* event)
+{
+  if (event->buttons().testFlag(Qt::LeftButton) && bIsDragging_) {
+    this->move(this->pos() + (event->pos() - mLastMousePosition_));
+    mLastMousePosition_ = event->pos();
+  }
+  QWidget::mouseMoveEvent(event);
+}
+
+void
+QCefView::mouseReleaseEvent(QMouseEvent* event)
+{
+  if (event->button() == Qt::LeftButton) {
+    bIsDragging_ = false;
+  }
+  QWidget::mouseReleaseEvent(event);
 }
