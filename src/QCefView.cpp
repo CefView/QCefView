@@ -55,8 +55,6 @@ public:
   static QList<ArchiveMapping> archiveMappingList_;
 
 private:
-  CCefManagerPtr pCefManager_;
-
   /// <summary>
   ///
   /// </summary>
@@ -69,8 +67,7 @@ private:
 
 public:
   explicit Implementation(const QString& url, QCefView* view, QCefWindow* win)
-    : pCefManager_(CCefManager::getInstance())
-    , pQCefViewHandler_(nullptr)
+    : pQCefViewHandler_(nullptr)
     , pCefDelegate_(nullptr)
   {
     // Set window info

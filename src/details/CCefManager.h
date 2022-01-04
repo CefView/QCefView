@@ -29,20 +29,11 @@ public:
   /// </summary>
   ~CCefManager();
 
-  static void setInstnace(const std::shared_ptr<CCefManager>& s) { s_This = s; }
-
   /// <summary>
   ///
   /// </summary>
   /// <returns></returns>
-  static std::shared_ptr<CCefManager> getInstance()
-  {
-    if (!s_This.expired()) {
-      auto p = s_This.lock();
-      return p;
-    }
-    return nullptr;
-  }
+  static CCefManager* getInstance() { return s_This; }
 
   /// <summary>
   ///
@@ -53,6 +44,11 @@ public:
   ///
   /// </summary>
   void uninitializeCef();
+
+  /// <summary>
+  ///
+  /// </summary>
+  void doCefWork();
 
   /// <summary>
   ///
@@ -75,7 +71,7 @@ public:
   void closeAllBrowserHandler();
 
 private:
-  static std::weak_ptr<CCefManager> s_This;
+  static CCefManager* s_This;
 
   /// <summary>
   ///

@@ -1,7 +1,7 @@
 ﻿#include "qcefviewtest.h"
 #include <QtWidgets/QApplication>
 
-#include <QCef.h>
+#include <QCefContext.h>
 
 int
 main(int argc, char* argv[])
@@ -10,13 +10,12 @@ main(int argc, char* argv[])
 
   QCefSetting settings;
   settings.setBridgeObjectName("CallBridge");
-  QCef::Initialize(settings, argc, argv);
+  QCefContext cefContext(&a, settings, argc, argv);
 
   QCefViewTest w;
   w.show();
 
   int rc = a.exec();
 
-  QCef::Uninitialize();
   return rc;
 }

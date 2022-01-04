@@ -2,7 +2,7 @@
 
 #include "CCefSetting.h"
 
-std::weak_ptr<CCefManager> CCefManager::s_This;
+CCefManager* CCefManager::s_This = nullptr;
 
 CCefManager::CCefManager(int argc, char* argv[], const QCefSetting& settings)
   : is_exiting_(false)
@@ -12,6 +12,8 @@ CCefManager::CCefManager(int argc, char* argv[], const QCefSetting& settings)
       addCookie(cookieItem.name, cookieItem.value, cookieItem.domain, cookieItem.url);
     }
   }
+
+  s_This = this;
 }
 
 CCefManager::~CCefManager()
