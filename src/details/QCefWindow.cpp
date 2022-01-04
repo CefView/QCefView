@@ -30,8 +30,16 @@ void
 QCefWindow::setBrowserWindowId(CefWindowHandle win)
 {
   if (win) {
-    browserWindow_ = QWindow::fromWinId((WId)win);
-    syncBrowserWindow();
+    // this method may be called from threads other than Qt main thread
+    // in order to make sure the QWindow is created in Qt main thread
+    // we need to run the following logic by posting it to Qt main thread
+    QMetaObject::invokeMethod(
+      this,
+      [=]() {
+        this->browserWindow_ = QWindow::fromWinId((WId)win);
+        syncBrowserWindow();
+      },
+      Qt::QueuedConnection);
   }
 }
 
