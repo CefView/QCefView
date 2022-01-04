@@ -9,16 +9,16 @@
 
 CCefSetting::CCefSetting()
 {
-  userAgent_.FromString(CEFVIEW_USER_AGENT);
+  userAgent_ = CEFVIEW_USER_AGENT;
 
   QDir ExeDir = QCoreApplication::applicationDirPath();
 
   QString strExePath = ExeDir.filePath(RENDER_PROCESS_NAME);
-  browserSubProcessPath_.FromString(QDir::toNativeSeparators(strExePath).toStdString());
+  browserSubProcessPath_ = QDir::toNativeSeparators(strExePath).toStdString();
 
   QString strResPath = ExeDir.filePath(RESOURCE_DIRECTORY_NAME);
-  resourceDirectoryPath_.FromString(QDir::toNativeSeparators(strResPath).toStdString());
+  resourceDirectoryPath_ = QDir::toNativeSeparators(strResPath).toStdString();
 
   QDir ResPath(strResPath);
-  localesDirectoryPath_.FromString(QDir::toNativeSeparators(ResPath.filePath(LOCALES_DIRECTORY_NAME)).toStdString());
+  localesDirectoryPath_ = QDir::toNativeSeparators(ResPath.filePath(LOCALES_DIRECTORY_NAME)).toStdString();
 }

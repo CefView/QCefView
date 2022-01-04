@@ -2,14 +2,11 @@
 
 #pragma region stl_headers
 #include <list>
+#include <string>
 #pragma endregion stl_headers
 
 #pragma region qt_headers
 #pragma endregion qt_headers
-
-#pragma region cef_headers
-#include <include/internal/cef_types_wrappers.h>
-#pragma endregion cef_headers
 
 #include <QCefSetting.h>
 
@@ -26,15 +23,15 @@ class CCefSetting
 public:
   explicit CCefSetting();
 
-  CefString locale_;
-  CefString userAgent_;
-  CefString cachePath_;
-  CefString userDataPath_;
-  CefString bridgeObjectName_;
-  CefString acceptLanguageList_;
-  CefString localesDirectoryPath_;
-  CefString browserSubProcessPath_;
-  CefString resourceDirectoryPath_;
+  std::string locale_;
+  std::string userAgent_;
+  std::string cachePath_;
+  std::string userDataPath_;
+  std::string bridgeObjectName_;
+  std::string acceptLanguageList_;
+  std::string localesDirectoryPath_;
+  std::string browserSubProcessPath_;
+  std::string resourceDirectoryPath_;
 
   uint32_t backgroundColor_ = 0x00000000;
   short remoteDebuggingport_ = 7788;

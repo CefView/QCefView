@@ -45,7 +45,7 @@ CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 
   // Initialize CEF.
   CefMainArgs main_args(::GetModuleHandle(nullptr));
-  auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_.ToString());
+  auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_);
   void* sandboxInfo = nullptr;
 #if defined(CEF_USE_SANDBOX)
   // Manage the life span of the sandbox information object. This is necessary
