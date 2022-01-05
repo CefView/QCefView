@@ -20,7 +20,6 @@ class QCefQueryPrivate;
 class QCEFVIEW_EXPORT QCefQuery
 {
   Q_DECLARE_PRIVATE(QCefQuery)
-
   QScopedPointer<QCefQueryPrivate> d_ptr;
 
 public:

@@ -17,6 +17,19 @@ QCefEvent::QCefEvent(const QString& name)
   setEventName(name);
 }
 
+QCefEvent::QCefEvent(const QCefEvent& other)
+  : QCefEvent()
+{
+  *d_ptr = *(other.d_ptr);
+}
+
+QCefEvent&
+QCefEvent::operator=(const QCefEvent& other)
+{
+  *d_ptr = *(other.d_ptr);
+  return *this;
+}
+
 QCefEvent::~QCefEvent() {}
 
 void

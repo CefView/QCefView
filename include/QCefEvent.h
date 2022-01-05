@@ -16,9 +16,7 @@ class QCefEventPrivate;
 class QCEFVIEW_EXPORT QCefEvent
 {
   Q_DECLARE_PRIVATE(QCefEvent)
-
   QScopedPointer<QCefEventPrivate> d_ptr;
-
   friend class QCefView;
 
 public:
@@ -32,6 +30,19 @@ public:
   /// </summary>
   /// <param name="name"></param>
   QCefEvent(const QString& name);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="other"></param>
+  QCefEvent(const QCefEvent& other);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="other"></param>
+  /// <returns></returns>
+  QCefEvent& operator=(const QCefEvent& other);
 
   /// <summary>
   ///

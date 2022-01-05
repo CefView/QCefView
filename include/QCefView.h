@@ -5,13 +5,10 @@
 #include <QCefQuery.h>
 #include <QCefEvent.h>
 
-#pragma region std_headers
-#include <memory>
-#pragma endregion std_headers
-
 #pragma region qt_headers
 #include <QWidget>
 #include <QVariantList>
+#include <QScopedPointer>
 #pragma endregion qt_headers
 
 /** Outline of QCefView:
@@ -45,15 +42,17 @@ class CefDownloadHandler;
 class CefJSDialogHandler;
 class CefKeyboardHandler;
 
+class QCefViewPrivate;
+
 /// <summary>
 ///
 /// </summary>
 class QCEFVIEW_EXPORT QCefView : public QWidget
 {
-  /// <summary>
-  ///
-  /// </summary>
   Q_OBJECT
+  Q_DECLARE_PRIVATE(QCefView)
+  Q_DISABLE_COPY(QCefView)
+  QScopedPointer<QCefViewPrivate> d_ptr;
 
 public:
   /// <summary>
@@ -315,16 +314,6 @@ protected:
   /// </summary>
   /// <param name="event"></param>
   virtual void mouseReleaseEvent(QMouseEvent* event) override;
-
-private:
-  /// <summary>
-  ///
-  /// </summary>
-  class Implementation;
-  std::unique_ptr<Implementation> pImpl_;
-
-  bool bIsDragging_;
-  QPoint mLastMousePosition_;
 };
 
 #endif // QCEFVIEW_H

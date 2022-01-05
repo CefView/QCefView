@@ -23,19 +23,13 @@ QCefQuery::QCefQuery(const QString& req, const int64_t query)
 QCefQuery::QCefQuery(const QCefQuery& other)
   : QCefQuery()
 {
-  d_ptr->id_ = other.d_ptr->id_;
-  d_ptr->reqeust_ = other.d_ptr->reqeust_;
-  d_ptr->restult_ = other.d_ptr->restult_;
-  d_ptr->response_ = other.d_ptr->response_;
+  *d_ptr = *(other.d_ptr);
 }
 
 QCefQuery&
 QCefQuery::operator=(const QCefQuery& other)
 {
-  d_ptr->id_ = other.d_ptr->id_;
-  d_ptr->reqeust_ = other.d_ptr->reqeust_;
-  d_ptr->restult_ = other.d_ptr->restult_;
-  d_ptr->response_ = other.d_ptr->response_;
+  *d_ptr = *(other.d_ptr);
   return *this;
 }
 

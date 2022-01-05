@@ -17,9 +17,7 @@ class QCefSettingPrivate;
 class QCEFVIEW_EXPORT QCefSetting
 {
   Q_DECLARE_PRIVATE(QCefSetting)
-
   QScopedPointer<QCefSettingPrivate> d_ptr;
-
   friend class QCefContext;
 
 public:
@@ -27,6 +25,19 @@ public:
   ///
   /// </summary>
   QCefSetting(int argc, char* argv[]);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="other"></param>
+  QCefSetting(const QCefSetting& other);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="other"></param>
+  /// <returns></returns>
+  QCefSetting& operator=(const QCefSetting& other);
 
   /// <summary>
   ///

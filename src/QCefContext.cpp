@@ -11,9 +11,11 @@
 class QCefContextPrivate
 {
 public:
-  QCefContextPrivate() {}
+  QCefContextPrivate() { cefWorkerTimer.setInterval(1000 / 100); }
 
-  QTimer* cefWorkerTimer = nullptr;
+  ~QCefContextPrivate() {}
+
+  QTimer cefWorkerTimer;
   CCefManager::RefPtr pCefManager;
 };
 
@@ -51,7 +53,9 @@ void
 QCefContext::doCefWork()
 {
   Q_D(QCefContext);
-  d->pCefManager->doCefWork();
+
+  if (d->pCefManager)
+    d->pCefManager->doCefWork();
 }
 
 bool
@@ -67,10 +71,8 @@ QCefContext::init(QObject* parent, const QCefSetting* settings)
   d->pCefManager->initialize(settings->d_func());
 
   // create and initialize the worker timer
-  d->cefWorkerTimer = new QTimer(parent);
-  connect(d->cefWorkerTimer, SIGNAL(timeout()), this, SLOT(doCefWork()));
-  d->cefWorkerTimer->setInterval(1000 / 60);
-  d->cefWorkerTimer->start();
+  connect(&d->cefWorkerTimer, SIGNAL(timeout()), this, SLOT(doCefWork()));
+  d->cefWorkerTimer.start();
 
   return true;
 }
@@ -83,6 +85,7 @@ QCefContext::uninit()
   // reset to release the cef manager
   d->pCefManager->uninitialize();
   d->pCefManager.reset();
+  d->cefWorkerTimer.stop();
 
   s_self = nullptr;
 }
