@@ -81,12 +81,6 @@ CCefManager::uninitializeCef()
 }
 
 void
-CCefManager::doCefWork()
-{
-  CefDoMessageLoopWork();
-}
-
-void
 CCefManager::removeBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler)
 {
   std::lock_guard<std::mutex> lock(handler_set_locker_);

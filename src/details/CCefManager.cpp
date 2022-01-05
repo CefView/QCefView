@@ -21,6 +21,12 @@ CCefManager::~CCefManager()
   uninitializeCef();
 }
 
+void
+CCefManager::doCefWork()
+{
+  CefDoMessageLoopWork();
+}
+
 bool
 CCefManager::addCookie(const std::string& name,
                        const std::string& value,

@@ -37,7 +37,8 @@ CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 
   // fixed values
   cef_settings.pack_loading_disabled = false;
-  cef_settings.multi_threaded_message_loop = true;
+  cef_settings.multi_threaded_message_loop = false;
+  cef_settings.external_message_pump = true;
 
 #if !defined(CEF_USE_SANDBOX)
   cef_settings.no_sandbox = true;
