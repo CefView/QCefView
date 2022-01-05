@@ -1,4 +1,4 @@
-﻿#include "../../details/CCefManager.h"
+#include "../../details/CCefManager.h"
 
 #import <Cocoa/Cocoa.h>
 
@@ -142,8 +142,8 @@ CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 
   // fixed values
   cef_settings.pack_loading_disabled = false;
-  cef_settings.external_message_pump = false;
   cef_settings.multi_threaded_message_loop = false;
+  cef_settings.external_message_pump = true;
 
 #if !defined(CEF_USE_SANDBOX)
   cef_settings.no_sandbox = true;
@@ -151,7 +151,7 @@ CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 
   // Initialize CEF.
   CefMainArgs main_args(argc, argv);
-  auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_);
+  auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_, shared_from_this());
   if (!CefInitialize(main_args, cef_settings, app, nullptr)) {
     assert(0);
     return false;
@@ -185,19 +185,12 @@ CCefManager::removeBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler)
     return;
 
   handler_set_.erase(handler);
-  if (handler_set_.empty() && is_exiting_)
-    CefQuitMessageLoop();
 }
 
 void
 CCefManager::closeAllBrowserHandler()
 {
-  is_exiting_ = true;
   std::lock_guard<std::mutex> lock(handler_set_locker_);
-  if (handler_set_.empty()) {
-    CefQuitMessageLoop();
-    return;
-  }
 
   for (auto handler : handler_set_) {
     handler->CloseAllBrowsers(true);
