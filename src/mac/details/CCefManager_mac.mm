@@ -105,18 +105,6 @@ freeCefLibrary()
   cef_unload_library();
 }
 
-void
-runMessageLoop()
-{
-  CefRunMessageLoop();
-}
-
-void
-exitMessageLoop()
-{
-  CefQuitMessageLoop();
-}
-
 bool
 CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 {

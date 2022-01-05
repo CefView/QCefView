@@ -46,7 +46,7 @@ CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 
   // Initialize CEF.
   CefMainArgs main_args(argc, argv);
-  auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_);
+  auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_, shared_from_this());
   if (!CefInitialize(main_args, cef_settings, app, nullptr)) {
     assert(0);
     return false;
@@ -85,7 +85,6 @@ CCefManager::removeBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler)
 void
 CCefManager::closeAllBrowserHandler()
 {
-  is_exiting_ = true;
   std::lock_guard<std::mutex> lock(handler_set_locker_);
   if (handler_set_.empty()) {
     return;
