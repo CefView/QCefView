@@ -2,6 +2,8 @@
 #define QCEFVIEW_H
 #pragma once
 #include <QCefView_global.h>
+#include <QCefQuery.h>
+#include <QCefEvent.h>
 
 #pragma region std_headers
 #include <memory>
@@ -11,9 +13,6 @@
 #include <QWidget>
 #include <QVariantList>
 #pragma endregion qt_headers
-
-#include <QCefQuery.h>
-#include <QCefEvent.h>
 
 /** Outline of QCefView:
  **

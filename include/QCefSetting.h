@@ -4,24 +4,29 @@
 #include <QCefView_global.h>
 
 #pragma region qt_headers
-#include <QObject>
 #include <QString>
 #include <QColor>
 #include <QScopedPointer>
 #pragma endregion qt_headers
 
-class CCefSetting;
-// class CCefManager;
+class QCefSettingPrivate;
 
-class QCEFVIEW_EXPORT QCefSetting : public QObject
+/// <summary>
+///
+/// </summary>
+class QCEFVIEW_EXPORT QCefSetting
 {
-  Q_OBJECT
+  Q_DECLARE_PRIVATE(QCefSetting)
+
+  QScopedPointer<QCefSettingPrivate> d_ptr;
+
+  friend class QCefContext;
 
 public:
   /// <summary>
   ///
   /// </summary>
-  QCefSetting();
+  QCefSetting(int argc, char* argv[]);
 
   /// <summary>
   ///
@@ -32,143 +37,138 @@ public:
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setBrowserSubProcessPath(const QString& path);
+  void setBrowserSubProcessPath(const QString& path);
 
   /// <summary>
   ///
   /// </summary>
-  const QString browserSubProcessPath();
+  const QString browserSubProcessPath() const;
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setResourceDirectoryPath(const QString& path);
+  void setResourceDirectoryPath(const QString& path);
 
   /// <summary>
   ///
   /// </summary>
-  const QString resourceDirectoryPath();
+  const QString resourceDirectoryPath() const;
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setLocalesDirectoryPath(const QString& path);
+  void setLocalesDirectoryPath(const QString& path);
 
   /// <summary>
   ///
   /// </summary>
-  const QString localesDirectoryPath();
+  const QString localesDirectoryPath() const;
 #endif
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setLocale(const QString& locale);
+  void setLocale(const QString& locale);
 
   /// <summary>
   ///
   /// </summary>
-  const QString locale();
+  const QString locale() const;
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setUserAgent(const QString& agent);
+  void setUserAgent(const QString& agent);
 
   /// <summary>
   ///
   /// </summary>
-  const QString userAgent();
+  const QString userAgent() const;
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setCachePath(const QString& path);
+  void setCachePath(const QString& path);
 
   /// <summary>
   ///
   /// </summary>
-  const QString cachePath();
+  const QString cachePath() const;
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setUserDataPath(const QString& path);
+  void setUserDataPath(const QString& path);
 
   /// <summary>
   ///
   /// </summary>
-  const QString userDataPath();
+  const QString userDataPath() const;
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setBridgeObjectName(const QString& name);
+  void setBridgeObjectName(const QString& name);
 
   /// <summary>
   ///
   /// </summary>
-  const QString bridgeObjectName();
+  const QString bridgeObjectName() const;
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setBackgroundColor(const QColor& color);
+  void setBackgroundColor(const QColor& color);
 
   /// <summary>
   ///
   /// </summary>
-  const QColor backgroundColor();
+  const QColor backgroundColor() const;
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setAcceptLanguageList(const QString& languages);
+  void setAcceptLanguageList(const QString& languages);
 
   /// <summary>
   ///
   /// </summary>
-  const QString acceptLanguageList();
+  const QString acceptLanguageList() const;
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setPersistSessionCookies(bool enabled);
+  void setPersistSessionCookies(bool enabled);
 
   /// <summary>
   ///
   /// </summary>
-  const bool persistSessionCookies();
+  const bool persistSessionCookies() const;
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setPersistUserPreferences(bool enabled);
+  void setPersistUserPreferences(bool enabled);
 
   /// <summary>
   ///
   /// </summary>
-  const bool persistUserPreferences();
+  const bool persistUserPreferences() const;
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& setRemoteDebuggingPort(short port);
+  void setRemoteDebuggingPort(short port);
 
   /// <summary>
   ///
   /// </summary>
-  const short remoteDebuggingPort();
+  const short remoteDebuggingPort() const;
 
   /// <summary>
   ///
   /// </summary>
-  QCefSetting& addGlobalCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
-
-private:
-  QScopedPointer<CCefSetting> d;
-
-  friend class CCefManager;
-}; // namespace QCefSetting
+  void addGlobalCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
+};
 
 #endif

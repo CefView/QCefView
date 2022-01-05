@@ -6,6 +6,7 @@
 
 #pragma region qt_headers
 #include <QCoreApplication>
+#include <QScopedPointer>
 #pragma endregion qt_headers
 
 class QCefContextPrivate;
@@ -19,13 +20,13 @@ class QCEFVIEW_EXPORT QCefContext : public QObject
 
   Q_DECLARE_PRIVATE(QCefContext)
 
-  QCefContextPrivate* d_ptr;
+  QScopedPointer<QCefContextPrivate> d_ptr;
 
 public:
   /// <summary>
   ///
   /// </summary>
-  QCefContext(QCoreApplication* app, QCefSetting& settings, int argc, char* argv[]);
+  QCefContext(QCoreApplication* app, const QCefSetting* settings);
 
   /// <summary>
   ///
@@ -57,7 +58,7 @@ private:
   /// <summary>
   ///
   /// </summary>
-  bool init(QObject* parent, const QCefSetting& settings, int argc, char* argv[]);
+  bool init(QObject* parent, const QCefSetting* settings);
 
   /// <summary>
   ///

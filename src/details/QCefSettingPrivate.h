@@ -18,10 +18,13 @@ typedef struct CookieItem
   std::string url;
 } CookieItem;
 
-class CCefSetting
+class QCefSettingPrivate
 {
 public:
-  explicit CCefSetting();
+  explicit QCefSettingPrivate();
+
+  int argc;
+  char** argv;
 
   std::string locale_;
   std::string userAgent_;

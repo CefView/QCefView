@@ -19,11 +19,11 @@ public:
 
 QCefContext* QCefContext::s_self;
 
-QCefContext::QCefContext(QCoreApplication* app, QCefSetting& settings, int argc, char* argv[])
+QCefContext::QCefContext(QCoreApplication* app, const QCefSetting* settings)
   : QObject(app)
   , d_ptr(new QCefContextPrivate)
 {
-  init(app, settings, argc, argv);
+  init(app, settings);
 }
 
 QCefContext*
@@ -35,9 +35,6 @@ QCefContext::instance()
 QCefContext::~QCefContext()
 {
   uninit();
-
-  delete d_ptr;
-  d_ptr = nullptr;
 }
 
 void
@@ -58,7 +55,7 @@ QCefContext::doCefWork()
 }
 
 bool
-QCefContext::init(QObject* parent, const QCefSetting& settings, int argc, char* argv[])
+QCefContext::init(QObject* parent, const QCefSetting* settings)
 {
   Q_ASSERT_X(s_self == nullptr, "QCefContext::init()", "There can be only one QCefContext instance");
   s_self = this;
@@ -67,7 +64,7 @@ QCefContext::init(QObject* parent, const QCefSetting& settings, int argc, char* 
 
   // create and initialize the cef manager
   d->pCefManager = std::make_shared<CCefManager>();
-  d->pCefManager->initialize(argc, argv, settings);
+  d->pCefManager->initialize(settings->d_func());
 
   // create and initialize the worker timer
   d->cefWorkerTimer = new QTimer(parent);

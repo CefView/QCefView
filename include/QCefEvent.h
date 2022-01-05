@@ -4,16 +4,22 @@
 #include <QCefView_global.h>
 
 #pragma region qt_headers
-#include <QObject>
 #include <QString>
+#include <QScopedPointer>
 #pragma endregion qt_headers
+
+class QCefEventPrivate;
 
 /// <summary>
 ///
 /// </summary>
-class QCEFVIEW_EXPORT QCefEvent : public QObject
+class QCEFVIEW_EXPORT QCefEvent
 {
-  Q_OBJECT
+  Q_DECLARE_PRIVATE(QCefEvent)
+
+  QScopedPointer<QCefEventPrivate> d_ptr;
+
+  friend class QCefView;
 
 public:
   /// <summary>
@@ -30,8 +36,19 @@ public:
   /// <summary>
   ///
   /// </summary>
+  ~QCefEvent();
+
+  /// <summary>
+  ///
+  /// </summary>
   /// <param name="name"></param>
   void setEventName(const QString& name);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
+  const QString eventName() const;
 
   /// <summary>
   ///

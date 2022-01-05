@@ -7,38 +7,35 @@
 
 #include <QCefView.h>
 
-// int QCefQuery::TYPEID = qRegisterMetaType<QCefQuery>("QCefQuery");
-
-//////////////////////////////////////////////////////////////////////////
+#include "details/QCefQueryPrivate.h"
 
 QCefQuery::QCefQuery()
-  : id_(-1)
-  , restult_(false)
-  , error_(0)
+  : d_ptr(new QCefQueryPrivate)
 {}
 
 QCefQuery::QCefQuery(const QString& req, const int64_t query)
-  : reqeust_(req)
-  , id_(query)
-  , restult_(false)
-  , error_(0)
-{}
+  : QCefQuery()
+{
+  d_ptr->id_ = query;
+  d_ptr->reqeust_ = req;
+}
 
 QCefQuery::QCefQuery(const QCefQuery& other)
+  : QCefQuery()
 {
-  reqeust_ = other.reqeust_;
-  id_ = other.id_;
-  restult_ = other.restult_;
-  response_ = other.response_;
+  d_ptr->id_ = other.d_ptr->id_;
+  d_ptr->reqeust_ = other.d_ptr->reqeust_;
+  d_ptr->restult_ = other.d_ptr->restult_;
+  d_ptr->response_ = other.d_ptr->response_;
 }
 
 QCefQuery&
 QCefQuery::operator=(const QCefQuery& other)
 {
-  reqeust_ = other.reqeust_;
-  id_ = other.id_;
-  restult_ = other.restult_;
-  response_ = other.response_;
+  d_ptr->id_ = other.d_ptr->id_;
+  d_ptr->reqeust_ = other.d_ptr->reqeust_;
+  d_ptr->restult_ = other.d_ptr->restult_;
+  d_ptr->response_ = other.d_ptr->response_;
   return *this;
 }
 
@@ -47,37 +44,43 @@ QCefQuery::~QCefQuery() {}
 const QString
 QCefQuery::reqeust() const
 {
-  return reqeust_;
+  Q_D(const QCefQuery);
+  return d->reqeust_;
 }
 
 const int64_t
 QCefQuery::id() const
 {
-  return id_;
+  Q_D(const QCefQuery);
+  return d->id_;
 }
 
 const QString
 QCefQuery::response() const
 {
-  return response_;
+  Q_D(const QCefQuery);
+  return d->response_;
 }
 
 const bool
 QCefQuery::result() const
 {
-  return restult_;
+  Q_D(const QCefQuery);
+  return d->restult_;
 }
 
 const int
 QCefQuery::error() const
 {
-  return error_;
+  Q_D(const QCefQuery);
+  return d->error_;
 }
 
 void
 QCefQuery::setResponseResult(bool success, const QString& response, int error /*= 0*/) const
 {
-  restult_ = success;
-  response_ = response;
-  error_ = error;
+  Q_ASSERT(d_ptr);
+  d_ptr->restult_ = success;
+  d_ptr->response_ = response;
+  d_ptr->error_ = error;
 }

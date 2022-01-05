@@ -1,191 +1,203 @@
 ﻿#include "QCefSetting.h"
 
-#pragma region qt_headers
-#include <QColor>
-#pragma endregion qt_headers
+#include "details/QCefSettingPrivate.h"
 
-#include "details/CCefSetting.h"
-
-QCefSetting::QCefSetting()
-  : d(new CCefSetting())
-{}
+QCefSetting::QCefSetting(int argc, char* argv[])
+  : d_ptr(new QCefSettingPrivate)
+{
+  d_ptr->argc = argc;
+  d_ptr->argv = argv;
+}
 
 QCefSetting::~QCefSetting() {}
 
 #if !defined(OS_MACOS)
-QCefSetting&
+void
 QCefSetting::setBrowserSubProcessPath(const QString& path)
 {
+  Q_D(QCefSetting);
   d->browserSubProcessPath_ = path.toStdString();
-  return *this;
 }
 
 const QString
-QCefSetting::browserSubProcessPath()
+QCefSetting::browserSubProcessPath() const
 {
+  Q_D(const QCefSetting);
   return QString::fromStdString(d->browserSubProcessPath_);
 }
 
-QCefSetting&
+void
 QCefSetting::setResourceDirectoryPath(const QString& path)
 {
+  Q_D(QCefSetting);
   d->resourceDirectoryPath_ = path.toStdString();
-  return *this;
 }
 
 const QString
-QCefSetting::resourceDirectoryPath()
+QCefSetting::resourceDirectoryPath() const
 {
+  Q_D(const QCefSetting);
   return QString::fromStdString(d->resourceDirectoryPath_);
 }
 
-QCefSetting&
+void
 QCefSetting::setLocalesDirectoryPath(const QString& path)
 {
+  Q_D(QCefSetting);
   d->localesDirectoryPath_ = path.toStdString();
-  return *this;
 }
 
 const QString
-QCefSetting::localesDirectoryPath()
+QCefSetting::localesDirectoryPath() const
 {
+  Q_D(const QCefSetting);
   return QString::fromStdString(d->localesDirectoryPath_);
 }
 #endif
 
-QCefSetting&
+void
 QCefSetting::setLocale(const QString& locale)
 {
+  Q_D(QCefSetting);
   d->locale_ = locale.toStdString();
-  return *this;
 }
 
 const QString
-QCefSetting::locale()
+QCefSetting::locale() const
 {
+  Q_D(const QCefSetting);
   return QString::fromStdString(d->locale_);
 }
 
-QCefSetting&
+void
 QCefSetting::setUserAgent(const QString& agent)
 {
+  Q_D(QCefSetting);
   d->userAgent_ = agent.toStdString();
-  return *this;
 }
 
 const QString
-QCefSetting::userAgent()
+QCefSetting::userAgent() const
 {
+  Q_D(const QCefSetting);
   return QString::fromStdString(d->userAgent_);
 }
 
-QCefSetting&
+void
 QCefSetting::setCachePath(const QString& path)
 {
+  Q_D(QCefSetting);
   d->cachePath_ = path.toStdString();
-  return *this;
 }
 
 const QString
-QCefSetting::cachePath()
+QCefSetting::cachePath() const
 {
+  Q_D(const QCefSetting);
   return QString::fromStdString(d->cachePath_);
 }
 
-QCefSetting&
+void
 QCefSetting::setUserDataPath(const QString& path)
 {
+  Q_D(QCefSetting);
   d->userDataPath_ = path.toStdString();
-  return *this;
 }
 
 const QString
-QCefSetting::userDataPath()
+QCefSetting::userDataPath() const
 {
+  Q_D(const QCefSetting);
   return QString::fromStdString(d->userDataPath_);
 }
 
-QCefSetting&
+void
 QCefSetting::setBridgeObjectName(const QString& name)
 {
+  Q_D(QCefSetting);
   d->bridgeObjectName_ = name.toStdString();
-  return *this;
 }
 
 const QString
-QCefSetting::bridgeObjectName()
+QCefSetting::bridgeObjectName() const
 {
+  Q_D(const QCefSetting);
   return QString::fromStdString(d->bridgeObjectName_);
 }
 
-QCefSetting&
+void
 QCefSetting::setBackgroundColor(const QColor& color)
 {
+  Q_D(QCefSetting);
   d->backgroundColor_ = color.value();
-  return *this;
 }
 
 const QColor
-QCefSetting::backgroundColor()
+QCefSetting::backgroundColor() const
 {
+  Q_D(const QCefSetting);
   return d->backgroundColor_;
 }
 
-QCefSetting&
+void
 QCefSetting::setAcceptLanguageList(const QString& languages)
 {
+  Q_D(QCefSetting);
   d->acceptLanguageList_ = languages.toStdString();
-  return *this;
 }
 
 const QString
-QCefSetting::acceptLanguageList()
+QCefSetting::acceptLanguageList() const
 {
+  Q_D(const QCefSetting);
   return QString::fromStdString(d->acceptLanguageList_);
 }
 
-QCefSetting&
+void
 QCefSetting::setPersistSessionCookies(bool enabled)
 {
+  Q_D(QCefSetting);
   d->persistSessionCookies_ = enabled;
-  return *this;
 }
 
 const bool
-QCefSetting::persistSessionCookies()
+QCefSetting::persistSessionCookies() const
 {
+  Q_D(const QCefSetting);
   return d->persistSessionCookies_;
 }
 
-QCefSetting&
+void
 QCefSetting::setPersistUserPreferences(bool enabled)
 {
+  Q_D(QCefSetting);
   d->persistUserPreferences_ = enabled;
-  return *this;
 }
 
 const bool
-QCefSetting::persistUserPreferences()
+QCefSetting::persistUserPreferences() const
 {
+  Q_D(const QCefSetting);
   return d->persistUserPreferences_;
 }
 
-QCefSetting&
+void
 QCefSetting::setRemoteDebuggingPort(short port)
 {
+  Q_D(QCefSetting);
   d->remoteDebuggingport_ = port;
-  return *this;
 }
 
 const short
-QCefSetting::remoteDebuggingPort()
+QCefSetting::remoteDebuggingPort() const
 {
+  Q_D(const QCefSetting);
   return d->remoteDebuggingport_;
 }
 
-QCefSetting&
+void
 QCefSetting::addGlobalCookie(const QString& name, const QString& value, const QString& domain, const QString& url)
 {
+  Q_D(QCefSetting);
   d->cookieList_.push_back({ name.toStdString(), value.toStdString(), domain.toStdString(), url.toStdString() });
-  return *this;
 }

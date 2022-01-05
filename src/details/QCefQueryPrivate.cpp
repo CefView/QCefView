@@ -1,4 +1,4 @@
-﻿#include "CCefSetting.h"
+﻿#include "QCefQueryPrivate.h"
 
 #pragma region qt_headers
 #include <QCoreApplication>
@@ -6,4 +6,6 @@
 #include <QString>
 #pragma endregion qt_headers
 
-#include <CefViewCoreProtocol.h>
+QCefQueryPrivate::QCefQueryPrivate() {}
+
+QCefQueryPrivate::~QCefQueryPrivate() {}

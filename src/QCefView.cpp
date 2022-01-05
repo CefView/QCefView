@@ -25,8 +25,8 @@
 
 #include "details/CCefManager.h"
 #include "details/QCefWindow.h"
-#include "details/CCefSetting.h"
 #include "details/CCefHandlerDelegate.h"
+#include "details/QCefEventPrivate.h"
 
 //////////////////////////////////////////////////////////////////////////
 class QCefView::Implementation
@@ -221,10 +221,10 @@ public:
       pQCefViewHandler_->GetBrowser()->StopLoad();
   }
 
-  bool triggerEvent(const QString& name, const QCefEvent& event, int frameId = CefViewBrowserHandler::MAIN_FRAME)
+  bool triggerEvent(const QString& name, const QVariantMap& args, int frameId = CefViewBrowserHandler::MAIN_FRAME)
   {
     if (!name.isEmpty()) {
-      return sendEventNotifyMessage(frameId, name, event);
+      return sendEventNotifyMessage(frameId, name, args);
     }
 
     return false;
@@ -252,7 +252,7 @@ public:
     }
   }
 
-  bool sendEventNotifyMessage(int frameId, const QString& name, const QCefEvent& event)
+  bool sendEventNotifyMessage(int frameId, const QString& name, const QVariantMap& args)
   {
     CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create(TRIGGEREVENT_NOTIFY_MESSAGE);
     CefRefPtr<CefListValue> arguments = msg->GetArgumentList();
@@ -264,22 +264,23 @@ public:
     CefRefPtr<CefDictionaryValue> dict = CefDictionaryValue::Create();
 
     CefString cefStr;
-    cefStr.FromString(event.objectName().toUtf8().constData());
+    cefStr.FromString(name.toUtf8().constData());
     dict->SetString("name", cefStr);
 
-    QList<QByteArray> keys = event.dynamicPropertyNames();
-    for (QByteArray key : keys) {
-      QVariant value = event.property(key.data());
+    QList<QString> keys = args.keys();
+    for (const QString& key : keys) {
+      auto value = args[key];
       if (value.type() == QVariant::Bool)
-        dict->SetBool(key.data(), value.toBool());
+        dict->SetBool(key.toUtf8().constData(), value.toBool());
       else if (value.type() == QVariant::Int || value.type() == QVariant::UInt)
-        dict->SetInt(key.data(), value.toInt());
+        dict->SetInt(key.toUtf8().constData(), value.toInt());
       else if (value.type() == QVariant::Double)
-        dict->SetDouble(key.data(), value.toDouble());
+        dict->SetDouble(key.toUtf8().constData(), value.toDouble());
       else if (value.type() == QVariant::String) {
         cefStr.FromString(value.toString().toUtf8().constData());
-        dict->SetString(key.data(), cefStr);
+        dict->SetString(key.toUtf8().constData(), cefStr);
       } else {
+        Q_ASSERT_X(false, "QCefViewPrivate::sendEventNotifyMessage", "Unsupport event argument type");
       }
     }
 
@@ -460,7 +461,7 @@ bool
 QCefView::triggerEvent(const QCefEvent& event)
 {
   if (pImpl_)
-    return pImpl_->triggerEvent(event.objectName(), event, CefViewBrowserHandler::MAIN_FRAME);
+    return pImpl_->triggerEvent(event.eventName(), event.d_func()->args, CefViewBrowserHandler::MAIN_FRAME);
 
   return false;
 }
@@ -469,7 +470,7 @@ bool
 QCefView::triggerEvent(const QCefEvent& event, int frameId)
 {
   if (pImpl_)
-    return pImpl_->triggerEvent(event.objectName(), event, frameId);
+    return pImpl_->triggerEvent(event.eventName(), event.d_func()->args, frameId);
 
   return false;
 }
@@ -478,7 +479,7 @@ bool
 QCefView::broadcastEvent(const QCefEvent& event)
 {
   if (pImpl_)
-    return pImpl_->triggerEvent(event.objectName(), event, CefViewBrowserHandler::ALL_FRAMES);
+    return pImpl_->triggerEvent(event.eventName(), event.d_func()->args, CefViewBrowserHandler::ALL_FRAMES);
 
   return false;
 }

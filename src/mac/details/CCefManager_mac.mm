@@ -7,7 +7,7 @@
 #include <include/wrapper/cef_library_loader.h>
 #pragma endregion cef_headers
 
-#include "../../details/CCefSetting.h"
+#include "../../details/QCefSettingPrivate.h"
 
 #define CEF_BINARY_NAME "Chromium Embedded Framework"
 #define CEF_FRAMEWORK_NAME "Chromium Embedded Framework.framework"
@@ -106,7 +106,7 @@ freeCefLibrary()
 }
 
 bool
-CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
+CCefManager::initializeCef(const QCefSettingPrivate* settings)
 {
   // load the cef library
   if (!loadCefLibrary()) {
@@ -118,24 +118,24 @@ CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
   CefString(&cef_settings.framework_dir_path) = cefFrameworkPath();
   CefString(&cef_settings.browser_subprocess_path) = cefSubprocessPath();
 
-  if (!settings.d->userAgent_.empty())
-    CefString(&cef_settings.user_agent) = settings.d->userAgent_;
-  if (!settings.d->cachePath_.empty())
-    CefString(&cef_settings.cache_path) = settings.d->cachePath_;
-  if (!settings.d->userDataPath_.empty())
-    CefString(&cef_settings.user_data_path) = settings.d->userDataPath_;
-  if (!settings.d->locale_.empty())
-    CefString(&cef_settings.locale) = settings.d->locale_;
-  if (!settings.d->acceptLanguageList_.empty())
-    CefString(&cef_settings.accept_language_list) = settings.d->acceptLanguageList_;
+  if (!settings->userAgent_.empty())
+    CefString(&cef_settings.user_agent) = settings->userAgent_;
+  if (!settings->cachePath_.empty())
+    CefString(&cef_settings.cache_path) = settings->cachePath_;
+  if (!settings->userDataPath_.empty())
+    CefString(&cef_settings.user_data_path) = settings->userDataPath_;
+  if (!settings->locale_.empty())
+    CefString(&cef_settings.locale) = settings->locale_;
+  if (!settings->acceptLanguageList_.empty())
+    CefString(&cef_settings.accept_language_list) = settings->acceptLanguageList_;
 
-  cef_settings.persist_session_cookies = settings.d->persistSessionCookies_;
-  cef_settings.persist_user_preferences = settings.d->persistUserPreferences_;
-  cef_settings.background_color = settings.d->backgroundColor_;
+  cef_settings.persist_session_cookies = settings->persistSessionCookies_;
+  cef_settings.persist_user_preferences = settings->persistUserPreferences_;
+  cef_settings.background_color = settings->backgroundColor_;
 
 #ifndef NDEBUG
   cef_settings.log_severity = LOGSEVERITY_DEFAULT;
-  cef_settings.remote_debugging_port = settings.d->remoteDebuggingport_;
+  cef_settings.remote_debugging_port = settings->remoteDebuggingport_;
 #else
   cef_settings.log_severity = LOGSEVERITY_DISABLE;
 #endif
@@ -150,8 +150,8 @@ CCefManager::initializeCef(int argc, char* argv[], const QCefSetting& settings)
 #endif
 
   // Initialize CEF.
-  CefMainArgs main_args(argc, argv);
-  auto app = new CefViewBrowserApp(settings.d->bridgeObjectName_, shared_from_this());
+  CefMainArgs main_args(settings->argc, settings->argv);
+  auto app = new CefViewBrowserApp(settings->bridgeObjectName_, shared_from_this());
   if (!CefInitialize(main_args, cef_settings, app, nullptr)) {
     assert(0);
     return false;
