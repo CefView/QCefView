@@ -8,7 +8,7 @@
 #pragma region qt_headers
 #pragma endregion qt_headers
 
-#include <QCefSetting.h>
+#include <QCefConfig.h>
 
 typedef struct CookieItem
 {
@@ -18,10 +18,10 @@ typedef struct CookieItem
   std::string url;
 } CookieItem;
 
-class QCefSettingPrivate
+class QCefConfigPrivate
 {
 public:
-  explicit QCefSettingPrivate();
+  explicit QCefConfigPrivate();
 
   int argc;
   char** argv;

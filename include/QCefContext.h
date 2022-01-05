@@ -2,7 +2,7 @@
 #define QCEF_H
 #pragma once
 #include <QCefView_global.h>
-#include <QCefSetting.h>
+#include <QCefConfig.h>
 
 #pragma region qt_headers
 #include <QCoreApplication>
@@ -24,7 +24,7 @@ public:
   /// <summary>
   ///
   /// </summary>
-  QCefContext(QCoreApplication* app, const QCefSetting* settings);
+  QCefContext(QCoreApplication* app, const QCefConfig* config);
 
   /// <summary>
   ///
@@ -56,7 +56,7 @@ private:
   /// <summary>
   ///
   /// </summary>
-  bool init(QObject* parent, const QCefSetting* settings);
+  bool init(QObject* parent, const QCefConfig* config);
 
   /// <summary>
   ///

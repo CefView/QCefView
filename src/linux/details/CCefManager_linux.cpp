@@ -1,36 +1,36 @@
 ﻿#include "../../details/CCefManager.h"
 
-#include "../../details/QCefSettingPrivate.h"
+#include "../../details/QCefConfigPrivate.h"
 
 bool
-CCefManager::initializeCef(const QCefSettingPrivate* settings)
+CCefManager::initializeCef(const QCefConfigPrivate* config)
 {
   // Build CefSettings
   CefSettings cef_settings;
-  if (!settings->browserSubProcessPath_.empty())
-    CefString(&cef_settings.browser_subprocess_path) = settings->browserSubProcessPath_;
-  if (!settings->resourceDirectoryPath_.empty())
-    CefString(&cef_settings.resources_dir_path) = settings->resourceDirectoryPath_;
-  if (!settings->localesDirectoryPath_.empty())
-    CefString(&cef_settings.locales_dir_path) = settings->localesDirectoryPath_;
-  if (!settings->userAgent_.empty())
-    CefString(&cef_settings.user_agent) = settings->userAgent_;
-  if (!settings->cachePath_.empty())
-    CefString(&cef_settings.cache_path) = settings->cachePath_;
-  if (!settings->userDataPath_.empty())
-    CefString(&cef_settings.user_data_path) = settings->userDataPath_;
-  if (!settings->locale_.empty())
-    CefString(&cef_settings.locale) = settings->locale_;
-  if (!settings->acceptLanguageList_.empty())
-    CefString(&cef_settings.accept_language_list) = settings->acceptLanguageList_;
+  if (!config->browserSubProcessPath_.empty())
+    CefString(&cef_settings.browser_subprocess_path) = config->browserSubProcessPath_;
+  if (!config->resourceDirectoryPath_.empty())
+    CefString(&cef_settings.resources_dir_path) = config->resourceDirectoryPath_;
+  if (!config->localesDirectoryPath_.empty())
+    CefString(&cef_settings.locales_dir_path) = config->localesDirectoryPath_;
+  if (!config->userAgent_.empty())
+    CefString(&cef_settings.user_agent) = config->userAgent_;
+  if (!config->cachePath_.empty())
+    CefString(&cef_settings.cache_path) = config->cachePath_;
+  if (!config->userDataPath_.empty())
+    CefString(&cef_settings.user_data_path) = config->userDataPath_;
+  if (!config->locale_.empty())
+    CefString(&cef_settings.locale) = config->locale_;
+  if (!config->acceptLanguageList_.empty())
+    CefString(&cef_settings.accept_language_list) = config->acceptLanguageList_;
 
-  cef_settings.persist_session_cookies = settings->persistSessionCookies_;
-  cef_settings.persist_user_preferences = settings->persistUserPreferences_;
-  cef_settings.background_color = settings->backgroundColor_;
+  cef_settings.persist_session_cookies = config->persistSessionCookies_;
+  cef_settings.persist_user_preferences = config->persistUserPreferences_;
+  cef_settings.background_color = config->backgroundColor_;
 
 #ifndef NDEBUG
   cef_settings.log_severity = LOGSEVERITY_DEFAULT;
-  cef_settings.remote_debugging_port = settings->remoteDebuggingport_;
+  cef_settings.remote_debugging_port = config->remoteDebuggingport_;
 #else
   cef_settings.log_severity = LOGSEVERITY_DISABLE;
 #endif
@@ -45,8 +45,8 @@ CCefManager::initializeCef(const QCefSettingPrivate* settings)
 #endif
 
   // Initialize CEF.
-  CefMainArgs main_args(settings->argc, settings->argv);
-  auto app = new CefViewBrowserApp(settings->bridgeObjectName_, shared_from_this());
+  CefMainArgs main_args(config->argc, config->argv);
+  auto app = new CefViewBrowserApp(config->bridgeObjectName_, shared_from_this());
   if (!CefInitialize(main_args, cef_settings, app, nullptr)) {
     assert(0);
     return false;

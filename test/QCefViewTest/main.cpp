@@ -8,9 +8,9 @@ main(int argc, char* argv[])
 {
   QApplication a(argc, argv);
 
-  QCefSetting settings(argc, argv);
-  settings.setBridgeObjectName("CallBridge");
-  QCefContext cefContext(&a, &settings);
+  QCefConfig config(argc, argv);
+  config.setBridgeObjectName("CallBridge");
+  QCefContext cefContext(&a, &config);
 
   QCefViewTest w;
   w.show();

@@ -2,7 +2,7 @@
 
 #include <QCefContext.h>
 
-#include "QCefSettingPrivate.h"
+#include "QCefConfigPrivate.h"
 
 CCefManager::WeakPtr CCefManager::s_This_;
 
@@ -11,14 +11,14 @@ CCefManager::CCefManager() {}
 CCefManager::~CCefManager() {}
 
 bool
-CCefManager::initialize(const QCefSettingPrivate* settings)
+CCefManager::initialize(const QCefConfigPrivate* config)
 {
   s_This_ = WeakPtr(shared_from_this());
 
-  if (!initializeCef(settings))
+  if (!initializeCef(config))
     return false;
 
-  for (auto cookieItem : settings->cookieList_) {
+  for (auto cookieItem : config->cookieList_) {
     addCookie(cookieItem.name, cookieItem.value, cookieItem.domain, cookieItem.url);
   }
 

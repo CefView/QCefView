@@ -12,7 +12,7 @@
 #include <CefViewBrowserHandler.h>
 #include <CefViewBrowserApp.h>
 
-#include "QCefSettingPrivate.h"
+#include "QCefConfigPrivate.h"
 
 /// <summary>
 ///
@@ -51,9 +51,9 @@ public:
   /// <summary>
   ///
   /// </summary>
-  /// <param name="settings"></param>
+  /// <param name="config"></param>
   /// <returns></returns>
-  bool initialize(const QCefSettingPrivate* settings);
+  bool initialize(const QCefConfigPrivate* config);
 
   /// <summary>
   ///
@@ -104,9 +104,9 @@ protected:
   /// </summary>
   /// <param name="argc"></param>
   /// <param name="argv"></param>
-  /// <param name="settings"></param>
+  /// <param name="config"></param>
   /// <returns></returns>
-  bool initializeCef(const QCefSettingPrivate* settings);
+  bool initializeCef(const QCefConfigPrivate* config);
 
   /// <summary>
   ///

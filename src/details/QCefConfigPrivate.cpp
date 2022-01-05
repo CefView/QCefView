@@ -1,4 +1,4 @@
-﻿#include "QCefSettingPrivate.h"
+﻿#include "QCefConfigPrivate.h"
 
 #pragma region qt_headers
 #include <QCoreApplication>
@@ -8,11 +8,11 @@
 
 #include <CefViewCoreProtocol.h>
 
-QCefSettingPrivate::QCefSettingPrivate()
+QCefConfigPrivate::QCefConfigPrivate()
 {
   userAgent_ = CEFVIEW_USER_AGENT;
 
- #if !defined(OS_MACOS)
+#if !defined(OS_MACOS)
   QDir ExeDir = QCoreApplication::applicationDirPath();
 
   QString strExePath = ExeDir.filePath(RENDER_PROCESS_NAME);
@@ -25,4 +25,3 @@ QCefSettingPrivate::QCefSettingPrivate()
   localesDirectoryPath_ = QDir::toNativeSeparators(ResPath.filePath(LOCALES_DIRECTORY_NAME)).toStdString();
 #endif
 }
-
