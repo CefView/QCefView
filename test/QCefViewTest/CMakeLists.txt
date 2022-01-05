@@ -48,6 +48,11 @@ if (OS_WINDOWS)
     ${_RES_FILES}
   )
 
+  target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+      QCefView
+  )
+
   target_compile_definitions(${PROJECT_NAME} PRIVATE
     UNICODE
     _UNICODE
@@ -124,6 +129,7 @@ if (OS_LINUX)
   target_link_libraries(${PROJECT_NAME}
     PRIVATE
       -Wl,--no-as-needed libcef_lib
+      QCefView
   )
 endif() # OS_LINUX
 
@@ -133,20 +139,19 @@ if (OS_MACOS)
   )
   source_group("Resource Files" ${_RES_FILES})
 
-  set_source_files_properties(
-    "QCefViewTestPage.html"
-    PROPERTIES
-      MACOSX_PACKAGE_LOCATION Resources
-  )
-
   set(QCefViewTest_INFO_PLIST_FILE 
     "${CMAKE_CURRENT_LIST_DIR}/mac/Info.plist"
+  )
+  
+  set(TEST_RESOURCE_FILES
+    "QCefViewTestPage.html"
   )
 
   add_executable(${PROJECT_NAME} MACOSX_BUNDLE 
     ${_SRC_FILES}
     ${_UI_FILES}
     ${_RES_FILES}
+    ${TEST_RESOURCE_FILES}
   )
 
   set_target_properties(${PROJECT_NAME} 
@@ -155,6 +160,7 @@ if (OS_MACOS)
       ARCHIVE_OUTPUT_DIRECTORY                  "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/demo"
       LIBRARY_OUTPUT_DIRECTORY                  "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/demo"
       RUNTIME_OUTPUT_DIRECTORY                  "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/demo"
+      RESOURCE                                  "${TEST_RESOURCE_FILES}"
       CLANG_ENABLE_OBJC_ARC                     "YES"
       MACOSX_BUNDLE_INFO_PLIST                  "${QCefViewTest_INFO_PLIST_FILE}"
       XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS   "@executable_path/../Frameworks"
@@ -173,6 +179,11 @@ if (OS_MACOS)
         "$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>/../../QCefView.framework"
         "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
 
+    # copy the web resource to the bundle
+    # COMMAND ${CMAKE_COMMAND} -E copy
+    #   "${CMAKE_CURRENT_SOURCE_DIR}/QCefViewTestPage.html"
+    #   "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Resources/"
+
     VERBATIM
   )
 
@@ -187,7 +198,6 @@ endif()
 
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
-    QCefView
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Widgets
