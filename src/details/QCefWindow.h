@@ -58,13 +58,13 @@ protected:
   ///
   /// </summary>
   /// <param name="e"></param>
-  virtual void exposeEvent(QExposeEvent* e);
+  virtual void exposeEvent(QExposeEvent* e) override;
 
   /// <summary>
   ///
   /// </summary>
   /// <param name="e"></param>
-  virtual void resizeEvent(QResizeEvent* e);
+  virtual void resizeEvent(QResizeEvent* e) override;
 
 private:
   /// <summary>

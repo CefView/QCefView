@@ -9,6 +9,12 @@
 
 #include "customcefview.h"
 
+CustomCefView::CustomCefView(const QString url, QWidget* parent /* = 0*/)
+  : QCefView(url, parent)
+{
+  setAttribute(Qt::WA_NativeWindow);
+}
+
 CustomCefView::~CustomCefView() {}
 
 void
@@ -19,6 +25,27 @@ CustomCefView::changeColor()
   QCefEvent event("colorChange");
   event.setStringProperty("color", color.name());
   broadcastEvent(event);
+}
+
+#include <windowsx.h>
+
+bool
+CustomCefView::nativeEvent(const QByteArray& eventType, void* message, qintptr* result)
+{
+  MSG* msg = (MSG*)message;
+  switch (msg->message) {
+    case WM_NCHITTEST:
+      int xPos = GET_X_LPARAM(msg->lParam) - this->frameGeometry().x();
+      int yPos = GET_Y_LPARAM(msg->lParam) - this->frameGeometry().y();
+
+      if (draggableRegion_.contains({ xPos, yPos })) {
+        *result = HTCAPTION;
+      } else {
+        return false;
+      }
+  }
+
+  return QCefView::nativeEvent(eventType, message, result);
 }
 
 void

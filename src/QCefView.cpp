@@ -31,8 +31,8 @@ QCefView::QCefView(const QString url, QWidget* parent /*= 0*/)
 
   // If we're already part of a window, we'll install our event handler
   // If our parent changes later, this will be handled in QCefView::changeEvent()
-  if (this->window())
-    this->window()->installEventFilter(this);
+  if (window())
+    window()->installEventFilter(this);
 }
 
 QCefView::QCefView(QWidget* parent /*= 0*/)
@@ -272,58 +272,14 @@ QCefView::changeEvent(QEvent* event)
 bool
 QCefView::eventFilter(QObject* watched, QEvent* event)
 {
+  if (watched != window())
+    return QWidget::eventFilter(watched, event);
+
   Q_D(QCefView);
 
-  if (watched == this->window()) {
-    if (QEvent::Resize == event->type() || QEvent::Move == event->type()) {
-      d->onToplevelWidgetMoveOrResize();
-    }
-  }
-
-  if (watched == this) {
-    if (QEvent::MouseButtonPress == event->type()) {
-      QMouseEvent* e = (QMouseEvent*)event;
-      if (e->button() == Qt::LeftButton) {
-        d->bIsDragging_ = true;
-        d->mLastMousePosition_ = e->pos();
-      }
-    }
+  if (QEvent::Resize == event->type() || QEvent::Move == event->type()) {
+    d->onToplevelWidgetMoveOrResize();
   }
 
   return QWidget::eventFilter(watched, event);
-}
-
-void
-QCefView::mousePressEvent(QMouseEvent* event)
-{
-  Q_D(QCefView);
-
-  if (event->button() == Qt::LeftButton) {
-    d->bIsDragging_ = true;
-    d->mLastMousePosition_ = event->pos();
-  }
-  QWidget::mousePressEvent(event);
-}
-
-void
-QCefView::mouseMoveEvent(QMouseEvent* event)
-{
-  Q_D(QCefView);
-
-  if (event->buttons().testFlag(Qt::LeftButton) && d->bIsDragging_) {
-    this->move(this->pos() + (event->pos() - d->mLastMousePosition_));
-    d->mLastMousePosition_ = event->pos();
-  }
-  QWidget::mouseMoveEvent(event);
-}
-
-void
-QCefView::mouseReleaseEvent(QMouseEvent* event)
-{
-  Q_D(QCefView);
-
-  if (event->button() == Qt::LeftButton) {
-    d->bIsDragging_ = false;
-  }
-  QWidget::mouseReleaseEvent(event);
 }

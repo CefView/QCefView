@@ -296,24 +296,6 @@ protected:
   /// <param name="event"></param>
   /// <returns></returns>
   virtual bool eventFilter(QObject* watched, QEvent* event) override;
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="event"></param>
-  virtual void mousePressEvent(QMouseEvent* event) override;
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="event"></param>
-  virtual void mouseMoveEvent(QMouseEvent* event) override;
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="event"></param>
-  virtual void mouseReleaseEvent(QMouseEvent* event) override;
 };
 
 #endif // QCEFVIEW_H

@@ -27,16 +27,6 @@ private:
   /// </summary>
   CefViewBrowserHandlerDelegateInterface::RefPtr pCefHandlerDelegate_;
 
-  /// <summary>
-  ///
-  /// </summary>
-  bool bIsDragging_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  QPoint mLastMousePosition_;
-
 public:
   /// <summary>
   ///

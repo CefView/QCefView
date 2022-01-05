@@ -37,6 +37,7 @@ QCefWindow::setBrowserWindowId(CefWindowHandle win)
       this,
       [=]() {
         this->browserWindow_ = QWindow::fromWinId((WId)win);
+        this->browserWindow_->setParent(this);
         syncBrowserWindow();
       },
       Qt::QueuedConnection);
