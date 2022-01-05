@@ -1,24 +1,36 @@
 ﻿#include "CCefManager.h"
 
+#include <QCefContext.h>
+
 #include "CCefSetting.h"
 
-CCefManager* CCefManager::s_This = nullptr;
+CCefManager::WeakPtr CCefManager::s_This_;
 
-CCefManager::CCefManager(int argc, char* argv[], const QCefSetting& settings)
-  : is_exiting_(false)
+CCefManager::CCefManager() {}
+
+CCefManager::~CCefManager() {}
+
+bool
+CCefManager::initialize(int argc, char* argv[], const QCefSetting& settings)
 {
-  if (initializeCef(argc, argv, settings)) {
-    for (auto cookieItem : settings.d->cookieList_) {
-      addCookie(cookieItem.name, cookieItem.value, cookieItem.domain, cookieItem.url);
-    }
+  s_This_ = WeakPtr(shared_from_this());
+
+  if (!initializeCef(argc, argv, settings))
+    return false;
+
+  for (auto cookieItem : settings.d->cookieList_) {
+    addCookie(cookieItem.name, cookieItem.value, cookieItem.domain, cookieItem.url);
   }
 
-  s_This = this;
+  return true;
 }
 
-CCefManager::~CCefManager()
+void
+CCefManager::uninitialize()
 {
   uninitializeCef();
+
+  s_This_.reset();
 }
 
 void
@@ -45,4 +57,13 @@ CCefManager::registerBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler)
 {
   std::lock_guard<std::mutex> lock(handler_set_locker_);
   handler_set_.insert(handler);
+}
+
+void
+CCefManager::OnScheduleMessageLoopWork(int64_t delay_ms)
+{
+  auto p = QCefContext::instance();
+  if (p) {
+    p->scheduleMessageLoopWork(delay_ms);
+  }
 }

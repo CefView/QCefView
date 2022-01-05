@@ -8,6 +8,7 @@
 #include <memory>
 #pragma endregion std_headers
 
+#include <CefViewBrowserAppDelegate.h>
 #include <CefViewBrowserHandler.h>
 #include <CefViewBrowserApp.h>
 
@@ -17,12 +18,24 @@
 ///
 /// </summary>
 class CCefManager
+  : public CefViewBrowserAppDelegateInterface
+  , public std::enable_shared_from_this<CCefManager>
 {
 public:
   /// <summary>
   ///
   /// </summary>
-  CCefManager(int argc, char* argv[], const QCefSetting& settings);
+  typedef std::shared_ptr<CCefManager> RefPtr;
+
+  /// <summary>
+  ///
+  /// </summary>
+  typedef std::weak_ptr<CCefManager> WeakPtr;
+
+  /// <summary>
+  ///
+  /// </summary>
+  CCefManager();
 
   /// <summary>
   ///
@@ -33,17 +46,21 @@ public:
   ///
   /// </summary>
   /// <returns></returns>
-  static CCefManager* getInstance() { return s_This; }
+  static RefPtr getInstance() { return s_This_.lock(); }
 
   /// <summary>
   ///
   /// </summary>
-  bool initializeCef(int argc, char* argv[], const QCefSetting& settings);
+  /// <param name="argc"></param>
+  /// <param name="argv"></param>
+  /// <param name="settings"></param>
+  /// <returns></returns>
+  bool initialize(int argc, char* argv[], const QCefSetting& settings);
 
   /// <summary>
   ///
   /// </summary>
-  void uninitializeCef();
+  void uninitialize();
 
   /// <summary>
   ///
@@ -53,16 +70,23 @@ public:
   /// <summary>
   ///
   /// </summary>
+  /// <param name="name"></param>
+  /// <param name="value"></param>
+  /// <param name="domain"></param>
+  /// <param name="url"></param>
+  /// <returns></returns>
   bool addCookie(const std::string& name, const std::string& value, const std::string& domain, const std::string& url);
 
   /// <summary>
   ///
   /// </summary>
+  /// <param name="handler"></param>
   void registerBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler);
 
   /// <summary>
   ///
   /// </summary>
+  /// <param name="handler"></param>
   void removeBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler);
 
   /// <summary>
@@ -70,8 +94,32 @@ public:
   /// </summary>
   void closeAllBrowserHandler();
 
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="delay_ms"></param>
+  void OnScheduleMessageLoopWork(int64_t delay_ms) override;
+
+protected:
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="argc"></param>
+  /// <param name="argv"></param>
+  /// <param name="settings"></param>
+  /// <returns></returns>
+  bool initializeCef(int argc, char* argv[], const QCefSetting& settings);
+
+  /// <summary>
+  ///
+  /// </summary>
+  void uninitializeCef();
+
 private:
-  static CCefManager* s_This;
+  /// <summary>
+  ///
+  /// </summary>
+  static WeakPtr s_This_;
 
   /// <summary>
   ///
@@ -87,11 +135,4 @@ private:
   ///
   /// </summary>
   std::set<CefRefPtr<CefViewBrowserHandler>> handler_set_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  bool is_exiting_;
 };
-
-typedef std::shared_ptr<CCefManager> CCefManagerPtr;

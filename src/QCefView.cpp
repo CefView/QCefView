@@ -26,7 +26,7 @@
 #include "details/CCefManager.h"
 #include "details/QCefWindow.h"
 #include "details/CCefSetting.h"
-#include "details/CCefDelegate.h"
+#include "details/CCefHandlerDelegate.h"
 
 //////////////////////////////////////////////////////////////////////////
 class QCefView::Implementation
@@ -63,12 +63,12 @@ private:
   /// <summary>
   ///
   /// </summary>
-  CefViewBrowserDelegatePtr pCefDelegate_;
+  CefViewBrowserHandlerDelegateInterface::RefPtr pCefHandlerDelegate_;
 
 public:
   explicit Implementation(const QString& url, QCefView* view, QCefWindow* win)
     : pQCefViewHandler_(nullptr)
-    , pCefDelegate_(nullptr)
+    , pCefHandlerDelegate_(nullptr)
   {
     // Set window info
     CefWindowInfo window_info;
@@ -86,7 +86,7 @@ public:
     browserSettings.plugins = STATE_DISABLED;
 
     // create the delegate
-    auto pCefDelegate = std::make_shared<CCefDelegate>(view, win);
+    auto pCefDelegate = std::make_shared<CCefHandlerDelegate>(view, win);
 
     // create the browser
     auto pQCefViewHandler = new CefViewBrowserHandler(pCefDelegate);
@@ -117,7 +117,7 @@ public:
     CCefManager::getInstance()->registerBrowserHandler(pQCefViewHandler);
 
     // update members
-    pCefDelegate_ = pCefDelegate;
+    pCefHandlerDelegate_ = pCefDelegate;
     pQCefViewHandler_ = pQCefViewHandler;
   }
 
@@ -129,8 +129,8 @@ public:
       pQCefViewHandler_ = nullptr;
     }
 
-    if (pCefDelegate_)
-      pCefDelegate_.reset();
+    if (pCefHandlerDelegate_)
+      pCefHandlerDelegate_.reset();
   }
 
   void closeAllBrowsers()

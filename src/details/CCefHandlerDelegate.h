@@ -17,19 +17,19 @@
 #include <include/cef_app.h>
 #pragma endregion cef_headers
 
-#include <CefViewBrowserDelegate.h>
+#include <CefViewBrowserHandlerDelegate.h>
 
 #include <QCefQuery.h>
 #include <QCefView.h>
 
 #include "QCefWindow.h"
 
-class CCefDelegate
-  : public CefViewBrowserDelegateInterface
-  , public std::enable_shared_from_this<CCefDelegate>
+class CCefHandlerDelegate
+  : public CefViewBrowserHandlerDelegateInterface
+  , public std::enable_shared_from_this<CCefHandlerDelegate>
 {
 public:
-  explicit CCefDelegate(QCefView* view, QCefWindow* window);
+  explicit CCefHandlerDelegate(QCefView* view, QCefWindow* window);
 
   virtual void setBrowserWindowId(CefWindowHandle win) override;
 

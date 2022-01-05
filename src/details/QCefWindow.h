@@ -13,7 +13,7 @@
 #include <include/cef_app.h>
 #pragma endregion cef_headers
 
-#include <CefViewBrowserDelegate.h>
+#include <CefViewBrowserHandlerDelegate.h>
 
 #include <QCefQuery.h>
 #include <QCefView.h>

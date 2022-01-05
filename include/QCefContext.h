@@ -30,7 +30,20 @@ public:
   /// <summary>
   ///
   /// </summary>
+  /// <returns></returns>
+  static QCefContext* instance();
+  ;
+
+  /// <summary>
+  ///
+  /// </summary>
   ~QCefContext();
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="delay_ms"></param>
+  void scheduleMessageLoopWork(int64_t delay_ms);
 
 protected slots:
   void doCefWork();
@@ -39,12 +52,17 @@ private:
   /// <summary>
   ///
   /// </summary>
-  void initialize(QObject* parent, const QCefSetting& settings, int argc, char* argv[]);
+  static QCefContext* s_self;
 
   /// <summary>
   ///
   /// </summary>
-  void uninitialize();
+  bool init(QObject* parent, const QCefSetting& settings, int argc, char* argv[]);
+
+  /// <summary>
+  ///
+  /// </summary>
+  void uninit();
 };
 
 #endif // QCEF_H

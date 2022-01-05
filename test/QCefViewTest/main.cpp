@@ -10,6 +10,7 @@ main(int argc, char* argv[])
 
   QCefSetting settings;
   settings.setBridgeObjectName("CallBridge");
+
   QCefContext cefContext(&a, settings, argc, argv);
 
   QCefViewTest w;
