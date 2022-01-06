@@ -1,4 +1,4 @@
-﻿#include "qcefviewtest.h"
+#include "qcefviewtest.h"
 
 #include <QDir>
 #include <QCoreApplication>
@@ -7,7 +7,6 @@
 QCefViewTest::QCefViewTest(QWidget* parent)
   : QMainWindow(parent)
 {
-  setWindowFlag(Qt::FramelessWindowHint);
   ui.setupUi(this);
   QHBoxLayout* layout = new QHBoxLayout();
   layout->setContentsMargins(2, 2, 2, 2);
@@ -34,21 +33,6 @@ QCefViewTest::QCefViewTest(QWidget* parent)
 
 QCefViewTest::~QCefViewTest() {}
 
-#include <windows.h>
-#include <windowsx.h>
-
-bool
-QCefViewTest::nativeEvent(const QByteArray& eventType, void* message, qintptr* result)
-{
-  MSG* msg = (MSG*)message;
-  switch (msg->message) {
-    case WM_NCHITTEST:
-      int xPos = GET_X_LPARAM(msg->lParam) - this->frameGeometry().x();
-      int yPos = GET_Y_LPARAM(msg->lParam) - this->frameGeometry().y();
-      break;
-  }
-  return QMainWindow::nativeEvent(eventType, message, result);
-}
 void
 QCefViewTest::onBtnChangeColorClicked()
 {

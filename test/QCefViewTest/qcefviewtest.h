@@ -1,4 +1,4 @@
-﻿#ifndef QCEFVIEWTEST_H
+#ifndef QCEFVIEWTEST_H
 #define QCEFVIEWTEST_H
 
 #include <QtWidgets/QMainWindow>
@@ -13,7 +13,11 @@ public:
   QCefViewTest(QWidget* parent = 0);
   ~QCefViewTest();
 
-  virtual bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result) override;
+//#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+//  virtual bool nativeEvent(const QByteArray &eventType, void *message, qintptr *result);
+//#else
+//  virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result);
+//#endif
 
 protected slots:
   void onBtnChangeColorClicked();

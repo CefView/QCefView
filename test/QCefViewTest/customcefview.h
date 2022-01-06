@@ -1,4 +1,4 @@
-﻿#ifndef CUSTOMCEFVIEW_H
+#ifndef CUSTOMCEFVIEW_H
 #define CUSTOMCEFVIEW_H
 
 #include <QCefView.h>
@@ -15,8 +15,13 @@ public:
   void changeColor();
 
 protected:
-  virtual bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result) override;
-
+    
+//#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+//  virtual bool nativeEvent(const QByteArray &eventType, void *message, qintptr *result);
+//#else
+//  virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result);
+//#endif
+    
   virtual void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion) override;
 
   virtual void onQCefUrlRequest(const QString& url) override;

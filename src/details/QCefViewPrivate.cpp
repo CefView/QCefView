@@ -1,4 +1,4 @@
-﻿#include "QCefViewPrivate.h"
+#include "QCefViewPrivate.h"
 
 #pragma region std_headers
 #include <stdexcept>
@@ -24,15 +24,18 @@ QCefViewPrivate::QCefViewPrivate(const QString& url, QCefView* view, QCefWindow*
   , pQCefViewHandler_(nullptr)
   , pCefHandlerDelegate_(nullptr)
 {
+  // get parent window rect
+  QRect rc = win->frameGeometry();
+
   // Set window info
   CefWindowInfo window_info;
 
 #if defined(OS_WINDOWS)
-  window_info.SetAsChild((CefWindowHandle)(win->winId()), RECT{ 0, 0, 0, 0 });
+  window_info.SetAsChild((CefWindowHandle)(win->winId()), RECT{ 0, 0, rc.width(), rc.height() });
 #elif defined(OS_MACOS)
-  window_info.SetAsChild((CefWindowHandle)(win->winId()), 0, 0, 0, 0);
+  window_info.SetAsChild((CefWindowHandle)(win->winId()), 0, 0, rc.width(), rc.height());
 #elif defined(OS_LINUX)
-  window_info.SetAsChild((CefWindowHandle)(win->winId()), CefRect{ 0, 0, 0, 0 });
+  window_info.SetAsChild((CefWindowHandle)(win->winId()), CefRect{ 0, 0, rc.width(), rc.height() });
 #endif
 
   CefBrowserSettings browserSettings;
