@@ -53,6 +53,7 @@ endif()
 # Config the QT package
 ###############################################################
 include(QtConfig.cmake)
+message(STATUS "Qt SKD dir: " ${QT_SDK_DIR})
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT_SDK_DIR})
 ###############################################################
 
