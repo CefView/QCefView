@@ -2,7 +2,7 @@
 
 BUILD_PROJECT=0
 
-BUILD_DIR="$(pwd)/.build/macOS"
+BUILD_DIR="$(pwd)/.build/Linux"
 
 while getopts bi flag
 do
@@ -12,7 +12,7 @@ do
 done
 
 echo ============== Config project ==============
-cmake -G "Xcode" -S . -B "${BUILD_DIR}" -DBUILD_DEMO=ON -DUSE_SANDBOX=ON
+cmake -G "Unix Makefiles" -S . -B "${BUILD_DIR}" -DBUILD_DEMO=ON -DUSE_SANDBOX=ON
 
 if [ ${BUILD_PROJECT} -eq 1 ] 
 then

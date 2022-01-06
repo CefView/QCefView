@@ -1,3 +1,7 @@
+.vscode
+.build
 .build.*
 dep/cef
 output
+.DS_Store
+CMakeLists.txt.user

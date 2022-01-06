@@ -1,4 +1,4 @@
-﻿#if defined(OS_WINDOWS)
+#if defined(OS_WINDOWS)
 #include <windows.h>
 #else
 #endif
@@ -8,6 +8,12 @@
 #include <QRandomGenerator>
 
 #include "customcefview.h"
+
+CustomCefView::CustomCefView(const QString url, QWidget* parent /* = 0*/)
+  : QCefView(url, parent)
+{
+  setAttribute(Qt::WA_NativeWindow);
+}
 
 CustomCefView::~CustomCefView() {}
 
@@ -22,8 +28,11 @@ CustomCefView::changeColor()
 }
 
 void
-CustomCefView::onDraggableRegionChanged(const QRegion& region)
-{}
+CustomCefView::onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion)
+{
+  draggableRegion_ = draggableRegion;
+  nonDraggableRegion_ = nonDraggableRegion;
+}
 
 void
 CustomCefView::onQCefUrlRequest(const QString& url)
@@ -64,19 +73,21 @@ CustomCefView::onQCefQueryRequest(const QCefQuery& query)
 void
 CustomCefView::onInvokeMethodNotify(int browserId, int frameId, const QString& method, const QVariantList& arguments)
 {
-  if (0 == method.compare("onDragAreaMouseDown")) {
-#if defined(OS_WINDOWS)
-    HWND hWnd = ::GetAncestor((HWND)(this->window()->winId()), GA_ROOT);
-    // get current mouse cursor position
-    POINT pt;
-    ::GetCursorPos(&pt);
-    // in case the mouse is being captured, try to release it
-    ::ReleaseCapture();
-    // simulate that the mouse left button is down on the title area
-    ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
-#endif
-    return;
-  } else if (0 == method.compare("TestMethod")) {
+  // if (0 == method.compare("onDragAreaMouseDown")) {
+  //#if defined(OS_WINDOWS)
+  //    HWND hWnd = ::GetAncestor((HWND)(this->window()->winId()), GA_ROOT);
+  //    // get current mouse cursor position
+  //    POINT pt;
+  //    ::GetCursorPos(&pt);
+  //    // in case the mouse is being captured, try to release it
+  //    ::ReleaseCapture();
+  //    // simulate that the mouse left button is down on the title area
+  //    ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
+  //#endif
+  // return;
+  //}
+
+  if (0 == method.compare("TestMethod")) {
     QMetaObject::invokeMethod(
       this,
       [=]() {

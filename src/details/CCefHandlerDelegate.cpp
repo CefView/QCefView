@@ -1,40 +1,40 @@
-﻿#include "CCefDelegate.h"
+﻿#include "CCefHandlerDelegate.h"
 
-CCefDelegate::CCefDelegate(QCefView* view, QCefWindow* window)
+CCefHandlerDelegate::CCefHandlerDelegate(QCefView* view, QCefWindow* window)
   : view_(view)
   , window_(window)
 {}
 
 void
-CCefDelegate::setCefBrowserWindowHandle(CefWindowHandle win)
+CCefHandlerDelegate::setBrowserWindowId(CefWindowHandle win)
 {
   if (window_)
-    window_->setCefBrowserWindow(win);
+    window_->setBrowserWindowId(win);
 }
 
 void
-CCefDelegate::loadingStateChanged(bool isLoading, bool canGoBack, bool canGoForward)
+CCefHandlerDelegate::loadingStateChanged(bool isLoading, bool canGoBack, bool canGoForward)
 {
   if (view_)
     view_->onLoadingStateChanged(isLoading, canGoBack, canGoForward);
 }
 
 void
-CCefDelegate::loadStart()
+CCefHandlerDelegate::loadStart()
 {
   if (view_)
     view_->onLoadStart();
 }
 
 void
-CCefDelegate::loadEnd(int httpStatusCode)
+CCefHandlerDelegate::loadEnd(int httpStatusCode)
 {
   if (view_)
     view_->onLoadEnd(httpStatusCode);
 }
 
 void
-CCefDelegate::loadError(int errorCode, const std::string& errorMsg, const std::string& failedUrl, bool& handled)
+CCefHandlerDelegate::loadError(int errorCode, const std::string& errorMsg, const std::string& failedUrl, bool& handled)
 {
   if (view_) {
     auto msg = QString::fromStdString(errorMsg);
@@ -44,21 +44,28 @@ CCefDelegate::loadError(int errorCode, const std::string& errorMsg, const std::s
 }
 
 void
-CCefDelegate::draggableRegionChanged(const std::vector<CefDraggableRegion>& regions)
+CCefHandlerDelegate::draggableRegionChanged(const std::vector<CefDraggableRegion>& regions)
 {
-  if (view_) {
-    // Determine new draggable region.
-    QRegion region;
-    std::vector<CefDraggableRegion>::const_iterator it = regions.begin();
-    for (; it != regions.end(); ++it) {
-      region += QRegion(it->bounds.x, it->bounds.y, it->bounds.width, it->bounds.height);
+  if (!view_)
+    return;
+
+  // Determine new draggable region.
+  QRegion draggableRegion;
+  QRegion nonDraggableRegion;
+  std::vector<CefDraggableRegion>::const_iterator it = regions.begin();
+  for (; it != regions.end(); ++it) {
+    if (it->draggable) {
+      draggableRegion += QRegion(it->bounds.x, it->bounds.y, it->bounds.width, it->bounds.height);
+    } else {
+      nonDraggableRegion += QRegion(it->bounds.x, it->bounds.y, it->bounds.width, it->bounds.height);
     }
-    view_->onDraggableRegionChanged(region);
   }
+
+  view_->onDraggableRegionChanged(draggableRegion, nonDraggableRegion);
 }
 
 void
-CCefDelegate::consoleMessage(const std::string& message, int level)
+CCefHandlerDelegate::consoleMessage(const std::string& message, int level)
 {
   if (view_) {
     auto msg = QString::fromStdString(message);
@@ -67,14 +74,14 @@ CCefDelegate::consoleMessage(const std::string& message, int level)
 }
 
 void
-CCefDelegate::takeFocus(bool next)
+CCefHandlerDelegate::takeFocus(bool next)
 {
   if (view_)
     view_->onTakeFocus(next);
 }
 
 void
-CCefDelegate::processUrlRequest(const std::string& url)
+CCefHandlerDelegate::processUrlRequest(const std::string& url)
 {
   if (view_) {
     auto u = QString::fromStdString(url);
@@ -83,7 +90,7 @@ CCefDelegate::processUrlRequest(const std::string& url)
 }
 
 void
-CCefDelegate::processQueryRequest(const std::string& request, const int64_t query_id)
+CCefHandlerDelegate::processQueryRequest(const std::string& request, const int64_t query_id)
 {
   if (view_) {
     auto req = QString::fromStdString(request);
@@ -92,10 +99,10 @@ CCefDelegate::processQueryRequest(const std::string& request, const int64_t quer
 }
 
 void
-CCefDelegate::invokeMethodNotify(int browserId,
-                                 int frameId,
-                                 const std::string& method,
-                                 const CefRefPtr<CefListValue>& arguments)
+CCefHandlerDelegate::invokeMethodNotify(int browserId,
+                                        int frameId,
+                                        const std::string& method,
+                                        const CefRefPtr<CefListValue>& arguments)
 {
   if (!view_)
     return;
@@ -131,7 +138,7 @@ CCefDelegate::invokeMethodNotify(int browserId,
 }
 
 void
-CCefDelegate::browserIsDestroying()
+CCefHandlerDelegate::browserIsDestroying()
 {
   return;
 }

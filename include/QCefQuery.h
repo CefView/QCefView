@@ -9,16 +9,18 @@
 
 #pragma region qt_headers
 #include <QString>
-#include <QPointer>
-#include <QMetaType>
+#include <QScopedPointer>
 #pragma endregion qt_headers
+
+class QCefQueryPrivate;
 
 /// <summary>
 ///
 /// </summary>
-class QCEFVIEW_EXPORT QCefQuery : public QObject
+class QCEFVIEW_EXPORT QCefQuery
 {
-  Q_OBJECT
+  Q_DECLARE_PRIVATE(QCefQuery)
+  QScopedPointer<QCefQueryPrivate> d_ptr;
 
 public:
   /// <summary>
@@ -88,39 +90,6 @@ public:
   /// <param name="response"></param>
   /// <param name="error"></param>
   void setResponseResult(bool success, const QString& response, int error = 0) const;
-
-private:
-  /// <summary>
-  ///
-  /// </summary>
-  int64_t id_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  QString reqeust_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  mutable QString response_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  mutable bool restult_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  mutable int error_;
-
-  ///// <summary>
-  /////
-  ///// </summary>
-  // static int TYPEID;
 };
-
-// Q_DECLARE_METATYPE(QCefQuery);
 
 #endif // QCEFQUERY_H

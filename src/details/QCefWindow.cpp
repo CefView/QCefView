@@ -1,5 +1,9 @@
 ﻿#include "QCefWindow.h"
 
+#pragma region stdc_headers
+#include <math.h>
+#pragma region stdc_headers
+
 #pragma region qt_headers
 #include <QCoreApplication>
 #include <QResizeEvent>
@@ -8,55 +12,61 @@
 #include <QDebug>
 #pragma endregion qt_headers
 
-#include "CCefManager.h"
-
 QCefWindow::QCefWindow(QWindow* parent, QCefView* hostView /*= 0*/)
   : QWindow(parent)
-  , hwndCefBrowser_(nullptr)
+  , browserWindow_(0)
 {
   setFlags(Qt::FramelessWindowHint);
-
-  CCefManager::getInstance().initializeCef();
 }
 
 QCefWindow::~QCefWindow()
 {
-  if (hwndCefBrowser_)
-    hwndCefBrowser_ = nullptr;
-
-  CCefManager::getInstance().uninitializeCef();
+  if (browserWindow_) {
+    browserWindow_ = 0;
+  }
 }
 
 void
-QCefWindow::setCefBrowserWindow(CefWindowHandle win)
+QCefWindow::setBrowserWindowId(CefWindowHandle win)
 {
-  hwndCefBrowser_ = win;
-  syncCefBrowserWindow();
+  if (win) {
+    // this method may be called from threads other than Qt main thread
+    // in order to make sure the QWindow is created in Qt main thread
+    // we need to run the following logic by posting it to Qt main thread
+    QMetaObject::invokeMethod(
+      this,
+      [=]() {
+        this->browserWindow_ = QWindow::fromWinId((WId)win);
+        this->browserWindow_->setParent(this);
+        updateBrowserWindow();
+      },
+      Qt::QueuedConnection);
+  }
 }
 
 void
-QCefWindow::syncCefBrowserWindow()
+QCefWindow::updateBrowserWindow()
 {
-#if defined(OS_WINDOWS)
-  double w = width() * devicePixelRatio();
-  double h = height() * devicePixelRatio();
-  if (hwndCefBrowser_)
-    ::SetWindowPos(hwndCefBrowser_, NULL, 0, 0, ceil(w), ceil(h), SWP_NOZORDER | SWP_NOSENDCHANGING | SWP_DEFERERASE);
-#else
+  if (browserWindow_ && browserWindow_->size() != size()) {
+    // double w = width() * devicePixelRatio();
+    // double h = height() * devicePixelRatio();
+    // browserWindow_->setGeometry(0, 0, ceil(w), ceil(h));
+
+    browserWindow_->setGeometry(0, 0, width(), height());
+  }
   return;
-#endif
 }
 
 void
 QCefWindow::exposeEvent(QExposeEvent* e)
 {
-  syncCefBrowserWindow();
+  updateBrowserWindow();
   QWindow::exposeEvent(e);
 }
 
 void
 QCefWindow::resizeEvent(QResizeEvent* e)
 {
-  syncCefBrowserWindow();
+  updateBrowserWindow();
   QWindow::resizeEvent(e);
 }

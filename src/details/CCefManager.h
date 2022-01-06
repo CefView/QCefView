@@ -1,18 +1,37 @@
 ﻿#pragma once
 
 #pragma region std_headers
+#include <atomic>
 #include <mutex>
+#include <set>
+#include <string>
+#include <memory>
 #pragma endregion std_headers
 
+#include <CefViewBrowserAppDelegate.h>
+#include <CefViewBrowserHandler.h>
 #include <CefViewBrowserApp.h>
+
+#include "QCefConfigPrivate.h"
 
 /// <summary>
 ///
 /// </summary>
 class CCefManager
+  : public CefViewBrowserAppDelegateInterface
+  , public std::enable_shared_from_this<CCefManager>
 {
+public:
+  /// <summary>
+  ///
+  /// </summary>
+  typedef std::shared_ptr<CCefManager> RefPtr;
 
-protected:
+  /// <summary>
+  ///
+  /// </summary>
+  typedef std::weak_ptr<CCefManager> WeakPtr;
+
   /// <summary>
   ///
   /// </summary>
@@ -21,19 +40,30 @@ protected:
   /// <summary>
   ///
   /// </summary>
-  ~CCefManager(){};
+  ~CCefManager();
 
-public:
   /// <summary>
   ///
   /// </summary>
   /// <returns></returns>
-  static CCefManager& getInstance();
+  static RefPtr getInstance() { return s_This_.lock(); }
 
   /// <summary>
   ///
   /// </summary>
-  void initializeCef();
+  /// <param name="config"></param>
+  /// <returns></returns>
+  bool initialize(const QCefConfigPrivate* config);
+
+  /// <summary>
+  ///
+  /// </summary>
+  void uninitialize();
+
+  /// <summary>
+  ///
+  /// </summary>
+  void doCefWork();
 
   /// <summary>
   ///
@@ -48,15 +78,47 @@ public:
   /// <summary>
   ///
   /// </summary>
-  void uninitializeCef();
+  /// <param name="handler"></param>
+  void registerBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="handler"></param>
+  void removeBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler);
+
+  /// <summary>
+  ///
+  /// </summary>
+  void closeAllBrowserHandler();
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="delay_ms"></param>
+  void OnScheduleMessageLoopWork(int64_t delay_ms) override;
 
 protected:
   /// <summary>
   ///
   /// </summary>
-  void releaseCef();
+  /// <param name="argc"></param>
+  /// <param name="argv"></param>
+  /// <param name="config"></param>
+  /// <returns></returns>
+  bool initializeCef(const QCefConfigPrivate* config);
+
+  /// <summary>
+  ///
+  /// </summary>
+  void uninitializeCef();
 
 private:
+  /// <summary>
+  ///
+  /// </summary>
+  static WeakPtr s_This_;
+
   /// <summary>
   ///
   /// </summary>
@@ -65,10 +127,10 @@ private:
   /// <summary>
   ///
   /// </summary>
-  CefSettings cef_settings_;
+  std::mutex handler_set_locker_;
 
   /// <summary>
   ///
   /// </summary>
-  int64_t nBrowserRefCount_;
+  std::set<CefRefPtr<CefViewBrowserHandler>> handler_set_;
 };

@@ -2,18 +2,14 @@
 #define QCEFVIEW_H
 #pragma once
 #include <QCefView_global.h>
-
-#pragma region std_headers
-#include <memory>
-#pragma endregion std_headers
+#include <QCefQuery.h>
+#include <QCefEvent.h>
 
 #pragma region qt_headers
 #include <QWidget>
 #include <QVariantList>
+#include <QScopedPointer>
 #pragma endregion qt_headers
-
-#include <QCefQuery.h>
-#include <QCefEvent.h>
 
 /** Outline of QCefView:
  **
@@ -46,15 +42,17 @@ class CefDownloadHandler;
 class CefJSDialogHandler;
 class CefKeyboardHandler;
 
+class QCefViewPrivate;
+
 /// <summary>
 ///
 /// </summary>
 class QCEFVIEW_EXPORT QCefView : public QWidget
 {
-  /// <summary>
-  ///
-  /// </summary>
   Q_OBJECT
+  Q_DECLARE_PRIVATE(QCefView)
+  Q_DISABLE_COPY(QCefView)
+  QScopedPointer<QCefViewPrivate> d_ptr;
 
 public:
   /// <summary>
@@ -246,8 +244,9 @@ public:
   /// <summary>
   ///
   /// </summary>
-  /// <param name="region"></param>
-  virtual void onDraggableRegionChanged(const QRegion& region);
+  /// <param name="draggableRegion"></param>
+  /// <param name="nonDraggableRegion"></param>
+  virtual void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
 
   /// <summary>
   ///
@@ -297,13 +296,6 @@ protected:
   /// <param name="event"></param>
   /// <returns></returns>
   virtual bool eventFilter(QObject* watched, QEvent* event) override;
-
-private:
-  /// <summary>
-  ///
-  /// </summary>
-  class Implementation;
-  std::unique_ptr<Implementation> pImpl_;
 };
 
 #endif // QCEFVIEW_H

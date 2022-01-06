@@ -7,17 +7,24 @@
 
 class QCefViewTest : public QMainWindow
 {
-	Q_OBJECT
+  Q_OBJECT
 
 public:
-	QCefViewTest(QWidget *parent = 0);
-	~QCefViewTest();
+  QCefViewTest(QWidget* parent = 0);
+  ~QCefViewTest();
+
+//#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+//  virtual bool nativeEvent(const QByteArray &eventType, void *message, qintptr *result);
+//#else
+//  virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result);
+//#endif
 
 protected slots:
-	void onBtnChangeColorClicked();
+  void onBtnChangeColorClicked();
+
 private:
-	Ui::QCefViewTestClass ui;
-	CustomCefView* cefview;
+  Ui::QCefViewTestClass ui;
+  CustomCefView* cefview;
 };
 
 #endif // QCEFVIEWTEST_H

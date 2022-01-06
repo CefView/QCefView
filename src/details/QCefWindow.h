@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #pragma region qt_headers
 #include <QWindow>
@@ -13,7 +13,7 @@
 #include <include/cef_app.h>
 #pragma endregion cef_headers
 
-#include <CefViewBrowserDelegate.h>
+#include <CefViewBrowserHandlerDelegate.h>
 
 #include <QCefQuery.h>
 #include <QCefView.h>
@@ -46,29 +46,29 @@ public:
   ///
   /// </summary>
   /// <param name="win"></param>
-  void setCefBrowserWindow(CefWindowHandle win);
+  void setBrowserWindowId(CefWindowHandle win);
 
 protected:
   /// <summary>
   ///
   /// </summary>
-  void syncCefBrowserWindow();
+  void updateBrowserWindow();
 
   /// <summary>
   ///
   /// </summary>
   /// <param name="e"></param>
-  virtual void exposeEvent(QExposeEvent* e);
+  virtual void exposeEvent(QExposeEvent* e) override;
 
   /// <summary>
   ///
   /// </summary>
   /// <param name="e"></param>
-  virtual void resizeEvent(QResizeEvent* e);
+  virtual void resizeEvent(QResizeEvent* e) override;
 
 private:
   /// <summary>
   ///
   /// </summary>
-  CefWindowHandle hwndCefBrowser_;
+  QWindow* browserWindow_;
 };

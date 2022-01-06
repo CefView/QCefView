@@ -4,8 +4,6 @@
 #include <QCoreApplication>
 #include <QHBoxLayout>
 
-#include <QCefSetting.h>
-
 QCefViewTest::QCefViewTest(QWidget* parent)
   : QMainWindow(parent)
 {
@@ -17,12 +15,16 @@ QCefViewTest::QCefViewTest(QWidget* parent)
   connect(ui.btn_changeColor, SIGNAL(clicked()), this, SLOT(onBtnChangeColorClicked()));
   layout->addWidget(ui.nativeContainer);
 
-  QCefSetting::setBridgeObjectName("CallBridge");
-
   QDir dir = QCoreApplication::applicationDirPath();
-  QString uri = QDir::toNativeSeparators(dir.filePath("QCefViewTestPage.html"));
+
+#if defined(OS_MACOS)
+  QString uri = QString("file://") + QDir::toNativeSeparators(dir.filePath("../Resources/QCefViewTestPage.html"));
+#else
+  QString uri = QString("file://") + QDir::toNativeSeparators(dir.filePath("QCefViewTestPage.html"));
+#endif
+
   cefview = new CustomCefView(uri, this);
-  // cefview = new CustomCefView("http://www.google.com/", this);
+  // cefview = new CustomCefView("http://www.w3.org", this);
   ui.cefContainer->layout()->addWidget(cefview);
   layout->addWidget(ui.cefContainer);
 
