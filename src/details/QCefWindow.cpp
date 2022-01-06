@@ -38,16 +38,16 @@ QCefWindow::setBrowserWindowId(CefWindowHandle win)
       [=]() {
         this->browserWindow_ = QWindow::fromWinId((WId)win);
         this->browserWindow_->setParent(this);
-        syncBrowserWindow();
+        updateBrowserWindow();
       },
       Qt::QueuedConnection);
   }
 }
 
 void
-QCefWindow::syncBrowserWindow()
+QCefWindow::updateBrowserWindow()
 {
-  if (browserWindow_) {
+  if (browserWindow_ && browserWindow_->size() != size()) {
     double w = width() * devicePixelRatio();
     double h = height() * devicePixelRatio();
     browserWindow_->setGeometry(0, 0, ceil(w), ceil(h));
@@ -58,13 +58,13 @@ QCefWindow::syncBrowserWindow()
 void
 QCefWindow::exposeEvent(QExposeEvent* e)
 {
-  syncBrowserWindow();
+  updateBrowserWindow();
   QWindow::exposeEvent(e);
 }
 
 void
 QCefWindow::resizeEvent(QResizeEvent* e)
 {
-  syncBrowserWindow();
+  updateBrowserWindow();
   QWindow::resizeEvent(e);
 }

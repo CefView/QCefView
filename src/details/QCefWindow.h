@@ -52,7 +52,7 @@ protected:
   /// <summary>
   ///
   /// </summary>
-  void syncBrowserWindow();
+  void updateBrowserWindow();
 
   /// <summary>
   ///
