@@ -19,12 +19,12 @@ if (DEFINED ENV{APPVEYOR})
   elseif (OS_LINUX)
     set(QT_SDK_DIR
       # Change this value to the Qt SDK path of your build environment
-      "$ENV{HOME}/Qt/6.2.1/gcc_64/lib/cmake"
+      "$ENV{HOME}/Qt/latest/gcc_64/lib/cmake"
     )
   elseif(OS_MACOS)
     set(QT_SDK_DIR
       # Change this value to the Qt SDK path of your build environment
-      "$ENV{HOME}/Qt/6.1.2/clang_64/lib/cmake"
+      "$ENV{HOME}/Qt/latest/clang_64/lib/cmake"
     )
   else()
     message(FATAL_ERROR "Unsupported plaftorm")
