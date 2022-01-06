@@ -4,6 +4,10 @@
 cmake_minimum_required(VERSION 3.4.1)
 project(QCefView)
 
+option(BUILD_DEMO       "Build the demo"                      OFF)
+option(USE_SANDBOX      "Enable CEF Sandbox"                  OFF)
+option(STATIC_CRT       "Use MultiThreaded linkage for MSVC"  OFF)
+
 # Only generate Debug and Release configuration types.
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
 if (NOT CMAKE_BUILD_TYPE)
@@ -57,26 +61,20 @@ message(STATUS "Qt SKD dir: " ${QT_SDK_DIR})
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT_SDK_DIR})
 ###############################################################
 
+
 # Config the CEF
 ###############################################################
-# Disable the sandbox
-if ((NOT DEFINED USE_SANDBOX) OR (USE_SANDBOX STREQUAL "") 
-    OR (${USE_SANDBOX} MATCHES "(FALSE|false|0|OFF)"))
-    option(USE_SANDBOX "Enable CEF Sandbox" OFF)
-elseif(${USE_SANDBOX} MATCHES "(TRUE|true|1|null|ON)")
-    option(USE_SANDBOX "Enable CEF Sandbox" ON)
-else()
-    message(FATAL_ERROR "++++++++++ INVALID FLAG USE_SANDBOX=" ${USE_SANDBOX})
-endif()
-###############################################################
-
 if (OS_WINDOWS)
   add_link_options(/DEBUG)
+  # Disable the sandbox on Windows, because the sandbox.lib is MT which 
+  # is conflict with Qt
+  set(USE_SANDBOX OFF CACHE BOOL "Disable sandbox on Windows" FORCE)
+  add_compile_options("/M$<IF:$<BOOL:${STATIC_CRT}>,T,D>$<$<CONFIG:Debug>:d>")
 else()
-  add_compile_options(-g)
   add_compile_options(
-      "$<$<CONFIG:DEBUG>:-O0>"
-      "$<$<CONFIG:RELEASE>:-O3>"
+    "-g"
+    "$<$<CONFIG:DEBUG>:-O0>"
+    "$<$<CONFIG:RELEASE>:-O3>"
   )
 endif()
 
@@ -98,14 +96,6 @@ add_subdirectory(src)
 
 # Config the Demo project
 ###############################################################
-if ((NOT DEFINED BUILD_DEMO) OR (BUILD_DEMO STREQUAL "") 
-    OR (${BUILD_DEMO} MATCHES "(FALSE|false|0|OFF)"))
-    option(BUILD_DEMO "Build the demo" OFF)
-elseif(${BUILD_DEMO} MATCHES "(TRUE|true|1|null|ON)")
-    option(BUILD_DEMO "Build the demo" ON)
-else()
-    message(FATAL_ERROR "++++++++++ INVALID FLAG BUILD_DEMO=" ${BUILD_DEMO})
-endif()
 if (BUILD_DEMO)
   add_subdirectory(test/QCefViewTest)
 endif()
