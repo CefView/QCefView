@@ -48,9 +48,11 @@ void
 QCefWindow::updateBrowserWindow()
 {
   if (browserWindow_ && browserWindow_->size() != size()) {
-    double w = width() * devicePixelRatio();
-    double h = height() * devicePixelRatio();
-    browserWindow_->setGeometry(0, 0, ceil(w), ceil(h));
+    // double w = width() * devicePixelRatio();
+    // double h = height() * devicePixelRatio();
+    // browserWindow_->setGeometry(0, 0, ceil(w), ceil(h));
+
+    browserWindow_->setGeometry(0, 0, width(), height());
   }
   return;
 }
