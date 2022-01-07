@@ -8,45 +8,59 @@
 #include <memory>
 #pragma endregion std_headers
 
-#include <CefViewBrowserAppDelegate.h>
+#pragma region qt_headers
+#include <QObject>
+#include <QTimer>
+#include <QList>
+#pragma endregion qt_headers
+
 #include <CefViewBrowserHandler.h>
 #include <CefViewBrowserApp.h>
 
 #include "QCefConfigPrivate.h"
 
+class CCefAppDelegate;
+
 /// <summary>
 ///
 /// </summary>
-class CCefManager
-  : public CefViewBrowserAppDelegateInterface
-  , public std::enable_shared_from_this<CCefManager>
+class QCefContextPrivate : public QObject
 {
+  Q_OBJECT
+
+private:
+  typedef struct ArchiveMapping
+  {
+    QString path;
+    QString url;
+    QString psw;
+  } ArchiveMapping;
+
+  typedef struct FolderMapping
+  {
+    QString path;
+    QString url;
+    int priority;
+  } FolderMapping;
+
+public:
+  QTimer cefWorkerTimer_;
+  QList<FolderMapping> folderMappingList_;
+  QList<ArchiveMapping> archiveMappingList_;
+
+  CefRefPtr<CefViewBrowserApp> app_;
+  CefViewBrowserAppDelegateInterface::RefPtr pAppDelegate_;
+
 public:
   /// <summary>
   ///
   /// </summary>
-  typedef std::shared_ptr<CCefManager> RefPtr;
+  QCefContextPrivate();
 
   /// <summary>
   ///
   /// </summary>
-  typedef std::weak_ptr<CCefManager> WeakPtr;
-
-  /// <summary>
-  ///
-  /// </summary>
-  CCefManager();
-
-  /// <summary>
-  ///
-  /// </summary>
-  ~CCefManager();
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <returns></returns>
-  static RefPtr getInstance() { return s_This_.lock(); }
+  ~QCefContextPrivate();
 
   /// <summary>
   ///
@@ -63,11 +77,6 @@ public:
   /// <summary>
   ///
   /// </summary>
-  void doCefWork();
-
-  /// <summary>
-  ///
-  /// </summary>
   /// <param name="name"></param>
   /// <param name="value"></param>
   /// <param name="domain"></param>
@@ -78,8 +87,14 @@ public:
   /// <summary>
   ///
   /// </summary>
-  /// <param name="delay_ms"></param>
-  void OnScheduleMessageLoopWork(int64_t delay_ms) override;
+  /// <param name="delayMs"></param>
+  void scheduleMessageLoopWork(int64_t delayMs);
+
+protected slots:
+  /// <summary>
+  ///
+  /// </summary>
+  void doCefWork();
 
 protected:
   /// <summary>
@@ -95,15 +110,4 @@ protected:
   ///
   /// </summary>
   void uninitializeCef();
-
-private:
-  /// <summary>
-  ///
-  /// </summary>
-  static WeakPtr s_This_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  CefRefPtr<CefViewBrowserApp> app_;
 };

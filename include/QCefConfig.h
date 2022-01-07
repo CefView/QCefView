@@ -18,6 +18,7 @@ class QCEFVIEW_EXPORT QCefConfig
 {
   Q_DECLARE_PRIVATE(QCefConfig)
   QScopedPointer<QCefConfigPrivate> d_ptr;
+
   friend class QCefContext;
 
 public:
@@ -175,11 +176,6 @@ public:
   ///
   /// </summary>
   const short remoteDebuggingPort() const;
-
-  /// <summary>
-  ///
-  /// </summary>
-  void addGlobalCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
 };
 
 #endif

@@ -24,9 +24,7 @@
 
 #include "QCefWindow.h"
 
-class CCefHandlerDelegate
-  : public CefViewBrowserHandlerDelegateInterface
-  , public std::enable_shared_from_this<CCefHandlerDelegate>
+class CCefHandlerDelegate : public CefViewBrowserHandlerDelegateInterface
 {
 public:
   explicit CCefHandlerDelegate(QCefView* view, QCefWindow* window);

@@ -7,6 +7,8 @@
 #include <QPoint>
 #pragma endregion qt_headers
 
+#include <QCefContext.h>
+
 #include "details/QCefEventPrivate.h"
 #include "details/QCefViewPrivate.h"
 
@@ -27,7 +29,7 @@ QCefView::QCefView(const QString url, QWidget* parent /*= 0*/)
   layout->addWidget(windowContainer);
 
   // create the implementation
-  d_ptr.reset(new QCefViewPrivate(url, this, pCefWindow));
+  d_ptr.reset(new QCefViewPrivate(QCefContext::instance()->d_func(), url, this, pCefWindow));
 
   // If we're already part of a window, we'll install our event handler
   // If our parent changes later, this will be handled in QCefView::changeEvent()
@@ -42,26 +44,6 @@ QCefView::QCefView(QWidget* parent /*= 0*/)
 QCefView::~QCefView()
 {
   disconnect();
-}
-
-void
-QCefView::addLocalFolderResource(const QString& path, const QString& url, int priority /* = 0*/)
-{
-  QCefViewPrivate::folderMappingList_.push_back({ path, url, priority });
-}
-
-void
-QCefView::addArchiveResource(const QString& path, const QString& url, const QString& password /* = ""*/)
-{
-  QCefViewPrivate::archiveMappingList_.push_back({ path, url, password });
-}
-
-void
-QCefView::addCookie(const QString& name, const QString& value, const QString& domain, const QString& url)
-{
-  Q_D(QCefView);
-
-  d->addCookie(name, value, domain, url);
 }
 
 void

@@ -13,14 +13,9 @@
 
 #include <CefViewCoreProtocol.h>
 
-#include "CCefManager.h"
-
-QList<QCefViewPrivate::FolderMapping> QCefViewPrivate::folderMappingList_;
-
-QList<QCefViewPrivate::ArchiveMapping> QCefViewPrivate::archiveMappingList_;
-
-QCefViewPrivate::QCefViewPrivate(const QString& url, QCefView* view, QCefWindow* win)
+QCefViewPrivate::QCefViewPrivate(QCefContextPrivate* context, const QString& url, QCefView* view, QCefWindow* win)
   : q_ptr(view)
+  , pContext_(context)
   , pQCefViewHandler_(nullptr)
   , pCefHandlerDelegate_(nullptr)
 {
@@ -43,19 +38,19 @@ QCefViewPrivate::QCefViewPrivate(const QString& url, QCefView* view, QCefWindow*
   browserSettings.plugins = STATE_DISABLED;
 
   // create the delegate
-  auto pCefDelegate = std::make_shared<CCefHandlerDelegate>(view, win);
+  auto pHandlerDelegate = std::make_shared<CCefHandlerDelegate>(view, win);
 
   // create the browser
-  auto pQCefViewHandler = new CefViewBrowserHandler(pCefDelegate);
+  auto pQCefViewHandler = new CefViewBrowserHandler(pHandlerDelegate);
 
   // add archive mapping
-  for (auto archiveMapping : archiveMappingList_) {
+  for (auto archiveMapping : pContext_->archiveMappingList_) {
     pQCefViewHandler->AddArchiveResourceProvider(
       archiveMapping.path.toStdString(), archiveMapping.url.toStdString(), archiveMapping.psw.toStdString());
   }
 
   // add local folder mapping
-  for (auto folderMapping : folderMappingList_) {
+  for (auto folderMapping : pContext_->folderMappingList_) {
     pQCefViewHandler->AddLocalDirectoryResourceProvider(
       folderMapping.path.toStdString(), folderMapping.url.toStdString(), folderMapping.priority);
   }
@@ -71,7 +66,7 @@ QCefViewPrivate::QCefViewPrivate(const QString& url, QCefView* view, QCefWindow*
   }
 
   // update members
-  pCefHandlerDelegate_ = pCefDelegate;
+  pCefHandlerDelegate_ = pHandlerDelegate;
   pQCefViewHandler_ = pQCefViewHandler;
 }
 
@@ -108,13 +103,6 @@ QCefViewPrivate::addArchiveResource(const QString& path, const QString& url, con
   if (pQCefViewHandler_) {
     pQCefViewHandler_->AddArchiveResourceProvider(path.toStdString(), url.toStdString(), password.toStdString());
   }
-}
-
-void
-QCefViewPrivate::addCookie(const QString& name, const QString& value, const QString& domain, const QString& url)
-{
-  CCefManager::getInstance()->addCookie(
-    name.toStdString(), value.toStdString(), domain.toStdString(), url.toStdString());
 }
 
 void

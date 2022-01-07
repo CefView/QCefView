@@ -1,11 +1,12 @@
 ﻿#pragma once
 #pragma region qt_headers
-#include <QPoint>
+#include <QString>
 #pragma endregion qt_headers
 
 #include <CefViewBrowserHandler.h>
 
 #include "QCefWindow.h"
+#include "QCefContextPrivate.h"
 #include "CCefHandlerDelegate.h"
 
 #include <QCefView.h>
@@ -17,6 +18,8 @@ class QCefViewPrivate
   QCefView* q_ptr;
 
 private:
+  QCefContextPrivate* pContext_;
+
   /// <summary>
   ///
   /// </summary>
@@ -28,30 +31,7 @@ private:
   CefViewBrowserHandlerDelegateInterface::RefPtr pCefHandlerDelegate_;
 
 public:
-  /// <summary>
-  ///
-  /// </summary>
-  typedef struct FolderMapping
-  {
-    QString path;
-    QString url;
-    int priority;
-  } FolderMapping;
-  static QList<FolderMapping> folderMappingList_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  typedef struct ArchiveMapping
-  {
-    QString path;
-    QString url;
-    QString psw;
-  } ArchiveMapping;
-  static QList<ArchiveMapping> archiveMappingList_;
-
-public:
-  explicit QCefViewPrivate(const QString& url, QCefView* view, QCefWindow* win);
+  explicit QCefViewPrivate(QCefContextPrivate* context, const QString& url, QCefView* view, QCefWindow* win);
 
   ~QCefViewPrivate();
 
@@ -60,8 +40,6 @@ public:
   void addLocalFolderResource(const QString& path, const QString& url);
 
   void addArchiveResource(const QString& path, const QString& url, const QString& password);
-
-  void addCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
 
   void navigateToString(const QString& content);
 

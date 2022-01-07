@@ -1,9 +1,9 @@
-﻿#include "../../details/CCefManager.h"
+﻿#include "../../details/QCefContextPrivate.h"
 
 #include "../../details/QCefConfigPrivate.h"
 
 bool
-CCefManager::initializeCef(const QCefConfigPrivate* config)
+QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
 {
   // Build CefSettings
   CefSettings cef_settings;
@@ -58,7 +58,7 @@ CCefManager::initializeCef(const QCefConfigPrivate* config)
 }
 
 void
-CCefManager::uninitializeCef()
+QCefContextPrivate::uninitializeCef()
 {
   if (!app_)
     return;

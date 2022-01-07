@@ -10,14 +10,6 @@
 
 #include <QCefConfig.h>
 
-typedef struct CookieItem
-{
-  std::string name;
-  std::string value;
-  std::string domain;
-  std::string url;
-} CookieItem;
-
 class QCefConfigPrivate
 {
 public:
@@ -40,6 +32,4 @@ public:
   short remoteDebuggingport_ = 7788;
   bool persistSessionCookies_;
   bool persistUserPreferences_;
-
-  std::list<CookieItem> cookieList_;
 };

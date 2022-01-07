@@ -1,4 +1,4 @@
-#include "../../details/CCefManager.h"
+#include "../../details/QCefContextPrivate.h"
 
 #import <Cocoa/Cocoa.h>
 
@@ -106,7 +106,7 @@ freeCefLibrary()
 }
 
 bool
-CCefManager::initializeCef(const QCefConfigPrivate* config)
+QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
 {
   // load the cef library
   if (!loadCefLibrary()) {
@@ -163,7 +163,7 @@ CCefManager::initializeCef(const QCefConfigPrivate* config)
 }
 
 void
-CCefManager::uninitializeCef()
+QCefContextPrivate::uninitializeCef()
 {
   if (!app_)
     return;
