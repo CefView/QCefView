@@ -1,9 +1,12 @@
 ﻿#include <QCefContext.h>
 
 #include <QTimer>
+#include <QThread>
 #include <QDebug>
 
 #include "details/CCefManager.h"
+
+#define kCefWorkerIntervalMs (0 * 1000 / 60)
 
 /// <summary>
 ///
@@ -11,7 +14,11 @@
 class QCefContextPrivate
 {
 public:
-  QCefContextPrivate() { cefWorkerTimer.setInterval(1000 / 100); }
+  QCefContextPrivate()
+  {
+    cefWorkerTimer.setTimerType(Qt::PreciseTimer);
+    cefWorkerTimer.setSingleShot(true);
+  }
 
   ~QCefContextPrivate() {}
 
@@ -40,12 +47,15 @@ QCefContext::~QCefContext()
 }
 
 void
-QCefContext::scheduleMessageLoopWork(int64_t delay_ms)
+QCefContext::scheduleMessageLoopWork(int64_t delayMs)
 {
-  if (delay_ms <= 0) {
-    QTimer::singleShot(0, this, SLOT(doCefWork()));
+  Q_D(QCefContext);
+
+  if (QThread::currentThread() == this->thread()) {
+    delayMs <= 0 ? doCefWork() : d->cefWorkerTimer.start(delayMs);
   } else {
-    QTimer::singleShot(delay_ms, this, SLOT(doCefWork()));
+    QMetaObject::invokeMethod(
+      &d->cefWorkerTimer, "start", Qt::QueuedConnection, Q_ARG(int, delayMs <= 0 ? 0 : delayMs));
   }
 }
 
@@ -54,25 +64,36 @@ QCefContext::doCefWork()
 {
   Q_D(QCefContext);
 
-  if (d->pCefManager)
+  // process cef work
+  d->pCefManager->doCefWork();
+
+  // check timer status
+  int delayMs = d->cefWorkerTimer.remainingTime();
+
+  // overdue
+  if (delayMs == 0) {
+    // overdue, process immediately
     d->pCefManager->doCefWork();
+  } else {
+    // schedule at regular interval
+    d->cefWorkerTimer.start(delayMs > 0 ? delayMs : kCefWorkerIntervalMs);
+  }
 }
 
 bool
 QCefContext::init(QObject* parent, const QCefConfig* config)
 {
-  Q_ASSERT_X(s_self == nullptr, "QCefContext::init()", "There can be only one QCefContext instance");
+  Q_ASSERT_X(!s_self, "QCefContext::init()", "There can be only one QCefContext instance");
   s_self = this;
 
   Q_D(QCefContext);
 
+  // create and initialize the worker timer
+  connect(&d->cefWorkerTimer, &QTimer::timeout, this, &QCefContext::doCefWork);
+
   // create and initialize the cef manager
   d->pCefManager = std::make_shared<CCefManager>();
   d->pCefManager->initialize(config->d_func());
-
-  // create and initialize the worker timer
-  connect(&d->cefWorkerTimer, SIGNAL(timeout()), this, SLOT(doCefWork()));
-  d->cefWorkerTimer.start();
 
   return true;
 }

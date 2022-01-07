@@ -79,28 +79,3 @@ CCefManager::uninitializeCef()
   // shutdown the cef
   CefShutdown();
 }
-
-void
-CCefManager::removeBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler)
-{
-  std::lock_guard<std::mutex> lock(handler_set_locker_);
-  if (handler_set_.empty())
-    return;
-
-  handler->CloseAllBrowsers(true);
-
-  handler_set_.erase(handler);
-}
-
-void
-CCefManager::closeAllBrowserHandler()
-{
-  std::lock_guard<std::mutex> lock(handler_set_locker_);
-  if (handler_set_.empty()) {
-    return;
-  }
-
-  for (auto handler : handler_set_) {
-    handler->CloseAllBrowsers(true);
-  }
-}

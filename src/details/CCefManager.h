@@ -78,23 +78,6 @@ public:
   /// <summary>
   ///
   /// </summary>
-  /// <param name="handler"></param>
-  void registerBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler);
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="handler"></param>
-  void removeBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler);
-
-  /// <summary>
-  ///
-  /// </summary>
-  void closeAllBrowserHandler();
-
-  /// <summary>
-  ///
-  /// </summary>
   /// <param name="delay_ms"></param>
   void OnScheduleMessageLoopWork(int64_t delay_ms) override;
 
@@ -123,14 +106,4 @@ private:
   ///
   /// </summary>
   CefRefPtr<CefViewBrowserApp> app_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  std::mutex handler_set_locker_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  std::set<CefRefPtr<CefViewBrowserHandler>> handler_set_;
 };

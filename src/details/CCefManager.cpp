@@ -53,13 +53,6 @@ CCefManager::addCookie(const std::string& name,
 }
 
 void
-CCefManager::registerBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler)
-{
-  std::lock_guard<std::mutex> lock(handler_set_locker_);
-  handler_set_.insert(handler);
-}
-
-void
 CCefManager::OnScheduleMessageLoopWork(int64_t delay_ms)
 {
   auto p = QCefContext::instance();

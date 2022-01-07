@@ -1,4 +1,4 @@
-#include "QCefViewPrivate.h"
+﻿#include "QCefViewPrivate.h"
 
 #pragma region std_headers
 #include <stdexcept>
@@ -70,9 +70,6 @@ QCefViewPrivate::QCefViewPrivate(const QString& url, QCefView* view, QCefWindow*
     throw std::exception();
   }
 
-  // hold the browser handler
-  CCefManager::getInstance()->registerBrowserHandler(pQCefViewHandler);
-
   // update members
   pCefHandlerDelegate_ = pCefDelegate;
   pQCefViewHandler_ = pQCefViewHandler;
@@ -82,7 +79,6 @@ QCefViewPrivate::~QCefViewPrivate()
 {
   if (pQCefViewHandler_) {
     pQCefViewHandler_->CloseAllBrowsers(true);
-    CCefManager::getInstance()->removeBrowserHandler(pQCefViewHandler_);
     pQCefViewHandler_ = nullptr;
   }
 

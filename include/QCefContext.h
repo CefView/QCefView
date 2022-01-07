@@ -41,10 +41,13 @@ public:
   /// <summary>
   ///
   /// </summary>
-  /// <param name="delay_ms"></param>
-  void scheduleMessageLoopWork(int64_t delay_ms);
+  /// <param name="delayMs"></param>
+  void scheduleMessageLoopWork(int64_t delayMs);
 
 protected slots:
+  /// <summary>
+  ///
+  /// </summary>
   void doCefWork();
 
 private:

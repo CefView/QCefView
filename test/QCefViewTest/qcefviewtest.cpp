@@ -1,4 +1,4 @@
-#include "qcefviewtest.h"
+﻿#include "qcefviewtest.h"
 
 #include <QDir>
 #include <QCoreApplication>
@@ -12,7 +12,7 @@ QCefViewTest::QCefViewTest(QWidget* parent)
   layout->setContentsMargins(2, 2, 2, 2);
   layout->setSpacing(3);
 
-  connect(ui.btn_changeColor, SIGNAL(clicked()), this, SLOT(onBtnChangeColorClicked()));
+  connect(ui.btn_changeColor, &QPushButton::clicked, this, &QCefViewTest::onBtnChangeColorClicked);
   layout->addWidget(ui.nativeContainer);
 
   QDir dir = QCoreApplication::applicationDirPath();

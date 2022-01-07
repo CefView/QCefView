@@ -176,25 +176,3 @@ CCefManager::uninitializeCef()
 
   freeCefLibrary();
 }
-
-void
-CCefManager::removeBrowserHandler(CefRefPtr<CefViewBrowserHandler> handler)
-{
-  std::lock_guard<std::mutex> lock(handler_set_locker_);
-  if (handler_set_.empty())
-    return;
-
-  handler_set_.erase(handler);
-}
-
-void
-CCefManager::closeAllBrowserHandler()
-{
-  std::lock_guard<std::mutex> lock(handler_set_locker_);
-
-  for (auto handler : handler_set_) {
-    handler->CloseAllBrowsers(true);
-    NSView* view = (__bridge NSView*)(handler->GetBrowser()->GetHost()->GetWindowHandle());
-    [view removeFromSuperview];
-  }
-}
