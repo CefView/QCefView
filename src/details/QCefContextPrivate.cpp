@@ -9,7 +9,7 @@
 #include "CCefAppDelegate.h"
 #include "QCefConfigPrivate.h"
 
-#define kCefWorkerIntervalMs (1000 / 60) // 60 fps
+const int64_t kCefWorkerIntervalMs = (1000 / 60); // 60 fps
 
 QCefContextPrivate::QCefContextPrivate()
 {
@@ -45,7 +45,7 @@ void
 QCefContextPrivate::scheduleCefLoopWork(int64_t delayMs)
 {
   // calculate the effective delay number
-  auto delay = qMax(0, qMin(delayMs, kCefWorkerIntervalMs));
+  auto delay = qMax((int64_t)0, qMin(delayMs, kCefWorkerIntervalMs));
 
   // update timer interval by different thread context
   if (QThread::currentThread() == this->thread()) {
