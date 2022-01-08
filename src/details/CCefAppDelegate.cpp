@@ -8,6 +8,6 @@ void
 CCefAppDelegate::OnScheduleMessageLoopWork(int64_t delay_ms)
 {
   if (pContext_) {
-    pContext_->scheduleMessageLoopWork(delay_ms);
+    pContext_->scheduleCefLoopWork(delay_ms);
   }
 }

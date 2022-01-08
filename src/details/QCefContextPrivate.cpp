@@ -9,13 +9,14 @@
 #include "CCefAppDelegate.h"
 #include "QCefConfigPrivate.h"
 
-#define kCefWorkerIntervalMs (0 * 1000 / 60)
+#define kCefWorkerIntervalMs (1000 / 60) // 60 fps
 
 QCefContextPrivate::QCefContextPrivate()
 {
+  QObject::connect(&cefWorkerTimer_, &QTimer::timeout, this, &QCefContextPrivate::performCefLoopWork);
   cefWorkerTimer_.setTimerType(Qt::PreciseTimer);
-  cefWorkerTimer_.setSingleShot(true);
-  QObject::connect(&cefWorkerTimer_, &QTimer::timeout, this, &QCefContextPrivate::doCefWork);
+  cefWorkerTimer_.setInterval(0); // at startup we want the high priority
+  cefWorkerTimer_.start();
 }
 
 QCefContextPrivate::~QCefContextPrivate() {}
@@ -23,59 +24,42 @@ QCefContextPrivate::~QCefContextPrivate() {}
 bool
 QCefContextPrivate::initialize(const QCefConfigPrivate* config)
 {
-  pAppDelegate_ = std::make_shared<CCefAppDelegate>(this);
-  if (!initializeCef(config))
-    return false;
+  // create app delegate before initialization
+  pAppDelegate_.reset(new CCefAppDelegate(this));
 
-  return true;
+  // initialize CEF
+  return initializeCef(config);
 }
 
 void
 QCefContextPrivate::uninitialize()
 {
+  // reset delegate before cleanup
   pAppDelegate_.reset();
 
+  // cleanup CEF
   uninitializeCef();
 }
 
-bool
-QCefContextPrivate::addCookie(const std::string& name,
-                              const std::string& value,
-                              const std::string& domain,
-                              const std::string& url)
-{
-  CefCookie cookie;
-  CefString(&cookie.name).FromString(name);
-  CefString(&cookie.value).FromString(value);
-  CefString(&cookie.domain).FromString(domain);
-  return CefCookieManager::GetGlobalManager(nullptr)->SetCookie(CefString(url), cookie, nullptr);
-}
-
 void
-QCefContextPrivate::scheduleMessageLoopWork(int64_t delayMs)
+QCefContextPrivate::scheduleCefLoopWork(int64_t delayMs)
 {
+  // calculate the effective delay number
+  auto delay = qMax(0, qMin(delayMs, kCefWorkerIntervalMs));
+
+  // update timer interval by different thread context
   if (QThread::currentThread() == this->thread()) {
-    delayMs <= 0 ? doCefWork() : cefWorkerTimer_.start(delayMs);
+    // current it is in main GUI thread, update timer interval directly
+    cefWorkerTimer_.start(delay);
   } else {
-    QMetaObject::invokeMethod(&cefWorkerTimer_, "start", Qt::QueuedConnection, Q_ARG(int, delayMs <= 0 ? 0 : delayMs));
+    // not in main GUI thread, postpone the updating of timer interval
+    QMetaObject::invokeMethod(&cefWorkerTimer_, "start", Qt::QueuedConnection, Q_ARG(int, delay));
   }
 }
 
 void
-QCefContextPrivate::doCefWork()
+QCefContextPrivate::performCefLoopWork()
 {
   // process cef work
   CefDoMessageLoopWork();
-
-  // check timer status
-  int delayMs = cefWorkerTimer_.remainingTime();
-
-  // overdue
-  if (delayMs == 0) {
-    // overdue, process immediately
-    CefDoMessageLoopWork();
-  } else {
-    // schedule at regular interval
-    cefWorkerTimer_.start(delayMs > 0 ? delayMs : kCefWorkerIntervalMs);
-  }
 }

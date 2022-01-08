@@ -77,24 +77,35 @@ public:
   /// <summary>
   ///
   /// </summary>
+  /// <param name="delayMs"></param>
+  void scheduleCefLoopWork(int64_t delayMs);
+
+  /// <summary>
+  ///
+  /// </summary>
   /// <param name="name"></param>
   /// <param name="value"></param>
   /// <param name="domain"></param>
   /// <param name="url"></param>
   /// <returns></returns>
-  bool addCookie(const std::string& name, const std::string& value, const std::string& domain, const std::string& url);
 
+  bool addGlobalCookie(const std::string& name,
+                       const std::string& value,
+                       const std::string& domain,
+                       const std::string& url)
+  {
+    CefCookie cookie;
+    CefString(&cookie.name).FromString(name);
+    CefString(&cookie.value).FromString(value);
+    CefString(&cookie.domain).FromString(domain);
+    return CefCookieManager::GetGlobalManager(nullptr)->SetCookie(CefString(url), cookie, nullptr);
+  }
+
+public slots:
   /// <summary>
   ///
   /// </summary>
-  /// <param name="delayMs"></param>
-  void scheduleMessageLoopWork(int64_t delayMs);
-
-protected slots:
-  /// <summary>
-  ///
-  /// </summary>
-  void doCefWork();
+  void performCefLoopWork();
 
 protected:
   /// <summary>

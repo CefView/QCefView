@@ -37,6 +37,7 @@ QCefContext::addLocalFolderResource(const QString& path, const QString& url, int
 void
 QCefContext::addArchiveResource(const QString& path, const QString& url, const QString& password /* = ""*/)
 {
+
   Q_D(QCefContext);
 
   d->archiveMappingList_.push_back({ path, url, password });
@@ -47,7 +48,7 @@ QCefContext::addCookie(const QString& name, const QString& value, const QString&
 {
   Q_D(QCefContext);
 
-  d->addCookie(name.toStdString(), value.toStdString(), domain.toStdString(), url.toStdString());
+  d->addGlobalCookie(name.toStdString(), value.toStdString(), domain.toStdString(), url.toStdString());
 }
 
 bool

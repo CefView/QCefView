@@ -72,13 +72,24 @@ QCefViewPrivate::QCefViewPrivate(QCefContextPrivate* context, const QString& url
 
 QCefViewPrivate::~QCefViewPrivate()
 {
-  if (pQCefViewHandler_) {
-    pQCefViewHandler_->CloseAllBrowsers(true);
-    pQCefViewHandler_ = nullptr;
-  }
-
+  // release the delegate
   if (pCefHandlerDelegate_)
     pCefHandlerDelegate_.reset();
+
+  // make sure the handler will be destructed
+  if (pQCefViewHandler_) {
+    pQCefViewHandler_->CloseAllBrowsers(true);
+
+    // wait till the handler was held by us only.
+    // there is no good solution for this
+    // in external message pump mode so far
+    while (!pQCefViewHandler_->HasOneRef()) {
+      pContext_->performCefLoopWork();
+    }
+
+    // release the handler to destruct it
+    pQCefViewHandler_ = nullptr;
+  }
 }
 
 void
