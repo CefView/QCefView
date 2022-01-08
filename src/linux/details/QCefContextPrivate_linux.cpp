@@ -46,7 +46,7 @@ QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
 
   // Initialize CEF.
   CefMainArgs main_args(config->argc, config->argv);
-  auto app = new CefViewBrowserApp(config->bridgeObjectName_, shared_from_this());
+  auto app = new CefViewBrowserApp(config->bridgeObjectName_, pAppDelegate_);
   if (!CefInitialize(main_args, cef_settings, app, nullptr)) {
     assert(0);
     return false;
