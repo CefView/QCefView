@@ -108,6 +108,17 @@ if (OS_LINUX)
       BUILD_WITH_INSTALL_RPATH TRUE
   )
 
+  target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+      # On linux platform and debug mode, libcef.so MUST be loaded before libc.so.
+      # Gnerally we can achive this by using LD_PRELOAD=libcef.so, but this is not 
+      # convenience for debugging. 
+      # Thus, here we do a trick to make sure the load order
+      "-Wl,--no-as-needed $<TARGET_FILE_DIR:QCefView>/$<TARGET_FILE_NAME:libcef_lib>"
+
+      QCefView
+  )
+
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     # Copy the TEST HTML file
     COMMAND ${CMAKE_COMMAND} -E copy_if_different 
@@ -120,16 +131,6 @@ if (OS_LINUX)
     # --no-translations 
     # --no-compiler-runtime 
     # $<TARGET_FILE:${PROJECT_NAME}>
-  )
-
-  # On linux platform and debug mode, libcef.so MUST be loaded before libc.so.
-  # Gnerally we can achive this by using LD_PRELOAD=libcef.so, but this is not 
-  # convenience for debugging. 
-  # Thus, here we do a trick to make sure the load order
-  target_link_libraries(${PROJECT_NAME}
-    PRIVATE
-      -Wl,--no-as-needed libcef_lib
-      QCefView
   )
 endif() # OS_LINUX
 
