@@ -1,8 +1,10 @@
 #include "../../details/QCefContextPrivate.h"
 
 #import <Cocoa/Cocoa.h>
+#import <objc/runtime.h>
 
 #pragma region cef_headers
+#include <include/cef_application_mac.h>
 #include <include/cef_sandbox_mac.h>
 #include <include/wrapper/cef_library_loader.h>
 #pragma endregion cef_headers
@@ -38,6 +40,47 @@
   path = [path stringByAppendingPathComponent:@"MacOS"];
   path = [path stringByAppendingPathComponent:@HELPER_BINARY_NAME];
   return path;
+}
+@end
+
+bool g_handling_send_event = false;
+
+@interface NSApplication (QCefApp) <CefAppProtocol>
+- (void)_swizzled_sendEvent:(NSEvent *)event;
+- (void)_swizzled_terminate:(id)sender;
+@end
+
+@implementation NSApplication (QCefApp)
+// wraps sendEvent and terminate
++ (void)load {
+    Method original = class_getInstanceMethod(self, @selector(sendEvent));
+    Method swizzled =
+        class_getInstanceMethod(self, @selector(_swizzled_sendEvent));
+    Method originalTerm = class_getInstanceMethod(self,
+                                                  @selector(terminate:));
+    Method swizzledTerm =
+        class_getInstanceMethod(self, @selector(_swizzled_terminate:));
+
+    method_exchangeImplementations(original, swizzled);
+    method_exchangeImplementations(originalTerm, swizzledTerm);
+}
+
+- (BOOL)isHandlingSendEvent {
+    return g_handling_send_event;
+}
+
+- (void)setHandlingSendEvent:(BOOL)handlingSendEvent {
+    g_handling_send_event = handlingSendEvent;
+}
+
+- (void)_swizzled_sendEvent:(NSEvent *)event {
+    CefScopedSendingEvent sendingEventScoper;
+
+    [self _swizzled_sendEvent:event];
+}
+
+- (void)_swizzled_terminate:(id)sender {
+    [self _swizzled_terminate:sender];
 }
 @end
 
