@@ -190,10 +190,11 @@ if (OS_MACOS)
 
   find_library(COCOA_FRAMEWORK Cocoa)
   find_library(APPKIT_FRAMEWORK Appkit)
-  target_link_libraries(${PROJECT_NAME} PRIVATE
-    $<TARGET_FILE:QCefView>
-    ${COCOA_FRAMEWORK}
-    ${APPKIT_FRAMEWORK}
+  target_link_libraries(${PROJECT_NAME} 
+    PRIVATE
+      $<TARGET_FILE:QCefView>
+      ${COCOA_FRAMEWORK}
+      ${APPKIT_FRAMEWORK}
   )
 endif()
 
