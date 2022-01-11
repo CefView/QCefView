@@ -210,7 +210,7 @@ QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
 void
 QCefContextPrivate::uninitializeCef()
 {
-  if (!app_)
+  if (!pApp_)
     return;
 
   pAppDelegate_ = nullptr;
