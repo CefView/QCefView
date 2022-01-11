@@ -1,4 +1,4 @@
-#include "QCefContextPrivate.h"
+﻿#include "QCefContextPrivate.h"
 
 #pragma region qt_headers
 #include <QThread>
@@ -7,6 +7,8 @@
 #include <QCefContext.h>
 
 #include "CCefAppDelegate.h"
+#include "CCefClientDelegate.h"
+
 #include "QCefConfigPrivate.h"
 
 const int64_t kCefWorkerIntervalMs = (1000 / 60); // 60 fps
@@ -23,18 +25,33 @@ QCefContextPrivate::~QCefContextPrivate() {}
 bool
 QCefContextPrivate::initialize(const QCefConfigPrivate* config)
 {
-  // create app delegate before initialization
-  pAppDelegate_.reset(new CCefAppDelegate(this));
+  if (!initializeCef(config)) {
+    return false;
+  }
 
-  // initialize CEF
-  return initializeCef(config);
+  pClientDelegate_ = std::make_shared<CCefClientDelegate>();
+  pClient_ = new CefViewBrowserClient(pClientDelegate_);
+
+  // add archive mapping
+  for (auto archiveMapping : archiveMappingList_) {
+    pClient_->AddArchiveResourceProvider(
+      archiveMapping.path.toStdString(), archiveMapping.url.toStdString(), archiveMapping.psw.toStdString());
+  }
+
+  // add local folder mapping
+  for (auto folderMapping : folderMappingList_) {
+    pClient_->AddLocalDirectoryResourceProvider(
+      folderMapping.path.toStdString(), folderMapping.url.toStdString(), folderMapping.priority);
+  }
+
+  return true;
 }
 
 void
 QCefContextPrivate::uninitialize()
 {
-  // reset delegate before cleanup
-  pAppDelegate_.reset();
+  pClientDelegate_ = nullptr;
+  pClient_ = nullptr;
 
   // cleanup CEF
   uninitializeCef();

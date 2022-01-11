@@ -27,20 +27,19 @@ QCefContext::~QCefContext()
 }
 
 void
-QCefContext::addLocalFolderResource(const QString& path, const QString& url, int priority /* = 0*/)
+QCefContext::addLocalFolderResource(const QString& path, const QString& url, int priority /*= 0*/)
 {
   Q_D(QCefContext);
 
-  d->folderMappingList_.push_back({ path, url, priority });
+  d->pClient_->AddLocalDirectoryResourceProvider(path.toStdString(), url.toStdString());
 }
 
 void
-QCefContext::addArchiveResource(const QString& path, const QString& url, const QString& password /* = ""*/)
+QCefContext::addArchiveResource(const QString& path, const QString& url, const QString& password /*= ""*/)
 {
-
   Q_D(QCefContext);
 
-  d->archiveMappingList_.push_back({ path, url, password });
+  d->pClient_->AddArchiveResourceProvider(path.toStdString(), url.toStdString(), password.toStdString());
 }
 
 void

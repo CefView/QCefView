@@ -4,6 +4,11 @@
 #include <stdexcept>
 #pragma endregion std_headers
 
+#pragma region qt_headers
+#include <QWindow>
+#include <QVBoxLayout>
+#pragma endregion qt_headers
+
 #pragma region cef_headers
 #include <include/cef_app.h>
 #include <include/cef_browser.h>
@@ -13,135 +18,99 @@
 
 #include <CefViewCoreProtocol.h>
 
-QCefViewPrivate::QCefViewPrivate(QCefContextPrivate* context, const QString& url, QCefView* view, QCefWindow* win)
+#include "QCefContext.h"
+#include "CCefClientDelegate.h"
+
+QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url)
   : q_ptr(view)
-  , pContext_(context)
-  , pQCefViewHandler_(nullptr)
-  , pCefHandlerDelegate_(nullptr)
+  , pContext_(nullptr)
+  , pCefBrowser_(nullptr)
 {
-  // get parent window rect
-  QRect rc = win->frameGeometry();
-
-  // Set window info
-  CefWindowInfo window_info;
-
-#if defined(OS_WINDOWS)
-  window_info.SetAsChild((CefWindowHandle)(win->winId()), RECT{ 0, 0, rc.width(), rc.height() });
-#elif defined(OS_MACOS)
-  window_info.SetAsChild((CefWindowHandle)(win->winId()), 0, 0, rc.width(), rc.height());
-#elif defined(OS_LINUX)
-  window_info.SetAsChild((CefWindowHandle)(win->winId()), CefRect{ 0, 0, rc.width(), rc.height() });
-#endif
-
-  CefBrowserSettings browserSettings;
-  // disable all plugins
-  browserSettings.plugins = STATE_DISABLED;
-
-  // create the delegate
-  auto pHandlerDelegate = std::make_shared<CCefHandlerDelegate>(view, win);
-
-  // create the browser
-  auto pQCefViewHandler = new CefViewBrowserHandler(pHandlerDelegate);
-
-  // add archive mapping
-  for (auto archiveMapping : pContext_->archiveMappingList_) {
-    pQCefViewHandler->AddArchiveResourceProvider(
-      archiveMapping.path.toStdString(), archiveMapping.url.toStdString(), archiveMapping.psw.toStdString());
-  }
-
-  // add local folder mapping
-  for (auto folderMapping : pContext_->folderMappingList_) {
-    pQCefViewHandler->AddLocalDirectoryResourceProvider(
-      folderMapping.path.toStdString(), folderMapping.url.toStdString(), folderMapping.priority);
-  }
-
-  // create the main browser window.
-  if (!CefBrowserHost::CreateBrowser(window_info,       // window info
-                                     pQCefViewHandler,  // handler
-                                     url.toStdString(), // url
-                                     browserSettings,   // settings
-                                     nullptr,
-                                     CefRequestContext::GetGlobalContext())) {
-    throw std::exception();
-  }
-
-  // update members
-  pCefHandlerDelegate_ = pHandlerDelegate;
-  pQCefViewHandler_ = pQCefViewHandler;
+  pContext_ = QCefContext::instance()->d_func();
 }
 
 QCefViewPrivate::~QCefViewPrivate()
 {
-  // release the delegate
-  if (pCefHandlerDelegate_)
-    pCefHandlerDelegate_.reset();
+  pContext_->pClientDelegate_->removeBrowserViewMapping(pCefBrowser_);
 
-  // make sure the handler will be destructed
-  if (pQCefViewHandler_) {
-    pQCefViewHandler_->CloseAllBrowsers(true);
+  pCefBrowser_->StopLoad();
+  pCefBrowser_->GetHost()->CloseBrowser(true);
+  pCefBrowser_ = nullptr;
+}
 
-    // wait till the handler was held by us only.
-    // there is no good solution for this
-    // in external message pump mode so far
-    while (!pQCefViewHandler_->HasOneRef()) {
-      pContext_->performCefLoopWork();
-    }
+QWindow*
+QCefViewPrivate::createBrowserWindow(const QString url, const QCefSetting* setting)
+{
+  Q_Q(QCefView);
 
-    // release the handler to destruct it
-    pQCefViewHandler_ = nullptr;
-  }
+  // Set window info
+  CefWindowInfo window_info;
+#if defined(OS_WINDOWS)
+  window_info.SetAsChild((CefWindowHandle)(q->winId()), RECT{ 0, 0, 0, 0 });
+#elif defined(OS_MACOS)
+  window_info.SetAsChild((CefWindowHandle)(q->winId()), 0, 0, 0, 0);
+#elif defined(OS_LINUX)
+  window_info.SetAsChild((CefWindowHandle)(q->winId()), CefRect{ 0, 0, 0, 0 });
+#endif
+
+  // create the browser object
+  CefBrowserSettings browserSettings;
+  browserSettings.plugins = STATE_DISABLED;
+  pCefBrowser_ = CefBrowserHost::CreateBrowserSync(window_info,         // window info
+                                                   pContext_->pClient_, // handler
+                                                   url.toStdString(),   // url
+                                                   browserSettings,     // settings
+                                                   nullptr,
+                                                   CefRequestContext::GetGlobalContext());
+  if (!pCefBrowser_)
+    return nullptr;
+
+  // register view to client delegate
+  pContext_->pClientDelegate_->insertBrowserViewMapping(pCefBrowser_, q);
+
+  // create QWindow from native browser window handle
+  return QWindow::fromWinId((WId)(pCefBrowser_->GetHost()->GetWindowHandle()));
+}
+
+int
+QCefViewPrivate::browserId()
+{
+  if (pCefBrowser_)
+    return pCefBrowser_->GetIdentifier();
+
+  return -1;
 }
 
 void
 QCefViewPrivate::closeAllBrowsers()
-{
-  if (pQCefViewHandler_) {
-    pQCefViewHandler_->CloseAllBrowsers(true);
-  }
-}
-
-void
-QCefViewPrivate::addLocalFolderResource(const QString& path, const QString& url)
-{
-  if (pQCefViewHandler_) {
-    pQCefViewHandler_->AddLocalDirectoryResourceProvider(path.toStdString(), url.toStdString());
-  }
-}
-
-void
-QCefViewPrivate::addArchiveResource(const QString& path, const QString& url, const QString& password)
-{
-  if (pQCefViewHandler_) {
-    pQCefViewHandler_->AddArchiveResourceProvider(path.toStdString(), url.toStdString(), password.toStdString());
-  }
-}
+{}
 
 void
 QCefViewPrivate::navigateToString(const QString& content)
 {
-  if (pQCefViewHandler_) {
+  if (pCefBrowser_) {
     std::string data = content.toStdString();
     data = CefURIEncode(CefBase64Encode(data.c_str(), data.size()), false).ToString();
     data = "data:text/html;base64," + data;
-    pQCefViewHandler_->GetBrowser()->GetMainFrame()->LoadURL(data);
+    pCefBrowser_->GetMainFrame()->LoadURL(data);
   }
 }
 
 void
 QCefViewPrivate::navigateToUrl(const QString& url)
 {
-  if (pQCefViewHandler_) {
+  if (pCefBrowser_) {
     CefString strUrl;
     strUrl.FromString(url.toStdString());
-    pQCefViewHandler_->GetBrowser()->GetMainFrame()->LoadURL(strUrl);
+    pCefBrowser_->GetMainFrame()->LoadURL(strUrl);
   }
 }
 
 bool
 QCefViewPrivate::browserCanGoBack()
 {
-  if (pQCefViewHandler_)
-    return pQCefViewHandler_->GetBrowser()->CanGoBack();
+  if (pCefBrowser_)
+    return pCefBrowser_->CanGoBack();
 
   return false;
 }
@@ -149,8 +118,8 @@ QCefViewPrivate::browserCanGoBack()
 bool
 QCefViewPrivate::browserCanGoForward()
 {
-  if (pQCefViewHandler_)
-    return pQCefViewHandler_->GetBrowser()->CanGoForward();
+  if (pCefBrowser_)
+    return pCefBrowser_->CanGoForward();
 
   return false;
 }
@@ -158,22 +127,22 @@ QCefViewPrivate::browserCanGoForward()
 void
 QCefViewPrivate::browserGoBack()
 {
-  if (pQCefViewHandler_)
-    pQCefViewHandler_->GetBrowser()->GoBack();
+  if (pCefBrowser_)
+    pCefBrowser_->GoBack();
 }
 
 void
 QCefViewPrivate::browserGoForward()
 {
-  if (pQCefViewHandler_)
-    pQCefViewHandler_->GetBrowser()->GoForward();
+  if (pCefBrowser_)
+    pCefBrowser_->GoForward();
 }
 
 bool
 QCefViewPrivate::browserIsLoading()
 {
-  if (pQCefViewHandler_)
-    return pQCefViewHandler_->GetBrowser()->IsLoading();
+  if (pCefBrowser_)
+    return pCefBrowser_->IsLoading();
 
   return false;
 }
@@ -181,15 +150,15 @@ QCefViewPrivate::browserIsLoading()
 void
 QCefViewPrivate::browserReload()
 {
-  if (pQCefViewHandler_)
-    pQCefViewHandler_->GetBrowser()->Reload();
+  if (pCefBrowser_)
+    pCefBrowser_->Reload();
 }
 
 void
 QCefViewPrivate::browserStopLoad()
 {
-  if (pQCefViewHandler_)
-    pQCefViewHandler_->GetBrowser()->StopLoad();
+  if (pCefBrowser_)
+    pCefBrowser_->StopLoad();
 }
 
 bool
@@ -207,10 +176,10 @@ QCefViewPrivate::triggerEvent(const QString& name,
 bool
 QCefViewPrivate::responseQCefQuery(const QCefQuery& query)
 {
-  if (pQCefViewHandler_) {
+  if (pContext_ && pContext_->pClient_) {
     CefString res;
     res.FromString(query.response().toStdString());
-    return pQCefViewHandler_->ResponseQuery(query.id(), query.result(), res, query.error());
+    return pContext_->pClient_->ResponseQuery(query.id(), query.result(), res, query.error());
   }
   return false;
 }
@@ -218,13 +187,10 @@ QCefViewPrivate::responseQCefQuery(const QCefQuery& query)
 void
 QCefViewPrivate::notifyMoveOrResizeStarted()
 {
-  if (pQCefViewHandler_) {
-    CefRefPtr<CefBrowser> browser = pQCefViewHandler_->GetBrowser();
-    if (browser) {
-      CefRefPtr<CefBrowserHost> host = browser->GetHost();
-      if (host)
-        host->NotifyMoveOrResizeStarted();
-    }
+  if (pCefBrowser_) {
+    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+    if (host)
+      host->NotifyMoveOrResizeStarted();
   }
 }
 
@@ -272,53 +238,11 @@ QCefViewPrivate::sendEventNotifyMessage(int frameId, const QString& name, const 
 
   arguments->SetDictionary(idx++, dict);
 
-  return pQCefViewHandler_->TriggerEvent(frameId, msg);
+  return pContext_->pClient_->TriggerEvent(pCefBrowser_, frameId, msg);
 }
 
 void
 QCefViewPrivate::onToplevelWidgetMoveOrResize()
 {
   notifyMoveOrResizeStarted();
-}
-
-void
-QCefViewPrivate::setContextMenuHandler(CefContextMenuHandler* handler)
-{
-  if (pQCefViewHandler_)
-    pQCefViewHandler_->SetContextMenuHandler(handler);
-}
-
-void
-QCefViewPrivate::setDialogHandler(CefDialogHandler* handler)
-{
-  if (pQCefViewHandler_)
-    pQCefViewHandler_->SetDialogHandler(handler);
-}
-
-void
-QCefViewPrivate::setDisplayHandler(CefDisplayHandler* handler)
-{
-  if (pQCefViewHandler_)
-    pQCefViewHandler_->SetDisplayHandler(handler);
-}
-
-void
-QCefViewPrivate::setDownloadHandler(CefDownloadHandler* handler)
-{
-  if (pQCefViewHandler_)
-    pQCefViewHandler_->SetDownloadHandler(handler);
-}
-
-void
-QCefViewPrivate::setJSDialogHandler(CefJSDialogHandler* handler)
-{
-  if (pQCefViewHandler_)
-    pQCefViewHandler_->SetJSDialogHandler(handler);
-}
-
-void
-QCefViewPrivate::setKeyboardHandler(CefKeyboardHandler* handler)
-{
-  if (pQCefViewHandler_)
-    pQCefViewHandler_->SetKeyboardHandler(handler);
 }

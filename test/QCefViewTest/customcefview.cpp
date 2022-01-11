@@ -1,4 +1,4 @@
-#if defined(OS_WINDOWS)
+﻿#if defined(OS_WINDOWS)
 #include <windows.h>
 #else
 #endif
@@ -9,8 +9,8 @@
 
 #include "customcefview.h"
 
-CustomCefView::CustomCefView(const QString url, QWidget* parent /* = 0*/)
-  : QCefView(url, parent)
+CustomCefView::CustomCefView(const QString url, const QCefSetting* setting, QWidget* parent /* = 0*/)
+  : QCefView(url, setting, parent)
 {
   setAttribute(Qt::WA_NativeWindow);
 }

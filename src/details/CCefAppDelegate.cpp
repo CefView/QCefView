@@ -1,5 +1,7 @@
 ﻿#include "CCefAppDelegate.h"
 
+#include "QCefContextPrivate.h"
+
 CCefAppDelegate::CCefAppDelegate(QCefContextPrivate* context)
   : pContext_(context)
 {}

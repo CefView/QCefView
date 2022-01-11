@@ -11,7 +11,7 @@ class CustomCefView : public QCefView
   Q_OBJECT
 
 public:
-  CustomCefView(const QString url, QWidget* parent = 0);
+  CustomCefView(const QString url, const QCefSetting* setting, QWidget* parent = 0);
 
   ~CustomCefView();
 

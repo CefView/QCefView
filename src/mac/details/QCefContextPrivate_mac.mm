@@ -194,13 +194,15 @@ QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
 
   // Initialize CEF.
   CefMainArgs main_args(config->argc, config->argv);
-  auto app = new CefViewBrowserApp(config->bridgeObjectName_, pAppDelegate_);
+  auto appDelegate = std::make_shared<CCefAppDelegate>(this);
+  auto app = new CefViewBrowserApp(config->bridgeObjectName_, appDelegate);
   if (!CefInitialize(main_args, cef_settings, app, nullptr)) {
     assert(0);
     return false;
   }
 
-  app_ = app;
+  pApp_ = app;
+  pAppDelegate_ = appDelegate;
 
   return true;
 }
@@ -211,8 +213,8 @@ QCefContextPrivate::uninitializeCef()
   if (!app_)
     return;
 
-  // Destroy the application
-  app_ = nullptr;
+  pAppDelegate_ = nullptr;
+  pApp_ = nullptr;
 
   // shutdown the cef
   CefShutdown();
