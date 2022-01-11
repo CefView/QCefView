@@ -4,6 +4,7 @@
 #include <QCefView_global.h>
 #include <QCefQuery.h>
 #include <QCefEvent.h>
+#include <QCefSetting.h>
 
 #pragma region qt_headers
 #include <QWidget>
@@ -20,7 +21,7 @@
  **		|    | WindowWrapper(QWidget)                             |    |
  **		|    |                                                    |    |
  **		|    |    +-------------------------------------------+   |    |
- **		|    |    | CefWindow(QWindow)                        |   |    |
+ **		|    |    | CefBrowserWindowHost(Native)              |   |    |
  **		|    |    |                                           |   |    |
  **		|    |    |                                           |   |    |
  **		|    |    |                                           |   |    |
@@ -29,9 +30,6 @@
  **		|    +----------------------------------------------------+    |
  **		|                                                              |
  **		+--------------------------------------------------------------+
- **
- **	Remarks:
- **		The WindowWrapper and CefWindow are transparent to upper layer user.
  **
  **/
 
@@ -58,7 +56,7 @@ public:
   /// <summary>
   ///
   /// </summary>
-  QCefView(const QString url, QWidget* parent = 0);
+  QCefView(const QString url, const QCefSetting* setting, QWidget* parent = 0);
 
   /// <summary>
   ///
@@ -69,6 +67,12 @@ public:
   ///
   /// </summary>
   ~QCefView();
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
+  int browserId();
 
   /// <summary>
   /// Navigates to the content.
@@ -152,42 +156,6 @@ public:
   /// <param name="query"></param>
   /// <returns></returns>
   bool responseQCefQuery(const QCefQuery& query);
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="handler"></param>
-  void setContextMenuHandler(CefContextMenuHandler* handler);
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="handler"></param>
-  void setDialogHandler(CefDialogHandler* handler);
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="handler"></param>
-  void setDisplayHandler(CefDisplayHandler* handler);
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="handler"></param>
-  void setDownloadHandler(CefDownloadHandler* handler);
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="handler"></param>
-  void setJSDialogHandler(CefJSDialogHandler* handler);
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="handler"></param>
-  void setKeyboardHandler(CefKeyboardHandler* handler);
 
   /// <summary>
   ///

@@ -14,12 +14,12 @@
 #include <QList>
 #pragma endregion qt_headers
 
-#include <CefViewBrowserHandler.h>
+#include <CefViewBrowserClient.h>
 #include <CefViewBrowserApp.h>
 
+#include "CCefAppDelegate.h"
+#include "CCefClientDelegate.h"
 #include "QCefConfigPrivate.h"
-
-class CCefAppDelegate;
 
 /// <summary>
 ///
@@ -43,13 +43,17 @@ private:
     int priority;
   } FolderMapping;
 
-public:
+private:
   QTimer cefWorkerTimer_;
   QList<FolderMapping> folderMappingList_;
   QList<ArchiveMapping> archiveMappingList_;
 
-  CefRefPtr<CefViewBrowserApp> app_;
-  CefViewBrowserAppDelegateInterface::RefPtr pAppDelegate_;
+public:
+  CefRefPtr<CefViewBrowserApp> pApp_;
+  std::shared_ptr<CCefAppDelegate> pAppDelegate_;
+
+  CefRefPtr<CefViewBrowserClient> pClient_;
+  std::shared_ptr<CCefClientDelegate> pClientDelegate_;
 
 public:
   /// <summary>

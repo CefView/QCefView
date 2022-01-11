@@ -20,7 +20,7 @@ class QCEFVIEW_EXPORT QCefContext : public QObject
   Q_DECLARE_PRIVATE(QCefContext)
   QScopedPointer<QCefContextPrivate> d_ptr;
 
-  friend class QCefView;
+  friend class QCefViewPrivate;
 
 public:
   /// <summary>

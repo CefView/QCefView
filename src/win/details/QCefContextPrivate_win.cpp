@@ -49,7 +49,8 @@ QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
 
   // Initialize CEF.
   CefMainArgs main_args(::GetModuleHandle(nullptr));
-  auto app = new CefViewBrowserApp(config->bridgeObjectName_, pAppDelegate_);
+  auto appDelegate = std::make_shared<CCefAppDelegate>(this);
+  auto app = new CefViewBrowserApp(config->bridgeObjectName_, appDelegate);
   void* sandboxInfo = nullptr;
 #if defined(CEF_USE_SANDBOX)
   // Manage the life span of the sandbox information object. This is necessary
@@ -62,7 +63,8 @@ QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
     return false;
   }
 
-  app_ = app;
+  pApp_ = app;
+  pAppDelegate_ = appDelegate;
 
   return true;
 }
@@ -70,11 +72,11 @@ QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
 void
 QCefContextPrivate::uninitializeCef()
 {
-  if (!app_)
+  if (!pApp_)
     return;
 
-  // Destroy the application
-  app_ = nullptr;
+  pAppDelegate_ = nullptr;
+  pApp_ = nullptr;
 
   // shutdown the cef
   CefShutdown();

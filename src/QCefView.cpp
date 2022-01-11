@@ -12,38 +12,55 @@
 #include "details/QCefEventPrivate.h"
 #include "details/QCefViewPrivate.h"
 
-QCefView::QCefView(const QString url, QWidget* parent /*= 0*/)
+QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* parent /*= 0*/)
   : QWidget(parent)
+  , d_ptr(new QCefViewPrivate(this, url))
 {
   // initialize the layout
-  QVBoxLayout* layout = new QVBoxLayout(this);
+  QVBoxLayout* layout = new QVBoxLayout();
   layout->setContentsMargins(0, 0, 0, 0);
-  setLayout(layout);
 
-  // create the window
-  QCefWindow* pCefWindow = new QCefWindow(windowHandle(), this);
-  pCefWindow->create();
+#if defined(OS_LINUX)
+  // don't know why, on Linux platform if we use this->winId() as
+  // the parent, it will complain about `BadWindow`,
+  // and the browser window is not visible.
+  QWindow wrapper;
+  CefWindowHandle parentId = (CefWindowHandle)(wrapper.winId());
+#else
+  CefWindowHandle parentId = (CefWindowHandle)(this->winId());
+#endif
 
-  // create window container
-  QWidget* windowContainer = createWindowContainer(pCefWindow, this);
-  layout->addWidget(windowContainer);
+  // create browser window
+  QWindow* browserWindow = d_ptr->createBrowserWindow(parentId, url, setting);
+  Q_ASSERT(browserWindow);
 
-  // create the implementation
-  d_ptr.reset(new QCefViewPrivate(QCefContext::instance()->d_func(), url, this, pCefWindow));
+  // create widget from browser window
+  QWidget* browserWidget = this->createWindowContainer(browserWindow, this);
+  Q_ASSERT(browserWidget);
 
-  // If we're already part of a window, we'll install our event handler
-  // If our parent changes later, this will be handled in QCefView::changeEvent()
+  // add browser widget to the layout
+  layout->addWidget(browserWidget);
+
+  // apply the layout
+  this->setLayout(layout);
+
+  // install event filter for top level window
   if (window())
     window()->installEventFilter(this);
 }
 
 QCefView::QCefView(QWidget* parent /*= 0*/)
-  : QCefView("about:blank", parent)
+  : QCefView("about:blank", nullptr, parent)
 {}
 
-QCefView::~QCefView()
+QCefView::~QCefView() {}
+
+int
+QCefView::browserId()
 {
-  disconnect();
+  Q_D(QCefView);
+
+  return d->browserId();
 }
 
 void
@@ -123,7 +140,7 @@ QCefView::triggerEvent(const QCefEvent& event)
 {
   Q_D(QCefView);
 
-  return d->triggerEvent(event.eventName(), event.d_func()->args, CefViewBrowserHandler::MAIN_FRAME);
+  return d->triggerEvent(event.eventName(), event.d_func()->args, CefViewBrowserClient::MAIN_FRAME);
 }
 
 bool
@@ -139,7 +156,7 @@ QCefView::broadcastEvent(const QCefEvent& event)
 {
   Q_D(QCefView);
 
-  return d->triggerEvent(event.eventName(), event.d_func()->args, CefViewBrowserHandler::ALL_FRAMES);
+  return d->triggerEvent(event.eventName(), event.d_func()->args, CefViewBrowserClient::ALL_FRAMES);
 }
 
 bool
@@ -148,54 +165,6 @@ QCefView::responseQCefQuery(const QCefQuery& query)
   Q_D(QCefView);
 
   return d->responseQCefQuery(query);
-}
-
-void
-QCefView::setContextMenuHandler(CefContextMenuHandler* handler)
-{
-  Q_D(QCefView);
-
-  return d->setContextMenuHandler(handler);
-}
-
-void
-QCefView::setDialogHandler(CefDialogHandler* handler)
-{
-  Q_D(QCefView);
-
-  return d->setDialogHandler(handler);
-}
-
-void
-QCefView::setDisplayHandler(CefDisplayHandler* handler)
-{
-  Q_D(QCefView);
-
-  return d->setDisplayHandler(handler);
-}
-
-void
-QCefView::setDownloadHandler(CefDownloadHandler* handler)
-{
-  Q_D(QCefView);
-
-  return d->setDownloadHandler(handler);
-}
-
-void
-QCefView::setJSDialogHandler(CefJSDialogHandler* handler)
-{
-  Q_D(QCefView);
-
-  return d->setJSDialogHandler(handler);
-}
-
-void
-QCefView::setKeyboardHandler(CefKeyboardHandler* handler)
-{
-  Q_D(QCefView);
-
-  return d->setKeyboardHandler(handler);
 }
 
 void
