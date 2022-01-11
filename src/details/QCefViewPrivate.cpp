@@ -5,6 +5,7 @@
 #pragma endregion std_headers
 
 #pragma region qt_headers
+#include <QtDebug>
 #include <QWindow>
 #include <QVBoxLayout>
 #pragma endregion qt_headers
@@ -31,26 +32,22 @@ QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url)
 
 QCefViewPrivate::~QCefViewPrivate()
 {
-  pContext_->pClientDelegate_->removeBrowserViewMapping(pCefBrowser_);
-
-  pCefBrowser_->StopLoad();
-  pCefBrowser_->GetHost()->CloseBrowser(true);
-  pCefBrowser_ = nullptr;
+  destroyBrowserWindow();
 }
 
 QWindow*
-QCefViewPrivate::createBrowserWindow(const QString url, const QCefSetting* setting)
+QCefViewPrivate::createBrowserWindow(CefWindowHandle p, const QString url, const QCefSetting* setting)
 {
   Q_Q(QCefView);
 
   // Set window info
   CefWindowInfo window_info;
 #if defined(OS_WINDOWS)
-  window_info.SetAsChild((CefWindowHandle)(q->winId()), RECT{ 0, 0, 0, 0 });
+  window_info.SetAsChild(p, RECT{ 0, 0, 0, 0 });
 #elif defined(OS_MACOS)
-  window_info.SetAsChild((CefWindowHandle)(q->winId()), 0, 0, 0, 0);
+  window_info.SetAsChild(p, 0, 0, 0, 0);
 #elif defined(OS_LINUX)
-  window_info.SetAsChild((CefWindowHandle)(q->winId()), CefRect{ 0, 0, 0, 0 });
+  window_info.SetAsChild(p, CefRect{ 0, 0, 0, 0 });
 #endif
 
   // create the browser object
@@ -62,14 +59,28 @@ QCefViewPrivate::createBrowserWindow(const QString url, const QCefSetting* setti
                                                    browserSettings,     // settings
                                                    nullptr,
                                                    CefRequestContext::GetGlobalContext());
-  if (!pCefBrowser_)
+  if (!pCefBrowser_) {
+    Q_ASSERT_X(pCefBrowser_, "QCefViewPrivate::createBrowserWindow", "Failed to create cer browser");
     return nullptr;
+  }
 
   // register view to client delegate
   pContext_->pClientDelegate_->insertBrowserViewMapping(pCefBrowser_, q);
 
   // create QWindow from native browser window handle
   return QWindow::fromWinId((WId)(pCefBrowser_->GetHost()->GetWindowHandle()));
+}
+
+void
+QCefViewPrivate::destroyBrowserWindow()
+{
+  // remove from delegate mapping
+  pContext_->pClientDelegate_->removeBrowserViewMapping(pCefBrowser_);
+
+  // clean resource
+  pCefBrowser_->StopLoad();
+  pCefBrowser_->GetHost()->CloseBrowser(true);
+  pCefBrowser_ = nullptr;
 }
 
 int

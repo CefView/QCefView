@@ -17,19 +17,31 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
   , d_ptr(new QCefViewPrivate(this, url))
 {
   // initialize the layout
-  QVBoxLayout* layout = new QVBoxLayout(this);
+  QVBoxLayout* layout = new QVBoxLayout();
   layout->setContentsMargins(0, 0, 0, 0);
 
+#if defined(OS_LINUX)
+  // don't know why, on Linux platform if we use this->winId() as
+  // the parent, it will complain about `BadWindow`,
+  // and the browser window is not visible.
+  QWindow wrapper;
+  CefWindowHandle parentId = (CefWindowHandle)(wrapper.winId());
+#else
+  CefWindowHandle parentId = (CefWindowHandle)(this->winId());
+#endif
+
   // create browser window
-  QWindow* browserWindow = d_ptr->createBrowserWindow(url, setting);
+  QWindow* browserWindow = d_ptr->createBrowserWindow(parentId, url, setting);
   Q_ASSERT(browserWindow);
 
   // create widget from browser window
   QWidget* browserWidget = this->createWindowContainer(browserWindow, this);
   Q_ASSERT(browserWidget);
 
-  // apply the layout
+  // add browser widget to the layout
   layout->addWidget(browserWidget);
+
+  // apply the layout
   this->setLayout(layout);
 
   // install event filter for top level window

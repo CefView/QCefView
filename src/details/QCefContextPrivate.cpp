@@ -29,6 +29,7 @@ QCefContextPrivate::initialize(const QCefConfigPrivate* config)
     return false;
   }
 
+  // create cef client
   pClientDelegate_ = std::make_shared<CCefClientDelegate>();
   pClient_ = new CefViewBrowserClient(pClientDelegate_);
 

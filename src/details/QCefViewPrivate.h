@@ -31,7 +31,9 @@ public:
 
   ~QCefViewPrivate();
 
-  QWindow* createBrowserWindow(const QString url, const QCefSetting* setting);
+  QWindow* createBrowserWindow(CefWindowHandle p, const QString url, const QCefSetting* setting);
+
+  void destroyBrowserWindow();
 
   int browserId();
 
