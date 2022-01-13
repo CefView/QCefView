@@ -27,6 +27,12 @@ jobs:
         with:
           submodules: 'true'
 
+      - name: Cache CEF folders
+        uses: actions/cache@v2
+        with:
+          path: ${{github.workspace}}/CefViewCore/dep
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
