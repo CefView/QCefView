@@ -2,14 +2,15 @@
 #define QCEFVIEW_H
 #pragma once
 #include <QCefView_global.h>
-#include <QCefQuery.h>
+
 #include <QCefEvent.h>
+#include <QCefQuery.h>
 #include <QCefSetting.h>
 
 #pragma region qt_headers
-#include <QWidget>
-#include <QVariantList>
 #include <QScopedPointer>
+#include <QVariantList>
+#include <QWidget>
 #pragma endregion qt_headers
 
 /** Outline of QCefView:

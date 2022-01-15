@@ -34,13 +34,13 @@ QCefContextPrivate::initialize(const QCefConfigPrivate* config)
   pClient_ = new CefViewBrowserClient(pClientDelegate_);
 
   // add archive mapping
-  for (auto archiveMapping : archiveMappingList_) {
+  for (auto& archiveMapping : archiveMappingList_) {
     pClient_->AddArchiveResourceProvider(
       archiveMapping.path.toStdString(), archiveMapping.url.toStdString(), archiveMapping.psw.toStdString());
   }
 
   // add local folder mapping
-  for (auto folderMapping : folderMappingList_) {
+  for (auto& folderMapping : folderMappingList_) {
     pClient_->AddLocalDirectoryResourceProvider(
       folderMapping.path.toStdString(), folderMapping.url.toStdString(), folderMapping.priority);
   }

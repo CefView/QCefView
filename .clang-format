@@ -3,6 +3,6 @@ BasedOnStyle: Mozilla
 ColumnLimit: 120
 AlignAfterOpenBracket: Align
 BinPackArguments: false
-SortIncludes: false
+SortIncludes: true
 FixNamespaceComments: true # add commend at end:
 NamespaceIndentation: None #intend content of namespace

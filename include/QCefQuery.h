@@ -8,8 +8,8 @@
 #pragma endregion std_headers
 
 #pragma region qt_headers
-#include <QString>
 #include <QScopedPointer>
+#include <QString>
 #pragma endregion qt_headers
 
 class QCefQueryPrivate;

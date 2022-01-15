@@ -4,9 +4,9 @@
 #include <QCefView_global.h>
 
 #pragma region qt_headers
-#include <QString>
 #include <QColor>
 #include <QScopedPointer>
+#include <QString>
 #pragma endregion qt_headers
 
 class QCefConfigPrivate;
