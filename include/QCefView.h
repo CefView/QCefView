@@ -34,13 +34,6 @@
  **
  **/
 
-class CefContextMenuHandler;
-class CefDialogHandler;
-class CefDisplayHandler;
-class CefDownloadHandler;
-class CefJSDialogHandler;
-class CefKeyboardHandler;
-
 class QCefViewPrivate;
 
 /// <summary>

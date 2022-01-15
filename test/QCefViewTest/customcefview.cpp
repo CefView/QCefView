@@ -12,7 +12,7 @@
 CustomCefView::CustomCefView(const QString url, const QCefSetting* setting, QWidget* parent /* = 0*/)
   : QCefView(url, setting, parent)
 {
-  setAttribute(Qt::WA_NativeWindow);
+  //setAttribute(Qt::WA_NativeWindow);
 }
 
 CustomCefView::~CustomCefView() {}

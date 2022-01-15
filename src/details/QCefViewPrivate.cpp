@@ -5,9 +5,10 @@
 #pragma endregion std_headers
 
 #pragma region qt_headers
-#include <QtDebug>
-#include <QWindow>
+#include <QPlatformSurfaceEvent>
 #include <QVBoxLayout>
+#include <QWindow>
+#include <QtDebug>
 #pragma endregion qt_headers
 
 #pragma region cef_headers
@@ -19,33 +20,43 @@
 
 #include <CefViewCoreProtocol.h>
 
-#include "QCefContext.h"
 #include "CCefClientDelegate.h"
+#include "QCefContext.h"
 
 QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url)
   : q_ptr(view)
-  , pContext_(nullptr)
+  , pContext_(QCefContext::instance()->d_func())
   , pCefBrowser_(nullptr)
+  , qBrowserWidget_(nullptr)
+  , qBrowserWindow_(nullptr)
 {
-  pContext_ = QCefContext::instance()->d_func();
+  createBrowser(url, nullptr);
 }
 
 QCefViewPrivate::~QCefViewPrivate()
 {
-  destroyBrowserWindow();
+  destroyBrowser();
 }
 
-QWindow*
-QCefViewPrivate::createBrowserWindow(CefWindowHandle p, const QString url, const QCefSetting* setting)
+void
+QCefViewPrivate::createBrowser(const QString url, const QCefSetting* setting)
 {
   Q_Q(QCefView);
 
+  // Don't know why, on Linux platform if we use QCefView's winId() as
+  // the parent, it will complain about `BadWindow`,
+  // and the browser window will not be created, this never happen
+  // on Windows and macOS, so we create a temporal QWindow as the
+  // parent to create CEF browser window.
+  QWindow w;
+  CefWindowHandle p = (CefWindowHandle)(w.winId());
+
   // Set window info
   CefWindowInfo window_info;
-#if defined(OS_WINDOWS)
-  window_info.SetAsChild(p, RECT{ 0, 0, 0, 0 });
-#elif defined(OS_MACOS)
+#if defined(OS_MACOS)
   window_info.SetAsChild(p, 0, 0, 0, 0);
+#elif defined(OS_WINDOWS)
+  window_info.SetAsChild(p, RECT{ 0, 0, 0, 0 });
 #elif defined(OS_LINUX)
   window_info.SetAsChild(p, CefRect{ 0, 0, 0, 0 });
 #endif
@@ -53,27 +64,53 @@ QCefViewPrivate::createBrowserWindow(CefWindowHandle p, const QString url, const
   // create the browser object
   CefBrowserSettings browserSettings;
   browserSettings.plugins = STATE_DISABLED;
-  pCefBrowser_ = CefBrowserHost::CreateBrowserSync(window_info,         // window info
-                                                   pContext_->pClient_, // handler
-                                                   url.toStdString(),   // url
-                                                   browserSettings,     // settings
-                                                   nullptr,
-                                                   CefRequestContext::GetGlobalContext());
-  if (!pCefBrowser_) {
-    Q_ASSERT_X(pCefBrowser_, "QCefViewPrivate::createBrowserWindow", "Failed to create cer browser");
-    return nullptr;
+  auto pCefBrowser = CefBrowserHost::CreateBrowserSync(window_info,         // window info
+                                                       pContext_->pClient_, // handler
+                                                       url.toStdString(),   // url
+                                                       browserSettings,     // settings
+                                                       nullptr,
+                                                       CefRequestContext::GetGlobalContext());
+  if (!pCefBrowser) {
+    Q_ASSERT_X(pCefBrowser, "QCefViewPrivate::createBrowser", "Failed to create cer browser");
+    return;
   }
 
   // register view to client delegate
-  pContext_->pClientDelegate_->insertBrowserViewMapping(pCefBrowser_, q);
+  pContext_->pClientDelegate_->insertBrowserViewMapping(pCefBrowser, q);
 
   // create QWindow from native browser window handle
-  return QWindow::fromWinId((WId)(pCefBrowser_->GetHost()->GetWindowHandle()));
+  QWindow* browserWindow = QWindow::fromWinId((WId)(pCefBrowser->GetHost()->GetWindowHandle()));
+  if (!browserWindow) {
+    Q_ASSERT_X(browserWindow, "QCefViewPrivate::createBrowser", "Failed to query QWindow from cef browser window");
+    pCefBrowser->GetHost()->CloseBrowser(true);
+    return;
+  }
+
+  // create QWidget from cef browser widow
+  QWidget* browserWidget = QWidget::createWindowContainer(browserWindow, q);
+  if (!browserWidget) {
+    Q_ASSERT_X(browserWidget, "QCefViewPrivate::createBrowser", "Failed to cretae QWidget from cef browser window");
+    pCefBrowser->GetHost()->CloseBrowser(true);
+    return;
+  }
+
+  pCefBrowser_ = pCefBrowser;
+  qBrowserWindow_ = browserWindow;
+  qBrowserWidget_ = browserWidget;
+
+  qBrowserWindow_->installEventFilter(this);
+  return;
 }
 
 void
-QCefViewPrivate::destroyBrowserWindow()
+QCefViewPrivate::destroyBrowser()
 {
+  if (!pCefBrowser_)
+    return;
+
+  // remove from parent tree
+  qBrowserWindow_->setParent(nullptr);
+
   // remove from delegate mapping
   pContext_->pClientDelegate_->removeBrowserViewMapping(pCefBrowser_);
 
@@ -81,6 +118,8 @@ QCefViewPrivate::destroyBrowserWindow()
   pCefBrowser_->StopLoad();
   pCefBrowser_->GetHost()->CloseBrowser(true);
   pCefBrowser_ = nullptr;
+  qBrowserWidget_ = nullptr;
+  qBrowserWindow_ = nullptr;
 }
 
 int
@@ -256,4 +295,19 @@ void
 QCefViewPrivate::onToplevelWidgetMoveOrResize()
 {
   notifyMoveOrResizeStarted();
+}
+
+bool
+QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
+{
+  if (watched == qBrowserWindow_) {
+    if (QEvent::PlatformSurface == event->type()) {
+      auto e = (QPlatformSurfaceEvent*)event;
+      auto sufaceType = e->surfaceEventType();
+      if (e->surfaceEventType() == QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed) {
+        destroyBrowser();
+      }
+    }
+  }
+  return QObject::eventFilter(watched, event);
 }

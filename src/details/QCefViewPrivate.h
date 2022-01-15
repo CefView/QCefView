@@ -10,8 +10,9 @@
 
 #include <QCefView.h>
 
-class QCefViewPrivate
+class QCefViewPrivate : public QObject
 {
+  Q_OBJECT
   Q_DECLARE_PUBLIC(QCefView)
   QCefView* q_ptr;
 
@@ -26,14 +27,25 @@ private:
   /// </summary>
   CefRefPtr<CefBrowser> pCefBrowser_;
 
+  /// <summary>
+  ///
+  /// </summary>
+  QWindow* qBrowserWindow_;
+
+  /// <summary>
+  ///
+  /// </summary>
+  QWidget* qBrowserWidget_;
+
+protected:
+  void createBrowser(const QString url, const QCefSetting* setting);
+
+  void destroyBrowser();
+
 public:
   explicit QCefViewPrivate(QCefView* view, const QString& url);
 
   ~QCefViewPrivate();
-
-  QWindow* createBrowserWindow(CefWindowHandle p, const QString url, const QCefSetting* setting);
-
-  void destroyBrowserWindow();
 
   int browserId();
 
@@ -66,4 +78,13 @@ public:
   bool sendEventNotifyMessage(int frameId, const QString& name, const QVariantMap& args);
 
   void onToplevelWidgetMoveOrResize();
+
+protected:
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="watched"></param>
+  /// <param name="event"></param>
+  /// <returns></returns>
+  virtual bool eventFilter(QObject* watched, QEvent* event) override;
 };
