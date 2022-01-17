@@ -15,7 +15,7 @@
 class QCefQueryPrivate;
 
 /// <summary>
-///
+/// Represents the query reqeust sent from the web content(Javascript)
 /// </summary>
 class QCEFVIEW_EXPORT QCefQuery
 {
@@ -24,71 +24,70 @@ class QCEFVIEW_EXPORT QCefQuery
 
 public:
   /// <summary>
-  ///
+  /// Constructs a query instance
   /// </summary>
   QCefQuery();
 
   /// <summary>
-  ///
+  /// Constructs a query instance with request context and query id
   /// </summary>
-  /// <param name="req"></param>
-  /// <param name="query"></param>
+  /// <param name="req">The request context</param>
+  /// <param name="query">The query id</param>
   QCefQuery(const QString& req, const int64_t query);
 
   /// <summary>
-  ///
+  /// Constructs a query instance from existing one
   /// </summary>
-  /// <param name="other"></param>
+  /// <param name="other">The other query instance</param>
   QCefQuery(const QCefQuery& other);
 
   /// <summary>
-  ///
+  /// Assigns an existing query instance to current
   /// </summary>
-  /// <param name="other"></param>
-  /// <returns></returns>
+  /// <param name="other">The other query instance</param>
   QCefQuery& operator=(const QCefQuery& other);
 
   /// <summary>
-  ///
+  /// Destructs a query instance
   /// </summary>
   ~QCefQuery();
 
   /// <summary>
-  ///
+  /// Gets the query content
   /// </summary>
-  /// <returns></returns>
+  /// <returns>The content string</returns>
   const QString reqeust() const;
 
   /// <summary>
-  ///
+  /// Gets the query id
   /// </summary>
-  /// <returns></returns>
+  /// <returns>The query id</returns>
   const int64_t id() const;
 
   /// <summary>
-  ///
+  /// Gets the response content string
   /// </summary>
-  /// <returns></returns>
+  /// <returns>The response content string</returns>
   const QString response() const;
 
   /// <summary>
-  ///
+  /// Gets the response result
   /// </summary>
-  /// <returns></returns>
+  /// <returns>The respone result</returns>
   const bool result() const;
 
   /// <summary>
-  ///
+  /// Gets the response error
   /// </summary>
-  /// <returns></returns>
+  /// <returns>The response error</returns>
   const int error() const;
 
   /// <summary>
-  ///
+  /// Sets the response
   /// </summary>
-  /// <param name="success"></param>
-  /// <param name="response"></param>
-  /// <param name="error"></param>
+  /// <param name="success">True if the query is successful; otherwise false</param>
+  /// <param name="response">The response content string</param>
+  /// <param name="error">The response error</param>
   void setResponseResult(bool success, const QString& response, int error = 0) const;
 };
 

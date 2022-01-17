@@ -77,8 +77,6 @@ public:
 
   bool sendEventNotifyMessage(int frameId, const QString& name, const QVariantMap& args);
 
-  void onToplevelWidgetMoveOrResize();
-
 protected:
   /// <summary>
   ///

@@ -43,6 +43,15 @@ QCefViewPrivate::createBrowser(const QString url, const QCefSetting* setting)
 {
   Q_Q(QCefView);
 
+  // Set window info
+  CefWindowInfo window_info;
+#if defined(OS_MACOS)
+  CefWindowHandle p = (CefWindowHandle)(q->winId());
+  window_info.SetAsChild(p, 0, 0, 0, 0);
+#elif defined(OS_WINDOWS)
+  CefWindowHandle p = (CefWindowHandle)(q->winId());
+  window_info.SetAsChild(p, RECT{ 0, 0, 0, 0 });
+#elif defined(OS_LINUX)
   // Don't know why, on Linux platform if we use QCefView's winId() as
   // the parent, it will complain about `BadWindow`,
   // and the browser window will not be created, this never happen
@@ -50,14 +59,6 @@ QCefViewPrivate::createBrowser(const QString url, const QCefSetting* setting)
   // parent to create CEF browser window.
   QWindow w;
   CefWindowHandle p = (CefWindowHandle)(w.winId());
-
-  // Set window info
-  CefWindowInfo window_info;
-#if defined(OS_MACOS)
-  window_info.SetAsChild(p, 0, 0, 0, 0);
-#elif defined(OS_WINDOWS)
-  window_info.SetAsChild(p, RECT{ 0, 0, 0, 0 });
-#elif defined(OS_LINUX)
   window_info.SetAsChild(p, CefRect{ 0, 0, 0, 0 });
 #endif
 
@@ -98,6 +99,10 @@ QCefViewPrivate::createBrowser(const QString url, const QCefSetting* setting)
   qBrowserWindow_ = browserWindow;
   qBrowserWidget_ = browserWidget;
 
+  if (q->window()) {
+    q->window()->installEventFilter(this);
+  }
+
   qBrowserWindow_->installEventFilter(this);
   return;
 }
@@ -111,12 +116,13 @@ QCefViewPrivate::destroyBrowser()
   // remove from parent tree
   qBrowserWindow_->setParent(nullptr);
 
-  // remove from delegate mapping
-  pContext_->pClientDelegate_->removeBrowserViewMapping(pCefBrowser_);
-
   // clean resource
   pCefBrowser_->StopLoad();
   pCefBrowser_->GetHost()->CloseBrowser(true);
+
+  // remove from delegate mapping
+  pContext_->pClientDelegate_->removeBrowserViewMapping(pCefBrowser_);
+
   pCefBrowser_ = nullptr;
   qBrowserWidget_ = nullptr;
   qBrowserWindow_ = nullptr;
@@ -291,15 +297,30 @@ QCefViewPrivate::sendEventNotifyMessage(int frameId, const QString& name, const 
   return pContext_->pClient_->TriggerEvent(pCefBrowser_, frameId, msg);
 }
 
-void
-QCefViewPrivate::onToplevelWidgetMoveOrResize()
-{
-  notifyMoveOrResizeStarted();
-}
-
 bool
 QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 {
+  Q_Q(QCefView);
+
+  // filter event from top level window
+  if (q->window() && watched == q->window()) {
+    switch (event->type()) {
+      case QEvent::ParentAboutToChange: {
+        q->window()->removeEventFilter(this);
+      } break;
+      case QEvent::ParentChange: {
+        q->window()->installEventFilter(this);
+      } break;
+      case QEvent::Move:
+      case QEvent::Resize: {
+        notifyMoveOrResizeStarted();
+      } break;
+      default:
+        break;
+    }
+  }
+
+  // filter event from the browser window
   if (watched == qBrowserWindow_) {
     if (QEvent::PlatformSurface == event->type()) {
       auto e = (QPlatformSurfaceEvent*)event;

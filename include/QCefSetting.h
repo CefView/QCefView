@@ -7,11 +7,20 @@
 #include <QString>
 #pragma endregion qt_headers
 
+/// <summary>
+///
+/// </summary>
 class QCEFVIEW_EXPORT QCefSetting
 {
 public:
+  /// <summary>
+  ///
+  /// </summary>
   QCefSetting();
 
+  /// <summary>
+  ///
+  /// </summary>
   ~QCefSetting();
 
 private:

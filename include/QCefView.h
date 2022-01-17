@@ -37,7 +37,7 @@
 class QCefViewPrivate;
 
 /// <summary>
-///
+/// Represents the CEF browser view
 /// </summary>
 class QCEFVIEW_EXPORT QCefView : public QWidget
 {
@@ -48,192 +48,177 @@ class QCEFVIEW_EXPORT QCefView : public QWidget
 
 public:
   /// <summary>
-  ///
+  /// Constructs a QCefView instance
   /// </summary>
+  /// <param name="url">The target url</param>
+  /// <param name="setting">The <see cref="QCefSetting"/> instance</param>
+  /// <param name="parent">The parent</param>
   QCefView(const QString url, const QCefSetting* setting, QWidget* parent = 0);
 
   /// <summary>
-  ///
+  /// Constructs a QCefView instance
   /// </summary>
+  /// <param name="parent">The parent</param>
   QCefView(QWidget* parent = 0);
 
   /// <summary>
-  ///
+  /// Destructs the QCefView instance
   /// </summary>
   ~QCefView();
 
   /// <summary>
-  ///
+  /// Gets the browser id
   /// </summary>
-  /// <returns></returns>
+  /// <returns>The browser id</returns>
   int browserId();
 
   /// <summary>
   /// Navigates to the content.
   /// </summary>
-  /// <param name="content"></param>
+  /// <param name="content">The content</param>
   void navigateToString(const QString& content);
 
   /// <summary>
-  ///
+  /// Navigates to the URL
   /// </summary>
-  /// <param name="url"></param>
+  /// <param name="url">The url</param>
   void navigateToUrl(const QString& url);
 
   /// <summary>
-  ///
+  /// Checks whether the browser can go back
   /// </summary>
-  /// <returns></returns>
+  /// <returns>True if can; otherwise false</returns>
   bool browserCanGoBack();
 
   /// <summary>
-  ///
+  /// Checks whether the browser can go forward
   /// </summary>
-  /// <returns></returns>
+  /// <returns>True if can; otherwise false</returns>
   bool browserCanGoForward();
 
   /// <summary>
-  ///
+  /// Requires the browser to go back
   /// </summary>
   void browserGoBack();
 
   /// <summary>
-  ///
+  /// Requires the browser to go forward
   /// </summary>
   void browserGoForward();
 
   /// <summary>
-  ///
+  /// Checks whether the browser is loading
   /// </summary>
-  /// <returns></returns>
+  /// <returns>True if it is loading; otherwise false</returns>
   bool browserIsLoading();
 
   /// <summary>
-  ///
+  /// Requires the browser to reload
   /// </summary>
   void browserReload();
 
   /// <summary>
-  ///
+  /// Requires the browser to stop load
   /// </summary>
   void browserStopLoad();
 
   /// <summary>
-  ///
+  /// Triggers the event for main frame
   /// </summary>
-  /// <param name="name"></param>
-  /// <param name="event"></param>
-  /// <param name="frameId"></param>
-  /// <returns></returns>
+  /// <param name="event">The <see cref="QCefEvent"/> instance</param>
+  /// <returns>True on successful; otherwise false</returns>
   bool triggerEvent(const QCefEvent& event);
 
   /// <summary>
-  ///
+  /// Triggers the event for specified frame
   /// </summary>
-  /// <param name="name"></param>
-  /// <param name="event"></param>
-  /// <param name="frameId"></param>
-  /// <returns></returns>
+  /// <param name="event">The <see cref="QCefEvent"/> instance</param>
+  /// <param name="frameId">The frame id</param>
+  /// <returns>True on successful; otherwise false</returns>
   bool triggerEvent(const QCefEvent& event, int frameId);
 
   /// <summary>
-  ///
+  /// Broad cast the event for all frames
   /// </summary>
-  /// <param name="name"></param>
-  /// <param name="event"></param>
-  /// <returns></returns>
+  /// <param name="event">The <see cref="QCefEvent"/> instance</param>
+  /// <returns>True on successful; otherwise false</returns>
   bool broadcastEvent(const QCefEvent& event);
 
   /// <summary>
-  ///
+  /// Response the <see cref="QCefQuery"/> request
   /// </summary>
-  /// <param name="query"></param>
-  /// <returns></returns>
+  /// <param name="query">The query instance</param>
+  /// <returns>True on successful; otherwise false</returns>
   bool responseQCefQuery(const QCefQuery& query);
 
   /// <summary>
-  ///
+  /// Gets called on loading state changed
   /// </summary>
-  /// <param name="isLoading"></param>
-  /// <param name="canGoBack"></param>
-  /// <param name="canGoForward"></param>
+  /// <param name="isLoading">Indicates the browser is loading</param>
+  /// <param name="canGoBack">Indicates the browser can go back</param>
+  /// <param name="canGoForward">Indicates the browser can go forward</param>
   virtual void onLoadingStateChanged(bool isLoading, bool canGoBack, bool canGoForward);
 
   /// <summary>
-  ///
+  /// Gets called on loading starts
   /// </summary>
   virtual void onLoadStart();
 
   /// <summary>
-  ///
+  /// Gets called on loading ends
   /// </summary>
   /// <param name="httpStatusCode"></param>
   virtual void onLoadEnd(int httpStatusCode);
 
   /// <summary>
-  ///
+  /// Gets called on loading failed due to error
   /// </summary>
-  /// <param name="errorCode"></param>
-  /// <param name="errorMsg"></param>
-  /// <param name="failedUrl"></param>
-  /// <param name="handled"></param>
+  /// <param name="errorCode">The error code</param>
+  /// <param name="errorMsg">The error message</param>
+  /// <param name="failedUrl">The url caused the failure</param>
+  /// <param name="handled">Sets this parameter to indicates whether this error was handled or not</param>
   virtual void onLoadError(int errorCode, const QString& errorMsg, const QString& failedUrl, bool& handled);
 
   /// <summary>
-  ///
+  /// Gets called on draggable region changed
   /// </summary>
-  /// <param name="draggableRegion"></param>
-  /// <param name="nonDraggableRegion"></param>
+  /// <param name="draggableRegion">The new draggable region</param>
+  /// <param name="nonDraggableRegion">The new non-draggable region</param>
   virtual void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
 
   /// <summary>
-  ///
+  /// Gets called on console message from the web content
   /// </summary>
-  /// <param name="message"></param>
-  /// <param name="level"></param>
+  /// <param name="message">The message</param>
+  /// <param name="level">The level</param>
   virtual void onConsoleMessage(const QString& message, int level);
 
   /// <summary>
-  ///
+  /// Gets called on focus event
   /// </summary>
-  /// <param name="next"></param>
+  /// <param name="next">The next</param>
   virtual void onTakeFocus(bool next);
 
   /// <summary>
-  ///
+  /// Gets called on cef url request
   /// </summary>
-  /// <param name="url"></param>
+  /// <param name="url">The requested url</param>
   virtual void onQCefUrlRequest(const QString& url);
 
   /// <summary>
-  ///
+  /// Gets called on new <see cref="QCefQuery"/> request
   /// </summary>
-  /// <param name="query"></param>
+  /// <param name="query">The query request</param>
   virtual void onQCefQueryRequest(const QCefQuery& query);
 
   /// <summary>
-  ///
+  /// Gets called on invoke method request from web content(Javascript)
   /// </summary>
-  /// <param name="browserId"></param>
-  /// <param name="frameId"></param>
-  /// <param name="method"></param>
-  /// <param name="arguments"></param>
+  /// <param name="browserId">The browser id</param>
+  /// <param name="frameId">The frame id</param>
+  /// <param name="method">The method name</param>
+  /// <param name="arguments">The arguments list</param>
   virtual void onInvokeMethodNotify(int browserId, int frameId, const QString& method, const QVariantList& arguments);
-
-protected:
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="event"></param>
-  virtual void changeEvent(QEvent* event) override;
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="watched"></param>
-  /// <param name="event"></param>
-  /// <returns></returns>
-  virtual bool eventFilter(QObject* watched, QEvent* event) override;
 };
 
 #endif // QCEFVIEW_H

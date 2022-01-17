@@ -15,10 +15,6 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
   : QWidget(parent)
   , d_ptr(new QCefViewPrivate(this, url))
 {
-  // install event filter for top level window
-  if (window())
-    window()->installEventFilter(this);
-
   // initialize the layout and
   // add browser widget to the layout
   QVBoxLayout* layout = new QVBoxLayout();
@@ -184,31 +180,3 @@ QCefView::onQCefQueryRequest(const QCefQuery& query)
 void
 QCefView::onInvokeMethodNotify(int browserId, int frameId, const QString& method, const QVariantList& arguments)
 {}
-
-void
-QCefView::changeEvent(QEvent* event)
-{
-  if (QEvent::ParentAboutToChange == event->type()) {
-    if (this->window())
-      this->window()->removeEventFilter(this);
-  } else if (QEvent::ParentChange == event->type()) {
-    if (this->window())
-      this->window()->installEventFilter(this);
-  }
-  QWidget::changeEvent(event);
-}
-
-bool
-QCefView::eventFilter(QObject* watched, QEvent* event)
-{
-  if (watched != window())
-    return QWidget::eventFilter(watched, event);
-
-  Q_D(QCefView);
-
-  if (QEvent::Resize == event->type() || QEvent::Move == event->type()) {
-    d->onToplevelWidgetMoveOrResize();
-  }
-
-  return QWidget::eventFilter(watched, event);
-}
