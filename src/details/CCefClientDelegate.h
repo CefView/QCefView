@@ -1,9 +1,9 @@
 ﻿#pragma once
 
 #pragma region std_headers
-#include <vector>
 #include <string>
 #include <unordered_map>
+#include <vector>
 #pragma endregion std_headers
 
 #pragma region cef_headers
@@ -57,8 +57,6 @@ public:
                                   int frameId,
                                   const std::string& method,
                                   const CefRefPtr<CefListValue>& arguments) override;
-
-  virtual void browserIsDestroying() override;
 
 protected:
   QCefView* take(CefRefPtr<CefBrowser>& browser);

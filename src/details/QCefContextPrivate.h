@@ -2,20 +2,21 @@
 
 #pragma region std_headers
 #include <atomic>
+#include <memory>
 #include <mutex>
 #include <set>
 #include <string>
-#include <memory>
 #pragma endregion std_headers
 
 #pragma region qt_headers
+#include <QCoreApplication>
+#include <QList>
 #include <QObject>
 #include <QTimer>
-#include <QList>
 #pragma endregion qt_headers
 
-#include <CefViewBrowserClient.h>
 #include <CefViewBrowserApp.h>
+#include <CefViewBrowserClient.h>
 
 #include "CCefAppDelegate.h"
 #include "CCefClientDelegate.h"
@@ -59,7 +60,7 @@ public:
   /// <summary>
   ///
   /// </summary>
-  QCefContextPrivate();
+  QCefContextPrivate(QCoreApplication* app);
 
   /// <summary>
   ///
@@ -106,6 +107,11 @@ public:
   }
 
 public slots:
+  /// <summary>
+  ///
+  /// </summary>
+  void onAboutToQuit();
+
   /// <summary>
   ///
   /// </summary>

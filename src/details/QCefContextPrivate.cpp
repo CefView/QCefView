@@ -13,11 +13,12 @@
 
 const int64_t kCefWorkerIntervalMs = (1000 / 60); // 60 fps
 
-QCefContextPrivate::QCefContextPrivate()
+QCefContextPrivate::QCefContextPrivate(QCoreApplication* app)
 {
-  QObject::connect(&cefWorkerTimer_, &QTimer::timeout, this, &QCefContextPrivate::performCefLoopWork);
   cefWorkerTimer_.setTimerType(Qt::PreciseTimer);
   cefWorkerTimer_.start(kCefWorkerIntervalMs);
+  connect(&cefWorkerTimer_, SIGNAL(timeout()), this, SLOT(performCefLoopWork()));
+  connect(app, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
 }
 
 QCefContextPrivate::~QCefContextPrivate() {}
@@ -51,11 +52,6 @@ QCefContextPrivate::initialize(const QCefConfigPrivate* config)
 void
 QCefContextPrivate::uninitialize()
 {
-  // wait for all browser to be closed
-  while (pClient_->GetBrowserCount()) {
-    QCoreApplication::processEvents();
-  }
-
   pClientDelegate_ = nullptr;
   pClient_ = nullptr;
 
@@ -69,6 +65,18 @@ QCefContextPrivate::scheduleCefLoopWork(int64_t delayMs)
   // calculate the effective delay number
   auto delay = qMax((int64_t)0, qMin(delayMs, kCefWorkerIntervalMs));
   QTimer::singleShot(delay, this, SLOT(performCefLoopWork()));
+}
+
+void
+QCefContextPrivate::onAboutToQuit()
+{
+  pClient_->CloseAllBrowsers();
+
+  // keep processing events till all browser closed
+  QCoreApplication::processEvents();
+  while (!pClient_->HasOneRef() || pClient_->GetBrowserCount()) {
+    QCoreApplication::processEvents();
+  }
 }
 
 void

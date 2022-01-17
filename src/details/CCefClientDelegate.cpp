@@ -164,12 +164,6 @@ CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
   view->onInvokeMethodNotify(browserId, frameId, m, argumentList);
 }
 
-void
-CCefClientDelegate::browserIsDestroying()
-{
-  return;
-}
-
 QCefView*
 CCefClientDelegate::take(CefRefPtr<CefBrowser>& browser)
 {

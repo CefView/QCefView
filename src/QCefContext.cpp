@@ -10,7 +10,7 @@ QCefContext* QCefContext::s_self;
 
 QCefContext::QCefContext(QCoreApplication* app, const QCefConfig* config)
   : QObject(app)
-  , d_ptr(new QCefContextPrivate)
+  , d_ptr(new QCefContextPrivate(app))
 {
   init(config);
 }
