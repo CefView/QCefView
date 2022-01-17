@@ -1,7 +1,7 @@
 ﻿#include "qcefviewtest.h"
 
-#include <QDir>
 #include <QCoreApplication>
+#include <QDir>
 #include <QHBoxLayout>
 
 QCefViewTest::QCefViewTest(QWidget* parent)
@@ -25,9 +25,9 @@ QCefViewTest::QCefViewTest(QWidget* parent)
 
   QCefSetting setting;
 
-  cefview = new CustomCefView(uri, &setting, this);
-  // cefview = new CustomCefView("http://www.w3.org", this);
-  ui.cefContainer->layout()->addWidget(cefview);
+  // cefview = new CustomCefView(uri, &setting, this);
+  cefView = new CustomCefView("https://www.w3schools.com/", &setting, this);
+  ui.cefContainer->layout()->addWidget(cefView);
   layout->addWidget(ui.cefContainer);
 
   centralWidget()->setLayout(layout);
@@ -38,5 +38,14 @@ QCefViewTest::~QCefViewTest() {}
 void
 QCefViewTest::onBtnChangeColorClicked()
 {
-  cefview->changeColor();
+  static bool closed = false;
+  if (!closed) {
+    auto b = cefView->close();
+    closed = true;
+  } else {
+    cefView->show();
+    closed = false;
+  }
+  // delete cefView;
+  // cefview->changeColor();
 }

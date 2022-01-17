@@ -51,6 +51,11 @@ QCefContextPrivate::initialize(const QCefConfigPrivate* config)
 void
 QCefContextPrivate::uninitialize()
 {
+  // wait for all browser to be closed
+  while (pClient_->GetBrowserCount()) {
+    QCoreApplication::processEvents();
+  }
+
   pClientDelegate_ = nullptr;
   pClient_ = nullptr;
 

@@ -40,6 +40,8 @@ private:
 protected:
   void createBrowser(const QString url, const QCefSetting* setting);
 
+  void closeBrowser();
+
   void destroyBrowser();
 
 public:
@@ -48,8 +50,6 @@ public:
   ~QCefViewPrivate();
 
   int browserId();
-
-  void closeAllBrowsers();
 
   void navigateToString(const QString& content);
 

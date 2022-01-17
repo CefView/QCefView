@@ -108,13 +108,16 @@ QCefViewPrivate::createBrowser(const QString url, const QCefSetting* setting)
 }
 
 void
-QCefViewPrivate::destroyBrowser()
+QCefViewPrivate::closeBrowser()
 {
   if (!pCefBrowser_)
     return;
 
-  // remove from parent tree
+  // remove the browser from parent tree, or CEF will send close
+  // event to the top level window, this will cause the application
+  // to exit the event loop, this is not what we expected to happen
   qBrowserWindow_->setParent(nullptr);
+  // auto b = qBrowserWindow_->close();
 
   // clean resource
   pCefBrowser_->StopLoad();
@@ -128,6 +131,13 @@ QCefViewPrivate::destroyBrowser()
   qBrowserWindow_ = nullptr;
 }
 
+void
+QCefViewPrivate::destroyBrowser()
+{
+  // close again
+  closeBrowser();
+}
+
 int
 QCefViewPrivate::browserId()
 {
@@ -136,10 +146,6 @@ QCefViewPrivate::browserId()
 
   return -1;
 }
-
-void
-QCefViewPrivate::closeAllBrowsers()
-{}
 
 void
 QCefViewPrivate::navigateToString(const QString& content)
@@ -304,6 +310,7 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 
   // filter event from top level window
   if (q->window() && watched == q->window()) {
+    qDebug() << "============ QCefView event:" << event->type();
     switch (event->type()) {
       case QEvent::ParentAboutToChange: {
         q->window()->removeEventFilter(this);
@@ -322,11 +329,13 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 
   // filter event from the browser window
   if (watched == qBrowserWindow_) {
+    qDebug() << "++++++++++++ Browser window event:" << event->type();
     if (QEvent::PlatformSurface == event->type()) {
       auto e = (QPlatformSurfaceEvent*)event;
       auto sufaceType = e->surfaceEventType();
       if (e->surfaceEventType() == QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed) {
-        destroyBrowser();
+        // QCefView is being destroyed, need to close the browser window in advance
+        closeBrowser();
       }
     }
   }
