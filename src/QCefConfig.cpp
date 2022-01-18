@@ -142,10 +142,10 @@ void
 QCefConfig::setBackgroundColor(const QColor& color)
 {
   Q_D(QCefConfig);
-  d->backgroundColor_ = color.value();
+  d->backgroundColor_ = color;
 }
 
-const QColor
+const QVariant
 QCefConfig::backgroundColor() const
 {
   Q_D(const QCefConfig);
@@ -173,7 +173,7 @@ QCefConfig::setPersistSessionCookies(bool enabled)
   d->persistSessionCookies_ = enabled;
 }
 
-const bool
+const QVariant
 QCefConfig::persistSessionCookies() const
 {
   Q_D(const QCefConfig);
@@ -187,7 +187,7 @@ QCefConfig::setPersistUserPreferences(bool enabled)
   d->persistUserPreferences_ = enabled;
 }
 
-const bool
+const QVariant
 QCefConfig::persistUserPreferences() const
 {
   Q_D(const QCefConfig);
@@ -201,7 +201,7 @@ QCefConfig::setRemoteDebuggingPort(short port)
   d->remoteDebuggingport_ = port;
 }
 
-const short
+const QVariant
 QCefConfig::remoteDebuggingPort() const
 {
   Q_D(const QCefConfig);

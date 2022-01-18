@@ -158,32 +158,12 @@ QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
 
   // Build CefSettings
   CefSettings cef_settings;
-  CefString(&cef_settings.framework_dir_path) = cefFrameworkPath();
-  CefString(&cef_settings.browser_subprocess_path) = cefSubprocessPath();
-
-  if (!config->userAgent_.empty())
-    CefString(&cef_settings.user_agent) = config->userAgent_;
-  if (!config->cachePath_.empty())
-    CefString(&cef_settings.cache_path) = config->cachePath_;
-  if (!config->userDataPath_.empty())
-    CefString(&cef_settings.user_data_path) = config->userDataPath_;
-  if (!config->locale_.empty())
-    CefString(&cef_settings.locale) = config->locale_;
-  if (!config->acceptLanguageList_.empty())
-    CefString(&cef_settings.accept_language_list) = config->acceptLanguageList_;
-
-  cef_settings.persist_session_cookies = config->persistSessionCookies_;
-  cef_settings.persist_user_preferences = config->persistUserPreferences_;
-  cef_settings.background_color = config->backgroundColor_;
-
-#ifndef NDEBUG
-  cef_settings.log_severity = LOGSEVERITY_DEFAULT;
-  cef_settings.remote_debugging_port = config->remoteDebuggingport_;
-#else
-  cef_settings.log_severity = LOGSEVERITY_DISABLE;
-#endif
+  if (config)
+    config->CopyToCefSettings(cef_settings);
 
   // fixed values
+  CefString(&cef_settings.framework_dir_path) = cefFrameworkPath();
+  CefString(&cef_settings.browser_subprocess_path) = cefSubprocessPath();
   cef_settings.pack_loading_disabled = false;
   cef_settings.multi_threaded_message_loop = false;
   cef_settings.external_message_pump = true;

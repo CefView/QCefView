@@ -13,7 +13,7 @@
 
 QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* parent /*= 0*/)
   : QWidget(parent)
-  , d_ptr(new QCefViewPrivate(this, url))
+  , d_ptr(new QCefViewPrivate(this, url, setting ? setting->d_func() : nullptr))
 {
   // initialize the layout and
   // add browser widget to the layout

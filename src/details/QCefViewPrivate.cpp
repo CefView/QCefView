@@ -23,14 +23,14 @@
 #include "CCefClientDelegate.h"
 #include "QCefContext.h"
 
-QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url)
+QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url, const QCefSettingPrivate* setting)
   : q_ptr(view)
   , pContext_(QCefContext::instance()->d_func())
   , pCefBrowser_(nullptr)
   , qBrowserWidget_(nullptr)
   , qBrowserWindow_(nullptr)
 {
-  createBrowser(url, nullptr);
+  createBrowser(url, setting);
 }
 
 QCefViewPrivate::~QCefViewPrivate()
@@ -39,7 +39,7 @@ QCefViewPrivate::~QCefViewPrivate()
 }
 
 void
-QCefViewPrivate::createBrowser(const QString url, const QCefSetting* setting)
+QCefViewPrivate::createBrowser(const QString url, const QCefSettingPrivate* setting)
 {
   Q_Q(QCefView);
 
@@ -64,6 +64,9 @@ QCefViewPrivate::createBrowser(const QString url, const QCefSetting* setting)
 
   // create the browser object
   CefBrowserSettings browserSettings;
+  if (setting)
+    setting->CopyToCefBrowserSettings(browserSettings);
+
   browserSettings.plugins = STATE_DISABLED;
   auto pCefBrowser = CefBrowserHost::CreateBrowserSync(window_info,         // window info
                                                        pContext_->pClient_, // handler

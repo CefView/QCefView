@@ -7,6 +7,7 @@
 #include <QColor>
 #include <QScopedPointer>
 #include <QString>
+#include <QVariant>
 #pragma endregion qt_headers
 
 class QCefConfigPrivate;
@@ -153,7 +154,7 @@ public:
   /// <summary>
   /// Gets the background color
   /// </summary>
-  const QColor backgroundColor() const;
+  const QVariant backgroundColor() const;
 
   /// <summary>
   /// Sets the acceptable language list
@@ -175,7 +176,7 @@ public:
   /// <summary>
   /// Gets whether to persist session cookie
   /// </summary>
-  const bool persistSessionCookies() const;
+  const QVariant persistSessionCookies() const;
 
   /// <summary>
   /// Sets whether to persist user preferences
@@ -186,7 +187,7 @@ public:
   /// <summary>
   /// Gets whether to persist user preferences
   /// </summary>
-  const bool persistUserPreferences() const;
+  const QVariant persistUserPreferences() const;
 
   /// <summary>
   /// Sets the remote debugging port
@@ -202,7 +203,7 @@ public:
   /// <summary>
   /// Gets the remote debugging port
   /// </summary>
-  const short remoteDebuggingPort() const;
+  const QVariant remoteDebuggingPort() const;
 };
 
 #endif

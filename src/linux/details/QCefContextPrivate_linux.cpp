@@ -7,33 +7,8 @@ QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
 {
   // Build CefSettings
   CefSettings cef_settings;
-  if (!config->browserSubProcessPath_.empty())
-    CefString(&cef_settings.browser_subprocess_path) = config->browserSubProcessPath_;
-  if (!config->resourceDirectoryPath_.empty())
-    CefString(&cef_settings.resources_dir_path) = config->resourceDirectoryPath_;
-  if (!config->localesDirectoryPath_.empty())
-    CefString(&cef_settings.locales_dir_path) = config->localesDirectoryPath_;
-  if (!config->userAgent_.empty())
-    CefString(&cef_settings.user_agent) = config->userAgent_;
-  if (!config->cachePath_.empty())
-    CefString(&cef_settings.cache_path) = config->cachePath_;
-  if (!config->userDataPath_.empty())
-    CefString(&cef_settings.user_data_path) = config->userDataPath_;
-  if (!config->locale_.empty())
-    CefString(&cef_settings.locale) = config->locale_;
-  if (!config->acceptLanguageList_.empty())
-    CefString(&cef_settings.accept_language_list) = config->acceptLanguageList_;
-
-  cef_settings.persist_session_cookies = config->persistSessionCookies_;
-  cef_settings.persist_user_preferences = config->persistUserPreferences_;
-  cef_settings.background_color = config->backgroundColor_;
-
-#ifndef NDEBUG
-  cef_settings.log_severity = LOGSEVERITY_DEFAULT;
-  cef_settings.remote_debugging_port = config->remoteDebuggingport_;
-#else
-  cef_settings.log_severity = LOGSEVERITY_DISABLE;
-#endif
+  if (config)
+    config->CopyToCefSettings(cef_settings);
 
   // fixed values
   cef_settings.pack_loading_disabled = false;

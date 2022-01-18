@@ -7,6 +7,7 @@
 #include <CefViewBrowserClient.h>
 
 #include "QCefContextPrivate.h"
+#include "QCefSettingPrivate.h"
 
 #include <QCefView.h>
 
@@ -38,14 +39,14 @@ private:
   QWidget* qBrowserWidget_;
 
 protected:
-  void createBrowser(const QString url, const QCefSetting* setting);
+  void createBrowser(const QString url, const QCefSettingPrivate* setting);
 
   void closeBrowser();
 
   void destroyBrowser();
 
 public:
-  explicit QCefViewPrivate(QCefView* view, const QString& url);
+  explicit QCefViewPrivate(QCefView* view, const QString& url, const QCefSettingPrivate* setting = nullptr);
 
   ~QCefViewPrivate();
 
