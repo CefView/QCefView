@@ -24,6 +24,9 @@ class QCEFVIEW_EXPORT QCefConfig
   friend class QCefContext;
 
 public:
+  /// <summary>
+  /// Represents the log severity
+  /// </summary>
   enum LogLevel
   {
     ///
