@@ -24,6 +24,51 @@ class QCEFVIEW_EXPORT QCefConfig
   friend class QCefContext;
 
 public:
+  enum LogLevel
+  {
+    ///
+    // Default logging (currently INFO logging).
+    ///
+    LOGSEVERITY_DEFAULT,
+
+    ///
+    // Verbose logging.
+    ///
+    LOGSEVERITY_VERBOSE,
+
+    ///
+    // DEBUG logging.
+    ///
+    LOGSEVERITY_DEBUG = LOGSEVERITY_VERBOSE,
+
+    ///
+    // INFO logging.
+    ///
+    LOGSEVERITY_INFO,
+
+    ///
+    // WARNING logging.
+    ///
+    LOGSEVERITY_WARNING,
+
+    ///
+    // ERROR logging.
+    ///
+    LOGSEVERITY_ERROR,
+
+    ///
+    // FATAL logging.
+    ///
+    LOGSEVERITY_FATAL,
+
+    ///
+    // Disable logging to file for all messages, and to stderr for messages with
+    // severity less than FATAL.
+    ///
+    LOGSEVERITY_DISABLE = 99
+  };
+
+public:
   /// <summary>
   /// Constructs a CEF config instance
   /// </summary>
@@ -80,6 +125,18 @@ public:
   /// </summary>
   const QString localesDirectoryPath() const;
 #endif
+
+  /// <summary>
+  /// Sets the log level
+  /// </summary>
+  /// <param name="lvl"></param>
+  void setLogLevel(const LogLevel lvl);
+
+  /// <summary>
+  /// Gets the log level
+  /// </summary>
+  /// <returns>The current log level</returns>
+  const QCefConfig::LogLevel logLevel() const;
 
   /// <summary>
   /// Sets the locale

@@ -30,43 +30,42 @@ void
 QCefConfigPrivate::CopyToCefSettings(CefSettings& settings) const
 {
 #if !defined(OS_MACOS)
-  if (!this->browserSubProcessPath_.empty())
-    CefString(&settings.browser_subprocess_path) = this->browserSubProcessPath_;
+  if (!browserSubProcessPath_.empty())
+    CefString(&settings.browser_subprocess_path) = browserSubProcessPath_;
 
-  if (!this->resourceDirectoryPath_.empty())
-    CefString(&settings.resources_dir_path) = this->resourceDirectoryPath_;
+  if (!resourceDirectoryPath_.empty())
+    CefString(&settings.resources_dir_path) = resourceDirectoryPath_;
 
-  if (!this->localesDirectoryPath_.empty())
-    CefString(&settings.locales_dir_path) = this->localesDirectoryPath_;
+  if (!localesDirectoryPath_.empty())
+    CefString(&settings.locales_dir_path) = localesDirectoryPath_;
 #endif
 
-  if (!this->userAgent_.empty())
-    CefString(&settings.user_agent) = this->userAgent_;
+  if (!userAgent_.empty())
+    CefString(&settings.user_agent) = userAgent_;
 
-  if (!this->cachePath_.empty())
-    CefString(&settings.cache_path) = this->cachePath_;
+  if (!cachePath_.empty())
+    CefString(&settings.cache_path) = cachePath_;
 
-  if (!this->userDataPath_.empty())
-    CefString(&settings.user_data_path) = this->userDataPath_;
+  if (!userDataPath_.empty())
+    CefString(&settings.user_data_path) = userDataPath_;
 
-  if (!this->locale_.empty())
-    CefString(&settings.locale) = this->locale_;
+  if (!locale_.empty())
+    CefString(&settings.locale) = locale_;
 
-  if (!this->acceptLanguageList_.empty())
-    CefString(&settings.accept_language_list) = this->acceptLanguageList_;
+  if (!acceptLanguageList_.empty())
+    CefString(&settings.accept_language_list) = acceptLanguageList_;
 
-  if (this->persistSessionCookies_.canConvert<int>())
-    settings.persist_session_cookies = this->persistSessionCookies_.toInt();
+  if (persistSessionCookies_.canConvert<int>())
+    settings.persist_session_cookies = persistSessionCookies_.toInt();
 
-  if (this->persistUserPreferences_.canConvert<int>())
-    settings.persist_user_preferences = this->persistUserPreferences_.toInt();
+  if (persistUserPreferences_.canConvert<int>())
+    settings.persist_user_preferences = persistUserPreferences_.toInt();
 
-  if (this->backgroundColor_.canConvert<QColor>())
-    settings.background_color = this->backgroundColor_.value<QColor>().value();
+  if (backgroundColor_.canConvert<QColor>())
+    settings.background_color = backgroundColor_.value<QColor>().value();
 
-  if (this->remoteDebuggingport_.canConvert<int>())
-    settings.remote_debugging_port = this->remoteDebuggingport_.toInt();
+  if (remoteDebuggingport_.canConvert<int>())
+    settings.remote_debugging_port = remoteDebuggingport_.toInt();
 
-  if (this->logLevel_.canConvert<int>())
-    settings.log_severity = (cef_log_severity_t)this->logLevel_.toInt();
+  settings.log_severity = (cef_log_severity_t)logLevel_;
 }

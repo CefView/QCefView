@@ -15,7 +15,7 @@
 class QCefQueryPrivate;
 
 /// <summary>
-/// Represents the query reqeust sent from the web content(Javascript)
+/// Represents the query request sent from the web content(Javascript)
 /// </summary>
 class QCEFVIEW_EXPORT QCefQuery
 {
@@ -56,7 +56,7 @@ public:
   /// Gets the query content
   /// </summary>
   /// <returns>The content string</returns>
-  const QString reqeust() const;
+  const QString request() const;
 
   /// <summary>
   /// Gets the query id

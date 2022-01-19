@@ -17,7 +17,7 @@ QCefQuery::QCefQuery(const QString& req, const int64_t query)
   : QCefQuery()
 {
   d_ptr->id_ = query;
-  d_ptr->reqeust_ = req;
+  d_ptr->request_ = req;
 }
 
 QCefQuery::QCefQuery(const QCefQuery& other)
@@ -36,10 +36,10 @@ QCefQuery::operator=(const QCefQuery& other)
 QCefQuery::~QCefQuery() {}
 
 const QString
-QCefQuery::reqeust() const
+QCefQuery::request() const
 {
   Q_D(const QCefQuery);
-  return d->reqeust_;
+  return d->request_;
 }
 
 const int64_t

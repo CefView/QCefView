@@ -14,7 +14,7 @@ public:
   ~QCefQueryPrivate();
 
   int64_t id_ = -1;
-  QString reqeust_;
+  QString request_;
   QString response_;
   bool restult_ = false;
   int error_ = 0;

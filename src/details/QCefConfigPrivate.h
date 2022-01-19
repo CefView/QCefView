@@ -2,7 +2,6 @@
 
 #pragma region stl_headers
 #include <list>
-#include <optional>
 #include <string>
 #pragma endregion stl_headers
 
@@ -18,51 +17,6 @@
 
 class QCefConfigPrivate
 {
-public:
-  enum LogLevel
-  {
-    ///
-    // Default logging (currently INFO logging).
-    ///
-    LOGSEVERITY_DEFAULT,
-
-    ///
-    // Verbose logging.
-    ///
-    LOGSEVERITY_VERBOSE,
-
-    ///
-    // DEBUG logging.
-    ///
-    LOGSEVERITY_DEBUG = LOGSEVERITY_VERBOSE,
-
-    ///
-    // INFO logging.
-    ///
-    LOGSEVERITY_INFO,
-
-    ///
-    // WARNING logging.
-    ///
-    LOGSEVERITY_WARNING,
-
-    ///
-    // ERROR logging.
-    ///
-    LOGSEVERITY_ERROR,
-
-    ///
-    // FATAL logging.
-    ///
-    LOGSEVERITY_FATAL,
-
-    ///
-    // Disable logging to file for all messages, and to stderr for messages with
-    // severity less than FATAL.
-    ///
-    LOGSEVERITY_DISABLE = 99
-  };
-
 public:
   explicit QCefConfigPrivate();
 
@@ -84,9 +38,10 @@ public:
   std::string resourceDirectoryPath_;
 #endif
 
-  QVariant backgroundColor_;        // <uint32_t>
-  QVariant remoteDebuggingport_;    //<short>
-  QVariant persistSessionCookies_;  //<bool>
-  QVariant persistUserPreferences_; //<bool>
-  QVariant logLevel_;               //<int>
+  int logLevel_ = LOGSEVERITY_DEFAULT;
+
+  /* bool   */ QVariant persistSessionCookies_;
+  /* bool   */ QVariant persistUserPreferences_;
+  /* short  */ QVariant remoteDebuggingport_;
+  /* QColor */ QVariant backgroundColor_;
 };

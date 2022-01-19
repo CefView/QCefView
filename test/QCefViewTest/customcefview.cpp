@@ -3,17 +3,15 @@
 #else
 #endif
 
-#include <QMessageBox>
 #include <QColor>
+#include <QMessageBox>
 #include <QRandomGenerator>
 
 #include "customcefview.h"
 
 CustomCefView::CustomCefView(const QString url, const QCefSetting* setting, QWidget* parent /* = 0*/)
   : QCefView(url, setting, parent)
-{
-  //setAttribute(Qt::WA_NativeWindow);
-}
+{}
 
 CustomCefView::~CustomCefView() {}
 
@@ -59,11 +57,11 @@ CustomCefView::onQCefQueryRequest(const QCefQuery& query)
       QString title("QCef Query Request");
       QString text = QString("Current Thread: QT_UI\r\n"
                              "Query: %1")
-                       .arg(query.reqeust());
+                       .arg(query.request());
 
       QMessageBox::information(this->window(), title, text);
 
-      QString response = query.reqeust().toUpper();
+      QString response = query.request().toUpper();
       query.setResponseResult(true, response);
       responseQCefQuery(query);
     },

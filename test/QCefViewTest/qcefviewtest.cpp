@@ -24,6 +24,7 @@ QCefViewTest::QCefViewTest(QWidget* parent)
 #endif
 
   QCefSetting setting;
+  setting.setBackgroundColor(QColor::fromRgb(0, 0, 255));
 
   // cefview = new CustomCefView(uri, &setting, this);
   cefView = new CustomCefView("https://www.w3schools.com/", &setting, this);

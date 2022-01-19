@@ -69,6 +69,20 @@ QCefConfig::localesDirectoryPath() const
 #endif
 
 void
+QCefConfig::setLogLevel(const LogLevel lvl)
+{
+  Q_D(QCefConfig);
+  d->logLevel_ = lvl;
+}
+
+const QCefConfig::LogLevel
+QCefConfig::logLevel() const
+{
+  Q_D(const QCefConfig);
+  return static_cast<LogLevel>(d->logLevel_);
+}
+
+void
 QCefConfig::setLocale(const QString& locale)
 {
   Q_D(QCefConfig);
