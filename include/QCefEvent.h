@@ -17,6 +17,7 @@ class QCEFVIEW_EXPORT QCefEvent
 {
   Q_DECLARE_PRIVATE(QCefEvent)
   QScopedPointer<QCefEventPrivate> d_ptr;
+
   friend class QCefView;
 
 public:

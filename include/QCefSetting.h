@@ -12,7 +12,7 @@
 class QCefSettingPrivate;
 
 /// <summary>
-///
+/// Represents the settings for individual browser
 /// </summary>
 class QCEFVIEW_EXPORT QCefSetting
 {

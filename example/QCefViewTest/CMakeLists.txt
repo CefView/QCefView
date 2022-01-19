@@ -63,9 +63,8 @@ if (OS_WINDOWS)
       VS_STARTUP_PROJECT ${PROJECT_NAME}
   )
 
-  set_property(TARGET ${PROJECT_NAME} 
-    PROPERTY
-      FOLDER "Test"
+  set_target_properties(${PROJECT_NAME} 
+    PROPERTIES
       VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
   )
 
@@ -157,7 +156,6 @@ if (OS_MACOS)
 
   set_target_properties(${PROJECT_NAME} 
     PROPERTIES 
-      FOLDER "Test"
       ARCHIVE_OUTPUT_DIRECTORY                  "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/demo"
       LIBRARY_OUTPUT_DIRECTORY                  "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/demo"
       RUNTIME_OUTPUT_DIRECTORY                  "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/demo"
@@ -197,6 +195,11 @@ if (OS_MACOS)
       ${APPKIT_FRAMEWORK}
   )
 endif()
+
+set_target_properties(${PROJECT_NAME} 
+  PROPERTIES
+    FOLDER example
+)
 
 target_link_libraries(${PROJECT_NAME}
   PRIVATE

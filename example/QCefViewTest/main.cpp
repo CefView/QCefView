@@ -1,7 +1,8 @@
-﻿#include "qcefviewtest.h"
-#include <QtWidgets/QApplication>
+﻿#include <QtWidgets/QApplication>
 
 #include <QCefContext.h>
+
+#include "MainWindow.h"
 
 int
 main(int argc, char* argv[])
@@ -17,7 +18,7 @@ main(int argc, char* argv[])
   // initialize QCefContext instance with config
   QCefContext cefContext(&a, &config);
 
-  QCefViewTest w;
+  MainWindow w;
   w.show();
 
   int rc = a.exec();

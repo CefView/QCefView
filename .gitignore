@@ -5,3 +5,4 @@ dep/cef
 output
 .DS_Store
 CMakeLists.txt.user
+docs/doxygen/xml

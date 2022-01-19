@@ -151,24 +151,25 @@ public:
   /// <returns>True on successful; otherwise false</returns>
   bool responseQCefQuery(const QCefQuery& query);
 
+signals:
   /// <summary>
   /// Gets called on loading state changed
   /// </summary>
   /// <param name="isLoading">Indicates the browser is loading</param>
   /// <param name="canGoBack">Indicates the browser can go back</param>
   /// <param name="canGoForward">Indicates the browser can go forward</param>
-  virtual void onLoadingStateChanged(bool isLoading, bool canGoBack, bool canGoForward);
+  void loadingStateChanged(bool isLoading, bool canGoBack, bool canGoForward);
 
   /// <summary>
   /// Gets called on loading starts
   /// </summary>
-  virtual void onLoadStart();
+  void loadStart();
 
   /// <summary>
   /// Gets called on loading ends
   /// </summary>
   /// <param name="httpStatusCode"></param>
-  virtual void onLoadEnd(int httpStatusCode);
+  void loadEnd(int httpStatusCode);
 
   /// <summary>
   /// Gets called on loading failed due to error
@@ -177,39 +178,33 @@ public:
   /// <param name="errorMsg">The error message</param>
   /// <param name="failedUrl">The url caused the failure</param>
   /// <param name="handled">Sets this parameter to indicates whether this error was handled or not</param>
-  virtual void onLoadError(int errorCode, const QString& errorMsg, const QString& failedUrl, bool& handled);
+  void loadError(int errorCode, const QString& errorMsg, const QString& failedUrl, bool& handled);
 
   /// <summary>
   /// Gets called on draggable region changed
   /// </summary>
   /// <param name="draggableRegion">The new draggable region</param>
   /// <param name="nonDraggableRegion">The new non-draggable region</param>
-  virtual void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
+  void draggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
 
   /// <summary>
   /// Gets called on console message from the web content
   /// </summary>
   /// <param name="message">The message</param>
   /// <param name="level">The level</param>
-  virtual void onConsoleMessage(const QString& message, int level);
+  void consoleMessage(const QString& message, int level);
 
   /// <summary>
   /// Gets called on focus event
   /// </summary>
   /// <param name="next">The next</param>
-  virtual void onTakeFocus(bool next);
-
-  /// <summary>
-  /// Gets called on cef url request
-  /// </summary>
-  /// <param name="url">The requested url</param>
-  virtual void onQCefUrlRequest(const QString& url);
+  void takeFocus(bool next);
 
   /// <summary>
   /// Gets called on new <see cref="QCefQuery"/> request
   /// </summary>
   /// <param name="query">The query request</param>
-  virtual void onQCefQueryRequest(const QCefQuery& query);
+  void cefQueryRequest(const QCefQuery& query);
 
   /// <summary>
   /// Gets called on invoke method request from web content(Javascript)
@@ -218,7 +213,7 @@ public:
   /// <param name="frameId">The frame id</param>
   /// <param name="method">The method name</param>
   /// <param name="arguments">The arguments list</param>
-  virtual void onInvokeMethodNotify(int browserId, int frameId, const QString& method, const QVariantList& arguments);
+  void invokeMethod(int browserId, int frameId, const QString& method, const QVariantList& arguments);
 };
 
 #endif // QCEFVIEW_H

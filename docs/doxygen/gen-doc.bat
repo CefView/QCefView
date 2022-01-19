@@ -1,2 +1,5 @@
+@REM genarete xml documentaion 
 doxygen
-moxygen -c -h xml
+
+@REM convert to markdown
+moxygen -c -h -o "md" xml

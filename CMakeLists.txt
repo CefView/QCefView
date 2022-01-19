@@ -31,7 +31,7 @@ endif()
 
 
 # Use folders in the resulting project files.
-set_property(GLOBAL PROPERTY OS_FOLDERS ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # C standard
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -91,6 +91,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/lib)
 
 # Include CefViewCore
 add_subdirectory(CefViewCore)
+set_target_properties(CefViewCore PROPERTIES FOLDER core)
+set_target_properties(CefViewWing PROPERTIES FOLDER core)
+set_target_properties(libcef_dll_wrapper PROPERTIES FOLDER core)
 
 # Config QCefView target
 ###############################################################
@@ -99,6 +102,6 @@ add_subdirectory(src)
 # Config the Demo project
 ###############################################################
 if (BUILD_DEMO)
-  add_subdirectory(test/QCefViewTest)
+  add_subdirectory(example/QCefViewTest)
 endif()
 ###############################################################

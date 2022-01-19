@@ -26,7 +26,7 @@ CCefClientDelegate::loadingStateChanged(CefRefPtr<CefBrowser>& browser,
 {
   auto view = take(browser);
   if (view)
-    view->onLoadingStateChanged(isLoading, canGoBack, canGoForward);
+    view->loadingStateChanged(isLoading, canGoBack, canGoForward);
 }
 
 void
@@ -34,7 +34,7 @@ CCefClientDelegate::loadStart(CefRefPtr<CefBrowser>& browser)
 {
   auto view = take(browser);
   if (view)
-    view->onLoadStart();
+    view->loadStart();
 }
 
 void
@@ -42,7 +42,7 @@ CCefClientDelegate::loadEnd(CefRefPtr<CefBrowser>& browser, int httpStatusCode)
 {
   auto view = take(browser);
   if (view)
-    view->onLoadEnd(httpStatusCode);
+    view->loadEnd(httpStatusCode);
 }
 
 void
@@ -56,7 +56,7 @@ CCefClientDelegate::loadError(CefRefPtr<CefBrowser>& browser,
   if (view) {
     auto msg = QString::fromStdString(errorMsg);
     auto url = QString::fromStdString(failedUrl);
-    view->onLoadError(errorCode, msg, url, handled);
+    view->loadError(errorCode, msg, url, handled);
   }
 }
 
@@ -80,7 +80,7 @@ CCefClientDelegate::draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
     }
   }
 
-  view->onDraggableRegionChanged(draggableRegion, nonDraggableRegion);
+  view->draggableRegionChanged(draggableRegion, nonDraggableRegion);
 }
 
 void
@@ -89,7 +89,7 @@ CCefClientDelegate::consoleMessage(CefRefPtr<CefBrowser>& browser, const std::st
   auto view = take(browser);
   if (view) {
     auto msg = QString::fromStdString(message);
-    view->onConsoleMessage(msg, level);
+    view->consoleMessage(msg, level);
   }
 }
 
@@ -98,12 +98,13 @@ CCefClientDelegate::takeFocus(CefRefPtr<CefBrowser>& browser, bool next)
 {
   auto view = take(browser);
   if (view)
-    view->onTakeFocus(next);
+    view->takeFocus(next);
 }
 
 void
 CCefClientDelegate::processUrlRequest(const std::string& url)
 {
+  // deprecated feature
   // auto view = take(browser);
   // if (view) {
   //  auto u = QString::fromStdString(url);
@@ -119,7 +120,7 @@ CCefClientDelegate::processQueryRequest(CefRefPtr<CefBrowser>& browser,
   auto view = take(browser);
   if (view) {
     auto req = QString::fromStdString(request);
-    view->onQCefQueryRequest(QCefQuery(req, query_id));
+    view->cefQueryRequest(QCefQuery(req, query_id));
   }
 }
 
@@ -161,7 +162,7 @@ CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
   }
 
   auto browserId = browser->GetIdentifier();
-  view->onInvokeMethodNotify(browserId, frameId, m, argumentList);
+  view->invokeMethod(browserId, frameId, m, argumentList);
 }
 
 QCefView*
