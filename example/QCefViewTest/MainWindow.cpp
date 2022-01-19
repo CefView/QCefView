@@ -74,8 +74,12 @@ MainWindow::onInvokeMethod(int browserId, int frameId, const QString& method, co
         QString title("QCef InvokeMethod Notify");
         QString text = QString("Current Thread: QT_UI\r\n"
                                "Method: %1\r\n"
-                               "Arguments: ...")
+                               "Arguments:\r\n")
                          .arg(method);
+
+        for (auto& arg : arguments) {
+          text.append(QString("  %1\r\n").arg(arg.toString()));
+        }
 
         QMessageBox::information(this->window(), title, text);
       },

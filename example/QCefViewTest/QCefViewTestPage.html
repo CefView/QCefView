@@ -31,8 +31,8 @@
       //     CallBridge.invokeMethod("onDragAreaMouseDown");
       //   }
 
-      function onInvokeMethodClicked() {
-        CallBridge.invokeMethod("TestMethod", 1, false, "arg3");
+      function onInvokeMethodClicked(name, ...arg) {
+        CallBridge.invokeMethod(name, ...arg);
       }
 
       function onCallBridgeQueryClicked() {
@@ -109,7 +109,7 @@
       <input
         type="button"
         value="Invoke Method"
-        onclick="onInvokeMethodClicked()"
+        onclick="onInvokeMethodClicked('TestMethod', 1, false, 'arg3')"
       />
       <br />
       <br />
