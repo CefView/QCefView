@@ -22,6 +22,7 @@
 
 #include "CCefClientDelegate.h"
 #include "QCefContext.h"
+#include "ValueConvertor.h"
 
 QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url, const QCefSettingPrivate* setting)
   : q_ptr(view)
@@ -224,7 +225,7 @@ QCefViewPrivate::browserStopLoad()
 
 bool
 QCefViewPrivate::triggerEvent(const QString& name,
-                              const QVariantMap& args,
+                              const QVariantList& args,
                               int frameId /*= CefViewBrowserHandler::MAIN_FRAME*/)
 {
   if (!name.isEmpty()) {
@@ -256,50 +257,67 @@ QCefViewPrivate::notifyMoveOrResizeStarted()
 }
 
 bool
-QCefViewPrivate::sendEventNotifyMessage(int frameId, const QString& name, const QVariantMap& args)
+QCefViewPrivate::sendEventNotifyMessage(int frameId, const QString& name, const QVariantList& args)
 {
   CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create(TRIGGEREVENT_NOTIFY_MESSAGE);
   CefRefPtr<CefListValue> arguments = msg->GetArgumentList();
 
+  //** arguments(CefValueList)
+  //** +------------+
+  //** | event name |
+  //** | event arg1 |
+  //** | event arg2 |
+  //** | event arg3 |
+  //** | event arg4 |
+  //** |    ...     |
+  //** |    ...     |
+  //** |    ...     |
+  //** |    ...     |
+  //** +------------+
   int idx = 0;
   CefString eventName = name.toStdString();
   arguments->SetString(idx++, eventName);
-
-  CefRefPtr<CefDictionaryValue> dict = CefDictionaryValue::Create();
-
-  CefString cefStr;
-  cefStr.FromString(name.toUtf8().constData());
-  dict->SetString("name", cefStr);
-
-  QList<QString> keys = args.keys();
-  for (const QString& key : keys) {
-    auto value = args[key];
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    auto valueType = value.type();
-#define TypeClass QVariant
-#define StringType String
-#else
-    auto valueType = value.typeId();
-#define TypeClass QMetaType
-#define StringType QString
-#endif
-    if (valueType == TypeClass::Bool)
-      dict->SetBool(key.toUtf8().constData(), value.toBool());
-    else if (valueType == TypeClass::Int || valueType == TypeClass::UInt)
-      dict->SetInt(key.toUtf8().constData(), value.toInt());
-    else if (valueType == TypeClass::Double)
-      dict->SetDouble(key.toUtf8().constData(), value.toDouble());
-    else if (valueType == TypeClass::StringType) {
-      cefStr.FromString(value.toString().toUtf8().constData());
-      dict->SetString(key.toUtf8().constData(), cefStr);
-    } else {
-      Q_ASSERT_X(false, "QCefViewPrivate::sendEventNotifyMessage", "Unsupport event argument type");
-    }
+  for (auto& qV : args) {
+    auto cVal = CefValue::Create();
+    ValueConvertor::QVariantToCefValue(cVal, &qV);
+    arguments->SetValue(idx++, cVal);
   }
 
-  arguments->SetDictionary(idx++, dict);
-
   return pContext_->pClient_->TriggerEvent(pCefBrowser_, frameId, msg);
+
+  //  CefRefPtr<CefDictionaryValue> dict = CefDictionaryValue::Create();
+  //
+  //  CefString cefStr;
+  //  cefStr.FromString(name.toUtf8().constData());
+  //  dict->SetString("name", cefStr);
+  //
+  //  QList<QString> keys = args.keys();
+  //  for (const QString& key : keys) {
+  //    auto value = args[key];
+  //#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+  //    auto valueType = value.type();
+  //#define TypeClass QVariant
+  //#define StringType String
+  //#else
+  //    auto valueType = value.typeId();
+  //#define TypeClass QMetaType
+  //#define StringType QString
+  //#endif
+  //    if (valueType == TypeClass::Bool)
+  //      dict->SetBool(key.toUtf8().constData(), value.toBool());
+  //    else if (valueType == TypeClass::Int || valueType == TypeClass::UInt)
+  //      dict->SetInt(key.toUtf8().constData(), value.toInt());
+  //    else if (valueType == TypeClass::Double)
+  //      dict->SetDouble(key.toUtf8().constData(), value.toDouble());
+  //    else if (valueType == TypeClass::StringType) {
+  //      cefStr.FromString(value.toString().toUtf8().constData());
+  //      dict->SetString(key.toUtf8().constData(), cefStr);
+  //    } else {
+  //      Q_ASSERT_X(false, "QCefViewPrivate::sendEventNotifyMessage", "Unsupport event argument type");
+  //    }
+  //  }
+  //
+  //  arguments->SetDictionary(idx++, dict);
 }
 
 bool

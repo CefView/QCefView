@@ -1,9 +1,4 @@
-﻿#if defined(OS_WINDOWS)
-#include <windows.h>
-#else
-#endif
-
-#include <QColor>
+﻿#include <QColor>
 #include <QRandomGenerator>
 
 #include "CefViewWidget.h"
@@ -20,6 +15,8 @@ CefViewWidget::changeColor()
   QColor color(QRandomGenerator::global()->generate());
 
   QCefEvent event("colorChange");
-  event.setStringProperty("color", color.name());
+  QVariantList args;
+  args.append(QVariant::fromValue(color.value()));
+  event.setArguments(args);
   broadcastEvent(event);
 }

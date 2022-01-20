@@ -70,13 +70,13 @@ public:
 
   void browserStopLoad();
 
-  bool triggerEvent(const QString& name, const QVariantMap& args, int frameId = CefViewBrowserClient::MAIN_FRAME);
+  bool triggerEvent(const QString& name, const QVariantList& args, int frameId = CefViewBrowserClient::MAIN_FRAME);
 
   bool responseQCefQuery(const QCefQuery& query);
 
   void notifyMoveOrResizeStarted();
 
-  bool sendEventNotifyMessage(int frameId, const QString& name, const QVariantMap& args);
+  bool sendEventNotifyMessage(int frameId, const QString& name, const QVariantList& args);
 
 protected:
   /// <summary>

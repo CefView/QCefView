@@ -6,6 +6,7 @@
 #pragma region qt_headers
 #include <QScopedPointer>
 #include <QString>
+#include <QVariantList>
 #pragma endregion qt_headers
 
 class QCefEventPrivate;
@@ -62,32 +63,16 @@ public:
   const QString eventName() const;
 
   /// <summary>
-  /// Sets a integer property with name and value
+  /// Sets the argument list
   /// </summary>
-  /// <param name="key">The name</param>
-  /// <param name="value">The value</param>
-  void setIntProperty(const QString& key, int value);
+  /// <param name="args">The argument list</param>
+  void setArguments(const QVariantList& args);
 
   /// <summary>
-  /// Sets a double property with name and value
+  /// Gets the argument list
   /// </summary>
-  /// <param name="key">The name</param>
-  /// <param name="value">The value</param>
-  void setDoubleProperty(const QString& key, double value);
-
-  /// <summary>
-  /// Sets a string property with name and value
-  /// </summary>
-  /// <param name="key">The name</param>
-  /// <param name="value">The value</param>
-  void setStringProperty(const QString& key, const QString& value);
-
-  /// <summary>
-  /// Sets a boolean property with name and value
-  /// </summary>
-  /// <param name="key">The name</param>
-  /// <param name="value">The value</param>
-  void setBoolProperty(const QString& key, bool value);
+  /// <returns>The argument list</returns>
+  QVariantList& arguments();
 };
 
 #endif // QCEFEVENT_H

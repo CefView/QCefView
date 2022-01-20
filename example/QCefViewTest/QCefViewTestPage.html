@@ -1,14 +1,8 @@
 <html>
   <head>
     <script>
-      function onColorChanged(event) {
-        var kvlist = [];
-        for (var key in event) {
-          kvlist.push(key + ":" + event[key]);
-        }
-        alert(kvlist.join("\n"));
-
-        document.getElementById("main").style.backgroundColor = event["color"];
+      function onColorChanged(color) {
+        document.getElementById("main").style.backgroundColor = color;
       }
 
       function onLoad() {
@@ -16,14 +10,8 @@
           return;
         }
 
-        CallBridge.addEventListener("colorChange", function (event) {
-          var kvlist = [];
-          for (var key in event) {
-            kvlist.push(key + ":" + event[key]);
-          }
-
-          document.getElementById("main").style.backgroundColor =
-            event["color"];
+        CallBridge.addEventListener("colorChange", function (color) {
+          document.getElementById("main").style.backgroundColor = color;
         });
       }
 

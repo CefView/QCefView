@@ -13,5 +13,5 @@ public:
   ~QCefEventPrivate();
 
   QString name;
-  QVariantMap args;
+  QVariantList args;
 };

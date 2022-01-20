@@ -1,5 +1,7 @@
 ﻿#include "CCefClientDelegate.h"
 
+#include "ValueConvertor.h"
+
 #include "QCefView.h"
 
 CCefClientDelegate::CCefClientDelegate() {}
@@ -135,34 +137,16 @@ CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
     return;
 
   auto m = QString::fromStdString(method);
-
-  QVariantList argumentList;
-  QString qStr;
-  for (int idx = 0; idx < arguments->GetSize(); idx++) {
-    if (CefValueType::VTYPE_NULL == arguments->GetType(idx))
-      argumentList.push_back(0);
-    else if (CefValueType::VTYPE_BOOL == arguments->GetType(idx))
-      argumentList.push_back(QVariant::fromValue(arguments->GetBool(idx)));
-    else if (CefValueType::VTYPE_INT == arguments->GetType(idx))
-      argumentList.push_back(QVariant::fromValue(arguments->GetInt(idx)));
-    else if (CefValueType::VTYPE_DOUBLE == arguments->GetType(idx))
-      argumentList.push_back(QVariant::fromValue(arguments->GetDouble(idx)));
-    else if (CefValueType::VTYPE_STRING == arguments->GetType(idx)) {
-#if defined(CEF_STRING_TYPE_UTF16)
-      qStr = QString::fromUtf16((char16_t*)arguments->GetString(idx).c_str());
-#elif defined(CEF_STRING_TYPE_UTF8)
-      qStr = QString::fromUtf8(arguments->GetString(idx).c_str());
-#elif defined(CEF_STRING_TYPE_WIDE)
-      qStr = QString::fromWCharArray(arguments->GetString(idx).c_str());
-#endif
-      argumentList.push_back(qStr);
-    } else {
-      // invalid type
-    }
+  QVariantList args;
+  for (int i = 0; i < arguments->GetSize(); i++) {
+    QVariant qV;
+    auto cV = arguments->GetValue(i);
+    ValueConvertor::CefValueToQVariant(&qV, cV);
+    args.push_back(qV);
   }
 
   auto browserId = browser->GetIdentifier();
-  view->invokeMethod(browserId, frameId, m, argumentList);
+  view->invokeMethod(browserId, frameId, m, args);
 }
 
 QCefView*

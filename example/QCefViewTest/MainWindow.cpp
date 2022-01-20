@@ -77,8 +77,13 @@ MainWindow::onInvokeMethod(int browserId, int frameId, const QString& method, co
                                "Arguments:\r\n")
                          .arg(method);
 
-        for (auto& arg : arguments) {
-          text.append(QString("  %1\r\n").arg(arg.toString()));
+        for (int i = 0; i < arguments.size(); i++) {
+          // clang-format off
+          text.append(QString("%1 Type:%2, Value:%3\r\n")
+              .arg(i)
+              .arg(arguments[i].typeName())
+              .arg(arguments[i].toString()));
+          // clang-format on
         }
 
         QMessageBox::information(this->window(), title, text);

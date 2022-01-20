@@ -35,7 +35,8 @@ QCefEvent::~QCefEvent() {}
 void
 QCefEvent::setEventName(const QString& name)
 {
-  d_ptr->name = name;
+  Q_D(QCefEvent);
+  d->name = name;
 }
 
 const QString
@@ -46,33 +47,15 @@ QCefEvent::eventName() const
 }
 
 void
-QCefEvent::setIntProperty(const QString& key, int value)
+QCefEvent::setArguments(const QVariantList& args)
 {
-  Q_ASSERT(0 != QString::compare(key, "name", Qt::CaseInsensitive));
   Q_D(QCefEvent);
-  d->args.insert(key, QVariant::fromValue(value));
+  d->args = args;
 }
 
-void
-QCefEvent::setDoubleProperty(const QString& key, double value)
+QVariantList&
+QCefEvent::arguments()
 {
-  Q_ASSERT(0 != QString::compare(key, "name", Qt::CaseInsensitive));
   Q_D(QCefEvent);
-  d->args.insert(key, QVariant::fromValue(value));
-}
-
-void
-QCefEvent::setStringProperty(const QString& key, const QString& value)
-{
-  Q_ASSERT(0 != QString::compare(key, "name", Qt::CaseInsensitive));
-  Q_D(QCefEvent);
-  d->args.insert(key, QVariant::fromValue(value));
-}
-
-void
-QCefEvent::setBoolProperty(const QString& key, bool value)
-{
-  Q_ASSERT(0 != QString::compare(key, "name", Qt::CaseInsensitive));
-  Q_D(QCefEvent);
-  d->args.insert(key, QVariant::fromValue(value));
+  return d->args;
 }
