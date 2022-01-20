@@ -203,8 +203,10 @@ signals:
   /// <summary>
   /// Gets called on new <see cref="QCefQuery"/> request
   /// </summary>
+  /// <param name="browserId">The browser id</param>
+  /// <param name="frameId">The frame id</param>
   /// <param name="query">The query request</param>
-  void cefQueryRequest(const QCefQuery& query);
+  void cefQueryRequest(int browserId, int frameId, const QCefQuery& query);
 
   /// <summary>
   /// Gets called on invoke method request from web content(Javascript)

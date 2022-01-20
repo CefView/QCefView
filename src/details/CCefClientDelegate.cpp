@@ -116,13 +116,15 @@ CCefClientDelegate::processUrlRequest(const std::string& url)
 
 void
 CCefClientDelegate::processQueryRequest(CefRefPtr<CefBrowser>& browser,
+                                        int frameId,
                                         const std::string& request,
                                         const int64_t query_id)
 {
   auto view = take(browser);
   if (view) {
+    auto browserId = browser->GetIdentifier();
     auto req = QString::fromStdString(request);
-    view->cefQueryRequest(QCefQuery(req, query_id));
+    view->cefQueryRequest(browserId, frameId, QCefQuery(req, query_id));
   }
 }
 

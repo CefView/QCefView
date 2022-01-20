@@ -42,8 +42,10 @@ MainWindow::MainWindow(QWidget* parent)
           this,
           SLOT(onInvokeMethod(int, int, const QString&, const QVariantList&)));
 
-  connect(cefViewWidget, SIGNAL(cefQueryRequest(const QCefQuery&)), this, SLOT(onQCefQueryRequest(const QCefQuery&)));
-  connect(cefViewWidget, SIGNAL(cefUrlRequest(const QString&)), this, SLOT(onQCefUrlRequest(const QString&)));
+  connect(cefViewWidget,
+          SIGNAL(cefQueryRequest(int, int, const QCefQuery&)),
+          this,
+          SLOT(onQCefQueryRequest(int, int, const QCefQuery&)));
 
   centralWidget()->setLayout(layout);
 }
@@ -94,7 +96,7 @@ MainWindow::onInvokeMethod(int browserId, int frameId, const QString& method, co
 }
 
 void
-MainWindow::onQCefQueryRequest(const QCefQuery& query)
+MainWindow::onQCefQueryRequest(int browserId, int frameId, const QCefQuery& query)
 {
   QMetaObject::invokeMethod(
     this,
@@ -109,22 +111,6 @@ MainWindow::onQCefQueryRequest(const QCefQuery& query)
       QString response = query.request().toUpper();
       query.setResponseResult(true, response);
       cefViewWidget->responseQCefQuery(query);
-    },
-    Qt::QueuedConnection);
-}
-
-void
-MainWindow::onQCefUrlRequest(const QString& url)
-{
-  QMetaObject::invokeMethod(
-    this,
-    [=]() {
-      QString title("QCef URL Request");
-      QString text = QString("Current Thread: QT_UI\r\n"
-                             "URL: %1")
-                       .arg(url);
-
-      QMessageBox::information(this->window(), title, text);
     },
     Qt::QueuedConnection);
 }

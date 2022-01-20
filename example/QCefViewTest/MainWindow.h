@@ -21,9 +21,7 @@ protected slots:
 
   void onInvokeMethod(int browserId, int frameId, const QString& method, const QVariantList& arguments);
 
-  void onQCefQueryRequest(const QCefQuery& query);
-
-  void onQCefUrlRequest(const QString& url);
+  void onQCefQueryRequest(int browserId, int frameId, const QCefQuery& query);
 
 private:
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)

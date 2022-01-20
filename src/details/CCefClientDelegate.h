@@ -50,6 +50,7 @@ public:
   virtual void processUrlRequest(const std::string& url) override;
 
   virtual void processQueryRequest(CefRefPtr<CefBrowser>& browser,
+                                   int frameId,
                                    const std::string& query,
                                    const int64_t query_id) override;
 
