@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget* parent)
   setting.setBackgroundColor(QColor::fromRgb(0, 0, 255));
 
   cefViewWidget = new CefViewWidget(uri, &setting, this);
-  // cefView = new CustomCefView("https://www.w3schools.com/", &setting, this);
+  // cefViewWidget = new CefViewWidget("https://www.w3schools.com/", &setting, this);
   ui.cefContainer->layout()->addWidget(cefViewWidget);
   layout->addWidget(ui.cefContainer);
 

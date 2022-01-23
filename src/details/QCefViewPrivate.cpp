@@ -55,7 +55,7 @@ QCefViewPrivate::createBrowser(const QString url, const QCefSettingPrivate* sett
 #elif defined(OS_LINUX)
   // Don't know why, on Linux platform if we use QCefView's winId() as
   // the parent, it will complain about `BadWindow`,
-  // and the browser window will not be created, this never happen
+  // and the browser window will not be created, this never happens
   // on Windows and macOS, so we create a temporal QWindow as the
   // parent to create CEF browser window.
   QWindow w;
@@ -284,40 +284,6 @@ QCefViewPrivate::sendEventNotifyMessage(int frameId, const QString& name, const 
   }
 
   return pContext_->pClient_->TriggerEvent(pCefBrowser_, frameId, msg);
-
-  //  CefRefPtr<CefDictionaryValue> dict = CefDictionaryValue::Create();
-  //
-  //  CefString cefStr;
-  //  cefStr.FromString(name.toUtf8().constData());
-  //  dict->SetString("name", cefStr);
-  //
-  //  QList<QString> keys = args.keys();
-  //  for (const QString& key : keys) {
-  //    auto value = args[key];
-  //#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-  //    auto valueType = value.type();
-  //#define TypeClass QVariant
-  //#define StringType String
-  //#else
-  //    auto valueType = value.typeId();
-  //#define TypeClass QMetaType
-  //#define StringType QString
-  //#endif
-  //    if (valueType == TypeClass::Bool)
-  //      dict->SetBool(key.toUtf8().constData(), value.toBool());
-  //    else if (valueType == TypeClass::Int || valueType == TypeClass::UInt)
-  //      dict->SetInt(key.toUtf8().constData(), value.toInt());
-  //    else if (valueType == TypeClass::Double)
-  //      dict->SetDouble(key.toUtf8().constData(), value.toDouble());
-  //    else if (valueType == TypeClass::StringType) {
-  //      cefStr.FromString(value.toString().toUtf8().constData());
-  //      dict->SetString(key.toUtf8().constData(), cefStr);
-  //    } else {
-  //      Q_ASSERT_X(false, "QCefViewPrivate::sendEventNotifyMessage", "Unsupport event argument type");
-  //    }
-  //  }
-  //
-  //  arguments->SetDictionary(idx++, dict);
 }
 
 bool
