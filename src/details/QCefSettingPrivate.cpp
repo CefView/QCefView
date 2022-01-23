@@ -105,5 +105,5 @@ QCefSettingPrivate::CopyToCefBrowserSettings(CefBrowserSettings& settings) const
     settings.webgl = webgl_.toBool() ? STATE_ENABLED : STATE_DISABLED;
 
   if (backgroundColor_.canConvert<QColor>())
-    settings.background_color = this->backgroundColor_.value<QColor>().value();
+    settings.background_color = this->backgroundColor_.value<QColor>().rgba();
 }

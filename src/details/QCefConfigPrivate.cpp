@@ -62,7 +62,7 @@ QCefConfigPrivate::CopyToCefSettings(CefSettings& settings) const
     settings.persist_user_preferences = persistUserPreferences_.toInt();
 
   if (backgroundColor_.canConvert<QColor>())
-    settings.background_color = backgroundColor_.value<QColor>().value();
+    settings.background_color = backgroundColor_.value<QColor>().rgba();
 
   if (remoteDebuggingport_.canConvert<int>())
     settings.remote_debugging_port = remoteDebuggingport_.toInt();

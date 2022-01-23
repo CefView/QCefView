@@ -1,10 +1,11 @@
 ﻿#ifndef QCEFVIEWTEST_H
 #define QCEFVIEWTEST_H
 
-#include <QtWidgets/QMainWindow>
+#include <QMainWindow>
 
-#include "CefViewWidget.h"
 #include "ui_MainWindow.h"
+
+#include <QCefView.h>
 
 class MainWindow : public QMainWindow
 {
@@ -33,7 +34,7 @@ private:
 private:
   Ui::MainWindow ui;
 
-  CefViewWidget* cefViewWidget;
+  QCefView* cefViewWidget;
   QRegion draggableRegion_;
   QRegion nonDraggableRegion_;
 };

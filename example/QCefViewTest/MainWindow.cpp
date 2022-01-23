@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QHBoxLayout>
 #include <QMessageBox>
+#include <QRandomGenerator>
 
 #include "MainWindow.h"
 
@@ -16,19 +17,21 @@ MainWindow::MainWindow(QWidget* parent)
   connect(ui.btn_changeColor, &QPushButton::clicked, this, &MainWindow::onBtnChangeColorClicked);
   layout->addWidget(ui.nativeContainer);
 
+  // build the path to the web resource
   QDir dir = QCoreApplication::applicationDirPath();
-
 #if defined(OS_MACOS)
   QString uri = QString("file://") + QDir::toNativeSeparators(dir.filePath("../Resources/QCefViewTestPage.html"));
 #else
   QString uri = QString("file://") + QDir::toNativeSeparators(dir.filePath("QCefViewTestPage.html"));
 #endif
 
+  // build settings for per QCefView
   QCefSetting setting;
+  // here we just set the default background to blue
   setting.setBackgroundColor(QColor::fromRgb(0, 0, 255));
 
-  cefViewWidget = new CefViewWidget(uri, &setting, this);
-  // cefViewWidget = new CefViewWidget("https://www.w3schools.com/", &setting, this);
+  // create the QCefView widget and add it to the layout container
+  cefViewWidget = new QCefView(uri, &setting, this);
   ui.cefContainer->layout()->addWidget(cefViewWidget);
   layout->addWidget(ui.cefContainer);
 
@@ -55,8 +58,17 @@ MainWindow::~MainWindow() {}
 void
 MainWindow::onBtnChangeColorClicked()
 {
-  if (cefViewWidget)
-    cefViewWidget->changeColor();
+  if (cefViewWidget) {
+    // create a random color
+    QColor color(QRandomGenerator::global()->generate());
+
+    // create the cef event and set the arguments
+    QCefEvent event("colorChange");
+    event.arguments().append(QVariant::fromValue(color.value()));
+
+    // broadcast the event to cef browsers
+    cefViewWidget->broadcastEvent(event);
+  }
 }
 
 void
@@ -129,41 +141,5 @@ bool
 MainWindow::nativeEvent(const QByteArray& eventType, void* message, long* result)
 {
 #endif
-  // MSG* msg = (MSG*)message;
-
-  // qDebug() << "MSG.message:0x" << Qt::hex << msg->message;
-
-  // switch (msg->message) {
-  //  case WM_NCHITTEST:
-  //    int xPos = GET_X_LPARAM(msg->lParam) - this->frameGeometry().x();
-  //    int yPos = GET_Y_LPARAM(msg->lParam) - this->frameGeometry().y();
-
-  //    qDebug() << "HitTest Point:(" << xPos << ", " << yPos << ")";
-
-  //    if (this->childAt(xPos, yPos) == 0) {
-  //      *result = HTCAPTION;
-
-  //      if (xPos > 0 && xPos < 8)
-  //        *result = HTLEFT;
-  //      if (xPos > (this->width() - 8) && xPos < (this->width() - 0))
-  //        *result = HTRIGHT;
-  //      if (yPos > 0 && yPos < 8)
-  //        *result = HTTOP;
-  //      if (yPos > (this->height() - 8) && yPos < (this->height() - 0))
-  //        *result = HTBOTTOM;
-  //      if (xPos > 18 && xPos < 22 && yPos > 18 && yPos < 22)
-  //        *result = HTTOPLEFT;
-  //      if (xPos > (this->width() - 22) && xPos < (this->width() - 18) && yPos > 18 && yPos < 22)
-  //        *result = HTTOPRIGHT;
-  //      if (xPos > 18 && xPos < 22 && yPos > (this->height() - 22) && yPos < (this->height() - 18))
-  //        *result = HTBOTTOMLEFT;
-  //      if (xPos > (this->width() - 22) && xPos < (this->width() - 18) && yPos > (this->height() - 22) &&
-  //          yPos < (this->height() - 18))
-  //        *result = HTBOTTOMRIGHT;
-
-  //      return true;
-  //    }
-  //}
-
   return QMainWindow::nativeEvent(eventType, message, result);
 }

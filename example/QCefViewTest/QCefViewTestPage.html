@@ -78,9 +78,7 @@
   </head>
 
   <body onload="onLoad()" id="main" class="noselect">
-    <h1 align="center" style="font-size: 12pt; font-family: MS Shell Dlg 2">
-      Web Area
-    </h1>
+    <h1 align="center" style="font-size: 12pt">Web Area</h1>
     <div id="firstVue">
       <input type="number" v-model.number="my_step" />
       <button v-on:click="clickButton">Add</button>
@@ -111,15 +109,6 @@ this message will be processed by native code.</textarea
       <input type="button" value="Query" onclick="onCallBridgeQueryClicked()" />
       <br />
       <br />
-
-      <!-- <label> Test Case for QCefUrl </label>
-      <br />
-      <a href="cefview://test.cef-url-request"
-        >cefview://test.cef-url-request</a
-      >
-      <br />
-      <br />
-      <br /> -->
     </div>
   </body>
   <script type="text/javascript">
