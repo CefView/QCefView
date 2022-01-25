@@ -35,6 +35,9 @@ file(GLOB_RECURSE _UI_FILES
 )
 source_group("Form Files" ${_UI_FILES})
 
+configure_file(index.in.html webres/index.html COPYONLY)
+configure_file(tutorial.in.html webres/tutorial.html COPYONLY)
+
 if (OS_WINDOWS)
   file(GLOB_RECURSE _RES_FILES
     "*.qrc"
@@ -75,10 +78,10 @@ if (OS_WINDOWS)
       -inputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\" 
       -outputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\"
     
-    # Copy the TEST HTML file
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different 
-      ${CMAKE_CURRENT_SOURCE_DIR}/QCefViewTestPage.html 
-      $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    # Copy the webres directory to output folder
+    COMMAND ${CMAKE_COMMAND} -E copy_directory 
+      ${CMAKE_CURRENT_BINARY_DIR}/webres 
+      $<TARGET_FILE_DIR:${PROJECT_NAME}>/webres
     
     # Deploy the Qt Application
     COMMAND ${DEPLOYQT_EXECUTABLE} 
@@ -119,10 +122,10 @@ if (OS_LINUX)
   )
 
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    # Copy the TEST HTML file
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different 
-      ${CMAKE_CURRENT_SOURCE_DIR}/QCefViewTestPage.html 
-      $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    # Copy the webres directory to output folder
+    COMMAND ${CMAKE_COMMAND} -E copy_directory 
+      ${CMAKE_CURRENT_BINARY_DIR}/webres 
+      $<TARGET_FILE_DIR:${PROJECT_NAME}>/webres
 
     # Deploy the Qt Application
     # COMMAND ${DEPLOYQT_EXECUTABLE} 
@@ -143,15 +146,15 @@ if (OS_MACOS)
     "${CMAKE_CURRENT_LIST_DIR}/mac/Info.plist"
   )
   
-  set(TEST_RESOURCE_FILES
-    "QCefViewTestPage.html"
+  file(GLOB WEB_RESOURCE_FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/webres/*.html"
   )
 
   add_executable(${PROJECT_NAME} MACOSX_BUNDLE 
     ${_SRC_FILES}
     ${_UI_FILES}
     ${_RES_FILES}
-    ${TEST_RESOURCE_FILES}
+    ${WEB_RESOURCE_FILES}
   )
 
   set_target_properties(${PROJECT_NAME} 
@@ -159,7 +162,7 @@ if (OS_MACOS)
       ARCHIVE_OUTPUT_DIRECTORY                  "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/demo"
       LIBRARY_OUTPUT_DIRECTORY                  "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/demo"
       RUNTIME_OUTPUT_DIRECTORY                  "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/demo"
-      RESOURCE                                  "${TEST_RESOURCE_FILES}"
+      RESOURCE                                  "${WEB_RESOURCE_FILES}"
       CLANG_ENABLE_OBJC_ARC                     "YES"
       MACOSX_BUNDLE_INFO_PLIST                  "${QCefViewTest_INFO_PLIST_FILE}"
       XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS   "@executable_path/../Frameworks"
@@ -178,9 +181,9 @@ if (OS_MACOS)
         "$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>/../../QCefView.framework"
         "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
 
-    # copy the web resource to the bundle
+    # copy the webres to the bundle
     # COMMAND ${CMAKE_COMMAND} -E copy
-    #   "${CMAKE_CURRENT_SOURCE_DIR}/QCefViewTestPage.html"
+    #   "${CMAKE_CURRENT_SOURCE_DIR}/webres"
     #   "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Resources/"
 
     VERBATIM
