@@ -146,15 +146,15 @@ if (OS_MACOS)
     "${CMAKE_CURRENT_LIST_DIR}/mac/Info.plist"
   )
   
-  file(GLOB WEB_RESOURCE_FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/webres/*.html"
-  )
+  #file(GLOB WEB_RESOURCE_FILES
+  #  "${CMAKE_CURRENT_BINARY_DIR}/webres/*.html"
+  #)
 
   add_executable(${PROJECT_NAME} MACOSX_BUNDLE 
     ${_SRC_FILES}
     ${_UI_FILES}
     ${_RES_FILES}
-    ${WEB_RESOURCE_FILES}
+    #${WEB_RESOURCE_FILES}
   )
 
   set_target_properties(${PROJECT_NAME} 
@@ -162,7 +162,7 @@ if (OS_MACOS)
       ARCHIVE_OUTPUT_DIRECTORY                  "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/demo"
       LIBRARY_OUTPUT_DIRECTORY                  "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/demo"
       RUNTIME_OUTPUT_DIRECTORY                  "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/demo"
-      RESOURCE                                  "${WEB_RESOURCE_FILES}"
+      #RESOURCE                                  "${WEB_RESOURCE_FILES}"
       CLANG_ENABLE_OBJC_ARC                     "YES"
       MACOSX_BUNDLE_INFO_PLIST                  "${QCefViewTest_INFO_PLIST_FILE}"
       XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS   "@executable_path/../Frameworks"
@@ -182,9 +182,9 @@ if (OS_MACOS)
         "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
 
     # copy the webres to the bundle
-    # COMMAND ${CMAKE_COMMAND} -E copy
-    #   "${CMAKE_CURRENT_SOURCE_DIR}/webres"
-    #   "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Resources/"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+       "${CMAKE_CURRENT_BINARY_DIR}/webres"
+       "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Resources/webres"
 
     VERBATIM
   )
