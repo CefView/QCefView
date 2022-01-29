@@ -5,10 +5,11 @@
 #pragma endregion std_headers
 
 #pragma region qt_headers
+#include <QApplication>
+#include <QDebug>
 #include <QPlatformSurfaceEvent>
 #include <QVBoxLayout>
 #include <QWindow>
-#include <QtDebug>
 #pragma endregion qt_headers
 
 #pragma region cef_headers
@@ -31,7 +32,9 @@ QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url, const QCefS
   , qBrowserWidget_(nullptr)
   , qBrowserWindow_(nullptr)
 {
-  createBrowser(url, setting);
+  connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::focusChanged);
+
+  createBrowser(view, url, setting);
 }
 
 QCefViewPrivate::~QCefViewPrivate()
@@ -40,17 +43,15 @@ QCefViewPrivate::~QCefViewPrivate()
 }
 
 void
-QCefViewPrivate::createBrowser(const QString url, const QCefSettingPrivate* setting)
+QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSettingPrivate* setting)
 {
-  Q_Q(QCefView);
-
   // Set window info
   CefWindowInfo window_info;
 #if defined(OS_MACOS)
-  CefWindowHandle p = (CefWindowHandle)(q->winId());
+  CefWindowHandle p = (CefWindowHandle)(view->winId());
   window_info.SetAsChild(p, 0, 0, 0, 0);
 #elif defined(OS_WINDOWS)
-  CefWindowHandle p = (CefWindowHandle)(q->winId());
+  CefWindowHandle p = (CefWindowHandle)(view->winId());
   window_info.SetAsChild(p, RECT{ 0, 0, 0, 0 });
 #elif defined(OS_LINUX)
   // Don't know why, on Linux platform if we use QCefView's winId() as
@@ -81,7 +82,7 @@ QCefViewPrivate::createBrowser(const QString url, const QCefSettingPrivate* sett
   }
 
   // register view to client delegate
-  pContext_->pClientDelegate_->insertBrowserViewMapping(pCefBrowser, q);
+  pContext_->pClientDelegate_->insertBrowserViewMapping(pCefBrowser, this);
 
   // create QWindow from native browser window handle
   QWindow* browserWindow = QWindow::fromWinId((WId)(pCefBrowser->GetHost()->GetWindowHandle()));
@@ -92,7 +93,7 @@ QCefViewPrivate::createBrowser(const QString url, const QCefSettingPrivate* sett
   }
 
   // create QWidget from cef browser widow
-  QWidget* browserWidget = QWidget::createWindowContainer(browserWindow, q);
+  QWidget* browserWidget = QWidget::createWindowContainer(browserWindow, view);
   if (!browserWidget) {
     Q_ASSERT_X(browserWidget, "QCefViewPrivate::createBrowser", "Failed to cretae QWidget from cef browser window");
     pCefBrowser->GetHost()->CloseBrowser(true);
@@ -103,8 +104,9 @@ QCefViewPrivate::createBrowser(const QString url, const QCefSettingPrivate* sett
   qBrowserWidget_ = browserWidget;
   pCefBrowser_ = pCefBrowser;
 
-  q->window()->installEventFilter(this);
+  view->window()->installEventFilter(this);
   qBrowserWindow_->installEventFilter(this);
+
   return;
 }
 
@@ -286,6 +288,70 @@ QCefViewPrivate::sendEventNotifyMessage(int frameId, const QString& name, const 
   return pContext_->pClient_->TriggerEvent(pCefBrowser_, frameId, msg);
 }
 
+void
+QCefViewPrivate::onTakeFocus(bool next)
+{
+  Q_Q(QCefView);
+  auto reason = next ? Qt::TabFocusReason : Qt::BacktabFocusReason;
+  auto widget = next ? q->nextInFocusChain() : q->previousInFocusChain();
+
+  // find correct widget
+  while (widget && 0 == (widget->focusPolicy() & Qt::TabFocus)) {
+    widget = next ? widget->nextInFocusChain() : widget->previousInFocusChain();
+  }
+
+  if (widget) {
+    // TO-DO bug: this does not work on Linux(X11), need to find a workaround
+    widget->raise();
+    widget->activateWindow();
+    widget->setFocus(reason);
+  }
+}
+
+void
+QCefViewPrivate::setFocus(bool focus)
+{
+  if (pCefBrowser_) {
+    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+    if (host) {
+      host->SetFocus(focus);
+      host->SendFocusEvent(focus);
+      if (!focus)
+        host->SendCaptureLostEvent();
+    }
+  }
+}
+
+void
+QCefViewPrivate::onGotFocus()
+{
+  qDebug() << "============= onGotFocus";
+}
+
+void
+QCefViewPrivate::focusChanged(QWidget* old, QWidget* now)
+{
+  if (!now)
+    return;
+
+  Q_Q(QCefView);
+
+  if (now == q) {
+    // QCefView got focus, need to move the focus to the browser window
+    setFocus(true);
+  } else {
+    // Bug fix: https://github.com/CefView/QCefView/issues/30
+    // When QCefView got focus then click if click some other widgets(for example a QLineEdit),
+    // the QCefView will not release the input focus, so we need to watch the focus change event.
+
+    // release the browser window focus status
+    setFocus(false);
+
+    // activate the top level window
+    now->activateWindow();
+  }
+}
+
 bool
 QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 {
@@ -294,6 +360,9 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
   // filter event from top level window
   if (watched == q->window()) {
     switch (event->type()) {
+      case QEvent::MouseButtonPress: {
+        q->window()->activateWindow();
+      } break;
       case QEvent::ParentAboutToChange: {
         q->window()->removeEventFilter(this);
       } break;

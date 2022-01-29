@@ -17,6 +17,8 @@ class QCefViewPrivate : public QObject
   Q_DECLARE_PUBLIC(QCefView)
   QCefView* q_ptr;
 
+  friend class CCefClientDelegate;
+
 private:
   /// <summary>
   ///
@@ -39,7 +41,7 @@ private:
   QWidget* qBrowserWidget_;
 
 protected:
-  void createBrowser(const QString url, const QCefSettingPrivate* setting);
+  void createBrowser(QCefView* view, const QString url, const QCefSettingPrivate* setting);
 
   void closeBrowser();
 
@@ -77,6 +79,15 @@ public:
   void notifyMoveOrResizeStarted();
 
   bool sendEventNotifyMessage(int frameId, const QString& name, const QVariantList& args);
+
+  void onTakeFocus(bool next);
+
+  void setFocus(bool focus);
+
+  void onGotFocus();
+
+protected slots:
+  void focusChanged(QWidget* old, QWidget* now);
 
 protected:
   /// <summary>
