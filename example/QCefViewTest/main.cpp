@@ -12,7 +12,7 @@ main(int argc, char* argv[])
   // build QCefConfig
   QCefConfig config(argc, argv);
   config.setUserAgent("QCefViewTest");
-  config.setLogLevel(QCefConfig::LOGSEVERITY_VERBOSE);
+  config.setLogLevel(QCefConfig::LOGSEVERITY_DEFAULT);
   config.setBridgeObjectName("CallBridge");
   config.setRemoteDebuggingPort(9000);
 

@@ -4,6 +4,7 @@
 #include <QPoint>
 #include <QResizeEvent>
 #include <QVBoxLayout>
+#include <QtDebug>
 #pragma endregion qt_headers
 
 #include <QCefContext.h>
@@ -15,6 +16,9 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
   : QWidget(parent)
   , d_ptr(new QCefViewPrivate(this, url, setting ? setting->d_func() : nullptr))
 {
+  // set focus policy
+  setFocusPolicy(Qt::StrongFocus);
+
   // initialize the layout and
   // add browser widget to the layout
   QVBoxLayout* layout = new QVBoxLayout();

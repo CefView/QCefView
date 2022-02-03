@@ -14,14 +14,21 @@
 
 #include <QCefQuery.h>
 
-class QCefView;
+class QCefViewPrivate;
 
 class CCefClientDelegate : public CefViewBrowserClientDelegateInterface
 {
+private:
+  std::unordered_map<int, QCefViewPrivate*> view_map_;
+
 public:
   CCefClientDelegate();
 
-  void insertBrowserViewMapping(CefRefPtr<CefBrowser>& browser, QCefView* view);
+protected:
+  QCefViewPrivate* take(CefRefPtr<CefBrowser>& browser);
+
+public:
+  void insertBrowserViewMapping(CefRefPtr<CefBrowser>& browser, QCefViewPrivate* view);
 
   void removeBrowserViewMapping(CefRefPtr<CefBrowser>& browser);
 
@@ -43,9 +50,18 @@ public:
   virtual void draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
                                       const std::vector<CefDraggableRegion>& regions) override;
 
+  virtual void cursorChanged(CefRefPtr<CefBrowser> browser,
+                             CefCursorHandle cursor,
+                             cef_cursor_type_t type,
+                             const CefCursorInfo& custom_cursor_info) override;
+
   virtual void consoleMessage(CefRefPtr<CefBrowser>& browser, const std::string& message, int level) override;
 
   virtual void takeFocus(CefRefPtr<CefBrowser>& browser, bool next) override;
+
+  virtual bool setFocus(CefRefPtr<CefBrowser>& browser) override;
+
+  virtual void gotFocus(CefRefPtr<CefBrowser>& browser) override;
 
   virtual void processUrlRequest(const std::string& url) override;
 
@@ -59,9 +75,22 @@ public:
                                   const std::string& method,
                                   const CefRefPtr<CefListValue>& arguments) override;
 
-protected:
-  QCefView* take(CefRefPtr<CefBrowser>& browser);
+  virtual bool GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
 
-private:
-  std::unordered_map<int, QCefView*> view_map_;
+  virtual void GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
+
+  virtual bool GetScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int viewY, int& screenX, int& screenY) override;
+
+  virtual bool GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& screen_info) override;
+
+  virtual void OnPopupShow(CefRefPtr<CefBrowser> browser, bool show) override;
+
+  virtual void OnPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& rect) override;
+
+  virtual void OnPaint(CefRefPtr<CefBrowser> browser,
+                       CefRenderHandler::PaintElementType type,
+                       const CefRenderHandler::RectList& dirtyRects,
+                       const void* buffer,
+                       int width,
+                       int height) override;
 };
