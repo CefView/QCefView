@@ -29,8 +29,8 @@ QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url, const QCefS
   : q_ptr(view)
   , pContext_(QCefContext::instance()->d_func())
   , pCefBrowser_(nullptr)
-  , qBrowserWidget_(nullptr)
   , qBrowserWindow_(nullptr)
+  , qBrowserWidget_(nullptr)
 {
   connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::focusChanged);
 
@@ -302,7 +302,7 @@ QCefViewPrivate::onTakeFocus(bool next)
 
   if (widget) {
     // TO-DO bug: this does not work on Linux(X11), need to find a workaround
-    widget->raise();
+    widget->window()->raise();
     widget->activateWindow();
     widget->setFocus(reason);
   }
@@ -325,11 +325,11 @@ QCefViewPrivate::setFocus(bool focus)
 void
 QCefViewPrivate::onGotFocus()
 {
-  qDebug() << "============= onGotFocus";
+  // CEF browser window got focus
 }
 
 void
-QCefViewPrivate::focusChanged(QWidget* old, QWidget* now)
+QCefViewPrivate::focusChanged(QWidget* /*old*/, QWidget* now)
 {
   if (!now)
     return;
@@ -382,7 +382,6 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
   if (watched == qBrowserWindow_) {
     if (QEvent::PlatformSurface == event->type()) {
       auto e = (QPlatformSurfaceEvent*)event;
-      auto sufaceType = e->surfaceEventType();
       if (e->surfaceEventType() == QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed) {
         // browser window is being destroyed, need to close the browser window in advance
         closeBrowser();
