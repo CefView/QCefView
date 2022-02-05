@@ -61,6 +61,8 @@ if (OS_WINDOWS)
 endif()  # OS_WINDOWS
 
 if (OS_LINUX)
+  find_package(Qt${QT_VERSION_MAJOR}Gui ${QT_MIN_VERSION} CONFIG REQUIRED Private)
+  
   file(GLOB_RECURSE QCefView_Linux_SRC_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/linux/*.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/linux/*.cpp"
@@ -87,6 +89,11 @@ if (OS_LINUX)
     PROPERTIES 
       INSTALL_RPATH "$ORIGIN"
       BUILD_WITH_INSTALL_RPATH TRUE
+  )
+
+  target_link_libraries(QCefView 
+    PRIVATE
+      Qt${QT_VERSION_MAJOR}::GuiPrivate
   )
 endif()  # OS_LINUX
 

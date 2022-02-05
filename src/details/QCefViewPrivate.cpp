@@ -10,6 +10,10 @@
 #include <QPlatformSurfaceEvent>
 #include <QVBoxLayout>
 #include <QWindow>
+#if defined(OS_LINUX)
+#include <X11/Xlib.h>
+#include <qpa/qplatformnativeinterface.h>
+#endif
 #pragma endregion qt_headers
 
 #pragma region cef_headers
@@ -93,7 +97,7 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
   }
 
   // create QWidget from cef browser widow
-  QWidget* browserWidget = QWidget::createWindowContainer(browserWindow, view);
+  QWidget* browserWidget = QWidget::createWindowContainer(browserWindow, view, Qt::X11BypassWindowManagerHint);
   if (!browserWidget) {
     Q_ASSERT_X(browserWidget, "QCefViewPrivate::createBrowser", "Failed to cretae QWidget from cef browser window");
     pCefBrowser->GetHost()->CloseBrowser(true);
@@ -305,6 +309,16 @@ QCefViewPrivate::onTakeFocus(bool next)
     widget->window()->raise();
     widget->activateWindow();
     widget->setFocus(reason);
+
+#if defined(OS_LINUX)
+    auto window = widget->window()->winId();
+    auto screen = widget->window()->windowHandle()->screen();
+    auto platformInterface = QApplication::platformNativeInterface();
+    auto display = (Display*)platformInterface->nativeResourceForScreen("display", screen);
+    auto ret = XSetInputFocus(display, window, RevertToNone, CurrentTime);
+    if (ret <= 0)
+        qWarning() << "Failed to move input focus";
+#endif
   }
 }
 
