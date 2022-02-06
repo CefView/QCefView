@@ -188,6 +188,31 @@ signals:
   void draggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
 
   /// <summary>
+  /// Gets called on the address changed
+  /// </summary>
+  /// <param name="frameId">The frame id</param>
+  /// <param name="url">The address</param>
+  void addressChanged(int frameId, const QString& url);
+
+  /// <summary>
+  /// Gets called on title changed
+  /// </summary>
+  /// <param name="title">The title</param>
+  void titleChanaged(const QString& title);
+
+  /// <summary>
+  /// Gets called on fullscreen mode changed
+  /// </summary>
+  /// <param name="fullscreen">The current fullscreen mode</param>
+  void fullscreenModeChanged(bool fullscreen);
+
+  /// <summary>
+  /// Gets called on status message changed
+  /// </summary>
+  /// <param name="message">The status message</param>
+  void statusMessage(const QString& message);
+
+  /// <summary>
   /// Gets called on console message from the web content
   /// </summary>
   /// <param name="message">The message</param>
@@ -195,10 +220,10 @@ signals:
   void consoleMessage(const QString& message, int level);
 
   /// <summary>
-  /// Gets called on focus event
+  /// Gets called on loading progress changed
   /// </summary>
-  /// <param name="next">The next</param>
-  void takeFocus(bool next);
+  /// <param name="progress">Current progress</param>
+  void loadingProgressChanged(double progress);
 
   /// <summary>
   /// Gets called on new <see cref="QCefQuery"/> request

@@ -98,11 +98,50 @@ CCefClientDelegate::draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
 }
 
 void
-CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser> browser,
-                                  CefCursorHandle cursor,
-                                  cef_cursor_type_t type,
-                                  const CefCursorInfo& custom_cursor_info)
-{}
+CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, int frameId, const CefString& url)
+{
+  auto p = take(browser);
+  if (p) {
+    auto u = QString::fromStdString(url);
+    p->q_ptr->addressChanged(frameId, u);
+  }
+}
+
+void
+CCefClientDelegate::titleChanged(CefRefPtr<CefBrowser>& browser, const CefString& title)
+{
+  auto p = take(browser);
+  if (p) {
+    auto t = QString::fromStdString(title);
+    p->q_ptr->titleChanaged(t);
+  }
+}
+
+void
+CCefClientDelegate::fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool fullscreen)
+{
+  auto p = take(browser);
+  if (p) {
+    p->q_ptr->fullscreenModeChanged(fullscreen);
+  }
+}
+
+bool
+CCefClientDelegate::tooltipMessage(CefRefPtr<CefBrowser>& browser, const CefString& text)
+{
+  // allow the tooltip action
+  return false;
+}
+
+void
+CCefClientDelegate::statusMessage(CefRefPtr<CefBrowser>& browser, const CefString& value)
+{
+  auto p = take(browser);
+  if (p) {
+    auto msg = QString::fromStdString(value);
+    p->q_ptr->statusMessage(msg);
+  }
+}
 
 void
 CCefClientDelegate::consoleMessage(CefRefPtr<CefBrowser>& browser, const std::string& message, int level)
@@ -112,6 +151,25 @@ CCefClientDelegate::consoleMessage(CefRefPtr<CefBrowser>& browser, const std::st
     auto msg = QString::fromStdString(message);
     p->q_ptr->consoleMessage(msg, level);
   }
+}
+
+void
+CCefClientDelegate::loadingProgressChanged(CefRefPtr<CefBrowser>& browser, double progress)
+{
+  auto p = take(browser);
+  if (p) {
+    p->q_ptr->loadingProgressChanged(progress);
+  }
+}
+
+bool
+CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser> browser,
+                                  CefCursorHandle cursor,
+                                  cef_cursor_type_t type,
+                                  const CefCursorInfo& custom_cursor_info)
+{
+  // allow the cursor changing action
+  return false;
 }
 
 void
@@ -125,6 +183,7 @@ CCefClientDelegate::takeFocus(CefRefPtr<CefBrowser>& browser, bool next)
 bool
 CCefClientDelegate::setFocus(CefRefPtr<CefBrowser>& browser)
 {
+  // allow the focus setting action
   return false;
 }
 
