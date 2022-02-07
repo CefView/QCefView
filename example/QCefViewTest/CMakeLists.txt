@@ -188,6 +188,11 @@ if (OS_MACOS)
        "${CMAKE_CURRENT_BINARY_DIR}/webres"
        "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Resources/webres"
 
+    # deploy the Qt Application
+    COMMAND ${DEPLOYQT_EXECUTABLE} 
+      "$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>"
+      "-codesign=-"
+
     VERBATIM
   )
 
