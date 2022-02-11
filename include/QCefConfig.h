@@ -29,45 +29,28 @@ public:
   /// </summary>
   enum LogLevel
   {
-    ///
-    // Default logging (currently INFO logging).
-    ///
+    /// Default logging (currently INFO logging)
     LOGSEVERITY_DEFAULT,
 
-    ///
-    // Verbose logging.
-    ///
+    /// Verbose logging
     LOGSEVERITY_VERBOSE,
 
-    ///
-    // DEBUG logging.
-    ///
-    LOGSEVERITY_DEBUG = LOGSEVERITY_VERBOSE,
+    /// DEBUG logging
+    LOGSEVERITY_DEBUG,
 
-    ///
-    // INFO logging.
-    ///
+    /// INFO logging
     LOGSEVERITY_INFO,
 
-    ///
-    // WARNING logging.
-    ///
+    /// WARNING logging
     LOGSEVERITY_WARNING,
 
-    ///
-    // ERROR logging.
-    ///
+    /// ERROR logging
     LOGSEVERITY_ERROR,
 
-    ///
-    // FATAL logging.
-    ///
+    /// FATAL logging
     LOGSEVERITY_FATAL,
 
-    ///
-    // Disable logging to file for all messages, and to stderr for messages with
-    // severity less than FATAL.
-    ///
+    /// Disable logging to file for all messages, and to stderr for messages with severity less than FATAL
     LOGSEVERITY_DISABLE = 99
   };
 
