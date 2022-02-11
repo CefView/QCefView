@@ -113,7 +113,7 @@ CCefClientDelegate::titleChanged(CefRefPtr<CefBrowser>& browser, const CefString
   auto p = take(browser);
   if (p) {
     auto t = QString::fromStdString(title);
-    p->q_ptr->titleChanaged(t);
+    p->q_ptr->titleChanged(t);
   }
 }
 

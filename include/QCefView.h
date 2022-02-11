@@ -198,7 +198,7 @@ signals:
   /// Gets called on title changed
   /// </summary>
   /// <param name="title">The title</param>
-  void titleChanaged(const QString& title);
+  void titleChanged(const QString& title);
 
   /// <summary>
   /// Gets called on fullscreen mode changed
