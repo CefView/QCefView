@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.4.1)
 project(QCefView)
 
 option(BUILD_DEMO       "Build the demo"                      OFF)
+option(BUILD_STATIC     "Build QCefView as static library"    OFF)
 option(USE_SANDBOX      "Enable CEF Sandbox"                  OFF)
 option(STATIC_CRT       "Use MultiThreaded linkage for MSVC"  OFF)
 
@@ -53,6 +54,10 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
   set(OS_WINDOWS 1)
   add_definitions(-DOS_WINDOWS=1)
 endif()
+
+if (BUILD_STATIC)
+  add_definitions(-DQCEFVIEW_STATIC=1)
+endif ()
 
 # Config the QT package
 ###############################################################

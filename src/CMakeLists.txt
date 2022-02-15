@@ -46,12 +46,21 @@ if (OS_WINDOWS)
     FILES ${QCefView_Windows_SRC_FILES}
   )
 
-  add_library(QCefView SHARED
-    ${QCefView_INCLUDE_FILES}
-    ${QCefView_SRC_FILES}
-    ${QCefView_details_SRC_FILES}
-    ${QCefView_Windows_SRC_FILES}
-  )
+  if (BUILD_STATIC)
+    add_library(QCefView STATIC
+      ${QCefView_INCLUDE_FILES}
+      ${QCefView_SRC_FILES}
+      ${QCefView_details_SRC_FILES}
+      ${QCefView_Windows_SRC_FILES}
+    )
+  else ()
+    add_library(QCefView SHARED
+      ${QCefView_INCLUDE_FILES}
+      ${QCefView_SRC_FILES}
+      ${QCefView_details_SRC_FILES}
+      ${QCefView_Windows_SRC_FILES}
+    )
+  endif ()
 
   target_compile_definitions(QCefView PRIVATE
     UNICODE
@@ -73,12 +82,21 @@ if (OS_LINUX)
     FILES ${QCefView_Linux_SRC_FILES}
   )
 
-  add_library(QCefView SHARED
-    ${QCefView_INCLUDE_FILES}
-    ${QCefView_SRC_FILES}
-    ${QCefView_details_SRC_FILES}
-    ${QCefView_Linux_SRC_FILES}
-  )
+  if (BUILD_STATIC)
+    add_library(QCefView STATIC
+      ${QCefView_INCLUDE_FILES}
+      ${QCefView_SRC_FILES}
+      ${QCefView_details_SRC_FILES}
+      ${QCefView_Linux_SRC_FILES}
+    )
+  else ()
+    add_library(QCefView SHARED
+      ${QCefView_INCLUDE_FILES}
+      ${QCefView_SRC_FILES}
+      ${QCefView_details_SRC_FILES}
+      ${QCefView_Linux_SRC_FILES}
+    )
+  endif ()
 
   target_compile_definitions(QCefView 
     PRIVATE
@@ -119,13 +137,23 @@ if (OS_MACOS)
   )
   set(QCefView_INFO_PLIST_FILE "${CMAKE_CURRENT_LIST_DIR}/mac/Info.plist")
 
-  add_library(QCefView SHARED
-    ${QCefView_INCLUDE_FILES}
-    ${QCefView_SRC_FILES}
-    ${QCefView_details_SRC_FILES}
-    ${QCefView_macOS_SRC_FILES}
-    ${QCefView_INFO_PLIST_FILE}
-  )
+  if (BUILD_STATIC)
+    add_library(QCefView STATIC
+      ${QCefView_INCLUDE_FILES}
+      ${QCefView_SRC_FILES}
+      ${QCefView_details_SRC_FILES}
+      ${QCefView_macOS_SRC_FILES}
+      ${QCefView_INFO_PLIST_FILE}
+    )
+  else ()
+    add_library(QCefView SHARED
+      ${QCefView_INCLUDE_FILES}
+      ${QCefView_SRC_FILES}
+      ${QCefView_details_SRC_FILES}
+      ${QCefView_macOS_SRC_FILES}
+      ${QCefView_INFO_PLIST_FILE}
+    )
+  endif ()
 
   set_target_properties(QCefView
     PROPERTIES
@@ -174,6 +202,7 @@ add_dependencies(QCefView
 target_link_libraries(QCefView 
   PRIVATE
     CefViewCore
+  PUBLIC
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Widgets
