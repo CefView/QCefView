@@ -98,7 +98,7 @@ CCefClientDelegate::draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
 }
 
 void
-CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, int frameId, const CefString& url)
+CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, int frameId, const std::string& url)
 {
   auto p = take(browser);
   if (p) {
@@ -108,7 +108,7 @@ CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, int frameId, 
 }
 
 void
-CCefClientDelegate::titleChanged(CefRefPtr<CefBrowser>& browser, const CefString& title)
+CCefClientDelegate::titleChanged(CefRefPtr<CefBrowser>& browser, const std::string& title)
 {
   auto p = take(browser);
   if (p) {
@@ -127,14 +127,14 @@ CCefClientDelegate::fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool f
 }
 
 bool
-CCefClientDelegate::tooltipMessage(CefRefPtr<CefBrowser>& browser, const CefString& text)
+CCefClientDelegate::tooltipMessage(CefRefPtr<CefBrowser>& browser, const std::string& text)
 {
   // allow the tooltip action
   return false;
 }
 
 void
-CCefClientDelegate::statusMessage(CefRefPtr<CefBrowser>& browser, const CefString& value)
+CCefClientDelegate::statusMessage(CefRefPtr<CefBrowser>& browser, const std::string& value)
 {
   auto p = take(browser);
   if (p) {
