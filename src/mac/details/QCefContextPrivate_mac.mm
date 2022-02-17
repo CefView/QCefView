@@ -45,42 +45,52 @@
 
 bool g_handling_send_event = false;
 
-@interface NSApplication (QCefApp) <CefAppProtocol>
+@interface NSApplication (CocoaCefApp) <CefAppProtocol>
 - (void)_swizzled_sendEvent:(NSEvent *)event;
 - (void)_swizzled_terminate:(id)sender;
+- (void)_swizzled_run;
 @end
 
-@implementation NSApplication (QCefApp)
-// wraps sendEvent and terminate
+@implementation NSApplication (CocoaCefApp)
+// wraps sendEvent, terminate and run
 + (void)load {
-    Method original = class_getInstanceMethod(self, @selector(sendEvent));
-    Method swizzled =
-        class_getInstanceMethod(self, @selector(_swizzled_sendEvent));
-    Method originalTerm = class_getInstanceMethod(self,
-                                                  @selector(terminate:));
-    Method swizzledTerm =
-        class_getInstanceMethod(self, @selector(_swizzled_terminate:));
+  // swizzle the sendEvent method
+  Method original_sendEvent = class_getInstanceMethod(self, @selector(sendEvent:));
+  Method swizzled_sendEvent = class_getInstanceMethod(self, @selector(_swizzled_sendEvent:));
+  method_exchangeImplementations(original_sendEvent, swizzled_sendEvent);
 
-    method_exchangeImplementations(original, swizzled);
-    method_exchangeImplementations(originalTerm, swizzledTerm);
+  // swizzle the terminate method
+  Method original_terminate = class_getInstanceMethod(self, @selector(terminate:));
+  Method swizzled_terminate = class_getInstanceMethod(self, @selector(_swizzled_terminate:));
+  method_exchangeImplementations(original_terminate, swizzled_terminate);
+
+  // swizzle the run method
+  //Method original_run = class_getInstanceMethod(self, @selector(run));
+  //Method swizzled_run = class_getInstanceMethod(self, @selector(_swizzled_run));
+  //method_exchangeImplementations(original_run, swizzled_run);
 }
 
 - (BOOL)isHandlingSendEvent {
-    return g_handling_send_event;
+  return g_handling_send_event;
 }
 
 - (void)setHandlingSendEvent:(BOOL)handlingSendEvent {
-    g_handling_send_event = handlingSendEvent;
+  g_handling_send_event = handlingSendEvent;
 }
 
 - (void)_swizzled_sendEvent:(NSEvent *)event {
-    CefScopedSendingEvent sendingEventScoper;
-
-    [self _swizzled_sendEvent:event];
+  CefScopedSendingEvent sendingEventScoper;
+  
+  [self _swizzled_sendEvent:event];
 }
 
 - (void)_swizzled_terminate:(id)sender {
-    [self _swizzled_terminate:sender];
+
+  [self _swizzled_terminate:sender];
+}
+
+- (void)_swizzled_run {
+  CefRunMessageLoop();
 }
 @end
 

@@ -189,9 +189,9 @@ if (OS_MACOS)
        "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Resources/webres"
 
     # deploy the Qt Application
-    COMMAND ${DEPLOYQT_EXECUTABLE} 
-      "$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>"
-      "-codesign=-"
+    # COMMAND ${DEPLOYQT_EXECUTABLE} 
+    #   "$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>"
+    #   "-codesign=-"
 
     VERBATIM
   )
