@@ -30,24 +30,7 @@ class QCefContextPrivate : public QObject
   Q_OBJECT
 
 private:
-  typedef struct ArchiveMapping
-  {
-    QString path;
-    QString url;
-    QString psw;
-  } ArchiveMapping;
-
-  typedef struct FolderMapping
-  {
-    QString path;
-    QString url;
-    int priority;
-  } FolderMapping;
-
-private:
   QTimer cefWorkerTimer_;
-  QList<FolderMapping> folderMappingList_;
-  QList<ArchiveMapping> archiveMappingList_;
 
 public:
   CefRefPtr<CefViewBrowserApp> pApp_;

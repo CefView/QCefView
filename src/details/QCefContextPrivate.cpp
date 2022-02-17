@@ -33,19 +33,6 @@ QCefContextPrivate::initialize(const QCefConfigPrivate* config)
   // create cef client
   pClientDelegate_ = std::make_shared<CCefClientDelegate>();
   pClient_ = new CefViewBrowserClient(pClientDelegate_);
-
-  // add archive mapping
-  for (auto& archiveMapping : archiveMappingList_) {
-    pClient_->AddArchiveResourceProvider(
-      archiveMapping.path.toStdString(), archiveMapping.url.toStdString(), archiveMapping.psw.toStdString());
-  }
-
-  // add local folder mapping
-  for (auto& folderMapping : folderMappingList_) {
-    pClient_->AddLocalDirectoryResourceProvider(
-      folderMapping.path.toStdString(), folderMapping.url.toStdString(), folderMapping.priority);
-  }
-
   return true;
 }
 
