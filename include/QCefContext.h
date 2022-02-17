@@ -47,6 +47,7 @@ public:
   /// </summary>
   /// <param name="path">The path to the local resource directory</param>
   /// <param name="url">The url to be mapped to</param>
+  /// <param name="priority">The priority</param>
   void addLocalFolderResource(const QString& path, const QString& url, int priority = 0);
 
   /// <summary>
@@ -55,7 +56,8 @@ public:
   /// <param name="path">The path to the local archive file</param>
   /// <param name="url">The url to be mapped to</param>
   /// <param name="password">The password of the archive</param>
-  void addArchiveResource(const QString& path, const QString& url, const QString& password = "");
+  /// <param name="priority">The priority</param>
+  void addArchiveResource(const QString& path, const QString& url, const QString& password = "", int priority = 0);
 
   /// <summary>
   /// Adds a cookie to the CEF context, this cookie is accessible from all browsers created with this context
