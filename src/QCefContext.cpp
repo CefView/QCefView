@@ -42,12 +42,12 @@ QCefContext::addArchiveResource(const QString& path, const QString& url, const Q
   d->pClient_->AddArchiveResourceProvider(path.toStdString(), url.toStdString(), password.toStdString());
 }
 
-void
+bool
 QCefContext::addCookie(const QString& name, const QString& value, const QString& domain, const QString& url)
 {
   Q_D(QCefContext);
 
-  d->addGlobalCookie(name.toStdString(), value.toStdString(), domain.toStdString(), url.toStdString());
+  return d->addGlobalCookie(name.toStdString(), value.toStdString(), domain.toStdString(), url.toStdString());
 }
 
 bool

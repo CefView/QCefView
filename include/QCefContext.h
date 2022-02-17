@@ -64,7 +64,8 @@ public:
   /// <param name="value">The cookie item value</param>
   /// <param name="domain">The applicable domain name</param>
   /// <param name="url">The applicable url</param>
-  void addCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
+  /// <returns>True on success; otherwise false</returns>
+  bool addCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
 
 protected:
   /// <summary>
