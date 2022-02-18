@@ -76,6 +76,8 @@ public:
 
   bool responseQCefQuery(const QCefQuery& query);
 
+  bool executeJavascript(int frameId, const QString& code, const QString& url, int startLine = 0);
+
   void notifyMoveOrResizeStarted();
 
   bool sendEventNotifyMessage(int frameId, const QString& name, const QVariantList& args);

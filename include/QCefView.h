@@ -151,6 +151,19 @@ public:
   /// <returns>True on successful; otherwise false</returns>
   bool responseQCefQuery(const QCefQuery& query);
 
+  /// <summary>
+  /// Executes javascript code in specified frame.
+  /// </summary>
+  /// <param name="frameId">The frame id</param>
+  /// <param name="code">The javascript code</param>
+  /// <param name="url">
+  /// the URL where the script in question can be found, if any. The renderer may request this URL to show the developer
+  /// the source of the error
+  /// </param>
+  /// <param name="startLine">The base line number to use for error reporting</param>
+  /// <returns>True on successful; otherwise false</returns>
+  bool executeJavascript(int frameId, const QString& code, const QString& url, int startLine = 0);
+
 signals:
   /// <summary>
   /// Gets called on loading state changed

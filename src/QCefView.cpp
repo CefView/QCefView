@@ -144,3 +144,11 @@ QCefView::responseQCefQuery(const QCefQuery& query)
 
   return d->responseQCefQuery(query);
 }
+
+bool
+QCefView::executeJavascript(int frameId, const QString& code, const QString& url, int startLine)
+{
+  Q_D(QCefView);
+
+  return d->executeJavascript(frameId, code, url, startLine);
+}
