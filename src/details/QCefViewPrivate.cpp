@@ -252,6 +252,27 @@ QCefViewPrivate::responseQCefQuery(const QCefQuery& query)
   return false;
 }
 
+bool
+QCefViewPrivate::executeJavascript(int frameId, const QString& code, const QString& url, int startLine /*= 0*/)
+{
+  if (pCefBrowser_) {
+    CefRefPtr<CefFrame> frame = pCefBrowser_->GetFrame(frameId);
+    if (frame) {
+      CefString c;
+      c.FromString(code.toStdString());
+
+      CefString u;
+      u.FromString(url.toStdString());
+
+      frame->ExecuteJavaScript(c, u, startLine);
+
+      return true;
+    }
+  }
+
+  return false;
+}
+
 void
 QCefViewPrivate::notifyMoveOrResizeStarted()
 {
@@ -317,7 +338,7 @@ QCefViewPrivate::onTakeFocus(bool next)
     auto display = (Display*)platformInterface->nativeResourceForScreen("display", screen);
     auto ret = XSetInputFocus(display, window, RevertToNone, CurrentTime);
     if (ret <= 0)
-        qWarning() << "Failed to move input focus";
+      qWarning() << "Failed to move input focus";
 #endif
   }
 }
