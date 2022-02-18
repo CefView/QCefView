@@ -32,6 +32,12 @@ CCefClientDelegate::removeBrowserViewMapping(CefRefPtr<CefBrowser>& browser)
   view_map_.erase(id);
 }
 
+bool
+CCefClientDelegate::doClose(CefRefPtr<CefBrowser> browser)
+{
+  return false;
+}
+
 void
 CCefClientDelegate::loadingStateChanged(CefRefPtr<CefBrowser>& browser,
                                         bool isLoading,
