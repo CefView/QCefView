@@ -119,9 +119,9 @@
       <widget class="QLineEdit" name="lineEdit_3"/>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="btn_newBrowser">
        <property name="text">
-        <string>PushButton</string>
+        <string>NewBrowser</string>
        </property>
       </widget>
      </item>

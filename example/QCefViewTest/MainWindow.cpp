@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget* parent)
   layout->setSpacing(3);
 
   connect(ui.btn_changeColor, &QPushButton::clicked, this, &MainWindow::onBtnChangeColorClicked);
+  connect(ui.btn_newBrowser, &QPushButton::clicked, this, &MainWindow::onBtnNewBrowserClicked);
   layout->addWidget(ui.nativeContainer);
 
   // build the path to the web resource
@@ -64,22 +65,6 @@ MainWindow::MainWindow(QWidget* parent)
 }
 
 MainWindow::~MainWindow() {}
-
-void
-MainWindow::onBtnChangeColorClicked()
-{
-  if (cefViewWidget) {
-    // create a random color
-    QColor color(QRandomGenerator::global()->generate());
-
-    // create the cef event and set the arguments
-    QCefEvent event("colorChange");
-    event.arguments().append(QVariant::fromValue(color.name(QColor::HexArgb)));
-
-    // broadcast the event to all frames in all browsers created by this QCefView widget
-    cefViewWidget->broadcastEvent(event);
-  }
-}
 
 void
 MainWindow::onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion)
@@ -138,19 +123,32 @@ MainWindow::onQCefQueryRequest(int browserId, int frameId, const QCefQuery& quer
     Qt::QueuedConnection);
 }
 
-#if defined(OS_WINDOWS)
-#include <windows.h>
-#include <windowsx.h>
-#endif
+void
+MainWindow::onBtnChangeColorClicked()
+{
+  if (cefViewWidget) {
+    // create a random color
+    QColor color(QRandomGenerator::global()->generate());
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-bool
-MainWindow::nativeEvent(const QByteArray& eventType, void* message, qintptr* result)
+    // create the cef event and set the arguments
+    QCefEvent event("colorChange");
+    event.arguments().append(QVariant::fromValue(color.name(QColor::HexArgb)));
+
+    // broadcast the event to all frames in all browsers created by this QCefView widget
+    cefViewWidget->broadcastEvent(event);
+  }
+}
+
+void
+MainWindow::onBtnNewBrowserClicked()
 {
-#else
-bool
-MainWindow::nativeEvent(const QByteArray& eventType, void* message, long* result)
-{
-#endif
-  return QMainWindow::nativeEvent(eventType, message, result);
+    QMainWindow* w =new QMainWindow(this);
+    w->setAttribute(Qt::WA_DeleteOnClose);
+
+    QCefSetting settings;
+    QCefView* view = new QCefView("https://bitbucket.org/chromiumembedded/cef/src", &settings, w);
+
+    w->setCentralWidget(view);
+    w->resize(1024,768);
+    w->show();
 }

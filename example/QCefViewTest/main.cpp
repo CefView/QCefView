@@ -22,7 +22,5 @@ main(int argc, char* argv[])
   MainWindow w;
   w.show();
 
-  int rc = a.exec();
-
-  return rc;
+  return a.exec();
 }

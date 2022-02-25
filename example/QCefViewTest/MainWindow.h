@@ -15,21 +15,19 @@ public:
   MainWindow(QWidget* parent = 0);
   ~MainWindow();
 
+  // QCefView slots
 protected slots:
-  void onBtnChangeColorClicked();
-
   void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
 
   void onInvokeMethod(int browserId, int frameId, const QString& method, const QVariantList& arguments);
 
   void onQCefQueryRequest(int browserId, int frameId, const QCefQuery& query);
 
-private:
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-  virtual bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result);
-#else
-  virtual bool nativeEvent(const QByteArray& eventType, void* message, long* result);
-#endif
+  // ui slots
+protected slots:
+  void onBtnChangeColorClicked();
+
+  void onBtnNewBrowserClicked();
 
 private:
   Ui::MainWindow ui;
