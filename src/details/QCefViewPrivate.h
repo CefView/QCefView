@@ -40,6 +40,11 @@ private:
   /// </summary>
   QWidget* qBrowserWidget_;
 
+public:
+  explicit QCefViewPrivate(QCefView* view, const QString& url, const QCefSettingPrivate* setting = nullptr);
+
+  ~QCefViewPrivate();
+
 protected:
   void createBrowser(QCefView* view, const QString url, const QCefSettingPrivate* setting);
 
@@ -47,11 +52,19 @@ protected:
 
   void destroyBrowser();
 
+protected slots:
+  void focusChanged(QWidget* old, QWidget* now);
+
+protected:
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="watched"></param>
+  /// <param name="event"></param>
+  /// <returns></returns>
+  virtual bool eventFilter(QObject* watched, QEvent* event) override;
+
 public:
-  explicit QCefViewPrivate(QCefView* view, const QString& url, const QCefSettingPrivate* setting = nullptr);
-
-  ~QCefViewPrivate();
-
   int browserId();
 
   void navigateToString(const QString& content);
@@ -87,16 +100,4 @@ public:
   void setFocus(bool focus);
 
   void onGotFocus();
-
-protected slots:
-  void focusChanged(QWidget* old, QWidget* now);
-
-protected:
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="watched"></param>
-  /// <param name="event"></param>
-  /// <returns></returns>
-  virtual bool eventFilter(QObject* watched, QEvent* event) override;
 };

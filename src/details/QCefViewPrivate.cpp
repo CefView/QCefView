@@ -95,9 +95,10 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
     pCefBrowser->GetHost()->CloseBrowser(true);
     return;
   }
+  browserWindow->setFlags(Qt::FramelessWindowHint | Qt::BypassWindowManagerHint | Qt::ForeignWindow);
 
   // create QWidget from cef browser widow
-  QWidget* browserWidget = QWidget::createWindowContainer(browserWindow, view, Qt::X11BypassWindowManagerHint);
+  QWidget* browserWidget = QWidget::createWindowContainer(browserWindow, view);
   if (!browserWidget) {
     Q_ASSERT_X(browserWidget, "QCefViewPrivate::createBrowser", "Failed to cretae QWidget from cef browser window");
     pCefBrowser->GetHost()->CloseBrowser(true);
@@ -108,8 +109,8 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
   qBrowserWidget_ = browserWidget;
   pCefBrowser_ = pCefBrowser;
 
-  view->window()->installEventFilter(this);
   qBrowserWindow_->installEventFilter(this);
+  view->window()->installEventFilter(this);
 
   return;
 }
@@ -142,6 +143,67 @@ QCefViewPrivate::destroyBrowser()
 {
   // close again
   closeBrowser();
+}
+
+void
+QCefViewPrivate::focusChanged(QWidget* /*old*/, QWidget* now)
+{
+  if (!now)
+    return;
+
+  Q_Q(QCefView);
+
+  if (now == q) {
+    // QCefView got focus, need to move the focus to the browser window
+    setFocus(true);
+  } else {
+    // Bug fix: https://github.com/CefView/QCefView/issues/30
+    // When QCefView got focus then click some other widgets(for example a QLineEdit),
+    // the QCefView will not release the input focus, so we need to watch the focus change event.
+
+    // release the browser window focus status
+    setFocus(false);
+  }
+}
+
+bool
+QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
+{
+  Q_Q(QCefView);
+
+  // filter event to the level window
+  if (watched == q->window()) {
+    switch (event->type()) {
+      case QEvent::MouseButtonPress: {
+        q->window()->activateWindow();
+      } break;
+      case QEvent::ParentAboutToChange: {
+        q->window()->removeEventFilter(this);
+      } break;
+      case QEvent::ParentChange: {
+        q->window()->installEventFilter(this);
+      } break;
+      case QEvent::Move:
+      case QEvent::Resize: {
+        notifyMoveOrResizeStarted();
+      } break;
+      default:
+        break;
+    }
+  }
+
+  // filter event to the browser window
+  if (watched == qBrowserWindow_) {
+    if (QEvent::PlatformSurface == event->type()) {
+      auto e = (QPlatformSurfaceEvent*)event;
+      if (e->surfaceEventType() == QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed) {
+        // browser window is being destroyed, need to close the browser window in advance
+        closeBrowser();
+      }
+    }
+  }
+
+  return QObject::eventFilter(watched, event);
 }
 
 int
@@ -361,65 +423,4 @@ void
 QCefViewPrivate::onGotFocus()
 {
   // CEF browser window got focus
-}
-
-void
-QCefViewPrivate::focusChanged(QWidget* /*old*/, QWidget* now)
-{
-  if (!now)
-    return;
-
-  Q_Q(QCefView);
-
-  if (now == q) {
-    // QCefView got focus, need to move the focus to the browser window
-    setFocus(true);
-  } else {
-    // Bug fix: https://github.com/CefView/QCefView/issues/30
-    // When QCefView got focus then click some other widgets(for example a QLineEdit),
-    // the QCefView will not release the input focus, so we need to watch the focus change event.
-
-    // release the browser window focus status
-    setFocus(false);
-  }
-}
-
-bool
-QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
-{
-  Q_Q(QCefView);
-
-  // filter event from top level window
-  if (watched == q->window()) {
-    switch (event->type()) {
-      case QEvent::MouseButtonPress: {
-        q->window()->activateWindow();
-      } break;
-      case QEvent::ParentAboutToChange: {
-        q->window()->removeEventFilter(this);
-      } break;
-      case QEvent::ParentChange: {
-        q->window()->installEventFilter(this);
-      } break;
-      case QEvent::Move:
-      case QEvent::Resize: {
-        notifyMoveOrResizeStarted();
-      } break;
-      default:
-        break;
-    }
-  }
-
-  // filter event from the browser window
-  if (watched == qBrowserWindow_) {
-    if (QEvent::PlatformSurface == event->type()) {
-      auto e = (QPlatformSurfaceEvent*)event;
-      if (e->surfaceEventType() == QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed) {
-        // browser window is being destroyed, need to close the browser window in advance
-        closeBrowser();
-      }
-    }
-  }
-
-  return QObject::eventFilter(watched, event);
 }
