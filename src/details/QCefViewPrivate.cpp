@@ -376,14 +376,11 @@ QCefViewPrivate::focusChanged(QWidget* /*old*/, QWidget* now)
     setFocus(true);
   } else {
     // Bug fix: https://github.com/CefView/QCefView/issues/30
-    // When QCefView got focus then click if click some other widgets(for example a QLineEdit),
+    // When QCefView got focus then click some other widgets(for example a QLineEdit),
     // the QCefView will not release the input focus, so we need to watch the focus change event.
 
     // release the browser window focus status
     setFocus(false);
-
-    // activate the top level window
-    now->activateWindow();
   }
 }
 
