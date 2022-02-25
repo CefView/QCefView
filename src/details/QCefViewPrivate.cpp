@@ -68,12 +68,12 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
   window_info.SetAsChild(p, CefRect{ 0, 0, 0, 0 });
 #endif
 
-  // create the browser object
+  // create the browser settings
   CefBrowserSettings browserSettings;
   if (setting)
     setting->CopyToCefBrowserSettings(browserSettings);
 
-  browserSettings.plugins = STATE_DISABLED;
+  // create browser object
   auto pCefBrowser = CefBrowserHost::CreateBrowserSync(window_info,         // window info
                                                        pContext_->pClient_, // handler
                                                        url.toStdString(),   // url
