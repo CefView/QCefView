@@ -164,6 +164,18 @@ public:
   /// <returns>True on successful; otherwise false</returns>
   bool executeJavascript(int frameId, const QString& code, const QString& url, int startLine = 0);
 
+  /// <summary>
+  /// Sets the preference for this browser
+  /// </summary>
+  /// <param name="name">The preference name</param>
+  /// <param name="value">
+  /// The preference value, if this value is QVariant::UnknownType or QVariant::Invalid, the
+  /// preference will be restored to default value
+  /// </param>
+  /// <param name="error">The error message populated on failure</param> <returns>True
+  /// on successful; otherwise false</returns>
+  bool setPreference(const QString& name, const QVariant& value, const QString& error);
+
 signals:
   /// <summary>
   /// Gets called on loading state changed

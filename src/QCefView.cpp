@@ -152,3 +152,11 @@ QCefView::executeJavascript(int frameId, const QString& code, const QString& url
 
   return d->executeJavascript(frameId, code, url, startLine);
 }
+
+bool
+QCefView::setPreference(const QString& name, const QVariant& value, const QString& error)
+{
+  Q_D(QCefView);
+
+  return d->setPreference(name, value, error);
+}

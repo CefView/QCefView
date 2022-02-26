@@ -424,3 +424,25 @@ QCefViewPrivate::onGotFocus()
 {
   // CEF browser window got focus
 }
+
+bool
+QCefViewPrivate::setPreference(const QString& name, const QVariant& value, const QString& error)
+{
+  if (pCefBrowser_) {
+    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+    if (host) {
+      CefString n;
+      n.FromString(name.toStdString());
+
+      auto v = CefValue::Create();
+      ValueConvertor::QVariantToCefValue(v, &value);
+
+      CefString e;
+      auto r = host->GetRequestContext()->SetPreference(n, v, e);
+      error.fromStdString(e.ToString());
+      return r;
+    }
+  }
+
+  return false;
+}

@@ -100,4 +100,6 @@ public:
   void setFocus(bool focus);
 
   void onGotFocus();
+
+  bool setPreference(const QString& name, const QVariant& value, const QString& error);
 };
