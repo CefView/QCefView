@@ -11,23 +11,27 @@
 #pragma endregion cef_headers
 
 #include <CefViewBrowserClientDelegate.h>
-
+#include <functional>
 #include <QCefQuery.h>
-
+#include "QCefJsCallback.h"
 class QCefViewPrivate;
-
 class CCefClientDelegate : public CefViewBrowserClientDelegateInterface
 {
 private:
   std::unordered_map<int, QCefViewPrivate*> view_map_;
+  std::unordered_map<int, JsCallbackFn> callback_map_;
+  int js_callback_id;
 
 public:
   CCefClientDelegate();
 
 protected:
   QCefViewPrivate* take(CefRefPtr<CefBrowser>& browser);
+ 
 
 public:
+  int addPendingCallback(JsCallbackFn &callback);
+
   void insertBrowserViewMapping(CefRefPtr<CefBrowser>& browser, QCefViewPrivate* view);
 
   void removeBrowserViewMapping(CefRefPtr<CefBrowser>& browser);

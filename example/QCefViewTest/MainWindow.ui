@@ -109,9 +109,9 @@
       <widget class="QLineEdit" name="lineEdit_2"/>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="btn_JSCallback">
        <property name="text">
-        <string>PushButton</string>
+        <string>JSCallback</string>
        </property>
       </widget>
      </item>

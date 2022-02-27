@@ -4,7 +4,8 @@
 
 #include "QCefViewPrivate.h"
 
-CCefClientDelegate::CCefClientDelegate() {}
+CCefClientDelegate::CCefClientDelegate() : js_callback_id(1)
+{}
 
 QCefViewPrivate*
 CCefClientDelegate::take(CefRefPtr<CefBrowser>& browser)
@@ -236,7 +237,6 @@ CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
   if (!p)
     return;
 
-  auto m = QString::fromStdString(method);
   QVariantList args;
   for (int i = 0; i < arguments->GetSize(); i++) {
     QVariant qV;
@@ -245,8 +245,23 @@ CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
     args.push_back(qV);
   }
 
-  auto browserId = browser->GetIdentifier();
-  p->q_ptr->invokeMethod(browserId, frameId, m, args);
+  if (method == CEF_JS_INVOKE_METHOD) {
+    if (args[0].type() == QVariant::Map) {
+      QVariantMap map = args[0].toMap();
+      QCefJsCallback cbResult(map);
+      auto cb = callback_map_.find(cbResult.id);
+      if (cb != callback_map_.end()) {
+        cb->second(cbResult.data);
+        if (cbResult.completed) {
+          callback_map_.erase(cb);
+        }
+      }
+    }    
+  } else {
+    auto browserId = browser->GetIdentifier();
+    auto m = QString::fromStdString(method);
+    p->q_ptr->invokeMethod(browserId, frameId, m, args);
+  }  
 }
 
 bool
@@ -287,3 +302,10 @@ CCefClientDelegate::OnPaint(CefRefPtr<CefBrowser> browser,
                             int width,
                             int height)
 {}
+
+int
+CCefClientDelegate::addPendingCallback(JsCallbackFn& callback)
+{
+  callback_map_.insert(std::make_pair(++js_callback_id, callback));
+  return js_callback_id;
+}

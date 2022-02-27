@@ -89,6 +89,8 @@ public:
 
   bool responseQCefQuery(const QCefQuery& query);
 
+  bool executeJavascript(const QString& code, JsCallbackFn callback);
+
   bool executeJavascript(int frameId, const QString& code, const QString& url, int startLine = 0);
 
   void notifyMoveOrResizeStarted();

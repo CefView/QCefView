@@ -313,6 +313,24 @@ QCefViewPrivate::responseQCefQuery(const QCefQuery& query)
   }
   return false;
 }
+bool
+QCefViewPrivate::executeJavascript(const QString& code, JsCallbackFn callback)
+{ 
+  if (pCefBrowser_) {
+    std::string jscode;
+    if (callback != NULL) {
+      int callbackId = pContext_->pClientDelegate_->addPendingCallback(callback);
+      jscode = QCefJsCallback::generateInjectJs(callbackId, code);
+    } else {
+      jscode = code.toStdString();
+    }    
+    CefRefPtr<CefFrame> frame = pCefBrowser_->GetMainFrame();
+    CefString c;
+    c.FromString(jscode);
+    frame->ExecuteJavaScript(c, frame->GetURL(), 0);
+    return true;
+  }
+}
 
 bool
 QCefViewPrivate::executeJavascript(int frameId, const QString& code, const QString& url, int startLine /*= 0*/)

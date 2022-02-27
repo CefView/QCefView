@@ -6,6 +6,7 @@
 #include <QCefEvent.h>
 #include <QCefQuery.h>
 #include <QCefSetting.h>
+#include <QCefJsCallback.h>
 
 #pragma region qt_headers
 #include <QScopedPointer>
@@ -163,6 +164,14 @@ public:
   /// <param name="startLine">The base line number to use for error reporting</param>
   /// <returns>True on successful; otherwise false</returns>
   bool executeJavascript(int frameId, const QString& code, const QString& url, int startLine = 0);
+
+  /// <summary>
+  /// Executes javascript code in the main frame, then callback asynchronously with string result 
+  /// </summary>
+  /// <param name="code">The javascript code</param>
+  /// <param name="callback">use NULL if callback is not needed</param>
+  /// <returns></returns>
+  bool executeJavascript(const QString& code, JsCallbackFn callback);
 
   /// <summary>
   /// Sets the preference for this browser

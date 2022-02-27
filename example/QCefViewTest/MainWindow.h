@@ -26,7 +26,7 @@ protected slots:
   // ui slots
 protected slots:
   void onBtnChangeColorClicked();
-
+  void onJsCallbackClicked();
   void onBtnNewBrowserClicked();
 
 private:

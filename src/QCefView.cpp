@@ -40,7 +40,6 @@ QCefView::browserId()
 
   return d->browserId();
 }
-
 void
 QCefView::navigateToString(const QString& content)
 {
@@ -151,6 +150,14 @@ QCefView::executeJavascript(int frameId, const QString& code, const QString& url
   Q_D(QCefView);
 
   return d->executeJavascript(frameId, code, url, startLine);
+}
+
+bool
+QCefView::executeJavascript(const QString& code, JsCallbackFn callback)
+{
+  Q_D(QCefView);
+
+  return d->executeJavascript(code, callback);
 }
 
 bool

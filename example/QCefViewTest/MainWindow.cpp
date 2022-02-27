@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget* parent)
 
   connect(ui.btn_changeColor, &QPushButton::clicked, this, &MainWindow::onBtnChangeColorClicked);
   connect(ui.btn_newBrowser, &QPushButton::clicked, this, &MainWindow::onBtnNewBrowserClicked);
+  connect(ui.btn_JSCallback, &QPushButton::clicked, this, &MainWindow::onJsCallbackClicked);
   layout->addWidget(ui.nativeContainer);
 
   // build the path to the web resource
@@ -159,4 +160,11 @@ MainWindow::onBtnNewBrowserClicked()
   w->setCentralWidget(view);
   w->resize(1024, 768);
   w->show();
+}
+
+void
+MainWindow::onJsCallbackClicked()
+{
+
+  cefViewWidget->executeJavascript("return 1 + 1", [this](const QString& result) { qDebug() << result; });
 }
