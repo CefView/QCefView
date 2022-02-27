@@ -30,6 +30,22 @@
         window.CefViewQuery(query);
         console.log("window.CefViewQuery returned...");
       }
+
+      function testInvokeMethod() {
+        let d = {
+          d1: true,
+          d2: 5678,
+          d3: "test object",
+          d4: [1, "2", false],
+          d5: {
+            d1: true,
+            d2: 5678,
+            d3: "nested object",
+            d4: [1, "2", true],
+          },
+        };
+        onInvokeMethodClicked("TestMethod", 1, false, "arg3", d);
+      }
     </script>
     <style>
       .noselect {
@@ -49,11 +65,7 @@
 
       <label> Test Case for InvokeMethod </label>
       <br />
-      <input
-        type="button"
-        value="Invoke Method"
-        onclick="onInvokeMethodClicked('TestMethod', 1, false, 'arg3')"
-      />
+      <input type="button" value="Invoke Method" onclick="testInvokeMethod()" />
       <br />
       <br />
 

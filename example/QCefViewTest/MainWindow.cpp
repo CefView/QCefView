@@ -1,6 +1,8 @@
 ﻿#include <QCoreApplication>
 #include <QDir>
 #include <QHBoxLayout>
+#include <QJsonDocument>
+#include <QJsonValue>
 #include <QMessageBox>
 #include <QRandomGenerator>
 
@@ -82,19 +84,25 @@ MainWindow::onInvokeMethod(int browserId, int frameId, const QString& method, co
       this,
       [=]() {
         QString title("QCef InvokeMethod Notify");
-        QString text = QString("Current Thread: QT_UI\r\n"
+        QString text = QString("================== Current Thread: QT_UI ==================\r\n"
                                "Method: %1\r\n"
                                "Arguments:\r\n")
                          .arg(method);
 
         for (int i = 0; i < arguments.size(); i++) {
+          auto jv = QJsonValue::fromVariant(arguments[i]);
+
           // clang-format off
-          text.append(QString("%1 Type:%2, Value:%3\r\n")
-              .arg(i)
-              .arg(arguments[i].typeName())
-              .arg(arguments[i].toString()));
+          text.append(
+              QString("%1 Type:%2, Value:%3\r\n")
+              .arg(i).arg(arguments[i].typeName()).arg(arguments[i].toString())
+          );
           // clang-format on
         }
+
+        auto jsonValue = QJsonDocument::fromVariant(arguments);
+        auto jsonString = QString(jsonValue.toJson());
+        text.append(QString("\r\nArguments List in JSON format:\r\n%1").arg(jsonString));
 
         QMessageBox::information(this->window(), title, text);
       },
@@ -142,13 +150,13 @@ MainWindow::onBtnChangeColorClicked()
 void
 MainWindow::onBtnNewBrowserClicked()
 {
-    QMainWindow* w =new QMainWindow(this);
-    w->setAttribute(Qt::WA_DeleteOnClose);
+  QMainWindow* w = new QMainWindow(this);
+  w->setAttribute(Qt::WA_DeleteOnClose);
 
-    QCefSetting settings;
-    QCefView* view = new QCefView("https://bitbucket.org/chromiumembedded/cef/src", &settings, w);
+  QCefSetting settings;
+  QCefView* view = new QCefView("https://immersiveweb.dev/", &settings, w);
 
-    w->setCentralWidget(view);
-    w->resize(1024,768);
-    w->show();
+  w->setCentralWidget(view);
+  w->resize(1024, 768);
+  w->show();
 }
