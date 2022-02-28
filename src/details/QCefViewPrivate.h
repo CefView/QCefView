@@ -85,15 +85,17 @@ public:
 
   void browserStopLoad();
 
-  bool triggerEvent(const QString& name, const QVariantList& args, int frameId = CefViewBrowserClient::MAIN_FRAME);
+  bool triggerEvent(const QString& name, const QVariantList& args, int64_t frameId = CefViewBrowserClient::MAIN_FRAME);
 
   bool responseQCefQuery(const QCefQuery& query);
 
-  bool executeJavascript(int frameId, const QString& code, const QString& url, int startLine = 0);
+  bool executeJavascript(int64_t frameId, const QString& code, const QString& url);
+
+  bool executeJavascriptWithResult(int64_t frameId, const QString& code, const QString& url, int64_t context);
 
   void notifyMoveOrResizeStarted();
 
-  bool sendEventNotifyMessage(int frameId, const QString& name, const QVariantList& args);
+  bool sendEventNotifyMessage(int64_t frameId, const QString& name, const QVariantList& args);
 
   void onTakeFocus(bool next);
 

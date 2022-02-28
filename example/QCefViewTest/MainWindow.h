@@ -19,13 +19,17 @@ public:
 protected slots:
   void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
 
-  void onInvokeMethod(int browserId, int frameId, const QString& method, const QVariantList& arguments);
+  void onInvokeMethod(int browserId, int64_t frameId, const QString& method, const QVariantList& arguments);
 
-  void onQCefQueryRequest(int browserId, int frameId, const QCefQuery& query);
+  void onQCefQueryRequest(int browserId, int64_t frameId, const QCefQuery& query);
+
+  void onJavascriptResult(int browserId, int64_t frameId, int64_t context, const QVariant& result);
 
   // ui slots
 protected slots:
   void onBtnChangeColorClicked();
+
+  void onBtnCallJSCodeClicked();
 
   void onBtnNewBrowserClicked();
 

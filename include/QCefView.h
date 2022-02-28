@@ -13,27 +13,6 @@
 #include <QWidget>
 #pragma endregion qt_headers
 
-/** Outline of QCefView:
- **
- **		+--------------------------------------------------------------+
- **		| QCefView(QWidget)                                            |
- **		|                                                              |
- **		|    +----------------------------------------------------+    |
- **		|    | WindowWrapper(QWidget)                             |    |
- **		|    |                                                    |    |
- **		|    |    +-------------------------------------------+   |    |
- **		|    |    | CefBrowserWindowHost(Native)              |   |    |
- **		|    |    |                                           |   |    |
- **		|    |    |                                           |   |    |
- **		|    |    |                                           |   |    |
- **		|    |    +-------------------------------------------+   |    |
- **		|    |                                                    |    |
- **		|    +----------------------------------------------------+    |
- **		|                                                              |
- **		+--------------------------------------------------------------+
- **
- **/
-
 class QCefViewPrivate;
 
 /// <summary>
@@ -45,6 +24,9 @@ class QCEFVIEW_EXPORT QCefView : public QWidget
   Q_DECLARE_PRIVATE(QCefView)
   Q_DISABLE_COPY(QCefView)
   QScopedPointer<QCefViewPrivate> d_ptr;
+
+public:
+  static const int64_t MainFrameID = 0;
 
 public:
   /// <summary>
@@ -135,7 +117,7 @@ public:
   /// <param name="event">The <see cref="QCefEvent"/> instance</param>
   /// <param name="frameId">The frame id</param>
   /// <returns>True on successful; otherwise false</returns>
-  bool triggerEvent(const QCefEvent& event, int frameId);
+  bool triggerEvent(const QCefEvent& event, int64_t frameId);
 
   /// <summary>
   /// Broad cast the event for all frames
@@ -160,9 +142,21 @@ public:
   /// The URL where the script in question can be found, if any. The renderer may request this URL to show the developer
   /// the source of the error
   /// </param>
-  /// <param name="startLine">The base line number to use for error reporting</param>
   /// <returns>True on successful; otherwise false</returns>
-  bool executeJavascript(int frameId, const QString& code, const QString& url, int startLine = 0);
+  bool executeJavascript(int64_t frameId, const QString& code, const QString& url);
+
+  /// <summary>
+  /// Executes javascript code in specified frame and the result will be reported through reportJavascriptResult signal
+  /// </summary>
+  /// <param name="frameId">The frame id</param>
+  /// <param name="code">The javascript code</param>
+  /// <param name="url">
+  /// The URL where the script in question can be found, if any. The renderer may request this URL to show the developer
+  /// the source of the error
+  /// </param>
+  /// <param name="context">The context used to identify the one execution</param>
+  /// <returns>True on successful; otherwise false</returns>
+  bool executeJavascriptWithResult(int64_t frameId, const QString& code, const QString& url, int64_t context);
 
   /// <summary>
   /// Sets the preference for this browser
@@ -217,7 +211,7 @@ signals:
   /// </summary>
   /// <param name="frameId">The frame id</param>
   /// <param name="url">The address</param>
-  void addressChanged(int frameId, const QString& url);
+  void addressChanged(int64_t frameId, const QString& url);
 
   /// <summary>
   /// Gets called on title changed
@@ -256,7 +250,7 @@ signals:
   /// <param name="browserId">The browser id</param>
   /// <param name="frameId">The frame id</param>
   /// <param name="query">The query request</param>
-  void cefQueryRequest(int browserId, int frameId, const QCefQuery& query);
+  void cefQueryRequest(int browserId, int64_t frameId, const QCefQuery& query);
 
   /// <summary>
   /// Gets called on invoke method request from web content(Javascript)
@@ -265,7 +259,16 @@ signals:
   /// <param name="frameId">The frame id</param>
   /// <param name="method">The method name</param>
   /// <param name="arguments">The arguments list</param>
-  void invokeMethod(int browserId, int frameId, const QString& method, const QVariantList& arguments);
+  void invokeMethod(int browserId, int64_t frameId, const QString& method, const QVariantList& arguments);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="browserId"></param>
+  /// <param name="frameId"></param>
+  /// <param name="context"></param>
+  /// <param name="result"></param>
+  void reportJavascriptResult(int browserId, int64_t frameId, int64_t context, const QVariant& result);
 };
 
 #endif // QCEFVIEW_H

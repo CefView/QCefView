@@ -163,6 +163,9 @@ QCefViewPrivate::focusChanged(QWidget* /*old*/, QWidget* now)
 
     // release the browser window focus status
     setFocus(false);
+
+    // activate the top level window
+    now->activateWindow();
   }
 }
 
@@ -294,7 +297,7 @@ QCefViewPrivate::browserStopLoad()
 bool
 QCefViewPrivate::triggerEvent(const QString& name,
                               const QVariantList& args,
-                              int frameId /*= CefViewBrowserHandler::MAIN_FRAME*/)
+                              int64_t frameId /*= CefViewBrowserHandler::MAIN_FRAME*/)
 {
   if (!name.isEmpty()) {
     return sendEventNotifyMessage(frameId, name, args);
@@ -315,7 +318,7 @@ QCefViewPrivate::responseQCefQuery(const QCefQuery& query)
 }
 
 bool
-QCefViewPrivate::executeJavascript(int frameId, const QString& code, const QString& url, int startLine /*= 0*/)
+QCefViewPrivate::executeJavascript(int64_t frameId, const QString& code, const QString& url)
 {
   if (pCefBrowser_) {
     CefRefPtr<CefFrame> frame = pCefBrowser_->GetFrame(frameId);
@@ -326,10 +329,30 @@ QCefViewPrivate::executeJavascript(int frameId, const QString& code, const QStri
       CefString u;
       u.FromString(url.toStdString());
 
-      frame->ExecuteJavaScript(c, u, startLine);
+      frame->ExecuteJavaScript(c, u, 0);
 
       return true;
     }
+  }
+
+  return false;
+}
+
+bool
+QCefViewPrivate::executeJavascriptWithResult(int64_t frameId, const QString& code, const QString& url, int64_t context)
+{
+  if (pContext_ && pContext_->pClient_) {
+    auto frame = frameId == 0 ? pCefBrowser_->GetMainFrame() : pCefBrowser_->GetFrame(frameId);
+    if (!frame)
+      return false;
+
+    CefString c;
+    c.FromString(code.toStdString());
+
+    CefString u;
+    u.FromString(url.toStdString());
+
+    return pContext_->pClient_->AsyncExecuteJSCode(pCefBrowser_, frame, c, u, context);
   }
 
   return false;
@@ -346,7 +369,7 @@ QCefViewPrivate::notifyMoveOrResizeStarted()
 }
 
 bool
-QCefViewPrivate::sendEventNotifyMessage(int frameId, const QString& name, const QVariantList& args)
+QCefViewPrivate::sendEventNotifyMessage(int64_t frameId, const QString& name, const QVariantList& args)
 {
   CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create(TRIGGEREVENT_NOTIFY_MESSAGE);
   CefRefPtr<CefListValue> arguments = msg->GetArgumentList();

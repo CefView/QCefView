@@ -122,7 +122,7 @@ QCefView::triggerEvent(const QCefEvent& event)
 }
 
 bool
-QCefView::triggerEvent(const QCefEvent& event, int frameId)
+QCefView::triggerEvent(const QCefEvent& event, int64_t frameId)
 {
   Q_D(QCefView);
 
@@ -146,11 +146,19 @@ QCefView::responseQCefQuery(const QCefQuery& query)
 }
 
 bool
-QCefView::executeJavascript(int frameId, const QString& code, const QString& url, int startLine)
+QCefView::executeJavascript(int64_t frameId, const QString& code, const QString& url)
 {
   Q_D(QCefView);
 
-  return d->executeJavascript(frameId, code, url, startLine);
+  return d->executeJavascript(frameId, code, url);
+}
+
+bool
+QCefView::executeJavascriptWithResult(int64_t frameId, const QString& code, const QString& url, int64_t context)
+{
+  Q_D(QCefView);
+
+  return d->executeJavascriptWithResult(frameId, code, url, context);
 }
 
 bool
