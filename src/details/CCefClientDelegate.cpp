@@ -104,7 +104,7 @@ CCefClientDelegate::draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
 }
 
 void
-CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, int frameId, const std::string& url)
+CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url)
 {
   auto p = take(browser);
   if (p) {
@@ -214,7 +214,7 @@ CCefClientDelegate::processUrlRequest(const std::string& url)
 
 void
 CCefClientDelegate::processQueryRequest(CefRefPtr<CefBrowser>& browser,
-                                        int frameId,
+                                        int64_t frameId,
                                         const std::string& request,
                                         const int64_t query_id)
 {
@@ -228,7 +228,7 @@ CCefClientDelegate::processQueryRequest(CefRefPtr<CefBrowser>& browser,
 
 void
 CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
-                                       int frameId,
+                                       int64_t frameId,
                                        const std::string& method,
                                        const CefRefPtr<CefListValue>& arguments)
 {
@@ -247,6 +247,22 @@ CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
 
   auto browserId = browser->GetIdentifier();
   p->q_ptr->invokeMethod(browserId, frameId, m, args);
+}
+
+void
+CCefClientDelegate::reportJSResult(CefRefPtr<CefBrowser>& browser,
+                                   int64_t frameId,
+                                   int64_t contextId,
+                                   const CefRefPtr<CefValue>& result)
+{
+  auto p = take(browser);
+  if (!p)
+    return;
+
+  auto browserId = browser->GetIdentifier();
+  QVariant qV;
+  ValueConvertor::CefValueToQVariant(&qV, result);
+  p->q_ptr->reportJavascriptResult(browserId, frameId, contextId, qV);
 }
 
 bool

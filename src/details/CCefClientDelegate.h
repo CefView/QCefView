@@ -52,7 +52,7 @@ public:
   virtual void draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
                                       const std::vector<CefDraggableRegion>& regions) override;
 
-  virtual void addressChanged(CefRefPtr<CefBrowser>& browser, int frameId, const std::string& url) override;
+  virtual void addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url) override;
 
   virtual void titleChanged(CefRefPtr<CefBrowser>& browser, const std::string& title) override;
 
@@ -80,14 +80,19 @@ public:
   virtual void processUrlRequest(const std::string& url) override;
 
   virtual void processQueryRequest(CefRefPtr<CefBrowser>& browser,
-                                   int frameId,
+                                   int64_t frameId,
                                    const std::string& query,
                                    const int64_t query_id) override;
 
   virtual void invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
-                                  int frameId,
+                                  int64_t frameId,
                                   const std::string& method,
                                   const CefRefPtr<CefListValue>& arguments) override;
+
+  virtual void reportJSResult(CefRefPtr<CefBrowser>& browser,
+                              int64_t frameId,
+                              int64_t contextId,
+                              const CefRefPtr<CefValue>& result) override;
 
   virtual bool GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
 
