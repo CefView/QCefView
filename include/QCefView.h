@@ -134,7 +134,8 @@ public:
   bool responseQCefQuery(const QCefQuery& query);
 
   /// <summary>
-  /// Executes javascript code in specified frame
+  /// Executes javascript code in specified frame, this method does not report the result of the javascript.
+  /// To get the result of the javascript execution use <see cref="executeJavascriptWithResult"/>
   /// </summary>
   /// <param name="frameId">The frame id</param>
   /// <param name="code">The javascript code</param>
@@ -146,7 +147,8 @@ public:
   bool executeJavascript(int64_t frameId, const QString& code, const QString& url);
 
   /// <summary>
-  /// Executes javascript code in specified frame and the result will be reported through reportJavascriptResult signal
+  /// Executes javascript code in specified frame and the result will be reported through <see
+  /// cref="reportJavascriptResult"/> signal
   /// </summary>
   /// <param name="frameId">The frame id</param>
   /// <param name="code">The javascript code</param>
@@ -253,7 +255,7 @@ signals:
   void cefQueryRequest(int browserId, int64_t frameId, const QCefQuery& query);
 
   /// <summary>
-  /// Gets called on invoke method request from web content(Javascript)
+  /// Gets called on invoking method request from web content(Javascript)
   /// </summary>
   /// <param name="browserId">The browser id</param>
   /// <param name="frameId">The frame id</param>
@@ -262,12 +264,12 @@ signals:
   void invokeMethod(int browserId, int64_t frameId, const QString& method, const QVariantList& arguments);
 
   /// <summary>
-  ///
+  /// Gets called on the result of the javascript executed with <see cref="executeJavascriptWithResult"/> returned
   /// </summary>
-  /// <param name="browserId"></param>
-  /// <param name="frameId"></param>
-  /// <param name="context"></param>
-  /// <param name="result"></param>
+  /// <param name="browserId">The browser id</param>
+  /// <param name="frameId">The frame id</param>
+  /// <param name="context">The context</param>
+  /// <param name="result">The result</param>
   void reportJavascriptResult(int browserId, int64_t frameId, int64_t context, const QVariant& result);
 };
 
