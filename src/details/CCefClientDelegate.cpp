@@ -241,7 +241,7 @@ CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
   for (int i = 0; i < arguments->GetSize(); i++) {
     QVariant qV;
     auto cV = arguments->GetValue(i);
-    ValueConvertor::CefValueToQVariant(&qV, cV);
+    ValueConvertor::CefValueToQVariant(&qV, cV.get());
     args.push_back(qV);
   }
 
@@ -261,7 +261,7 @@ CCefClientDelegate::reportJSResult(CefRefPtr<CefBrowser>& browser,
 
   auto browserId = browser->GetIdentifier();
   QVariant qV;
-  ValueConvertor::CefValueToQVariant(&qV, result);
+  ValueConvertor::CefValueToQVariant(&qV, result.get());
   p->q_ptr->reportJavascriptResult(browserId, frameId, contextId, qV);
 }
 

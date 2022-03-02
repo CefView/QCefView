@@ -128,9 +128,9 @@ ValueConvertor::QVariantToCefValue(CefValue* cValue, const QVariant* qVariant)
     case TypeClass::UInt:
     case TypeClass::LongLong:
     case TypeClass::ULongLong:
- #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     case TypeClass::Float:
- #endif
+#endif
     case TypeClass::Double: {
       cValue->SetDouble(qVariant->toDouble());
     } break;
@@ -150,7 +150,7 @@ ValueConvertor::QVariantToCefValue(CefValue* cValue, const QVariant* qVariant)
       for (auto& key : keys) {
         auto qVal = qDict.take(key);
         auto cVal = CefValue::Create();
-        QVariantToCefValue(cVal, &qVal);
+        QVariantToCefValue(cVal.get(), &qVal);
         CefString cKey = CefString(key.toStdString());
         cDict->SetValue(cKey, cVal);
       }
@@ -163,7 +163,7 @@ ValueConvertor::QVariantToCefValue(CefValue* cValue, const QVariant* qVariant)
       for (int i = 0; i < qCount; i++) {
         auto qVal = qList.at(i);
         auto cVal = CefValue::Create();
-        QVariantToCefValue(cVal, &qVal);
+        QVariantToCefValue(cVal.get(), &qVal);
         cList->SetValue(i, cVal);
       }
       cValue->SetList(cList);

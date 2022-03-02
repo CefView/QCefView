@@ -56,7 +56,7 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
   window_info.SetAsChild(p, 0, 0, 0, 0);
 #elif defined(OS_WINDOWS)
   CefWindowHandle p = (CefWindowHandle)(view->winId());
-  window_info.SetAsChild(p, RECT{ 0, 0, 0, 0 });
+  window_info.SetAsChild(p, { 0, 0, 0, 0 });
 #elif defined(OS_LINUX)
   // Don't know why, on Linux platform if we use QCefView's winId() as
   // the parent, it will complain about `BadWindow`,
@@ -403,7 +403,7 @@ QCefViewPrivate::sendEventNotifyMessage(int64_t frameId, const QString& name, co
   arguments->SetString(idx++, eventName);
   for (auto& qV : args) {
     auto cVal = CefValue::Create();
-    ValueConvertor::QVariantToCefValue(cVal, &qV);
+    ValueConvertor::QVariantToCefValue(cVal.get(), &qV);
     arguments->SetValue(idx++, cVal);
   }
 
@@ -466,7 +466,7 @@ QCefViewPrivate::setPreference(const QString& name, const QVariant& value, const
       n.FromString(name.toStdString());
 
       auto v = CefValue::Create();
-      ValueConvertor::QVariantToCefValue(v, &value);
+      ValueConvertor::QVariantToCefValue(v.get(), &value);
 
       CefString e;
       auto r = host->GetRequestContext()->SetPreference(n, v, e);
