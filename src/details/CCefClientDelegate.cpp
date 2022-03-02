@@ -183,7 +183,7 @@ CCefClientDelegate::takeFocus(CefRefPtr<CefBrowser>& browser, bool next)
 {
   auto p = take(browser);
   if (p)
-    p->onTakeFocus(next);
+    p->onCefWindowLostTabFocus(next);
 }
 
 bool
@@ -198,7 +198,7 @@ CCefClientDelegate::gotFocus(CefRefPtr<CefBrowser>& browser)
 {
   auto p = take(browser);
   if (p)
-    p->onGotFocus();
+    p->onCefWindowGotFocus();
 }
 
 void

@@ -146,23 +146,35 @@ QCefViewPrivate::destroyBrowser()
 }
 
 void
+QCefViewPrivate::setCefWindowFocus(bool focus)
+{
+  if (pCefBrowser_) {
+    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+    if (host) {
+      host->SetFocus(focus);
+    }
+  }
+}
+
+void
 QCefViewPrivate::focusChanged(QWidget* /*old*/, QWidget* now)
 {
   if (!now)
     return;
 
   Q_Q(QCefView);
+  qDebug() << "new focus widget:" << now;
 
   if (now == q) {
     // QCefView got focus, need to move the focus to the browser window
-    setFocus(true);
+    setCefWindowFocus(true);
   } else {
     // Bug fix: https://github.com/CefView/QCefView/issues/30
     // When QCefView got focus then click some other widgets(for example a QLineEdit),
     // the QCefView will not release the input focus, so we need to watch the focus change event.
 
     // release the browser window focus status
-    setFocus(false);
+    setCefWindowFocus(false);
 
     // activate the top level window
     now->activateWindow();
@@ -399,9 +411,12 @@ QCefViewPrivate::sendEventNotifyMessage(int64_t frameId, const QString& name, co
 }
 
 void
-QCefViewPrivate::onTakeFocus(bool next)
+QCefViewPrivate::onCefWindowLostTabFocus(bool next)
 {
+  // The focus was returned from CEF window, QCefView needs to handle
+  // this event and give the focus to the correct next or previous widget
   Q_Q(QCefView);
+
   auto reason = next ? Qt::TabFocusReason : Qt::BacktabFocusReason;
   auto widget = next ? q->nextInFocusChain() : q->previousInFocusChain();
 
@@ -429,23 +444,16 @@ QCefViewPrivate::onTakeFocus(bool next)
 }
 
 void
-QCefViewPrivate::setFocus(bool focus)
-{
-  if (pCefBrowser_) {
-    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
-    if (host) {
-      host->SetFocus(focus);
-      host->SendFocusEvent(focus);
-      if (!focus)
-        host->SendCaptureLostEvent();
-    }
-  }
-}
-
-void
-QCefViewPrivate::onGotFocus()
+QCefViewPrivate::onCefWindowGotFocus()
 {
   // CEF browser window got focus
+  Q_Q(QCefView);
+
+  // if the QCefView has no focus, we move focus on it
+  if (!q->hasFocus()) {
+    qDebug() << "CEF window got focus, move focus on QCefView";
+    q->setFocus();
+  }
 }
 
 bool

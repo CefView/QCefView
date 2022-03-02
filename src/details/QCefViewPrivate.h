@@ -52,6 +52,8 @@ protected:
 
   void destroyBrowser();
 
+  bool setPreference(const QString& name, const QVariant& value, const QString& error);
+
 protected slots:
   void focusChanged(QWidget* old, QWidget* now);
 
@@ -97,11 +99,9 @@ public:
 
   bool sendEventNotifyMessage(int64_t frameId, const QString& name, const QVariantList& args);
 
-  void onTakeFocus(bool next);
+  void setCefWindowFocus(bool focus);
 
-  void setFocus(bool focus);
+  void onCefWindowLostTabFocus(bool next);
 
-  void onGotFocus();
-
-  bool setPreference(const QString& name, const QVariant& value, const QString& error);
+  void onCefWindowGotFocus();
 };
