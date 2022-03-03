@@ -291,48 +291,6 @@ QCefSetting::plugins() const
 }
 
 void
-QCefSetting::setUniversalAccessFromFileUrls(const bool value)
-{
-  Q_D(QCefSetting);
-  d->universalAccessFromFileUrls_ = value;
-}
-
-const QVariant
-QCefSetting::universalAccessFromFileUrls() const
-{
-  Q_D(const QCefSetting);
-  return d->universalAccessFromFileUrls_;
-}
-
-void
-QCefSetting::setFileAccessFromFileUrls(const bool value)
-{
-  Q_D(QCefSetting);
-  d->fileAccessFromFileUrls_ = value;
-}
-
-const QVariant
-QCefSetting::fileAccessFromFileUrls() const
-{
-  Q_D(const QCefSetting);
-  return d->fileAccessFromFileUrls_;
-}
-
-void
-QCefSetting::setWebSecurity(const bool value)
-{
-  Q_D(QCefSetting);
-  d->webSecurity_ = value;
-}
-
-const QVariant
-QCefSetting::webSecurity() const
-{
-  Q_D(const QCefSetting);
-  return d->webSecurity_;
-}
-
-void
 QCefSetting::setImageLoading(const bool value)
 {
   Q_D(QCefSetting);
@@ -414,20 +372,6 @@ QCefSetting::databases() const
 {
   Q_D(const QCefSetting);
   return d->databases_;
-}
-
-void
-QCefSetting::setApplicationCache(const bool value)
-{
-  Q_D(QCefSetting);
-  d->applicationCache_ = value;
-}
-
-const QVariant
-QCefSetting::applicationCache() const
-{
-  Q_D(const QCefSetting);
-  return d->applicationCache_;
 }
 
 void

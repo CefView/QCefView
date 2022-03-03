@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget* parent)
 
   // build settings for per QCefView
   QCefSetting setting;
+  setting.setPlugins(false);
   setting.setBackgroundColor(QColor::fromRgba(qRgba(250, 249, 222, 255)));
 
   // create the QCefView widget and add it to the layout container
@@ -160,7 +161,7 @@ MainWindow::onBtnNewBrowserClicked()
   w->setAttribute(Qt::WA_DeleteOnClose);
 
   QCefSetting settings;
-  QCefView* view = new QCefView("https://immersiveweb.dev/", &settings, w);
+  QCefView* view = new QCefView("https://cefview.github.io/QCefView/", &settings, w);
 
   w->setCentralWidget(view);
   w->resize(1024, 768);

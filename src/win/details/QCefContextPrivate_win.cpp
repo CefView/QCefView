@@ -23,7 +23,6 @@ QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
 #endif
 
   // Initialize CEF.
-  CefMainArgs main_args(::GetModuleHandle(nullptr));
   auto appDelegate = std::make_shared<CCefAppDelegate>(this);
   auto app = new CefViewBrowserApp(config->bridgeObjectName_, appDelegate);
   void* sandboxInfo = nullptr;
@@ -33,6 +32,8 @@ QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
   static CefScopedSandboxInfo scoped_sandbox;
   sandbox_info = scoped_sandbox.sandbox_info();
 #endif
+
+  CefMainArgs main_args(::GetModuleHandle(nullptr));
   if (!CefInitialize(main_args, cef_settings, app, sandboxInfo)) {
     assert(0);
     return false;

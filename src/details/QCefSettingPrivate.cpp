@@ -71,15 +71,6 @@ QCefSettingPrivate::CopyToCefBrowserSettings(CefBrowserSettings& settings) const
   if (plugins_.canConvert<bool>())
     settings.plugins = plugins_.toBool() ? STATE_ENABLED : STATE_DISABLED;
 
-  if (universalAccessFromFileUrls_.canConvert<bool>())
-    settings.universal_access_from_file_urls = universalAccessFromFileUrls_.toBool() ? STATE_ENABLED : STATE_DISABLED;
-
-  if (fileAccessFromFileUrls_.canConvert<bool>())
-    settings.file_access_from_file_urls = fileAccessFromFileUrls_.toBool() ? STATE_ENABLED : STATE_DISABLED;
-
-  if (webSecurity_.canConvert<bool>())
-    settings.web_security = webSecurity_.toBool() ? STATE_ENABLED : STATE_DISABLED;
-
   if (imageLoading_.canConvert<bool>())
     settings.image_loading = imageLoading_.toBool() ? STATE_ENABLED : STATE_DISABLED;
 
@@ -97,9 +88,6 @@ QCefSettingPrivate::CopyToCefBrowserSettings(CefBrowserSettings& settings) const
 
   if (databases_.canConvert<bool>())
     settings.databases = databases_.toBool() ? STATE_ENABLED : STATE_DISABLED;
-
-  if (applicationCache_.canConvert<bool>())
-    settings.application_cache = applicationCache_.toBool() ? STATE_ENABLED : STATE_DISABLED;
 
   if (webgl_.canConvert<bool>())
     settings.webgl = webgl_.toBool() ? STATE_ENABLED : STATE_DISABLED;

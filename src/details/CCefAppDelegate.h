@@ -8,7 +8,10 @@ class CCefAppDelegate : public CefViewBrowserAppDelegateInterface
 public:
   CCefAppDelegate(QCefContextPrivate* context);
 
-  void OnScheduleMessageLoopWork(int64_t delay_ms) override;
+  virtual void onBeforeCommandLineProcessing(const CefString& process_type,
+                                             CefRefPtr<CefCommandLine> command_line) override;
+
+  void onScheduleMessageLoopWork(int64_t delay_ms) override;
 
 private:
   QCefContextPrivate* pContext_;

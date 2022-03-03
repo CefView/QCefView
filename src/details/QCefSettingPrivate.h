@@ -43,16 +43,12 @@ public:
   /* bool */ QVariant javascriptAccessClipboard_;
   /* bool */ QVariant javascriptDomPaste_;
   /* bool */ QVariant plugins_;
-  /* bool */ QVariant universalAccessFromFileUrls_;
-  /* bool */ QVariant fileAccessFromFileUrls_;
-  /* bool */ QVariant webSecurity_;
   /* bool */ QVariant imageLoading_;
   /* bool */ QVariant imageShrinkStandaloneToFit_;
   /* bool */ QVariant textAreaResize_;
   /* bool */ QVariant tabToLinks_;
   /* bool */ QVariant localStorage_;
   /* bool */ QVariant databases_;
-  /* bool */ QVariant applicationCache_;
   /* bool */ QVariant webgl_;
 
   /* QColor */ QVariant backgroundColor_;

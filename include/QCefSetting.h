@@ -273,42 +273,6 @@ public:
   const QVariant plugins() const;
 
   /// <summary>
-  /// Sets to enable or disable the permission of universal access from file urls
-  /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
-  void setUniversalAccessFromFileUrls(const bool value);
-
-  /// <summary>
-  /// Gets whether to enable or disable the permission of universal access from file urls
-  /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
-  const QVariant universalAccessFromFileUrls() const;
-
-  /// <summary>
-  /// Sets to enable or disable the permission of file access from file urls
-  /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
-  void setFileAccessFromFileUrls(const bool value);
-
-  /// <summary>
-  /// Gets whether to enable or disable the permission of file access from file urls
-  /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
-  const QVariant fileAccessFromFileUrls() const;
-
-  /// <summary>
-  /// Sets to enable or disable web security
-  /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
-  void setWebSecurity(const bool value);
-
-  /// <summary>
-  /// Gets whether to enable or disable web security
-  /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
-  const QVariant webSecurity() const;
-
-  /// <summary>
   /// Sets to enable or disable the permission of loading images
   /// </summary>
   /// <param name="value">True to enalbe; false to disable</param>
@@ -379,18 +343,6 @@ public:
   /// </summary>
   /// <returns>True to enalbe; false to disable</returns>
   const QVariant databases() const;
-
-  /// <summary>
-  /// Sets to enable or disable application cache
-  /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
-  void setApplicationCache(const bool value);
-
-  /// <summary>
-  /// Gets whether to enable or disable  application cache
-  /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
-  const QVariant applicationCache() const;
 
   /// <summary>
   /// Sets to enable or disable webGL
