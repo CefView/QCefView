@@ -51,13 +51,7 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
 {
   // Set window info
   CefWindowInfo window_info;
-#if defined(OS_MACOS)
-  CefWindowHandle p = (CefWindowHandle)(view->winId());
-  window_info.SetAsChild(p, 0, 0, 0, 0);
-#elif defined(OS_WINDOWS)
-  CefWindowHandle p = (CefWindowHandle)(view->winId());
-  window_info.SetAsChild(p, { 0, 0, 0, 0 });
-#elif defined(OS_LINUX)
+#if defined(OS_LINUX)
   // Don't know why, on Linux platform if we use QCefView's winId() as
   // the parent, it will complain about `BadWindow`,
   // and the browser window will not be created, this never happens
@@ -65,7 +59,10 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
   // parent to create CEF browser window.
   QWindow w;
   CefWindowHandle p = (CefWindowHandle)(w.winId());
-  window_info.SetAsChild(p, CefRect{ 0, 0, 0, 0 });
+  window_info.SetAsChild(p, { 0, 0, 0, 0 });
+#else
+  CefWindowHandle p = (CefWindowHandle)(view->winId());
+  window_info.SetAsChild(p, { 0, 0, 0, 0 });
 #endif
 
   // create the browser settings
