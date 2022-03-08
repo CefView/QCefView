@@ -49,21 +49,12 @@ QCefViewPrivate::~QCefViewPrivate()
 void
 QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSettingPrivate* setting)
 {
+  // create a temporary windows as the parent of the CEF browser window to be created
+  QWindow fakeParent;
+
   // Set window info
   CefWindowInfo window_info;
-#if defined(OS_LINUX)
-  // Don't know why, on Linux platform if we use QCefView's winId() as
-  // the parent, it will complain about `BadWindow`,
-  // and the browser window will not be created, this never happens
-  // on Windows and macOS, so we create a temporal QWindow as the
-  // parent to create CEF browser window.
-  QWindow w;
-  CefWindowHandle p = (CefWindowHandle)(w.winId());
-  window_info.SetAsChild(p, { 0, 0, 0, 0 });
-#else
-  CefWindowHandle p = (CefWindowHandle)(view->winId());
-  window_info.SetAsChild(p, { 0, 0, 0, 0 });
-#endif
+  window_info.SetAsChild((CefWindowHandle)(fakeParent.winId()), { 0, 0, 0, 0 });
 
   // create the browser settings
   CefBrowserSettings browserSettings;
@@ -92,10 +83,9 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
     pCefBrowser->GetHost()->CloseBrowser(true);
     return;
   }
-  browserWindow->setFlags(Qt::FramelessWindowHint | Qt::BypassWindowManagerHint | Qt::ForeignWindow);
 
-  // create QWidget from cef browser widow
-  QWidget* browserWidget = QWidget::createWindowContainer(browserWindow, view);
+  // create QWidget from cef browser widow, this will re-parent the CEF browser window
+  QWidget* browserWidget = QWidget::createWindowContainer(browserWindow, view, Qt::FramelessWindowHint);
   if (!browserWidget) {
     Q_ASSERT_X(browserWidget, "QCefViewPrivate::createBrowser", "Failed to cretae QWidget from cef browser window");
     pCefBrowser->GetHost()->CloseBrowser(true);
@@ -154,13 +144,13 @@ QCefViewPrivate::setCefWindowFocus(bool focus)
 }
 
 void
-QCefViewPrivate::focusChanged(QWidget* /*old*/, QWidget* now)
+QCefViewPrivate::focusChanged(QWidget* old, QWidget* now)
 {
   if (!now)
     return;
 
   Q_Q(QCefView);
-  qDebug() << "new focus widget:" << now;
+  qDebug() << now << " got focus, old widget: " << old;
 
   if (now == q) {
     // QCefView got focus, need to move the focus to the browser window
@@ -173,8 +163,10 @@ QCefViewPrivate::focusChanged(QWidget* /*old*/, QWidget* now)
     // release the browser window focus status
     setCefWindowFocus(false);
 
-    // activate the top level window
-    now->activateWindow();
+    // if old widget is null, that means the focus was moved from other window to current widget
+    // we need to activate the current window to release the other input status
+    if (!old)
+      now->activateWindow();
   }
 }
 
