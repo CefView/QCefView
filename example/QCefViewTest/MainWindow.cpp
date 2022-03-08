@@ -157,7 +157,7 @@ MainWindow::onBtnCallJSCodeClicked()
 void
 MainWindow::onBtnNewBrowserClicked()
 {
-  QMainWindow* w = new QMainWindow(this);
+  QMainWindow* w = new QMainWindow(nullptr);
   w->setAttribute(Qt::WA_DeleteOnClose);
 
   QCefSetting settings;
