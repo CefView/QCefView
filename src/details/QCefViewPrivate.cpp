@@ -321,6 +321,9 @@ QCefViewPrivate::responseQCefQuery(const QCefQuery& query)
 bool
 QCefViewPrivate::executeJavascript(int64_t frameId, const QString& code, const QString& url)
 {
+  if (code.isEmpty())
+    return false;
+
   if (pCefBrowser_) {
     CefRefPtr<CefFrame> frame = pCefBrowser_->GetFrame(frameId);
     if (frame) {
@@ -328,7 +331,11 @@ QCefViewPrivate::executeJavascript(int64_t frameId, const QString& code, const Q
       c.FromString(code.toStdString());
 
       CefString u;
-      u.FromString(url.toStdString());
+      if (url.isEmpty()) {
+        u = frame->GetURL();
+      } else {
+        u.FromString(url.toStdString());
+      }
 
       frame->ExecuteJavaScript(c, u, 0);
 
