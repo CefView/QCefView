@@ -12,86 +12,158 @@
 QCefSettingPrivate::QCefSettingPrivate() {}
 
 void
-QCefSettingPrivate::CopyToCefBrowserSettings(CefBrowserSettings& settings) const
+QCefSettingPrivate::CopyFromCefBrowserSettings(QCefSetting* qs, const CefBrowserSettings* cs)
 {
-  if (!standardFontFamily_.empty())
-    CefString(&settings.standard_font_family) = standardFontFamily_;
+  qs->d_ptr->standardFontFamily_ = CefString(&cs->standard_font_family).ToString();
 
-  if (!fixedFontFamily_.empty())
-    CefString(&settings.fixed_font_family) = fixedFontFamily_;
+  qs->d_ptr->fixedFontFamily_ = CefString(&cs->fixed_font_family).ToString();
 
-  if (!serifFontFamily_.empty())
-    CefString(&settings.serif_font_family) = serifFontFamily_;
+  qs->d_ptr->serifFontFamily_ = CefString(&cs->serif_font_family).ToString();
 
-  if (!sansSerifFontFamily_.empty())
-    CefString(&settings.sans_serif_font_family) = sansSerifFontFamily_;
+  qs->d_ptr->sansSerifFontFamily_ = CefString(&cs->sans_serif_font_family).ToString();
 
-  if (!cursiveFontFamily_.empty())
-    CefString(&settings.cursive_font_family) = cursiveFontFamily_;
+  qs->d_ptr->cursiveFontFamily_ = CefString(&cs->cursive_font_family).ToString();
 
-  if (!fantasyFontFamily_.empty())
-    CefString(&settings.fantasy_font_family) = fantasyFontFamily_;
+  qs->d_ptr->fantasyFontFamily_ = CefString(&cs->fantasy_font_family).ToString();
 
-  if (!defaultEncoding_.empty())
-    CefString(&settings.default_encoding) = defaultEncoding_;
+  qs->d_ptr->defaultEncoding_ = CefString(&cs->default_encoding).ToString();
 
-  if (!acceptLanguageList_.empty())
-    CefString(&settings.accept_language_list) = acceptLanguageList_;
+  qs->d_ptr->acceptLanguageList_ = CefString(&cs->accept_language_list).ToString();
 
-  if (windowlessFrameRate_.canConvert<int>())
-    settings.windowless_frame_rate = windowlessFrameRate_.toInt();
+  qs->d_ptr->windowlessFrameRate_ = cs->windowless_frame_rate;
 
-  if (defaultFontSize_.canConvert<int>())
-    settings.default_font_size = defaultFontSize_.toInt();
+  qs->d_ptr->defaultFontSize_ = cs->default_font_size;
 
-  if (defaultFixedFontSize_.canConvert<int>())
-    settings.default_fixed_font_size = defaultFixedFontSize_.toInt();
+  qs->d_ptr->defaultFixedFontSize_ = cs->default_fixed_font_size;
 
-  if (minimumFontSize_.canConvert<int>())
-    settings.minimum_font_size = minimumFontSize_.toInt();
+  qs->d_ptr->minimumFontSize_ = cs->minimum_font_size;
 
-  if (minimumLogicalFontSize_.canConvert<int>())
-    settings.minimum_logical_font_size = minimumLogicalFontSize_.toInt();
+  qs->d_ptr->minimumLogicalFontSize_ = cs->minimum_logical_font_size;
 
-  if (remoteFonts_.canConvert<bool>())
-    settings.remote_fonts = remoteFonts_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->remote_fonts != STATE_DEFAULT)
+    qs->d_ptr->remoteFonts_ = cs->remote_fonts == STATE_ENABLED;
 
-  if (javascript_.canConvert<bool>())
-    settings.javascript = javascript_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->javascript != STATE_DEFAULT)
+    qs->d_ptr->javascript_ = cs->javascript == STATE_ENABLED;
 
-  if (javascriptCloseWindows_.canConvert<bool>())
-    settings.javascript_close_windows = javascriptCloseWindows_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->javascript_close_windows != STATE_DEFAULT)
+    qs->d_ptr->javascriptCloseWindows_ = cs->javascript_close_windows == STATE_ENABLED;
 
-  if (javascriptAccessClipboard_.canConvert<bool>())
-    settings.javascript_access_clipboard = javascriptAccessClipboard_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->javascript_access_clipboard != STATE_DEFAULT)
+    qs->d_ptr->javascriptAccessClipboard_ = cs->javascript_access_clipboard == STATE_ENABLED;
 
-  if (javascriptDomPaste_.canConvert<bool>())
-    settings.javascript_dom_paste = javascriptDomPaste_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->javascript_dom_paste != STATE_DEFAULT)
+    qs->d_ptr->javascriptDomPaste_ = cs->javascript_dom_paste == STATE_ENABLED;
 
-  if (plugins_.canConvert<bool>())
-    settings.plugins = plugins_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->plugins != STATE_DEFAULT)
+    qs->d_ptr->plugins_ = cs->plugins == STATE_ENABLED;
 
-  if (imageLoading_.canConvert<bool>())
-    settings.image_loading = imageLoading_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->image_loading != STATE_DEFAULT)
+    qs->d_ptr->imageLoading_ = cs->image_loading == STATE_ENABLED;
 
-  if (imageShrinkStandaloneToFit_.canConvert<bool>())
-    settings.image_shrink_standalone_to_fit = imageShrinkStandaloneToFit_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->image_shrink_standalone_to_fit != STATE_DEFAULT)
+    qs->d_ptr->imageShrinkStandaloneToFit_ = cs->image_shrink_standalone_to_fit == STATE_ENABLED;
 
-  if (textAreaResize_.canConvert<bool>())
-    settings.text_area_resize = textAreaResize_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->text_area_resize != STATE_DEFAULT)
+    qs->d_ptr->textAreaResize_ = cs->text_area_resize == STATE_ENABLED;
 
-  if (tabToLinks_.canConvert<bool>())
-    settings.tab_to_links = tabToLinks_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->tab_to_links != STATE_DEFAULT)
+    qs->d_ptr->tabToLinks_ = cs->tab_to_links == STATE_ENABLED;
 
-  if (localStorage_.canConvert<bool>())
-    settings.local_storage = localStorage_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->local_storage != STATE_DEFAULT)
+    qs->d_ptr->localStorage_ = cs->local_storage == STATE_ENABLED;
 
-  if (databases_.canConvert<bool>())
-    settings.databases = databases_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->databases != STATE_DEFAULT)
+    qs->d_ptr->databases_ = cs->databases == STATE_ENABLED;
 
-  if (webgl_.canConvert<bool>())
-    settings.webgl = webgl_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+  if (cs->webgl != STATE_DEFAULT)
+    qs->d_ptr->webgl_ = cs->webgl == STATE_ENABLED;
 
-  if (backgroundColor_.canConvert<QColor>())
-    settings.background_color = this->backgroundColor_.value<QColor>().rgba();
+  qs->d_ptr->backgroundColor_ = QColor::fromRgba(cs->background_color);
+}
+
+void
+QCefSettingPrivate::CopyToCefBrowserSettings(const QCefSetting* qs, CefBrowserSettings* cs)
+{
+  if (!qs->d_ptr->standardFontFamily_.empty())
+    CefString(&cs->standard_font_family) = qs->d_ptr->standardFontFamily_;
+
+  if (!qs->d_ptr->fixedFontFamily_.empty())
+    CefString(&cs->fixed_font_family) = qs->d_ptr->fixedFontFamily_;
+
+  if (!qs->d_ptr->serifFontFamily_.empty())
+    CefString(&cs->serif_font_family) = qs->d_ptr->serifFontFamily_;
+
+  if (!qs->d_ptr->sansSerifFontFamily_.empty())
+    CefString(&cs->sans_serif_font_family) = qs->d_ptr->sansSerifFontFamily_;
+
+  if (!qs->d_ptr->cursiveFontFamily_.empty())
+    CefString(&cs->cursive_font_family) = qs->d_ptr->cursiveFontFamily_;
+
+  if (!qs->d_ptr->fantasyFontFamily_.empty())
+    CefString(&cs->fantasy_font_family) = qs->d_ptr->fantasyFontFamily_;
+
+  if (!qs->d_ptr->defaultEncoding_.empty())
+    CefString(&cs->default_encoding) = qs->d_ptr->defaultEncoding_;
+
+  if (!qs->d_ptr->acceptLanguageList_.empty())
+    CefString(&cs->accept_language_list) = qs->d_ptr->acceptLanguageList_;
+
+  if (qs->d_ptr->windowlessFrameRate_.canConvert<int>())
+    cs->windowless_frame_rate = qs->d_ptr->windowlessFrameRate_.toInt();
+
+  if (qs->d_ptr->defaultFontSize_.canConvert<int>())
+    cs->default_font_size = qs->d_ptr->defaultFontSize_.toInt();
+
+  if (qs->d_ptr->defaultFixedFontSize_.canConvert<int>())
+    cs->default_fixed_font_size = qs->d_ptr->defaultFixedFontSize_.toInt();
+
+  if (qs->d_ptr->minimumFontSize_.canConvert<int>())
+    cs->minimum_font_size = qs->d_ptr->minimumFontSize_.toInt();
+
+  if (qs->d_ptr->minimumLogicalFontSize_.canConvert<int>())
+    cs->minimum_logical_font_size = qs->d_ptr->minimumLogicalFontSize_.toInt();
+
+  if (qs->d_ptr->remoteFonts_.canConvert<bool>())
+    cs->remote_fonts = qs->d_ptr->remoteFonts_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->javascript_.canConvert<bool>())
+    cs->javascript = qs->d_ptr->javascript_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->javascriptCloseWindows_.canConvert<bool>())
+    cs->javascript_close_windows = qs->d_ptr->javascriptCloseWindows_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->javascriptAccessClipboard_.canConvert<bool>())
+    cs->javascript_access_clipboard = qs->d_ptr->javascriptAccessClipboard_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->javascriptDomPaste_.canConvert<bool>())
+    cs->javascript_dom_paste = qs->d_ptr->javascriptDomPaste_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->plugins_.canConvert<bool>())
+    cs->plugins = qs->d_ptr->plugins_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->imageLoading_.canConvert<bool>())
+    cs->image_loading = qs->d_ptr->imageLoading_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->imageShrinkStandaloneToFit_.canConvert<bool>())
+    cs->image_shrink_standalone_to_fit =
+      qs->d_ptr->imageShrinkStandaloneToFit_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->textAreaResize_.canConvert<bool>())
+    cs->text_area_resize = qs->d_ptr->textAreaResize_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->tabToLinks_.canConvert<bool>())
+    cs->tab_to_links = qs->d_ptr->tabToLinks_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->localStorage_.canConvert<bool>())
+    cs->local_storage = qs->d_ptr->localStorage_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->databases_.canConvert<bool>())
+    cs->databases = qs->d_ptr->databases_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->webgl_.canConvert<bool>())
+    cs->webgl = qs->d_ptr->webgl_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+
+  if (qs->d_ptr->backgroundColor_.canConvert<QColor>())
+    cs->background_color = qs->d_ptr->backgroundColor_.value<QColor>().rgba();
 }

@@ -1,8 +1,8 @@
 ﻿#include "CCefClientDelegate.h"
 
-#include "ValueConvertor.h"
-
+#include "QCefSettingPrivate.h"
 #include "QCefViewPrivate.h"
+#include "ValueConvertor.h"
 
 CCefClientDelegate::CCefClientDelegate() {}
 
@@ -31,6 +31,35 @@ CCefClientDelegate::removeBrowserViewMapping(CefRefPtr<CefBrowser>& browser)
   auto id = browser->GetIdentifier();
   view_map_.erase(id);
 }
+
+bool
+CCefClientDelegate::onBeforPopup(CefRefPtr<CefBrowser>& browser,
+                                 int64_t frameId,
+                                 const std::string& targetUrl,
+                                 const std::string& targetFrameName,
+                                 CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
+                                 CefWindowInfo& windowInfo,
+                                 CefBrowserSettings& settings,
+                                 bool& DisableJavascriptAccess)
+{
+  bool result = false;
+  auto p = take(browser);
+  if (p) {
+    auto url = QString::fromStdString(targetUrl);
+    auto name = QString::fromStdString(targetFrameName);
+
+    QCefSetting s;
+    QCefSettingPrivate::CopyFromCefBrowserSettings(&s, &settings);
+    result = p->q_ptr->onBeforPopup(
+      frameId, url, name, static_cast<QCefView::WindowOpenDisposition>(targetDisposition), s, DisableJavascriptAccess);
+    QCefSettingPrivate::CopyToCefBrowserSettings(&s, &settings);
+  }
+  return result;
+}
+
+void
+CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
+{}
 
 bool
 CCefClientDelegate::doClose(CefRefPtr<CefBrowser> browser)

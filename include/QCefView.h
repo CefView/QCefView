@@ -29,6 +29,21 @@ public:
   static const int64_t MainFrameID = 0;
 
 public:
+  enum WindowOpenDisposition
+  {
+    WOD_UNKNOWN,
+    WOD_CURRENT_TAB,
+    WOD_SINGLETON_TAB,
+    WOD_NEW_FOREGROUND_TAB,
+    WOD_NEW_BACKGROUND_TAB,
+    WOD_NEW_POPUP,
+    WOD_NEW_WINDOW,
+    WOD_SAVE_TO_DISK,
+    WOD_OFF_THE_RECORD,
+    WOD_IGNORE_ACTION
+  };
+
+public:
   /// <summary>
   /// Constructs a QCefView instance
   /// </summary>
@@ -171,6 +186,24 @@ public:
   /// <param name="error">The error message populated on failure</param> <returns>True
   /// on successful; otherwise false</returns>
   bool setPreference(const QString& name, const QVariant& value, const QString& error);
+
+public:
+  /// <summary>
+  /// Gets called before the popup browser created
+  /// </summary>
+  /// <param name="frameId">The source frame id</param>
+  /// <param name="targetUrl">The target URL</param>
+  /// <param name="targetFrameName">The target name</param>
+  /// <param name="targetDisposition">Target window open method</param>
+  /// <param name="settings">Settings to be used for the popup</param>
+  /// <param name="DisableJavascriptAccess">Disable the access to Javascript</param>
+  /// <returns>True to cancel the popup; false to allow</returns>
+  virtual bool onBeforPopup(int64_t frameId,
+                            const QString& targetUrl,
+                            const QString& targetFrameName,
+                            QCefView::WindowOpenDisposition targetDisposition,
+                            QCefSetting& settings,
+                            bool& DisableJavascriptAccess);
 
 signals:
   /// <summary>

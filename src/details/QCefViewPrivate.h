@@ -4,10 +4,7 @@
 #include <QWindow>
 #pragma endregion qt_headers
 
-#include <CefViewBrowserClient.h>
-
 #include "QCefContextPrivate.h"
-#include "QCefSettingPrivate.h"
 
 #include <QCefView.h>
 
@@ -41,12 +38,12 @@ private:
   QWidget* qBrowserWidget_;
 
 public:
-  explicit QCefViewPrivate(QCefView* view, const QString& url, const QCefSettingPrivate* setting = nullptr);
+  explicit QCefViewPrivate(QCefView* view, const QString& url, const QCefSetting* setting = nullptr);
 
   ~QCefViewPrivate();
 
 protected:
-  void createBrowser(QCefView* view, const QString url, const QCefSettingPrivate* setting);
+  void createBrowser(QCefView* view, const QString url, const QCefSetting* setting);
 
   void closeBrowser();
 

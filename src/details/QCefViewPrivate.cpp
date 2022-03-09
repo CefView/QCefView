@@ -27,9 +27,10 @@
 
 #include "CCefClientDelegate.h"
 #include "QCefContext.h"
+#include "QCefSettingPrivate.h"
 #include "ValueConvertor.h"
 
-QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url, const QCefSettingPrivate* setting)
+QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url, const QCefSetting* setting)
   : q_ptr(view)
   , pContext_(QCefContext::instance()->d_func())
   , pCefBrowser_(nullptr)
@@ -47,7 +48,7 @@ QCefViewPrivate::~QCefViewPrivate()
 }
 
 void
-QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSettingPrivate* setting)
+QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSetting* setting)
 {
   // create a temporary windows as the parent of the CEF browser window to be created
   QWindow fakeParent;
@@ -58,8 +59,9 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
 
   // create the browser settings
   CefBrowserSettings browserSettings;
-  if (setting)
-    setting->CopyToCefBrowserSettings(browserSettings);
+  if (setting) {
+    QCefSettingPrivate::CopyToCefBrowserSettings(setting, &browserSettings);
+  }
 
   // create browser object
   auto pCefBrowser = CefBrowserHost::CreateBrowserSync(window_info,         // window info

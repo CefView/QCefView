@@ -17,10 +17,18 @@
 
 class QCefSettingPrivate
 {
+  Q_DECLARE_PUBLIC(QCefSetting)
+  QCefSetting* q_ptr;
+
+  friend class CCefClientDelegate;
+
+public:
+  static void CopyFromCefBrowserSettings(QCefSetting* qs, const CefBrowserSettings* cs);
+
+  static void CopyToCefBrowserSettings(const QCefSetting* qs, CefBrowserSettings* cs);
+
 public:
   explicit QCefSettingPrivate();
-
-  void CopyToCefBrowserSettings(CefBrowserSettings& settings) const;
 
   std::string standardFontFamily_;
   std::string fixedFontFamily_;

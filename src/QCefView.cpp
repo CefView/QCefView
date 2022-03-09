@@ -14,7 +14,7 @@
 
 QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* parent /*= 0*/)
   : QWidget(parent)
-  , d_ptr(new QCefViewPrivate(this, url, setting ? setting->d_func() : nullptr))
+  , d_ptr(new QCefViewPrivate(this, url, setting))
 {
   // set focus policy
   setFocusPolicy(Qt::StrongFocus);
@@ -167,4 +167,16 @@ QCefView::setPreference(const QString& name, const QVariant& value, const QStrin
   Q_D(QCefView);
 
   return d->setPreference(name, value, error);
+}
+
+bool
+QCefView::onBeforPopup(int64_t frameId,
+                       const QString& targetUrl,
+                       const QString& targetFrameName,
+                       QCefView::WindowOpenDisposition targetDisposition,
+                       QCefSetting& settings,
+                       bool& DisableJavascriptAccess)
+{
+  // allow the popup browser
+  return false;
 }

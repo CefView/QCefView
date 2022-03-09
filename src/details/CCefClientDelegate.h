@@ -32,6 +32,17 @@ public:
 
   void removeBrowserViewMapping(CefRefPtr<CefBrowser>& browser);
 
+  virtual bool onBeforPopup(CefRefPtr<CefBrowser>& browser,
+                            int64_t frameId,
+                            const std::string& targetUrl,
+                            const std::string& targetFrameName,
+                            CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
+                            CefWindowInfo& windowInfo,
+                            CefBrowserSettings& settings,
+                            bool& DisableJavascriptAccess) override;
+
+  virtual void onAfterCreate(CefRefPtr<CefBrowser>& browser) override;
+
   virtual bool doClose(CefRefPtr<CefBrowser> browser) override;
 
   virtual void loadingStateChanged(CefRefPtr<CefBrowser>& browser,
