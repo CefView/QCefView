@@ -342,6 +342,9 @@ QCefViewPrivate::executeJavascript(int64_t frameId, const QString& code, const Q
 bool
 QCefViewPrivate::executeJavascriptWithResult(int64_t frameId, const QString& code, const QString& url, int64_t context)
 {
+  if (code.isEmpty())
+    return false;
+
   if (pContext_ && pContext_->pClient_) {
     auto frame = frameId == 0 ? pCefBrowser_->GetMainFrame() : pCefBrowser_->GetFrame(frameId);
     if (!frame)
@@ -351,7 +354,11 @@ QCefViewPrivate::executeJavascriptWithResult(int64_t frameId, const QString& cod
     c.FromString(code.toStdString());
 
     CefString u;
-    u.FromString(url.toStdString());
+    if (url.isEmpty()) {
+      u = frame->GetURL();
+    } else {
+      u.FromString(url.toStdString());
+    }
 
     return pContext_->pClient_->AsyncExecuteJSCode(pCefBrowser_, frame, c, u, context);
   }
