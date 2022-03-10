@@ -30,6 +30,8 @@ class QCefContextPrivate : public QObject
   Q_OBJECT
 
 private:
+  int argc_;
+  char** argv_;
   QTimer cefWorkerTimer_;
 
 public:
@@ -43,7 +45,7 @@ public:
   /// <summary>
   ///
   /// </summary>
-  QCefContextPrivate(QCoreApplication* app);
+  QCefContextPrivate(QCoreApplication* app, int argc, char** argv);
 
   /// <summary>
   ///

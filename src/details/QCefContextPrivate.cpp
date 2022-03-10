@@ -13,7 +13,9 @@
 
 const int64_t kCefWorkerIntervalMs = (1000 / 60); // 60 fps
 
-QCefContextPrivate::QCefContextPrivate(QCoreApplication* app)
+QCefContextPrivate::QCefContextPrivate(QCoreApplication* app, int argc, char** argv)
+  : argc_(argc)
+  , argv_(argv)
 {
   cefWorkerTimer_.setTimerType(Qt::PreciseTimer);
   cefWorkerTimer_.start(kCefWorkerIntervalMs);

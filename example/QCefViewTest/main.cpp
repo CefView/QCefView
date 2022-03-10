@@ -10,7 +10,7 @@ main(int argc, char* argv[])
   QApplication a(argc, argv);
 
   // build QCefConfig
-  QCefConfig config(argc, argv);
+  QCefConfig config;
   config.setUserAgent("QCefViewTest");
   config.setLogLevel(QCefConfig::LOGSEVERITY_DEFAULT);
   config.setBridgeObjectName("CallBridge");
@@ -26,7 +26,7 @@ main(int argc, char* argv[])
   config.addCommandLineSwitchWithValue("disable-features", "BlinkGenPropertyTrees,TranslateUI,site-per-process");
 
   // initialize QCefContext instance with config
-  QCefContext cefContext(&a, &config);
+  QCefContext cefContext(&a, argc, argv, &config);
 
   MainWindow w;
   w.show();

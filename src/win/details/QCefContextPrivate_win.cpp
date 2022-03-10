@@ -25,7 +25,8 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   // Initialize CEF.
   auto cmdArgs = QCefConfigPrivate::GetCommandLineArgs(config);
   auto appDelegate = std::make_shared<CCefAppDelegate>(this, cmdArgs);
-  auto app = new CefViewBrowserApp(config->bridgeObjectName().toStdString(), appDelegate);
+  auto bridgeObjectName = config ? config->bridgeObjectName().toStdString() : std::string();
+  auto app = new CefViewBrowserApp(bridgeObjectName, appDelegate);
   void* sandboxInfo = nullptr;
 #if defined(CEF_USE_SANDBOX)
   // Manage the life span of the sandbox information object. This is necessary

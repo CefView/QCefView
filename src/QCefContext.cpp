@@ -8,9 +8,9 @@
 
 QCefContext* QCefContext::s_self;
 
-QCefContext::QCefContext(QCoreApplication* app, const QCefConfig* config)
+QCefContext::QCefContext(QCoreApplication* app, int argc, char** argv, const QCefConfig* config)
   : QObject(app)
-  , d_ptr(new QCefContextPrivate(app))
+  , d_ptr(new QCefContextPrivate(app, argc, argv))
 {
   init(config);
 }

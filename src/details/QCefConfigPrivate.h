@@ -27,9 +27,7 @@ public:
 
   static const ArgsMap& GetCommandLineArgs(const QCefConfig* config);
 
-  int argc;
-  char** argv;
-
+public:
   std::string locale_;
   std::string userAgent_;
   std::string cachePath_;

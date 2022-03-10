@@ -2,12 +2,9 @@
 
 #include "details/QCefConfigPrivate.h"
 
-QCefConfig::QCefConfig(int argc, char* argv[])
+QCefConfig::QCefConfig()
   : d_ptr(new QCefConfigPrivate)
-{
-  d_ptr->argc = argc;
-  d_ptr->argv = argv;
-}
+{}
 
 QCefConfig::QCefConfig(const QCefConfig& other)
   : d_ptr(new QCefConfigPrivate)

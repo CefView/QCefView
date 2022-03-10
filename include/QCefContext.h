@@ -28,8 +28,10 @@ public:
   /// Constructs the CEF context
   /// </summary>
   /// <param name="app">The application</param>
+  /// <param name="argc">The argument count</param>
+  /// <param name="argv">The argument list pointer</param>
   /// <param name="config">The <see cref="QCefConfig"/> instance</param>
-  QCefContext(QCoreApplication* app, const QCefConfig* config);
+  QCefContext(QCoreApplication* app, int argc, char** argv, const QCefConfig* config);
 
   /// <summary>
   /// Gets the unique default instance

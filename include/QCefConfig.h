@@ -56,9 +56,7 @@ public:
   /// <summary>
   /// Constructs a CEF config instance
   /// </summary>
-  /// <param name="argc">The application arguments count</param>
-  /// <param name="argv">The application arguments list</param>
-  QCefConfig(int argc, char* argv[]);
+  QCefConfig();
 
   /// <summary>
   /// Constructs a CEF setting from existing one

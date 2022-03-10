@@ -22,8 +22,9 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   // Initialize CEF.
   auto cmdArgs = QCefConfigPrivate::GetCommandLineArgs(config);
   auto appDelegate = std::make_shared<CCefAppDelegate>(this, cmdArgs);
-  auto app = new CefViewBrowserApp(config->bridgeObjectName_, appDelegate);
-  CefMainArgs main_args(config->argc, config->argv);
+  auto bridgeObjectName = config ? config->bridgeObjectName().toStdString() : std::string();
+  auto app = new CefViewBrowserApp(bridgeObjectName, appDelegate);
+  CefMainArgs main_args(argc_, argv_);
   if (!CefInitialize(main_args, cef_settings, app, nullptr)) {
     assert(0);
     return false;
