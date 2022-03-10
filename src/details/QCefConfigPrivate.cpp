@@ -27,45 +27,59 @@ QCefConfigPrivate::QCefConfigPrivate()
 }
 
 void
-QCefConfigPrivate::CopyToCefSettings(CefSettings& settings) const
+QCefConfigPrivate::CopyToCefSettings(const QCefConfig* config, CefSettings* settings)
 {
+  if (!config || !settings)
+    return;
+
 #if !defined(OS_MACOS)
-  if (!browserSubProcessPath_.empty())
-    CefString(&settings.browser_subprocess_path) = browserSubProcessPath_;
+  if (!config->d_ptr->browserSubProcessPath_.empty())
+    CefString(&settings->browser_subprocess_path) = config->d_ptr->browserSubProcessPath_;
 
-  if (!resourceDirectoryPath_.empty())
-    CefString(&settings.resources_dir_path) = resourceDirectoryPath_;
+  if (!config->d_ptr->resourceDirectoryPath_.empty())
+    CefString(&settings->resources_dir_path) = config->d_ptr->resourceDirectoryPath_;
 
-  if (!localesDirectoryPath_.empty())
-    CefString(&settings.locales_dir_path) = localesDirectoryPath_;
+  if (!config->d_ptr->localesDirectoryPath_.empty())
+    CefString(&settings->locales_dir_path) = config->d_ptr->localesDirectoryPath_;
 #endif
 
-  if (!userAgent_.empty())
-    CefString(&settings.user_agent) = userAgent_;
+  if (!config->d_ptr->userAgent_.empty())
+    CefString(&settings->user_agent) = config->d_ptr->userAgent_;
 
-  if (!cachePath_.empty())
-    CefString(&settings.cache_path) = cachePath_;
+  if (!config->d_ptr->cachePath_.empty())
+    CefString(&settings->cache_path) = config->d_ptr->cachePath_;
 
-  if (!userDataPath_.empty())
-    CefString(&settings.user_data_path) = userDataPath_;
+  if (!config->d_ptr->userDataPath_.empty())
+    CefString(&settings->user_data_path) = config->d_ptr->userDataPath_;
 
-  if (!locale_.empty())
-    CefString(&settings.locale) = locale_;
+  if (!config->d_ptr->locale_.empty())
+    CefString(&settings->locale) = config->d_ptr->locale_;
 
-  if (!acceptLanguageList_.empty())
-    CefString(&settings.accept_language_list) = acceptLanguageList_;
+  if (!config->d_ptr->acceptLanguageList_.empty())
+    CefString(&settings->accept_language_list) = config->d_ptr->acceptLanguageList_;
 
-  if (persistSessionCookies_.canConvert<int>())
-    settings.persist_session_cookies = persistSessionCookies_.toInt();
+  if (config->d_ptr->persistSessionCookies_.canConvert<int>())
+    settings->persist_session_cookies = config->d_ptr->persistSessionCookies_.toInt();
 
-  if (persistUserPreferences_.canConvert<int>())
-    settings.persist_user_preferences = persistUserPreferences_.toInt();
+  if (config->d_ptr->persistUserPreferences_.canConvert<int>())
+    settings->persist_user_preferences = config->d_ptr->persistUserPreferences_.toInt();
 
-  if (backgroundColor_.canConvert<QColor>())
-    settings.background_color = backgroundColor_.value<QColor>().rgba();
+  if (config->d_ptr->backgroundColor_.canConvert<QColor>())
+    settings->background_color = config->d_ptr->backgroundColor_.value<QColor>().rgba();
 
-  if (remoteDebuggingport_.canConvert<int>())
-    settings.remote_debugging_port = remoteDebuggingport_.toInt();
+  if (config->d_ptr->remoteDebuggingport_.canConvert<int>())
+    settings->remote_debugging_port = config->d_ptr->remoteDebuggingport_.toInt();
 
-  settings.log_severity = (cef_log_severity_t)logLevel_;
+  settings->log_severity = (cef_log_severity_t)config->d_ptr->logLevel_;
+}
+
+const QCefConfigPrivate::ArgsMap&
+QCefConfigPrivate::GetCommandLineArgs(const QCefConfig* config)
+{
+  if (!config) {
+    static ArgsMap emptyArgs;
+    return emptyArgs;
+  }
+
+  return config->d_ptr->commandLineArgs_;
 }

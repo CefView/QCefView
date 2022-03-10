@@ -24,6 +24,26 @@ QCefConfig::operator=(const QCefConfig& other)
 
 QCefConfig::~QCefConfig() {}
 
+void
+QCefConfig::addCommandLineSwitch(const QString& smitch)
+{
+  if (smitch.isEmpty())
+    return;
+
+  Q_D(QCefConfig);
+  d->commandLineArgs_[smitch.toStdString()] = std::string();
+}
+
+void
+QCefConfig::addCommandLineSwitchWithValue(const QString& smitch, const QString& v)
+{
+  if (smitch.isEmpty() || v.isEmpty())
+    return;
+
+  Q_D(QCefConfig);
+  d->commandLineArgs_[smitch.toStdString()] = v.toStdString();
+}
+
 #if !defined(OS_MACOS)
 void
 QCefConfig::setBrowserSubProcessPath(const QString& path)

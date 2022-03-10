@@ -55,7 +55,7 @@ public:
   /// </summary>
   /// <param name="config"></param>
   /// <returns></returns>
-  bool initialize(const QCefConfigPrivate* config);
+  bool initialize(const QCefConfig* config);
 
   /// <summary>
   ///
@@ -108,7 +108,7 @@ protected:
   /// <param name="argv"></param>
   /// <param name="config"></param>
   /// <returns></returns>
-  bool initializeCef(const QCefConfigPrivate* config);
+  bool initializeCef(const QCefConfig* config);
 
   /// <summary>
   ///

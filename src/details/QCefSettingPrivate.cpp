@@ -14,6 +14,9 @@ QCefSettingPrivate::QCefSettingPrivate() {}
 void
 QCefSettingPrivate::CopyFromCefBrowserSettings(QCefSetting* qs, const CefBrowserSettings* cs)
 {
+  if (!qs || !cs)
+    return;
+
   qs->d_ptr->standardFontFamily_ = CefString(&cs->standard_font_family).ToString();
 
   qs->d_ptr->fixedFontFamily_ = CefString(&cs->fixed_font_family).ToString();
@@ -85,6 +88,9 @@ QCefSettingPrivate::CopyFromCefBrowserSettings(QCefSetting* qs, const CefBrowser
 void
 QCefSettingPrivate::CopyToCefBrowserSettings(const QCefSetting* qs, CefBrowserSettings* cs)
 {
+  if (!qs || !cs)
+    return;
+
   if (!qs->d_ptr->standardFontFamily_.empty())
     CefString(&cs->standard_font_family) = qs->d_ptr->standardFontFamily_;
 

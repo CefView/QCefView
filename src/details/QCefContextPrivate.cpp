@@ -24,7 +24,7 @@ QCefContextPrivate::QCefContextPrivate(QCoreApplication* app)
 QCefContextPrivate::~QCefContextPrivate() {}
 
 bool
-QCefContextPrivate::initialize(const QCefConfigPrivate* config)
+QCefContextPrivate::initialize(const QCefConfig* config)
 {
   if (!initializeCef(config)) {
     return false;

@@ -3,6 +3,7 @@
 #pragma region stl_headers
 #include <list>
 #include <string>
+#include <unordered_map>
 #pragma endregion stl_headers
 
 #pragma region cef_headers
@@ -17,10 +18,14 @@
 
 class QCefConfigPrivate
 {
+  typedef std::unordered_map<std::string, std::string> ArgsMap;
+
 public:
   explicit QCefConfigPrivate();
 
-  void CopyToCefSettings(CefSettings& settings) const;
+  static void CopyToCefSettings(const QCefConfig* config, CefSettings* settings);
+
+  static const ArgsMap& GetCommandLineArgs(const QCefConfig* config);
 
   int argc;
   char** argv;
@@ -44,4 +49,6 @@ public:
   /* bool   */ QVariant persistUserPreferences_;
   /* short  */ QVariant remoteDebuggingport_;
   /* QColor */ QVariant backgroundColor_;
+
+  ArgsMap commandLineArgs_;
 };

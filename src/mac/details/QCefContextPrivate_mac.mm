@@ -159,7 +159,7 @@ freeCefLibrary()
 }
 
 bool
-QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
+QCefContextPrivate::initializeCef(const QCefConfig* config)
 {
   // load the cef library
   if (!loadCefLibrary()) {
@@ -169,7 +169,7 @@ QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
   // Build CefSettings
   CefSettings cef_settings;
   if (config)
-    config->CopyToCefSettings(cef_settings);
+    QCefConfigPrivate::CopyToCefSettings(config, &cef_settings);
 
   // fixed values
   CefString(&cef_settings.framework_dir_path) = cefFrameworkPath();
@@ -183,9 +183,10 @@ QCefContextPrivate::initializeCef(const QCefConfigPrivate* config)
 #endif
 
   // Initialize CEF.
-  CefMainArgs main_args(config->argc, config->argv);
-  auto appDelegate = std::make_shared<CCefAppDelegate>(this);
+  auto cmdArgs = QCefConfigPrivate::GetCommandLineArgs(config);
+  auto appDelegate = std::make_shared<CCefAppDelegate>(this, cmdArgs);
   auto app = new CefViewBrowserApp(config->bridgeObjectName_, appDelegate);
+  CefMainArgs main_args(config->argc, config->argv);
   if (!CefInitialize(main_args, cef_settings, app, nullptr)) {
     assert(0);
     return false;

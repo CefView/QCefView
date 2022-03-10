@@ -1,25 +1,37 @@
 ﻿#include "CCefAppDelegate.h"
 
+#include <CefViewCoreProtocol.h>
+
 #include "QCefContextPrivate.h"
 
-CCefAppDelegate::CCefAppDelegate(QCefContextPrivate* context)
+CCefAppDelegate::CCefAppDelegate(QCefContextPrivate* context, CommandLineArgs args)
   : pContext_(context)
+  , commandLineArgs_(args)
 {}
 
 void
 CCefAppDelegate::onBeforeCommandLineProcessing(const CefString& process_type, CefRefPtr<CefCommandLine> command_line)
 {
-  // set switches
-  if (process_type.empty()) {
-    command_line->AppendSwitch("use-mock-keychain");
-    command_line->AppendSwitch("disable-spell-checking");
-    command_line->AppendSwitch("disable-remote-core-animation");
-    command_line->AppendSwitch("disable-site-isolation-trials");
-    command_line->AppendSwitch("enable-aggressive-domstorage-flushing");
+  for (auto& kv : commandLineArgs_) {
+    if (!kv.first.empty()) {
+      if (!kv.second.empty())
+        command_line->AppendSwitchWithValue(kv.first, kv.second);
+      else
+        command_line->AppendSwitch(kv.first);
+    }
+  }
+}
 
-    // set switches with value
-    command_line->AppendSwitchWithValue("renderer-process-limit", "1");
-    command_line->AppendSwitchWithValue("disable-features", "BlinkGenPropertyTrees,TranslateUI,site-per-process");
+void
+CCefAppDelegate::OnBeforeChildProcessLaunch(CefRefPtr<CefCommandLine> command_line)
+{
+  for (auto& kv : commandLineArgs_) {
+    if (!kv.first.empty()) {
+      if (!kv.second.empty())
+        command_line->AppendSwitchWithValue(kv.first, kv.second);
+      else
+        command_line->AppendSwitch(kv.first);
+    }
   }
 }
 

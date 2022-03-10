@@ -21,8 +21,6 @@ class QCEFVIEW_EXPORT QCefConfig
   Q_DECLARE_PRIVATE(QCefConfig)
   QScopedPointer<QCefConfigPrivate> d_ptr;
 
-  friend class QCefContext;
-
 public:
   /// <summary>
   /// Represents the log severity
@@ -76,6 +74,19 @@ public:
   /// Destructs the config
   /// </summary>
   ~QCefConfig();
+
+  /// <summary>
+  /// Adds a switch to the commandline args used to initialize the CEF
+  /// </summary>
+  /// <param name="smitch">The switch name</param>
+  void addCommandLineSwitch(const QString& smitch);
+
+  /// <summary>
+  /// Adds a switch with value to the commandline args used to initialize the CEF
+  /// </summary>
+  /// <param name="smitch">The swtich name</param>
+  /// <param name="v">The switch value</param>
+  void addCommandLineSwitchWithValue(const QString& smitch, const QString& v);
 
 #if !defined(OS_MACOS)
   /// <summary>

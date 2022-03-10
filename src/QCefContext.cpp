@@ -60,7 +60,7 @@ QCefContext::init(const QCefConfig* config)
   s_self = this;
 
   Q_D(QCefContext);
-  d->initialize(config ? config->d_func() : nullptr);
+  d->initialize(config);
 
   return true;
 }
