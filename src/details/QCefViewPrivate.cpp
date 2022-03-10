@@ -148,26 +148,25 @@ QCefViewPrivate::setCefWindowFocus(bool focus)
 void
 QCefViewPrivate::focusChanged(QWidget* old, QWidget* now)
 {
-  if (!now)
+  Q_Q(QCefView);
+
+  // qDebug() << q << q->window()->isActiveWindow() << ":focus changed from:" << old << " -> " << now;
+  // qDebug() << q->windowHandle() << "focusWindow:" << QGuiApplication::focusWindow();
+
+  if (!now || now->window() != q->window())
     return;
 
-  Q_Q(QCefView);
-  qDebug() << now << " got focus, old widget: " << old;
-
   if (now == q) {
-    // QCefView got focus, need to move the focus to the browser window
-    setCefWindowFocus(true);
+    // QCefView got focus, need to move the focus to the CEF browser window
+    // This only works when changing focus by TAB key
+    if (old && old->window() == q->window())
+      setCefWindowFocus(true);
   } else {
-    // Bug fix: https://github.com/CefView/QCefView/issues/30
-    // When QCefView got focus then click some other widgets(for example a QLineEdit),
-    // the QCefView will not release the input focus, so we need to watch the focus change event.
-
-    // release the browser window focus status
-    setCefWindowFocus(false);
-
-    // if old widget is null, that means the focus was moved from other window to current widget
-    // we need to activate the current window to release the other input status
-    if (!old)
+    // Because setCefWindowFocus will not release CEF browser window focus,
+    // here we need to activate the new focused widget forcefully.
+    // This code should be executed only when click any focus except
+    // the QCefView while QCefView is holding the focus
+    if (!old && !QGuiApplication::focusWindow())
       now->activateWindow();
   }
 }

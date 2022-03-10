@@ -49,7 +49,7 @@ protected:
 
   void destroyBrowser();
 
-  bool setPreference(const QString& name, const QVariant& value, const QString& error);
+  void setCefWindowFocus(bool focus);
 
 protected slots:
   void focusChanged(QWidget* old, QWidget* now);
@@ -96,9 +96,9 @@ public:
 
   bool sendEventNotifyMessage(int64_t frameId, const QString& name, const QVariantList& args);
 
-  void setCefWindowFocus(bool focus);
-
   void onCefWindowLostTabFocus(bool next);
 
   void onCefWindowGotFocus();
+
+  bool setPreference(const QString& name, const QVariant& value, const QString& error);
 };
