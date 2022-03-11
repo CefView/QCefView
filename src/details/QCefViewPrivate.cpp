@@ -37,9 +37,9 @@ QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url, const QCefS
   , qBrowserWindow_(nullptr)
   , qBrowserWidget_(nullptr)
 {
-  connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::focusChanged);
-
   createBrowser(view, url, setting);
+
+  connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::focusChanged);
 }
 
 QCefViewPrivate::~QCefViewPrivate()
@@ -71,7 +71,7 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
                                                        nullptr,
                                                        CefRequestContext::GetGlobalContext());
   if (!pCefBrowser) {
-    Q_ASSERT_X(pCefBrowser, "QCefViewPrivate::createBrowser", "Failed to create cer browser");
+    Q_ASSERT_X(pCefBrowser, "QCefViewPrivate::createBrowser", "Failed to create cef browser");
     return;
   }
 
@@ -87,9 +87,12 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
   }
 
   // create QWidget from cef browser widow, this will re-parent the CEF browser window
-  QWidget* browserWidget = QWidget::createWindowContainer(browserWindow, view, Qt::FramelessWindowHint);
+  QWidget* browserWidget = QWidget::createWindowContainer(
+    browserWindow,
+    view,
+    Qt::CustomizeWindowHint | Qt::FramelessWindowHint | Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
   if (!browserWidget) {
-    Q_ASSERT_X(browserWidget, "QCefViewPrivate::createBrowser", "Failed to cretae QWidget from cef browser window");
+    Q_ASSERT_X(browserWidget, "QCefViewPrivate::createBrowser", "Failed to create QWidget from cef browser window");
     pCefBrowser->GetHost()->CloseBrowser(true);
     return;
   }
@@ -179,9 +182,6 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
   // filter event to the level window
   if (watched == q->window()) {
     switch (event->type()) {
-      case QEvent::MouseButtonPress: {
-        q->window()->activateWindow();
-      } break;
       case QEvent::ParentAboutToChange: {
         q->window()->removeEventFilter(this);
       } break;
