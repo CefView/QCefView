@@ -30,6 +30,34 @@
 #include "QCefSettingPrivate.h"
 #include "ValueConvertor.h"
 
+#if defined(OS_LINUX)
+Display*
+X11GetDisplay(QWidget* widget)
+{
+  Q_ASSERT_X(widget, "X11GetDisplay", "Invalid parameter widget");
+  if (!widget) {
+    qWarning("Invalid parameter widget");
+    return nullptr;
+  }
+
+  auto platformInterface = QApplication::platformNativeInterface();
+  Q_ASSERT_X(platformInterface, "X11GetDisplay", "Failed to get platform native interface");
+  if (!platformInterface) {
+    qWarning("Failed to get platform native interface");
+    return nullptr;
+  }
+
+  auto screen = widget->window()->windowHandle()->screen();
+  Q_ASSERT_X(screen, "X11GetDisplay", "Failed to get screen");
+  if (!screen) {
+    qWarning("Failed to get screen");
+    return nullptr;
+  }
+
+  return (Display*)platformInterface->nativeResourceForScreen("display", screen);
+}
+#endif
+
 QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url, const QCefSetting* setting)
   : q_ptr(view)
   , pContext_(QCefContext::instance()->d_func())
@@ -70,8 +98,9 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
                                                        browserSettings,     // settings
                                                        nullptr,
                                                        CefRequestContext::GetGlobalContext());
+  Q_ASSERT_X(pCefBrowser, "QCefViewPrivate::createBrowser", "Failed to create cef browser");
   if (!pCefBrowser) {
-    Q_ASSERT_X(pCefBrowser, "QCefViewPrivate::createBrowser", "Failed to create cef browser");
+    qWarning("Failed to create cef browser");
     return;
   }
 
@@ -80,9 +109,10 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
 
   // create QWindow from native browser window handle
   QWindow* browserWindow = QWindow::fromWinId((WId)(pCefBrowser->GetHost()->GetWindowHandle()));
+  Q_ASSERT_X(browserWindow, "QCefViewPrivate::createBrowser", "Failed to query QWindow from cef browser window");
   if (!browserWindow) {
-    Q_ASSERT_X(browserWindow, "QCefViewPrivate::createBrowser", "Failed to query QWindow from cef browser window");
     pCefBrowser->GetHost()->CloseBrowser(true);
+    qWarning("Failed to query QWindow from cef browser window");
     return;
   }
 
@@ -91,8 +121,9 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
     browserWindow,
     view,
     Qt::CustomizeWindowHint | Qt::FramelessWindowHint | Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
+  Q_ASSERT_X(browserWidget, "QCefViewPrivate::createBrowser", "Failed to create QWidget from cef browser window");
   if (!browserWidget) {
-    Q_ASSERT_X(browserWidget, "QCefViewPrivate::createBrowser", "Failed to create QWidget from cef browser window");
+    qWarning("Failed to create QWidget from cef browser window");
     pCefBrowser->GetHost()->CloseBrowser(true);
     return;
   }
@@ -206,6 +237,14 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
         closeBrowser();
       }
     }
+#if defined(OS_LINUX)
+    else if (event->type() == QEvent::Show) {
+      if (::XMapWindow(X11GetDisplay(qBrowserWidget_), qBrowserWindow_->winId()) <= 0)
+        qWarning() << "Failed to move input focus";
+      // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
+      // with the QCefView widget
+    }
+#endif
   }
 
   return QObject::eventFilter(watched, event);
@@ -436,12 +475,7 @@ QCefViewPrivate::onCefWindowLostTabFocus(bool next)
     widget->setFocus(reason);
 
 #if defined(OS_LINUX)
-    auto window = widget->window()->winId();
-    auto screen = widget->window()->windowHandle()->screen();
-    auto platformInterface = QApplication::platformNativeInterface();
-    auto display = (Display*)platformInterface->nativeResourceForScreen("display", screen);
-    auto ret = XSetInputFocus(display, window, RevertToNone, CurrentTime);
-    if (ret <= 0)
+    if (::XSetInputFocus(X11GetDisplay(widget), widget->window()->winId(), RevertToNone, CurrentTime) <= 0)
       qWarning() << "Failed to move input focus";
 #endif
   }
