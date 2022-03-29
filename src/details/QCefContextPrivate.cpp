@@ -59,12 +59,32 @@ QCefContextPrivate::scheduleCefLoopWork(int64_t delayMs)
 void
 QCefContextPrivate::onAboutToQuit()
 {
+  // close all live browsers
   pClient_->CloseAllBrowsers();
 
-  // keep processing events till all browser closed
-  QCoreApplication::processEvents();
-  while (!pClient_->HasOneRef() || pClient_->GetBrowserCount()) {
-    QCoreApplication::processEvents();
+  // check whether can exit now
+  if (!this->canExit()) {
+    // launch an event loop to wait for the clean process
+    // of CEF browsers resource
+    QEventLoop exitCleanLoop;
+
+    // create an idle timer to check whether the CEF resource has been
+    // cleaned up. If yes then exit the event loop to continue the
+    // application exit process
+    QTimer exitCheckTimer;
+    this->connect(&exitCheckTimer, &QTimer::timeout, [&]() {
+      // if all browser were closed and there is only one reference to the
+      // CefBrowserClient object (only referred by QCefContextPrivate instance),
+      // we can quit safely
+      if (this->canExit())
+        exitCleanLoop.quit();
+    });
+
+    // start the timer
+    exitCheckTimer.start(0);
+
+    // enter the event loop
+    exitCleanLoop.exec();
   }
 }
 
@@ -73,4 +93,10 @@ QCefContextPrivate::performCefLoopWork()
 {
   // process cef work
   CefDoMessageLoopWork();
+}
+
+bool
+QCefContextPrivate::canExit()
+{
+  return !pClient_ || (!pClient_->GetBrowserCount() && pClient_->HasOneRef());
 }

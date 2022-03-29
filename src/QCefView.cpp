@@ -31,7 +31,10 @@ QCefView::QCefView(QWidget* parent /*= 0*/)
   : QCefView("about:blank", nullptr, parent)
 {}
 
-QCefView::~QCefView() {}
+QCefView::~QCefView()
+{
+  qDebug() << this << "is being destructed";
+}
 
 int
 QCefView::browserId()

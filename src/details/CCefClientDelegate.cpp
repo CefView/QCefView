@@ -64,6 +64,13 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 bool
 CCefClientDelegate::doClose(CefRefPtr<CefBrowser> browser)
 {
+  // remove the browser from parent tree, or CEF will send close
+  // event to the top level window, this will cause the application
+  // to exit the event loop, this is not what we expected to happen
+  auto p = take(browser);
+  if (p)
+    p->q_ptr->setParent(nullptr);
+
   return false;
 }
 

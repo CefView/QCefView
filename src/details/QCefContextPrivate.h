@@ -116,4 +116,10 @@ protected:
   ///
   /// </summary>
   void uninitializeCef();
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
+  bool canExit();
 };

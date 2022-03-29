@@ -144,11 +144,6 @@ QCefViewPrivate::closeBrowser()
   if (!pCefBrowser_)
     return;
 
-  // remove the browser from parent tree, or CEF will send close
-  // event to the top level window, this will cause the application
-  // to exit the event loop, this is not what we expected to happen
-  qBrowserWindow_->setParent(nullptr);
-
   // clean resource
   pCefBrowser_->StopLoad();
   pCefBrowser_->GetHost()->CloseBrowser(true);
