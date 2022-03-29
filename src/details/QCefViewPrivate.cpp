@@ -466,7 +466,6 @@ QCefViewPrivate::onCefWindowLostTabFocus(bool next)
   if (widget) {
     // TO-DO bug: this does not work on Linux(X11), need to find a workaround
     widget->window()->raise();
-    widget->activateWindow();
     widget->setFocus(reason);
 
 #if defined(OS_LINUX)
