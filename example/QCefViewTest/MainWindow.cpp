@@ -18,14 +18,19 @@ MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
 {
   ui.setupUi(this);
-  QHBoxLayout* layout = new QHBoxLayout();
-  layout->setContentsMargins(2, 2, 2, 2);
-  layout->setSpacing(3);
 
+  connect(ui.btn_reCreate, &QPushButton::clicked, this, &MainWindow::onBtnRecreateClicked);
   connect(ui.btn_changeColor, &QPushButton::clicked, this, &MainWindow::onBtnChangeColorClicked);
   connect(ui.btn_callJSCode, &QPushButton::clicked, this, &MainWindow::onBtnCallJSCodeClicked);
   connect(ui.btn_newBrowser, &QPushButton::clicked, this, &MainWindow::onBtnNewBrowserClicked);
+  connect(ui.btn_quitApp, &QPushButton::clicked, qApp, &QCoreApplication::quit);
+
+  QHBoxLayout* layout = new QHBoxLayout();
+  layout->setContentsMargins(2, 2, 2, 2);
+  layout->setSpacing(3);
   layout->addWidget(ui.nativeContainer);
+  layout->addWidget(ui.cefContainer);
+  centralWidget()->setLayout(layout);
 
   // build the path to the web resource
   QDir dir = QCoreApplication::applicationDirPath();
@@ -38,6 +43,15 @@ MainWindow::MainWindow(QWidget* parent)
   // add a local folder to URL map
   QCefContext::instance()->addLocalFolderResource(webResourceDir, URL_ROOT);
 
+  createCefView();
+}
+
+MainWindow::~MainWindow() {}
+
+void
+MainWindow::createCefView()
+{
+  ///*
   // build settings for per QCefView
   QCefSetting setting;
   setting.setPlugins(false);
@@ -46,7 +60,6 @@ MainWindow::MainWindow(QWidget* parent)
   // create the QCefView widget and add it to the layout container
   cefViewWidget = new QCefView(INDEX_URL, &setting, this);
   ui.cefContainer->layout()->addWidget(cefViewWidget);
-  layout->addWidget(ui.cefContainer);
 
   // connect the invokeMethod to the slot
   connect(cefViewWidget, &QCefView::invokeMethod, this, &MainWindow::onInvokeMethod);
@@ -57,11 +70,8 @@ MainWindow::MainWindow(QWidget* parent)
   connect(cefViewWidget, &QCefView::draggableRegionChanged, this, &MainWindow::onDraggableRegionChanged);
 
   connect(cefViewWidget, &QCefView::reportJavascriptResult, this, &MainWindow::onJavascriptResult);
-
-  centralWidget()->setLayout(layout);
+  //*/
 }
-
-MainWindow::~MainWindow() {}
 
 void
 MainWindow::onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion)
@@ -128,6 +138,17 @@ MainWindow::onJavascriptResult(int browserId, int64_t frameId, int64_t context, 
   QString text = QString("Context id: %1\r\nResult in JSON format:\r\n%2").arg(context).arg(jsonString);
 
   QMessageBox::information(this->window(), title, text);
+}
+
+void
+MainWindow::onBtnRecreateClicked()
+{
+  if (cefViewWidget) {
+    cefViewWidget->deleteLater();
+    cefViewWidget = nullptr;
+  }
+
+  createCefView();
 }
 
 void

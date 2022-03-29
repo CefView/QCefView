@@ -15,6 +15,9 @@ public:
   MainWindow(QWidget* parent = 0);
   ~MainWindow();
 
+protected:
+  void createCefView();
+
   // QCefView slots
 protected slots:
   void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
@@ -27,6 +30,8 @@ protected slots:
 
   // ui slots
 protected slots:
+  void onBtnRecreateClicked();
+
   void onBtnChangeColorClicked();
 
   void onBtnCallJSCodeClicked();
