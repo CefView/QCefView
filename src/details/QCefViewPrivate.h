@@ -52,13 +52,7 @@ protected:
   void setCefWindowFocus(bool focus);
 
 protected slots:
-  void applicationFocusChanged(QWidget* old, QWidget* now);
-
-  void browserWindowPositionChanged(int arg);
-
-  void browserWindowVisibilityChanged(QWindow::Visibility v);
-
-  void browserWindowStateChanged(Qt::WindowState windowState);
+  void focusChanged(QWidget* old, QWidget* now);
 
 protected:
   /// <summary>

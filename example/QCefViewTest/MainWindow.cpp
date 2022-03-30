@@ -58,7 +58,7 @@ MainWindow::createCefView()
   setting.setBackgroundColor(QColor::fromRgba(qRgba(250, 249, 222, 255)));
 
   // create the QCefView widget and add it to the layout container
-  cefViewWidget = new QCefView("http://output.jsbin.com/rinece" /*INDEX_URL*/, &setting, nullptr);
+  cefViewWidget = new QCefView(INDEX_URL, &setting, this);
   ui.cefContainer->layout()->addWidget(cefViewWidget);
 
   // connect the invokeMethod to the slot

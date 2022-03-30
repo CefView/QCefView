@@ -67,7 +67,7 @@ QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url, const QCefS
 {
   createBrowser(view, url, setting);
 
-  connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::applicationFocusChanged);
+  connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::focusChanged);
 }
 
 QCefViewPrivate::~QCefViewPrivate()
@@ -115,11 +115,6 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
     qWarning("Failed to query QWindow from cef browser window");
     return;
   }
-  connect(browserWindow, &QWindow::xChanged, this, &QCefViewPrivate::browserWindowPositionChanged);
-  connect(browserWindow, &QWindow::yChanged, this, &QCefViewPrivate::browserWindowPositionChanged);
-#if defined(OS_WINDOWS)
-  connect(browserWindow, &QWindow::visibilityChanged, this, &QCefViewPrivate::browserWindowVisibilityChanged);
-#endif
 
   // create QWidget from cef browser widow, this will re-parent the CEF browser window
   QWidget* browserWidget = QWidget::createWindowContainer(
@@ -138,9 +133,8 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
   pCefBrowser_ = pCefBrowser;
 
   qBrowserWindow_->installEventFilter(this);
-  qBrowserWidget_->installEventFilter(this);
-  // view->window()->installEventFilter(this);
-  // view->installEventFilter(this);
+  view->window()->installEventFilter(this);
+
   return;
 }
 
@@ -181,7 +175,7 @@ QCefViewPrivate::setCefWindowFocus(bool focus)
 }
 
 void
-QCefViewPrivate::applicationFocusChanged(QWidget* old, QWidget* now)
+QCefViewPrivate::focusChanged(QWidget* old, QWidget* now)
 {
   Q_Q(QCefView);
 
@@ -206,78 +200,27 @@ QCefViewPrivate::applicationFocusChanged(QWidget* old, QWidget* now)
   }
 }
 
-void
-QCefViewPrivate::browserWindowPositionChanged(int arg)
-{
-  notifyMoveOrResizeStarted();
-}
-
-void
-QCefViewPrivate::browserWindowVisibilityChanged(QWindow::Visibility v)
-{
-  Q_Q(QCefView);
-
-#if defined(OS_WINDOWS)
-  if (v == QWindow::Hidden || v == QWindow::Minimized) {
-    // resize the browser window to 0 so that CEF will notify the
-    // visibilitychanged event in JS
-    qBrowserWindow_->resize(0, 0);
-  } else {
-    // force to re-layout
-    q->layout()->invalidate();
-  }
-#endif
-}
-
-void
-QCefViewPrivate::browserWindowStateChanged(Qt::WindowState windowState)
-{
-  Q_Q(QCefView);
-
-  qDebug() << "================ " << windowState;
-}
-
 bool
 QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 {
   Q_Q(QCefView);
 
-  // if (watched == q) {
-  //  switch (event->type()) {
-  //    case QEvent::ParentAboutToChange: {
-  //      qDebug() << "================ ParentAboutToChange" << q->window();
-  //      q->window()->removeEventFilter(this);
-  //    } break;
-  //    case QEvent::ParentChange: {
-  //      qDebug() << "================ ParentChange" << q->window();
-  //      q->window()->installEventFilter(this);
-  //    } break;
-  //  }
-  //}
-
-  //// filter event to the top level window
-  // if (watched == q->window()) {
-  //  switch (event->type()) {
-  //    case QEvent::WindowStateChange: {
-  //      qDebug() << "================ " << q->window()->windowState();
-  //    } break;
-  //    // case QEvent::ParentAboutToChange: {
-  //    //  q->window()->removeEventFilter(this);
-  //    //} break;
-  //    // case QEvent::ParentChange: {
-  //    //  q->window()->installEventFilter(this);
-  //    //} break;
-  //    case QEvent::Move:
-  //    case QEvent::Resize: {
-  //      notifyMoveOrResizeStarted();
-  //    } break;
-  //    default:
-  //      break;
-  //  }
-  //}
-
-  if (watched == qBrowserWidget_) {
-    qDebug() << "============" << event->type();
+  // filter event to the level window
+  if (watched == q->window()) {
+    switch (event->type()) {
+      case QEvent::ParentAboutToChange: {
+        q->window()->removeEventFilter(this);
+      } break;
+      case QEvent::ParentChange: {
+        q->window()->installEventFilter(this);
+      } break;
+      case QEvent::Move:
+      case QEvent::Resize: {
+        notifyMoveOrResizeStarted();
+      } break;
+      default:
+        break;
+    }
   }
 
   // filter event to the browser window
@@ -288,10 +231,6 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
         // browser window is being destroyed, need to close the browser window in advance
         closeBrowser();
       }
-    } else if (event->type() == QEvent::Move) {
-      qDebug() << "============ Move";
-    } else if (event->type() == QEvent::Resize) {
-      qDebug() << "============ Resize";
     }
 #if defined(OS_LINUX)
     else if (event->type() == QEvent::Show) {
