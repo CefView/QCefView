@@ -52,7 +52,7 @@ protected:
   void setCefWindowFocus(bool focus);
 
 protected slots:
-  void focusChanged(QWidget* old, QWidget* now);
+  void applicationFocusChanged(QWidget* old, QWidget* now);
 
 protected:
   /// <summary>

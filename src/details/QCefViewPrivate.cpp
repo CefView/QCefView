@@ -67,7 +67,7 @@ QCefViewPrivate::QCefViewPrivate(QCefView* view, const QString& url, const QCefS
 {
   createBrowser(view, url, setting);
 
-  connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::focusChanged);
+  connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::applicationFocusChanged);
 }
 
 QCefViewPrivate::~QCefViewPrivate()
@@ -128,12 +128,15 @@ QCefViewPrivate::createBrowser(QCefView* view, const QString url, const QCefSett
     return;
   }
 
+  view->window()->installEventFilter(this);
+  view->installEventFilter(this);
+
   qBrowserWindow_ = browserWindow;
   qBrowserWidget_ = browserWidget;
   pCefBrowser_ = pCefBrowser;
 
+  qBrowserWidget_->installEventFilter(this);
   qBrowserWindow_->installEventFilter(this);
-  view->window()->installEventFilter(this);
 
   return;
 }
@@ -175,7 +178,7 @@ QCefViewPrivate::setCefWindowFocus(bool focus)
 }
 
 void
-QCefViewPrivate::focusChanged(QWidget* old, QWidget* now)
+QCefViewPrivate::applicationFocusChanged(QWidget* old, QWidget* now)
 {
   Q_Q(QCefView);
 
@@ -205,18 +208,55 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 {
   Q_Q(QCefView);
 
-  // filter event to the level window
-  if (watched == q->window()) {
-    switch (event->type()) {
+  auto et = event->type();
+
+  // filter event to QCefView
+  if (watched == q) {
+    switch (et) {
       case QEvent::ParentAboutToChange: {
         q->window()->removeEventFilter(this);
       } break;
       case QEvent::ParentChange: {
         q->window()->installEventFilter(this);
       } break;
-      case QEvent::Move:
+    }
+  }
+
+  // filter event to the top level window
+  if (watched == q->window()) {
+    switch (et) {
+      case QEvent::Move: {
+        notifyMoveOrResizeStarted();
+      } break;
+      default:
+        break;
+    }
+  }
+
+  // filter event to the browser widget
+  if (watched == qBrowserWidget_) {
+    switch (et) {
       case QEvent::Resize: {
         notifyMoveOrResizeStarted();
+      } break;
+      case QEvent::Show: {
+#if defined(OS_LINUX)
+        if (::XMapWindow(X11GetDisplay(qBrowserWidget_), qBrowserWindow_->winId()) <= 0)
+          qWarning() << "Failed to move input focus";
+          // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
+          // with the QCefView widget
+#endif
+#if defined(OS_WINDOWS)
+        // force to re-layout
+        q->layout()->invalidate();
+#endif
+      } break;
+      case QEvent::Hide: {
+#if defined(OS_WINDOWS)
+        // resize the browser window to 0 so that CEF will notify the
+        // "visibilitychanged" event in Javascript
+        qBrowserWindow_->resize(0, 0);
+#endif
       } break;
       default:
         break;
@@ -225,21 +265,14 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 
   // filter event to the browser window
   if (watched == qBrowserWindow_) {
-    if (QEvent::PlatformSurface == event->type()) {
-      auto e = (QPlatformSurfaceEvent*)event;
-      if (e->surfaceEventType() == QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed) {
-        // browser window is being destroyed, need to close the browser window in advance
-        closeBrowser();
-      }
+    if (QEvent::PlatformSurface != et)
+      return QObject::eventFilter(watched, event);
+
+    auto t = ((QPlatformSurfaceEvent*)event)->surfaceEventType();
+    if (QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed == t) {
+      // browser window is being destroyed, need to close the browser window in advance
+      closeBrowser();
     }
-#if defined(OS_LINUX)
-    else if (event->type() == QEvent::Show) {
-      if (::XMapWindow(X11GetDisplay(qBrowserWidget_), qBrowserWindow_->winId()) <= 0)
-        qWarning() << "Failed to move input focus";
-      // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
-      // with the QCefView widget
-    }
-#endif
   }
 
   return QObject::eventFilter(watched, event);
