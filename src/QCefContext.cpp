@@ -31,7 +31,7 @@ QCefContext::addLocalFolderResource(const QString& path, const QString& url, int
 {
   Q_D(QCefContext);
 
-  d->pClient_->AddLocalDirectoryResourceProvider(path.toStdString(), url.toStdString());
+  d->addLocalFolderResource(path, url, priority);
 }
 
 void
@@ -42,7 +42,7 @@ QCefContext::addArchiveResource(const QString& path,
 {
   Q_D(QCefContext);
 
-  d->pClient_->AddArchiveResourceProvider(path.toStdString(), url.toStdString(), password.toStdString(), priority);
+  d->addArchiveResource(path, url, password, priority);
 }
 
 bool

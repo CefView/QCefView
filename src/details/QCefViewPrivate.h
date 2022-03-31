@@ -1,9 +1,14 @@
 ﻿#pragma once
 #pragma region qt_headers
+#include <QSet>
 #include <QString>
 #include <QWindow>
 #pragma endregion qt_headers
 
+#include <CefViewBrowserClient.h>
+#include <CefViewBrowserClientDelegate.h>
+
+#include "CCefClientDelegate.h"
 #include "QCefContextPrivate.h"
 
 #include <QCefView.h>
@@ -17,10 +22,25 @@ class QCefViewPrivate : public QObject
   friend class CCefClientDelegate;
 
 private:
+  static QSet<QCefViewPrivate*> sLiveInstances;
+
+public:
+  static void destroyAllInstance();
+
   /// <summary>
   ///
   /// </summary>
-  QCefContextPrivate* pContext_;
+  QCefContextPrivate* pContextPrivate_;
+
+  /// <summary>
+  ///
+  /// </summary>
+  CefRefPtr<CefViewBrowserClient> pClient_;
+
+  /// <summary>
+  ///
+  /// </summary>
+  CCefClientDelegate::RefPtr pClientDelegate_;
 
   /// <summary>
   ///
@@ -42,13 +62,13 @@ public:
 
   ~QCefViewPrivate();
 
+  void createCefBrowser(QCefView* view, const QString url, const QCefSetting* setting);
+
+  void cefBrowserCreated(CefRefPtr<CefBrowser>& browser);
+
+  void destroyCefBrowser();
+
 protected:
-  void createBrowser(QCefView* view, const QString url, const QCefSetting* setting);
-
-  void closeBrowser();
-
-  void destroyBrowser();
-
   void setCefWindowFocus(bool focus);
 
 protected slots:

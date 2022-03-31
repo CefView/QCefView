@@ -4,7 +4,6 @@
 #include <atomic>
 #include <memory>
 #include <mutex>
-#include <set>
 #include <string>
 #pragma endregion std_headers
 
@@ -19,8 +18,22 @@
 #include <CefViewBrowserClient.h>
 
 #include "CCefAppDelegate.h"
-#include "CCefClientDelegate.h"
 #include "QCefConfigPrivate.h"
+
+typedef struct FolderResourceMapping
+{
+  QString path;
+  QString url;
+  int priority;
+} FolderResourceMapping;
+
+typedef struct ArchiveResourceMapping
+{
+  QString path;
+  QString url;
+  QString password;
+  int priority;
+} ArchiveResourceMapping;
 
 /// <summary>
 ///
@@ -32,14 +45,15 @@ class QCefContextPrivate : public QObject
 private:
   int argc_;
   char** argv_;
+
+private:
   QTimer cefWorkerTimer_;
+  QList<FolderResourceMapping> folderResourceMappingList_;
+  QList<ArchiveResourceMapping> archiveResourceMappingList_;
 
-public:
+private:
   CefRefPtr<CefViewBrowserApp> pApp_;
-  std::shared_ptr<CCefAppDelegate> pAppDelegate_;
-
-  CefRefPtr<CefViewBrowserClient> pClient_;
-  std::shared_ptr<CCefClientDelegate> pClientDelegate_;
+  CCefAppDelegate::RefPtr pAppDelegate_;
 
 public:
   /// <summary>
@@ -55,9 +69,34 @@ public:
   /// <summary>
   ///
   /// </summary>
+  /// <returns></returns>
+  CefRefPtr<CefViewBrowserApp> getCefApp();
+
+  /// <summary>
+  ///
+  /// </summary>
   /// <param name="config"></param>
   /// <returns></returns>
   bool initialize(const QCefConfig* config);
+
+  /// <summary>
+  /// Adds a url mapping item with local web resource directory
+  /// </summary>
+  /// <param name="path">The path to the local resource directory</param>
+  /// <param name="url">The url to be mapped to</param>
+  /// <param name="priority">The priority</param>
+  void addLocalFolderResource(const QString& path, const QString& url, int priority = 0);
+  const QList<FolderResourceMapping>& folderResourceMappingList();
+
+  /// <summary>
+  /// Adds a url mapping item with local archive (.zip) file which contains the web resource
+  /// </summary>
+  /// <param name="path">The path to the local archive file</param>
+  /// <param name="url">The url to be mapped to</param>
+  /// <param name="password">The password of the archive</param>
+  /// <param name="priority">The priority</param>
+  void addArchiveResource(const QString& path, const QString& url, const QString& password = "", int priority = 0);
+  const QList<ArchiveResourceMapping>& archiveResourceMappingList();
 
   /// <summary>
   ///
@@ -116,10 +155,4 @@ protected:
   ///
   /// </summary>
   void uninitializeCef();
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <returns></returns>
-  bool canExit();
 };

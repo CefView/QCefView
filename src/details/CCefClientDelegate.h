@@ -19,19 +19,12 @@ class QCefViewPrivate;
 class CCefClientDelegate : public CefViewBrowserClientDelegateInterface
 {
 private:
-  std::unordered_map<int, QCefViewPrivate*> view_map_;
+  QCefViewPrivate* pQCefViewPrivate_;
 
 public:
-  CCefClientDelegate();
-
-protected:
-  QCefViewPrivate* take(CefRefPtr<CefBrowser>& browser);
+  CCefClientDelegate(QCefViewPrivate* p);
 
 public:
-  void insertBrowserViewMapping(CefRefPtr<CefBrowser>& browser, QCefViewPrivate* view);
-
-  void removeBrowserViewMapping(CefRefPtr<CefBrowser>& browser);
-
   virtual bool onBeforPopup(CefRefPtr<CefBrowser>& browser,
                             int64_t frameId,
                             const std::string& targetUrl,
@@ -44,6 +37,8 @@ public:
   virtual void onAfterCreate(CefRefPtr<CefBrowser>& browser) override;
 
   virtual bool doClose(CefRefPtr<CefBrowser> browser) override;
+
+  virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
 
   virtual void loadingStateChanged(CefRefPtr<CefBrowser>& browser,
                                    bool isLoading,

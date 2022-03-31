@@ -19,11 +19,10 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
   // set focus policy
   setFocusPolicy(Qt::StrongFocus);
 
-  // initialize the layout and
-  // add browser widget to the layout
+  // set layout
   QVBoxLayout* layout = new QVBoxLayout();
   layout->setContentsMargins(0, 0, 0, 0);
-  layout->addWidget(d_ptr->qBrowserWidget_);
+  layout->setSpacing(0);
   setLayout(layout);
 }
 
