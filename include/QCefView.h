@@ -29,6 +29,9 @@ public:
   static const int64_t MainFrameID = 0;
 
 public:
+  /// <summary>
+  ///
+  /// </summary>
   enum WindowOpenDisposition
   {
     WOD_UNKNOWN,
@@ -42,6 +45,7 @@ public:
     WOD_OFF_THE_RECORD,
     WOD_IGNORE_ACTION
   };
+  Q_ENUM(WindowOpenDisposition)
 
 public:
   /// <summary>
@@ -187,24 +191,6 @@ public:
   /// on successful; otherwise false</returns>
   bool setPreference(const QString& name, const QVariant& value, const QString& error);
 
-public:
-  /// <summary>
-  /// Gets called before the popup browser created
-  /// </summary>
-  /// <param name="frameId">The source frame id</param>
-  /// <param name="targetUrl">The target URL</param>
-  /// <param name="targetFrameName">The target name</param>
-  /// <param name="targetDisposition">Target window open method</param>
-  /// <param name="settings">Settings to be used for the popup</param>
-  /// <param name="DisableJavascriptAccess">Disable the access to Javascript</param>
-  /// <returns>True to cancel the popup; false to allow</returns>
-  virtual bool onBeforPopup(int64_t frameId,
-                            const QString& targetUrl,
-                            const QString& targetFrameName,
-                            QCefView::WindowOpenDisposition targetDisposition,
-                            QCefSetting& settings,
-                            bool& DisableJavascriptAccess);
-
 signals:
   /// <summary>
   /// Gets called on loading state changed
@@ -304,6 +290,45 @@ signals:
   /// <param name="context">The context</param>
   /// <param name="result">The result</param>
   void reportJavascriptResult(int browserId, int64_t frameId, int64_t context, const QVariant& result);
+
+public slots:
+  /// <summary>
+  /// Gets called before the popup browser created
+  /// </summary>
+  /// <param name="frameId">The source frame id</param>
+  /// <param name="targetUrl">The target URL</param>
+  /// <param name="targetFrameName">The target name</param>
+  /// <param name="targetDisposition">Target window open method</param>
+  /// <param name="settings">Settings to be used for the popup</param>
+  /// <param name="DisableJavascriptAccess">Disable the access to Javascript</param>
+  /// <returns>True to cancel the popup; false to allow</returns>
+  virtual bool onBeforPopup(int64_t frameId,
+                            const QString& targetUrl,
+                            const QString& targetFrameName,
+                            QCefView::WindowOpenDisposition targetDisposition,
+                            QCefSetting& settings,
+                            bool& DisableJavascriptAccess);
+
+  /// <summary>
+  ///
+  /// </summary>
+  virtual void onPopupCreated(QWindow* wnd);
+
+public:
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="query"></param>
+  /// <returns></returns>
+  QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
+
+protected:
+  void showEvent(QShowEvent* event) override;
+  void hideEvent(QHideEvent* event) override;
+  void focusInEvent(QFocusEvent* event) override;
+  void focusOutEvent(QFocusEvent* event) override;
+  void resizeEvent(QResizeEvent* event) override;
+  void paintEvent(QPaintEvent* event) override;
 };
 
 #endif // QCEFVIEW_H

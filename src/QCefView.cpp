@@ -1,6 +1,7 @@
 ﻿#include <QCefView.h>
 
 #pragma region qt_headers
+#include <QPainter>
 #include <QPoint>
 #include <QResizeEvent>
 #include <QVBoxLayout>
@@ -16,14 +17,14 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
   : QWidget(parent)
   , d_ptr(new QCefViewPrivate(this, url, setting))
 {
-  // set focus policy
-  setFocusPolicy(Qt::StrongFocus);
+  setAttribute(Qt::WA_PaintOnScreen);
+  // setAttribute(Qt::WA_OpaquePaintEvent);
+  setAttribute(Qt::WA_StaticContents);
 
-  // set layout
-  QVBoxLayout* layout = new QVBoxLayout();
-  layout->setContentsMargins(0, 0, 0, 0);
-  layout->setSpacing(0);
-  setLayout(layout);
+  // BUG: when size goes into zero, CEF OSR will crash
+  setMinimumSize(1, 1);
+  setMouseTracking(true);
+  setFocusPolicy(Qt::WheelFocus);
 }
 
 QCefView::QCefView(QWidget* parent /*= 0*/)
@@ -179,6 +180,86 @@ QCefView::onBeforPopup(int64_t frameId,
                        QCefSetting& settings,
                        bool& DisableJavascriptAccess)
 {
-  // allow the popup browser
+  // return false to allow the popup browser
   return false;
+}
+
+void
+QCefView::onPopupCreated(QWindow* wnd)
+{}
+
+QVariant
+QCefView::inputMethodQuery(Qt::InputMethodQuery query) const
+{
+  Q_D(const QCefView);
+  switch (query) {
+    case Qt::ImCursorRectangle:
+      return QVariant(d->qImeCursorRect_);
+    case Qt::ImAnchorRectangle:
+      break;
+    case Qt::ImFont:
+      break;
+    case Qt::ImCursorPosition:
+      break;
+    case Qt::ImSurroundingText:
+      break;
+    case Qt::ImCurrentSelection:
+      break;
+    case Qt::ImMaximumTextLength:
+      break;
+    case Qt::ImAnchorPosition:
+      break;
+    default:
+      break;
+  }
+
+  return QWidget::inputMethodQuery(query);
+}
+
+void
+QCefView::showEvent(QShowEvent* event)
+{
+  Q_D(QCefView);
+  d->onVisibilityChanged(true);
+}
+
+void
+QCefView::hideEvent(QHideEvent* event)
+{
+  Q_D(QCefView);
+  d->onVisibilityChanged(false);
+}
+
+void
+QCefView::focusInEvent(QFocusEvent* event)
+{
+  Q_D(QCefView);
+  d->onFocusChanged(true);
+}
+
+void
+QCefView::focusOutEvent(QFocusEvent* event)
+{
+  Q_D(QCefView);
+  d->onFocusChanged(false);
+}
+
+void
+QCefView::resizeEvent(QResizeEvent* event)
+{
+  Q_D(QCefView);
+  d->onSizeChanged(event->size(), event->oldSize());
+}
+
+void
+QCefView::paintEvent(QPaintEvent* event)
+{
+  QPainter painter(this);
+
+  Q_D(QCefView);
+  painter.drawPixmap(event->rect(), d->qCefViewFrame_, event->rect());
+
+  if (d->showPopup_) {
+    painter.drawPixmap(d->qPopupRect_, d->qCefPopupFrame_);
+  }
 }
