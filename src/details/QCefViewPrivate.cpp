@@ -1,4 +1,4 @@
-﻿#include "QCefViewPrivate.h"
+#include "QCefViewPrivate.h"
 
 #pragma region std_headers
 #include <stdexcept>
@@ -491,9 +491,11 @@ QCefViewPrivate::onViewVisibilityChanged(bool visible)
     pCefBrowser_->GetHost()->WasHidden(!visible);
 #else
   Q_Q(QCefView);
-  if (!visible) {
-    if (ncw.qBrowserWidget_)
+  if (ncw.qBrowserWidget_) {
+    if (!visible)
       ncw.qBrowserWidget_->resize(0, 0);
+    else
+      ncw.qBrowserWidget_->resize(q->frameSize());
   }
 #endif
 }

@@ -1,4 +1,4 @@
-﻿#include "CCefClientDelegate.h"
+#include "CCefClientDelegate.h"
 
 #include "QCefViewPrivate.h"
 
@@ -8,7 +8,7 @@ CCefClientDelegate::loadingStateChanged(CefRefPtr<CefBrowser>& browser,
                                         bool canGoBack,
                                         bool canGoForward)
 {
-  if (pCefViewPrivate_ && browser->IsSame(pCefViewPrivate_->pCefBrowser_))
+  if (pCefViewPrivate_ && pCefViewPrivate_->pCefBrowser_ && browser->IsSame(pCefViewPrivate_->pCefBrowser_))
     pCefViewPrivate_->q_ptr->loadingStateChanged(isLoading, canGoBack, canGoForward);
 }
 
