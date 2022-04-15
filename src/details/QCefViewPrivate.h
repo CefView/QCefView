@@ -1,14 +1,22 @@
 ﻿#pragma once
 #pragma region qt_headers
+#include <QAbstractNativeEventFilter>
+#include <QSet>
 #include <QString>
 #include <QWindow>
 #pragma endregion qt_headers
 
+#include <CefViewBrowserClient.h>
+#include <CefViewBrowserClientDelegate.h>
+
+#include "CCefClientDelegate.h"
 #include "QCefContextPrivate.h"
 
 #include <QCefView.h>
 
-class QCefViewPrivate : public QObject
+class QCefViewPrivate
+  : public QObject
+  , public QAbstractNativeEventFilter
 {
   Q_OBJECT
   Q_DECLARE_PUBLIC(QCefView)
@@ -17,51 +25,148 @@ class QCefViewPrivate : public QObject
   friend class CCefClientDelegate;
 
 private:
-  /// <summary>
-  ///
-  /// </summary>
-  QCefContextPrivate* pContext_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  CefRefPtr<CefBrowser> pCefBrowser_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  QWindow* qBrowserWindow_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  QWidget* qBrowserWidget_;
+  static QSet<QCefViewPrivate*> sLiveInstances;
 
 public:
-  explicit QCefViewPrivate(QCefView* view, const QString& url, const QCefSetting* setting = nullptr);
+  /// <summary>
+  ///
+  /// </summary>
+  static void destroyAllInstance();
+
+  /// <summary>
+  ///
+  /// </summary>
+  QCefContextPrivate* pContextPrivate_ = nullptr;
+
+  /// <summary>
+  ///
+  /// </summary>
+  CefRefPtr<CefViewBrowserClient> pClient_ = nullptr;
+
+  /// <summary>
+  ///
+  /// </summary>
+  CCefClientDelegate::RefPtr pClientDelegate_ = nullptr;
+
+  /// <summary>
+  ///
+  /// </summary>
+  CefRefPtr<CefBrowser> pCefBrowser_ = nullptr;
+
+  /// <summary>
+  /// Native child window private data
+  /// </summary>
+  struct NcwPrivateData
+  {
+    /// <summary>
+    ///
+    /// </summary>
+    QWindow* qBrowserWindow_ = nullptr;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QWidget* qBrowserWidget_ = nullptr;
+  } ncw;
+
+  /// <summary>
+  /// Offscreen rendering private data
+  /// </summary>
+  struct OsrPrivateData
+  {
+    /// <summary>
+    ///
+    /// </summary>
+    bool showPopup_;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QRect qPopupRect_;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QRect qImeCursorRect_;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QPixmap qCefViewFrame_;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QPixmap qCefPopupFrame_;
+  } osr;
+
+public:
+  explicit QCefViewPrivate(QCefContextPrivate* ctx,
+                           QCefView* view,
+                           const QString& url,
+                           const QCefSetting* setting = nullptr);
 
   ~QCefViewPrivate();
 
+  void createCefBrowser(QCefView* view, const QString url, const QCefSetting* setting);
+
+  void destroyCefBrowser();
+
 protected:
-  void createBrowser(QCefView* view, const QString url, const QCefSetting* setting);
+  void onCefBrowserCreated(CefRefPtr<CefBrowser>& browser);
 
-  void closeBrowser();
+  void ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser);
 
-  void destroyBrowser();
+  void osrOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser);
 
   void setCefWindowFocus(bool focus);
 
-protected slots:
-  void applicationFocusChanged(QWidget* old, QWidget* now);
+public slots:
+  void onAppFocusChanged(QWidget* old, QWidget* now);
+
+  void onCefWindowLostTabFocus(bool next);
+
+  void onCefWindowGotFocus();
+
+  void onCefUpdateCursor(const QCursor& cursor);
+
+  void onCefInputStateChanged(bool editable);
+
+  void onOsrImeCursorRectChanged(const QRect& rc);
+
+  void onOsrShowPopup(bool show);
+
+  void onOsrResizePopup(const QRect& rc);
+
+  void onOsrUpdateViewFrame(const QImage& frame, const QRegion& region);
+
+  void onOsrUpdatePopupFrame(const QImage& frame, const QRegion& region);
 
 protected:
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="watched"></param>
-  /// <param name="event"></param>
-  /// <returns></returns>
   virtual bool eventFilter(QObject* watched, QEvent* event) override;
+
+  QVariant onViewInputMethodQuery(Qt::InputMethodQuery query) const;
+
+  void onViewInputMethodEvent(QInputMethodEvent* event);
+
+  void onViewVisibilityChanged(bool visible);
+
+  void onViewFocusChanged(bool focused);
+
+  void onViewSizeChanged(const QSize& size, const QSize& oldSize);
+
+  void onViewMouseEvent(QMouseEvent* event);
+
+  void onViewWheelEvent(QWheelEvent* event);
+
+  virtual bool nativeEventFilter(const QByteArray& eventType,
+                                 void* message,
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+                                 qintptr* result
+#else
+                                 long* result
+#endif
+                                 ) override;
 
 public:
   int browserId();
@@ -95,10 +200,6 @@ public:
   void notifyMoveOrResizeStarted();
 
   bool sendEventNotifyMessage(int64_t frameId, const QString& name, const QVariantList& args);
-
-  void onCefWindowLostTabFocus(bool next);
-
-  void onCefWindowGotFocus();
 
   bool setPreference(const QString& name, const QVariant& value, const QString& error);
 };
