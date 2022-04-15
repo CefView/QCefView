@@ -1,4 +1,4 @@
-#include "QCefViewPrivate.h"
+﻿#include "QCefViewPrivate.h"
 
 #pragma region std_headers
 #include <stdexcept>
@@ -174,58 +174,46 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser>& browser)
 void
 QCefViewPrivate::ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser)
 {
-  QMetaObject::invokeMethod(
-    this,
-    [=]() {
-      Q_Q(QCefView);
+  Q_Q(QCefView);
 
-      // create QWindow from native browser window handle
-      QWindow* browserWindow = QWindow::fromWinId((WId)(pCefBrowser_->GetHost()->GetWindowHandle()));
+  // create QWindow from native browser window handle
+  QWindow* browserWindow = QWindow::fromWinId((WId)(pCefBrowser_->GetHost()->GetWindowHandle()));
 
-      // create QWidget from cef browser widow, this will re-parent the CEF browser window
-      QWidget* browserWidget =
-        QWidget::createWindowContainer(browserWindow,
-                                       q,
-                                       Qt::CustomizeWindowHint | Qt::FramelessWindowHint |
-                                         Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
-      Q_ASSERT_X(
-        browserWidget, "QCefViewPrivateNCW::createBrowser", "Failed to create QWidget from cef browser window");
-      if (!browserWidget) {
-        qWarning("Failed to create QWidget from cef browser window");
-        browser->GetHost()->CloseBrowser(true);
-        return;
-      }
+  // create QWidget from cef browser widow, this will re-parent the CEF browser window
+  QWidget* browserWidget = QWidget::createWindowContainer(
+    browserWindow,
+    q,
+    Qt::CustomizeWindowHint | Qt::FramelessWindowHint | Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
+  Q_ASSERT_X(browserWidget, "QCefViewPrivateNCW::createBrowser", "Failed to create QWidget from cef browser window");
+  if (!browserWidget) {
+    qWarning("Failed to create QWidget from cef browser window");
+    browser->GetHost()->CloseBrowser(true);
+    return;
+  }
 
-      ncw.qBrowserWindow_ = browserWindow;
-      ncw.qBrowserWidget_ = browserWidget;
+  ncw.qBrowserWindow_ = browserWindow;
+  ncw.qBrowserWidget_ = browserWidget;
 
-      ncw.qBrowserWidget_->installEventFilter(this);
-      ncw.qBrowserWindow_->installEventFilter(this);
+  ncw.qBrowserWidget_->installEventFilter(this);
+  ncw.qBrowserWindow_->installEventFilter(this);
 
-      connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::onAppFocusChanged);
+  connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::onAppFocusChanged);
 
-      // initialize the layout and
-      // add browser widget to the layout
-      QVBoxLayout* layout = new QVBoxLayout();
-      layout->setContentsMargins(0, 0, 0, 0);
-      layout->setSpacing(0);
-      layout->addWidget(ncw.qBrowserWidget_);
-      q->setLayout(layout);
-    },
-    Qt::QueuedConnection);
+  // initialize the layout and
+  // add browser widget to the layout
+  QVBoxLayout* layout = new QVBoxLayout();
+  layout->setContentsMargins(0, 0, 0, 0);
+  layout->setSpacing(0);
+  layout->addWidget(ncw.qBrowserWidget_);
+  q->setLayout(layout);
 }
 
 void
 QCefViewPrivate::osrOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser)
 {
-  QMetaObject::invokeMethod(
-    this,
-    [=]() {
-      // install global native event filter to
-      // capture the keyboard event
-      qApp->installNativeEventFilter(this);
-    },
-    Qt::BlockingQueuedConnection);
+  // install global native event filter to
+  // capture the keyboard event
+  qApp->installNativeEventFilter(this);
 }
 
 void

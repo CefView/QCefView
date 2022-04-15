@@ -1,4 +1,4 @@
-#include "CCefClientDelegate.h"
+﻿#include "CCefClientDelegate.h"
 
 #include <QThread>
 
@@ -24,10 +24,12 @@ CCefClientDelegate::onBeforPopup(CefRefPtr<CefBrowser>& browser,
     QCefView::WindowOpenDisposition d = (QCefView::WindowOpenDisposition)targetDisposition;
     QCefSettingPrivate::CopyFromCefBrowserSettings(&s, &settings);
 
-    Qt::ConnectionType connType = pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection : Qt::BlockingQueuedConnection;
+    Qt::ConnectionType connType = pCefViewPrivate_->q_ptr->thread() == QThread::currentThread()
+                                    ? Qt::DirectConnection
+                                    : Qt::BlockingQueuedConnection;
     QMetaObject::invokeMethod(pCefViewPrivate_->q_ptr,
                               "onBeforPopup",                            //
-                              connType,              //
+                              connType,                                  //
                               Q_RETURN_ARG(bool, result),                //
                               Q_ARG(int64_t, frameId),                   //
                               Q_ARG(const QString&, url),                //
@@ -47,13 +49,23 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
   if (!pCefViewPrivate_)
     return;
 
+  Qt::ConnectionType connType =
+    pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection : Qt::QueuedConnection;
+
   if (browser->IsPopup()) {
     QWindow* wnd = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));
-    QMetaObject::invokeMethod(pCefViewPrivate_->q_ptr,      //
-                              "onPopupCreated",             //
+    QMetaObject::invokeMethod(pCefViewPrivate_->q_ptr, //
+                              "onPopupCreated",        //
+                              connType,                //
                               Q_ARG(QWindow*, wnd));
   } else {
-    pCefViewPrivate_->onCefBrowserCreated(browser);
+    QMetaObject::invokeMethod(
+      pCefViewPrivate_,
+      [=]() {
+        CefRefPtr<CefBrowser> b(browser);
+        pCefViewPrivate_->onCefBrowserCreated(b);
+      },
+      connType);
   }
 }
 
