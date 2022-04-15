@@ -149,6 +149,7 @@ CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser> browser,
                                   cef_cursor_type_t type,
                                   const CefCursorInfo& custom_cursor_info)
 {
+#if defined(CEF_USE_OSR)
   if (!pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_))
     return false;
 
@@ -158,7 +159,10 @@ CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser> browser,
   } else {
   }
 
-  QMetaObject::invokeMethod(pCefViewPrivate_, "onUpdateCursor", Q_ARG(const QCursor&, cur));
+  QMetaObject::invokeMethod(pCefViewPrivate_, "onCefUpdateCursor", Q_ARG(const QCursor&, cur));
 
   return true;
+#else
+  return false;
+#endif
 }

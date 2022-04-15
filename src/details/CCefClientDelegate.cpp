@@ -41,7 +41,7 @@ CCefClientDelegate::focusedEditableNodeChanged(CefRefPtr<CefBrowser>& browser,
                                                bool focusOnEditableNode)
 {
   if (pCefViewPrivate_ && pCefViewPrivate_->pCefBrowser_->IsSame(browser)) {
-    QMetaObject::invokeMethod(pCefViewPrivate_, "onInputStateChanged", Q_ARG(bool, focusOnEditableNode));
+    QMetaObject::invokeMethod(pCefViewPrivate_, "onCefInputStateChanged", Q_ARG(bool, focusOnEditableNode));
   }
 }
 

@@ -166,6 +166,7 @@ QCefViewPrivate::nativeEventFilter(const QByteArray& eventType,
 #endif
 )
 {
+#if defined(CEF_USE_OSR)
   if (!pCefBrowser_ || !q_ptr->hasFocus())
     return false;
 
@@ -188,6 +189,8 @@ QCefViewPrivate::nativeEventFilter(const QByteArray& eventType,
     default:
       break;
   }
-
   return ret;
+#else
+  return false;
+#endif
 }

@@ -7,7 +7,9 @@ project(QCefView)
 option(BUILD_DEMO       "Build the demo"                      OFF)
 option(BUILD_STATIC     "Build QCefView as static library"    OFF)
 option(USE_SANDBOX      "Enable CEF Sandbox"                  OFF)
+option(USE_OSR          "Enable CEF Offscreen rendering"      OFF)
 option(STATIC_CRT       "Use MultiThreaded linkage for MSVC"  OFF)
+
 
 # Only generate Debug and Release configuration types.
 set(CMAKE_CONFIGURATION_TYPES Debug Release)

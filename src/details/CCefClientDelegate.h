@@ -45,8 +45,19 @@ public:
                               int64_t frameId,
                               int64_t contextId,
                               const CefRefPtr<CefValue>& result) override;
+  // CefContextMenuHandler
+  virtual void onBeforeContextMenu(CefRefPtr<CefBrowser> browser,
+                                   CefRefPtr<CefFrame> frame,
+                                   CefRefPtr<CefContextMenuParams> params,
+                                   CefRefPtr<CefMenuModel> model) override;
 
-  // LifSpan handler
+  virtual bool onContextMenuCommand(CefRefPtr<CefBrowser> browser,
+                                    CefRefPtr<CefFrame> frame,
+                                    CefRefPtr<CefContextMenuParams> params,
+                                    int command_id,
+                                    CefContextMenuHandler::EventFlags event_flags) override;
+
+  // LifSpanHandler
   virtual bool onBeforPopup(CefRefPtr<CefBrowser>& browser,
                             int64_t frameId,
                             const std::string& targetUrl,
@@ -59,7 +70,7 @@ public:
   virtual bool doClose(CefRefPtr<CefBrowser> browser) override;
   virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
 
-  // Load handler
+  // LoadHandler
   virtual void loadingStateChanged(CefRefPtr<CefBrowser>& browser,
                                    bool isLoading,
                                    bool canGoBack,
@@ -72,7 +83,7 @@ public:
                          const std::string& failedUrl,
                          bool& handled) override;
 
-  // Display handler
+  // DisplayHandler
   virtual void draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
                                       const std::vector<CefDraggableRegion>& regions) override;
   virtual void addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url) override;
@@ -93,12 +104,12 @@ public:
                              bool* is_keyboard_shortcut) override;
   virtual bool onKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent& event, CefEventHandle os_event) override;
 
-  // Focus handler
+  // FocusHandler
   virtual void takeFocus(CefRefPtr<CefBrowser>& browser, bool next) override;
   virtual bool setFocus(CefRefPtr<CefBrowser>& browser) override;
   virtual void gotFocus(CefRefPtr<CefBrowser>& browser) override;
 
-  // Render handler
+  // RenderHandler
   virtual bool GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
   virtual void GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
   virtual bool GetScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int viewY, int& screenX, int& screenY) override;

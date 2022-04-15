@@ -190,6 +190,12 @@ if (OS_MACOS)
   )
 endif()  # OS_MACOS
 
+if (USE_OSR)
+  target_compile_definitions(QCefView PRIVATE
+    -DCEF_USE_OSR
+  )
+endif ()
+
 target_include_directories(QCefView PRIVATE
   "${CMAKE_CURRENT_SOURCE_DIR}/../include"
   ${CefViewCore_EXPORT_INCLUDE_PATH}

@@ -69,7 +69,7 @@ CCefClientDelegate::OnPopupShow(CefRefPtr<CefBrowser> browser, bool show)
   if (!pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_))
     return;
 
-  pCefViewPrivate_->onShowPopup(show);
+  pCefViewPrivate_->onOsrShowPopup(show);
 }
 
 void
@@ -78,7 +78,7 @@ CCefClientDelegate::OnPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& re
   if (!pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_))
     return;
 
-  pCefViewPrivate_->onResizePopup(QRect{ rect.x, rect.y, rect.width, rect.height });
+  pCefViewPrivate_->onOsrResizePopup(QRect{ rect.x, rect.y, rect.width, rect.height });
 }
 
 void
@@ -101,9 +101,9 @@ CCefClientDelegate::OnPaint(CefRefPtr<CefBrowser> browser,
   QImage frame = QImage(static_cast<const uchar*>(buffer), width, height, QImage::Format_ARGB32_Premultiplied);
 
   if (PET_VIEW == type) {
-    pCefViewPrivate_->onCefViewFrame(frame, region);
+    pCefViewPrivate_->onOsrUpdateViewFrame(frame, region);
   } else if (PET_POPUP == type) {
-    pCefViewPrivate_->onCefPopupFrame(frame, region);
+    pCefViewPrivate_->onOsrUpdatePopupFrame(frame, region);
   } else {
   }
 }

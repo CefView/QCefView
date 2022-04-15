@@ -14,15 +14,6 @@
 
 #include <QCefView.h>
 
-/// <summary>
-///
-/// </summary>
-enum PaintType
-{
-  PaintView = 0,
-  PaintPopup,
-};
-
 class QCefViewPrivate
   : public QObject
   , public QAbstractNativeEventFilter
@@ -45,31 +36,75 @@ public:
   /// <summary>
   ///
   /// </summary>
-  QCefContextPrivate* pContextPrivate_;
+  QCefContextPrivate* pContextPrivate_ = nullptr;
 
   /// <summary>
   ///
   /// </summary>
-  CefRefPtr<CefViewBrowserClient> pClient_;
+  CefRefPtr<CefViewBrowserClient> pClient_ = nullptr;
 
   /// <summary>
   ///
   /// </summary>
-  CCefClientDelegate::RefPtr pClientDelegate_;
+  CCefClientDelegate::RefPtr pClientDelegate_ = nullptr;
 
   /// <summary>
   ///
   /// </summary>
-  CefRefPtr<CefBrowser> pCefBrowser_;
+  CefRefPtr<CefBrowser> pCefBrowser_ = nullptr;
 
-  bool showPopup_;
-  QRect qPopupRect_;
-  QRect qImeCursorRect_;
-  QPixmap qCefViewFrame_;
-  QPixmap qCefPopupFrame_;
+  /// <summary>
+  /// Native child window private data
+  /// </summary>
+  struct NcwPrivateData
+  {
+    /// <summary>
+    ///
+    /// </summary>
+    QWindow* qBrowserWindow_ = nullptr;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QWidget* qBrowserWidget_ = nullptr;
+  } ncw;
+
+  /// <summary>
+  /// Offscreen rendering private data
+  /// </summary>
+  struct OsrPrivateData
+  {
+    /// <summary>
+    ///
+    /// </summary>
+    bool showPopup_;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QRect qPopupRect_;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QRect qImeCursorRect_;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QPixmap qCefViewFrame_;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QPixmap qCefPopupFrame_;
+  } osr;
 
 public:
-  explicit QCefViewPrivate(QCefView* view, const QString& url, const QCefSetting* setting = nullptr);
+  explicit QCefViewPrivate(QCefContextPrivate* ctx,
+                           QCefView* view,
+                           const QString& url,
+                           const QCefSetting* setting = nullptr);
 
   ~QCefViewPrivate();
 
@@ -77,44 +112,52 @@ public:
 
   void destroyCefBrowser();
 
-  void invalidateRender();
-
 protected:
   void onCefBrowserCreated(CefRefPtr<CefBrowser>& browser);
 
+  void ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser);
+
+  void osrOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser);
+
+  void setCefWindowFocus(bool focus);
+
 public slots:
-  void onInputStateChanged(bool editable);
-
-  void onImeCursorRectChanged(const QRect& rc);
-
-  void onUpdateCursor(const QCursor& cursor);
+  void onAppFocusChanged(QWidget* old, QWidget* now);
 
   void onCefWindowLostTabFocus(bool next);
 
   void onCefWindowGotFocus();
 
-  void onShowPopup(bool show);
+  void onCefUpdateCursor(const QCursor& cursor);
 
-  void onResizePopup(const QRect& rc);
+  void onCefInputStateChanged(bool editable);
 
-  void onCefViewFrame(const QImage& frame, const QRegion& region);
+  void onOsrImeCursorRectChanged(const QRect& rc);
 
-  void onCefPopupFrame(const QImage& frame, const QRegion& region);
+  void onOsrShowPopup(bool show);
+
+  void onOsrResizePopup(const QRect& rc);
+
+  void onOsrUpdateViewFrame(const QImage& frame, const QRegion& region);
+
+  void onOsrUpdatePopupFrame(const QImage& frame, const QRegion& region);
 
 protected:
   virtual bool eventFilter(QObject* watched, QEvent* event) override;
 
-  void onVisibilityChanged(bool visible);
+  QVariant onViewInputMethodQuery(Qt::InputMethodQuery query) const;
 
-  void onFocusChanged(bool focused);
+  void onViewInputMethodEvent(QInputMethodEvent* event);
 
-  void onSizeChanged(const QSize& size, const QSize& oldSize);
+  void onViewVisibilityChanged(bool visible);
 
-  void onMouseEvent(QMouseEvent* event);
+  void onViewFocusChanged(bool focused);
 
-  void onWheelEvent(QWheelEvent* event);
+  void onViewSizeChanged(const QSize& size, const QSize& oldSize);
 
-  void onInputMethodEvent(QInputMethodEvent* event);
+  void onViewMouseEvent(QMouseEvent* event);
+
+  void onViewWheelEvent(QWheelEvent* event);
 
   virtual bool nativeEventFilter(const QByteArray& eventType,
                                  void* message,

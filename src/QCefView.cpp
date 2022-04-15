@@ -15,11 +15,12 @@
 
 QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* parent /*= 0*/)
   : QWidget(parent)
-  , d_ptr(new QCefViewPrivate(this, url, setting))
+  , d_ptr(new QCefViewPrivate(QCefContext::instance()->d_func(), this, url, setting))
 {
+#if defined(CEF_USE_OSR)
   setAttribute(Qt::WA_PaintOnScreen);
-  // setAttribute(Qt::WA_OpaquePaintEvent);
   setAttribute(Qt::WA_StaticContents);
+#endif
 
   // BUG: when size goes into zero, CEF OSR will crash
   setMinimumSize(1, 1);
@@ -191,75 +192,99 @@ QCefView::onPopupCreated(QWindow* wnd)
 QVariant
 QCefView::inputMethodQuery(Qt::InputMethodQuery query) const
 {
+#if defined(CEF_USE_OSR)
   Q_D(const QCefView);
-  switch (query) {
-    case Qt::ImCursorRectangle:
-      return QVariant(d->qImeCursorRect_);
-    case Qt::ImAnchorRectangle:
-      break;
-    case Qt::ImFont:
-      break;
-    case Qt::ImCursorPosition:
-      break;
-    case Qt::ImSurroundingText:
-      break;
-    case Qt::ImCurrentSelection:
-      break;
-    case Qt::ImMaximumTextLength:
-      break;
-    case Qt::ImAnchorPosition:
-      break;
-    default:
-      break;
-  }
+  auto r = d->onViewInputMethodQuery(query);
+  if (r.isValid())
+    return r;
+#endif
 
   return QWidget::inputMethodQuery(query);
+}
+
+void
+QCefView::paintEvent(QPaintEvent* event)
+{
+#if defined(CEF_USE_OSR)
+  QPainter painter(this);
+
+  Q_D(QCefView);
+  painter.drawPixmap(event->rect(), d->osr.qCefViewFrame_, event->rect());
+
+  if (d->osr.showPopup_) {
+    painter.drawPixmap(d->osr.qPopupRect_, d->osr.qCefPopupFrame_);
+  }
+#else
+  return QWidget::paintEvent(event);
+#endif
+}
+
+void
+QCefView::inputMethodEvent(QInputMethodEvent* event)
+{
+  Q_D(QCefView);
+  d->onViewInputMethodEvent(event);
 }
 
 void
 QCefView::showEvent(QShowEvent* event)
 {
   Q_D(QCefView);
-  d->onVisibilityChanged(true);
+  d->onViewVisibilityChanged(true);
 }
 
 void
 QCefView::hideEvent(QHideEvent* event)
 {
   Q_D(QCefView);
-  d->onVisibilityChanged(false);
+  d->onViewVisibilityChanged(false);
 }
 
 void
 QCefView::focusInEvent(QFocusEvent* event)
 {
   Q_D(QCefView);
-  d->onFocusChanged(true);
+  d->onViewFocusChanged(true);
 }
 
 void
 QCefView::focusOutEvent(QFocusEvent* event)
 {
   Q_D(QCefView);
-  d->onFocusChanged(false);
+  d->onViewFocusChanged(false);
 }
 
 void
 QCefView::resizeEvent(QResizeEvent* event)
 {
   Q_D(QCefView);
-  d->onSizeChanged(event->size(), event->oldSize());
+  d->onViewSizeChanged(event->size(), event->oldSize());
 }
 
 void
-QCefView::paintEvent(QPaintEvent* event)
+QCefView::mouseMoveEvent(QMouseEvent* event)
 {
-  QPainter painter(this);
-
   Q_D(QCefView);
-  painter.drawPixmap(event->rect(), d->qCefViewFrame_, event->rect());
+  d->onViewMouseEvent(event);
+}
 
-  if (d->showPopup_) {
-    painter.drawPixmap(d->qPopupRect_, d->qCefPopupFrame_);
-  }
+void
+QCefView::mousePressEvent(QMouseEvent* event)
+{
+  Q_D(QCefView);
+  d->onViewMouseEvent(event);
+}
+
+void
+QCefView::mouseReleaseEvent(QMouseEvent* event)
+{
+  Q_D(QCefView);
+  d->onViewMouseEvent(event);
+}
+
+void
+QCefView::wheelEvent(QWheelEvent* event)
+{
+  Q_D(QCefView);
+  d->onViewWheelEvent(event);
 }

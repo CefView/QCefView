@@ -323,12 +323,18 @@ public:
   QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
 
 protected:
+  void paintEvent(QPaintEvent* event) override;
+
+  void inputMethodEvent(QInputMethodEvent* event) override;
   void showEvent(QShowEvent* event) override;
   void hideEvent(QHideEvent* event) override;
   void focusInEvent(QFocusEvent* event) override;
   void focusOutEvent(QFocusEvent* event) override;
   void resizeEvent(QResizeEvent* event) override;
-  void paintEvent(QPaintEvent* event) override;
+  void mouseMoveEvent(QMouseEvent* event) override;
+  void mousePressEvent(QMouseEvent* event) override;
+  void mouseReleaseEvent(QMouseEvent* event) override;
+  void wheelEvent(QWheelEvent* event) override;
 };
 
 #endif // QCEFVIEW_H
