@@ -16,6 +16,9 @@
 
 class QCefViewPrivate;
 
+#define IsValidBrowser(browser)                                                                                        \
+  (pCefViewPrivate_ && pCefViewPrivate_->pCefBrowser_ && browser->IsSame(pCefViewPrivate_->pCefBrowser_))
+
 class CCefClientDelegate : public CefViewBrowserClientDelegateInterface
 {
 private:

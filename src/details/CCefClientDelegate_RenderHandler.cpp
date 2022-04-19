@@ -9,7 +9,7 @@
 bool
 CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
-  if (!pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_))
+  if (!IsValidBrowser(browser))
     return false;
 
   QRect rcWindow = pCefViewPrivate_->q_ptr->window()->frameGeometry();
@@ -20,7 +20,8 @@ CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& re
 void
 CCefClientDelegate::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
-  if (!pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_)) {
+
+  if (!IsValidBrowser(browser)) {
     rect.Set(0, 0, 1, 1);
     return;
   }
@@ -34,7 +35,7 @@ CCefClientDelegate::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 bool
 CCefClientDelegate::GetScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int viewY, int& screenX, int& screenY)
 {
-  if (!pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_))
+  if (!IsValidBrowser(browser))
     return false;
 
   QPoint ptScreen = pCefViewPrivate_->q_ptr->mapToGlobal(QPoint(viewX, viewY));
@@ -46,7 +47,7 @@ CCefClientDelegate::GetScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int
 bool
 CCefClientDelegate::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& screen_info)
 {
-  if (!pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_))
+  if (!IsValidBrowser(browser))
     return false;
 
   QScreen* screen = pCefViewPrivate_->q_ptr->screen();
@@ -66,7 +67,7 @@ CCefClientDelegate::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& 
 void
 CCefClientDelegate::OnPopupShow(CefRefPtr<CefBrowser> browser, bool show)
 {
-  if (!pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_))
+  if (!IsValidBrowser(browser))
     return;
 
   pCefViewPrivate_->onOsrShowPopup(show);
@@ -75,7 +76,7 @@ CCefClientDelegate::OnPopupShow(CefRefPtr<CefBrowser> browser, bool show)
 void
 CCefClientDelegate::OnPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& rect)
 {
-  if (!pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_))
+  if (!IsValidBrowser(browser))
     return;
 
   pCefViewPrivate_->onOsrResizePopup(QRect{ rect.x, rect.y, rect.width, rect.height });
@@ -89,7 +90,7 @@ CCefClientDelegate::OnPaint(CefRefPtr<CefBrowser> browser,
                             int width,
                             int height)
 {
-  if (!pCefViewPrivate_ || !pCefViewPrivate_->pCefBrowser_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_))
+  if (!IsValidBrowser(browser))
     return;
 
   QRegion region;
@@ -140,7 +141,7 @@ CCefClientDelegate::OnImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
                                                  const CefRange& selected_range,
                                                  const CefRenderHandler::RectList& character_bounds)
 {
-  if (!pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_))
+  if (!IsValidBrowser(browser))
     return;
 
   // qDebug() << "OnImeCompositionRangeChanged:" << selected_range.from << " - " << selected_range.to

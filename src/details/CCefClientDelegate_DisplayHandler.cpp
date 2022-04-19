@@ -66,7 +66,7 @@ void
 CCefClientDelegate::draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
                                            const std::vector<CefDraggableRegion>& regions)
 {
-  if (!pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_))
+  if (!IsValidBrowser(browser))
     return;
 
   // Determine new draggable region.
@@ -87,27 +87,30 @@ CCefClientDelegate::draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
 void
 CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url)
 {
-  if (pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_)) {
-    auto u = QString::fromStdString(url);
-    pCefViewPrivate_->q_ptr->addressChanged(frameId, u);
-  }
+  if (!IsValidBrowser(browser))
+    return;
+
+  auto u = QString::fromStdString(url);
+  pCefViewPrivate_->q_ptr->addressChanged(frameId, u);
 }
 
 void
 CCefClientDelegate::titleChanged(CefRefPtr<CefBrowser>& browser, const std::string& title)
 {
-  if (pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_)) {
-    auto t = QString::fromStdString(title);
-    pCefViewPrivate_->q_ptr->titleChanged(t);
-  }
+  if (!IsValidBrowser(browser))
+    return;
+
+  auto t = QString::fromStdString(title);
+  pCefViewPrivate_->q_ptr->titleChanged(t);
 }
 
 void
 CCefClientDelegate::fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool fullscreen)
 {
-  if (pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_)) {
-    pCefViewPrivate_->q_ptr->fullscreenModeChanged(fullscreen);
-  }
+  if (!IsValidBrowser(browser))
+    return;
+
+  pCefViewPrivate_->q_ptr->fullscreenModeChanged(fullscreen);
 }
 
 bool
@@ -120,27 +123,30 @@ CCefClientDelegate::tooltipMessage(CefRefPtr<CefBrowser>& browser, const std::st
 void
 CCefClientDelegate::statusMessage(CefRefPtr<CefBrowser>& browser, const std::string& value)
 {
-  if (pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_)) {
-    auto msg = QString::fromStdString(value);
-    pCefViewPrivate_->q_ptr->statusMessage(msg);
-  }
+  if (!IsValidBrowser(browser))
+    return;
+
+  auto msg = QString::fromStdString(value);
+  pCefViewPrivate_->q_ptr->statusMessage(msg);
 }
 
 void
 CCefClientDelegate::consoleMessage(CefRefPtr<CefBrowser>& browser, const std::string& message, int level)
 {
-  if (pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_)) {
-    auto msg = QString::fromStdString(message);
-    pCefViewPrivate_->q_ptr->consoleMessage(msg, level);
-  }
+  if (!IsValidBrowser(browser))
+    return;
+
+  auto msg = QString::fromStdString(message);
+  pCefViewPrivate_->q_ptr->consoleMessage(msg, level);
 }
 
 void
 CCefClientDelegate::loadingProgressChanged(CefRefPtr<CefBrowser>& browser, double progress)
 {
-  if (pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_)) {
-    pCefViewPrivate_->q_ptr->loadingProgressChanged(progress);
-  }
+  if (!IsValidBrowser(browser))
+    return;
+
+  pCefViewPrivate_->q_ptr->loadingProgressChanged(progress);
 }
 
 bool
@@ -149,10 +155,10 @@ CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser> browser,
                                   cef_cursor_type_t type,
                                   const CefCursorInfo& custom_cursor_info)
 {
-#if defined(CEF_USE_OSR)
-  if (!pCefViewPrivate_ || !browser->IsSame(pCefViewPrivate_->pCefBrowser_))
+  if (!IsValidBrowser(browser))
     return false;
 
+#if defined(CEF_USE_OSR)
   QCursor cur;
   if (type != CT_CUSTOM) {
     cur.setShape(mapCursorShape(type));
