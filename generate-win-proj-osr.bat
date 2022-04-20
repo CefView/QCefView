@@ -1,0 +1,1 @@
+cmake -S . -B .build/Windows -DBUILD_DEMO=ON -DUSE_OSR=ON

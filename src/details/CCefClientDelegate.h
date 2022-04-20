@@ -24,8 +24,6 @@ class CCefClientDelegate : public CefViewBrowserClientDelegateInterface
 private:
   QCefViewPrivate* pCefViewPrivate_;
 
-  CefSize viewSize_;
-
 public:
   CCefClientDelegate(QCefViewPrivate* p);
 

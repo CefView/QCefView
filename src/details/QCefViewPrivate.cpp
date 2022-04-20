@@ -211,8 +211,11 @@ QCefViewPrivate::ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser)
 void
 QCefViewPrivate::osrOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser)
 {
-  // install global native event filter to
-  // capture the keyboard event
+  Q_Q(QCefView);
+
+  // install global native event filter to capture the keyboard event
+  pCefBrowser_->GetHost()->WasHidden(!q->isVisible());
+  pCefBrowser_->GetHost()->WasResized();
   qApp->installNativeEventFilter(this);
 }
 

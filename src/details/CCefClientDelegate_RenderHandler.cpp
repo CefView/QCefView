@@ -9,27 +9,28 @@
 bool
 CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
+  return false;
   if (!IsValidBrowser(browser))
     return false;
 
   QRect rcWindow = pCefViewPrivate_->q_ptr->window()->frameGeometry();
   rect.Set(rcWindow.left(), rcWindow.right(), rcWindow.width(), rcWindow.height());
+  qDebug() << "======== GetRootScreenRect:" << rcWindow;
   return true;
 }
 
 void
 CCefClientDelegate::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
-
   if (!IsValidBrowser(browser)) {
     rect.Set(0, 0, 1, 1);
     return;
   }
 
   QSize rcSize = pCefViewPrivate_->q_ptr->size();
-  viewSize_.Set(rcSize.width(), rcSize.height());
   QPoint ptScreen = pCefViewPrivate_->q_ptr->mapToGlobal(QPoint(0, 0));
   rect.Set(ptScreen.x(), ptScreen.y(), rcSize.width(), rcSize.height());
+  qDebug() << "======== GetViewRect:" << QRect{ ptScreen.x(), ptScreen.y(), rcSize.width(), rcSize.height() };
 }
 
 bool
@@ -61,6 +62,8 @@ CCefClientDelegate::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& 
                   CefRect{ availableRect.x(), availableRect.y(), availableRect.width(), availableRect.height() } //
   );
 
+  qDebug() << "======== GetScreenInfo:" << rect << ", availableRect" << availableRect;
+
   return true;
 }
 
@@ -78,6 +81,8 @@ CCefClientDelegate::OnPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& re
 {
   if (!IsValidBrowser(browser))
     return;
+
+  qDebug() << "======== OnPopupSize:" << QRect{ rect.x, rect.y, rect.width, rect.height };
 
   pCefViewPrivate_->onOsrResizePopup(QRect{ rect.x, rect.y, rect.width, rect.height });
 }

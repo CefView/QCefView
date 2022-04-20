@@ -77,7 +77,7 @@ public:
     /// <summary>
     ///
     /// </summary>
-    bool showPopup_;
+    bool showPopup_ = false;
 
     /// <summary>
     ///

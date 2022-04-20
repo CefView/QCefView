@@ -50,7 +50,12 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
     return;
 
   Qt::ConnectionType connType =
-    pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection : Qt::QueuedConnection;
+    pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection :
+#if defined(CEF_USE_OSR)
+                                                                  Qt::BlockingQueuedConnection;
+#else
+                                                                  Qt::QueuedConnection;
+#endif
 
   if (browser->IsPopup()) {
     QWindow* wnd = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));

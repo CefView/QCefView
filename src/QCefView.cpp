@@ -209,14 +209,13 @@ QCefView::paintEvent(QPaintEvent* event)
   QPainter painter(this);
 
   Q_D(QCefView);
-  painter.drawPixmap(event->rect(), d->osr.qCefViewFrame_, event->rect());
+  painter.drawPixmap(0, 0, d->osr.qCefViewFrame_);
 
   if (d->osr.showPopup_) {
-    painter.drawPixmap(d->osr.qPopupRect_, d->osr.qCefPopupFrame_);
+    painter.drawPixmap(d->osr.qPopupRect_.topLeft(), d->osr.qCefPopupFrame_);
   }
-#else
-  return QWidget::paintEvent(event);
 #endif
+  return QWidget::paintEvent(event);
 }
 
 void
