@@ -49,29 +49,31 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
   if (!pCefViewPrivate_)
     return;
 
-  Qt::ConnectionType connType =
-    pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection :
-#if defined(CEF_USE_OSR)
-                                                                  Qt::BlockingQueuedConnection;
-#else
-                                                                  Qt::QueuedConnection;
-#endif
+  // create QWindow from native browser window handle
+  QWindow* w = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));
+  Qt::ConnectionType c = Qt::DirectConnection;
+  if (pCefViewPrivate_->q_ptr->thread() != QThread::currentThread()) {
+    // move window to QCefView thread
+    w->moveToThread(pCefViewPrivate_->q_ptr->thread());
 
-  if (browser->IsPopup()) {
-    QWindow* wnd = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));
-    QMetaObject::invokeMethod(pCefViewPrivate_->q_ptr, //
-                              "onPopupCreated",        //
-                              connType,                //
-                              Q_ARG(QWindow*, wnd));
-  } else {
-    QMetaObject::invokeMethod(
-      pCefViewPrivate_,
-      [=]() {
-        CefRefPtr<CefBrowser> b(browser);
-        pCefViewPrivate_->onCefBrowserCreated(b);
-      },
-      connType);
+    // change connection type
+#if defined(CEF_USE_OSR)
+    c = Qt::BlockingQueuedConnection;
+#else
+    c = Qt::QueuedConnection;
+#endif
   }
+
+  QMetaObject::invokeMethod(
+    pCefViewPrivate_,
+    [=]() {
+      CefRefPtr<CefBrowser> b(browser);
+      if (b->IsPopup())
+        pCefViewPrivate_->onCefPopupBrowserCreated(b, w);
+      else
+        pCefViewPrivate_->onCefMainBrowserCreated(b, w);
+    },
+    c);
 }
 
 bool

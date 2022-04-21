@@ -113,11 +113,13 @@ public:
   void destroyCefBrowser();
 
 protected:
-  void onCefBrowserCreated(CefRefPtr<CefBrowser>& browser);
+  void onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
 
-  void ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser);
+  void ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* browserWindow);
 
   void osrOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser);
+
+  void onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
 
   void setCefWindowFocus(bool focus);
 

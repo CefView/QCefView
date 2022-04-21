@@ -160,29 +160,25 @@ QCefViewPrivate::destroyCefBrowser()
 }
 
 void
-QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser>& browser)
+QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window)
 {
+  // capture the browser
   pCefBrowser_ = browser;
 
 #if defined(CEF_USE_OSR)
   osrOnCefBrowserCreated(browser);
 #else
-  ncwOnCefBrowserCreated(browser);
+  ncwOnCefBrowserCreated(browser, window);
 #endif
 }
 
 void
-QCefViewPrivate::ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser)
+QCefViewPrivate::ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* browserWindow)
 {
-  Q_Q(QCefView);
-
-  // create QWindow from native browser window handle
-  QWindow* browserWindow = QWindow::fromWinId((WId)(pCefBrowser_->GetHost()->GetWindowHandle()));
-
   // create QWidget from cef browser widow, this will re-parent the CEF browser window
   QWidget* browserWidget = QWidget::createWindowContainer(
     browserWindow,
-    q,
+    q_ptr,
     Qt::CustomizeWindowHint | Qt::FramelessWindowHint | Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
   Q_ASSERT_X(browserWidget, "QCefViewPrivateNCW::createBrowser", "Failed to create QWidget from cef browser window");
   if (!browserWidget) {
@@ -191,33 +187,43 @@ QCefViewPrivate::ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser)
     return;
   }
 
+  // capture the resource
   ncw.qBrowserWindow_ = browserWindow;
   ncw.qBrowserWidget_ = browserWidget;
 
+  // install event filters
   ncw.qBrowserWidget_->installEventFilter(this);
   ncw.qBrowserWindow_->installEventFilter(this);
 
+  // monitor the focus changed event globally
   connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::onAppFocusChanged);
 
-  // initialize the layout and
-  // add browser widget to the layout
+  // initialize the layout and add browser widget to the layout
   QVBoxLayout* layout = new QVBoxLayout();
   layout->setContentsMargins(0, 0, 0, 0);
   layout->setSpacing(0);
   layout->addWidget(ncw.qBrowserWidget_);
-  q->setLayout(layout);
+  q_ptr->setLayout(layout);
 }
 
 void
 QCefViewPrivate::osrOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser)
 {
-  Q_Q(QCefView);
+  // notify the visibility and size
+  pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
+  pCefBrowser_->GetHost()->WasResized();
 
   // install global native event filter to capture the keyboard event
-  pCefBrowser_->GetHost()->WasHidden(!q->isVisible());
-  pCefBrowser_->GetHost()->WasResized();
-  q->installEventFilter(this);
+  q_ptr->installEventFilter(this);
   qApp->installNativeEventFilter(this);
+}
+
+void
+QCefViewPrivate::onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window)
+{
+  Q_Q(QCefView);
+
+  q->onPopupCreated(window);
 }
 
 void
