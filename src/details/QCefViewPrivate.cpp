@@ -178,7 +178,7 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
 #else
   // create QWidget from cef browser widow, this will re-parent the CEF browser window
   QWidget* browserWidget = QWidget::createWindowContainer(
-    browserWindow,
+    window,
     q_ptr,
     Qt::CustomizeWindowHint | Qt::FramelessWindowHint | Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
   Q_ASSERT_X(browserWidget, "QCefViewPrivateNCW::createBrowser", "Failed to create QWidget from cef browser window");
@@ -189,7 +189,7 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
   }
 
   // capture the resource
-  ncw.qBrowserWindow_ = browserWindow;
+  ncw.qBrowserWindow_ = window;
   ncw.qBrowserWidget_ = browserWidget;
 
   // monitor the focus changed event globally
@@ -303,6 +303,7 @@ QCefViewPrivate::onCefInputStateChanged(bool editable)
   q->setAttribute(Qt::WA_InputMethodEnabled, editable);
 }
 
+#if defined(CEF_USE_OSR)
 void
 QCefViewPrivate::onOsrImeCursorRectChanged(const QRect& rc)
 {
@@ -350,6 +351,7 @@ QCefViewPrivate::onOsrUpdatePopupFrame(const QImage& frame, const QRegion& regio
     q->update();
   });
 }
+#endif
 
 bool
 QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)

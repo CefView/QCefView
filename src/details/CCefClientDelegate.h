@@ -113,6 +113,7 @@ public:
   virtual void gotFocus(CefRefPtr<CefBrowser>& browser) override;
 
   // RenderHandler
+#if defined(CEF_USE_OSR)
   virtual bool GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
   virtual void GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
   virtual bool GetScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int viewY, int& screenX, int& screenY) override;
@@ -144,4 +145,5 @@ public:
                                       const CefRange& selected_range) override;
   virtual void OnVirtualKeyboardRequested(CefRefPtr<CefBrowser> browser,
                                           CefRenderHandler::TextInputMode input_mode) override;
+#endif
 };

@@ -6,6 +6,8 @@
 
 #include "QCefViewPrivate.h"
 
+#if defined(CEF_USE_OSR)
+
 bool
 CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
@@ -172,3 +174,5 @@ void
 CCefClientDelegate::OnVirtualKeyboardRequested(CefRefPtr<CefBrowser> browser,
                                                CefRenderHandler::TextInputMode input_mode)
 {}
+
+#endif

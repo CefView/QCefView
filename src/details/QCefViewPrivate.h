@@ -136,6 +136,7 @@ public slots:
 
   void onCefInputStateChanged(bool editable);
 
+#if defined(CEF_USE_OSR)
   void onOsrImeCursorRectChanged(const QRect& rc);
 
   void onOsrShowPopup(bool show);
@@ -145,6 +146,7 @@ public slots:
   void onOsrUpdateViewFrame(const QImage& frame, const QRegion& region);
 
   void onOsrUpdatePopupFrame(const QImage& frame, const QRegion& region);
+#endif
 
 protected:
   virtual bool eventFilter(QObject* watched, QEvent* event) override;
