@@ -11,6 +11,11 @@ CCefClientDelegate::CCefClientDelegate(QCefViewPrivate* p)
   : pCefViewPrivate_(p)
 {}
 
+CCefClientDelegate::~CCefClientDelegate()
+{
+  return;
+}
+
 void
 CCefClientDelegate::processUrlRequest(const std::string& url)
 {

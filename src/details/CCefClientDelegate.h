@@ -27,6 +27,8 @@ private:
 public:
   CCefClientDelegate(QCefViewPrivate* p);
 
+  ~CCefClientDelegate();
+
   virtual void processUrlRequest(const std::string& url) override;
 
   virtual void processQueryRequest(CefRefPtr<CefBrowser>& browser,
@@ -59,14 +61,14 @@ public:
                                     CefContextMenuHandler::EventFlags event_flags) override;
 
   // LifSpanHandler
-  virtual bool onBeforPopup(CefRefPtr<CefBrowser>& browser,
-                            int64_t frameId,
-                            const std::string& targetUrl,
-                            const std::string& targetFrameName,
-                            CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
-                            CefWindowInfo& windowInfo,
-                            CefBrowserSettings& settings,
-                            bool& DisableJavascriptAccess) override;
+  virtual bool onBeforePopup(CefRefPtr<CefBrowser>& browser,
+                             int64_t frameId,
+                             const std::string& targetUrl,
+                             const std::string& targetFrameName,
+                             CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
+                             CefWindowInfo& windowInfo,
+                             CefBrowserSettings& settings,
+                             bool& DisableJavascriptAccess) override;
   virtual void onAfterCreate(CefRefPtr<CefBrowser>& browser) override;
   virtual bool doClose(CefRefPtr<CefBrowser> browser) override;
   virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;

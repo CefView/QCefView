@@ -53,22 +53,7 @@ public:
   /// </summary>
   CefRefPtr<CefBrowser> pCefBrowser_ = nullptr;
 
-  /// <summary>
-  /// Native child window private data
-  /// </summary>
-  struct NcwPrivateData
-  {
-    /// <summary>
-    ///
-    /// </summary>
-    QWindow* qBrowserWindow_ = nullptr;
-
-    /// <summary>
-    ///
-    /// </summary>
-    QWidget* qBrowserWidget_ = nullptr;
-  } ncw;
-
+#if defined(CEF_USE_OSR)
   /// <summary>
   /// Offscreen rendering private data
   /// </summary>
@@ -99,6 +84,23 @@ public:
     /// </summary>
     QPixmap qCefPopupFrame_;
   } osr;
+#else
+  /// <summary>
+  /// Native child window private data
+  /// </summary>
+  struct NcwPrivateData
+  {
+    /// <summary>
+    ///
+    /// </summary>
+    QWindow* qBrowserWindow_ = nullptr;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QWidget* qBrowserWidget_ = nullptr;
+  } ncw;
+#endif
 
 public:
   explicit QCefViewPrivate(QCefContextPrivate* ctx,
@@ -115,11 +117,11 @@ public:
 protected:
   void onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
 
-  void ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* browserWindow);
-
-  void osrOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser);
-
   void onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
+
+  bool onCefDoCloseBrowser(CefRefPtr<CefBrowser>& browser);
+
+  void onCefBeforeCloseBrowser(CefRefPtr<CefBrowser>& browser);
 
   void setCefWindowFocus(bool focus);
 

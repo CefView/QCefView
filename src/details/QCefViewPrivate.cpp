@@ -152,9 +152,14 @@ QCefViewPrivate::destroyCefBrowser()
   if (!pClient_)
     return;
 
+#if !defined(CEF_USE_OSR)
+  // remove parent, or CEF will send close to the parent
+  // this will lead the top level window to be closed
+  ncw.qBrowserWindow_->setParent(nullptr);
+#endif
+
   // clean all browsers
   pClient_->CloseAllBrowsers();
-
   pClient_ = nullptr;
   pCefBrowser_ = nullptr;
 }
@@ -166,15 +171,11 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
   pCefBrowser_ = browser;
 
 #if defined(CEF_USE_OSR)
-  osrOnCefBrowserCreated(browser);
+  // notify the visibility and size
+  pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
+  pCefBrowser_->GetHost()->WasResized();
+  qApp->installNativeEventFilter(this);
 #else
-  ncwOnCefBrowserCreated(browser, window);
-#endif
-}
-
-void
-QCefViewPrivate::ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* browserWindow)
-{
   // create QWidget from cef browser widow, this will re-parent the CEF browser window
   QWidget* browserWidget = QWidget::createWindowContainer(
     browserWindow,
@@ -191,10 +192,6 @@ QCefViewPrivate::ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow*
   ncw.qBrowserWindow_ = browserWindow;
   ncw.qBrowserWidget_ = browserWidget;
 
-  // install event filters
-  ncw.qBrowserWidget_->installEventFilter(this);
-  ncw.qBrowserWindow_->installEventFilter(this);
-
   // monitor the focus changed event globally
   connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::onAppFocusChanged);
 
@@ -204,18 +201,7 @@ QCefViewPrivate::ncwOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow*
   layout->setSpacing(0);
   layout->addWidget(ncw.qBrowserWidget_);
   q_ptr->setLayout(layout);
-}
-
-void
-QCefViewPrivate::osrOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser)
-{
-  // notify the visibility and size
-  pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
-  pCefBrowser_->GetHost()->WasResized();
-
-  // install global native event filter to capture the keyboard event
-  q_ptr->installEventFilter(this);
-  qApp->installNativeEventFilter(this);
+#endif
 }
 
 void
@@ -224,6 +210,18 @@ QCefViewPrivate::onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindo
   Q_Q(QCefView);
 
   q->onPopupCreated(window);
+}
+
+bool
+QCefViewPrivate::onCefDoCloseBrowser(CefRefPtr<CefBrowser>& browser)
+{
+  return false;
+}
+
+void
+QCefViewPrivate::onCefBeforeCloseBrowser(CefRefPtr<CefBrowser>& browser)
+{
+  return;
 }
 
 void
@@ -358,63 +356,29 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 {
   Q_Q(QCefView);
 
-  // monitor the move event of the top-level window
-  if (watched == q->window() && event->type() == QEvent::Move) {
+  auto et = event->type();
+
+  // monitor the move event of the top-level window and the widget
+  if ((watched == q->window() || watched == q) && (et == QEvent::Move || et == QEvent::Resize)) {
     notifyMoveOrResizeStarted();
     return QObject::eventFilter(watched, event);
   }
 
 #if defined(CEF_USE_OSR)
-  // monitor the move/resize event of QCefView
-  if (watched == q && (event->type() == QEvent::Move || event->type() == QEvent::Resize)) {
-    notifyMoveOrResizeStarted();
-    return QObject::eventFilter(watched, event);
-  }
-
   return QObject::eventFilter(watched, event);
 #else
-  auto et = event->type();
-
-  // filter event to the browser widget
-  if (watched == ncw.qBrowserWidget_) {
+  // filter event to the browser window
+  if (watched == ncw.qBrowserWindow_) {
     switch (et) {
-      case QEvent::Move:
-      case QEvent::Resize: {
-        notifyMoveOrResizeStarted();
-      } break;
-      case QEvent::Show: {
-#if defined(OS_LINUX)
-        if (::XMapWindow(X11GetDisplay(ncw.qBrowserWidget_), ncw.qBrowserWindow_->winId()) <= 0)
-          qWarning() << "Failed to move input focus";
-          // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
-          // with the QCefView widget
-#endif
-#if defined(OS_WINDOWS)
-        // force to re-layout
-        q->layout()->invalidate();
-#endif
-      } break;
-      case QEvent::Hide: {
-#if defined(OS_WINDOWS)
-        // resize the browser window to 0 so that CEF will notify the
-        // "visibilitychanged" event in Javascript
-        ncw.qBrowserWindow_->resize(0, 0);
-#endif
+      case QEvent::PlatformSurface: {
+        auto t = ((QPlatformSurfaceEvent*)event)->surfaceEventType();
+        if (QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed == t) {
+          // browser window is being destroyed, need to close the browser window in advance
+          destroyCefBrowser();
+        }
       } break;
       default:
         break;
-    }
-  }
-
-  // filter event to the browser window
-  if (watched == ncw.qBrowserWindow_) {
-    if (QEvent::PlatformSurface != et)
-      return QObject::eventFilter(watched, event);
-
-    auto t = ((QPlatformSurfaceEvent*)event)->surfaceEventType();
-    if (QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed == t) {
-      // browser window is being destroyed, need to close the browser window in advance
-      destroyCefBrowser();
     }
   }
 
@@ -500,10 +464,17 @@ QCefViewPrivate::onViewVisibilityChanged(bool visible)
 #else
   Q_Q(QCefView);
   if (ncw.qBrowserWidget_) {
-    if (!visible)
-      ncw.qBrowserWidget_->resize(0, 0);
-    else
+    if (visible) {
+#if defined(OS_LINUX)
+      if (::XMapWindow(X11GetDisplay(ncw.qBrowserWidget_), ncw.qBrowserWindow_->winId()) <= 0)
+        qWarning() << "Failed to move input focus";
+        // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
+        // with the QCefView widget
+#endif
       ncw.qBrowserWidget_->resize(q->frameSize());
+    } else {
+      ncw.qBrowserWidget_->resize(0, 0);
+    }
   }
 #endif
 }

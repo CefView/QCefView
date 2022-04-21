@@ -6,14 +6,14 @@
 #include "QCefViewPrivate.h"
 
 bool
-CCefClientDelegate::onBeforPopup(CefRefPtr<CefBrowser>& browser,
-                                 int64_t frameId,
-                                 const std::string& targetUrl,
-                                 const std::string& targetFrameName,
-                                 CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
-                                 CefWindowInfo& windowInfo,
-                                 CefBrowserSettings& settings,
-                                 bool& DisableJavascriptAccess)
+CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
+                                  int64_t frameId,
+                                  const std::string& targetUrl,
+                                  const std::string& targetFrameName,
+                                  CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
+                                  CefWindowInfo& windowInfo,
+                                  CefBrowserSettings& settings,
+                                  bool& DisableJavascriptAccess)
 {
   bool result = false;
   if (pCefViewPrivate_) {
@@ -24,12 +24,11 @@ CCefClientDelegate::onBeforPopup(CefRefPtr<CefBrowser>& browser,
     QCefView::WindowOpenDisposition d = (QCefView::WindowOpenDisposition)targetDisposition;
     QCefSettingPrivate::CopyFromCefBrowserSettings(&s, &settings);
 
-    Qt::ConnectionType connType = pCefViewPrivate_->q_ptr->thread() == QThread::currentThread()
-                                    ? Qt::DirectConnection
-                                    : Qt::BlockingQueuedConnection;
+    Qt::ConnectionType c = pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection
+                                                                                         : Qt::BlockingQueuedConnection;
     QMetaObject::invokeMethod(pCefViewPrivate_->q_ptr,
                               "onBeforPopup",                            //
-                              connType,                                  //
+                              c,                                         //
                               Q_RETURN_ARG(bool, result),                //
                               Q_ARG(int64_t, frameId),                   //
                               Q_ARG(const QString&, url),                //
@@ -79,12 +78,37 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 bool
 CCefClientDelegate::doClose(CefRefPtr<CefBrowser> browser)
 {
+  if (!pCefViewPrivate_)
+    return false;
 
-  return false;
+  Qt::ConnectionType c =
+    pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection : Qt::BlockingQueuedConnection;
+
+  bool rt = false;
+  QMetaObject::invokeMethod(
+    pCefViewPrivate_,
+    [this, browser, &rt]() {
+      CefRefPtr<CefBrowser> b(browser);
+      rt = pCefViewPrivate_->onCefDoCloseBrowser(b);
+    },
+    c);
+  return rt;
 }
 
 void
 CCefClientDelegate::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 {
-  return;
+  if (!pCefViewPrivate_)
+    return;
+
+  Qt::ConnectionType c =
+    pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection : Qt::BlockingQueuedConnection;
+
+  QMetaObject::invokeMethod(
+    pCefViewPrivate_,
+    [this, browser]() {
+      CefRefPtr<CefBrowser> b(browser);
+      pCefViewPrivate_->onCefBeforeCloseBrowser(b);
+    },
+    c);
 }
