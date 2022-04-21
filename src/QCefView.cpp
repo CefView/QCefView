@@ -174,12 +174,12 @@ QCefView::setPreference(const QString& name, const QVariant& value, const QStrin
 }
 
 bool
-QCefView::onBeforPopup(int64_t frameId,
-                       const QString& targetUrl,
-                       const QString& targetFrameName,
-                       QCefView::WindowOpenDisposition targetDisposition,
-                       QCefSetting& settings,
-                       bool& DisableJavascriptAccess)
+QCefView::onBeforePopup(int64_t frameId,
+                        const QString& targetUrl,
+                        const QString& targetFrameName,
+                        QCefView::WindowOpenDisposition targetDisposition,
+                        QCefSetting& settings,
+                        bool& DisableJavascriptAccess)
 {
   // return false to allow the popup browser
   return false;

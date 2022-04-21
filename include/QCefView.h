@@ -302,12 +302,12 @@ public slots:
   /// <param name="settings">Settings to be used for the popup</param>
   /// <param name="DisableJavascriptAccess">Disable the access to Javascript</param>
   /// <returns>True to cancel the popup; false to allow</returns>
-  virtual bool onBeforPopup(int64_t frameId,
-                            const QString& targetUrl,
-                            const QString& targetFrameName,
-                            QCefView::WindowOpenDisposition targetDisposition,
-                            QCefSetting& settings,
-                            bool& DisableJavascriptAccess);
+  virtual bool onBeforePopup(int64_t frameId,
+                             const QString& targetUrl,
+                             const QString& targetFrameName,
+                             QCefView::WindowOpenDisposition targetDisposition,
+                             QCefSetting& settings,
+                             bool& DisableJavascriptAccess);
 
   /// <summary>
   /// Gets called right after the popup browser was created
