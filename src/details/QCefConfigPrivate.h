@@ -35,7 +35,7 @@ public:
   std::string bridgeObjectName_;
   std::string acceptLanguageList_;
 
-#if !defined(OS_MACOS)
+#if !defined(Q_OS_MACOS)
   std::string localesDirectoryPath_;
   std::string browserSubProcessPath_;
   std::string resourceDirectoryPath_;

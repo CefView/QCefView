@@ -261,6 +261,20 @@ QCefView::resizeEvent(QResizeEvent* event)
 }
 
 void
+QCefView::keyPressEvent(QKeyEvent* event)
+{
+  Q_D(QCefView);
+  d->onViewKeyEvent(event);
+}
+
+void
+QCefView::keyReleaseEvent(QKeyEvent* event)
+{
+  Q_D(QCefView);
+  d->onViewKeyEvent(event);
+}
+
+void
 QCefView::mouseMoveEvent(QMouseEvent* event)
 {
   Q_D(QCefView);

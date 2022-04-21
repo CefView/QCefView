@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget* parent)
 
   // build the path to the web resource
   QDir dir = QCoreApplication::applicationDirPath();
-#if defined(OS_MACOS)
+#if defined(Q_OS_MACOS)
   QString webResourceDir = /*QString("file://") +*/ QDir::toNativeSeparators(dir.filePath("../Resources/webres"));
 #else
   QString webResourceDir = /*QString("file://") +*/ QDir::toNativeSeparators(dir.filePath("webres"));
@@ -59,8 +59,8 @@ MainWindow::createCefView()
 
   // create the QCefView widget and add it to the layout container
   // cefViewWidget = new QCefView(INDEX_URL, &setting, this);
-  // cefViewWidget = new QCefView("http://output.jsbin.com/rinece", &setting, this);
-  cefViewWidget = new QCefView("https://www.testufo.com", &setting, this);
+  cefViewWidget = new QCefView("http://output.jsbin.com/rinece", &setting, this);
+  // cefViewWidget = new QCefView("https://www.testufo.com", &setting, this);
   ui.cefContainer->layout()->addWidget(cefViewWidget);
 
   // connect the invokeMethod to the slot

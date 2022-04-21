@@ -9,31 +9,6 @@ IsKeyDown(WPARAM wparam)
 }
 
 int
-GetCefMouseModifiers(WPARAM wparam)
-{
-  int modifiers = 0;
-  if (wparam & MK_CONTROL)
-    modifiers |= EVENTFLAG_CONTROL_DOWN;
-  if (wparam & MK_SHIFT)
-    modifiers |= EVENTFLAG_SHIFT_DOWN;
-  if (IsKeyDown(VK_MENU))
-    modifiers |= EVENTFLAG_ALT_DOWN;
-  if (wparam & MK_LBUTTON)
-    modifiers |= EVENTFLAG_LEFT_MOUSE_BUTTON;
-  if (wparam & MK_MBUTTON)
-    modifiers |= EVENTFLAG_MIDDLE_MOUSE_BUTTON;
-  if (wparam & MK_RBUTTON)
-    modifiers |= EVENTFLAG_RIGHT_MOUSE_BUTTON;
-
-  // Low bit set from GetKeyState indicates "toggled".
-  if (::GetKeyState(VK_NUMLOCK) & 1)
-    modifiers |= EVENTFLAG_NUM_LOCK_ON;
-  if (::GetKeyState(VK_CAPITAL) & 1)
-    modifiers |= EVENTFLAG_CAPS_LOCK_ON;
-  return modifiers;
-}
-
-int
 GetCefKeyboardModifiers(quint32 vk, quint32 scode)
 {
   int modifiers = 0;

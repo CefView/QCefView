@@ -86,7 +86,7 @@ public:
   /// <param name="v">The switch value</param>
   void addCommandLineSwitchWithValue(const QString& smitch, const QString& v);
 
-#if !defined(OS_MACOS)
+#if !defined(Q_OS_MACOS)
   /// <summary>
   /// Sets the browser subprocess path
   /// </summary>

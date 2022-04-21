@@ -12,7 +12,7 @@ QCefConfigPrivate::QCefConfigPrivate()
 {
   userAgent_ = kCefViewDefaultUserAgent;
 
-#if !defined(OS_MACOS)
+#if !defined(Q_OS_MACOS)
   QDir ExeDir = QCoreApplication::applicationDirPath();
 
   QString strExePath = ExeDir.filePath(kCefViewRenderProcessName);
@@ -32,7 +32,7 @@ QCefConfigPrivate::CopyToCefSettings(const QCefConfig* config, CefSettings* sett
   if (!config || !settings)
     return;
 
-#if !defined(OS_MACOS)
+#if !defined(Q_OS_MACOS)
   if (!config->d_ptr->browserSubProcessPath_.empty())
     CefString(&settings->browser_subprocess_path) = config->d_ptr->browserSubProcessPath_;
 

@@ -41,7 +41,7 @@ QCefConfig::addCommandLineSwitchWithValue(const QString& smitch, const QString& 
   d->commandLineArgs_[smitch.toStdString()] = v.toStdString();
 }
 
-#if !defined(OS_MACOS)
+#if !defined(Q_OS_MACOS)
 void
 QCefConfig::setBrowserSubProcessPath(const QString& path)
 {

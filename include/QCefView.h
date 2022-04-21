@@ -358,6 +358,16 @@ protected:
   void resizeEvent(QResizeEvent* event) override;
 
   /// <summary>
+  /// Please refer to QWidget::keyPressEvent
+  /// </summary>
+  void keyPressEvent(QKeyEvent* event) override;
+
+  /// <summary>
+  /// Please refer to QWidget::keyReleaseEvent
+  /// </summary>
+  void keyReleaseEvent(QKeyEvent* event) override;
+
+  /// <summary>
   /// Please refer to QWidget::mouseMoveEvent
   /// </summary>
   void mouseMoveEvent(QMouseEvent* event) override;

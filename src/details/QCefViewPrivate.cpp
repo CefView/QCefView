@@ -12,7 +12,7 @@
 #include <QPlatformSurfaceEvent>
 #include <QVBoxLayout>
 #include <QWindow>
-#if defined(OS_LINUX)
+#if defined(Q_OS_LINUX)
 #include <X11/Xlib.h>
 #include <qpa/qplatformnativeinterface.h>
 #endif
@@ -32,7 +32,7 @@
 #include "QCefSettingPrivate.h"
 #include "ValueConvertor.h"
 
-#if defined(OS_LINUX)
+#if defined(Q_OS_LINUX)
 Display*
 X11GetDisplay(QWidget* widget)
 {
@@ -467,7 +467,7 @@ QCefViewPrivate::onViewVisibilityChanged(bool visible)
   Q_Q(QCefView);
   if (ncw.qBrowserWidget_) {
     if (visible) {
-#if defined(OS_LINUX)
+#if defined(Q_OS_LINUX)
       if (::XMapWindow(X11GetDisplay(ncw.qBrowserWidget_), ncw.qBrowserWindow_->winId()) <= 0)
         qWarning() << "Failed to move input focus";
         // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
@@ -499,6 +499,101 @@ QCefViewPrivate::onViewSizeChanged(const QSize& size, const QSize& oldSize)
 #endif
 }
 
+#if defined(CEF_USE_OSR)
+uint32_t
+GetCefKeyboardModifiers(QKeyEvent* event)
+{
+  uint32_t cm = 0;
+#if defined(Q_OS_WINDOWS)
+  if (::GetKeyState(VK_NUMLOCK) & 1)
+    cm |= EVENTFLAG_NUM_LOCK_ON;
+  if (::GetKeyState(VK_CAPITAL) & 1)
+    cm |= EVENTFLAG_CAPS_LOCK_ON;
+
+  auto vk = event->nativeVirtualKey();
+  switch (vk) {
+    case VK_SHIFT:
+      if (::GetKeyState(VK_LSHIFT) & 0x8000)
+        cm |= EVENTFLAG_IS_LEFT;
+      else if (::GetKeyState(VK_RSHIFT) & 0x8000)
+        cm |= EVENTFLAG_IS_RIGHT;
+      break;
+    case VK_CONTROL:
+      if (::GetKeyState(VK_LCONTROL) & 0x8000)
+        cm |= EVENTFLAG_IS_LEFT;
+      else if (::GetKeyState(VK_RCONTROL) & 0x8000)
+        cm |= EVENTFLAG_IS_RIGHT;
+      break;
+    case VK_MENU:
+      if (::GetKeyState(VK_LMENU) & 0x8000)
+        cm |= EVENTFLAG_IS_LEFT;
+      else if (::GetKeyState(VK_RMENU) & 0x8000)
+        cm |= EVENTFLAG_IS_RIGHT;
+      break;
+    case VK_LWIN:
+      cm |= EVENTFLAG_IS_LEFT;
+      break;
+    case VK_RWIN:
+      cm |= EVENTFLAG_IS_RIGHT;
+      break;
+  }
+
+  // mimic alt-gr check behavior from
+  if (!event->text().isEmpty() && (::GetKeyState(VK_RMENU) & 0x8000)) {
+    // reverse AltGr detection taken from PlatformKeyMap::UsesAltGraph
+    // instead of checking all combination for ctrl-alt, just check current char
+    HKL current_layout = ::GetKeyboardLayout(0);
+
+    // https://docs.microsoft.com/en-gb/windows/win32/api/winuser/nf-winuser-vkkeyscanexw
+    // ... high-order byte contains the shift state,
+    // which can be a combination of the following flag bits.
+    // 2 Either CTRL key is pressed.
+    // 4 Either ALT key is pressed.
+    SHORT scan_res = ::VkKeyScanExW(vk, current_layout);
+    if (((scan_res >> 8) & 0xFF) == (2 | 4)) {
+      // ctrl-alt pressed
+      cm &= ~(EVENTFLAG_CONTROL_DOWN | EVENTFLAG_ALT_DOWN);
+      cm |= EVENTFLAG_ALTGR_DOWN;
+    }
+  }
+#endif
+
+  return cm;
+}
+#endif
+
+void
+QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
+{
+#if defined(CEF_USE_OSR)
+  if (!pCefBrowser_)
+    return;
+
+  auto m = event->modifiers();
+
+  CefKeyEvent e;
+  e.windows_key_code = event->key();
+  e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
+  e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
+  e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
+  e.modifiers |= m & Qt::KeypadModifier ? EVENTFLAG_IS_KEY_PAD : 0;
+  e.modifiers |= GetCefKeyboardModifiers(event);
+
+  // if (event->type() == QEvent::KeyPress) {
+  //  e.type = KEYEVENT_RAWKEYDOWN;
+  //} else {
+  //  e.type = KEYEVENT_KEYUP;
+  //}
+  // pCefBrowser_->GetHost()->SendKeyEvent(e);
+
+  // if ((event->type() == QEvent::KeyPress) && !event->text().isEmpty()) {
+  //  e.windows_key_code = event->key();
+  //  e.type = KEYEVENT_CHAR;
+  //  pCefBrowser_->GetHost()->SendKeyEvent(e);
+  //}
+#endif
+}
+
 void
 QCefViewPrivate::onViewMouseEvent(QMouseEvent* event)
 {
@@ -506,18 +601,18 @@ QCefViewPrivate::onViewMouseEvent(QMouseEvent* event)
   if (!pCefBrowser_)
     return;
 
-  auto m = event->modifiers();
   auto b = event->buttons();
+  auto m = event->modifiers();
 
   CefMouseEvent e;
+  e.x = ((QMouseEvent*)event)->pos().x();
+  e.y = ((QMouseEvent*)event)->pos().y();
   e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
   e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
   e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
   e.modifiers |= b & Qt::LeftButton ? EVENTFLAG_LEFT_MOUSE_BUTTON : 0;
   e.modifiers |= b & Qt::RightButton ? EVENTFLAG_RIGHT_MOUSE_BUTTON : 0;
   e.modifiers |= b & Qt::MiddleButton ? EVENTFLAG_MIDDLE_MOUSE_BUTTON : 0;
-  e.x = ((QMouseEvent*)event)->pos().x();
-  e.y = ((QMouseEvent*)event)->pos().y();
 
   if (QEvent::MouseMove == event->type()) {
     pCefBrowser_->GetHost()->SendMouseMoveEvent(e, false);

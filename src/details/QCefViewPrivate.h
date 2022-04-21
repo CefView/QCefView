@@ -161,6 +161,8 @@ protected:
 
   void onViewSizeChanged(const QSize& size, const QSize& oldSize);
 
+  void onViewKeyEvent(QKeyEvent* event);
+
   void onViewMouseEvent(QMouseEvent* event);
 
   void onViewWheelEvent(QWheelEvent* event);
