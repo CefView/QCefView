@@ -216,6 +216,7 @@ QCefViewPrivate::osrOnCefBrowserCreated(CefRefPtr<CefBrowser>& browser)
   // install global native event filter to capture the keyboard event
   pCefBrowser_->GetHost()->WasHidden(!q->isVisible());
   pCefBrowser_->GetHost()->WasResized();
+  q->installEventFilter(this);
   qApp->installNativeEventFilter(this);
 }
 
@@ -350,11 +351,20 @@ bool
 QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 {
   Q_Q(QCefView);
+
+  // monitor the move event of the top-level window
   if (watched == q->window() && event->type() == QEvent::Move) {
     notifyMoveOrResizeStarted();
+    return QObject::eventFilter(watched, event);
   }
 
 #if defined(CEF_USE_OSR)
+  // monitor the move/resize event of QCefView
+  if (watched == q && (event->type() == QEvent::Move || event->type() == QEvent::Resize)) {
+    notifyMoveOrResizeStarted();
+    return QObject::eventFilter(watched, event);
+  }
+
   return QObject::eventFilter(watched, event);
 #else
   auto et = event->type();
@@ -362,6 +372,7 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
   // filter event to the browser widget
   if (watched == ncw.qBrowserWidget_) {
     switch (et) {
+      case QEvent::Move:
       case QEvent::Resize: {
         notifyMoveOrResizeStarted();
       } break;
@@ -749,8 +760,9 @@ QCefViewPrivate::notifyMoveOrResizeStarted()
 {
   if (pCefBrowser_) {
     CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
-    if (host)
+    if (host) {
       host->NotifyMoveOrResizeStarted();
+    }
   }
 }
 

@@ -9,13 +9,11 @@
 bool
 CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
-  return false;
   if (!IsValidBrowser(browser))
     return false;
 
   QRect rcWindow = pCefViewPrivate_->q_ptr->window()->frameGeometry();
   rect.Set(rcWindow.left(), rcWindow.right(), rcWindow.width(), rcWindow.height());
-  qDebug() << "======== GetRootScreenRect:" << rcWindow;
   return true;
 }
 
@@ -27,10 +25,13 @@ CCefClientDelegate::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
     return;
   }
 
+  // Note: the documentation of the CefRenderHandler::GetViewRect
+  // says `the rect is relative to the screen coordinates` but actually
+  // it is relative to the top level window. In the source code of of the cefclient example
+  // it just returns the rect retrieved from GetClinetRect which is relative to the window
   QSize rcSize = pCefViewPrivate_->q_ptr->size();
-  QPoint ptScreen = pCefViewPrivate_->q_ptr->mapToGlobal(QPoint(0, 0));
-  rect.Set(ptScreen.x(), ptScreen.y(), rcSize.width(), rcSize.height());
-  qDebug() << "======== GetViewRect:" << QRect{ ptScreen.x(), ptScreen.y(), rcSize.width(), rcSize.height() };
+  QPoint ptWindow = pCefViewPrivate_->q_ptr->mapTo(pCefViewPrivate_->q_ptr->window(), QPoint(0, 0));
+  rect.Set(ptWindow.x(), ptWindow.y(), rcSize.width(), rcSize.height());
 }
 
 bool
@@ -51,18 +52,17 @@ CCefClientDelegate::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& 
   if (!IsValidBrowser(browser))
     return false;
 
-  QScreen* screen = pCefViewPrivate_->q_ptr->screen();
-  QRect rect = screen->geometry();
-  QRect availableRect = screen->availableGeometry();
-  screen_info.Set(screen->devicePixelRatio(),                                                                    //
-                  screen->depth(),                                                                               //
-                  0,                                                                                             //
-                  false,                                                                                         //
-                  CefRect{ rect.x(), rect.y(), rect.width(), rect.height() },                                    //
-                  CefRect{ availableRect.x(), availableRect.y(), availableRect.width(), availableRect.height() } //
-  );
+  CefRect rect;
+  GetViewRect(browser, rect);
 
-  qDebug() << "======== GetScreenInfo:" << rect << ", availableRect" << availableRect;
+  QScreen* screen = pCefViewPrivate_->q_ptr->screen();
+  screen_info.Set(screen->devicePixelRatio(), //
+                  screen->depth(),            //
+                  0,                          //
+                  false,                      //
+                  rect,                       //
+                  rect                        //
+  );
 
   return true;
 }
@@ -81,8 +81,6 @@ CCefClientDelegate::OnPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& re
 {
   if (!IsValidBrowser(browser))
     return;
-
-  qDebug() << "======== OnPopupSize:" << QRect{ rect.x, rect.y, rect.width, rect.height };
 
   pCefViewPrivate_->onOsrResizePopup(QRect{ rect.x, rect.y, rect.width, rect.height });
 }
@@ -156,7 +154,7 @@ CCefClientDelegate::OnImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
     auto r = character_bounds[character_bounds.size() - 1];
     QRect rc(r.x, r.y, r.width, r.height);
     QMetaObject::invokeMethod(pCefViewPrivate_,             //
-                              "onImeCursorRectChanged",     //
+                              "onOsrImeCursorRectChanged",  //
                               Qt::BlockingQueuedConnection, //
                               Q_ARG(const QRect&, rc));
   }
