@@ -222,7 +222,7 @@ public:
   /// <summary>
   /// Sets whether to persist session cookie
   /// </summary>
-  /// <param name="enabled">True if to perssit session cookie</param>
+  /// <param name="enabled">True if to persist session cookie</param>
   void setPersistSessionCookies(bool enabled);
 
   /// <summary>

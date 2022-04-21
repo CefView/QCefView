@@ -310,30 +310,71 @@ public slots:
                             bool& DisableJavascriptAccess);
 
   /// <summary>
-  ///
+  /// Gets called right after the popup browser was created
   /// </summary>
+  /// <param name="wnd">The host window of new created browser</param>
   virtual void onPopupCreated(QWindow* wnd);
 
 public:
   /// <summary>
-  ///
+  /// Please refer to QWidget::inputMethodQuery
   /// </summary>
-  /// <param name="query"></param>
-  /// <returns></returns>
   QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
 
 protected:
+  /// <summary>
+  /// Please refer to QWidget::paintEvent
+  /// </summary>
   void paintEvent(QPaintEvent* event) override;
 
+  /// <summary>
+  /// Please refer to QWidget::inputMethodEvent
+  /// </summary>
   void inputMethodEvent(QInputMethodEvent* event) override;
+
+  /// <summary>
+  /// Please refer to QWidget::showEvent
+  /// </summary>
   void showEvent(QShowEvent* event) override;
+
+  /// <summary>
+  /// Please refer to QWidget::hideEvent
+  /// </summary>
   void hideEvent(QHideEvent* event) override;
+
+  /// <summary>
+  /// Please refer to QWidget::focusInEvent
+  /// </summary>
   void focusInEvent(QFocusEvent* event) override;
+
+  /// <summary>
+  /// Please refer to QWidget::focusOutEvent
+  /// </summary>
   void focusOutEvent(QFocusEvent* event) override;
+
+  /// <summary>
+  /// Please refer to QWidget::resizeEvent
+  /// </summary>
   void resizeEvent(QResizeEvent* event) override;
+
+  /// <summary>
+  /// Please refer to QWidget::mouseMoveEvent
+  /// </summary>
   void mouseMoveEvent(QMouseEvent* event) override;
+
+  /// <summary>
+  /// Please refer to QWidget::mousePressEvent
+  /// </summary>
   void mousePressEvent(QMouseEvent* event) override;
+
+  /// <summary>
+  /// Please refer to QWidget::mouseReleaseEvent
+  /// </summary>
   void mouseReleaseEvent(QMouseEvent* event) override;
+
+  /// <summary>
+  /// Please refer to QWidget::wheelEvent
+  /// </summary>
   void wheelEvent(QWheelEvent* event) override;
 };
 
