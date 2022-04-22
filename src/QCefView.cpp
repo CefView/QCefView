@@ -18,8 +18,7 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
   , d_ptr(new QCefViewPrivate(QCefContext::instance()->d_func(), this, url, setting))
 {
 #if defined(CEF_USE_OSR)
-  setAttribute(Qt::WA_PaintOnScreen);
-  setAttribute(Qt::WA_StaticContents);
+  setAttribute(Qt::WA_OpaquePaintEvent);
 #endif
 
   setMouseTracking(true);
@@ -203,15 +202,21 @@ QCefView::inputMethodQuery(Qt::InputMethodQuery query) const
 void
 QCefView::paintEvent(QPaintEvent* event)
 {
-#if defined(CEF_USE_OSR)
-  QPainter painter(this);
-
   Q_D(QCefView);
-  painter.drawPixmap(0, 0, d->osr.qCefViewFrame_);
 
-  if (d->osr.showPopup_) {
-    painter.drawPixmap(d->osr.qPopupRect_.topLeft(), d->osr.qCefPopupFrame_);
+#if defined(CEF_USE_OSR)
+  QPixmap backingPixmap(size());
+  QPainter backingPainter(&backingPixmap);
+  backingPainter.fillRect(rect(), QPalette().window());
+  {
+    QMutexLocker lock(&(d->osr.qPaintLock_));
+    backingPainter.drawImage(0, 0, d->osr.qCefViewFrame_);
+    if (d->osr.showPopup_)
+      backingPainter.drawImage(d->osr.qPopupRect_.topLeft(), d->osr.qCefPopupFrame_);
   }
+
+  QPainter painter(this);
+  painter.drawPixmap(0, 0, backingPixmap);
 #endif
   return QWidget::paintEvent(event);
 }

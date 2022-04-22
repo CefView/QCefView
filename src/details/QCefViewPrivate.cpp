@@ -331,11 +331,12 @@ QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region
   Q_Q(QCefView);
 
   // copy to hold the frame buffer data
-  auto framePixmap = QPixmap::fromImage(frame.copy());
-  QMetaObject::invokeMethod(q, [=]() {
-    osr.qCefViewFrame_ = framePixmap;
-    q->update();
-  });
+  auto viewFrame = frame.copy();
+  {
+    QMutexLocker lock(&(osr.qPaintLock_));
+    osr.qCefViewFrame_ = viewFrame;
+  }
+  q->update();
 }
 
 void
@@ -344,11 +345,12 @@ QCefViewPrivate::onOsrUpdatePopupFrame(const QImage& frame, const QRegion& regio
   Q_Q(QCefView);
 
   // copy to hold the frame buffer data
-  auto framePixmap = QPixmap::fromImage(frame.copy());
-  QMetaObject::invokeMethod(q, [=]() {
-    osr.qCefPopupFrame_ = framePixmap;
-    q->update();
-  });
+  auto popupFrame = frame.copy();
+  {
+    QMutexLocker lock(&(osr.qPaintLock_));
+    osr.qCefPopupFrame_ = popupFrame;
+  }
+  q->update();
 }
 #endif
 
