@@ -1,5 +1,8 @@
 # QCefView https://cefview.github.io/QCefView/
 
+## [Quick Start](https://cefview.github.io/QCefView/)
+
+
 QCefView is a Qt based QWidget which encapsulates [CEF](https://bitbucket.org/chromiumembedded/cef). With QCefView you can build your application UI in frontend developing way to boost your project. And what's more you can completely decouple the UI and business logic in your project.
 
 |   |  Lastest Build Status  | Production Ready  |
@@ -8,8 +11,22 @@ QCefView is a Qt based QWidget which encapsulates [CEF](https://bitbucket.org/ch
 | macOS | [![Build on macOS](https://github.com/CefView/QCefView/actions/workflows/build-macos.yml/badge.svg)](https://github.com/CefView/QCefView/actions/workflows/build-macos.yml) | :heavy_check_mark: |
 | Linux | [![Build on Linux](https://github.com/CefView/QCefView/actions/workflows/build-linux.yml/badge.svg)](https://github.com/CefView/QCefView/actions/workflows/build-linux.yml) | :x: |
 
-## [Quick Start](https://cefview.github.io/QCefView/)
 
+## About OSR mode
+
+QCefView supports CEF offscreen rendering mode, to enable the OSR mode just add switch `USE_OSR=ON` during the CMake configuring stage (remember to clear the cache generate from previous configuration).
+
+QCefView currently use Qt Software Rasterizer as the backend paint engine for best compatibility, thus the rendering performance is not so good to be applied for all business scenarios. If you are going to host WegGL games, video sites or some other Web Apps with high rendering performance, Non OSR mode (Native Child Window mode) is recommended.
+
+### Why not OpenGL/DirectX/Metal?
+
+QCefView was designed to be a common Qt widget for Desktop application, so the compatibility is the first important requirement. We can switch the backend engine from Software Rasterizer to OpenGL/DirectX/Metal but this will increase the complexity and decrease the compatibility of QCefView. 
+
+For example if we use OpenGL as the backend engine then all the applications with QCefView introduced will be switched to OpenGL backend automatically. I believe not all users want this to happen. 
+
+DirectX/Metal are platform dependent and they are not supported natively by Qt. If we provide QCefView with extra dependencies individually, this makes QCefView so different with other components in Qt Framework.
+
+But if you must use OSR and the rendering performance is vital, you can try to switch the backend with whatever you want.
 
 ## Contributing
 This project welcomes contributions and suggestions. Make sure to align your code style with the configuration defined by .clang-format file
