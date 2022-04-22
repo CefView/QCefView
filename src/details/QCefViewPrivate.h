@@ -146,9 +146,13 @@ public slots:
 
   void onOsrResizePopup(const QRect& rc);
 
-  void onOsrUpdateViewFrame(const QImage& frame, const QRegion& region);
+signals:
+  void updateOsrFrame();
 
-  void onOsrUpdatePopupFrame(const QImage& frame, const QRegion& region);
+protected:
+  void onOsrUpdateViewFrame(const QImage& frame, const CefRenderHandler::RectList& dirtyRects);
+
+  void onOsrUpdatePopupFrame(const QImage& frame, const CefRenderHandler::RectList& dirtyRects);
 #endif
 
 protected:
