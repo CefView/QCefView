@@ -14,9 +14,7 @@
 
 #include <QCefView.h>
 
-class QCefViewPrivate
-  : public QObject
-  , public QAbstractNativeEventFilter
+class QCefViewPrivate : public QObject
 {
   Q_OBJECT
   Q_DECLARE_PUBLIC(QCefView)
@@ -166,15 +164,6 @@ protected:
   void onViewMouseEvent(QMouseEvent* event);
 
   void onViewWheelEvent(QWheelEvent* event);
-
-  virtual bool nativeEventFilter(const QByteArray& eventType,
-                                 void* message,
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-                                 qintptr* result
-#else
-                                 long* result
-#endif
-                                 ) override;
 
 public:
   int browserId();

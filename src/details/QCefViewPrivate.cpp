@@ -174,7 +174,6 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
   // notify the visibility and size
   pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
   pCefBrowser_->GetHost()->WasResized();
-  qApp->installNativeEventFilter(this);
 #else
   // create QWidget from cef browser widow, this will re-parent the CEF browser window
   QWidget* browserWidget = QWidget::createWindowContainer(
@@ -361,31 +360,30 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
   auto et = event->type();
 
   // monitor the move event of the top-level window and the widget
-  if ((watched == q->window() || watched == q) && (et == QEvent::Move || et == QEvent::Resize)) {
+  if ((watched == q || watched == q->window()) && (et == QEvent::Move || et == QEvent::Resize)) {
     notifyMoveOrResizeStarted();
-    return QObject::eventFilter(watched, event);
   }
 
 #if defined(CEF_USE_OSR)
-  return QObject::eventFilter(watched, event);
-#else
-  // filter event to the browser window
-  if (watched == ncw.qBrowserWindow_) {
-    switch (et) {
-      case QEvent::PlatformSurface: {
-        auto t = ((QPlatformSurfaceEvent*)event)->surfaceEventType();
-        if (QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed == t) {
-          // browser window is being destroyed, need to close the browser window in advance
-          destroyCefBrowser();
-        }
-      } break;
-      default:
-        break;
+  if (watched == q && (et == QEvent::KeyPress || et == QEvent::KeyRelease)) {
+    QKeyEvent* ke = (QKeyEvent*)event;
+    if (ke->key() == Qt::Key_Tab) {
+      onViewKeyEvent(ke);
+      return true;
     }
   }
+#else
+  // filter event to the browser window
+  if (watched == ncw.qBrowserWindow_ && et == QEvent::PlatformSurface) {
+    auto t = ((QPlatformSurfaceEvent*)event)->surfaceEventType();
+    if (QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed == t) {
+      // browser window is being destroyed, need to close the browser window in advance
+      destroyCefBrowser();
+    }
+  }
+#endif
 
   return QObject::eventFilter(watched, event);
-#endif
 }
 
 QVariant
@@ -504,6 +502,7 @@ uint32_t
 GetCefKeyboardModifiers(QKeyEvent* event)
 {
   uint32_t cm = 0;
+
 #if defined(Q_OS_WINDOWS)
   if (::GetKeyState(VK_NUMLOCK) & 1)
     cm |= EVENTFLAG_NUM_LOCK_ON;
@@ -569,28 +568,28 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
   if (!pCefBrowser_)
     return;
 
-  auto m = event->modifiers();
-
   CefKeyEvent e;
-  e.windows_key_code = event->key();
+
+  auto m = event->modifiers();
   e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
   e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
   e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
   e.modifiers |= m & Qt::KeypadModifier ? EVENTFLAG_IS_KEY_PAD : 0;
   e.modifiers |= GetCefKeyboardModifiers(event);
 
-  // if (event->type() == QEvent::KeyPress) {
-  //  e.type = KEYEVENT_RAWKEYDOWN;
-  //} else {
-  //  e.type = KEYEVENT_KEYUP;
-  //}
-  // pCefBrowser_->GetHost()->SendKeyEvent(e);
+  e.windows_key_code = event->nativeVirtualKey();
+  if (event->type() == QEvent::KeyPress) {
+    e.type = KEYEVENT_RAWKEYDOWN;
+  } else {
+    e.type = KEYEVENT_KEYUP;
+  }
+  pCefBrowser_->GetHost()->SendKeyEvent(e);
 
-  // if ((event->type() == QEvent::KeyPress) && !event->text().isEmpty()) {
-  //  e.windows_key_code = event->key();
-  //  e.type = KEYEVENT_CHAR;
-  //  pCefBrowser_->GetHost()->SendKeyEvent(e);
-  //}
+  if ((event->type() == QEvent::KeyPress) && !event->text().isEmpty()) {
+    e.windows_key_code = event->text().at(0).unicode();
+    e.type = KEYEVENT_CHAR;
+    pCefBrowser_->GetHost()->SendKeyEvent(e);
+  }
 #endif
 }
 
