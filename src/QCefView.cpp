@@ -22,8 +22,6 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
   setAttribute(Qt::WA_StaticContents);
 #endif
 
-  // BUG: when size goes into zero, CEF OSR will crash
-  setMinimumSize(1, 1);
   setMouseTracking(true);
   setFocusPolicy(Qt::WheelFocus);
 }
