@@ -174,6 +174,7 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
   // notify the visibility and size
   pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
   pCefBrowser_->GetHost()->WasResized();
+  connect(this, SIGNAL(updateOsrFrame()), q_ptr, SLOT(update()));
 #else
   // create QWidget from cef browser widow, this will re-parent the CEF browser window
   QWidget* browserWidget = QWidget::createWindowContainer(
@@ -326,29 +327,41 @@ QCefViewPrivate::onOsrResizePopup(const QRect& rc)
 }
 
 void
-QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region)
+QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const CefRenderHandler::RectList& dirtyRects)
 {
-  Q_Q(QCefView);
+  {
+    QMutexLocker lock(&(osr.qPaintLock_));
 
-  // copy to hold the frame buffer data
-  auto framePixmap = QPixmap::fromImage(frame.copy());
-  QMetaObject::invokeMethod(q, [=]() {
-    osr.qCefViewFrame_ = framePixmap;
-    q->update();
-  });
+    if (osr.qCefViewFrame_.size() == frame.size()) {
+      QPainter painter(&osr.qCefViewFrame_);
+      for (auto& rect : dirtyRects) {
+        QRect rc{ rect.x, rect.y, rect.width, rect.height };
+        painter.drawImage(rc, frame, rc);
+      }
+    } else {
+      osr.qCefViewFrame_ = frame.copy();
+    }
+  }
+  emit updateOsrFrame();
 }
 
 void
-QCefViewPrivate::onOsrUpdatePopupFrame(const QImage& frame, const QRegion& region)
+QCefViewPrivate::onOsrUpdatePopupFrame(const QImage& frame, const CefRenderHandler::RectList& dirtyRects)
 {
-  Q_Q(QCefView);
+  {
+    QMutexLocker lock(&(osr.qPaintLock_));
 
-  // copy to hold the frame buffer data
-  auto framePixmap = QPixmap::fromImage(frame.copy());
-  QMetaObject::invokeMethod(q, [=]() {
-    osr.qCefPopupFrame_ = framePixmap;
-    q->update();
-  });
+    if (osr.qCefPopupFrame_.size() == frame.size()) {
+      QPainter painter(&osr.qCefPopupFrame_);
+      for (auto& rect : dirtyRects) {
+        QRect rc{ rect.x, rect.y, rect.width, rect.height };
+        painter.drawImage(rc, frame, rc);
+      }
+    } else {
+      osr.qCefPopupFrame_ = frame.copy();
+    }
+  }
+  emit updateOsrFrame();
 }
 #endif
 

@@ -1,6 +1,6 @@
 ﻿#pragma once
 #pragma region qt_headers
-#include <QAbstractNativeEventFilter>
+#include <QMutex>
 #include <QSet>
 #include <QString>
 #include <QWindow>
@@ -75,12 +75,17 @@ public:
     /// <summary>
     ///
     /// </summary>
-    QPixmap qCefViewFrame_;
+    QMutex qPaintLock_;
 
     /// <summary>
     ///
     /// </summary>
-    QPixmap qCefPopupFrame_;
+    QImage qCefViewFrame_;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QImage qCefPopupFrame_;
   } osr;
 #else
   /// <summary>
@@ -141,9 +146,13 @@ public slots:
 
   void onOsrResizePopup(const QRect& rc);
 
-  void onOsrUpdateViewFrame(const QImage& frame, const QRegion& region);
+signals:
+  void updateOsrFrame();
 
-  void onOsrUpdatePopupFrame(const QImage& frame, const QRegion& region);
+protected:
+  void onOsrUpdateViewFrame(const QImage& frame, const CefRenderHandler::RectList& dirtyRects);
+
+  void onOsrUpdatePopupFrame(const QImage& frame, const CefRenderHandler::RectList& dirtyRects);
 #endif
 
 protected:

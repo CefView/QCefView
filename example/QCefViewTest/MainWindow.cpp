@@ -55,6 +55,7 @@ MainWindow::createCefView()
   // build settings for per QCefView
   QCefSetting setting;
   setting.setPlugins(false);
+  setting.setWindowlessFrameRate(60);
   setting.setBackgroundColor(QColor::fromRgba(qRgba(250, 249, 222, 255)));
 
   // create the QCefView widget and add it to the layout container

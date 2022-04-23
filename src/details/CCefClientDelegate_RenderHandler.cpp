@@ -110,9 +110,9 @@ CCefClientDelegate::OnPaint(CefRefPtr<CefBrowser> browser,
   QImage frame = QImage(static_cast<const uchar*>(buffer), width, height, QImage::Format_ARGB32_Premultiplied);
 
   if (PET_VIEW == type) {
-    pCefViewPrivate_->onOsrUpdateViewFrame(frame, region);
+    pCefViewPrivate_->onOsrUpdateViewFrame(frame, dirtyRects);
   } else if (PET_POPUP == type) {
-    pCefViewPrivate_->onOsrUpdatePopupFrame(frame, region);
+    pCefViewPrivate_->onOsrUpdatePopupFrame(frame, dirtyRects);
   } else {
   }
 }
