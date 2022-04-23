@@ -19,6 +19,7 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
 {
 #if defined(CEF_USE_OSR)
   setAttribute(Qt::WA_OpaquePaintEvent);
+  setBackgroundRole(QPalette::Window);
 #endif
 
   setMouseTracking(true);
@@ -207,7 +208,7 @@ QCefView::paintEvent(QPaintEvent* event)
 #if defined(CEF_USE_OSR)
   QPixmap backingPixmap(size());
   QPainter backingPainter(&backingPixmap);
-  backingPainter.fillRect(rect(), QPalette().window());
+  backingPainter.fillRect(rect(), palette().color(backgroundRole()));
   {
     QMutexLocker lock(&(d->osr.qPaintLock_));
     backingPainter.drawImage(0, 0, d->osr.qCefViewFrame_);
@@ -218,6 +219,7 @@ QCefView::paintEvent(QPaintEvent* event)
   QPainter painter(this);
   painter.drawPixmap(0, 0, backingPixmap);
 #endif
+
   return QWidget::paintEvent(event);
 }
 
