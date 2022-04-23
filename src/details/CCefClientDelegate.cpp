@@ -5,7 +5,7 @@
 
 #include "QCefSettingPrivate.h"
 #include "QCefViewPrivate.h"
-#include "ValueConvertor.h"
+#include "utils/ValueConvertor.h"
 
 CCefClientDelegate::CCefClientDelegate(QCefViewPrivate* p)
   : pCefViewPrivate_(p)
