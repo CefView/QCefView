@@ -1,7 +1,7 @@
 ﻿#include <QCefConfig.h>
 
-#include "details/CommonUtils.h"
 #include "details/QCefConfigPrivate.h"
+#include "details/utils/CommonUtils.h"
 
 REGISTER_METATYPE(QCefConfig);
 

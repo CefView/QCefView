@@ -7,8 +7,8 @@
 
 #include <QCefView.h>
 
-#include "details/CommonUtils.h"
 #include "details/QCefQueryPrivate.h"
+#include "details/utils/CommonUtils.h"
 
 REGISTER_METATYPE(QCefQuery);
 

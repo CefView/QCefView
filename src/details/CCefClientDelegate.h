@@ -54,11 +54,19 @@ public:
                                    CefRefPtr<CefContextMenuParams> params,
                                    CefRefPtr<CefMenuModel> model) override;
 
+  virtual bool onRunContextMenu(CefRefPtr<CefBrowser> browser,
+                                CefRefPtr<CefFrame> frame,
+                                CefRefPtr<CefContextMenuParams> params,
+                                CefRefPtr<CefMenuModel> model,
+                                CefRefPtr<CefRunContextMenuCallback> callback) override;
+
   virtual bool onContextMenuCommand(CefRefPtr<CefBrowser> browser,
                                     CefRefPtr<CefFrame> frame,
                                     CefRefPtr<CefContextMenuParams> params,
                                     int command_id,
                                     CefContextMenuHandler::EventFlags event_flags) override;
+
+  virtual void onContextMenuDismissed(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame) override;
 
   // LifSpanHandler
   virtual bool onBeforePopup(CefRefPtr<CefBrowser>& browser,

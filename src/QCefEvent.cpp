@@ -5,8 +5,8 @@
 #include <include/wrapper/cef_message_router.h>
 #pragma endregion cef_headers
 
-#include "details/CommonUtils.h"
 #include "details/QCefEventPrivate.h"
+#include "details/utils/CommonUtils.h"
 
 REGISTER_METATYPE(QCefEvent);
 

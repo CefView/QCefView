@@ -531,17 +531,21 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
 
   if (event->type() == QEvent::KeyPress) {
     e.type = KEYEVENT_RAWKEYDOWN;
-    if (!event->text().isEmpty()) {
+    pCefBrowser_->GetHost()->SendKeyEvent(e);
 #if defined(Q_OS_WINDOWS)
+    if (!event->text().isEmpty()) {
       e.windows_key_code = event->text().at(0).unicode();
-#endif
       e.type = KEYEVENT_CHAR;
       pCefBrowser_->GetHost()->SendKeyEvent(e);
     }
+#else
+    e.type = KEYEVENT_CHAR;
+    pCefBrowser_->GetHost()->SendKeyEvent(e);
+#endif
   } else {
     e.type = KEYEVENT_KEYUP;
+    pCefBrowser_->GetHost()->SendKeyEvent(e);
   }
-  pCefBrowser_->GetHost()->SendKeyEvent(e);
 
 #endif
 }
@@ -571,6 +575,8 @@ QCefViewPrivate::onViewMouseEvent(QMouseEvent* event)
     return;
   }
 
+  qDebug() << "====== onViewMouseEvent:" << event;
+
   CefBrowserHost::MouseButtonType mbt = MBT_LEFT;
   switch (event->button()) {
     case Qt::LeftButton: {
@@ -587,10 +593,12 @@ QCefViewPrivate::onViewMouseEvent(QMouseEvent* event)
   }
 
   if (QEvent::MouseButtonPress == event->type()) {
-    pCefBrowser_->GetHost()->SendMouseClickEvent(e, mbt, false, event->pointCount());
+    pCefBrowser_->GetHost()->SendMouseClickEvent(e, mbt, false, 1);
+  } else if (QEvent::MouseButtonDblClick == event->type()) {
+    pCefBrowser_->GetHost()->SendMouseClickEvent(e, mbt, false, 2);
   } else if (QEvent::MouseButtonRelease == event->type()) {
     // if the release was generated right after a popup, we must discard it
-    pCefBrowser_->GetHost()->SendMouseClickEvent(e, mbt, true, event->pointCount());
+    pCefBrowser_->GetHost()->SendMouseClickEvent(e, mbt, true, 1);
   }
 #endif
 }
