@@ -232,7 +232,7 @@ signals:
   /// </summary>
   /// <param name="frameId">The frame id</param>
   /// <param name="url">The address</param>
-  void addressChanged(int64_t frameId, const QString& url);
+  void addressChanged(qint64 frameId, const QString& url);
 
   /// <summary>
   /// Gets called on title changed
@@ -271,7 +271,7 @@ signals:
   /// <param name="browserId">The browser id</param>
   /// <param name="frameId">The frame id</param>
   /// <param name="query">The query request</param>
-  void cefQueryRequest(int browserId, int64_t frameId, const QCefQuery& query);
+  void cefQueryRequest(int browserId, qint64 frameId, const QCefQuery& query);
 
   /// <summary>
   /// Gets called on invoking method request from web content(Javascript)
@@ -280,7 +280,7 @@ signals:
   /// <param name="frameId">The frame id</param>
   /// <param name="method">The method name</param>
   /// <param name="arguments">The arguments list</param>
-  void invokeMethod(int browserId, int64_t frameId, const QString& method, const QVariantList& arguments);
+  void invokeMethod(int browserId, qint64 frameId, const QString& method, const QVariantList& arguments);
 
   /// <summary>
   /// Gets called on the result of the javascript executed with <see cref="executeJavascriptWithResult"/> returned
@@ -289,7 +289,7 @@ signals:
   /// <param name="frameId">The frame id</param>
   /// <param name="context">The context</param>
   /// <param name="result">The result</param>
-  void reportJavascriptResult(int browserId, int64_t frameId, int64_t context, const QVariant& result);
+  void reportJavascriptResult(int browserId, qint64 frameId, qint64 context, const QVariant& result);
 
 public slots:
   /// <summary>
@@ -302,7 +302,7 @@ public slots:
   /// <param name="settings">Settings to be used for the popup</param>
   /// <param name="DisableJavascriptAccess">Disable the access to Javascript</param>
   /// <returns>True to cancel the popup; false to allow</returns>
-  virtual bool onBeforePopup(int64_t frameId,
+  virtual bool onBeforePopup(qint64 frameId,
                              const QString& targetUrl,
                              const QString& targetFrameName,
                              QCefView::WindowOpenDisposition targetDisposition,

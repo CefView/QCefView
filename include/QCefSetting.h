@@ -369,4 +369,6 @@ public:
   const QVariant backgroundColor() const;
 };
 
+Q_DECLARE_METATYPE(QCefSetting);
+
 #endif

@@ -7,7 +7,10 @@
 
 #include <QCefView.h>
 
+#include "details/CommonUtils.h"
 #include "details/QCefQueryPrivate.h"
+
+REGISTER_METATYPE(QCefQuery);
 
 QCefQuery::QCefQuery()
   : d_ptr(new QCefQueryPrivate)
@@ -42,7 +45,7 @@ QCefQuery::request() const
   return d->request_;
 }
 
-const int64_t
+const qint64
 QCefQuery::id() const
 {
   Q_D(const QCefQuery);

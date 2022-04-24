@@ -1,9 +1,9 @@
 ﻿#include "QCefSetting.h"
 
+#include "details/CommonUtils.h"
 #include "details/QCefSettingPrivate.h"
 
-#pragma region qt_headers
-#pragma endregion qt_headers
+REGISTER_METATYPE(QCefSetting);
 
 QCefSetting::QCefSetting()
   : d_ptr(new QCefSettingPrivate)

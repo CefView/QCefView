@@ -75,4 +75,6 @@ public:
   QVariantList& arguments();
 };
 
+Q_DECLARE_METATYPE(QCefEvent);
+
 #endif // QCEFEVENT_H

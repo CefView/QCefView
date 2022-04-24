@@ -62,7 +62,7 @@ public:
   /// Gets the query id
   /// </summary>
   /// <returns>The query id</returns>
-  const int64_t id() const;
+  const qint64 id() const;
 
   /// <summary>
   /// Gets the response content string
@@ -90,5 +90,7 @@ public:
   /// <param name="error">The response error</param>
   void setResponseResult(bool success, const QString& response, int error = 0) const;
 };
+
+Q_DECLARE_METATYPE(QCefQuery);
 
 #endif // QCEFQUERY_H

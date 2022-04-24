@@ -258,4 +258,6 @@ public:
   const QVariant remoteDebuggingPort() const;
 };
 
+Q_DECLARE_METATYPE(QCefConfig);
+
 #endif

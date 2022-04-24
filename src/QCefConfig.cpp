@@ -1,6 +1,9 @@
 ﻿#include <QCefConfig.h>
 
+#include "details/CommonUtils.h"
 #include "details/QCefConfigPrivate.h"
+
+REGISTER_METATYPE(QCefConfig);
 
 QCefConfig::QCefConfig()
   : d_ptr(new QCefConfigPrivate)

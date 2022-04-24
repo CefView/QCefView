@@ -172,7 +172,7 @@ QCefView::setPreference(const QString& name, const QVariant& value, const QStrin
 }
 
 bool
-QCefView::onBeforePopup(int64_t frameId,
+QCefView::onBeforePopup(qint64 frameId,
                         const QString& targetUrl,
                         const QString& targetFrameName,
                         QCefView::WindowOpenDisposition targetDisposition,
