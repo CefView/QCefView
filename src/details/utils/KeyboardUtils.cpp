@@ -3,940 +3,149 @@
 
 #include <include/cef_app.h>
 
-#if defined(Q_OS_WINDOWS)
-#elif defined(Q_OS_LINUX)
-#define XK_3270 // for XK_3270_BackTab
-#include <X11/XF86keysym.h>
-#include <X11/Xcursor/Xcursor.h>
-#include <X11/keysym.h>
-
-#define GDK_space 0x020
-#define GDK_exclam 0x021
-#define GDK_quotedbl 0x022
-#define GDK_numbersign 0x023
-#define GDK_dollar 0x024
-#define GDK_percent 0x025
-#define GDK_ampersand 0x026
-#define GDK_apostrophe 0x027
-#define GDK_quoteright 0x027
-#define GDK_parenleft 0x028
-#define GDK_parenright 0x029
-#define GDK_asterisk 0x02a
-#define GDK_plus 0x02b
-#define GDK_comma 0x02c
-#define GDK_minus 0x02d
-#define GDK_period 0x02e
-#define GDK_slash 0x02f
-#define GDK_0 0x030
-#define GDK_1 0x031
-#define GDK_2 0x032
-#define GDK_3 0x033
-#define GDK_4 0x034
-#define GDK_5 0x035
-#define GDK_6 0x036
-#define GDK_7 0x037
-#define GDK_8 0x038
-#define GDK_9 0x039
-#define GDK_colon 0x03a
-#define GDK_semicolon 0x03b
-#define GDK_less 0x03c
-#define GDK_equal 0x03d
-#define GDK_greater 0x03e
-#define GDK_question 0x03f
-#define GDK_at 0x040
-#define GDK_A 0x041
-#define GDK_B 0x042
-#define GDK_C 0x043
-#define GDK_D 0x044
-#define GDK_E 0x045
-#define GDK_F 0x046
-#define GDK_G 0x047
-#define GDK_H 0x048
-#define GDK_I 0x049
-#define GDK_J 0x04a
-#define GDK_K 0x04b
-#define GDK_L 0x04c
-#define GDK_M 0x04d
-#define GDK_N 0x04e
-#define GDK_O 0x04f
-#define GDK_P 0x050
-#define GDK_Q 0x051
-#define GDK_R 0x052
-#define GDK_S 0x053
-#define GDK_T 0x054
-#define GDK_U 0x055
-#define GDK_V 0x056
-#define GDK_W 0x057
-#define GDK_X 0x058
-#define GDK_Y 0x059
-#define GDK_Z 0x05a
-#define GDK_bracketleft 0x05b
-#define GDK_backslash 0x05c
-#define GDK_bracketright 0x05d
-#define GDK_asciicircum 0x05e
-#define GDK_underscore 0x05f
-#define GDK_grave 0x060
-#define GDK_quoteleft 0x060
-#define GDK_a 0x061
-#define GDK_b 0x062
-#define GDK_c 0x063
-#define GDK_d 0x064
-#define GDK_e 0x065
-#define GDK_f 0x066
-#define GDK_g 0x067
-#define GDK_h 0x068
-#define GDK_i 0x069
-#define GDK_j 0x06a
-#define GDK_k 0x06b
-#define GDK_l 0x06c
-#define GDK_m 0x06d
-#define GDK_n 0x06e
-#define GDK_o 0x06f
-#define GDK_p 0x070
-#define GDK_q 0x071
-#define GDK_r 0x072
-#define GDK_s 0x073
-#define GDK_t 0x074
-#define GDK_u 0x075
-#define GDK_v 0x076
-#define GDK_w 0x077
-#define GDK_x 0x078
-#define GDK_y 0x079
-#define GDK_z 0x07a
-#define GDK_braceleft 0x07b
-#define GDK_Super_L 0xFFEB
-#define GDK_Super_R 0xFFEC
-
-typedef enum
-{
-  GDK_SHIFT_MASK    = 1 << 0,
-  GDK_LOCK_MASK     = 1 << 1,
-  GDK_CONTROL_MASK  = 1 << 2,
-  GDK_MOD1_MASK     = 1 << 3,
-  GDK_MOD2_MASK     = 1 << 4,
-  GDK_MOD3_MASK     = 1 << 5,
-  GDK_MOD4_MASK     = 1 << 6,
-  GDK_MOD5_MASK     = 1 << 7,
-  GDK_BUTTON1_MASK  = 1 << 8,
-  GDK_BUTTON2_MASK  = 1 << 9,
-  GDK_BUTTON3_MASK  = 1 << 10,
-  GDK_BUTTON4_MASK  = 1 << 11,
-  GDK_BUTTON5_MASK  = 1 << 12,
-  GDK_MODIFIER_RESERVED_13_MASK  = 1 << 13,
-  GDK_MODIFIER_RESERVED_14_MASK  = 1 << 14,
-  GDK_MODIFIER_RESERVED_15_MASK  = 1 << 15,
-  GDK_MODIFIER_RESERVED_16_MASK  = 1 << 16,
-  GDK_MODIFIER_RESERVED_17_MASK  = 1 << 17,
-  GDK_MODIFIER_RESERVED_18_MASK  = 1 << 18,
-  GDK_MODIFIER_RESERVED_19_MASK  = 1 << 19,
-  GDK_MODIFIER_RESERVED_20_MASK  = 1 << 20,
-  GDK_MODIFIER_RESERVED_21_MASK  = 1 << 21,
-  GDK_MODIFIER_RESERVED_22_MASK  = 1 << 22,
-  GDK_MODIFIER_RESERVED_23_MASK  = 1 << 23,
-  GDK_MODIFIER_RESERVED_24_MASK  = 1 << 24,
-  GDK_MODIFIER_RESERVED_25_MASK  = 1 << 25,
-  /* The next few modifiers are used by XKB, so we skip to the end.
-   * Bits 15 - 25 are currently unused. Bit 29 is used internally.
-   */
-
-  GDK_SUPER_MASK    = 1 << 26,
-  GDK_HYPER_MASK    = 1 << 27,
-  GDK_META_MASK     = 1 << 28,
-
-  GDK_MODIFIER_RESERVED_29_MASK  = 1 << 29,
-  GDK_RELEASE_MASK  = 1 << 30,
-  /* Combination of GDK_SHIFT_MASK..GDK_BUTTON5_MASK + GDK_SUPER_MASK
-     + GDK_HYPER_MASK + GDK_META_MASK + GDK_RELEASE_MASK */
-  GDK_MODIFIER_MASK = 0x5c001fff
-} GdkModifierType;
-
-// From ui/events/keycodes/keyboard_codes_posix.h.
-enum KeyboardCode
-{
-  VKEY_BACK = 0x08,
-  VKEY_TAB = 0x09,
-  VKEY_BACKTAB = 0x0A,
-  VKEY_CLEAR = 0x0C,
-  VKEY_RETURN = 0x0D,
-  VKEY_SHIFT = 0x10,
-  VKEY_CONTROL = 0x11,
-  VKEY_MENU = 0x12,
-  VKEY_PAUSE = 0x13,
-  VKEY_CAPITAL = 0x14,
-  VKEY_KANA = 0x15,
-  VKEY_HANGUL = 0x15,
-  VKEY_JUNJA = 0x17,
-  VKEY_FINAL = 0x18,
-  VKEY_HANJA = 0x19,
-  VKEY_KANJI = 0x19,
-  VKEY_ESCAPE = 0x1B,
-  VKEY_CONVERT = 0x1C,
-  VKEY_NONCONVERT = 0x1D,
-  VKEY_ACCEPT = 0x1E,
-  VKEY_MODECHANGE = 0x1F,
-  VKEY_SPACE = 0x20,
-  VKEY_PRIOR = 0x21,
-  VKEY_NEXT = 0x22,
-  VKEY_END = 0x23,
-  VKEY_HOME = 0x24,
-  VKEY_LEFT = 0x25,
-  VKEY_UP = 0x26,
-  VKEY_RIGHT = 0x27,
-  VKEY_DOWN = 0x28,
-  VKEY_SELECT = 0x29,
-  VKEY_PRINT = 0x2A,
-  VKEY_EXECUTE = 0x2B,
-  VKEY_SNAPSHOT = 0x2C,
-  VKEY_INSERT = 0x2D,
-  VKEY_DELETE = 0x2E,
-  VKEY_HELP = 0x2F,
-  VKEY_0 = 0x30,
-  VKEY_1 = 0x31,
-  VKEY_2 = 0x32,
-  VKEY_3 = 0x33,
-  VKEY_4 = 0x34,
-  VKEY_5 = 0x35,
-  VKEY_6 = 0x36,
-  VKEY_7 = 0x37,
-  VKEY_8 = 0x38,
-  VKEY_9 = 0x39,
-  VKEY_A = 0x41,
-  VKEY_B = 0x42,
-  VKEY_C = 0x43,
-  VKEY_D = 0x44,
-  VKEY_E = 0x45,
-  VKEY_F = 0x46,
-  VKEY_G = 0x47,
-  VKEY_H = 0x48,
-  VKEY_I = 0x49,
-  VKEY_J = 0x4A,
-  VKEY_K = 0x4B,
-  VKEY_L = 0x4C,
-  VKEY_M = 0x4D,
-  VKEY_N = 0x4E,
-  VKEY_O = 0x4F,
-  VKEY_P = 0x50,
-  VKEY_Q = 0x51,
-  VKEY_R = 0x52,
-  VKEY_S = 0x53,
-  VKEY_T = 0x54,
-  VKEY_U = 0x55,
-  VKEY_V = 0x56,
-  VKEY_W = 0x57,
-  VKEY_X = 0x58,
-  VKEY_Y = 0x59,
-  VKEY_Z = 0x5A,
-  VKEY_LWIN = 0x5B,
-  VKEY_COMMAND = VKEY_LWIN, // Provide the Mac name for convenience.
-  VKEY_RWIN = 0x5C,
-  VKEY_APPS = 0x5D,
-  VKEY_SLEEP = 0x5F,
-  VKEY_NUMPAD0 = 0x60,
-  VKEY_NUMPAD1 = 0x61,
-  VKEY_NUMPAD2 = 0x62,
-  VKEY_NUMPAD3 = 0x63,
-  VKEY_NUMPAD4 = 0x64,
-  VKEY_NUMPAD5 = 0x65,
-  VKEY_NUMPAD6 = 0x66,
-  VKEY_NUMPAD7 = 0x67,
-  VKEY_NUMPAD8 = 0x68,
-  VKEY_NUMPAD9 = 0x69,
-  VKEY_MULTIPLY = 0x6A,
-  VKEY_ADD = 0x6B,
-  VKEY_SEPARATOR = 0x6C,
-  VKEY_SUBTRACT = 0x6D,
-  VKEY_DECIMAL = 0x6E,
-  VKEY_DIVIDE = 0x6F,
-  VKEY_F1 = 0x70,
-  VKEY_F2 = 0x71,
-  VKEY_F3 = 0x72,
-  VKEY_F4 = 0x73,
-  VKEY_F5 = 0x74,
-  VKEY_F6 = 0x75,
-  VKEY_F7 = 0x76,
-  VKEY_F8 = 0x77,
-  VKEY_F9 = 0x78,
-  VKEY_F10 = 0x79,
-  VKEY_F11 = 0x7A,
-  VKEY_F12 = 0x7B,
-  VKEY_F13 = 0x7C,
-  VKEY_F14 = 0x7D,
-  VKEY_F15 = 0x7E,
-  VKEY_F16 = 0x7F,
-  VKEY_F17 = 0x80,
-  VKEY_F18 = 0x81,
-  VKEY_F19 = 0x82,
-  VKEY_F20 = 0x83,
-  VKEY_F21 = 0x84,
-  VKEY_F22 = 0x85,
-  VKEY_F23 = 0x86,
-  VKEY_F24 = 0x87,
-  VKEY_NUMLOCK = 0x90,
-  VKEY_SCROLL = 0x91,
-  VKEY_LSHIFT = 0xA0,
-  VKEY_RSHIFT = 0xA1,
-  VKEY_LCONTROL = 0xA2,
-  VKEY_RCONTROL = 0xA3,
-  VKEY_LMENU = 0xA4,
-  VKEY_RMENU = 0xA5,
-  VKEY_BROWSER_BACK = 0xA6,
-  VKEY_BROWSER_FORWARD = 0xA7,
-  VKEY_BROWSER_REFRESH = 0xA8,
-  VKEY_BROWSER_STOP = 0xA9,
-  VKEY_BROWSER_SEARCH = 0xAA,
-  VKEY_BROWSER_FAVORITES = 0xAB,
-  VKEY_BROWSER_HOME = 0xAC,
-  VKEY_VOLUME_MUTE = 0xAD,
-  VKEY_VOLUME_DOWN = 0xAE,
-  VKEY_VOLUME_UP = 0xAF,
-  VKEY_MEDIA_NEXT_TRACK = 0xB0,
-  VKEY_MEDIA_PREV_TRACK = 0xB1,
-  VKEY_MEDIA_STOP = 0xB2,
-  VKEY_MEDIA_PLAY_PAUSE = 0xB3,
-  VKEY_MEDIA_LAUNCH_MAIL = 0xB4,
-  VKEY_MEDIA_LAUNCH_MEDIA_SELECT = 0xB5,
-  VKEY_MEDIA_LAUNCH_APP1 = 0xB6,
-  VKEY_MEDIA_LAUNCH_APP2 = 0xB7,
-  VKEY_OEM_1 = 0xBA,
-  VKEY_OEM_PLUS = 0xBB,
-  VKEY_OEM_COMMA = 0xBC,
-  VKEY_OEM_MINUS = 0xBD,
-  VKEY_OEM_PERIOD = 0xBE,
-  VKEY_OEM_2 = 0xBF,
-  VKEY_OEM_3 = 0xC0,
-  VKEY_OEM_4 = 0xDB,
-  VKEY_OEM_5 = 0xDC,
-  VKEY_OEM_6 = 0xDD,
-  VKEY_OEM_7 = 0xDE,
-  VKEY_OEM_8 = 0xDF,
-  VKEY_OEM_102 = 0xE2,
-  VKEY_OEM_103 = 0xE3, // GTV KEYCODE_MEDIA_REWIND
-  VKEY_OEM_104 = 0xE4, // GTV KEYCODE_MEDIA_FAST_FORWARD
-  VKEY_PROCESSKEY = 0xE5,
-  VKEY_PACKET = 0xE7,
-  VKEY_DBE_SBCSCHAR = 0xF3,
-  VKEY_DBE_DBCSCHAR = 0xF4,
-  VKEY_ATTN = 0xF6,
-  VKEY_CRSEL = 0xF7,
-  VKEY_EXSEL = 0xF8,
-  VKEY_EREOF = 0xF9,
-  VKEY_PLAY = 0xFA,
-  VKEY_ZOOM = 0xFB,
-  VKEY_NONAME = 0xFC,
-  VKEY_PA1 = 0xFD,
-  VKEY_OEM_CLEAR = 0xFE,
-  VKEY_UNKNOWN = 0,
-
-  // POSIX specific VKEYs. Note that as of Windows SDK 7.1, 0x97-9F, 0xD8-DA,
-  // and 0xE8 are unassigned.
-  VKEY_WLAN = 0x97,
-  VKEY_POWER = 0x98,
-  VKEY_BRIGHTNESS_DOWN = 0xD8,
-  VKEY_BRIGHTNESS_UP = 0xD9,
-  VKEY_KBD_BRIGHTNESS_DOWN = 0xDA,
-  VKEY_KBD_BRIGHTNESS_UP = 0xE8,
-
-  // Windows does not have a specific key code for AltGr. We use the unused 0xE1
-  // (VK_OEM_AX) code to represent AltGr, matching the behaviour of Firefox on
-  // Linux.
-  VKEY_ALTGR = 0xE1,
-  // Windows does not have a specific key code for Compose. We use the unused
-  // 0xE6 (VK_ICO_CLEAR) code to represent Compose.
-  VKEY_COMPOSE = 0xE6,
+static QMap<int, qint32> keyMap = {
+  { Qt::Key_Left, 0x25 },
+  { Qt::Key_Up, 0x26 },
+  { Qt::Key_Right, 0x27 },
+  { Qt::Key_Down, 0x28 },
+  { Qt::Key_Backspace, 0x08 },
+  { Qt::Key_Tab, 0x09 },
+  { Qt::Key_Clear, 0x0C },
+  { Qt::Key_Return, 0x0D },
+  { Qt::Key_Enter, 0x0D },
+  { Qt::Key_Shift, 0x10 },
+  { Qt::Key_Control, 0x11 },
+  { Qt::Key_Alt, 0x12 },
+  { Qt::Key_Pause, 0x13 },
+  { Qt::Key_CapsLock, 0x14 },
+  { Qt::Key_Escape, 0x1B },
+  { Qt::Key_Space, 0x20 },
+  { Qt::Key_PageUp, 0x21 },
+  { Qt::Key_PageDown, 0x22 },
+  { Qt::Key_End, 0x23 },
+  { Qt::Key_Home, 0x24 },
+  { Qt::Key_Select, 0x29 },
+  { Qt::Key_Print, 0x2A },
+  { Qt::Key_Execute, 0x2B },
+  { Qt::Key_Printer, 0x2C },
+  { Qt::Key_Insert, 0x2D },
+  { Qt::Key_Delete, 0x2E },
+  { Qt::Key_Help, 0x2F },
+  { Qt::Key_0, 0x30 },
+  { Qt::Key_ParenRight, 0x30 }, // )
+  { Qt::Key_1, 0x31 },
+  { Qt::Key_Exclam, 0x31 }, // !
+  { Qt::Key_2, 0x32 },
+  { Qt::Key_At, 0x32 }, // @
+  { Qt::Key_3, 0x33 },
+  { Qt::Key_NumberSign, 0x33 }, // #
+  { Qt::Key_4, 0x34 },
+  { Qt::Key_Dollar, 0x34 }, // $
+  { Qt::Key_5, 0x35 },
+  { Qt::Key_Percent, 0x35 }, // %
+  { Qt::Key_6, 0x36 },
+  { Qt::Key_AsciiCircum, 0x36 }, // ^
+  { Qt::Key_7, 0x37 },
+  { Qt::Key_Ampersand, 0x37 }, // &
+  { Qt::Key_8, 0x38 },
+  { Qt::Key_Asterisk, 0x38 }, // *
+  { Qt::Key_9, 0x39 },
+  { Qt::Key_ParenLeft, 0x39 }, // (
+  { Qt::Key_A, 0x41 },
+  { Qt::Key_B, 0x42 },
+  { Qt::Key_C, 0x43 },
+  { Qt::Key_D, 0x44 },
+  { Qt::Key_E, 0x45 },
+  { Qt::Key_F, 0x46 },
+  { Qt::Key_G, 0x47 },
+  { Qt::Key_H, 0x48 },
+  { Qt::Key_I, 0x49 },
+  { Qt::Key_J, 0x4A },
+  { Qt::Key_K, 0x4B },
+  { Qt::Key_L, 0x4C },
+  { Qt::Key_M, 0x4D },
+  { Qt::Key_N, 0x4E },
+  { Qt::Key_O, 0x4F },
+  { Qt::Key_P, 0x50 },
+  { Qt::Key_Q, 0x51 },
+  { Qt::Key_R, 0x52 },
+  { Qt::Key_S, 0x53 },
+  { Qt::Key_T, 0x54 },
+  { Qt::Key_U, 0x55 },
+  { Qt::Key_V, 0x56 },
+  { Qt::Key_W, 0x57 },
+  { Qt::Key_X, 0x58 },
+  { Qt::Key_Y, 0x59 },
+  { Qt::Key_Z, 0x5A },
+  { Qt::Key_multiply, 0x6A },
+  { Qt::Key_F1, 0x70 },
+  { Qt::Key_F2, 0x71 },
+  { Qt::Key_F3, 0x72 },
+  { Qt::Key_F4, 0x73 },
+  { Qt::Key_F5, 0x74 },
+  { Qt::Key_F6, 0x75 },
+  { Qt::Key_F7, 0x76 },
+  { Qt::Key_F8, 0x77 },
+  { Qt::Key_F9, 0x78 },
+  { Qt::Key_F10, 0x79 },
+  { Qt::Key_F11, 0x7A },
+  { Qt::Key_F12, 0x7B },
+  { Qt::Key_F13, 0x7C },
+  { Qt::Key_F14, 0x7D },
+  { Qt::Key_F15, 0x7E },
+  { Qt::Key_F16, 0x7F },
+  { Qt::Key_F17, 0x80 },
+  { Qt::Key_F18, 0x81 },
+  { Qt::Key_F19, 0x82 },
+  { Qt::Key_F20, 0x83 },
+  { Qt::Key_F21, 0x84 },
+  { Qt::Key_F22, 0x85 },
+  { Qt::Key_F23, 0x86 },
+  { Qt::Key_F24, 0x87 },
+  { Qt::Key_NumLock, 0x90 },
+  { Qt::Key_ScrollLock, 0x91 },
+  { Qt::Key_VolumeDown, 0xAE },
+  { Qt::Key_VolumeUp, 0xAF },
+  { Qt::Key_VolumeMute, 0xAD },
+  { Qt::Key_MediaStop, 0xB2 },
+  { Qt::Key_MediaPlay, 0xB3 },
+  { Qt::Key_Plus, 0xBB },         // +
+  { Qt::Key_Minus, 0xBD },        // -
+  { Qt::Key_Underscore, 0xBD },   // _
+  { Qt::Key_Equal, 0xBB },        // =
+  { Qt::Key_Semicolon, 0xBA },    // ;
+  { Qt::Key_Colon, 0xBA },        // :
+  { Qt::Key_Comma, 0xBC },        // ,
+  { Qt::Key_Less, 0xBC },         // <
+  { Qt::Key_Period, 0xBE },       // .
+  { Qt::Key_Greater, 0xBE },      // >
+  { Qt::Key_Slash, 0xBF },        // /
+  { Qt::Key_Question, 0xBF },     // ?
+  { Qt::Key_BracketLeft, 0xDB },  // [
+  { Qt::Key_BraceLeft, 0xDB },    // {
+  { Qt::Key_BracketRight, 0xDD }, // ]
+  { Qt::Key_BraceRight, 0xDD },   // }
+  { Qt::Key_Bar, 0xDC },          // |
+  { Qt::Key_Backslash, 0xDC },    // "\"
+  { Qt::Key_Apostrophe, 0xDE },   // '
+  { Qt::Key_QuoteDbl, 0xDE },     // "
+  { Qt::Key_QuoteLeft, 0xC0 },    // `
+  { Qt::Key_AsciiTilde, 0xC0 },   // ~
 };
 
-// From ui/events/keycodes/keyboard_code_conversion_x.cc.
-// Gdk key codes (e.g. GDK_BackSpace) and X keysyms (e.g. XK_BackSpace) share
-// the same values.
-KeyboardCode
-KeyboardCodeFromXKeysym(uint32_t keysym)
+quint32
+QtKeyToWindowsVirtualKey(int k)
 {
-  switch (keysym) {
-    case XK_BackSpace:
-      return VKEY_BACK;
-    case XK_Delete:
-    case XK_KP_Delete:
-      return VKEY_DELETE;
-    case XK_Tab:
-    case XK_KP_Tab:
-    case XK_ISO_Left_Tab:
-    case XK_3270_BackTab:
-      return VKEY_TAB;
-    case XK_Linefeed:
-    case XK_Return:
-    case XK_KP_Enter:
-    case XK_ISO_Enter:
-      return VKEY_RETURN;
-    case XK_Clear:
-    case XK_KP_Begin: // NumPad 5 without Num Lock, for crosbug.com/29169.
-      return VKEY_CLEAR;
-    case XK_KP_Space:
-    case XK_space:
-      return VKEY_SPACE;
-    case XK_Home:
-    case XK_KP_Home:
-      return VKEY_HOME;
-    case XK_End:
-    case XK_KP_End:
-      return VKEY_END;
-    case XK_Page_Up:
-    case XK_KP_Page_Up: // aka XK_KP_Prior
-      return VKEY_PRIOR;
-    case XK_Page_Down:
-    case XK_KP_Page_Down: // aka XK_KP_Next
-      return VKEY_NEXT;
-    case XK_Left:
-    case XK_KP_Left:
-      return VKEY_LEFT;
-    case XK_Right:
-    case XK_KP_Right:
-      return VKEY_RIGHT;
-    case XK_Down:
-    case XK_KP_Down:
-      return VKEY_DOWN;
-    case XK_Up:
-    case XK_KP_Up:
-      return VKEY_UP;
-    case XK_Escape:
-      return VKEY_ESCAPE;
-    case XK_Kana_Lock:
-    case XK_Kana_Shift:
-      return VKEY_KANA;
-    case XK_Hangul:
-      return VKEY_HANGUL;
-    case XK_Hangul_Hanja:
-      return VKEY_HANJA;
-    case XK_Kanji:
-      return VKEY_KANJI;
-    case XK_Henkan:
-      return VKEY_CONVERT;
-    case XK_Muhenkan:
-      return VKEY_NONCONVERT;
-    case XK_Zenkaku_Hankaku:
-      return VKEY_DBE_DBCSCHAR;
-    case XK_A:
-    case XK_a:
-      return VKEY_A;
-    case XK_B:
-    case XK_b:
-      return VKEY_B;
-    case XK_C:
-    case XK_c:
-      return VKEY_C;
-    case XK_D:
-    case XK_d:
-      return VKEY_D;
-    case XK_E:
-    case XK_e:
-      return VKEY_E;
-    case XK_F:
-    case XK_f:
-      return VKEY_F;
-    case XK_G:
-    case XK_g:
-      return VKEY_G;
-    case XK_H:
-    case XK_h:
-      return VKEY_H;
-    case XK_I:
-    case XK_i:
-      return VKEY_I;
-    case XK_J:
-    case XK_j:
-      return VKEY_J;
-    case XK_K:
-    case XK_k:
-      return VKEY_K;
-    case XK_L:
-    case XK_l:
-      return VKEY_L;
-    case XK_M:
-    case XK_m:
-      return VKEY_M;
-    case XK_N:
-    case XK_n:
-      return VKEY_N;
-    case XK_O:
-    case XK_o:
-      return VKEY_O;
-    case XK_P:
-    case XK_p:
-      return VKEY_P;
-    case XK_Q:
-    case XK_q:
-      return VKEY_Q;
-    case XK_R:
-    case XK_r:
-      return VKEY_R;
-    case XK_S:
-    case XK_s:
-      return VKEY_S;
-    case XK_T:
-    case XK_t:
-      return VKEY_T;
-    case XK_U:
-    case XK_u:
-      return VKEY_U;
-    case XK_V:
-    case XK_v:
-      return VKEY_V;
-    case XK_W:
-    case XK_w:
-      return VKEY_W;
-    case XK_X:
-    case XK_x:
-      return VKEY_X;
-    case XK_Y:
-    case XK_y:
-      return VKEY_Y;
-    case XK_Z:
-    case XK_z:
-      return VKEY_Z;
+  if (keyMap.contains(k))
+    return keyMap[k];
 
-    case XK_0:
-    case XK_1:
-    case XK_2:
-    case XK_3:
-    case XK_4:
-    case XK_5:
-    case XK_6:
-    case XK_7:
-    case XK_8:
-    case XK_9:
-      return static_cast<KeyboardCode>(VKEY_0 + (keysym - XK_0));
-
-    case XK_parenright:
-      return VKEY_0;
-    case XK_exclam:
-      return VKEY_1;
-    case XK_at:
-      return VKEY_2;
-    case XK_numbersign:
-      return VKEY_3;
-    case XK_dollar:
-      return VKEY_4;
-    case XK_percent:
-      return VKEY_5;
-    case XK_asciicircum:
-      return VKEY_6;
-    case XK_ampersand:
-      return VKEY_7;
-    case XK_asterisk:
-      return VKEY_8;
-    case XK_parenleft:
-      return VKEY_9;
-
-    case XK_KP_0:
-    case XK_KP_1:
-    case XK_KP_2:
-    case XK_KP_3:
-    case XK_KP_4:
-    case XK_KP_5:
-    case XK_KP_6:
-    case XK_KP_7:
-    case XK_KP_8:
-    case XK_KP_9:
-      return static_cast<KeyboardCode>(VKEY_NUMPAD0 + (keysym - XK_KP_0));
-
-    case XK_multiply:
-    case XK_KP_Multiply:
-      return VKEY_MULTIPLY;
-    case XK_KP_Add:
-      return VKEY_ADD;
-    case XK_KP_Separator:
-      return VKEY_SEPARATOR;
-    case XK_KP_Subtract:
-      return VKEY_SUBTRACT;
-    case XK_KP_Decimal:
-      return VKEY_DECIMAL;
-    case XK_KP_Divide:
-      return VKEY_DIVIDE;
-    case XK_KP_Equal:
-    case XK_equal:
-    case XK_plus:
-      return VKEY_OEM_PLUS;
-    case XK_comma:
-    case XK_less:
-      return VKEY_OEM_COMMA;
-    case XK_minus:
-    case XK_underscore:
-      return VKEY_OEM_MINUS;
-    case XK_greater:
-    case XK_period:
-      return VKEY_OEM_PERIOD;
-    case XK_colon:
-    case XK_semicolon:
-      return VKEY_OEM_1;
-    case XK_question:
-    case XK_slash:
-      return VKEY_OEM_2;
-    case XK_asciitilde:
-    case XK_quoteleft:
-      return VKEY_OEM_3;
-    case XK_bracketleft:
-    case XK_braceleft:
-      return VKEY_OEM_4;
-    case XK_backslash:
-    case XK_bar:
-      return VKEY_OEM_5;
-    case XK_bracketright:
-    case XK_braceright:
-      return VKEY_OEM_6;
-    case XK_quoteright:
-    case XK_quotedbl:
-      return VKEY_OEM_7;
-    case XK_ISO_Level5_Shift:
-      return VKEY_OEM_8;
-    case XK_Shift_L:
-    case XK_Shift_R:
-      return VKEY_SHIFT;
-    case XK_Control_L:
-    case XK_Control_R:
-      return VKEY_CONTROL;
-    case XK_Meta_L:
-    case XK_Meta_R:
-    case XK_Alt_L:
-    case XK_Alt_R:
-      return VKEY_MENU;
-    case XK_ISO_Level3_Shift:
-      return VKEY_ALTGR;
-    case XK_Multi_key:
-      return VKEY_COMPOSE;
-    case XK_Pause:
-      return VKEY_PAUSE;
-    case XK_Caps_Lock:
-      return VKEY_CAPITAL;
-    case XK_Num_Lock:
-      return VKEY_NUMLOCK;
-    case XK_Scroll_Lock:
-      return VKEY_SCROLL;
-    case XK_Select:
-      return VKEY_SELECT;
-    case XK_Print:
-      return VKEY_PRINT;
-    case XK_Execute:
-      return VKEY_EXECUTE;
-    case XK_Insert:
-    case XK_KP_Insert:
-      return VKEY_INSERT;
-    case XK_Help:
-      return VKEY_HELP;
-    case XK_Super_L:
-      return VKEY_LWIN;
-    case XK_Super_R:
-      return VKEY_RWIN;
-    case XK_Menu:
-      return VKEY_APPS;
-    case XK_F1:
-    case XK_F2:
-    case XK_F3:
-    case XK_F4:
-    case XK_F5:
-    case XK_F6:
-    case XK_F7:
-    case XK_F8:
-    case XK_F9:
-    case XK_F10:
-    case XK_F11:
-    case XK_F12:
-    case XK_F13:
-    case XK_F14:
-    case XK_F15:
-    case XK_F16:
-    case XK_F17:
-    case XK_F18:
-    case XK_F19:
-    case XK_F20:
-    case XK_F21:
-    case XK_F22:
-    case XK_F23:
-    case XK_F24:
-      return static_cast<KeyboardCode>(VKEY_F1 + (keysym - XK_F1));
-    case XK_KP_F1:
-    case XK_KP_F2:
-    case XK_KP_F3:
-    case XK_KP_F4:
-      return static_cast<KeyboardCode>(VKEY_F1 + (keysym - XK_KP_F1));
-
-    case XK_guillemotleft:
-    case XK_guillemotright:
-    case XK_degree:
-    // In the case of canadian multilingual keyboard layout, VKEY_OEM_102 is
-    // assigned to ugrave key.
-    case XK_ugrave:
-    case XK_Ugrave:
-    case XK_brokenbar:
-      return VKEY_OEM_102; // international backslash key in 102 keyboard.
-
-    // When evdev is in use, /usr/share/X11/xkb/symbols/inet maps F13-18 keys
-    // to the special XF86XK symbols to support Microsoft Ergonomic keyboards:
-    // https://bugs.freedesktop.org/show_bug.cgi?id=5783
-    // In Chrome, we map these X key symbols back to F13-18 since we don't have
-    // VKEYs for these XF86XK symbols.
-    case XF86XK_Tools:
-      return VKEY_F13;
-    case XF86XK_Launch5:
-      return VKEY_F14;
-    case XF86XK_Launch6:
-      return VKEY_F15;
-    case XF86XK_Launch7:
-      return VKEY_F16;
-    case XF86XK_Launch8:
-      return VKEY_F17;
-    case XF86XK_Launch9:
-      return VKEY_F18;
-    case XF86XK_Refresh:
-    case XF86XK_History:
-    case XF86XK_OpenURL:
-    case XF86XK_AddFavorite:
-    case XF86XK_Go:
-    case XF86XK_ZoomIn:
-    case XF86XK_ZoomOut:
-      // ui::AcceleratorGtk tries to convert the XF86XK_ keysyms on Chrome
-      // startup. It's safe to return VKEY_UNKNOWN here since ui::AcceleratorGtk
-      // also checks a Gdk keysym. http://crbug.com/109843
-      return VKEY_UNKNOWN;
-    // For supporting multimedia buttons on a USB keyboard.
-    case XF86XK_Back:
-      return VKEY_BROWSER_BACK;
-    case XF86XK_Forward:
-      return VKEY_BROWSER_FORWARD;
-    case XF86XK_Reload:
-      return VKEY_BROWSER_REFRESH;
-    case XF86XK_Stop:
-      return VKEY_BROWSER_STOP;
-    case XF86XK_Search:
-      return VKEY_BROWSER_SEARCH;
-    case XF86XK_Favorites:
-      return VKEY_BROWSER_FAVORITES;
-    case XF86XK_HomePage:
-      return VKEY_BROWSER_HOME;
-    case XF86XK_AudioMute:
-      return VKEY_VOLUME_MUTE;
-    case XF86XK_AudioLowerVolume:
-      return VKEY_VOLUME_DOWN;
-    case XF86XK_AudioRaiseVolume:
-      return VKEY_VOLUME_UP;
-    case XF86XK_AudioNext:
-      return VKEY_MEDIA_NEXT_TRACK;
-    case XF86XK_AudioPrev:
-      return VKEY_MEDIA_PREV_TRACK;
-    case XF86XK_AudioStop:
-      return VKEY_MEDIA_STOP;
-    case XF86XK_AudioPlay:
-      return VKEY_MEDIA_PLAY_PAUSE;
-    case XF86XK_Mail:
-      return VKEY_MEDIA_LAUNCH_MAIL;
-    case XF86XK_LaunchA: // F3 on an Apple keyboard.
-      return VKEY_MEDIA_LAUNCH_APP1;
-    case XF86XK_LaunchB: // F4 on an Apple keyboard.
-    case XF86XK_Calculator:
-      return VKEY_MEDIA_LAUNCH_APP2;
-    case XF86XK_WLAN:
-      return VKEY_WLAN;
-    case XF86XK_PowerOff:
-      return VKEY_POWER;
-    case XF86XK_MonBrightnessDown:
-      return VKEY_BRIGHTNESS_DOWN;
-    case XF86XK_MonBrightnessUp:
-      return VKEY_BRIGHTNESS_UP;
-    case XF86XK_KbdBrightnessDown:
-      return VKEY_KBD_BRIGHTNESS_DOWN;
-    case XF86XK_KbdBrightnessUp:
-      return VKEY_KBD_BRIGHTNESS_UP;
-
-      // TODO(sad): some keycodes are still missing.
-  }
-  return VKEY_UNKNOWN;
+  return 0;
 }
-
-// From content/browser/renderer_host/input/web_input_event_util_posix.cc.
-KeyboardCode
-GdkEventToWindowsKeyCode(uint32_t keyval)
-{
-  static const unsigned int kHardwareCodeToGDKKeyval[] = {
-    0,                // 0x00:
-    0,                // 0x01:
-    0,                // 0x02:
-    0,                // 0x03:
-    0,                // 0x04:
-    0,                // 0x05:
-    0,                // 0x06:
-    0,                // 0x07:
-    0,                // 0x08:
-    0,                // 0x09: GDK_Escape
-    GDK_1,            // 0x0A: GDK_1
-    GDK_2,            // 0x0B: GDK_2
-    GDK_3,            // 0x0C: GDK_3
-    GDK_4,            // 0x0D: GDK_4
-    GDK_5,            // 0x0E: GDK_5
-    GDK_6,            // 0x0F: GDK_6
-    GDK_7,            // 0x10: GDK_7
-    GDK_8,            // 0x11: GDK_8
-    GDK_9,            // 0x12: GDK_9
-    GDK_0,            // 0x13: GDK_0
-    GDK_minus,        // 0x14: GDK_minus
-    GDK_equal,        // 0x15: GDK_equal
-    0,                // 0x16: GDK_BackSpace
-    0,                // 0x17: GDK_Tab
-    GDK_q,            // 0x18: GDK_q
-    GDK_w,            // 0x19: GDK_w
-    GDK_e,            // 0x1A: GDK_e
-    GDK_r,            // 0x1B: GDK_r
-    GDK_t,            // 0x1C: GDK_t
-    GDK_y,            // 0x1D: GDK_y
-    GDK_u,            // 0x1E: GDK_u
-    GDK_i,            // 0x1F: GDK_i
-    GDK_o,            // 0x20: GDK_o
-    GDK_p,            // 0x21: GDK_p
-    GDK_bracketleft,  // 0x22: GDK_bracketleft
-    GDK_bracketright, // 0x23: GDK_bracketright
-    0,                // 0x24: GDK_Return
-    0,                // 0x25: GDK_Control_L
-    GDK_a,            // 0x26: GDK_a
-    GDK_s,            // 0x27: GDK_s
-    GDK_d,            // 0x28: GDK_d
-    GDK_f,            // 0x29: GDK_f
-    GDK_g,            // 0x2A: GDK_g
-    GDK_h,            // 0x2B: GDK_h
-    GDK_j,            // 0x2C: GDK_j
-    GDK_k,            // 0x2D: GDK_k
-    GDK_l,            // 0x2E: GDK_l
-    GDK_semicolon,    // 0x2F: GDK_semicolon
-    GDK_apostrophe,   // 0x30: GDK_apostrophe
-    GDK_grave,        // 0x31: GDK_grave
-    0,                // 0x32: GDK_Shift_L
-    GDK_backslash,    // 0x33: GDK_backslash
-    GDK_z,            // 0x34: GDK_z
-    GDK_x,            // 0x35: GDK_x
-    GDK_c,            // 0x36: GDK_c
-    GDK_v,            // 0x37: GDK_v
-    GDK_b,            // 0x38: GDK_b
-    GDK_n,            // 0x39: GDK_n
-    GDK_m,            // 0x3A: GDK_m
-    GDK_comma,        // 0x3B: GDK_comma
-    GDK_period,       // 0x3C: GDK_period
-    GDK_slash,        // 0x3D: GDK_slash
-    0,                // 0x3E: GDK_Shift_R
-    0,                // 0x3F:
-    0,                // 0x40:
-    0,                // 0x41:
-    0,                // 0x42:
-    0,                // 0x43:
-    0,                // 0x44:
-    0,                // 0x45:
-    0,                // 0x46:
-    0,                // 0x47:
-    0,                // 0x48:
-    0,                // 0x49:
-    0,                // 0x4A:
-    0,                // 0x4B:
-    0,                // 0x4C:
-    0,                // 0x4D:
-    0,                // 0x4E:
-    0,                // 0x4F:
-    0,                // 0x50:
-    0,                // 0x51:
-    0,                // 0x52:
-    0,                // 0x53:
-    0,                // 0x54:
-    0,                // 0x55:
-    0,                // 0x56:
-    0,                // 0x57:
-    0,                // 0x58:
-    0,                // 0x59:
-    0,                // 0x5A:
-    0,                // 0x5B:
-    0,                // 0x5C:
-    0,                // 0x5D:
-    0,                // 0x5E:
-    0,                // 0x5F:
-    0,                // 0x60:
-    0,                // 0x61:
-    0,                // 0x62:
-    0,                // 0x63:
-    0,                // 0x64:
-    0,                // 0x65:
-    0,                // 0x66:
-    0,                // 0x67:
-    0,                // 0x68:
-    0,                // 0x69:
-    0,                // 0x6A:
-    0,                // 0x6B:
-    0,                // 0x6C:
-    0,                // 0x6D:
-    0,                // 0x6E:
-    0,                // 0x6F:
-    0,                // 0x70:
-    0,                // 0x71:
-    0,                // 0x72:
-    GDK_Super_L,      // 0x73: GDK_Super_L
-    GDK_Super_R,      // 0x74: GDK_Super_R
-  };
-
-  // |windows_key_code| has to include a valid virtual-key code even when we
-  // use non-US layouts, e.g. even when we type an 'A' key of a US keyboard
-  // on the Hebrew layout, |windows_key_code| should be VK_A.
-  // On the other hand, |event->keyval| value depends on the current
-  // GdkKeymap object, i.e. when we type an 'A' key of a US keyboard on
-  // the Hebrew layout, |event->keyval| becomes GDK_hebrew_shin and this
-  // KeyboardCodeFromXKeysym() call returns 0.
-  // To improve compatibilty with Windows, we use |event->hardware_keycode|
-  // for retrieving its Windows key-code for the keys when the
-  // WebCore::windows_key_codeForEvent() call returns 0.
-  // We shouldn't use |event->hardware_keycode| for keys that GdkKeymap
-  // objects cannot change because |event->hardware_keycode| doesn't change
-  // even when we change the layout options, e.g. when we swap a control
-  // key and a caps-lock key, GTK doesn't swap their
-  // |event->hardware_keycode| values but swap their |event->keyval| values.
-  KeyboardCode windows_key_code = KeyboardCodeFromXKeysym(keyval);
-  if (windows_key_code)
-    return windows_key_code;
-
-  // if (event->hardware_keycode < base::size(kHardwareCodeToGDKKeyval)) {
-  //   int keyval = kHardwareCodeToGDKKeyval[event->hardware_keycode];
-  //   if (keyval)
-  //     return KeyboardCodeFromXKeysym(keyval);
-  // }
-
-  // This key is one that keyboard-layout drivers cannot change.
-  // Use |event->keyval| to retrieve its |windows_key_code| value.
-  return KeyboardCodeFromXKeysym(keyval);
-}
-
-// From content/browser/renderer_host/input/web_input_event_util_posix.cc.
-KeyboardCode
-GetWindowsKeyCodeWithoutLocation(KeyboardCode key_code)
-{
-  switch (key_code) {
-    case VKEY_LCONTROL:
-    case VKEY_RCONTROL:
-      return VKEY_CONTROL;
-    case VKEY_LSHIFT:
-    case VKEY_RSHIFT:
-      return VKEY_SHIFT;
-    case VKEY_LMENU:
-    case VKEY_RMENU:
-      return VKEY_MENU;
-    default:
-      return key_code;
-  }
-}
-#elif defined(Q_OS_MACOS)
-#endif
 
 uint32_t
 GetPlatformKeyboardCode(QKeyEvent* event)
 {
-#if defined(Q_OS_WINDOWS)
-  return event->nativeVirtualKey();
-#elif defined(Q_OS_LINUX)
-  KeyboardCode windows_key_code = GdkEventToWindowsKeyCode(event->nativeVirtualKey());
-  return GetWindowsKeyCodeWithoutLocation(windows_key_code);
-#elif defined(Q_OS_MACOS)
-#else
-#endif
-  return 0;
+  return QtKeyToWindowsVirtualKey(event->key());
 }
 
 uint32_t
@@ -997,6 +206,49 @@ GetPlatformKeyboardModifiers(QKeyEvent* event)
     }
   }
 #elif defined(Q_OS_LINUX)
+  typedef enum
+  {
+    GDK_SHIFT_MASK = 1 << 0,
+    GDK_LOCK_MASK = 1 << 1,
+    GDK_CONTROL_MASK = 1 << 2,
+    GDK_MOD1_MASK = 1 << 3,
+    GDK_MOD2_MASK = 1 << 4,
+    GDK_MOD3_MASK = 1 << 5,
+    GDK_MOD4_MASK = 1 << 6,
+    GDK_MOD5_MASK = 1 << 7,
+    GDK_BUTTON1_MASK = 1 << 8,
+    GDK_BUTTON2_MASK = 1 << 9,
+    GDK_BUTTON3_MASK = 1 << 10,
+    GDK_BUTTON4_MASK = 1 << 11,
+    GDK_BUTTON5_MASK = 1 << 12,
+    GDK_MODIFIER_RESERVED_13_MASK = 1 << 13,
+    GDK_MODIFIER_RESERVED_14_MASK = 1 << 14,
+    GDK_MODIFIER_RESERVED_15_MASK = 1 << 15,
+    GDK_MODIFIER_RESERVED_16_MASK = 1 << 16,
+    GDK_MODIFIER_RESERVED_17_MASK = 1 << 17,
+    GDK_MODIFIER_RESERVED_18_MASK = 1 << 18,
+    GDK_MODIFIER_RESERVED_19_MASK = 1 << 19,
+    GDK_MODIFIER_RESERVED_20_MASK = 1 << 20,
+    GDK_MODIFIER_RESERVED_21_MASK = 1 << 21,
+    GDK_MODIFIER_RESERVED_22_MASK = 1 << 22,
+    GDK_MODIFIER_RESERVED_23_MASK = 1 << 23,
+    GDK_MODIFIER_RESERVED_24_MASK = 1 << 24,
+    GDK_MODIFIER_RESERVED_25_MASK = 1 << 25,
+    /* The next few modifiers are used by XKB, so we skip to the end.
+     * Bits 15 - 25 are currently unused. Bit 29 is used internally.
+     */
+
+    GDK_SUPER_MASK = 1 << 26,
+    GDK_HYPER_MASK = 1 << 27,
+    GDK_META_MASK = 1 << 28,
+
+    GDK_MODIFIER_RESERVED_29_MASK = 1 << 29,
+    GDK_RELEASE_MASK = 1 << 30,
+    /* Combination of GDK_SHIFT_MASK..GDK_BUTTON5_MASK + GDK_SUPER_MASK
+       + GDK_HYPER_MASK + GDK_META_MASK + GDK_RELEASE_MASK */
+    GDK_MODIFIER_MASK = 0x5c001fff
+  } GdkModifierType;
+
   auto state = event->nativeModifiers();
   if (state & GDK_SHIFT_MASK)
     cm |= EVENTFLAG_SHIFT_DOWN;
@@ -1013,6 +265,7 @@ GetPlatformKeyboardModifiers(QKeyEvent* event)
   if (state & GDK_BUTTON3_MASK)
     cm |= EVENTFLAG_RIGHT_MOUSE_BUTTON;
 #elif defined(Q_OS_MACOS)
+#else
 #endif
 
   return cm;

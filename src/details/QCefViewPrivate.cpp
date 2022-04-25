@@ -519,6 +519,8 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
     return;
 
   CefKeyEvent e;
+  e.windows_key_code = GetPlatformKeyboardCode(event);
+  e.native_key_code = event->nativeScanCode();
 
   auto m = event->modifiers();
   e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
@@ -526,27 +528,32 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
   e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
   e.modifiers |= m & Qt::KeypadModifier ? EVENTFLAG_IS_KEY_PAD : 0;
   e.modifiers |= GetPlatformKeyboardModifiers(event);
-  e.windows_key_code = GetPlatformKeyboardCode(event);
-  e.native_key_code = event->nativeScanCode();
+  if (e.modifiers & EVENTFLAG_ALT_DOWN)
+    e.is_system_key = true;
 
-  if (event->type() == QEvent::KeyPress) {
-    e.type = KEYEVENT_RAWKEYDOWN;
-    pCefBrowser_->GetHost()->SendKeyEvent(e);
-#if defined(Q_OS_WINDOWS)
-    if (!event->text().isEmpty()) {
-      e.windows_key_code = event->text().at(0).unicode();
-      e.type = KEYEVENT_CHAR;
-      pCefBrowser_->GetHost()->SendKeyEvent(e);
-    }
-#else
-    e.type = KEYEVENT_CHAR;
-    pCefBrowser_->GetHost()->SendKeyEvent(e);
-#endif
-  } else {
+  // QEvent::KeyRelease
+  // send key release event
+  if (event->type() == QEvent::KeyRelease) {
     e.type = KEYEVENT_KEYUP;
     pCefBrowser_->GetHost()->SendKeyEvent(e);
+    return;
   }
 
+  // QEvent::KeyPress
+  // send key down event
+  e.type = KEYEVENT_RAWKEYDOWN;
+  pCefBrowser_->GetHost()->SendKeyEvent(e);
+
+  // contains char?
+  if (event->text().isEmpty())
+    return;
+
+  // send key char event
+  e.type = KEYEVENT_CHAR;
+  e.windows_key_code = event->text().at(0).unicode();
+  e.unmodified_character = event->key();
+  e.character = e.windows_key_code;
+  pCefBrowser_->GetHost()->SendKeyEvent(e);
 #endif
 }
 
@@ -575,7 +582,7 @@ QCefViewPrivate::onViewMouseEvent(QMouseEvent* event)
     return;
   }
 
-  qDebug() << "====== onViewMouseEvent:" << event;
+  // qDebug() << "====== onViewMouseEvent:" << event;
 
   CefBrowserHost::MouseButtonType mbt = MBT_LEFT;
   switch (event->button()) {
