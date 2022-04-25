@@ -1,4 +1,4 @@
-﻿#include "QCefContextPrivate.h"
+#include "QCefContextPrivate.h"
 
 #pragma region qt_headers
 #include <QThread>
@@ -17,9 +17,9 @@ QCefContextPrivate::QCefContextPrivate(QCoreApplication* app, int argc, char** a
   : argc_(argc)
   , argv_(argv)
 {
-  // cefWorkerTimer_.setTimerType(Qt::PreciseTimer);
-  // cefWorkerTimer_.start(kCefWorkerIntervalMs);
-  // connect(&cefWorkerTimer_, SIGNAL(timeout()), this, SLOT(performCefLoopWork()));
+  cefWorkerTimer_.setTimerType(Qt::PreciseTimer);
+  cefWorkerTimer_.start(kCefWorkerIntervalMs);
+  connect(&cefWorkerTimer_, SIGNAL(timeout()), this, SLOT(performCefLoopWork()));
   connect(app, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
 }
 

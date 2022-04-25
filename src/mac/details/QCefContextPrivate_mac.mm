@@ -65,9 +65,9 @@ bool g_handling_send_event = false;
   method_exchangeImplementations(original_terminate, swizzled_terminate);
 
   // swizzle the run method
-  Method original_run = class_getInstanceMethod(self, @selector(run));
-  Method swizzled_run = class_getInstanceMethod(self, @selector(_swizzled_run));
-  method_exchangeImplementations(original_run, swizzled_run);
+  // Method original_run = class_getInstanceMethod(self, @selector(run));
+  // Method swizzled_run = class_getInstanceMethod(self, @selector(_swizzled_run));
+  // method_exchangeImplementations(original_run, swizzled_run);
 }
 
 - (BOOL)isHandlingSendEvent {
@@ -178,8 +178,9 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   CefString(&cef_settings.framework_dir_path) = cefFrameworkPath();
   CefString(&cef_settings.browser_subprocess_path) = cefSubprocessPath();
   cef_settings.pack_loading_disabled = false;
+  cef_settings.external_message_pump = true;
   cef_settings.multi_threaded_message_loop = false;
-  cef_settings.external_message_pump = false;
+
 
 #if defined(CEF_USE_OSR)
   cef_settings.windowless_rendering_enabled = true;
