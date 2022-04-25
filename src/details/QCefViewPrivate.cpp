@@ -335,6 +335,7 @@ QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const CefRenderHandle
 
     if (osr.qCefViewFrame_.size() == frame.size()) {
       QPainter painter(&osr.qCefViewFrame_);
+      painter.setRenderHints(QPainter::SmoothPixmapTransform);
       for (auto& rect : dirtyRects) {
         QRect rc{ rect.x, rect.y, rect.width, rect.height };
         painter.drawImage(rc, frame, rc);
@@ -354,6 +355,7 @@ QCefViewPrivate::onOsrUpdatePopupFrame(const QImage& frame, const CefRenderHandl
 
     if (osr.qCefPopupFrame_.size() == frame.size()) {
       QPainter painter(&osr.qCefPopupFrame_);
+      painter.setRenderHints(QPainter::SmoothPixmapTransform);
       for (auto& rect : dirtyRects) {
         QRect rc{ rect.x, rect.y, rect.width, rect.height };
         painter.drawImage(rc, frame, rc);

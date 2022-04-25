@@ -60,6 +60,7 @@ CCefClientDelegate::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& 
   CefRect rect;
   GetViewRect(browser, rect);
 
+  auto scale = pCefViewPrivate_->q_ptr->window()->devicePixelRatio();
   QScreen* screen = pCefViewPrivate_->q_ptr->screen();
   screen_info.Set(screen->devicePixelRatio(), //
                   screen->depth(),            //
@@ -100,12 +101,6 @@ CCefClientDelegate::OnPaint(CefRefPtr<CefBrowser> browser,
 {
   if (!IsValidBrowser(browser))
     return;
-
-  QRegion region;
-  CefRenderHandler::RectList::const_iterator it = dirtyRects.begin();
-  for (; it != dirtyRects.end(); ++it) {
-    region += QRegion(it->x, it->y, it->width, it->height);
-  }
 
   QImage frame = QImage(static_cast<const uchar*>(buffer), width, height, QImage::Format_ARGB32_Premultiplied);
 
