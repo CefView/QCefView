@@ -208,12 +208,18 @@ QCefView::paintEvent(QPaintEvent* event)
 #if defined(CEF_USE_OSR)
   QPixmap backingPixmap(size());
   QPainter backingPainter(&backingPixmap);
+  backingPainter.setRenderHints(QPainter::SmoothPixmapTransform);
   backingPainter.fillRect(rect(), palette().color(backgroundRole()));
   {
     QMutexLocker lock(&(d->osr.qPaintLock_));
-    backingPainter.drawImage(0, 0, d->osr.qCefViewFrame_);
-    if (d->osr.showPopup_)
-      backingPainter.drawImage(d->osr.qPopupRect_.topLeft(), d->osr.qCefPopupFrame_);
+    QImage view = d->osr.qCefViewFrame_;
+    view.setDevicePixelRatio(devicePixelRatio());
+    backingPainter.drawImage(0, 0, view);
+    if (d->osr.showPopup_) {
+      QImage popup = d->osr.qCefPopupFrame_;
+      popup.setDevicePixelRatio(devicePixelRatio());
+      backingPainter.drawImage(d->osr.qPopupRect_.topLeft(), popup);
+    }
   }
 
   QPainter painter(this);
