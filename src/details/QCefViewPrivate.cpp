@@ -268,7 +268,7 @@ QCefViewPrivate::onViewScreenChanged(QScreen* screen)
 {
 #if defined(CEF_USE_OSR)
   if (pCefBrowser_)
-    pCefBrowser_->GetHost()->WasResized();
+    pCefBrowser_->GetHost()->NotifyScreenInfoChanged();
 #endif
 }
 
@@ -383,10 +383,13 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 
   auto et = event->type();
 
+  
+#if !defined(Q_OS_MACOS)
   // monitor the move event of the top-level window and the widget
   if ((watched == q || watched == q->window()) && (et == QEvent::Move || et == QEvent::Resize)) {
     notifyMoveOrResizeStarted();
   }
+#endif
 
 #if defined(CEF_USE_OSR)
   if (watched == q && (et == QEvent::KeyPress || et == QEvent::KeyRelease)) {
