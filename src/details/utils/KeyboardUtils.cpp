@@ -10,6 +10,7 @@ static QMap<int, qint32> keyMap = {
   { Qt::Key_Down, 0x28 },
   { Qt::Key_Backspace, 0x08 },
   { Qt::Key_Tab, 0x09 },
+  { Qt::Key_Backtab, 0x09 },
   { Qt::Key_Clear, 0x0C },
   { Qt::Key_Return, 0x0D },
   { Qt::Key_Enter, 0x0D },

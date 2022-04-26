@@ -1,4 +1,4 @@
-#include "QCefViewPrivate.h"
+﻿#include "QCefViewPrivate.h"
 
 #pragma region std_headers
 #include <stdexcept>
@@ -342,7 +342,7 @@ QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const CefRenderHandle
 {
   {
     QMutexLocker lock(&(osr.qPaintLock_));
-    
+
     if (osr.qCefViewFrame_.size() == frame.size()) {
       QPainter painter(&osr.qCefViewFrame_);
       for (auto& rect : dirtyRects) {
@@ -361,7 +361,7 @@ QCefViewPrivate::onOsrUpdatePopupFrame(const QImage& frame, const CefRenderHandl
 {
   {
     QMutexLocker lock(&(osr.qPaintLock_));
-    
+
     if (osr.qCefPopupFrame_.size() == frame.size()) {
       QPainter painter(&osr.qCefPopupFrame_);
       for (auto& rect : dirtyRects) {
@@ -383,7 +383,6 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 
   auto et = event->type();
 
-  
 #if !defined(Q_OS_MACOS)
   // monitor the move event of the top-level window and the widget
   if ((watched == q || watched == q->window()) && (et == QEvent::Move || et == QEvent::Resize)) {
@@ -394,7 +393,7 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 #if defined(CEF_USE_OSR)
   if (watched == q && (et == QEvent::KeyPress || et == QEvent::KeyRelease)) {
     QKeyEvent* ke = (QKeyEvent*)event;
-    if (ke->key() == Qt::Key_Tab) {
+    if (ke->key() == Qt::Key_Tab || ke->key() == Qt::Key_Backtab) {
       onViewKeyEvent(ke);
       return true;
     }

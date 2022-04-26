@@ -1,4 +1,4 @@
-#include <QCefView.h>
+﻿#include <QCefView.h>
 
 #pragma region qt_headers
 #include <QPainter>
@@ -209,22 +209,29 @@ QCefView::paintEvent(QPaintEvent* event)
   Q_D(QCefView);
 
 #if defined(CEF_USE_OSR)
-  // compose the the backing image with view and popup
-  QSize backingSize = size() * devicePixelRatio();
-  QRect backingRect = QRect(0, 0, backingSize.width(), backingSize.height());
-  QPixmap backingPixmap(backingSize);
-  QPainter backingPainter(&backingPixmap);
-  backingPainter.fillRect(backingRect, palette().color(backgroundRole()));
+  QPainter painter(this);
+  // paint background
+  painter.fillRect(rect(), palette().color(backgroundRole()));
+
   {
     QMutexLocker lock(&(d->osr.qPaintLock_));
-    backingPainter.drawImage(backingRect, d->osr.qCefViewFrame_);
+
+    // paint cef view
+    painter.drawImage(
+      QRect{
+        0,
+        0,
+        (int)(d->osr.qCefViewFrame_.width() / devicePixelRatio()), //
+        (int)(d->osr.qCefViewFrame_.height() / devicePixelRatio()) //
+      },
+      d->osr.qCefViewFrame_);
+
+    // paint cef pop-up
     if (d->osr.showPopup_) {
-      backingPainter.drawImage(d->osr.qPopupRect_.topLeft() * devicePixelRatio(), d->osr.qCefPopupFrame_);
+      painter.drawImage(d->osr.qPopupRect_, d->osr.qCefPopupFrame_);
     }
   }
-  
-  QPainter painter(this);
-  painter.drawPixmap(rect(), backingPixmap);
+
 #endif
 
   QWidget::paintEvent(event);
