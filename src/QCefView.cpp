@@ -1,4 +1,4 @@
-﻿#include <QCefView.h>
+#include <QCefView.h>
 
 #pragma region qt_headers
 #include <QPainter>
@@ -18,8 +18,11 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
   , d_ptr(new QCefViewPrivate(QCefContext::instance()->d_func(), this, url, setting))
 {
 #if defined(CEF_USE_OSR)
-  setAttribute(Qt::WA_OpaquePaintEvent);
   setBackgroundRole(QPalette::Window);
+#if !defined(Q_OS_MACOS)
+  // On macOS this attribute will block the view update
+  setAttribute(Qt::WA_OpaquePaintEvent);
+#endif
 #endif
 
   setMouseTracking(true);
@@ -219,12 +222,12 @@ QCefView::paintEvent(QPaintEvent* event)
       backingPainter.drawImage(d->osr.qPopupRect_.topLeft() * devicePixelRatio(), d->osr.qCefPopupFrame_);
     }
   }
-
+  
   QPainter painter(this);
   painter.drawPixmap(rect(), backingPixmap);
 #endif
 
-  return QWidget::paintEvent(event);
+  QWidget::paintEvent(event);
 }
 
 void

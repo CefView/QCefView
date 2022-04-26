@@ -1,4 +1,4 @@
-﻿#include "CCefClientDelegate.h"
+#include "CCefClientDelegate.h"
 
 #include <QDebug>
 #include <QImage>
@@ -11,18 +11,7 @@
 bool
 CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
-  if (!IsValidBrowser(browser))
-    return false;
-
-  QRect rcWindow = pCefViewPrivate_->q_ptr->window()->frameGeometry();
-  rect.Set(rcWindow.left(),
-           rcWindow.right(),
-           rcWindow.width() ? rcWindow.width() : 1,
-           rcWindow.height() ? rcWindow.height() : 1);
-
-  // qDebug() << "GetRootScreenRect:" << rcWindow;
-
-  return true;
+  return false;
 }
 
 void
@@ -66,16 +55,16 @@ CCefClientDelegate::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& 
   CefRect rect;
   GetViewRect(browser, rect);
 
-  auto scale = pCefViewPrivate_->q_ptr->window()->devicePixelRatio();
-  QScreen* screen = pCefViewPrivate_->q_ptr->screen();
-  screen_info.Set(screen->devicePixelRatio(), //
-                  screen->depth(),            //
+  screen_info.Set(pCefViewPrivate_->q_ptr->devicePixelRatio(), //
+                  pCefViewPrivate_->q_ptr->depth(),            //
                   0,                          //
                   false,                      //
                   rect,                       //
                   rect                        //
   );
 
+  // qDebug() << "GetScreenInfo: pixel ratio:" << screen_info.device_scale_factor;
+  
   return true;
 }
 
@@ -107,9 +96,9 @@ CCefClientDelegate::OnPaint(CefRefPtr<CefBrowser> browser,
 {
   if (!IsValidBrowser(browser))
     return;
-
+  
   QImage frame = QImage(static_cast<const uchar*>(buffer), width, height, QImage::Format_ARGB32_Premultiplied);
-
+  
   if (PET_VIEW == type) {
     pCefViewPrivate_->onOsrUpdateViewFrame(frame, dirtyRects);
   } else if (PET_POPUP == type) {
