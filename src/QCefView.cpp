@@ -206,24 +206,22 @@ QCefView::paintEvent(QPaintEvent* event)
   Q_D(QCefView);
 
 #if defined(CEF_USE_OSR)
-  QPixmap backingPixmap(size());
+  // compose the the backing image with view and popup
+  QSize backingSize = size() * devicePixelRatio();
+  QRect backingRect = QRect(0, 0, backingSize.width(), backingSize.height());
+  QPixmap backingPixmap(backingSize);
   QPainter backingPainter(&backingPixmap);
-  backingPainter.setRenderHints(QPainter::SmoothPixmapTransform);
-  backingPainter.fillRect(rect(), palette().color(backgroundRole()));
+  backingPainter.fillRect(backingRect, palette().color(backgroundRole()));
   {
     QMutexLocker lock(&(d->osr.qPaintLock_));
-    QImage view = d->osr.qCefViewFrame_;
-    view.setDevicePixelRatio(devicePixelRatio());
-    backingPainter.drawImage(0, 0, view);
+    backingPainter.drawImage(backingRect, d->osr.qCefViewFrame_);
     if (d->osr.showPopup_) {
-      QImage popup = d->osr.qCefPopupFrame_;
-      popup.setDevicePixelRatio(devicePixelRatio());
-      backingPainter.drawImage(d->osr.qPopupRect_.topLeft(), popup);
+      backingPainter.drawImage(d->osr.qPopupRect_.topLeft() * devicePixelRatio(), d->osr.qCefPopupFrame_);
     }
   }
 
   QPainter painter(this);
-  painter.drawPixmap(0, 0, backingPixmap);
+  painter.drawPixmap(rect(), backingPixmap);
 #endif
 
   return QWidget::paintEvent(event);

@@ -176,6 +176,7 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
   pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
   pCefBrowser_->GetHost()->WasResized();
   connect(this, SIGNAL(updateOsrFrame()), q_ptr, SLOT(update()));
+  connect(q_ptr->windowHandle(), SIGNAL(screenChanged(QScreen*)), this, SLOT(onViewScreenChanged(QScreen*)));
 #else
   // create QWidget from cef browser widow, this will re-parent the CEF browser window
   QWidget* browserWidget = QWidget::createWindowContainer(
@@ -263,6 +264,15 @@ QCefViewPrivate::onAppFocusChanged(QWidget* old, QWidget* now)
 }
 
 void
+QCefViewPrivate::onViewScreenChanged(QScreen* screen)
+{
+#if defined(CEF_USE_OSR)
+  if (pCefBrowser_)
+    pCefBrowser_->GetHost()->WasResized();
+#endif
+}
+
+void
 QCefViewPrivate::onCefWindowLostTabFocus(bool next)
 {
   // The focus was returned from CEF window, QCefView needs to handle
@@ -335,7 +345,6 @@ QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const CefRenderHandle
 
     if (osr.qCefViewFrame_.size() == frame.size()) {
       QPainter painter(&osr.qCefViewFrame_);
-      painter.setRenderHints(QPainter::SmoothPixmapTransform);
       for (auto& rect : dirtyRects) {
         QRect rc{ rect.x, rect.y, rect.width, rect.height };
         painter.drawImage(rc, frame, rc);

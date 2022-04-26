@@ -19,6 +19,9 @@ CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& re
            rcWindow.right(),
            rcWindow.width() ? rcWindow.width() : 1,
            rcWindow.height() ? rcWindow.height() : 1);
+
+  // qDebug() << "GetRootScreenRect:" << rcWindow;
+
   return true;
 }
 
@@ -36,6 +39,9 @@ CCefClientDelegate::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
   // it just returns the rect retrieved from GetClinetRect which is relative to the window
   QSize rcSize = pCefViewPrivate_->q_ptr->size();
   QPoint ptWindow = pCefViewPrivate_->q_ptr->mapTo(pCefViewPrivate_->q_ptr->window(), QPoint(0, 0));
+
+  // qDebug() << "GetViewRect:" << QRect(ptWindow, rcSize);
+
   rect.Set(ptWindow.x(), ptWindow.y(), rcSize.width() ? rcSize.width() : 1, rcSize.height() ? rcSize.height() : 1);
 }
 
