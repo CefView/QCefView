@@ -1,4 +1,4 @@
-﻿#include "QCefViewPrivate.h"
+#include "QCefViewPrivate.h"
 
 #pragma region std_headers
 #include <stdexcept>
@@ -553,7 +553,11 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
 
   // QEvent::KeyPress
   // send key down event
+#if defined(Q_OS_MACOS)
+  e.type = KEYEVENT_KEYDOWN;
+#else
   e.type = KEYEVENT_RAWKEYDOWN;
+#endif
   pCefBrowser_->GetHost()->SendKeyEvent(e);
 
   // contains char?

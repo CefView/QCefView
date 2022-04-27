@@ -1,4 +1,4 @@
-﻿#if defined(CEF_USE_OSR)
+#if defined(CEF_USE_OSR)
 #include "KeyboardUtils.h"
 
 #include <include/cef_app.h>
@@ -266,6 +266,8 @@ GetPlatformKeyboardModifiers(QKeyEvent* event)
   if (state & GDK_BUTTON3_MASK)
     cm |= EVENTFLAG_RIGHT_MOUSE_BUTTON;
 #elif defined(Q_OS_MACOS)
+  auto m = event->modifiers();
+  cm |= m & Qt::ControlModifier ? EVENTFLAG_COMMAND_DOWN : 0;
 #else
 #endif
 
