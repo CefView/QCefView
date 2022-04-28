@@ -19,11 +19,9 @@ QCefView is a Qt based QWidget which encapsulates [CEF](https://bitbucket.org/ch
 
 
 ### macOS
-#### Native Child Window Mode :x: 
-    1. cmd+a/z/x/c/v not working
+#### Native Child Window Mode :heavy_check_mark:
 #### Offscreen Rendering Mode :x: 
     1. rendering position problem
-    2. cmd+a/z/x/c/v not working
 
 ### Linux
 #### Native Child Window Mode :x: 

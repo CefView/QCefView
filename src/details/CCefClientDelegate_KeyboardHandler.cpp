@@ -1,4 +1,4 @@
-﻿#include "CCefClientDelegate.h"
+#include "CCefClientDelegate.h"
 
 #include <QDebug>
 #include <QImage>
@@ -12,6 +12,37 @@ CCefClientDelegate::onPreKeyEvent(CefRefPtr<CefBrowser> browser,
                                   CefEventHandle os_event,
                                   bool* is_keyboard_shortcut)
 {
+#if defined(Q_OS_MACOS)
+  if (event.modifiers & EVENTFLAG_COMMAND_DOWN) {
+    switch (event.native_key_code) {
+      case 0: // A
+        browser->GetFocusedFrame()->SelectAll();
+        *is_keyboard_shortcut = true;
+        break;
+      case 6: // Z
+        browser->GetFocusedFrame()->Undo();
+        *is_keyboard_shortcut = true;
+        break;
+      case 7: // X
+        browser->GetFocusedFrame()->Cut();
+        *is_keyboard_shortcut = true;
+        break;
+      case 8: // C
+        browser->GetFocusedFrame()->Copy();
+        *is_keyboard_shortcut = true;
+        break;
+      case 9: // V
+        browser->GetFocusedFrame()->Paste();
+        *is_keyboard_shortcut = true;
+        break;
+      case 16: // Y
+        browser->GetFocusedFrame()->Redo();
+        *is_keyboard_shortcut = true;
+        break;
+    }
+  }
+#endif
+
   return false;
 }
 
