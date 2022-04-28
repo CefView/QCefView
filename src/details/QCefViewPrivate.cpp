@@ -538,7 +538,7 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
 #if defined(CEF_USE_OSR)
   if (!pCefBrowser_)
     return;
-
+  
   CefKeyEvent e;
   e.windows_key_code = GetPlatformKeyboardCode(event);
   e.native_key_code = event->nativeScanCode();
@@ -562,11 +562,7 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
 
   // QEvent::KeyPress
   // send key down event
-#if defined(Q_OS_MACOS)
-  e.type = KEYEVENT_KEYDOWN;
-#else
   e.type = KEYEVENT_RAWKEYDOWN;
-#endif
   pCefBrowser_->GetHost()->SendKeyEvent(e);
 
   // contains char?
