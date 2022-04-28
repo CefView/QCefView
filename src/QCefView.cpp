@@ -1,4 +1,4 @@
-﻿#include <QCefView.h>
+#include <QCefView.h>
 
 #pragma region qt_headers
 #include <QPainter>
@@ -17,12 +17,9 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
   : QWidget(parent)
   , d_ptr(new QCefViewPrivate(QCefContext::instance()->d_func(), this, url, setting))
 {
-#if defined(CEF_USE_OSR)
+#if defined(CEF_USE_OSR) && !defined(Q_OS_MACOS)
   setBackgroundRole(QPalette::Window);
-#if !defined(Q_OS_MACOS)
-  // On macOS this attribute will block the view update
   setAttribute(Qt::WA_OpaquePaintEvent);
-#endif
 #endif
 
   setMouseTracking(true);
@@ -210,8 +207,11 @@ QCefView::paintEvent(QPaintEvent* event)
 
 #if defined(CEF_USE_OSR)
   QPainter painter(this);
+
+#if !defined(Q_OS_MACOS)
   // paint background
   painter.fillRect(rect(), palette().color(backgroundRole()));
+#endif
 
   {
     QMutexLocker lock(&(d->osr.qPaintLock_));

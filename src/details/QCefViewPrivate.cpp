@@ -291,12 +291,21 @@ QCefViewPrivate::onCefWindowLostTabFocus(bool next)
     // TO-DO bug: this does not work on Linux(X11), need to find a workaround
     widget->window()->raise();
     widget->setFocus(reason);
+    widget->activateWindow();
   }
 }
 
 void
 QCefViewPrivate::onCefWindowGotFocus()
-{}
+{
+  // qDebug() << "cefwindow got focus";
+  Q_Q(QCefView);
+  QWidget* focusedWidget = qApp->focusWidget();
+  if (focusedWidget && focusedWidget != q) {
+    focusedWidget->clearFocus();
+  }
+  return;
+}
 
 void
 QCefViewPrivate::onCefUpdateCursor(const QCursor& cursor)
