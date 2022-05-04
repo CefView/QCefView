@@ -1,9 +1,13 @@
-#if defined(CEF_USE_OSR)
+﻿#if defined(CEF_USE_OSR)
 #include "KeyboardUtils.h"
 
 #include <include/cef_app.h>
 
-static QMap<int, qint32> keyMap = {
+static QMap<int, qint32> windowsKeyMap = {
+  // TO-DO
+};
+
+static QMap<int, qint32> macOSKeyMap = {
   { Qt::Key_Left, 0x25 },
   { Qt::Key_Up, 0x26 },
   { Qt::Key_Right, 0x27 },
@@ -137,16 +141,19 @@ static QMap<int, qint32> keyMap = {
 quint32
 QtKeyToWindowsVirtualKey(int k)
 {
-  if (keyMap.contains(k))
-    return keyMap[k];
+  if (windowsKeyMap.contains(k))
+    return windowsKeyMap[k];
 
   return 0;
 }
 
-uint32_t
-GetPlatformKeyboardCode(QKeyEvent* event)
+quint32
+QtKeyToMacOSVirtualKey(int k)
 {
-  return QtKeyToWindowsVirtualKey(event->key());
+  if (windowsKeyMap.contains(k))
+    return windowsKeyMap[k];
+
+  return 0;
 }
 
 uint32_t

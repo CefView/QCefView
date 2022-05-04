@@ -2,8 +2,11 @@
 #pragma once
 #include <QKeyEvent>
 
-uint32_t
-GetPlatformKeyboardCode(QKeyEvent* event);
+quint32
+QtKeyToWindowsVirtualKey(int k);
+
+quint32
+QtKeyToMacOSVirtualKey(int k);
 
 uint32_t
 GetPlatformKeyboardModifiers(QKeyEvent* event);
