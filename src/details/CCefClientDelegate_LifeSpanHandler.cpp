@@ -1,4 +1,4 @@
-﻿#include "CCefClientDelegate.h"
+#include "CCefClientDelegate.h"
 
 #include <QThread>
 
@@ -47,18 +47,21 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 {
   if (!pCefViewPrivate_)
     return;
-
+  
+  QWindow* w = nullptr;
+#if !defined(CEF_USE_OSR)
   // create QWindow from native browser window handle
-  QWindow* w = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));
+  w = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));
+#endif
+  
   Qt::ConnectionType c = Qt::DirectConnection;
+  
   if (pCefViewPrivate_->q_ptr->thread() != QThread::currentThread()) {
-    // move window to QCefView thread
-    w->moveToThread(pCefViewPrivate_->q_ptr->thread());
-
     // change connection type
 #if defined(CEF_USE_OSR)
     c = Qt::BlockingQueuedConnection;
 #else
+    w->moveToThread(pCefViewPrivate_->q_ptr->thread());
     c = Qt::QueuedConnection;
 #endif
   }

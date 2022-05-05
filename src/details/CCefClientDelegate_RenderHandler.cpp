@@ -17,7 +17,7 @@ CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& re
 
   QRect rcScreen = pCefViewPrivate_->q_ptr->windowHandle()->screen()->geometry();
 
-  qDebug() << "GetRootScreenRect:" << rcScreen;
+  // qDebug() << "CCefClientDelegate::GetRootScreenRect:" << rcScreen;
 
   rect.Set(rcScreen.x(), rcScreen.y(), rcScreen.width(), rcScreen.height());
   return true;
@@ -38,7 +38,7 @@ CCefClientDelegate::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
   QSize rcSize = pCefViewPrivate_->q_ptr->size();
   QPoint ptWindow = pCefViewPrivate_->q_ptr->mapTo(pCefViewPrivate_->q_ptr->window(), QPoint(0, 0));
 
-  qDebug() << "GetViewRect:" << QRect(ptWindow, rcSize);
+  // qDebug() << "CCefClientDelegate::GetViewRect:" << QRect(ptWindow, rcSize);
 
   rect.Set(ptWindow.x(), ptWindow.y(), rcSize.width() ? rcSize.width() : 1, rcSize.height() ? rcSize.height() : 1);
 }
@@ -72,8 +72,8 @@ CCefClientDelegate::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& 
                   { availableRect.x(), availableRect.y(), availableRect.width(), availableRect.height() } //
   );
 
-  // qDebug() << "GetScreenInfo: pixel ratio:" << screen_info.device_scale_factor << "rect:" << rect
-  //          << "availableRect:" << availableRect;
+  // qDebug() << "CCefClientDelegate::GetScreenInfo: pixel ratio:" << screen_info.device_scale_factor << "rect:" << rect
+  //           << "availableRect:" << availableRect;
 
   return true;
 }
