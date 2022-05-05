@@ -1,12 +1,12 @@
-﻿#if defined(CEF_USE_OSR)
+#if defined(CEF_USE_OSR)
 #pragma once
 #include <QKeyEvent>
 
 quint32
-QtKeyToWindowsVirtualKey(int k);
+QKeyEventToWindowsVirtualKey(QKeyEvent* ke);
 
 quint32
-QtKeyToMacOSVirtualKey(int k);
+QKeyEventToMacOSVirtualKey(QKeyEvent* ke);
 
 uint32_t
 GetPlatformKeyboardModifiers(QKeyEvent* event);

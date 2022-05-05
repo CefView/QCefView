@@ -538,16 +538,21 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
 #if defined(CEF_USE_OSR)
   if (!pCefBrowser_)
     return;
-  
+
+  // qDebug() << Qt::hex << "==== onViewKeyEvent: key = " << (Qt::Key)(event->key())
+  // << ", nativeVirtualKey = 0x" << event->nativeVirtualKey()
+  // << ", nativeScanCode = 0x" << event->nativeScanCode()
+  // << ", modifiers = " << event->modifiers()
+  // << ", nativeModifiers = 0x" << event->nativeModifiers();
+
   CefKeyEvent e;
 #if defined(Q_OS_MACOS)
-  e.native_key_code = QtKeyToMacOSVirtualKey(event->key());
+  e.native_key_code = QKeyEventToMacOSVirtualKey(event);
 #else
-  e.windows_key_code = QtKeyToWindowsVirtualKey(event->key());
+  e.windows_key_code = QKeyEventToWindowsVirtualKey(event);
 #endif
 
   auto m = event->modifiers();
-  e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
   e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
   e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
   e.modifiers |= m & Qt::KeypadModifier ? EVENTFLAG_IS_KEY_PAD : 0;
@@ -567,6 +572,11 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
   // send key down event
   e.type = KEYEVENT_RAWKEYDOWN;
   pCefBrowser_->GetHost()->SendKeyEvent(e);
+
+#if defined(Q_OS_MACOS)
+  if (e.modifiers & EVENTFLAG_IS_KEY_PAD)
+    return;
+#endif
 
   // contains char?
   if (event->text().isEmpty())

@@ -1,4 +1,4 @@
-#if 1 || defined(CEF_USE_OSR)
+#if defined(CEF_USE_OSR)
 #include "KeyboardUtils.h"
 
 #include <QKeyEvent>
@@ -106,6 +106,7 @@ enum
   kVK_ANSI_LeftBracket = 0x21,
   kVK_ANSI_I = 0x22,
   kVK_ANSI_P = 0x23,
+  kVK_Return = 0x24,
   kVK_ANSI_L = 0x25,
   kVK_ANSI_J = 0x26,
   kVK_ANSI_Quote = 0x27,
@@ -117,7 +118,16 @@ enum
   kVK_ANSI_N = 0x2D,
   kVK_ANSI_M = 0x2E,
   kVK_ANSI_Period = 0x2F,
+  kVK_Space = 0x31,
   kVK_ANSI_Grave = 0x32,
+  kVK_Command = 0x37,
+  kVK_Shift = 0x38,
+  kVK_CapsLock = 0x39,
+  kVK_Option = 0x3A,
+  kVK_Control = 0x3B,
+  kVK_RightShift = 0x3C,
+  kVK_RightOption = 0x3D,
+  kVK_RightControl = 0x3E,
   kVK_ANSI_KeypadDecimal = 0x41,
   kVK_ANSI_KeypadMultiply = 0x43,
   kVK_ANSI_KeypadPlus = 0x45,
@@ -141,19 +151,9 @@ enum
 /* keycodes for keys that are independent of keyboard layout*/
 enum
 {
-  kVK_Return = 0x24,
   kVK_Tab = 0x30,
-  kVK_Space = 0x31,
   kVK_Delete = 0x33,
   kVK_Escape = 0x35,
-  kVK_Command = 0x37,
-  kVK_Shift = 0x38,
-  kVK_CapsLock = 0x39,
-  kVK_Option = 0x3A,
-  kVK_Control = 0x3B,
-  kVK_RightShift = 0x3C,
-  kVK_RightOption = 0x3D,
-  kVK_RightControl = 0x3E,
   kVK_Function = 0x3F,
   kVK_F17 = 0x40,
   kVK_VolumeUp = 0x48,
@@ -191,66 +191,18 @@ enum
 };
 
 static QMap<int, qint32> macOSKeyMap = {
-  // TO-DO
-  { Qt::Key_Home, kHomeCharCode },
-  { Qt::Key_Enter, kEnterCharCode },
-  { Qt::Key_End, kEndCharCode },
-  { Qt::Key_Backspace, kBackspaceCharCode },
-  { Qt::Key_Tab, kTabCharCode },
-  { Qt::Key_PageUp, kPageUpCharCode },
-  { Qt::Key_PageDown, kPageDownCharCode },
-  { Qt::Key_Return, kReturnCharCode },
-  { Qt::Key_Escape, kEscapeCharCode },
-  { Qt::Key_Left, kLeftArrowCharCode },
-  { Qt::Key_Right, kRightArrowCharCode },
-  { Qt::Key_Up, kUpArrowCharCode },
-  { Qt::Key_Down, kDownArrowCharCode },
-  { Qt::Key_Help, kHelpCharCode },
-  { Qt::Key_Delete, kDeleteCharCode },
-
-  // ascii maps, for debug
-  { Qt::Key_Colon, ':' },
-  { Qt::Key_Semicolon, ';' },
-  { Qt::Key_Less, '<' },
-  { Qt::Key_Equal, '=' },
-  { Qt::Key_Greater, '>' },
-  { Qt::Key_Question, '?' },
-  { Qt::Key_At, '@' },
-  { Qt::Key_Space, ' ' },
-  { Qt::Key_Exclam, '!' },
-  { Qt::Key_QuoteDbl, '"' },
-  { Qt::Key_NumberSign, '#' },
-  { Qt::Key_Dollar, '$' },
-  { Qt::Key_Percent, '%' },
-  { Qt::Key_Ampersand, '&' },
-  { Qt::Key_Apostrophe, '\'' },
-  { Qt::Key_ParenLeft, '(' },
-  { Qt::Key_ParenRight, ')' },
-  { Qt::Key_Asterisk, '*' },
-  { Qt::Key_Plus, '+' },
-  { Qt::Key_Comma, ',' },
-  { Qt::Key_Minus, '-' },
-  { Qt::Key_Period, '.' },
-  { Qt::Key_Slash, '/' },
-  { Qt::Key_BracketLeft, '[' },
-  { Qt::Key_BracketRight, ']' },
-  { Qt::Key_Backslash, '\\' },
-  { Qt::Key_Underscore, '_' },
-  { Qt::Key_QuoteLeft, '`' },
-  { Qt::Key_BraceLeft, '{' },
-  { Qt::Key_BraceRight, '}' },
-  { Qt::Key_Bar, '|' },
-  { Qt::Key_AsciiTilde, '~' },
-  { Qt::Key_AsciiCircum, '^' },
+  { Qt::Key_Control, kVK_Command }, { Qt::Key_Shift, kVK_Shift },  { Qt::Key_CapsLock, kVK_CapsLock },
+  { Qt::Key_Alt, kVK_Option },      { Qt::Key_Meta, kVK_Control },
 };
 
 quint32
-QtKeyToMacOSVirtualKey(int k)
+QKeyEventToMacOSVirtualKey(QKeyEvent* ke)
 {
-  if (macOSKeyMap.contains(k))
-    return macOSKeyMap[k];
+  if (macOSKeyMap.contains(ke->key())) {
+    return macOSKeyMap[ke->key()];
+  }
 
-  return 0;
+  return ke->nativeVirtualKey();
 }
 
 static QMap<int, qint32> windowsKeyMap = {
@@ -385,10 +337,10 @@ static QMap<int, qint32> windowsKeyMap = {
 };
 
 quint32
-QtKeyToWindowsVirtualKey(int k)
+QKeyEventToWindowsVirtualKey(QKeyEvent* ke)
 {
-  if (windowsKeyMap.contains(k))
-    return windowsKeyMap[k];
+  if (windowsKeyMap.contains(ke->key()))
+    return windowsKeyMap[ke->key()];
 
   return 0;
 }
@@ -399,6 +351,9 @@ GetPlatformKeyboardModifiers(QKeyEvent* event)
   uint32_t cm = 0;
 
 #if defined(Q_OS_WINDOWS)
+  auto m = event->modifiers();
+  cm |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
+
   if (::GetKeyState(VK_NUMLOCK) & 1)
     cm |= EVENTFLAG_NUM_LOCK_ON;
   if (::GetKeyState(VK_CAPITAL) & 1)
@@ -494,6 +449,9 @@ GetPlatformKeyboardModifiers(QKeyEvent* event)
     GDK_MODIFIER_MASK = 0x5c001fff
   } GdkModifierType;
 
+  auto m = event->modifiers();
+  cm |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
+
   auto state = event->nativeModifiers();
   if (state & GDK_SHIFT_MASK)
     cm |= EVENTFLAG_SHIFT_DOWN;
@@ -510,8 +468,69 @@ GetPlatformKeyboardModifiers(QKeyEvent* event)
   if (state & GDK_BUTTON3_MASK)
     cm |= EVENTFLAG_RIGHT_MOUSE_BUTTON;
 #elif defined(Q_OS_MACOS)
+  typedef enum NSEventModifierFlags
+  {
+    NX_DEVICELCTLKEYMASK = 0x00000001,   // left ctrl
+    NX_DEVICELSHIFTKEYMASK = 0x00000002, // left shift
+    NX_DEVICERSHIFTKEYMASK = 0x00000004, // right shift
+    NX_DEVICELCMDKEYMASK = 0x00000008,   // left cmd
+    NX_DEVICERCMDKEYMASK = 0x00000010,   // right cmd
+    NX_DEVICELALTKEYMASK = 0x00000020,   // left option
+    NX_DEVICERALTKEYMASK = 0x00000040,   // right option
+    NX_DEVICE_ALPHASHIFT_STATELESS_MASK = 0x00000080,
+    NX_DEVICERCTLKEYMASK = 0x00002000, // right ctrl
+
+    NSEventModifierFlagCapsLock = 1 << 16,   // Set if Caps Lock key is pressed.
+    NSEventModifierFlagShift = 1 << 17,      // Set if Shift key is pressed.
+    NSEventModifierFlagControl = 1 << 18,    // Set if Control key is pressed.
+    NSEventModifierFlagOption = 1 << 19,     // Set if Option or Alternate key is pressed.
+    NSEventModifierFlagCommand = 1 << 20,    // Set if Command key is pressed.
+    NSEventModifierFlagNumericPad = 1 << 21, // Set if any key in the numeric keypad is pressed.
+    NSEventModifierFlagHelp = 1 << 22,       // Set if the Help key is pressed.
+    NSEventModifierFlagFunction = 1 << 23,   // Set if any function key is pressed.
+
+    // Used to retrieve only the device-independent modifier flags, allowing applications to mask off the
+    // device-dependent modifier flags, including event coalescing information.
+    NSEventModifierFlagDeviceIndependentFlagsMask = 0xffff0000UL
+  } NSEventModifierFlags;
+
   auto m = event->modifiers();
+  cm |= m & Qt::MetaModifier ? EVENTFLAG_CONTROL_DOWN : 0;
   cm |= m & Qt::ControlModifier ? EVENTFLAG_COMMAND_DOWN : 0;
+
+  auto state = event->nativeModifiers();
+  switch (event->key()) {
+    case Qt::Key_CapsLock:
+      if (state & NSEventModifierFlagCapsLock)
+        cm |= EVENTFLAG_CAPS_LOCK_ON;
+      break;
+    case Qt::Key_Control:
+      if (state & NX_DEVICELCMDKEYMASK)
+        cm |= EVENTFLAG_IS_LEFT;
+      else if (state & NX_DEVICERCMDKEYMASK)
+        cm |= EVENTFLAG_IS_RIGHT;
+      break;
+    case Qt::Key_Shift:
+      if (state & NX_DEVICELSHIFTKEYMASK)
+        cm |= EVENTFLAG_IS_LEFT;
+      else if (state & NX_DEVICERSHIFTKEYMASK)
+        cm |= EVENTFLAG_IS_RIGHT;
+      break;
+    case Qt::Key_Meta:
+      if (state & NX_DEVICELCTLKEYMASK)
+        cm |= EVENTFLAG_IS_LEFT;
+      else if (state & NX_DEVICERCTLKEYMASK)
+        cm |= EVENTFLAG_IS_RIGHT;
+      break;
+    case Qt::Key_Option:
+      if (state & NX_DEVICELALTKEYMASK)
+        cm |= EVENTFLAG_IS_LEFT;
+      else if (state & NX_DEVICERALTKEYMASK)
+        cm |= EVENTFLAG_IS_RIGHT;
+      break;
+    default:
+      break;
+  }
 #else
 #endif
 
