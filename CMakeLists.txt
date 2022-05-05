@@ -7,7 +7,7 @@ project(QCefView)
 option(BUILD_DEMO       "Build the demo"                      OFF)
 option(BUILD_STATIC     "Build QCefView as static library"    OFF)
 option(USE_SANDBOX      "Enable CEF Sandbox"                  OFF)
-option(USE_OSR          "Enable CEF Offscreen rendering"      OFF)
+option(USE_OSR          "Enable CEF Offscreen rendering"      ON)
 option(STATIC_CRT       "Use MultiThreaded linkage for MSVC"  OFF)
 
 
