@@ -160,7 +160,6 @@ CCefClientDelegate::OnImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
     QRect rc(r.x, r.y, r.width, r.height);
     QMetaObject::invokeMethod(pCefViewPrivate_,             //
                               "onOsrImeCursorRectChanged",  //
-                              Qt::BlockingQueuedConnection, //
                               Q_ARG(const QRect&, rc));
   }
 
