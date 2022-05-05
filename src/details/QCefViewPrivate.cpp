@@ -540,10 +540,10 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
     return;
   
   CefKeyEvent e;
-#if !defined(Q_OS_WINDOWS)
-  e.windows_key_code = QtKeyToWindowsVirtualKey(event->key());
-#else
+#if defined(Q_OS_MACOS)
   e.native_key_code = QtKeyToMacOSVirtualKey(event->key());
+#else
+  e.windows_key_code = QtKeyToWindowsVirtualKey(event->key());
 #endif
 
   auto m = event->modifiers();
