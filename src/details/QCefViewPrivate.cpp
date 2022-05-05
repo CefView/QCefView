@@ -540,8 +540,11 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
     return;
   
   CefKeyEvent e;
-  e.windows_key_code = GetPlatformKeyboardCode(event);
-  e.native_key_code = event->nativeScanCode();
+#if !defined(Q_OS_WINDOWS)
+  e.windows_key_code = QtKeyToWindowsVirtualKey(event->key());
+#else
+  e.native_key_code = QtKeyToMacOSVirtualKey(event->key());
+#endif
 
   auto m = event->modifiers();
   e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
