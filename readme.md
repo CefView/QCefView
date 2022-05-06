@@ -8,8 +8,8 @@ QCefView is a Qt based QWidget which encapsulates [CEF](https://bitbucket.org/ch
 | Platform |  Lastest Build Status  | OSR Production Ready  | NCW Production Ready  |
 |---|---|---|---|
 | Windows | [![Build on Windows](https://github.com/CefView/QCefView/actions/workflows/build-windows.yml/badge.svg)](https://github.com/CefView/QCefView/actions/workflows/build-windows.yml) | :heavy_check_mark: | :heavy_check_mark: |
-| macOS | [![Build on macOS](https://github.com/CefView/QCefView/actions/workflows/build-macos.yml/badge.svg)](https://github.com/CefView/QCefView/actions/workflows/build-macos.yml) | :x: | :heavy_check_mark: |
-| Linux | [![Build on Linux](https://github.com/CefView/QCefView/actions/workflows/build-linux.yml/badge.svg)](https://github.com/CefView/QCefView/actions/workflows/build-linux.yml) | :heavy_check_mark: | :x: |
+| macOS | [![Build on macOS](https://github.com/CefView/QCefView/actions/workflows/build-macos.yml/badge.svg)](https://github.com/CefView/QCefView/actions/workflows/build-macos.yml)          | :heavy_check_mark: | :heavy_check_mark: |
+| Linux | [![Build on Linux](https://github.com/CefView/QCefView/actions/workflows/build-linux.yml/badge.svg)](https://github.com/CefView/QCefView/actions/workflows/build-linux.yml)         | :heavy_check_mark: | :x: |
 
 **OSR** = Offscreen Rendering Mode **NCW** = Native Child Window Mode
 
