@@ -1,14 +1,15 @@
-#if defined(CEF_USE_OSR)
+﻿#if defined(CEF_USE_OSR)
 #pragma once
 #include <QKeyEvent>
+#include <include/cef_app.h>
 
-quint32
-QKeyEventToWindowsVirtualKey(QKeyEvent* ke);
+void
+MapQKeyEventToCefKeyEvent(QKeyEvent* qe, CefKeyEvent& ce);
 
-quint32
-QKeyEventToMacOSVirtualKey(QKeyEvent* ke);
+bool
+ShouldSendKeyCharEvent(QKeyEvent* qe);
 
-uint32_t
-GetPlatformKeyboardModifiers(QKeyEvent* event);
+void
+AdjustCefKeyCharEvent(QKeyEvent* qe, CefKeyEvent& ce);
 
 #endif

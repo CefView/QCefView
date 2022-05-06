@@ -1,4 +1,4 @@
-#include "QCefViewPrivate.h"
+﻿#include "QCefViewPrivate.h"
 
 #pragma region std_headers
 #include <stdexcept>
@@ -539,55 +539,35 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
   if (!pCefBrowser_)
     return;
 
-  // qDebug() << Qt::hex << "==== onViewKeyEvent: key = " << (Qt::Key)(event->key())
-  // << ", nativeVirtualKey = 0x" << event->nativeVirtualKey()
-  // << ", nativeScanCode = 0x" << event->nativeScanCode()
-  // << ", modifiers = " << event->modifiers()
-  // << ", nativeModifiers = 0x" << event->nativeModifiers();
+  // qDebug("==== onViewKeyEvent:key=%d, nativeVirtualKey=0x%02x, nativeScanCode=0x%02x, modifiers=0x%08x, "
+  //       "nativeModifiers=0x%08x, text=%s",
+  //       (Qt::Key)(event->key()),
+  //       event->nativeVirtualKey(),
+  //       event->nativeScanCode(),
+  //       (quint32)(event->modifiers()),
+  //       event->nativeModifiers(),
+  //       event->text().toStdString().c_str());
 
   CefKeyEvent e;
-#if defined(Q_OS_MACOS)
-  e.native_key_code = QKeyEventToMacOSVirtualKey(event);
-#else
-  e.windows_key_code = QKeyEventToWindowsVirtualKey(event);
-#endif
+  MapQKeyEventToCefKeyEvent(event, e);
 
-  auto m = event->modifiers();
-  e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
-  e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
-  e.modifiers |= m & Qt::KeypadModifier ? EVENTFLAG_IS_KEY_PAD : 0;
-  e.modifiers |= GetPlatformKeyboardModifiers(event);
-  if (e.modifiers & EVENTFLAG_ALT_DOWN)
-    e.is_system_key = true;
-
-  // QEvent::KeyRelease
-  // send key release event
+  // QEvent::KeyRelease - send key release event
   if (event->type() == QEvent::KeyRelease) {
     e.type = KEYEVENT_KEYUP;
     pCefBrowser_->GetHost()->SendKeyEvent(e);
     return;
   }
 
-  // QEvent::KeyPress
-  // send key down event
+  // QEvent::KeyPress - send key down event
   e.type = KEYEVENT_RAWKEYDOWN;
   pCefBrowser_->GetHost()->SendKeyEvent(e);
 
-#if defined(Q_OS_MACOS)
-  if (e.modifiers & EVENTFLAG_IS_KEY_PAD)
-    return;
-#endif
-
-  // contains char?
-  if (event->text().isEmpty())
-    return;
-
   // send key char event
-  e.type = KEYEVENT_CHAR;
-  e.windows_key_code = event->text().at(0).unicode();
-  e.unmodified_character = event->key();
-  e.character = e.windows_key_code;
-  pCefBrowser_->GetHost()->SendKeyEvent(e);
+  if (ShouldSendKeyCharEvent(event)) {
+    AdjustCefKeyCharEvent(event, e);
+    e.type = KEYEVENT_CHAR;
+    pCefBrowser_->GetHost()->SendKeyEvent(e);
+  }
 #endif
 }
 

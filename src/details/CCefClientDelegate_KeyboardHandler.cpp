@@ -12,9 +12,14 @@ CCefClientDelegate::onPreKeyEvent(CefRefPtr<CefBrowser> browser,
                                   CefEventHandle os_event,
                                   bool* is_keyboard_shortcut)
 {
-  // qDebug() << Qt::hex << "CefKeyEvent:" << event.type
-  //   << ", native_key_code: 0x" << event.native_key_code
-  //   << ", modifiers:0x" << event.modifiers;
+  // qDebug("===== CefKeyEvent:type=%d, modifiers=0x%08x, windows_key_code=%d, native_key_code=%d, char=0x%04x, "
+  //        "unmod_char=0x%04x",
+  //        event.type,
+  //        event.modifiers,
+  //        event.windows_key_code,
+  //        event.native_key_code,
+  //        event.character,
+  //        event.unmodified_character);
 
 #if defined(Q_OS_MACOS)
   if (event.modifiers & EVENTFLAG_COMMAND_DOWN && event.type == KEYEVENT_RAWKEYDOWN) {
