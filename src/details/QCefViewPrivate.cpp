@@ -350,14 +350,14 @@ void
 QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region)
 {
   if (osr.qCefViewFrame_.size() == frame.size()) {
-    QMutexLocker lock(&(osr.qPaintLock_));
+    QMutexLocker lock(&(osr.qViewPaintLock_));
     // update region
     QPainter painter(&osr.qCefViewFrame_);
     for (auto& rc : region) {
       painter.drawImage(rc, frame, rc);
     }
   } else {
-    QMutexLocker lock(&(osr.qPaintLock_));
+    QMutexLocker lock(&(osr.qViewPaintLock_));
     osr.qCefViewFrame_ = frame.copy();
   }
   emit updateOsrFrame();
@@ -367,14 +367,14 @@ void
 QCefViewPrivate::onOsrUpdatePopupFrame(const QImage& frame, const QRegion& region)
 {
   if (osr.qCefPopupFrame_.size() == frame.size()) {
-    QMutexLocker lock(&(osr.qPaintLock_));
+    QMutexLocker lock(&(osr.qPopupPaintLock_));
     // update region
     QPainter painter(&osr.qCefPopupFrame_);
     for (auto& rc : region) {
       painter.drawImage(rc, frame, rc);
     }
   } else {
-    QMutexLocker lock(&(osr.qPaintLock_));
+    QMutexLocker lock(&(osr.qPopupPaintLock_));
     osr.qCefPopupFrame_ = frame.copy();
   }
   emit updateOsrFrame();

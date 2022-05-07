@@ -216,14 +216,15 @@ QCefView::paintEvent(QPaintEvent* event)
 
   // perform the painting
   {
-    QMutexLocker lock(&(d->osr.qPaintLock_));
-
     // paint cef view
+    QMutexLocker lock(&(d->osr.qViewPaintLock_));
     int width = d->osr.qCefViewFrame_.width() / scaleFactor;
     int height = d->osr.qCefViewFrame_.height() / scaleFactor;
     painter.drawImage(QRect{ 0, 0, width, height }, d->osr.qCefViewFrame_);
-
+  }
+  {
     // paint cef pop-up
+    QMutexLocker lock(&(d->osr.qPopupPaintLock_));
     if (d->osr.showPopup_) {
       painter.drawImage(d->osr.qPopupRect_, d->osr.qCefPopupFrame_);
     }

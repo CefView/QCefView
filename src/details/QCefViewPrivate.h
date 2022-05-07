@@ -75,12 +75,17 @@ public:
     /// <summary>
     ///
     /// </summary>
-    QMutex qPaintLock_;
+    QMutex qViewPaintLock_;
 
     /// <summary>
     ///
     /// </summary>
     QImage qCefViewFrame_;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QMutex qPopupPaintLock_;
 
     /// <summary>
     ///
