@@ -1,4 +1,4 @@
-#include <QCoreApplication>
+﻿#include <QCoreApplication>
 #include <QDir>
 #include <QHBoxLayout>
 #include <QJsonDocument>
@@ -60,8 +60,8 @@ MainWindow::createCefView()
 
   // create the QCefView widget and add it to the layout container
   // cefViewWidget = new QCefView(INDEX_URL, &setting, this);
-  // cefViewWidget = new QCefView("https://www.testufo.com", &setting, this);
-  cefViewWidget = new QCefView("https://devicetests.com", &setting, this);
+  cefViewWidget = new QCefView("https://www.testufo.com", &setting, this);
+  // cefViewWidget = new QCefView("https://devicetests.com", &setting, this);
   ui.cefContainer->layout()->addWidget(cefViewWidget);
 
   // connect the invokeMethod to the slot

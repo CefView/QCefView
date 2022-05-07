@@ -152,9 +152,9 @@ signals:
   void updateOsrFrame();
 
 protected:
-  void onOsrUpdateViewFrame(const QImage& frame, const CefRenderHandler::RectList& dirtyRects);
+  void onOsrUpdateViewFrame(const QImage& frame, const QRegion& region);
 
-  void onOsrUpdatePopupFrame(const QImage& frame, const CefRenderHandler::RectList& dirtyRects);
+  void onOsrUpdatePopupFrame(const QImage& frame, const QRegion& region);
 #endif
 
 protected:

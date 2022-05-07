@@ -1,4 +1,4 @@
-#include "CCefClientDelegate.h"
+﻿#include "CCefClientDelegate.h"
 
 #include <QDebug>
 #include <QImage>
@@ -107,12 +107,18 @@ CCefClientDelegate::OnPaint(CefRefPtr<CefBrowser> browser,
   if (!IsValidBrowser(browser))
     return;
 
-  QImage frame = QImage(static_cast<const uchar*>(buffer), width, height, QImage::Format_ARGB32_Premultiplied);
+  QImage frame;
+  QRegion region;
+
+  frame = QImage(static_cast<const uchar*>(buffer), width, height, QImage::Format_ARGB32_Premultiplied);
+  for (auto& rect : dirtyRects) {
+    region += QRect{ rect.x, rect.y, rect.width, rect.height };
+  }
 
   if (PET_VIEW == type) {
-    pCefViewPrivate_->onOsrUpdateViewFrame(frame, dirtyRects);
+    pCefViewPrivate_->onOsrUpdateViewFrame(frame, region);
   } else if (PET_POPUP == type) {
-    pCefViewPrivate_->onOsrUpdatePopupFrame(frame, dirtyRects);
+    pCefViewPrivate_->onOsrUpdatePopupFrame(frame, region);
   } else {
   }
 }
@@ -158,8 +164,8 @@ CCefClientDelegate::OnImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
   if (!character_bounds.empty()) {
     auto r = character_bounds[character_bounds.size() - 1];
     QRect rc(r.x, r.y, r.width, r.height);
-    QMetaObject::invokeMethod(pCefViewPrivate_,             //
-                              "onOsrImeCursorRectChanged",  //
+    QMetaObject::invokeMethod(pCefViewPrivate_,            //
+                              "onOsrImeCursorRectChanged", //
                               Q_ARG(const QRect&, rc));
   }
 

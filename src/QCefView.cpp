@@ -1,4 +1,4 @@
-#include <QCefView.h>
+﻿#include <QCefView.h>
 
 #pragma region qt_headers
 #include <QPainter>
@@ -213,25 +213,23 @@ QCefView::paintEvent(QPaintEvent* event)
   painter.fillRect(rect(), palette().color(backgroundRole()));
 #endif
 
+  // get current scale factor
+  qreal scaleFactor = devicePixelRatio();
+
+  // perform the painting
   {
     QMutexLocker lock(&(d->osr.qPaintLock_));
 
     // paint cef view
-    painter.drawImage(
-      QRect{
-        0,
-        0,
-        (int)(d->osr.qCefViewFrame_.width() / devicePixelRatio()), //
-        (int)(d->osr.qCefViewFrame_.height() / devicePixelRatio()) //
-      },
-      d->osr.qCefViewFrame_);
+    int width = d->osr.qCefViewFrame_.width() / scaleFactor;
+    int height = d->osr.qCefViewFrame_.height() / scaleFactor;
+    painter.drawImage(QRect{ 0, 0, width, height }, d->osr.qCefViewFrame_);
 
     // paint cef pop-up
     if (d->osr.showPopup_) {
       painter.drawImage(d->osr.qPopupRect_, d->osr.qCefPopupFrame_);
     }
   }
-
 #endif
 
   QWidget::paintEvent(event);
