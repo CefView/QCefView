@@ -38,9 +38,6 @@ protected slots:
 
   void onBtnNewBrowserClicked();
 
-protected:
-  bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result);
-
 private:
   Ui::MainWindow ui;
 

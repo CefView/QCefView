@@ -1,15 +1,5 @@
 ﻿#include "MainWindow.h"
 
-#if defined(Q_OS_WINDOWS)
-#include <windows.h>
-#endif
-
-#if defined(Q_OS_MACOS)
-#endif
-
-#if defined(Q_OS_LINUX)
-#endif
-
 #include <QCoreApplication>
 #include <QDir>
 #include <QHBoxLayout>
@@ -70,7 +60,7 @@ MainWindow::createCefView()
 
   // create the QCefView widget and add it to the layout container
   // cefViewWidget = new CefViewWidget(INDEX_URL, &setting);
-  cefViewWidget = new CefViewWidget("https://www.testufo.com", &setting);
+  cefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
   // cefViewWidget = new CefViewWidget("https://devicetests.com", &setting);
   ui.cefContainer->layout()->addWidget(cefViewWidget);
 
@@ -200,14 +190,4 @@ MainWindow::onBtnNewBrowserClicked()
   w->setCentralWidget(view);
   w->resize(1024, 768);
   w->show();
-}
-
-bool
-MainWindow::nativeEvent(const QByteArray& eventType, void* message, qintptr* result)
-{
-#if defined(Q_OS_WINDOWS)
-  MSG* msg = (MSG*)message;
-  qDebug("+++++++++++++++ MSG: hwnd=%p, message=0x%08x", msg->hwnd, msg->message);
-#endif
-  return QMainWindow::nativeEvent(eventType, message, result);
 }
