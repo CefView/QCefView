@@ -1,4 +1,4 @@
-#include <QCefView.h>
+﻿#include <QCefView.h>
 
 #pragma region qt_headers
 #include <QPainter>
@@ -246,6 +246,7 @@ QCefView::showEvent(QShowEvent* event)
 {
   Q_D(QCefView);
   d->onViewVisibilityChanged(true);
+  QWidget::showEvent(event);
 }
 
 void
@@ -253,6 +254,7 @@ QCefView::hideEvent(QHideEvent* event)
 {
   Q_D(QCefView);
   d->onViewVisibilityChanged(false);
+  QWidget::hideEvent(event);
 }
 
 void
@@ -260,6 +262,7 @@ QCefView::focusInEvent(QFocusEvent* event)
 {
   Q_D(QCefView);
   d->onViewFocusChanged(true);
+  QWidget::focusInEvent(event);
 }
 
 void
@@ -267,6 +270,7 @@ QCefView::focusOutEvent(QFocusEvent* event)
 {
   Q_D(QCefView);
   d->onViewFocusChanged(false);
+  QWidget::focusOutEvent(event);
 }
 
 void
@@ -274,6 +278,7 @@ QCefView::resizeEvent(QResizeEvent* event)
 {
   Q_D(QCefView);
   d->onViewSizeChanged(event->size(), event->oldSize());
+  QWidget::resizeEvent(event);
 }
 
 void
@@ -281,6 +286,7 @@ QCefView::keyPressEvent(QKeyEvent* event)
 {
   Q_D(QCefView);
   d->onViewKeyEvent(event);
+  QWidget::keyPressEvent(event);
 }
 
 void
@@ -288,6 +294,7 @@ QCefView::keyReleaseEvent(QKeyEvent* event)
 {
   Q_D(QCefView);
   d->onViewKeyEvent(event);
+  QWidget::keyReleaseEvent(event);
 }
 
 void
@@ -295,6 +302,7 @@ QCefView::mouseMoveEvent(QMouseEvent* event)
 {
   Q_D(QCefView);
   d->onViewMouseEvent(event);
+  QWidget::mouseMoveEvent(event);
 }
 
 void
@@ -302,6 +310,7 @@ QCefView::mousePressEvent(QMouseEvent* event)
 {
   Q_D(QCefView);
   d->onViewMouseEvent(event);
+  QWidget::mousePressEvent(event);
 }
 
 void
@@ -309,6 +318,7 @@ QCefView::mouseReleaseEvent(QMouseEvent* event)
 {
   Q_D(QCefView);
   d->onViewMouseEvent(event);
+  QWidget::mouseReleaseEvent(event);
 }
 
 void
@@ -316,4 +326,5 @@ QCefView::wheelEvent(QWheelEvent* event)
 {
   Q_D(QCefView);
   d->onViewWheelEvent(event);
+  QWidget::wheelEvent(event);
 }
