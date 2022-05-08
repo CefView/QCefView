@@ -5,7 +5,7 @@
 
 #include "ui_MainWindow.h"
 
-#include <QCefView.h>
+#include "CefViewWidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -38,10 +38,13 @@ protected slots:
 
   void onBtnNewBrowserClicked();
 
+protected:
+  bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result);
+
 private:
   Ui::MainWindow ui;
 
-  QCefView* cefViewWidget;
+  CefViewWidget* cefViewWidget = nullptr;
   QRegion draggableRegion_;
   QRegion nonDraggableRegion_;
 };

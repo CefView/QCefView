@@ -1,7 +1,17 @@
-﻿#include <QColor>
-#include <QRandomGenerator>
+﻿#include "CefViewWidget.h"
 
-#include "CefViewWidget.h"
+#if defined(Q_OS_WINDOWS)
+#include <windows.h>
+#endif
+
+#if defined(Q_OS_MACOS)
+#endif
+
+#if defined(Q_OS_LINUX)
+#endif
+
+#include <QColor>
+#include <QRandomGenerator>
 
 CefViewWidget::CefViewWidget(const QString url, const QCefSetting* setting, QWidget* parent /* = 0*/)
   : QCefView(url, setting, parent)
@@ -9,14 +19,12 @@ CefViewWidget::CefViewWidget(const QString url, const QCefSetting* setting, QWid
 
 CefViewWidget::~CefViewWidget() {}
 
-void
-CefViewWidget::changeColor()
+bool
+CefViewWidget::nativeEvent(const QByteArray& eventType, void* message, qintptr* result)
 {
-  QColor color(QRandomGenerator::global()->generate());
-
-  QCefEvent event("colorChange");
-  QVariantList args;
-  args.append(QVariant::fromValue(color.value()));
-  event.setArguments(args);
-  broadcastEvent(event);
+#if defined(Q_OS_WINDOWS)
+  MSG* msg = (MSG*)message;
+  qDebug("--------------- MSG: hwnd=%p, message=0x%08x", msg->hwnd, msg->message);
+#endif
+  return QCefView::nativeEvent(eventType, message, result);
 }

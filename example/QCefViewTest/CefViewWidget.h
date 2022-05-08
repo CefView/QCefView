@@ -15,10 +15,8 @@ public:
 
   ~CefViewWidget();
 
-  /// <summary>
-  /// Changes the background color of web area
-  /// </summary>
-  void changeColor();
+protected:
+  bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result);
 };
 
 #endif // CUSTOMCEFVIEW_H
