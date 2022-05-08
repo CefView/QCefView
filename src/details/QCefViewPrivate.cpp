@@ -115,7 +115,7 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
   // Set window info
   CefWindowInfo window_info;
 #if defined(CEF_USE_OSR)
-  window_info.SetAsWindowless(nullptr);
+  window_info.SetAsWindowless(0);
 #else
   window_info.SetAsChild((CefWindowHandle)view->winId(), { 0, 0, view->maximumWidth(), view->maximumHeight() });
 #endif
