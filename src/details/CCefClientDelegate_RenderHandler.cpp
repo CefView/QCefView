@@ -1,5 +1,6 @@
 ﻿#include "CCefClientDelegate.h"
 
+#include <QApplication>
 #include <QDebug>
 #include <QImage>
 #include <QScreen>
@@ -15,7 +16,14 @@ CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& re
     return false;
   }
 
-  QRect rcScreen = pCefViewPrivate_->q_ptr->windowHandle()->screen()->geometry();
+  // get the screen which the view is current residing at
+  QScreen* currentScreen = pCefViewPrivate_->q_ptr->window()->screen();
+  if (!currentScreen) {
+    // the view is not visible so we retrieve the main screen info
+    currentScreen = QApplication::screens().at(0);
+  }
+
+  QRect rcScreen = currentScreen->geometry();
 
   // qDebug() << "CCefClientDelegate::GetRootScreenRect:" << rcScreen;
 
@@ -61,7 +69,13 @@ CCefClientDelegate::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& 
   if (!IsValidBrowser(browser))
     return false;
 
-  QScreen* currentScreen = pCefViewPrivate_->q_ptr->windowHandle()->screen();
+  // get the screen which the view is current residing at
+  QScreen* currentScreen = pCefViewPrivate_->q_ptr->window()->screen();
+  if (!currentScreen) {
+    // the view is not visible so we retrieve the main screen info
+    currentScreen = QApplication::screens().at(0);
+  }
+
   QRect rect = currentScreen->geometry();
   QRect availableRect = currentScreen->availableGeometry();
   screen_info.Set(currentScreen->devicePixelRatio(),                                                      //
