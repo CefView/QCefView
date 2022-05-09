@@ -27,7 +27,7 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
     Qt::ConnectionType c = pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection
                                                                                          : Qt::BlockingQueuedConnection;
     QMetaObject::invokeMethod(pCefViewPrivate_->q_ptr,
-                              "onBeforPopup",                            //
+                              "onBeforePopup",                           //
                               c,                                         //
                               Q_RETURN_ARG(bool, result),                //
                               Q_ARG(qint64, frameId),                    //
