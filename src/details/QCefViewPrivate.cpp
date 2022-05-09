@@ -176,7 +176,10 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
   pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
   pCefBrowser_->GetHost()->WasResized();
   connect(this, SIGNAL(updateOsrFrame()), q_ptr, SLOT(update()));
-  connect(q_ptr->windowHandle(), SIGNAL(screenChanged(QScreen*)), this, SLOT(onViewScreenChanged(QScreen*)));
+
+  // monitor the screenChanged signal from the top-level window
+  disconnect(this, SLOT(onViewScreenChanged(QScreen*)));
+  connect(q_ptr->window()->windowHandle(), SIGNAL(screenChanged(QScreen*)), this, SLOT(onViewScreenChanged(QScreen*)));
 #else
   // create QWidget from cef browser widow, this will re-parent the CEF browser window
   QWidget* browserWidget = QWidget::createWindowContainer(
@@ -396,6 +399,20 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 #endif
 
 #if defined(CEF_USE_OSR)
+  // if the parent chain changed, we need to re-connect the screenChanged signal
+  if (et == QEvent::ParentChange) {
+    QWidget* w = qobject_cast<QWidget*>(watched);
+    if (w && (w == q || w->isAncestorOf(q))) {
+      // reconnect the screenChanged
+      disconnect(this, SLOT(onViewScreenChanged(QScreen*)));
+      connect(q->window()->windowHandle(),        //
+              SIGNAL(screenChanged(QScreen*)),    //
+              this,                               //
+              SLOT(onViewScreenChanged(QScreen*)) //
+      );
+    }
+  }
+
   if (watched == q && (et == QEvent::KeyPress || et == QEvent::KeyRelease)) {
     QKeyEvent* ke = (QKeyEvent*)event;
     if (ke->key() == Qt::Key_Tab || ke->key() == Qt::Key_Backtab) {
