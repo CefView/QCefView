@@ -1,4 +1,4 @@
-#include "CCefClientDelegate.h"
+﻿#include "CCefClientDelegate.h"
 
 #include <QThread>
 
@@ -30,7 +30,7 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
                               "onBeforPopup",                            //
                               c,                                         //
                               Q_RETURN_ARG(bool, result),                //
-                              Q_ARG(int64_t, frameId),                   //
+                              Q_ARG(qint64, frameId),                    //
                               Q_ARG(const QString&, url),                //
                               Q_ARG(const QString&, name),               //
                               Q_ARG(QCefView::WindowOpenDisposition, d), //
@@ -47,15 +47,15 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 {
   if (!pCefViewPrivate_)
     return;
-  
+
   QWindow* w = nullptr;
 #if !defined(CEF_USE_OSR)
   // create QWindow from native browser window handle
   w = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));
 #endif
-  
+
   Qt::ConnectionType c = Qt::DirectConnection;
-  
+
   if (pCefViewPrivate_->q_ptr->thread() != QThread::currentThread()) {
     // change connection type
 #if defined(CEF_USE_OSR)
