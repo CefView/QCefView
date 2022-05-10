@@ -9,8 +9,9 @@ CCefClientDelegate::onBeforeContextMenu(CefRefPtr<CefBrowser> browser,
                                         CefRefPtr<CefMenuModel> model)
 {
 #if defined(CEF_USE_OSR)
-  // Context menu will not disappear on left click under OSR mode,
-  // so we just disable the default one you need to implement your own context menu
+  // Context menu will not disappear on left click under OSR
+  // mode, so we just disable the default one. You need to
+  // implement your own context menu.
   model->Clear();
 #endif
 }

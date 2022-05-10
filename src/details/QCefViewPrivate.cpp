@@ -179,7 +179,13 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
 
   // monitor the screenChanged signal from the top-level window
   disconnect(this, SLOT(onViewScreenChanged(QScreen*)));
-  connect(q_ptr->window()->windowHandle(), SIGNAL(screenChanged(QScreen*)), this, SLOT(onViewScreenChanged(QScreen*)));
+  if (q_ptr->window()->windowHandle()) {
+    connect(q_ptr->window()->windowHandle(),    //
+            SIGNAL(screenChanged(QScreen*)),    //
+            this,                               //
+            SLOT(onViewScreenChanged(QScreen*)) //
+    );
+  }
 #else
   // create QWidget from cef browser widow, this will re-parent the CEF browser window
   QWidget* browserWidget = QWidget::createWindowContainer(
@@ -341,6 +347,10 @@ void
 QCefViewPrivate::onOsrShowPopup(bool show)
 {
   osr.showPopup_ = show;
+
+  // clear the previous pop-up frame data if exist
+  osr.qCefPopupFrame_ = QImage();
+  osr.qPopupRect_ = QRect();
 }
 
 void
@@ -352,6 +362,16 @@ QCefViewPrivate::onOsrResizePopup(const QRect& rc)
 void
 QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region)
 {
+#if defined(QT_DEBUG)
+  qint64 elapsedMs = paintTimer_.restart();
+  // qDebug() << "===== CEF view frame update since last frame:" << elapsedMs;
+  if (elapsedMs >= 20)
+    qDebug() << "===== CEF view frame update stutter detected:" << elapsedMs;
+
+  QElapsedTimer updateDurationTimer;
+  updateDurationTimer.start();
+#endif
+
   if (osr.qCefViewFrame_.size() == frame.size()) {
     QMutexLocker lock(&(osr.qViewPaintLock_));
     // update region
@@ -364,6 +384,10 @@ QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region
     osr.qCefViewFrame_ = frame.copy();
   }
   emit updateOsrFrame();
+
+#if defined(QT_DEBUG)
+  qDebug() << "===== CEF frame update duration:" << elapsedMs;
+#endif
 }
 
 void
@@ -405,11 +429,13 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
     if (w && (w == q || w->isAncestorOf(q))) {
       // reconnect the screenChanged
       disconnect(this, SLOT(onViewScreenChanged(QScreen*)));
-      connect(q->window()->windowHandle(),        //
-              SIGNAL(screenChanged(QScreen*)),    //
-              this,                               //
-              SLOT(onViewScreenChanged(QScreen*)) //
-      );
+      if (q->window()->windowHandle()) {
+        connect(q->window()->windowHandle(),        //
+                SIGNAL(screenChanged(QScreen*)),    //
+                this,                               //
+                SLOT(onViewScreenChanged(QScreen*)) //
+        );
+      }
     }
   }
 

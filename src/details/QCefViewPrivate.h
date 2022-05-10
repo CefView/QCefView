@@ -4,6 +4,10 @@
 #include <QSet>
 #include <QString>
 #include <QWindow>
+
+#if defined(QT_DEBUG)
+#include <QElapsedTimer>
+#endif
 #pragma endregion qt_headers
 
 #include <CefViewBrowserClient.h>
@@ -108,6 +112,10 @@ public:
     /// </summary>
     QWidget* qBrowserWidget_ = nullptr;
   } ncw;
+#endif
+
+#if defined(QT_DEBUG)
+  QElapsedTimer paintTimer_;
 #endif
 
 public:
