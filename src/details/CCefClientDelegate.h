@@ -86,9 +86,10 @@ public:
                                    bool isLoading,
                                    bool canGoBack,
                                    bool canGoForward) override;
-  virtual void loadStart(CefRefPtr<CefBrowser>& browser) override;
-  virtual void loadEnd(CefRefPtr<CefBrowser>& browser, int httpStatusCode) override;
+  virtual void loadStart(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>& frame, int transition_type) override;
+  virtual void loadEnd(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>& frame, int httpStatusCode) override;
   virtual void loadError(CefRefPtr<CefBrowser>& browser,
+                         CefRefPtr<CefFrame>& frame,
                          int errorCode,
                          const std::string& errorMsg,
                          const std::string& failedUrl,
