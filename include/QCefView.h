@@ -194,22 +194,25 @@ public:
 signals:
   /// <summary>
   /// Gets called on loading state changed
+  /// loadingStateChanged 以两次为单位调用，前一次IsLoading=1，后一次IsLoading=0。
+  /// 多frame的网页，如cn.bing.com，会被多次成对调用。
+  /// 无法利用loadingStateChanged、loadStart、loadEnd直接判断整个网页的加载完成，需要额外的方法。
   /// </summary>
   /// <param name="isLoading">Indicates the browser is loading</param>
   /// <param name="canGoBack">Indicates the browser can go back</param>
   /// <param name="canGoForward">Indicates the browser can go forward</param>
-  void loadingStateChanged(bool isLoading, bool canGoBack, bool canGoForward);
+  void loadingStateChanged(bool isLoading, bool canGoBack, bool canGoForward, int browserId);
 
   /// <summary>
   /// Gets called on loading starts
   /// </summary>
-  void loadStart();
+  void loadStart(int browserId, int frameId, bool frameIsMain, int transition_type);
 
   /// <summary>
   /// Gets called on loading ends
   /// </summary>
   /// <param name="httpStatusCode"></param>
-  void loadEnd(int httpStatusCode);
+  void loadEnd(int httpStatusCode, int browserId, int frameId, bool frameIsMain);
 
   /// <summary>
   /// Gets called on loading failed due to error
@@ -218,7 +221,7 @@ signals:
   /// <param name="errorMsg">The error message</param>
   /// <param name="failedUrl">The url caused the failure</param>
   /// <param name="handled">Sets this parameter to indicates whether this error was handled or not</param>
-  void loadError(int errorCode, const QString& errorMsg, const QString& failedUrl, bool& handled);
+  void loadError(int errorCode, const QString& errorMsg, const QString& failedUrl, bool& handled, int browserId, int frameId, bool frameIsMain);
 
   /// <summary>
   /// Gets called on draggable region changed
