@@ -11,7 +11,7 @@ CCefClientDelegate::loadingStateChanged(CefRefPtr<CefBrowser>& browser,
   if (!IsValidBrowser(browser))
     return;
 
-  Q_EMIT pCefViewPrivate_->q_ptr->loadingStateChanged(isLoading, canGoBack, canGoForward, browser->GetIdentifier());
+  pCefViewPrivate_->q_ptr->loadingStateChanged(isLoading, canGoBack, canGoForward, browser->GetIdentifier());
 }
 
 void
@@ -20,7 +20,7 @@ CCefClientDelegate::loadStart(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame
   if (!IsValidBrowser(browser))
     return;
 
-  Q_EMIT pCefViewPrivate_->q_ptr->loadStart(browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), transition_type);
+  pCefViewPrivate_->q_ptr->loadStart(browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), transition_type);
 }
 
 void
@@ -29,7 +29,7 @@ CCefClientDelegate::loadEnd(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>&
   if (!IsValidBrowser(browser))
     return;
 
-  Q_EMIT pCefViewPrivate_->q_ptr->loadEnd(httpStatusCode, browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain());
+  pCefViewPrivate_->q_ptr->loadEnd(httpStatusCode, browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain());
 }
 
 void
@@ -45,5 +45,5 @@ CCefClientDelegate::loadError(CefRefPtr<CefBrowser>& browser,
 
   auto msg = QString::fromStdString(errorMsg);
   auto url = QString::fromStdString(failedUrl);
-  Q_EMIT pCefViewPrivate_->q_ptr->loadError(errorCode, msg, url, handled, browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain());
+  pCefViewPrivate_->q_ptr->loadError(errorCode, msg, url, handled, browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain());
 }
