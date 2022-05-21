@@ -17,7 +17,12 @@ CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& re
   }
 
   // get the screen which the view is current residing at
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
   QScreen* currentScreen = pCefViewPrivate_->q_ptr->window()->screen();
+#else
+  QWindow window = pCefViewPrivate_->q_ptr->window()->windowHandle();
+  QScreen* currentScreen = window ? window->screen() : nullptr;
+#endif
   if (!currentScreen) {
     // the view is not visible so we retrieve the main screen info
     currentScreen = QApplication::screens().at(0);

@@ -20,7 +20,8 @@ CCefClientDelegate::loadStart(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame
   if (!IsValidBrowser(browser))
     return;
 
-  pCefViewPrivate_->q_ptr->loadStart(browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), transition_type);
+  pCefViewPrivate_->q_ptr->loadStart(
+    browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), transition_type);
 }
 
 void
@@ -45,5 +46,6 @@ CCefClientDelegate::loadError(CefRefPtr<CefBrowser>& browser,
 
   auto msg = QString::fromStdString(errorMsg);
   auto url = QString::fromStdString(failedUrl);
-  pCefViewPrivate_->q_ptr->loadError(errorCode, msg, url, handled, browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain());
+  pCefViewPrivate_->q_ptr->loadError(
+    browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), errorCode, msg, url, handled);
 }

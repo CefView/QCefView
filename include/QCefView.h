@@ -194,34 +194,48 @@ public:
 signals:
   /// <summary>
   /// Gets called on loading state changed
-  /// loadingStateChanged 以两次为单位调用，前一次IsLoading=1，后一次IsLoading=0。
-  /// 多frame的网页，如cn.bing.com，会被多次成对调用。
-  /// 无法利用loadingStateChanged、loadStart、loadEnd直接判断整个网页的加载完成，需要额外的方法。
   /// </summary>
+  /// <param name="browserId">Indicates the browser id</param>
   /// <param name="isLoading">Indicates the browser is loading</param>
   /// <param name="canGoBack">Indicates the browser can go back</param>
   /// <param name="canGoForward">Indicates the browser can go forward</param>
-  void loadingStateChanged(bool isLoading, bool canGoBack, bool canGoForward, int browserId);
+  void loadingStateChanged(int browserId, bool isLoading, bool canGoBack, bool canGoForward);
 
   /// <summary>
   /// Gets called on loading starts
   /// </summary>
+  /// <param name="browserId">Indicates the browser id</param>
+  /// <param name="frameId">Indicates the frame id</param>
+  /// <param name="frameIsMain">Indicates the whether this is the main frame</param>
+  /// <param name="transition_type">transition type</param>
   void loadStart(int browserId, int frameId, bool frameIsMain, int transition_type);
 
   /// <summary>
   /// Gets called on loading ends
   /// </summary>
-  /// <param name="httpStatusCode"></param>
-  void loadEnd(int httpStatusCode, int browserId, int frameId, bool frameIsMain);
+  /// <param name="browserId">Indicates the browser id</param>
+  /// <param name="frameId">Indicates the frame id</param>
+  /// <param name="frameIsMain">Indicates the whether this is the main frame</param>
+  /// <param name="httpStatusCode">The HTTP status code</param>
+  void loadEnd(int browserId, int frameId, bool frameIsMain, int httpStatusCode);
 
   /// <summary>
   /// Gets called on loading failed due to error
   /// </summary>
+  /// <param name="browserId">Indicates the browser id</param>
+  /// <param name="frameId">Indicates the frame id</param>
+  /// <param name="frameIsMain">Indicates the whether this is the main frame</param>
   /// <param name="errorCode">The error code</param>
   /// <param name="errorMsg">The error message</param>
   /// <param name="failedUrl">The url caused the failure</param>
   /// <param name="handled">Sets this parameter to indicates whether this error was handled or not</param>
-  void loadError(int errorCode, const QString& errorMsg, const QString& failedUrl, bool& handled, int browserId, int frameId, bool frameIsMain);
+  void loadError(int browserId,
+                 int frameId,
+                 bool frameIsMain,
+                 int errorCode,
+                 const QString& errorMsg,
+                 const QString& failedUrl,
+                 bool& handled);
 
   /// <summary>
   /// Gets called on draggable region changed
