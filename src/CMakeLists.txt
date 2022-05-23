@@ -192,19 +192,14 @@ if (OS_MACOS)
     TARGET QCefView
     PRE_BUILD
 
-    #sign the cef framework
-    COMMAND codesign --force --sign - 
-    "$<TARGET_BUNDLE_DIR:QCefView>/../Chromium Embedded Framework.framework"
-
-    #copy the cef framework to resource directory
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    "$<TARGET_BUNDLE_DIR:QCefView>/../Chromium Embedded Framework.framework"
-    "$<TARGET_FILE_DIR:QCefView>/Resources/Chromium Embedded Framework.framework"
-
     #copy the CefViewWing*.app to resource directory
     COMMAND cp -a
-    \"$<TARGET_BUNDLE_DIR:QCefView>/../CefViewWing\"*.app 
+    "$<TARGET_BUNDLE_DIR:CefViewWing>/../"
     "$<TARGET_FILE_DIR:QCefView>/Resources/"
+
+    #sign the cef framework
+    COMMAND codesign --force --sign - 
+    "$<TARGET_BUNDLE_DIR:QCefView>/Resources/Chromium Embedded Framework.framework"
   )
 endif()  # OS_MACOS
 
@@ -237,9 +232,8 @@ install(
   TARGETS QCefView
     ARCHIVE DESTINATION "QCefView/lib$<$<CONFIG:Debug>:/Debug>"
     LIBRARY DESTINATION "QCefView/bin$<$<CONFIG:Debug>:/Debug>"
-    #RUNTIME DESTINATION "QCefView/bin$<$<CONFIG:Debug>:/Debug>"
     FRAMEWORK DESTINATION "QCefView/lib$<$<CONFIG:Debug>:/Debug>"
 )
-install(DIRECTORY 
-  "$<TARGET_FILE_DIR:QCefView>/" DESTINATION "QCefView/bin$<$<CONFIG:Debug>:/Debug>"
-)
+if (NOT OS_MACOS)
+  install(DIRECTORY "$<TARGET_FILE_DIR:QCefView>/" DESTINATION "QCefView/bin$<$<CONFIG:Debug>:/Debug>")
+endif()

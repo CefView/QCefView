@@ -12,7 +12,7 @@ do
 done
 
 echo ============== Config project ==============
-cmake -G "Xcode" -S . -B "${BUILD_DIR}" -DBUILD_DEMO=ON -DUSE_SANDBOX=ON
+cmake -G "Xcode" -S . -B "${BUILD_DIR}" -DBUILD_DEMO=ON -DUSE_SANDBOX=ON -DCMAKE_INSTALL_PREFIX:PATH="$(pwd)/out/install/macos"
 
 if [ ${BUILD_PROJECT} -eq 1 ] 
 then
