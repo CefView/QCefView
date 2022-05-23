@@ -117,7 +117,18 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
 #if defined(CEF_USE_OSR)
   window_info.SetAsWindowless(0);
 #else
+#if defined(OS_LINUX)
+  // Don't know why, on Linux platform if we use QCefView's winId() as
+  // the parent, it will complain about `BadWindow`,
+  // and the browser window will not be created, this never happens
+  // on Windows and macOS, so we create a temporal QWindow as the
+  // parent to create CEF browser window.
+  QWindow w;
+  CefWindowHandle p = (CefWindowHandle)(w.winId());
+  window_info.SetAsChild(p, { 0, 0, 0, 0 });
+#else
   window_info.SetAsChild((CefWindowHandle)view->winId(), { 0, 0, view->maximumWidth(), view->maximumHeight() });
+#endif
 #endif
 
   // create the browser settings

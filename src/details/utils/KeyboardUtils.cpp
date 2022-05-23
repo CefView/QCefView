@@ -1,4 +1,4 @@
-#if 1 || defined(CEF_USE_OSR)
+#if defined(CEF_USE_OSR)
 #include "KeyboardUtils.h"
 
 #if defined(Q_OS_MACOS)
