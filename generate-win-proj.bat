@@ -1,1 +1,1 @@
-cmake -S . -B .build/Windows -DBUILD_DEMO=ON
+cmake -S . -B .build/Windows -DBUILD_DEMO=ON -DCMAKE_INSTALL_PREFIX:PATH="%cd%/out/install/windows"

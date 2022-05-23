@@ -67,6 +67,15 @@ if (OS_WINDOWS)
     _UNICODE
     QCEFVIEW_LIB
   )
+
+  add_custom_command(TARGET QCefView 
+  POST_BUILD
+
+  # copy binary files of CefViewCore
+  COMMAND ${CMAKE_COMMAND} -E copy_directory 
+    "$<TARGET_FILE_DIR:CefViewWing>"
+    "$<TARGET_FILE_DIR:QCefView>"
+  )
 endif()  # OS_WINDOWS
 
 if (OS_LINUX)
@@ -112,6 +121,15 @@ if (OS_LINUX)
   target_link_libraries(QCefView 
     PRIVATE
       Qt${QT_VERSION_MAJOR}::GuiPrivate
+  )
+
+  add_custom_command(TARGET QCefView 
+  POST_BUILD
+
+  # copy binary files of CefViewCore
+  COMMAND ${CMAKE_COMMAND} -E copy_directory 
+    "$<TARGET_FILE_DIR:CefViewWing>"
+    "$<TARGET_FILE_DIR:QCefView>"
   )
 endif()  # OS_LINUX
 
@@ -214,3 +232,14 @@ target_link_libraries(QCefView
     Qt${QT_VERSION_MAJOR}::Widgets
 )
 
+# install QCefView files
+install(
+  TARGETS QCefView
+    ARCHIVE DESTINATION "QCefView/lib$<$<CONFIG:Debug>:/Debug>"
+    LIBRARY DESTINATION "QCefView/bin$<$<CONFIG:Debug>:/Debug>"
+    #RUNTIME DESTINATION "QCefView/bin$<$<CONFIG:Debug>:/Debug>"
+    FRAMEWORK DESTINATION "QCefView/lib$<$<CONFIG:Debug>:/Debug>"
+)
+install(DIRECTORY 
+  "$<TARGET_FILE_DIR:QCefView>/" DESTINATION "QCefView/bin$<$<CONFIG:Debug>:/Debug>"
+)

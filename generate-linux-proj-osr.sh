@@ -12,7 +12,7 @@ do
 done
 
 echo ============== Config project ==============
-cmake -G "Unix Makefiles" -S . -B "${BUILD_DIR}" -DBUILD_DEMO=ON -DUSE_OSR=ON -DUSE_SANDBOX=ON
+cmake -G "Unix Makefiles" -S . -B "${BUILD_DIR}" -DBUILD_DEMO=ON -DUSE_OSR=ON -DUSE_SANDBOX=ON -DCMAKE_INSTALL_PREFIX:PATH="$(pwd)/out/install/linux"
 
 if [ ${BUILD_PROJECT} -eq 1 ] 
 then
