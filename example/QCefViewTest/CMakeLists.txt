@@ -83,7 +83,12 @@ if (OS_WINDOWS)
       -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\${PROJECT_NAME}.manifest\" 
       -inputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\" 
       -outputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\"
-    
+
+    # Copy QCefView binary to output folder
+    COMMAND ${CMAKE_COMMAND} -E copy_directory 
+    $<TARGET_FILE_DIR:QCefView> 
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>
+      
     # Copy the webres directory to output folder
     COMMAND ${CMAKE_COMMAND} -E copy_directory 
       ${CMAKE_CURRENT_BINARY_DIR}/webres 
@@ -129,6 +134,11 @@ if (OS_LINUX)
   )
 
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    # Copy QCefView binary to output folder
+    COMMAND ${CMAKE_COMMAND} -E copy_directory 
+    $<TARGET_FILE_DIR:QCefView> 
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>
+
     # Copy the webres directory to output folder
     COMMAND ${CMAKE_COMMAND} -E copy_directory 
       ${CMAKE_CURRENT_BINARY_DIR}/webres 
@@ -162,9 +172,6 @@ if (OS_MACOS)
 
   set_target_properties(${PROJECT_NAME} 
     PROPERTIES 
-      # ARCHIVE_OUTPUT_DIRECTORY                  "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/demo"
-      # LIBRARY_OUTPUT_DIRECTORY                  "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/demo"
-      # RUNTIME_OUTPUT_DIRECTORY                  "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/demo"
       CLANG_ENABLE_OBJC_ARC                     "YES"
       MACOSX_BUNDLE_INFO_PLIST                  "${QCefViewTest_INFO_PLIST_FILE}"
       XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS   "@executable_path/../Frameworks"
@@ -209,6 +216,9 @@ endif()
 set_target_properties(${PROJECT_NAME} 
   PROPERTIES
     FOLDER example
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/output/$<CONFIG>/bin
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/output/$<CONFIG>/lib
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/output/$<CONFIG>/lib
 )
 
 target_link_libraries(${PROJECT_NAME}
@@ -217,3 +227,9 @@ target_link_libraries(${PROJECT_NAME}
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Widgets
 )
+
+if (OS_MACOS)
+  install(DIRECTORY "$<TARGET_FILE_DIR:${PROJECT_NAME}>" DESTINATION "QCefViewTest$<$<CONFIG:Debug>:/Debug>/QCefViewTest.app")
+else()
+  install(DIRECTORY "$<TARGET_FILE_DIR:${PROJECT_NAME}>" DESTINATION "QCefViewTest$<$<CONFIG:Debug>:/Debug>")
+endif()
