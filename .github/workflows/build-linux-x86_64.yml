@@ -47,14 +47,14 @@ jobs:
         run: cmake --install ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
       - name: Create SDK artifact
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         # Upload artifact
         with:
           name: QCefView.linux.x86_64.zip
           path: ${{github.workspace}}/out/install/QCefView
 
       - name: Create Demo artifact
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         # Upload artifact
         with:
           name: QCefViewTest.linux.x86_64.zip
