@@ -235,5 +235,6 @@ install(
     FRAMEWORK DESTINATION "QCefView/lib$<$<CONFIG:Debug>:/Debug>"
 )
 if (NOT OS_MACOS)
+  install(DIRECTORY "${CMAKE_SOURCE_DIR}/include" DESTINATION "QCefView")
   install(DIRECTORY "$<TARGET_FILE_DIR:QCefView>/" DESTINATION "QCefView/bin$<$<CONFIG:Debug>:/Debug>")
 endif()

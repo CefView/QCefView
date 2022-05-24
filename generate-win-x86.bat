@@ -4,4 +4,4 @@ cmake -S . ^
 -A Win32 ^
 -DPROJECT_ARCH=x86 ^
 -DBUILD_DEMO=ON ^
--DCMAKE_INSTALL_PREFIX:PATH="%cd%/out/install/windows.x86"
+-DCMAKE_INSTALL_PREFIX:PATH="%cd%/out/windows.x86"

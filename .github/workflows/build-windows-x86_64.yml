@@ -36,11 +36,21 @@ jobs:
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-        run: cmake -B ${{github.workspace}}/build -A x64 -DPROJECT_ARCH=x86_64 -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_DEMO=ON
+        run: cmake -B ${{github.workspace}}/build -A x64 -DPROJECT_ARCH=x86_64 -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_DEMO=ON -DCMAKE_INSTALL_PREFIX:PATH=${{github.workspace}}/out/install
 
       - name: Build
         # Build your program with the given configuration
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+      - name: Install
+        # Collect the output
+        run: cmake --install ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      
+      - uses: actions/upload-artifact@v3
+        # Upload artifact
+        with:
+          name: QCefViewSDK.windows.x86_64
+          path: ${{github.workspace}}/out/install
 
     #- name: Test
     #working-directory: ${{github.workspace}}/build
