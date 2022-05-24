@@ -1,8 +1,10 @@
 #!/bin/bash
 
+# OSR mode is enabled by default, add -DUSE_OSR=OFF to disable the OSR mode
+
 BUILD_PROJECT=0
 
-BUILD_DIR="$(pwd)/.build/macOS"
+BUILD_DIR="$(pwd)/.build/linux.x86"
 
 while getopts bi flag
 do
@@ -12,7 +14,7 @@ do
 done
 
 echo ============== Config project ==============
-cmake -G "Xcode" -S . -B "${BUILD_DIR}" -DBUILD_DEMO=ON -DUSE_SANDBOX=ON -DCMAKE_INSTALL_PREFIX:PATH="$(pwd)/out/install/macos"
+cmake -G "Unix Makefiles" -S . -B "${BUILD_DIR}" -DPROJECT_ARCH=x86 -DBUILD_DEMO=ON -DUSE_SANDBOX=ON -DCMAKE_INSTALL_PREFIX:PATH="$(pwd)/out/install/linux.x86"
 
 if [ ${BUILD_PROJECT} -eq 1 ] 
 then

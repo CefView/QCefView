@@ -1,8 +1,10 @@
 #!/bin/bash
 
+# OSR mode is enabled by default, add -DUSE_OSR=OFF to disable the OSR mode
+
 BUILD_PROJECT=0
 
-BUILD_DIR="$(pwd)/.build/Linux"
+BUILD_DIR="$(pwd)/.build/linux.x86_64"
 
 while getopts bi flag
 do
@@ -12,7 +14,7 @@ do
 done
 
 echo ============== Config project ==============
-cmake -G "Unix Makefiles" -S . -B "${BUILD_DIR}" -DBUILD_DEMO=ON -DUSE_SANDBOX=ON -DCMAKE_INSTALL_PREFIX:PATH="$(pwd)/out/install/linux"
+cmake -G "Unix Makefiles" -S . -B "${BUILD_DIR}" -DPROJECT_ARCH=x86_64 -DBUILD_DEMO=ON -DUSE_SANDBOX=ON -DCMAKE_INSTALL_PREFIX:PATH="$(pwd)/out/install/linux.x86_64"
 
 if [ ${BUILD_PROJECT} -eq 1 ] 
 then

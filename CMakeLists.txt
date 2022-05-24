@@ -17,22 +17,6 @@ if (NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
-# Set proejct architecture
-# Determine the project architecture.
-if(NOT DEFINED PROJECT_ARCH)
-  if(CMAKE_SIZEOF_VOID_P MATCHES 8)
-    set(PROJECT_ARCH "x86_64")
-  else()
-    set(PROJECT_ARCH "x86")
-  endif()
-
-  if(OS_MACOSX)
-    # PROJECT_ARCH should be specified on Mac OS X.
-    message(WARNING "No PROJECT_ARCH value specified, using ${PROJECT_ARCH}")
-  endif()
-endif()
-
-
 # Use folders in the resulting project files.
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -46,14 +30,45 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_definitions(-D_SILENCE_CXX17_RESULT_OF_DEPRECATION_WARNING=1)
 
+# Determine the project architecture.
+if(NOT DEFINED PROJECT_ARCH)
+  if(OS_WINDOWS AND "${CMAKE_GENERATOR_PLATFORM}" STREQUAL "arm64")
+    set(PROJECT_ARCH "arm64")
+  elseif(CMAKE_SIZEOF_VOID_P MATCHES 8)
+    set(PROJECT_ARCH "x86_64")
+  else()
+    set(PROJECT_ARCH "x86")
+  endif()
+endif()
+
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
   set(OS_MACOS 1)
   set(OS_POSIX 1)
   add_definitions(-DOS_MACOS=1 -DOS_POSIX=1)
+
+  # Target architecture.
+  if(PROJECT_ARCH STREQUAL "x86_64")
+    set(CMAKE_OSX_ARCHITECTURES "x86_64")
+  elseif(PROJECT_ARCH STREQUAL "arm64")
+    set(CMAKE_OSX_ARCHITECTURES "arm64")
+  else()
+    set(CMAKE_OSX_ARCHITECTURES "i386")
+  endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
   set(OS_LINUX 1)
   set(OS_POSIX 1)
   add_definitions(-DOS_LINUX=1 -DOS_POSIX=1)
+
+  # Target architecture.
+  if(PROJECT_ARCH STREQUAL "x86_64")
+    # x86 64-bit architecture.
+    add_compile_options(-m64 -march=x86-64)
+    add_link_options(-m64)
+  elseif(PROJECT_ARCH STREQUAL "x86")
+    # x86 32-bit architecture.
+    add_compile_options(-m32)
+    add_link_options(-m32)
+  endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
   set(OS_WINDOWS 1)
   add_definitions(-DOS_WINDOWS=1)
