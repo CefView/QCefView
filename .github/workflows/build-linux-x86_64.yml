@@ -3,8 +3,20 @@ name: Build on Linux
 on:
   push:
     branches: [main]
+    paths:
+      - 'CMakeLists.txt'
+      - 'CefViewCore'
+      - 'example/**'
+      - 'include/**'
+      - 'src/**'
   pull_request:
     branches: [main]
+    paths:
+      - 'CMakeLists.txt'
+      - 'CefViewCore'
+      - 'example/**'
+      - 'include/**'
+      - 'src/**'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
