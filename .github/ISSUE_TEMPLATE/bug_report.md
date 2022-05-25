@@ -1,11 +1,15 @@
 ---
-name: Bug Report [Bug报告]
-about: Create a bug report to help us improve
+name: Bug Report [BUG报告]
+about: Create a bug report to help us improve 【请使用此模板提交BUG报告】
 title: "[BUG]: "
 labels: ["Bug", "Triage"]
 assignees: tishion
 
 ---
+[//]: # (Node: if you find some bugs caused by using different CEF/Qt version with the one in current repo, this report will be ignored)
+[//]: # (All lines start with [//]: # are comment lines and will not be rebdered by markdown, so there's no need to delete them)
+[//]: # (注意：如果你发现的BUG是由于使用了与当前代码库中不同的Qt/CEF版本，该BUG将会被忽略)
+[//]: # (以下所有的以[//]: #开始的文字都是注释，不会被markdown渲染，所以无需删除)
 
 **Describe the bug 【Bug描述】** 
 
@@ -18,7 +22,6 @@ assignees: tishion
 
 [//]: # (Steps to reproduce the behavior)
 [//]: # (在下面填写复现该BUG的详细操作步骤)
-
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
@@ -37,10 +40,13 @@ assignees: tishion
 ...
 
 **Environment 【BUG产生的环境】**
+
+[//]: # (Please complete the following information)
+[//]: # (请提供以下信息)
  - OS & Version: [e.g. Windows/macOS/Linux]
- - Qt Version: 填写所使用的Qt版本
- - CEF Version: 填写所使用的CEF版本
- - OSR/NCW Mode: 填写CEF的工作模式OSR/NCW
+ - Qt Version:
+ - CEF Version:
+ - OSR/NCW Mode:
  
 
 **Additional context 【更多额外信息】**
