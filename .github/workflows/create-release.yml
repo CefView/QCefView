@@ -8,13 +8,15 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug)
   BUILD_TYPE: Release
+  RELEASE_VERSION: ${{github.ref_name}}
 
 jobs:
   initialize:
+    name: Create QCefView.${{github.ref_name}} release
     runs-on: ubuntu-latest
     steps:
       - name: Create Version Number
-        run: echo TO-DO
+        run: echo create release for tag ${{github.ref_name}}
 
   build-windows:
     needs: initialize
@@ -143,15 +145,15 @@ jobs:
           name: QCefViewTest.linux.x86_64.zip
           path: ${{github.workspace}}/out/install/QCefViewTest
 
-  # create-release:
-  #   needs: [build-windows, build-macos, build-linux]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         path: ${{github.workspace}}/artifacts
-  #     - uses: ncipollo/release-action@v1
-  #       with:
-  #         artifacts: ""
-  #         bodyFile: "body.md"
-  #         token: ${{ secrets.GITHUB_TOKEN }}
+  create-release:
+    needs: [build-windows, build-macos, build-linux]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          path: ${{github.workspace}}/artifacts
+      - uses: softprops/action-gh-release@v1
+        with:
+          name: QCefView.${{github.ref_name}}
+          generate_release_notes: true
+          files: ${{github.workspace}}/artifacts/*.zip
