@@ -230,7 +230,7 @@ target_link_libraries(${PROJECT_NAME}
 
 if (OS_MACOS)
   # Copy the app to a subfoler named QCefViewTest under install dir
-  install(DIRECTORY "$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>" DESTINATION "${PROJECT_NAME}$<$<CONFIG:Debug>:/Debug>/${PROJECT_NAME}.app")
+  install(DIRECTORY "$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>/" DESTINATION "${PROJECT_NAME}$<$<CONFIG:Debug>:/Debug>/${PROJECT_NAME}.app")
 else()
-  install(DIRECTORY "$<TARGET_FILE_DIR:${PROJECT_NAME}>" DESTINATION "${PROJECT_NAME}$<$<CONFIG:Debug>:/Debug>")
+  install(DIRECTORY "$<TARGET_FILE_DIR:${PROJECT_NAME}>/" DESTINATION "${PROJECT_NAME}$<$<CONFIG:Debug>:/Debug>")
 endif()
