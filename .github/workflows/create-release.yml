@@ -12,13 +12,14 @@ env:
 
 jobs:
   initialize:
-    name: Create QCefView.${{github.ref_name}} release
+    name: Prepare Release
     runs-on: ubuntu-latest
     steps:
-      - name: Create Version Number
+      - name: Version Number
         run: echo create release for tag ${{github.ref_name}}
 
   build-windows:
+    name: Build Windows Release
     needs: initialize
     runs-on: windows-latest
     steps:
@@ -48,16 +49,17 @@ jobs:
       - name: Create SDK artifact
         uses: actions/upload-artifact@v3
         with:
-          name: QCefView.windows.x86_64.zip
+          name: QCefView.windows.x86_64
           path: ${{github.workspace}}/out/install/QCefView
 
       - name: Create Demo artifact
         uses: actions/upload-artifact@v3
         with:
-          name: QCefViewTest.windows.x86_64.zip
+          name: QCefViewTest.windows.x86_64
           path: ${{github.workspace}}/out/install/QCefViewTest
 
   build-macos:
+    name: Build macOS Release
     needs: initialize
     runs-on: macos-latest
     steps:
@@ -92,17 +94,18 @@ jobs:
         uses: actions/upload-artifact@v3
         # Upload artifact
         with:
-          name: QCefView.macos.x86_64.zip
+          name: QCefView.macos.x86_64
           path: ${{github.workspace}}/out/install/QCefView
 
       - name: Create Demo artifact
         uses: actions/upload-artifact@v3
         # Upload artifact
         with:
-          name: QCefViewTest.macos.x86_64.zip
+          name: QCefViewTest.macos.x86_64
           path: ${{github.workspace}}/out/install/QCefViewTest
 
   build-linux:
+    name: Build Linux Release
     needs: initialize
     runs-on: ubuntu-latest
     steps:
@@ -135,25 +138,32 @@ jobs:
         uses: actions/upload-artifact@v3
         # Upload artifact
         with:
-          name: QCefView.linux.x86_64.zip
+          name: QCefView.linux.x86_64
           path: ${{github.workspace}}/out/install/QCefView
 
       - name: Create Demo artifact
         uses: actions/upload-artifact@v3
         # Upload artifact
         with:
-          name: QCefViewTest.linux.x86_64.zip
+          name: QCefViewTest.linux.x86_64
           path: ${{github.workspace}}/out/install/QCefViewTest
 
-  create-release:
+  archive-release:
+    name: Create and Publish Release
     needs: [build-windows, build-macos, build-linux]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
         with:
           path: ${{github.workspace}}/artifacts
-      - uses: softprops/action-gh-release@v1
+
+      - name: Archive all artifacts
+        run: for dir in ${{github.workspace}}/artifacts/*; do ( cd "$dir" && zip -r ../"${dir%/}".zip . ) done
+      
+      - name: Publish Release 
+        uses: softprops/action-gh-release@v1
         with:
-          name: QCefView.${{github.ref_name}}
+          name: QCefView-${{github.ref_name}}
           generate_release_notes: true
           files: ${{github.workspace}}/artifacts/*.zip
