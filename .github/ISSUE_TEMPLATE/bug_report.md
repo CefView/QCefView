@@ -2,7 +2,7 @@
 name: Bug Report [BUG报告]
 about: Create a bug report to help us improve 【请使用此模板提交BUG报告】
 title: "[BUG]: "
-labels: ["Bug", "Triage"]
+labels: ["bug", "triage"]
 assignees: tishion
 
 ---
