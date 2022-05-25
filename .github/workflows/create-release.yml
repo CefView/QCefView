@@ -159,7 +159,7 @@ jobs:
           path: ${{github.workspace}}/artifacts
 
       - name: Archive all artifacts
-        run: for dir in ${{github.workspace}}/artifacts/*; do ( cd "$dir" && zip -r ../"${dir%/}".zip . ) done
+        run: for dir in ${{github.workspace}}/artifacts/*; do ( cd $dir && zip -r $dir.zip . ) done
       
       - name: Publish Release 
         uses: softprops/action-gh-release@v1
