@@ -1,20 +1,16 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+name: Feature request 【增加新特性需求】
+about: Suggest an idea for this project 【请使用此模板发起新特性需求】
+title: [FEATURE]:
+labels: ["feature", "triage"]
+assignees: tishion
 
 ---
+[//]: # (以下所有的以"[//]: #"开始的文字都是注释，不会被markdown渲染，所以无需删除)
+[//]: # (All lines start "with [//]: #" below are comment lines and will not be rebdered by markdown, so there's no need to delete them)
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+** Feature Description 【特性详细描述】**
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
-
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+[//]: # (请在下面描述所需新特性的详细信息)
+[//]: # (Please describe the detailed information about the request feature)
+...
