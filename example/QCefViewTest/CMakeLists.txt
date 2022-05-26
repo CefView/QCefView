@@ -21,6 +21,10 @@ elseif (OS_MACOS)
 else()
 endif()
 
+# Create an empty source file as the rebuild trigger
+# QCefView will update this file every time it gets built
+file(WRITE ${CMAKE_BINARY_DIR}/auto_rebuild.cpp "/* Auto Rebuild Trigger */")
+
 include_directories(
   ${CMAKE_SOURCE_DIR}/include
 )
@@ -28,6 +32,7 @@ include_directories(
 file(GLOB_RECURSE _SRC_FILES
   "*.h"
   "*.cpp"
+  ${CMAKE_BINARY_DIR}/auto_rebuild.cpp
 )
 
 file(GLOB_RECURSE _UI_FILES
@@ -77,29 +82,40 @@ if (OS_WINDOWS)
       VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
   )
 
-  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    # Embed the manifest file into the target
-    COMMAND mt.exe 
-      -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\${PROJECT_NAME}.manifest\" 
-      -inputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\" 
-      -outputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\"
+  add_custom_command(TARGET ${PROJECT_NAME} 
+    PRE_BUILD
 
-    # Copy QCefView binary to output folder
-    COMMAND ${CMAKE_COMMAND} -E copy_directory 
-    $<TARGET_FILE_DIR:QCefView> 
-    $<TARGET_FILE_DIR:${PROJECT_NAME}>
+      # Copy QCefView binary to output folder
+      COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        $<TARGET_FILE_DIR:QCefView> 
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>
+  )
+
+  add_custom_command(TARGET ${PROJECT_NAME} 
+    POST_BUILD
+
+      # Embed the manifest file into the target
+      COMMAND mt.exe 
+        -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\${PROJECT_NAME}.manifest\" 
+        -inputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\" 
+        -outputresource:\"$<TARGET_FILE:${PROJECT_NAME}>\"
+
+      # Copy QCefView binary to output folder
+      COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        $<TARGET_FILE_DIR:QCefView> 
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>
+
+      # Copy the webres directory to output folder
+      COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        ${CMAKE_CURRENT_BINARY_DIR}/webres 
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/webres
       
-    # Copy the webres directory to output folder
-    COMMAND ${CMAKE_COMMAND} -E copy_directory 
-      ${CMAKE_CURRENT_BINARY_DIR}/webres 
-      $<TARGET_FILE_DIR:${PROJECT_NAME}>/webres
-    
-    # Deploy the Qt Application
-    COMMAND ${DEPLOYQT_EXECUTABLE} 
-      --no-svg 
-      --no-translations 
-      --no-compiler-runtime 
-      $<TARGET_FILE:${PROJECT_NAME}>
+      # Deploy the Qt Application
+      COMMAND ${DEPLOYQT_EXECUTABLE} 
+        --no-svg 
+        --no-translations 
+        --no-compiler-runtime 
+        $<TARGET_FILE:${PROJECT_NAME}>
   )
 endif() # OS_WINDOWS
 
@@ -133,23 +149,34 @@ if (OS_LINUX)
       QCefView
   )
 
-  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    # Copy QCefView binary to output folder
-    COMMAND ${CMAKE_COMMAND} -E copy_directory 
-    $<TARGET_FILE_DIR:QCefView> 
-    $<TARGET_FILE_DIR:${PROJECT_NAME}>
+  add_custom_command(TARGET ${PROJECT_NAME} 
+    PRE_BUILD
 
-    # Copy the webres directory to output folder
-    COMMAND ${CMAKE_COMMAND} -E copy_directory 
-      ${CMAKE_CURRENT_BINARY_DIR}/webres 
-      $<TARGET_FILE_DIR:${PROJECT_NAME}>/webres
+      # Copy QCefView binary to output folder
+      COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        $<TARGET_FILE_DIR:QCefView> 
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>
+  )
 
-    # Deploy the Qt Application
-    # COMMAND ${DEPLOYQT_EXECUTABLE} 
-    # --no-svg 
-    # --no-translations 
-    # --no-compiler-runtime 
-    # $<TARGET_FILE:${PROJECT_NAME}>
+  add_custom_command(TARGET ${PROJECT_NAME} 
+    POST_BUILD
+
+      # Copy QCefView binary to output folder
+      COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        $<TARGET_FILE_DIR:QCefView> 
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>
+
+      # Copy the webres directory to output folder
+      COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        ${CMAKE_CURRENT_BINARY_DIR}/webres 
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/webres
+
+      # Deploy the Qt Application
+      # COMMAND ${DEPLOYQT_EXECUTABLE} 
+      # --no-svg 
+      # --no-translations 
+      # --no-compiler-runtime 
+      # $<TARGET_FILE:${PROJECT_NAME}>
   )
 endif() # OS_LINUX
 

@@ -133,9 +133,7 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
 
   // create the browser settings
   CefBrowserSettings browserSettings;
-  if (setting) {
-    QCefSettingPrivate::CopyToCefBrowserSettings(setting, &browserSettings);
-  }
+  QCefSettingPrivate::CopyToCefBrowserSettings(setting, &browserSettings);
 
   // create browser object
   bool success = CefBrowserHost::CreateBrowser(window_info,       // window info

@@ -69,12 +69,17 @@ if (OS_WINDOWS)
   )
 
   add_custom_command(TARGET QCefView 
-  POST_BUILD
+    PRE_BUILD
 
-  # copy binary files of CefViewCore
-  COMMAND ${CMAKE_COMMAND} -E copy_directory 
-    "$<TARGET_FILE_DIR:CefViewWing>"
-    "$<TARGET_FILE_DIR:QCefView>"
+      # copy binary files of CefViewCore
+      COMMAND ${CMAKE_COMMAND} 
+        -E copy_directory 
+        "$<TARGET_FILE_DIR:CefViewWing>"
+        "$<TARGET_FILE_DIR:QCefView>"
+
+      # gnerate a file contain timestamp
+      COMMAND ${CMAKE_COMMAND} 
+        -E echo "/* Auto Build Trigger */" > "${CMAKE_BINARY_DIR}/auto_rebuild.cpp"
   )
 endif()  # OS_WINDOWS
 
@@ -124,12 +129,13 @@ if (OS_LINUX)
   )
 
   add_custom_command(TARGET QCefView 
-  POST_BUILD
+    PRE_BUILD
 
-  # copy binary files of CefViewCore
-  COMMAND ${CMAKE_COMMAND} -E copy_directory 
-    "$<TARGET_FILE_DIR:CefViewWing>"
-    "$<TARGET_FILE_DIR:QCefView>"
+      # copy binary files of CefViewCore
+      COMMAND ${CMAKE_COMMAND} 
+        -E copy_directory 
+        "$<TARGET_FILE_DIR:CefViewWing>"
+        "$<TARGET_FILE_DIR:QCefView>"
   )
 endif()  # OS_LINUX
 
@@ -188,18 +194,20 @@ if (OS_MACOS)
       XCODE_ATTRIBUTE_GCC_C_LANGUAGE_STANDARD                     "c99"         # -std=c99
   )
 
-  add_custom_command(
-    TARGET QCefView
+  add_custom_command(TARGET QCefView
     PRE_BUILD
 
-    #copy the CefViewWing*.app to resource directory
-    COMMAND cp -a
-    "$<TARGET_BUNDLE_DIR:CefViewWing>/../"
-    "$<TARGET_FILE_DIR:QCefView>/Resources/"
+      #copy the CefViewWing*.app to resource directory
+      COMMAND cp 
+        -a
+        "$<TARGET_BUNDLE_DIR:CefViewWing>/../"
+        "$<TARGET_FILE_DIR:QCefView>/Resources/"
 
-    #sign the cef framework
-    COMMAND codesign --force --sign - 
-    "$<TARGET_BUNDLE_DIR:QCefView>/Resources/Chromium Embedded Framework.framework"
+      #sign the cef framework
+      COMMAND codesign 
+        --force 
+        --sign - 
+        "$<TARGET_BUNDLE_DIR:QCefView>/Resources/Chromium Embedded Framework.framework"
   )
 endif()  # OS_MACOS
 
