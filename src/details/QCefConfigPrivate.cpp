@@ -29,8 +29,23 @@ QCefConfigPrivate::QCefConfigPrivate()
 void
 QCefConfigPrivate::CopyToCefSettings(const QCefConfig* config, CefSettings* settings)
 {
-  if (!config || !settings)
+  // validate input target setting parameter
+  if (!settings) {
+    // nothing to do but return
     return;
+  }
+
+  // validate the input source config parameter
+  if (!config) {
+    // just copy the mandatory fields
+    QCefConfigPrivate cfg;
+#if !defined(Q_OS_MACOS)
+    CefString(&settings->browser_subprocess_path) = cfg.browserSubProcessPath_;
+    CefString(&settings->resources_dir_path) = cfg.resourceDirectoryPath_;
+    CefString(&settings->locales_dir_path) = cfg.localesDirectoryPath_;
+#endif
+    return;
+  }
 
 #if !defined(Q_OS_MACOS)
   if (!config->d_ptr->browserSubProcessPath_.empty())

@@ -10,8 +10,7 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
 
   // Build CefSettings
   CefSettings cef_settings;
-  if (config)
-    QCefConfigPrivate::CopyToCefSettings(config, &cef_settings);
+  QCefConfigPrivate::CopyToCefSettings(config, &cef_settings);
 
   // fixed values
   cef_settings.pack_loading_disabled = false;
@@ -26,7 +25,7 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   cef_settings.no_sandbox = true;
 #endif
 
-  // Initialize CEF.
+  // Initialize CEF
   auto cmdArgs = QCefConfigPrivate::GetCommandLineArgs(config);
   auto appDelegate = std::make_shared<CCefAppDelegate>(this, cmdArgs);
   auto bridgeObjectName = config ? config->bridgeObjectName().toStdString() : std::string();

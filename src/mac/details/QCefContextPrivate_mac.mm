@@ -171,8 +171,7 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
 
   // Build CefSettings
   CefSettings cef_settings;
-  if (config)
-    QCefConfigPrivate::CopyToCefSettings(config, &cef_settings);
+  QCefConfigPrivate::CopyToCefSettings(config, &cef_settings);
 
   // fixed values
   CefString(&cef_settings.framework_dir_path) = cefFrameworkPath();
