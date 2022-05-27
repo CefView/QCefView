@@ -56,13 +56,14 @@ MainWindow::createCefView()
   QCefSetting setting;
   setting.setPlugins(false);
   setting.setWindowlessFrameRate(60);
-  setting.setBackgroundColor(QColor::fromRgba(qRgba(250, 249, 222, 255)));
+  setting.setBackgroundColor(QColor::fromRgba(qRgba(0, 255, 0, 255)));
 
   // create the QCefView widget and add it to the layout container
   // cefViewWidget = new CefViewWidget(INDEX_URL, &setting);
   cefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
   // cefViewWidget = new CefViewWidget("https://devicetests.com", &setting);
   ui.cefContainer->layout()->addWidget(cefViewWidget);
+  cefViewWidget->setStyleSheet("background-color: blue;");
 
   // connect the invokeMethod to the slot
   connect(cefViewWidget, &QCefView::invokeMethod, this, &MainWindow::onInvokeMethod);

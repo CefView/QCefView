@@ -64,6 +64,11 @@ public:
     /// <summary>
     ///
     /// </summary>
+    bool transparentPaintingEnabled = false;
+
+    /// <summary>
+    ///
+    /// </summary>
     bool showPopup_ = false;
 
     /// <summary>

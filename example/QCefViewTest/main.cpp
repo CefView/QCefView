@@ -15,6 +15,7 @@ main(int argc, char* argv[])
   config.setLogLevel(QCefConfig::LOGSEVERITY_DEFAULT);
   config.setBridgeObjectName("CallBridge");
   config.setRemoteDebuggingPort(9000);
+  config.setBackgroundColor(QColor::fromRgba(qRgba(255, 0, 0, 255)));
 
   // add command line args
   // config.addCommandLineSwitch("allow-universal-access-from-files");

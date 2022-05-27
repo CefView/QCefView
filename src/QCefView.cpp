@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QPoint>
 #include <QResizeEvent>
+#include <QStyleOption>
 #include <QVBoxLayout>
 #include <QtDebug>
 #pragma endregion qt_headers
@@ -206,11 +207,18 @@ QCefView::paintEvent(QPaintEvent* event)
   Q_D(QCefView);
 
 #if defined(CEF_USE_OSR)
+  // 1. constructs painter for current widget
   QPainter painter(this);
 
-  // paint background
+  // 2. paint background with background role
   painter.fillRect(rect(), palette().color(backgroundRole()));
 
+  // 3. paint widget with its stylesheet
+  QStyleOption opt;
+  opt.initFrom(this);
+  style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+
+  // 4. paint the CEF view and pop-up
   // get current scale factor
   qreal scaleFactor = devicePixelRatio();
 
@@ -231,6 +239,7 @@ QCefView::paintEvent(QPaintEvent* event)
   }
 #endif
 
+  // 5. call base paintEvent (empty implementation)
   QWidget::paintEvent(event);
 }
 

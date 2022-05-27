@@ -188,7 +188,7 @@ public:
   /// into all browser and frames. This object is designated for communicating
   /// between Javascript in web content and native context(C/C++) code.
   /// This object is set as an property of window object. That means it can be
-  /// obtained by calling window.bridgeObject in the Javascript code.
+  /// obtained by calling window.bridgeObject in the Javascript code
   /// </remarks>
   void setBridgeObjectName(const QString& name);
 
@@ -201,6 +201,11 @@ public:
   /// Sets the background color of the web page
   /// </summary>
   /// <param name="color">The color to be set</param>
+  /// <remarks>
+  /// This only works if the web page has no background color set. The alpha component value
+  /// will be adjusted to 0 or 255, it means if you pass a value with alpha value
+  /// in the range of [1, 255], it will be accepted as 255. The default value is qRgba(255, 255,. 255, 255)
+  /// </remarks>
   void setBackgroundColor(const QColor& color);
 
   /// <summary>
