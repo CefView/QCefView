@@ -53,6 +53,13 @@ QCefContext::addCookie(const QString& name, const QString& value, const QString&
   return d->addGlobalCookie(name.toStdString(), value.toStdString(), domain.toStdString(), url.toStdString());
 }
 
+const QCefConfig*
+QCefContext::cefConfig() const
+{
+  Q_D(const QCefContext);
+  return d->cefConfig();
+}
+
 bool
 QCefContext::init(const QCefConfig* config)
 {

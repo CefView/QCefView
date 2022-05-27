@@ -47,9 +47,13 @@ private:
   char** argv_;
 
 private:
-  QTimer cefWorkerTimer_;
+  const QCefConfig* config_;
   QList<FolderResourceMapping> folderResourceMappingList_;
   QList<ArchiveResourceMapping> archiveResourceMappingList_;
+
+#if defined(Q_OS_MACOS)
+  QTimer cefWorkerTimer_;
+#endif
 
 private:
   CefRefPtr<CefViewBrowserApp> pApp_;
@@ -78,6 +82,12 @@ public:
   /// <param name="config"></param>
   /// <returns></returns>
   bool initialize(const QCefConfig* config);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
+  const QCefConfig* cefConfig() const;
 
   /// <summary>
   /// Adds a url mapping item with local web resource directory
@@ -136,10 +146,12 @@ public slots:
   /// </summary>
   void onAboutToQuit();
 
+#if defined(Q_OS_MACOS)
   /// <summary>
   ///
   /// </summary>
   void performCefLoopWork();
+#endif
 
 protected:
   /// <summary>

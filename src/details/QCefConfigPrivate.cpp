@@ -10,6 +10,7 @@
 
 QCefConfigPrivate::QCefConfigPrivate()
 {
+  backgroundColor_ = QColor::fromRgba(qRgba(255, 255, 255, 255));
   userAgent_ = kCefViewDefaultUserAgent;
 
 #if !defined(Q_OS_MACOS)
@@ -39,6 +40,10 @@ QCefConfigPrivate::CopyToCefSettings(const QCefConfig* config, CefSettings* sett
   if (!config) {
     // just copy the mandatory fields
     QCefConfigPrivate cfg;
+
+    settings->background_color = config->d_ptr->backgroundColor_.value<QColor>().rgba();
+    CefString(&settings->user_agent) = config->d_ptr->userAgent_;
+
 #if !defined(Q_OS_MACOS)
     CefString(&settings->browser_subprocess_path) = cfg.browserSubProcessPath_;
     CefString(&settings->resources_dir_path) = cfg.resourceDirectoryPath_;

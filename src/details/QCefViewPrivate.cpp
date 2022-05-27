@@ -135,6 +135,11 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
   CefBrowserSettings browserSettings;
   QCefSettingPrivate::CopyToCefBrowserSettings(setting, &browserSettings);
 
+#if defined(CEF_USE_OSR)
+  if (CefColorGetA(browserSettings.background_color) == 0)
+    osr.transparentPaintingEnabled = true;
+#endif
+
   // create browser object
   bool success = CefBrowserHost::CreateBrowser(window_info,       // window info
                                                pClient,           // handler
@@ -381,16 +386,17 @@ QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region
   updateDurationTimer.start();
 #endif
 
-  if (osr.qCefViewFrame_.size() == frame.size()) {
+  if (osr.qCefViewFrame_.size() != frame.size() || osr.transparentPaintingEnabled) {
+    // update full image
     QMutexLocker lock(&(osr.qViewPaintLock_));
-    // update region
+    osr.qCefViewFrame_ = frame.copy();
+  } else {
+    QMutexLocker lock(&(osr.qViewPaintLock_));
+    // update only dirty regions
     QPainter painter(&osr.qCefViewFrame_);
     for (auto& rc : region) {
       painter.drawImage(rc, frame, rc);
     }
-  } else {
-    QMutexLocker lock(&(osr.qViewPaintLock_));
-    osr.qCefViewFrame_ = frame.copy();
   }
   emit updateOsrFrame();
 

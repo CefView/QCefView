@@ -360,6 +360,12 @@ public:
   /// Sets the background color
   /// </summary>
   /// <param name="value">The color</param>
+  /// <remarks>
+  /// This only works if the web page has no background color set. The alpha component value
+  /// will be adjusted to 0 or 255, it means if you pass a value with alpha value
+  /// in the range of [1, 255], it will be accepted as 255. The default value is inherited from
+  /// <see cref="QCefConfig::backgroundColor()"/>
+  /// </remarks>
   void setBackgroundColor(const QColor& value);
 
   /// <summary>

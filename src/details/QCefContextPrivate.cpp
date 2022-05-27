@@ -37,11 +37,18 @@ QCefContextPrivate::getCefApp()
 bool
 QCefContextPrivate::initialize(const QCefConfig* config)
 {
+  config_ = config;
   if (!initializeCef(config)) {
     return false;
   }
 
   return true;
+}
+
+const QCefConfig*
+QCefContextPrivate::cefConfig() const
+{
+  return config_;
 }
 
 void
@@ -118,9 +125,11 @@ QCefContextPrivate::onAboutToQuit()
   }
 }
 
+#if defined(Q_OS_MACOS)
 void
 QCefContextPrivate::performCefLoopWork()
 {
   // process cef work
   CefDoMessageLoopWork();
 }
+#endif

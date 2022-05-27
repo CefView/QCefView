@@ -7,9 +7,15 @@
 #include <QString>
 #pragma endregion qt_headers
 
+#include <QCefContext.h>
+
 #include <CefViewCoreProtocol.h>
 
-QCefSettingPrivate::QCefSettingPrivate() {}
+QCefSettingPrivate::QCefSettingPrivate()
+{
+  auto cefConfig = QCefContext::instance()->cefConfig();
+  backgroundColor_ = cefConfig->backgroundColor();
+}
 
 void
 QCefSettingPrivate::CopyFromCefBrowserSettings(QCefSetting* qs, const CefBrowserSettings* cs)
@@ -88,8 +94,13 @@ QCefSettingPrivate::CopyFromCefBrowserSettings(QCefSetting* qs, const CefBrowser
 void
 QCefSettingPrivate::CopyToCefBrowserSettings(const QCefSetting* qs, CefBrowserSettings* cs)
 {
-  if (!qs || !cs)
+  if (!cs)
     return;
+
+  if (!qs) {
+    QCefSettingPrivate defaultSettings;
+    cs->background_color = qs->d_ptr->backgroundColor_.value<QColor>().rgba();
+  }
 
   if (!qs->d_ptr->standardFontFamily_.empty())
     CefString(&cs->standard_font_family) = qs->d_ptr->standardFontFamily_;

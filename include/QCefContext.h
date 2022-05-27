@@ -71,6 +71,12 @@ public:
   /// <returns>True on success; otherwise false</returns>
   bool addCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
 
+  /// <summary>
+  /// Gets the QCefConfig
+  /// </summary>
+  /// <returns>The QCefConfig instance</returns>
+  const QCefConfig* cefConfig() const;
+
 protected:
   /// <summary>
   /// Initialize the CEF context
