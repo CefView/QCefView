@@ -55,10 +55,12 @@ jobs:
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
       - name: Install
+        if: github.event_name != 'pull_request'
         # Collect the output
         run: cmake --install ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
       
       - name: Create SDK artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v3
         # Upload artifact
         with:
@@ -66,6 +68,7 @@ jobs:
           path: ${{github.workspace}}/out/install/QCefView
 
       - name: Create Demo artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v3
         # Upload artifact
         with:
