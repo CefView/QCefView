@@ -115,7 +115,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/lib)
 # Include CefViewCore
 add_subdirectory(CefViewCore)
 set_target_properties(CefViewCore PROPERTIES FOLDER core)
-set_target_properties(CefViewWing PROPERTIES FOLDER core)
+foreach(CefViewWingTarget ${CefViewCore_HELPER_APP_TARGETS})
+  set_target_properties(${CefViewWingTarget} PROPERTIES FOLDER core)  
+endforeach(CefViewWingTarget)
 set_target_properties(libcef_dll_wrapper PROPERTIES FOLDER core)
 
 # Config QCefView target
