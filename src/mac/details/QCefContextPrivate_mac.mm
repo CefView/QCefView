@@ -28,13 +28,13 @@
 }
 
 + (NSString*) CefFrameworkPath {
-  NSString* path = [[NSBundle bundleForClass:[PathFactory class]] resourcePath];
+  NSString* path = [[NSBundle bundleForClass:[PathFactory class]] builtInPlugInsPath];
   path = [path stringByAppendingPathComponent:@CEF_FRAMEWORK_NAME];
   return path;
 }
 
 + (NSString*) CefSubprocessPath {
-  NSString* path = [[NSBundle bundleForClass:[PathFactory class]] resourcePath];
+  NSString* path = [[NSBundle bundleForClass:[PathFactory class]] builtInPlugInsPath];
   path = [path stringByAppendingPathComponent:@HELPER_BUNDLE_NAME];
   path = [path stringByAppendingPathComponent:@"Contents"];
   path = [path stringByAppendingPathComponent:@"MacOS"];

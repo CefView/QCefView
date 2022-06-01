@@ -77,7 +77,7 @@ if (OS_WINDOWS)
         "$<TARGET_FILE_DIR:CefViewWing>"
         "$<TARGET_FILE_DIR:QCefView>"
 
-      # gnerate a file contain timestamp
+      # gnerate a file contains timestamp
       COMMAND ${CMAKE_COMMAND} 
         -E echo "/* Auto Build Trigger */" > "${CMAKE_BINARY_DIR}/auto_rebuild.cpp"
   )
@@ -181,33 +181,36 @@ if (OS_MACOS)
 
   set_target_properties(QCefView
     PROPERTIES
-      FRAMEWORK TRUE
-      COMPILE_FLAGS                                               "-fobjc-arc"
+      FRAMEWORK                                                   TRUE
+      CLANG_ENABLE_OBJC_ARC                                       "YES"
       PUBLIC_HEADER                                               "${QCefView_INCLUDE_HEADERS}"
       MACOSX_FRAMEWORK_INFO_PLIST                                 "${QCefView_INFO_PLIST_FILE}"
-      MACOSX_FRAMEWORK_IDENTIFIER                                 "com.cefview.qcefview"
-      CLANG_ENABLE_OBJC_ARC                                       "YES"
+      XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER                   "com.cefview.qcefview"
       XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD                 "gnu++11"     # -std=gnu++11
       XCODE_ATTRIBUTE_CLANG_LINK_OBJC_RUNTIME                     "NO"          # -fno-objc-link-runtime
       XCODE_ATTRIBUTE_COPY_PHASE_STRIP                            "NO"
       XCODE_ATTRIBUTE_DEAD_CODE_STRIPPING[variant=Release]        "YES"         # -Wl,-dead_strip
       XCODE_ATTRIBUTE_GCC_C_LANGUAGE_STANDARD                     "c99"         # -std=c99
+      COMPILE_FLAGS                                               "-fobjc-arc"
   )
 
   add_custom_command(TARGET QCefView
-    PRE_BUILD
+    POST_BUILD
 
-      #copy the CefViewWing*.app to resource directory
-      COMMAND cp 
-        -a
+      # create plugins directory
+      COMMAND mkdir -p
+        "$<TARGET_BUNDLE_DIR:QCefView>/PlugIns/"
+
+      #copy the CefViewCore binaries to resource directory
+      COMMAND cp -a
         "$<TARGET_BUNDLE_DIR:CefViewWing>/../"
-        "$<TARGET_FILE_DIR:QCefView>/Resources/"
-
+        "$<TARGET_BUNDLE_DIR:QCefView>/PlugIns/"
+      
       #sign the cef framework
       COMMAND codesign 
         --force 
         --sign - 
-        "$<TARGET_BUNDLE_DIR:QCefView>/Resources/Chromium Embedded Framework.framework"
+        "$<TARGET_BUNDLE_DIR:QCefView>/PlugIns/Chromium Embedded Framework.framework"
   )
 endif()  # OS_MACOS
 
