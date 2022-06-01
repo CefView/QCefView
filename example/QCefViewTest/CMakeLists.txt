@@ -199,35 +199,34 @@ if (OS_MACOS)
 
   set_target_properties(${PROJECT_NAME} 
     PROPERTIES 
-      CLANG_ENABLE_OBJC_ARC                     "YES"
-      MACOSX_BUNDLE_INFO_PLIST                  "${QCefViewTest_INFO_PLIST_FILE}"
-      XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS   "@executable_path/../Frameworks"
-      XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "com.cefview.qcefviewtest"
-      XCODE_LINK_BUILD_PHASE_MODE KNOWN_LOCATION
+      CLANG_ENABLE_OBJC_ARC                       "YES"
+      MACOSX_BUNDLE_INFO_PLIST                    "${QCefViewTest_INFO_PLIST_FILE}"
+      XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER   "com.cefview.qcefviewtest"
+      XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS     "@executable_path/../Frameworks"
   )
 
   add_custom_command(TARGET ${PROJECT_NAME} 
     POST_BUILD
 
-    # remove the old framework from the bundle if exists
-    COMMAND rm -fr "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
+      # remove the old framework from the bundle if exists
+      COMMAND rm -fr "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
 
-    # copy the latest framework to the bundle
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "$<TARGET_BUNDLE_DIR:QCefView>"
-        "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
+      # copy the latest framework to the bundle
+      COMMAND ${CMAKE_COMMAND} -E copy_directory
+          "$<TARGET_BUNDLE_DIR:QCefView>"
+          "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
 
-    # copy the webres to the bundle
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-       "${CMAKE_CURRENT_BINARY_DIR}/webres"
-       "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Resources/webres"
+      # copy the webres to the bundle
+      COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_BINARY_DIR}/webres"
+        "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Resources/webres"
 
-    # deploy the Qt Application
-    COMMAND ${DEPLOYQT_EXECUTABLE} 
-       "$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>"
-       "-codesign=-"
+      # deploy the Qt Application
+      COMMAND ${DEPLOYQT_EXECUTABLE} 
+        "$<TARGET_BUNDLE_DIR:${PROJECT_NAME}>"
+        "-codesign=-"
 
-    VERBATIM
+      VERBATIM
   )
 
   find_library(COCOA_FRAMEWORK Cocoa)
