@@ -1,7 +1,8 @@
 ﻿#include "CCefClientDelegate.h"
 
 #include <QCursor>
-
+#include <QtGui>
+#include <QtCore>
 #include "QCefViewPrivate.h"
 
 Qt::CursorShape
@@ -102,6 +103,38 @@ CCefClientDelegate::titleChanged(CefRefPtr<CefBrowser>& browser, const std::stri
 
   auto t = QString::fromStdString(title);
   pCefViewPrivate_->q_ptr->titleChanged(t);
+}
+
+void
+CCefClientDelegate::faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::vector<CefString>& icon_urls)
+{
+  if (!IsValidBrowser(browser))
+    return;
+
+  QStringList urls;
+  for (int i = 0; i < icon_urls.size(); i++)
+  {
+      urls.append(QString::fromStdString(icon_urls.at(i).ToString()));
+  }
+  pCefViewPrivate_->q_ptr->faviconURLChanged(urls);
+}
+
+void
+CCefClientDelegate::faviconChanged(CefRefPtr<CefImage> image)
+{
+  //图像转换
+  int pixel_width = 0;
+  int pixel_height = 0;
+  CefRefPtr<CefBinaryValue> data = image->GetAsBitmap(1, CEF_COLOR_TYPE_RGBA_8888, CEF_ALPHA_TYPE_OPAQUE, pixel_width, pixel_height);
+
+  size_t size = data->GetSize();
+  QScopedPointer<uchar> buffer(new uchar(size));
+  data->GetData(buffer.data(), size, 0);
+
+  QBitmap bitmap = QBitmap::fromData(QSize(pixel_width, pixel_height), buffer.data(), QImage::Format_Mono);//QImage::Format_RGBA8888);
+  QIcon icon(bitmap);
+
+  pCefViewPrivate_->q_ptr->faviconChanged(icon);
 }
 
 void
