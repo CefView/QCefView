@@ -64,6 +64,9 @@ if (OS_WINDOWS)
 
   target_link_libraries(${PROJECT_NAME}
     PRIVATE
+      Qt${QT_VERSION_MAJOR}::Core
+      Qt${QT_VERSION_MAJOR}::Gui
+      Qt${QT_VERSION_MAJOR}::Widgets
       QCefView
   )
 
@@ -146,6 +149,9 @@ if (OS_LINUX)
       # Thus, here we do a trick to make sure the load order
       "-Wl,--no-as-needed $<TARGET_FILE_DIR:QCefView>/$<TARGET_FILE_NAME:libcef_lib>"
 
+      Qt${QT_VERSION_MAJOR}::Core
+      Qt${QT_VERSION_MAJOR}::Gui
+      Qt${QT_VERSION_MAJOR}::Widgets
       QCefView
   )
 
@@ -233,9 +239,12 @@ if (OS_MACOS)
   find_library(APPKIT_FRAMEWORK Appkit)
   target_link_libraries(${PROJECT_NAME} 
     PRIVATE
-      $<TARGET_FILE:QCefView>
       ${COCOA_FRAMEWORK}
       ${APPKIT_FRAMEWORK}
+      Qt${QT_VERSION_MAJOR}::Core
+      Qt${QT_VERSION_MAJOR}::Gui
+      Qt${QT_VERSION_MAJOR}::Widgets
+      QCefView
   )
 endif()
 
@@ -245,13 +254,6 @@ set_target_properties(${PROJECT_NAME}
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/output/$<CONFIG>/bin
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/output/$<CONFIG>/lib
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/output/$<CONFIG>/lib
-)
-
-target_link_libraries(${PROJECT_NAME}
-  PRIVATE
-    Qt${QT_VERSION_MAJOR}::Core
-    Qt${QT_VERSION_MAJOR}::Gui
-    Qt${QT_VERSION_MAJOR}::Widgets
 )
 
 if (OS_MACOS)
