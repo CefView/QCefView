@@ -122,18 +122,25 @@ CCefClientDelegate::faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::
 void
 CCefClientDelegate::faviconChanged(CefRefPtr<CefImage> image)
 {
+  QIcon icon;
+
   //图像转换
-  int pixel_width = 0;
-  int pixel_height = 0;
-  CefRefPtr<CefBinaryValue> data = image->GetAsBitmap(1, CEF_COLOR_TYPE_RGBA_8888, CEF_ALPHA_TYPE_OPAQUE, pixel_width, pixel_height);
+  int width = 0;
+  int height = 0;
+  CefRefPtr<CefBinaryValue> data = image->GetAsPNG(1.0, true, width, height);
+  int bufsize = (int)data->GetSize();
+  if (bufsize > 0)
+  {
+      QByteArray buffer(bufsize + 4, char(0));
+      data->GetData(buffer.data(), bufsize, 0);
 
-  size_t size = data->GetSize();
-  QScopedPointer<uchar> buffer(new uchar(size));
-  data->GetData(buffer.data(), size, 0);
+      QBitmap bitmap;
+      bitmap.loadFromData(buffer);
 
-  QBitmap bitmap = QBitmap::fromData(QSize(pixel_width, pixel_height), buffer.data(), QImage::Format_Mono);//QImage::Format_RGBA8888);
-  QIcon icon(bitmap);
+      icon = QIcon(bitmap);
+  }
 
+  //发出信号
   pCefViewPrivate_->q_ptr->faviconChanged(icon);
 }
 
