@@ -182,7 +182,12 @@ if (OS_MACOS)
   set_target_properties(QCefView
     PROPERTIES
       FRAMEWORK                                                   TRUE
+
+      # compiler settings
+      COMPILE_FLAGS                                               "-fobjc-arc"
       CLANG_ENABLE_OBJC_ARC                                       "YES"
+
+      # xcode settings
       PUBLIC_HEADER                                               "${QCefView_INCLUDE_HEADERS}"
       MACOSX_FRAMEWORK_INFO_PLIST                                 "${QCefView_INFO_PLIST_FILE}"
       XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER                   "com.cefview.qcefview"
@@ -191,7 +196,7 @@ if (OS_MACOS)
       XCODE_ATTRIBUTE_COPY_PHASE_STRIP                            "NO"
       XCODE_ATTRIBUTE_DEAD_CODE_STRIPPING[variant=Release]        "YES"         # -Wl,-dead_strip
       XCODE_ATTRIBUTE_GCC_C_LANGUAGE_STANDARD                     "c99"         # -std=c99
-      COMPILE_FLAGS                                               "-fobjc-arc"
+      XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS                     "@executable_path/../Frameworks @loader_path/Frameworks"
   )
 
   add_custom_command(TARGET QCefView
@@ -230,12 +235,12 @@ add_dependencies(QCefView
 )
 
 target_link_libraries(QCefView 
-  PRIVATE
-    CefViewCore
   PUBLIC
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Widgets
+  PRIVATE
+    CefViewCore
 )
 
 # install QCefView files
