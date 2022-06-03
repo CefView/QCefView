@@ -258,6 +258,18 @@ signals:
   void titleChanged(const QString& title);
 
   /// <summary>
+  /// Gets called on title changed
+  /// </summary>
+  /// <param name="urls">The urls</param>
+  void faviconURLChanged(const QStringList& urls);
+
+  /// <summary>
+  /// Gets called on title changed
+  /// </summary>
+  /// <param name="icon">The icon</param>
+  void faviconChanged(const QIcon &icon);
+
+  /// <summary>
   /// Gets called on fullscreen mode changed
   /// </summary>
   /// <param name="fullscreen">The current fullscreen mode</param>
