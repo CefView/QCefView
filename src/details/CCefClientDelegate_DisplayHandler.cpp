@@ -1,8 +1,10 @@
 ﻿#include "CCefClientDelegate.h"
 
+#include <QBitmap>
+#include <QByteArray>
 #include <QCursor>
-#include <QtGui>
-#include <QtCore>
+#include <QIcon>
+
 #include "QCefViewPrivate.h"
 
 Qt::CursorShape
@@ -112,10 +114,10 @@ CCefClientDelegate::faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::
     return;
 
   QStringList urls;
-  for (int i = 0; i < icon_urls.size(); i++)
-  {
-      urls.append(QString::fromStdString(icon_urls.at(i).ToString()));
+  for (auto& iconUrl : icon_urls) {
+    urls.append(QString::fromStdString(iconUrl.ToString()));
   }
+
   pCefViewPrivate_->q_ptr->faviconURLChanged(urls);
 }
 
@@ -124,23 +126,20 @@ CCefClientDelegate::faviconChanged(CefRefPtr<CefImage> image)
 {
   QIcon icon;
 
-  //图像转换
   int width = 0;
   int height = 0;
   CefRefPtr<CefBinaryValue> data = image->GetAsPNG(1.0, true, width, height);
   int bufsize = (int)data->GetSize();
-  if (bufsize > 0)
-  {
-      QByteArray buffer(bufsize + 4, char(0));
-      data->GetData(buffer.data(), bufsize, 0);
+  if (bufsize > 0) {
+    QByteArray buffer(bufsize + 4, char(0));
+    data->GetData(buffer.data(), bufsize, 0);
 
-      QBitmap bitmap;
-      bitmap.loadFromData(buffer);
+    QBitmap bitmap;
+    bitmap.loadFromData(buffer);
 
-      icon = QIcon(bitmap);
+    icon = QIcon(bitmap);
   }
 
-  //发出信号
   pCefViewPrivate_->q_ptr->faviconChanged(icon);
 }
 
