@@ -46,21 +46,13 @@ if (OS_WINDOWS)
     FILES ${QCefView_Windows_SRC_FILES}
   )
 
-  if (BUILD_STATIC)
-    add_library(QCefView STATIC
-      ${QCefView_INCLUDE_FILES}
-      ${QCefView_SRC_FILES}
-      ${QCefView_details_SRC_FILES}
-      ${QCefView_Windows_SRC_FILES}
-    )
-  else ()
-    add_library(QCefView SHARED
-      ${QCefView_INCLUDE_FILES}
-      ${QCefView_SRC_FILES}
-      ${QCefView_details_SRC_FILES}
-      ${QCefView_Windows_SRC_FILES}
-    )
-  endif ()
+
+  add_library(QCefView ${QCEFVIEW_LIB_TYPE}
+    ${QCefView_INCLUDE_FILES}
+    ${QCefView_SRC_FILES}
+    ${QCefView_details_SRC_FILES}
+    ${QCefView_Windows_SRC_FILES}
+  )
 
   target_compile_definitions(QCefView PRIVATE
     UNICODE
@@ -96,21 +88,12 @@ if (OS_LINUX)
     FILES ${QCefView_Linux_SRC_FILES}
   )
 
-  if (BUILD_STATIC)
-    add_library(QCefView STATIC
-      ${QCefView_INCLUDE_FILES}
-      ${QCefView_SRC_FILES}
-      ${QCefView_details_SRC_FILES}
-      ${QCefView_Linux_SRC_FILES}
-    )
-  else ()
-    add_library(QCefView SHARED
-      ${QCefView_INCLUDE_FILES}
-      ${QCefView_SRC_FILES}
-      ${QCefView_details_SRC_FILES}
-      ${QCefView_Linux_SRC_FILES}
-    )
-  endif ()
+  add_library(QCefView ${QCEFVIEW_LIB_TYPE}
+    ${QCefView_INCLUDE_FILES}
+    ${QCefView_SRC_FILES}
+    ${QCefView_details_SRC_FILES}
+    ${QCefView_Linux_SRC_FILES}
+  )
 
   target_compile_definitions(QCefView 
     PRIVATE
@@ -161,23 +144,14 @@ if (OS_MACOS)
   )
   set(QCefView_INFO_PLIST_FILE "${CMAKE_CURRENT_LIST_DIR}/mac/Info.plist")
 
-  if (BUILD_STATIC)
-    add_library(QCefView STATIC
-      ${QCefView_INCLUDE_FILES}
-      ${QCefView_SRC_FILES}
-      ${QCefView_details_SRC_FILES}
-      ${QCefView_macOS_SRC_FILES}
-      ${QCefView_INFO_PLIST_FILE}
-    )
-  else ()
-    add_library(QCefView SHARED
-      ${QCefView_INCLUDE_FILES}
-      ${QCefView_SRC_FILES}
-      ${QCefView_details_SRC_FILES}
-      ${QCefView_macOS_SRC_FILES}
-      ${QCefView_INFO_PLIST_FILE}
-    )
-  endif ()
+
+  add_library(QCefView ${QCEFVIEW_LIB_TYPE}
+    ${QCefView_INCLUDE_FILES}
+    ${QCefView_SRC_FILES}
+    ${QCefView_details_SRC_FILES}
+    ${QCefView_macOS_SRC_FILES}
+    ${QCefView_INFO_PLIST_FILE}
+  )
 
   set_target_properties(QCefView
     PROPERTIES

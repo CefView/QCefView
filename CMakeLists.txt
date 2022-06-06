@@ -75,7 +75,11 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 endif()
 
 if (BUILD_STATIC)
+  set(QCEFVIEW_LIB_TYPE STATIC)
   add_definitions(-DQCEFVIEW_STATIC=1)
+else()
+  set(QCEFVIEW_LIB_TYPE SHARED)
+  add_definitions(-DQCEFVIEW_STATIC=0)
 endif ()
 
 # Config the QT package
