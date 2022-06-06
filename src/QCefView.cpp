@@ -1,4 +1,4 @@
-﻿#include <QCefView.h>
+#include <QCefView.h>
 
 #pragma region qt_headers
 #include <QPainter>
@@ -125,7 +125,7 @@ QCefView::triggerEvent(const QCefEvent& event)
 }
 
 bool
-QCefView::triggerEvent(const QCefEvent& event, int64_t frameId)
+QCefView::triggerEvent(const QCefEvent& event, qint64 frameId)
 {
   Q_D(QCefView);
 
@@ -149,7 +149,7 @@ QCefView::responseQCefQuery(const QCefQuery& query)
 }
 
 bool
-QCefView::executeJavascript(int64_t frameId, const QString& code, const QString& url)
+QCefView::executeJavascript(qint64 frameId, const QString& code, const QString& url)
 {
   Q_D(QCefView);
 
@@ -157,7 +157,7 @@ QCefView::executeJavascript(int64_t frameId, const QString& code, const QString&
 }
 
 bool
-QCefView::executeJavascriptWithResult(int64_t frameId, const QString& code, const QString& url, int64_t context)
+QCefView::executeJavascriptWithResult(qint64 frameId, const QString& code, const QString& url, qint64 context)
 {
   Q_D(QCefView);
 

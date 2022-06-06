@@ -1,4 +1,4 @@
-﻿#ifndef QCEFVIEW_H
+#ifndef QCEFVIEW_H
 #define QCEFVIEW_H
 #pragma once
 #include <QCefView_global.h>
@@ -26,7 +26,7 @@ class QCEFVIEW_EXPORT QCefView : public QWidget
   QScopedPointer<QCefViewPrivate> d_ptr;
 
 public:
-  static const int64_t MainFrameID = 0;
+  static const qint64 MainFrameID = 0;
 
 public:
   /// <summary>
@@ -136,7 +136,7 @@ public:
   /// <param name="event">The <see cref="QCefEvent"/> instance</param>
   /// <param name="frameId">The frame id</param>
   /// <returns>True on successful; otherwise false</returns>
-  bool triggerEvent(const QCefEvent& event, int64_t frameId);
+  bool triggerEvent(const QCefEvent& event, qint64 frameId);
 
   /// <summary>
   /// Broad cast the event for all frames
@@ -163,7 +163,7 @@ public:
   /// the source of the error
   /// </param>
   /// <returns>True on successful; otherwise false</returns>
-  bool executeJavascript(int64_t frameId, const QString& code, const QString& url);
+  bool executeJavascript(qint64 frameId, const QString& code, const QString& url);
 
   /// <summary>
   /// Executes javascript code in specified frame and the result will be reported through <see
@@ -177,7 +177,7 @@ public:
   /// </param>
   /// <param name="context">The context used to identify the one execution</param>
   /// <returns>True on successful; otherwise false</returns>
-  bool executeJavascriptWithResult(int64_t frameId, const QString& code, const QString& url, int64_t context);
+  bool executeJavascriptWithResult(qint64 frameId, const QString& code, const QString& url, qint64 context);
 
   /// <summary>
   /// Sets the preference for this browser
@@ -208,7 +208,7 @@ signals:
   /// <param name="frameId">Indicates the frame id</param>
   /// <param name="frameIsMain">Indicates the whether this is the main frame</param>
   /// <param name="transition_type">transition type</param>
-  void loadStart(int browserId, int frameId, bool frameIsMain, int transition_type);
+  void loadStart(int browserId, qint64 frameId, bool frameIsMain, int transition_type);
 
   /// <summary>
   /// Gets called on loading ends
@@ -217,7 +217,7 @@ signals:
   /// <param name="frameId">Indicates the frame id</param>
   /// <param name="frameIsMain">Indicates the whether this is the main frame</param>
   /// <param name="httpStatusCode">The HTTP status code</param>
-  void loadEnd(int browserId, int frameId, bool frameIsMain, int httpStatusCode);
+  void loadEnd(int browserId, qint64 frameId, bool frameIsMain, int httpStatusCode);
 
   /// <summary>
   /// Gets called on loading failed due to error
@@ -230,7 +230,7 @@ signals:
   /// <param name="failedUrl">The url caused the failure</param>
   /// <param name="handled">Sets this parameter to indicates whether this error was handled or not</param>
   void loadError(int browserId,
-                 int frameId,
+                 qint64 frameId,
                  bool frameIsMain,
                  int errorCode,
                  const QString& errorMsg,
