@@ -79,7 +79,6 @@ if (BUILD_STATIC)
   add_definitions(-DQCEFVIEW_STATIC=1)
 else()
   set(QCEFVIEW_LIB_TYPE SHARED)
-  add_definitions(-DQCEFVIEW_STATIC=0)
 endif ()
 
 # Config the QT package
