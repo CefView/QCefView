@@ -46,21 +46,13 @@ if (OS_WINDOWS)
     FILES ${QCefView_Windows_SRC_FILES}
   )
 
-  if (BUILD_STATIC)
-    add_library(QCefView STATIC
-      ${QCefView_INCLUDE_FILES}
-      ${QCefView_SRC_FILES}
-      ${QCefView_details_SRC_FILES}
-      ${QCefView_Windows_SRC_FILES}
-    )
-  else ()
-    add_library(QCefView SHARED
-      ${QCefView_INCLUDE_FILES}
-      ${QCefView_SRC_FILES}
-      ${QCefView_details_SRC_FILES}
-      ${QCefView_Windows_SRC_FILES}
-    )
-  endif ()
+
+  add_library(QCefView ${QCEFVIEW_LIB_TYPE}
+    ${QCefView_INCLUDE_FILES}
+    ${QCefView_SRC_FILES}
+    ${QCefView_details_SRC_FILES}
+    ${QCefView_Windows_SRC_FILES}
+  )
 
   target_compile_definitions(QCefView PRIVATE
     UNICODE
@@ -77,7 +69,7 @@ if (OS_WINDOWS)
         "$<TARGET_FILE_DIR:CefViewWing>"
         "$<TARGET_FILE_DIR:QCefView>"
 
-      # gnerate a file contain timestamp
+      # gnerate a file contains timestamp
       COMMAND ${CMAKE_COMMAND} 
         -E echo "/* Auto Build Trigger */" > "${CMAKE_BINARY_DIR}/auto_rebuild.cpp"
   )
@@ -96,21 +88,12 @@ if (OS_LINUX)
     FILES ${QCefView_Linux_SRC_FILES}
   )
 
-  if (BUILD_STATIC)
-    add_library(QCefView STATIC
-      ${QCefView_INCLUDE_FILES}
-      ${QCefView_SRC_FILES}
-      ${QCefView_details_SRC_FILES}
-      ${QCefView_Linux_SRC_FILES}
-    )
-  else ()
-    add_library(QCefView SHARED
-      ${QCefView_INCLUDE_FILES}
-      ${QCefView_SRC_FILES}
-      ${QCefView_details_SRC_FILES}
-      ${QCefView_Linux_SRC_FILES}
-    )
-  endif ()
+  add_library(QCefView ${QCEFVIEW_LIB_TYPE}
+    ${QCefView_INCLUDE_FILES}
+    ${QCefView_SRC_FILES}
+    ${QCefView_details_SRC_FILES}
+    ${QCefView_Linux_SRC_FILES}
+  )
 
   target_compile_definitions(QCefView 
     PRIVATE
@@ -161,53 +144,52 @@ if (OS_MACOS)
   )
   set(QCefView_INFO_PLIST_FILE "${CMAKE_CURRENT_LIST_DIR}/mac/Info.plist")
 
-  if (BUILD_STATIC)
-    add_library(QCefView STATIC
-      ${QCefView_INCLUDE_FILES}
-      ${QCefView_SRC_FILES}
-      ${QCefView_details_SRC_FILES}
-      ${QCefView_macOS_SRC_FILES}
-      ${QCefView_INFO_PLIST_FILE}
-    )
-  else ()
-    add_library(QCefView SHARED
-      ${QCefView_INCLUDE_FILES}
-      ${QCefView_SRC_FILES}
-      ${QCefView_details_SRC_FILES}
-      ${QCefView_macOS_SRC_FILES}
-      ${QCefView_INFO_PLIST_FILE}
-    )
-  endif ()
+
+  add_library(QCefView ${QCEFVIEW_LIB_TYPE}
+    ${QCefView_INCLUDE_FILES}
+    ${QCefView_SRC_FILES}
+    ${QCefView_details_SRC_FILES}
+    ${QCefView_macOS_SRC_FILES}
+    ${QCefView_INFO_PLIST_FILE}
+  )
 
   set_target_properties(QCefView
     PROPERTIES
-      FRAMEWORK TRUE
+      FRAMEWORK                                                   TRUE
+
+      # compiler settings
       COMPILE_FLAGS                                               "-fobjc-arc"
+      CLANG_ENABLE_OBJC_ARC                                       "YES"
+
+      # xcode settings
       PUBLIC_HEADER                                               "${QCefView_INCLUDE_HEADERS}"
       MACOSX_FRAMEWORK_INFO_PLIST                                 "${QCefView_INFO_PLIST_FILE}"
-      MACOSX_FRAMEWORK_IDENTIFIER                                 "com.cefview.qcefview"
-      CLANG_ENABLE_OBJC_ARC                                       "YES"
+      XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER                   "com.cefview.qcefview"
       XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD                 "gnu++11"     # -std=gnu++11
       XCODE_ATTRIBUTE_CLANG_LINK_OBJC_RUNTIME                     "NO"          # -fno-objc-link-runtime
       XCODE_ATTRIBUTE_COPY_PHASE_STRIP                            "NO"
       XCODE_ATTRIBUTE_DEAD_CODE_STRIPPING[variant=Release]        "YES"         # -Wl,-dead_strip
       XCODE_ATTRIBUTE_GCC_C_LANGUAGE_STANDARD                     "c99"         # -std=c99
+      XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS                     "@executable_path/../Frameworks @loader_path/Frameworks"
   )
 
   add_custom_command(TARGET QCefView
-    PRE_BUILD
+    POST_BUILD
 
-      #copy the CefViewWing*.app to resource directory
-      COMMAND cp 
-        -a
+      # create plugins directory
+      COMMAND mkdir -p
+        "$<TARGET_BUNDLE_DIR:QCefView>/PlugIns/"
+
+      #copy the CefViewCore binaries to resource directory
+      COMMAND cp -a
         "$<TARGET_BUNDLE_DIR:CefViewWing>/../"
-        "$<TARGET_FILE_DIR:QCefView>/Resources/"
-
+        "$<TARGET_BUNDLE_DIR:QCefView>/PlugIns/"
+      
       #sign the cef framework
       COMMAND codesign 
         --force 
         --sign - 
-        "$<TARGET_BUNDLE_DIR:QCefView>/Resources/Chromium Embedded Framework.framework"
+        "$<TARGET_BUNDLE_DIR:QCefView>/PlugIns/Chromium Embedded Framework.framework"
   )
 endif()  # OS_MACOS
 
@@ -227,12 +209,12 @@ add_dependencies(QCefView
 )
 
 target_link_libraries(QCefView 
-  PRIVATE
-    CefViewCore
   PUBLIC
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Widgets
+  PRIVATE
+    CefViewCore
 )
 
 # install QCefView files

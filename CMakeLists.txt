@@ -1,7 +1,7 @@
 # 
 # The main config file for QCefView
 #
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.9.1)
 project(QCefView)
 
 option(BUILD_DEMO       "Build the demo"                      OFF)
@@ -75,7 +75,11 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 endif()
 
 if (BUILD_STATIC)
+  set(QCEFVIEW_LIB_TYPE STATIC)
   add_definitions(-DQCEFVIEW_STATIC=1)
+else()
+  set(QCEFVIEW_LIB_TYPE SHARED)
+  add_definitions(-DQCEFVIEW_STATIC=0)
 endif ()
 
 # Config the QT package
@@ -115,7 +119,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/lib)
 # Include CefViewCore
 add_subdirectory(CefViewCore)
 set_target_properties(CefViewCore PROPERTIES FOLDER core)
-set_target_properties(CefViewWing PROPERTIES FOLDER core)
+foreach(CefViewWingTarget ${CefViewCore_HELPER_APP_TARGETS})
+  set_target_properties(${CefViewWingTarget} PROPERTIES FOLDER core)  
+endforeach(CefViewWingTarget)
 set_target_properties(libcef_dll_wrapper PROPERTIES FOLDER core)
 
 # Config QCefView target
