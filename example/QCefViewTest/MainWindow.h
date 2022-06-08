@@ -1,4 +1,4 @@
-﻿#ifndef QCEFVIEWTEST_H
+#ifndef QCEFVIEWTEST_H
 #define QCEFVIEWTEST_H
 
 #include <QMainWindow>
@@ -27,6 +27,19 @@ protected slots:
   void onQCefQueryRequest(int browserId, int64_t frameId, const QCefQuery& query);
 
   void onJavascriptResult(int browserId, int64_t frameId, int64_t context, const QVariant& result);
+
+  void onLoadingStateChanged(int browserId, bool isLoading, bool canGoBack, bool canGoForward);
+
+  void onLoadStart(int browserId, qint64 frameId, bool isMainFrame, int transition_type);
+
+  void onLoadEnd(int browserId, qint64 frameId, bool isMainFrame, int httpStatusCode);
+
+  void onLoadError(int browserId,
+                   qint64 frameId,
+                   bool isMainFrame,
+                   int errorCode,
+                   const QString& errorMsg,
+                   const QString& failedUrl);
 
   // ui slots
 protected slots:

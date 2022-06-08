@@ -206,36 +206,34 @@ signals:
   /// </summary>
   /// <param name="browserId">Indicates the browser id</param>
   /// <param name="frameId">Indicates the frame id</param>
-  /// <param name="frameIsMain">Indicates the whether this is the main frame</param>
+  /// <param name="isMainFrame">Indicates the whether this is the main frame</param>
   /// <param name="transition_type">transition type</param>
-  void loadStart(int browserId, qint64 frameId, bool frameIsMain, int transition_type);
+  void loadStart(int browserId, qint64 frameId, bool isMainFrame, int transition_type);
 
   /// <summary>
   /// Gets called on loading ends
   /// </summary>
   /// <param name="browserId">Indicates the browser id</param>
   /// <param name="frameId">Indicates the frame id</param>
-  /// <param name="frameIsMain">Indicates the whether this is the main frame</param>
+  /// <param name="isMainFrame">Indicates the whether this is the main frame</param>
   /// <param name="httpStatusCode">The HTTP status code</param>
-  void loadEnd(int browserId, qint64 frameId, bool frameIsMain, int httpStatusCode);
+  void loadEnd(int browserId, qint64 frameId, bool isMainFrame, int httpStatusCode);
 
   /// <summary>
   /// Gets called on loading failed due to error
   /// </summary>
   /// <param name="browserId">Indicates the browser id</param>
   /// <param name="frameId">Indicates the frame id</param>
-  /// <param name="frameIsMain">Indicates the whether this is the main frame</param>
+  /// <param name="isMainFrame">Indicates the whether this is the main frame</param>
   /// <param name="errorCode">The error code</param>
   /// <param name="errorMsg">The error message</param>
   /// <param name="failedUrl">The url caused the failure</param>
-  /// <param name="handled">Sets this parameter to indicates whether this error was handled or not</param>
   void loadError(int browserId,
                  qint64 frameId,
-                 bool frameIsMain,
+                 bool isMainFrame,
                  int errorCode,
                  const QString& errorMsg,
-                 const QString& failedUrl,
-                 bool& handled);
+                 const QString& failedUrl);
 
   /// <summary>
   /// Gets called on draggable region changed
@@ -267,7 +265,7 @@ signals:
   /// Gets called on title changed
   /// </summary>
   /// <param name="icon">The icon</param>
-  void faviconChanged(const QIcon &icon);
+  void faviconChanged(const QIcon& icon);
 
   /// <summary>
   /// Gets called on fullscreen mode changed

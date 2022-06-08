@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #pragma region qt_headers
 #include <QMutex>
 #include <QSet>
@@ -145,6 +145,12 @@ protected:
   void onCefBeforeCloseBrowser(CefRefPtr<CefBrowser>& browser);
 
   void setCefWindowFocus(bool focus);
+
+  bool handleLoadError(CefRefPtr<CefBrowser>& browser,
+                       CefRefPtr<CefFrame>& frame,
+                       int errorCode,
+                       const std::string& errorMsg,
+                       const std::string& failedUrl);
 
 public slots:
   void onAppFocusChanged(QWidget* old, QWidget* now);

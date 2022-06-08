@@ -1,4 +1,4 @@
-﻿#include "QCefViewPrivate.h"
+#include "QCefViewPrivate.h"
 
 #pragma region std_headers
 #include <stdexcept>
@@ -258,6 +258,26 @@ QCefViewPrivate::setCefWindowFocus(bool focus)
       host->SetFocus(focus);
     }
   }
+}
+
+bool
+QCefViewPrivate::handleLoadError(CefRefPtr<CefBrowser>& browser,
+                                 CefRefPtr<CefFrame>& frame,
+                                 int errorCode,
+                                 const std::string& errorMsg,
+                                 const std::string& failedUrl)
+{
+  Q_Q(QCefView);
+
+  // If the signal was connected then emit the signal and set handled with true to skip the default handler
+  if (q->receivers(SIGNAL(loadError(int, qint64, bool, int, const QString&, const QString&))) > 0) {
+    auto msg = QString::fromStdString(errorMsg);
+    auto url = QString::fromStdString(failedUrl);
+    q->loadError(browser->GetIdentifier(), frame->GetIdentifier(), errorCode, frame->IsMain(), msg, url);
+    return true;
+  }
+
+  return false;
 }
 
 void
