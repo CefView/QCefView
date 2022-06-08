@@ -1,4 +1,4 @@
-﻿#include "MainWindow.h"
+#include "MainWindow.h"
 
 #include <QCoreApplication>
 #include <QDir>
@@ -74,6 +74,10 @@ MainWindow::createCefView()
   connect(cefViewWidget, &QCefView::draggableRegionChanged, this, &MainWindow::onDraggableRegionChanged);
 
   connect(cefViewWidget, &QCefView::reportJavascriptResult, this, &MainWindow::onJavascriptResult);
+
+  connect(cefViewWidget, &QCefView::loadStart, this, &MainWindow::onLoadStart);
+  connect(cefViewWidget, &QCefView::loadEnd, this, &MainWindow::onLoadEnd);
+  connect(cefViewWidget, &QCefView::loadError, this, &MainWindow::onLoadError);
   //*/
 }
 
@@ -142,6 +146,39 @@ MainWindow::onJavascriptResult(int browserId, int64_t frameId, int64_t context, 
   QString text = QString("Context id: %1\r\nResult in JSON format:\r\n%2").arg(context).arg(jsonString);
 
   QMessageBox::information(this->window(), title, text);
+}
+
+void
+MainWindow::onLoadingStateChanged(int browserId, bool isLoading, bool canGoBack, bool canGoForward)
+{
+  qDebug() << "onLoadingStateChanged, browserId:" << browserId << ", isLoading:" << isLoading
+           << ", canGoBack:" << canGoBack << ", canGoForward:" << canGoForward;
+}
+
+void
+MainWindow::onLoadStart(int browserId, qint64 frameId, bool isMainFrame, int transition_type)
+{
+  qDebug() << "onLoadStart, browserId:" << browserId << ", frameId:" << frameId << ", isMainFrame:" << isMainFrame
+           << ", transitionType:" << transition_type;
+}
+
+void
+MainWindow::onLoadEnd(int browserId, qint64 frameId, bool isMainFrame, int httpStatusCode)
+{
+  qDebug() << "onLoadEnd, browserId:" << browserId << ", frameId:" << frameId << ", isMainFrame:" << isMainFrame
+           << ", httpStatusCode:" << httpStatusCode;
+}
+
+void
+MainWindow::onLoadError(int browserId,
+                        qint64 frameId,
+                        bool isMainFrame,
+                        int errorCode,
+                        const QString& errorMsg,
+                        const QString& failedUrl)
+{
+  qDebug() << "onLoadError, browserId:" << browserId << ", frameId:" << frameId << ", isMainFrame:" << isMainFrame
+           << ", errorCode:" << errorCode;
 }
 
 void
