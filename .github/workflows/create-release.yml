@@ -80,7 +80,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
 
       - name: Configure CMake
-        run: cmake -G "Xcode" -B ${{github.workspace}}/build -DPROJECT_ARCH=x86_64 -DTARGET_ARCH=x86_64 -DBUILD_DEMO=ON -DUSE_SANDBOX=ON -DCMAKE_INSTALL_PREFIX:PATH=${{github.workspace}}/out/install
+        run: cmake -G "Xcode" -B ${{github.workspace}}/build -DPROJECT_ARCH=x86_64 -DBUILD_DEMO=ON -DUSE_SANDBOX=ON -DCMAKE_INSTALL_PREFIX:PATH=${{github.workspace}}/out/install
 
       - name: Build QCefView
         run: xcodebuild -project ${{github.workspace}}/build/QCefView.xcodeproj -target QCefView -configuration ${{env.BUILD_TYPE}}
