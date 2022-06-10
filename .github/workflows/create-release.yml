@@ -19,7 +19,7 @@ jobs:
         run: echo create release for tag ${{github.ref_name}}
 
   build-windows:
-    name: Build Windows Release
+    name: Build Windows Release-x86_64
     needs: initialize
     runs-on: windows-latest
     steps:
@@ -59,7 +59,7 @@ jobs:
           path: ${{github.workspace}}/out/install/QCefViewTest
 
   build-macos:
-    name: Build macOS Release
+    name: Build macOS Release-x86_64
     needs: initialize
     runs-on: macos-latest
     steps:
@@ -107,7 +107,7 @@ jobs:
           path: ${{github.workspace}}/out/install/QCefViewTest
 
   build-linux:
-    name: Build Linux Release
+    name: Build Linux Release-x86_64
     needs: initialize
     runs-on: ubuntu-latest
     steps:

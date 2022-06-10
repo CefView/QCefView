@@ -1,4 +1,4 @@
-name: Build on Linux
+name: Build on Linux-x86_64
 
 on:
   push:
