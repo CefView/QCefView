@@ -40,9 +40,9 @@ MainWindow::MainWindow(QWidget* parent)
   QString webResourceDir = /*QString("file://") +*/ QDir::toNativeSeparators(dir.filePath("webres"));
 #endif
 
-  // add a local folder to URL map
+  // add a local folder to URL map (global)
   QCefContext::instance()->addLocalFolderResource(webResourceDir, URL_ROOT);
-
+  
   createCefView();
 }
 
@@ -59,8 +59,8 @@ MainWindow::createCefView()
   setting.setBackgroundColor(QColor::fromRgba(qRgba(0, 255, 0, 255)));
 
   // create the QCefView widget and add it to the layout container
-  // cefViewWidget = new CefViewWidget(INDEX_URL, &setting);
-  cefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
+  cefViewWidget = new CefViewWidget(INDEX_URL, &setting);
+  // cefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
   // cefViewWidget = new CefViewWidget("https://devicetests.com", &setting);
   ui.cefContainer->layout()->addWidget(cefViewWidget);
   cefViewWidget->setStyleSheet("background-color: blue;");

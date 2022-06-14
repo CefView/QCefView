@@ -29,11 +29,31 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
 
 QCefView::QCefView(QWidget* parent /*= 0*/)
   : QCefView("about:blank", nullptr, parent)
-{}
+{
+}
 
 QCefView::~QCefView()
 {
   qDebug() << this << "is being destructed";
+}
+
+void
+QCefView::addLocalFolderResource(const QString& path, const QString& url, int priority /*= 0*/)
+{
+  Q_D(QCefView);
+
+  d->addLocalFolderResource(path, url, priority);
+}
+
+void
+QCefView::addArchiveResource(const QString& path,
+                             const QString& url,
+                             const QString& password /*= ""*/,
+                             int priority /*= 0*/)
+{
+  Q_D(QCefView);
+
+  d->addArchiveResource(path, url, password, priority);
 }
 
 int
@@ -186,7 +206,8 @@ QCefView::onBeforePopup(qint64 frameId,
 
 void
 QCefView::onPopupCreated(QWindow* wnd)
-{}
+{
+}
 
 QVariant
 QCefView::inputMethodQuery(Qt::InputMethodQuery query) const

@@ -180,6 +180,25 @@ QCefViewPrivate::destroyCefBrowser()
 }
 
 void
+QCefViewPrivate::addLocalFolderResource(const QString& path, const QString& url, int priority /*= 0*/)
+{
+  if (pClient_) {
+    pClient_->AddLocalDirectoryResourceProvider(path.toStdString(), url.toStdString(), priority);
+  }
+}
+
+void
+QCefViewPrivate::addArchiveResource(const QString& path,
+                                    const QString& url,
+                                    const QString& password /*= ""*/,
+                                    int priority /*= 0*/)
+{
+  if (pClient_) {
+    pClient_->AddArchiveResourceProvider(path.toStdString(), url.toStdString(), password.toStdString(), priority);
+  }
+}
+
+void
 QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window)
 {
   // capture the browser
