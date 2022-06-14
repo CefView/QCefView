@@ -66,6 +66,23 @@ public:
   /// Destructs the QCefView instance
   /// </summary>
   ~QCefView();
+  
+  /// <summary>
+  /// Adds a url mapping item with local web resource directory
+  /// </summary>
+  /// <param name="path">The path to the local resource directory</param>
+  /// <param name="url">The url to be mapped to</param>
+  /// <param name="priority">The priority</param>
+  void addLocalFolderResource(const QString& path, const QString& url, int priority = 0);
+
+  /// <summary>
+  /// Adds a url mapping item with local archive (.zip) file which contains the web resource
+  /// </summary>
+  /// <param name="path">The path to the local archive file</param>
+  /// <param name="url">The url to be mapped to</param>
+  /// <param name="password">The password of the archive</param>
+  /// <param name="priority">The priority</param>
+  void addArchiveResource(const QString& path, const QString& url, const QString& password = "", int priority = 0);
 
   /// <summary>
   /// Gets the browser id

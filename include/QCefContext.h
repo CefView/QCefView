@@ -1,4 +1,4 @@
-﻿#ifndef QCEF_H
+#ifndef QCEF_H
 #define QCEF_H
 #pragma once
 #include <QCefView_global.h>
@@ -45,7 +45,7 @@ public:
   ~QCefContext();
 
   /// <summary>
-  /// Adds a url mapping item with local web resource directory
+  /// Adds a url mapping item with local web resource directory. This works for all <see ref="QCefView" /> instances created subsequently
   /// </summary>
   /// <param name="path">The path to the local resource directory</param>
   /// <param name="url">The url to be mapped to</param>
@@ -53,7 +53,7 @@ public:
   void addLocalFolderResource(const QString& path, const QString& url, int priority = 0);
 
   /// <summary>
-  /// Adds a url mapping item with local archive (.zip) file which contains the web resource
+  /// Adds a url mapping item with local archive (.zip) file which contains the web resource. This works for all <see ref="QCefView" /> instances created subsequently
   /// </summary>
   /// <param name="path">The path to the local archive file</param>
   /// <param name="url">The url to be mapped to</param>

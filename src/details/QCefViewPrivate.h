@@ -135,6 +135,10 @@ public:
 
   void destroyCefBrowser();
 
+  void addLocalFolderResource(const QString& path, const QString& url, int priority = 0);
+
+  void addArchiveResource(const QString& path, const QString& url, const QString& password = "", int priority = 0);
+
 protected:
   void onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
 
