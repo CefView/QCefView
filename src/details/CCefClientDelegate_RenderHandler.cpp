@@ -1,4 +1,4 @@
-﻿#include "CCefClientDelegate.h"
+#include "CCefClientDelegate.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -16,13 +16,15 @@ CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& re
     return false;
   }
 
-  // get the screen which the view is current residing at
+  // get the screen which the view is currently residing in
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
-  QScreen* currentScreen = pCefViewPrivate_->q_ptr->window()->screen();
+  QScreen* currentScreen = pCefViewPrivate_->q_ptr->screen();
 #else
-  QWindow window = pCefViewPrivate_->q_ptr->window()->windowHandle();
-  QScreen* currentScreen = window ? window->screen() : nullptr;
+  QWidget* ancestorWidget = pCefViewPrivate_->q_ptr->window();
+  QWindow* ancestorWindow = ancestorWidget ? ancestorWidget->windowHandle() : nullptr;
+  QScreen* currentScreen = ancestorWindow ? ancestorWindow->screen() : nullptr;
 #endif
+  
   if (!currentScreen) {
     // the view is not visible so we retrieve the main screen info
     currentScreen = QApplication::screens().at(0);
@@ -73,9 +75,16 @@ CCefClientDelegate::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& 
 {
   if (!IsValidBrowser(browser))
     return false;
-
-  // get the screen which the view is current residing at
-  QScreen* currentScreen = pCefViewPrivate_->q_ptr->window()->screen();
+  
+  // get the screen which the view is currently residing in
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+  QScreen* currentScreen = pCefViewPrivate_->q_ptr->screen();
+#else
+  QWidget* ancestorWidget = pCefViewPrivate_->q_ptr->window();
+  QWindow* ancestorWindow = ancestorWidget ? ancestorWidget->windowHandle() : nullptr;
+  QScreen* currentScreen = ancestorWindow ? ancestorWindow->screen() : nullptr;
+#endif
+  
   if (!currentScreen) {
     // the view is not visible so we retrieve the main screen info
     currentScreen = QApplication::screens().at(0);
