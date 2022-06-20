@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget* parent)
 
   connect(ui.btn_reCreate, &QPushButton::clicked, this, &MainWindow::onBtnRecreateClicked);
   connect(ui.btn_changeColor, &QPushButton::clicked, this, &MainWindow::onBtnChangeColorClicked);
+  connect(ui.btn_setFocus, &QPushButton::clicked, this, &MainWindow::onBtnSetFocusClicked);
   connect(ui.btn_callJSCode, &QPushButton::clicked, this, &MainWindow::onBtnCallJSCodeClicked);
   connect(ui.btn_newBrowser, &QPushButton::clicked, this, &MainWindow::onBtnNewBrowserClicked);
   connect(ui.btn_quitApp, &QPushButton::clicked, qApp, &QCoreApplication::quit);
@@ -56,12 +57,20 @@ MainWindow::createCefView()
   QCefSetting setting;
   setting.setPlugins(false);
   setting.setWindowlessFrameRate(60);
-  setting.setBackgroundColor(QColor::fromRgba(qRgba(0, 255, 0, 255)));
+  setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
 
   // create the QCefView widget and add it to the layout container
-  cefViewWidget = new CefViewWidget(INDEX_URL, &setting);
+  // cefViewWidget = new CefViewWidget(INDEX_URL, &setting);
+
+  // this site is for test web events
+  cefViewWidget = new CefViewWidget("http://output.jsbin.com/rinece", &setting, this);
+  
+  // this site is for test OSR performance
   // cefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
+  
+  // this site is test for input devices
   // cefViewWidget = new CefViewWidget("https://devicetests.com", &setting);
+  
   ui.cefContainer->layout()->addWidget(cefViewWidget);
   cefViewWidget->setStyleSheet("background-color: blue;");
 
@@ -214,6 +223,14 @@ MainWindow::onBtnCallJSCodeClicked()
   int64_t context = 1000;
   QString code = "alert('hello QCefView'); return {k1: 'str', k2: true, k3: 100};";
   cefViewWidget->executeJavascriptWithResult(QCefView::MainFrameID, code, "", context);
+}
+
+void
+MainWindow::onBtnSetFocusClicked()
+{
+  if (cefViewWidget) {
+    cefViewWidget->setFocus();
+  }
 }
 
 void

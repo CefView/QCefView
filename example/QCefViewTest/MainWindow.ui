@@ -99,9 +99,9 @@
       <widget class="QLineEdit" name="lineEdit"/>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="btn_setFocus">
        <property name="text">
-        <string>PushButton</string>
+        <string>SetFocus</string>
        </property>
       </widget>
      </item>

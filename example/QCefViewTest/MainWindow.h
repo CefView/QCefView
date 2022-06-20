@@ -47,6 +47,8 @@ protected slots:
 
   void onBtnChangeColorClicked();
 
+  void onBtnSetFocusClicked();
+  
   void onBtnCallJSCodeClicked();
 
   void onBtnNewBrowserClicked();
