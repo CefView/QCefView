@@ -14,6 +14,13 @@ public:
   CefViewWidget(const QString url, const QCefSetting* setting, QWidget* parent = 0);
 
   ~CefViewWidget();
+
+  virtual void onBrowserWindowCreated(QWindow* win);
+
+  virtual void resizeEvent(QResizeEvent* event);
+
+private:
+  QWindow* cefWindow = nullptr;
 };
 
 #endif // CUSTOMCEFVIEW_H

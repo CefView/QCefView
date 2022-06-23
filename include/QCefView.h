@@ -1,4 +1,4 @@
-#ifndef QCEFVIEW_H
+﻿#ifndef QCEFVIEW_H
 #define QCEFVIEW_H
 #pragma once
 #include <QCefView_global.h>
@@ -66,7 +66,7 @@ public:
   /// Destructs the QCefView instance
   /// </summary>
   ~QCefView();
-  
+
   /// <summary>
   /// Adds a url mapping item with local web resource directory
   /// </summary>
@@ -336,6 +336,12 @@ signals:
   void reportJavascriptResult(int browserId, qint64 frameId, qint64 context, const QVariant& result);
 
 public slots:
+  /// <summary>
+  /// Gets called after the main browser window created
+  /// </summary>
+  /// <param name="win">The CEF window</param>
+  virtual void onBrowserWindowCreated(QWindow* win);
+
   /// <summary>
   /// Gets called before the popup browser created
   /// </summary>

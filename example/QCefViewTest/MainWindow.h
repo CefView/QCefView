@@ -1,4 +1,4 @@
-#ifndef QCEFVIEWTEST_H
+﻿#ifndef QCEFVIEWTEST_H
 #define QCEFVIEWTEST_H
 
 #include <QMainWindow>
@@ -20,6 +20,7 @@ protected:
 
   // QCefView slots
 protected slots:
+
   void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
 
   void onInvokeMethod(int browserId, int64_t frameId, const QString& method, const QVariantList& arguments);
@@ -48,7 +49,7 @@ protected slots:
   void onBtnChangeColorClicked();
 
   void onBtnSetFocusClicked();
-  
+
   void onBtnCallJSCodeClicked();
 
   void onBtnNewBrowserClicked();

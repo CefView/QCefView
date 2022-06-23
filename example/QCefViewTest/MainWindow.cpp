@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+﻿#include "MainWindow.h"
 
 #include <QCoreApplication>
 #include <QDir>
@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget* parent)
 
   // add a local folder to URL map (global)
   QCefContext::instance()->addLocalFolderResource(webResourceDir, URL_ROOT);
-  
+
   createCefView();
 }
 
@@ -57,20 +57,21 @@ MainWindow::createCefView()
   QCefSetting setting;
   setting.setPlugins(false);
   setting.setWindowlessFrameRate(60);
-  setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
+  // setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
+  setting.setBackgroundColor(Qt::blue);
 
   // create the QCefView widget and add it to the layout container
   // cefViewWidget = new CefViewWidget(INDEX_URL, &setting);
 
   // this site is for test web events
   cefViewWidget = new CefViewWidget("http://output.jsbin.com/rinece", &setting, this);
-  
+
   // this site is for test OSR performance
   // cefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
-  
+
   // this site is test for input devices
   // cefViewWidget = new CefViewWidget("https://devicetests.com", &setting);
-  
+
   ui.cefContainer->layout()->addWidget(cefViewWidget);
   cefViewWidget->setStyleSheet("background-color: blue;");
 

@@ -1,4 +1,4 @@
-#include <QCefView.h>
+﻿#include <QCefView.h>
 
 #pragma region qt_headers
 #include <QPainter>
@@ -29,8 +29,7 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
 
 QCefView::QCefView(QWidget* parent /*= 0*/)
   : QCefView("about:blank", nullptr, parent)
-{
-}
+{}
 
 QCefView::~QCefView()
 {
@@ -192,6 +191,10 @@ QCefView::setPreference(const QString& name, const QVariant& value, const QStrin
   return d->setPreference(name, value, error);
 }
 
+void
+QCefView::onBrowserWindowCreated(QWindow* win)
+{}
+
 bool
 QCefView::onBeforePopup(qint64 frameId,
                         const QString& targetUrl,
@@ -206,8 +209,7 @@ QCefView::onBeforePopup(qint64 frameId,
 
 void
 QCefView::onPopupCreated(QWindow* wnd)
-{
-}
+{}
 
 QVariant
 QCefView::inputMethodQuery(Qt::InputMethodQuery query) const
