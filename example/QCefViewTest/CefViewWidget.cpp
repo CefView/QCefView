@@ -5,7 +5,11 @@
 #include <QResizeEvent>
 #include <QWindow>
 
+#if defined(Q_OS_WINDOWS)
 #include <windows.h>
+#elif defined(Q_OS_MACOS)
+#else
+#endif
 
 CefViewWidget::CefViewWidget(const QString url, const QCefSetting* setting, QWidget* parent /* = 0*/)
   : QCefView(url, setting, parent)
