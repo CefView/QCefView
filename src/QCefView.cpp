@@ -192,6 +192,14 @@ QCefView::setPreference(const QString& name, const QVariant& value, const QStrin
 }
 
 void
+QCefView::setFocus(Qt::FocusReason reason)
+{
+  Q_D(QCefView);
+
+  d->setCefWindowFocus(true);
+}
+
+void
 QCefView::onBrowserWindowCreated(QWindow* win)
 {}
 
