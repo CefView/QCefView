@@ -338,13 +338,13 @@ signals:
 
 public slots:
   /// <summary>
-  /// Gets called after the main browser window created. Ths slots does not work for OSR mode.
+  /// Gets called after the main browser window created. This slot does not work for OSR mode.
   /// </summary>
   /// <param name="win">The CEF window</param>
   virtual void onBrowserWindowCreated(QWindow* win);
 
   /// <summary>
-  /// Gets called before the popup browser created
+  /// Gets called before the pop-up browser created
   /// </summary>
   /// <param name="frameId">The source frame id</param>
   /// <param name="targetUrl">The target URL</param>
@@ -361,12 +361,24 @@ public slots:
                              bool& DisableJavascriptAccess);
 
   /// <summary>
-  /// Gets called right after the popup browser was created
+  /// Gets called right after the pop-up browser was created
   /// </summary>
   /// <param name="wnd">The host window of new created browser</param>
   virtual void onPopupCreated(QWindow* wnd);
 
+#pragma region QWidget
+public slots:
+  /// <summary>
+  ///
+  /// </summary>
+  inline void setFocus() { setFocus(Qt::OtherFocusReason); }
+
 public:
+  /// <summary>
+  /// Please refer to QWidget::setFocus
+  /// </summary>
+  void setFocus(Qt::FocusReason reason);
+
   /// <summary>
   /// Please refer to QWidget::inputMethodQuery
   /// </summary>
@@ -437,6 +449,7 @@ protected:
   /// Please refer to QWidget::wheelEvent
   /// </summary>
   void wheelEvent(QWheelEvent* event) override;
+#pragma endregion
 };
 
 #endif // QCEFVIEW_H

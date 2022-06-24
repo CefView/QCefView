@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #pragma region qt_headers
 #include <QMutex>
 #include <QSet>
@@ -139,6 +139,8 @@ public:
 
   void addArchiveResource(const QString& path, const QString& url, const QString& password = "", int priority = 0);
 
+  void setCefWindowFocus(bool focus);
+
 protected:
   void onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
 
@@ -147,8 +149,6 @@ protected:
   bool onCefDoCloseBrowser(CefRefPtr<CefBrowser>& browser);
 
   void onCefBeforeCloseBrowser(CefRefPtr<CefBrowser>& browser);
-
-  void setCefWindowFocus(bool focus);
 
   bool handleLoadError(CefRefPtr<CefBrowser>& browser,
                        CefRefPtr<CefFrame>& frame,

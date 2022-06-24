@@ -199,6 +199,17 @@ QCefViewPrivate::addArchiveResource(const QString& path,
 }
 
 void
+QCefViewPrivate::setCefWindowFocus(bool focus)
+{
+  if (pCefBrowser_) {
+    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+    if (host) {
+      host->SetFocus(focus);
+    }
+  }
+}
+
+void
 QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window)
 {
   // capture the browser
@@ -269,17 +280,6 @@ void
 QCefViewPrivate::onCefBeforeCloseBrowser(CefRefPtr<CefBrowser>& browser)
 {
   return;
-}
-
-void
-QCefViewPrivate::setCefWindowFocus(bool focus)
-{
-  if (pCefBrowser_) {
-    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
-    if (host) {
-      host->SetFocus(focus);
-    }
-  }
 }
 
 bool
