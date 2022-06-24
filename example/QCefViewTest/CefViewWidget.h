@@ -20,7 +20,9 @@ public:
   virtual void resizeEvent(QResizeEvent* event);
 
 private:
-  QWindow* cefWindow = nullptr;
+  QWindow* m_cefWindow = nullptr;
+
+  int m_cornerRadius = 50;
 };
 
 #endif // CUSTOMCEFVIEW_H

@@ -11,6 +11,7 @@
 #include <QScopedPointer>
 #include <QVariantList>
 #include <QWidget>
+#include <QWindow>
 #pragma endregion qt_headers
 
 class QCefViewPrivate;
@@ -337,7 +338,7 @@ signals:
 
 public slots:
   /// <summary>
-  /// Gets called after the main browser window created
+  /// Gets called after the main browser window created. Ths slots does not work for OSR mode.
   /// </summary>
   /// <param name="win">The CEF window</param>
   virtual void onBrowserWindowCreated(QWindow* win);
