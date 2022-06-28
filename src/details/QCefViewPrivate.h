@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #pragma region qt_headers
 #include <QMutex>
 #include <QSet>
@@ -34,6 +34,11 @@ public:
   ///
   /// </summary>
   static void destroyAllInstance();
+
+  /// <summary>
+  ///
+  /// </summary>
+  Qt::CefContextMenuPolicy cefContextMenuPolicy_ = Qt::CefAllowContextMenu;
 
   /// <summary>
   ///

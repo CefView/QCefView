@@ -1,4 +1,4 @@
-﻿#include <QCefView.h>
+#include <QCefView.h>
 
 #pragma region qt_headers
 #include <QPainter>
@@ -29,7 +29,8 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
 
 QCefView::QCefView(QWidget* parent /*= 0*/)
   : QCefView("about:blank", nullptr, parent)
-{}
+{
+}
 
 QCefView::~QCefView()
 {
@@ -192,6 +193,22 @@ QCefView::setPreference(const QString& name, const QVariant& value, const QStrin
 }
 
 void
+QCefView::setCefContextMenuPolicy(Qt::CefContextMenuPolicy policy)
+{
+  Q_D(QCefView);
+
+  d->cefContextMenuPolicy_ = policy;
+}
+
+Qt::CefContextMenuPolicy
+QCefView::cefContextMenuPolicy()
+{
+  Q_D(QCefView);
+
+  return d->cefContextMenuPolicy_;
+}
+
+void
 QCefView::setFocus(Qt::FocusReason reason)
 {
   Q_D(QCefView);
@@ -201,13 +218,14 @@ QCefView::setFocus(Qt::FocusReason reason)
 
 void
 QCefView::onBrowserWindowCreated(QWindow* win)
-{}
+{
+}
 
 bool
 QCefView::onBeforePopup(qint64 frameId,
                         const QString& targetUrl,
                         const QString& targetFrameName,
-                        QCefView::WindowOpenDisposition targetDisposition,
+                        Qt::CefWindowOpenDisposition targetDisposition,
                         QCefSetting& settings,
                         bool& DisableJavascriptAccess)
 {
@@ -217,7 +235,8 @@ QCefView::onBeforePopup(qint64 frameId,
 
 void
 QCefView::onPopupCreated(QWindow* wnd)
-{}
+{
+}
 
 QVariant
 QCefView::inputMethodQuery(Qt::InputMethodQuery query) const

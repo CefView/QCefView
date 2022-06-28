@@ -1,4 +1,4 @@
-﻿#ifndef QCEFVIEW_H
+#ifndef QCEFVIEW_H
 #define QCEFVIEW_H
 #pragma once
 #include <QCefView_global.h>
@@ -16,6 +16,39 @@
 
 class QCefViewPrivate;
 
+namespace Qt {
+Q_NAMESPACE
+/// <summary>
+/// Represents the CEF popup windows open disposition
+/// </summary>
+enum CefWindowOpenDisposition
+{
+  CefWindowOpenDispositionUnknown,
+  CefWindowOpenDispositionCurrentTab,
+  CefWindowOpenDispositionSingletonTab,
+  CefWindowOpenDispositionNewForeGroundTab,
+  CefWindowOpenDispositionNewBackgroundTab,
+  CefWindowOpenDispositionNewPopup,
+  CefWindowOpenDispositionNewWindow,
+  CefWindowOpenDispositionSaveToDisk,
+  CefWindowOpenDispositionOffTheRecord,
+  CefWindowOpenDispositionIgnoreAction,
+};
+Q_ENUM_NS(CefWindowOpenDisposition)
+
+/// <summary>
+/// Represents the CEF context menu policy
+/// </summary>
+enum CefContextMenuPolicy
+{
+  CefAllowContextMenu = 0x0000,
+  CefDisableMainContextMenu = 0x0001,
+  CefDisablePopupContextMenu = 0x0002,
+  CefDisableAllContextMenu = (CefDisableMainContextMenu | CefDisablePopupContextMenu),
+};
+Q_FLAG_NS(CefContextMenuPolicy)
+} // namespace Qt
+
 /// <summary>
 /// Represents the CEF browser view
 /// </summary>
@@ -28,25 +61,6 @@ class QCEFVIEW_EXPORT QCefView : public QWidget
 
 public:
   static const qint64 MainFrameID = 0;
-
-public:
-  /// <summary>
-  ///
-  /// </summary>
-  enum WindowOpenDisposition
-  {
-    WOD_UNKNOWN,
-    WOD_CURRENT_TAB,
-    WOD_SINGLETON_TAB,
-    WOD_NEW_FOREGROUND_TAB,
-    WOD_NEW_BACKGROUND_TAB,
-    WOD_NEW_POPUP,
-    WOD_NEW_WINDOW,
-    WOD_SAVE_TO_DISK,
-    WOD_OFF_THE_RECORD,
-    WOD_IGNORE_ACTION
-  };
-  Q_ENUM(WindowOpenDisposition)
 
 public:
   /// <summary>
@@ -205,9 +219,21 @@ public:
   /// The preference value, if this value is QVariant::UnknownType or QVariant::Invalid, the
   /// preference will be restored to default value
   /// </param>
-  /// <param name="error">The error message populated on failure</param> <returns>True
-  /// on successful; otherwise false</returns>
+  /// <param name="error">The error message populated on failure</param>
+  // <returns>True on successful; otherwise false</returns>
   bool setPreference(const QString& name, const QVariant& value, const QString& error);
+
+  /// <summary>
+  /// Sets the cef context menu policy
+  /// </summary>
+  /// <param name="policy">The policy</param>
+  void setCefContextMenuPolicy(Qt::CefContextMenuPolicy policy);
+
+  /// <summary>
+  /// Gets the cef context menu policy
+  /// </summary>
+  // <returns>The cef context menu policy</returns>
+  Qt::CefContextMenuPolicy cefContextMenuPolicy();
 
 signals:
   /// <summary>
@@ -356,7 +382,7 @@ public slots:
   virtual bool onBeforePopup(qint64 frameId,
                              const QString& targetUrl,
                              const QString& targetFrameName,
-                             QCefView::WindowOpenDisposition targetDisposition,
+                             Qt::CefWindowOpenDisposition targetDisposition,
                              QCefSetting& settings,
                              bool& DisableJavascriptAccess);
 
@@ -371,7 +397,10 @@ public slots:
   /// <summary>
   ///
   /// </summary>
-  inline void setFocus() { setFocus(Qt::OtherFocusReason); }
+  inline void setFocus()
+  {
+    setFocus(Qt::OtherFocusReason);
+  }
 
 public:
   /// <summary>

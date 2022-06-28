@@ -1,4 +1,6 @@
-﻿#include "CCefClientDelegate.h"
+#include "CCefClientDelegate.h"
+
+#include <QDebug>
 
 #include "QCefViewPrivate.h"
 
@@ -8,11 +10,27 @@ CCefClientDelegate::onBeforeContextMenu(CefRefPtr<CefBrowser> browser,
                                         CefRefPtr<CefContextMenuParams> params,
                                         CefRefPtr<CefMenuModel> model)
 {
+  if (!pCefViewPrivate_)
+    return;
+  
+  qDebug() << "onBeforeContextMenu, menu item count:" << model->GetCount();
+  
+  if (browser->IsPopup()) {
+    // pop-up browser doesn't involve off-screen renderring
+    if (Qt::CefDisablePopupContextMenu & pCefViewPrivate_->cefContextMenuPolicy_) {
+      model->Clear();
+    }
+  } else {
+    // main browser
+    if (Qt::CefDisableMainContextMenu & pCefViewPrivate_->cefContextMenuPolicy_) {
+      model->Clear();
+    }
+  }
+  
 #if defined(CEF_USE_OSR)
   // Context menu will not disappear on left click under OSR
   // mode, so we just disable the default one. You need to
   // implement your own context menu.
-  model->Clear();
 #endif
 }
 
@@ -38,4 +56,6 @@ CCefClientDelegate::onContextMenuCommand(CefRefPtr<CefBrowser> browser,
 
 void
 CCefClientDelegate::onContextMenuDismissed(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame)
-{}
+{
+  qDebug() << "onContextMenuDismissed";
+}
