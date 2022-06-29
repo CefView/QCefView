@@ -1,4 +1,5 @@
-﻿#pragma once
+#pragma once
+#include <QDebug>
 #include <QMetaType>
 
 #define REGISTER_METATYPE(TYPE)                                                                                        \
@@ -6,3 +7,23 @@
   {                                                                                                                    \
     TYPE##_MetaTypeRegister() { qRegisterMetaType<TYPE>(); }                                                           \
   } TYPE##_MetaTypeRegister;
+
+class FunctionLogger
+{
+public:
+  FunctionLogger(const QString& fn)
+    : functionName_(fn)
+  {
+    qDebug() << "+++" << functionName_;
+  }
+
+  ~FunctionLogger() { qDebug() << "---" << functionName_; }
+
+  QString functionName_;
+};
+
+#if defined(QT_DEBUG)
+#define FLog() FunctionLogger __fl__(__FUNCTION__);
+#else
+#define FLog()
+#endif

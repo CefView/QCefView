@@ -1,4 +1,4 @@
-#include <QCefView.h>
+﻿#include <QCefView.h>
 
 #pragma region qt_headers
 #include <QPainter>
@@ -13,6 +13,7 @@
 
 #include "details/QCefEventPrivate.h"
 #include "details/QCefViewPrivate.h"
+#include "details/utils/CommonUtils.h"
 
 QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* parent /*= 0*/)
   : QWidget(parent)
@@ -29,8 +30,7 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
 
 QCefView::QCefView(QWidget* parent /*= 0*/)
   : QCefView("about:blank", nullptr, parent)
-{
-}
+{}
 
 QCefView::~QCefView()
 {
@@ -193,19 +193,19 @@ QCefView::setPreference(const QString& name, const QVariant& value, const QStrin
 }
 
 void
-QCefView::setCefContextMenuPolicy(Qt::CefContextMenuPolicy policy)
+QCefView::setDisablePopupContextMenu(bool disable)
 {
   Q_D(QCefView);
 
-  d->cefContextMenuPolicy_ = policy;
+  d->disablePopuContextMenu_ = disable;
 }
 
-Qt::CefContextMenuPolicy
-QCefView::cefContextMenuPolicy()
+bool
+QCefView::isPopupContextMenuDisabled()
 {
   Q_D(QCefView);
 
-  return d->cefContextMenuPolicy_;
+  return d->disablePopuContextMenu_;
 }
 
 void
@@ -218,14 +218,13 @@ QCefView::setFocus(Qt::FocusReason reason)
 
 void
 QCefView::onBrowserWindowCreated(QWindow* win)
-{
-}
+{}
 
 bool
 QCefView::onBeforePopup(qint64 frameId,
                         const QString& targetUrl,
                         const QString& targetFrameName,
-                        Qt::CefWindowOpenDisposition targetDisposition,
+                        QCefView::CefWindowOpenDisposition targetDisposition,
                         QCefSetting& settings,
                         bool& DisableJavascriptAccess)
 {
@@ -235,8 +234,7 @@ QCefView::onBeforePopup(qint64 frameId,
 
 void
 QCefView::onPopupCreated(QWindow* wnd)
-{
-}
+{}
 
 QVariant
 QCefView::inputMethodQuery(Qt::InputMethodQuery query) const
@@ -268,7 +266,7 @@ QCefView::paintEvent(QPaintEvent* event)
   opt.initFrom(this);
   style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
 
-  // 4. paint the CEF view and pop-up
+  // 4. paint the CEF view and popup
   // get current scale factor
   qreal scaleFactor = devicePixelRatio();
 
@@ -281,7 +279,7 @@ QCefView::paintEvent(QPaintEvent* event)
     painter.drawImage(QRect{ 0, 0, width, height }, d->osr.qCefViewFrame_);
   }
   {
-    // paint cef pop-up
+    // paint cef popup
     QMutexLocker lock(&(d->osr.qPopupPaintLock_));
     if (d->osr.showPopup_) {
       painter.drawImage(d->osr.qPopupRect_, d->osr.qCefPopupFrame_);
@@ -386,4 +384,18 @@ QCefView::wheelEvent(QWheelEvent* event)
   Q_D(QCefView);
   d->onViewWheelEvent(event);
   QWidget::wheelEvent(event);
+}
+
+void
+QCefView::contextMenuEvent(QContextMenuEvent* event)
+{
+  FLog();
+
+#if defined(CEF_USE_OSR)
+  Q_D(QCefView);
+
+  if (d->osr.isShowingContextMenu_) {
+    d->osr.contextMenu_->popup(mapToGlobal(event->pos()));
+  }
+#endif
 }

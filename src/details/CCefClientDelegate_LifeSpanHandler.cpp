@@ -1,4 +1,4 @@
-#include "CCefClientDelegate.h"
+﻿#include "CCefClientDelegate.h"
 
 #include <QThread>
 
@@ -21,21 +21,21 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
     auto name = QString::fromStdString(targetFrameName);
 
     QCefSetting s;
-    Qt::CefWindowOpenDisposition d = (Qt::CefWindowOpenDisposition)targetDisposition;
+    QCefView::CefWindowOpenDisposition d = (QCefView::CefWindowOpenDisposition)targetDisposition;
     QCefSettingPrivate::CopyFromCefBrowserSettings(&s, &settings);
 
     Qt::ConnectionType c = pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection
                                                                                          : Qt::BlockingQueuedConnection;
     QMetaObject::invokeMethod(pCefViewPrivate_->q_ptr,
-                              "onBeforePopup",                        //
-                              c,                                      //
-                              Q_RETURN_ARG(bool, result),             //
-                              Q_ARG(qint64, frameId),                 //
-                              Q_ARG(const QString&, url),             //
-                              Q_ARG(const QString&, name),            //
-                              Q_ARG(Qt::CefWindowOpenDisposition, d), //
-                              Q_ARG(QCefSetting&, s),                 //
-                              Q_ARG(bool&, DisableJavascriptAccess)   //
+                              "onBeforePopup",                              //
+                              c,                                            //
+                              Q_RETURN_ARG(bool, result),                   //
+                              Q_ARG(qint64, frameId),                       //
+                              Q_ARG(const QString&, url),                   //
+                              Q_ARG(const QString&, name),                  //
+                              Q_ARG(QCefView::CefWindowOpenDisposition, d), //
+                              Q_ARG(QCefSetting&, s),                       //
+                              Q_ARG(bool&, DisableJavascriptAccess)         //
     );
     QCefSettingPrivate::CopyToCefBrowserSettings(&s, &settings);
   }

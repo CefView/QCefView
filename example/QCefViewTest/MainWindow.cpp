@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+﻿#include "MainWindow.h"
 
 #include <QCoreApplication>
 #include <QDir>
@@ -66,6 +66,9 @@ MainWindow::createCefView()
   // this site is for test web events
   cefViewWidget = new CefViewWidget("http://output.jsbin.com/rinece", &setting, this);
 
+  //
+  // cefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);
+
   // this site is for test OSR performance
   // cefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
 
@@ -73,7 +76,8 @@ MainWindow::createCefView()
   // cefViewWidget = new CefViewWidget("https://devicetests.com", &setting);
 
   ui.cefContainer->layout()->addWidget(cefViewWidget);
-  cefViewWidget->setStyleSheet("background-color: blue;");
+
+  // cefViewWidget->setCefContextMenuPolicy(Qt::CefDisableAllContextMenu);
 
   // connect the invokeMethod to the slot
   connect(cefViewWidget, &QCefView::invokeMethod, this, &MainWindow::onInvokeMethod);

@@ -1,4 +1,4 @@
-#ifndef QCEFVIEW_H
+﻿#ifndef QCEFVIEW_H
 #define QCEFVIEW_H
 #pragma once
 #include <QCefView_global.h>
@@ -16,39 +16,6 @@
 
 class QCefViewPrivate;
 
-namespace Qt {
-Q_NAMESPACE
-/// <summary>
-/// Represents the CEF popup windows open disposition
-/// </summary>
-enum CefWindowOpenDisposition
-{
-  CefWindowOpenDispositionUnknown,
-  CefWindowOpenDispositionCurrentTab,
-  CefWindowOpenDispositionSingletonTab,
-  CefWindowOpenDispositionNewForeGroundTab,
-  CefWindowOpenDispositionNewBackgroundTab,
-  CefWindowOpenDispositionNewPopup,
-  CefWindowOpenDispositionNewWindow,
-  CefWindowOpenDispositionSaveToDisk,
-  CefWindowOpenDispositionOffTheRecord,
-  CefWindowOpenDispositionIgnoreAction,
-};
-Q_ENUM_NS(CefWindowOpenDisposition)
-
-/// <summary>
-/// Represents the CEF context menu policy
-/// </summary>
-enum CefContextMenuPolicy
-{
-  CefAllowContextMenu = 0x0000,
-  CefDisableMainContextMenu = 0x0001,
-  CefDisablePopupContextMenu = 0x0002,
-  CefDisableAllContextMenu = (CefDisableMainContextMenu | CefDisablePopupContextMenu),
-};
-Q_FLAG_NS(CefContextMenuPolicy)
-} // namespace Qt
-
 /// <summary>
 /// Represents the CEF browser view
 /// </summary>
@@ -60,7 +27,28 @@ class QCEFVIEW_EXPORT QCefView : public QWidget
   QScopedPointer<QCefViewPrivate> d_ptr;
 
 public:
+  /// <summary>
+  /// The main frame identity
+  /// </summary>
   static const qint64 MainFrameID = 0;
+
+  /// <summary>
+  /// Represents the CEF popup windows open disposition
+  /// </summary>
+  enum CefWindowOpenDisposition
+  {
+    CefWindowOpenDispositionUnknown,
+    CefWindowOpenDispositionCurrentTab,
+    CefWindowOpenDispositionSingletonTab,
+    CefWindowOpenDispositionNewForeGroundTab,
+    CefWindowOpenDispositionNewBackgroundTab,
+    CefWindowOpenDispositionNewPopup,
+    CefWindowOpenDispositionNewWindow,
+    CefWindowOpenDispositionSaveToDisk,
+    CefWindowOpenDispositionOffTheRecord,
+    CefWindowOpenDispositionIgnoreAction,
+  };
+  Q_ENUM(CefWindowOpenDisposition)
 
 public:
   /// <summary>
@@ -224,16 +212,16 @@ public:
   bool setPreference(const QString& name, const QVariant& value, const QString& error);
 
   /// <summary>
-  /// Sets the cef context menu policy
+  /// Sets whether to disable the context menu for popup browser
   /// </summary>
-  /// <param name="policy">The policy</param>
-  void setCefContextMenuPolicy(Qt::CefContextMenuPolicy policy);
+  /// <param name="disable">True to disable; otherwise false</param>
+  void setDisablePopupContextMenu(bool disable);
 
   /// <summary>
-  /// Gets the cef context menu policy
+  /// Gets whether to disable the context menu for popup browser
   /// </summary>
-  // <returns>The cef context menu policy</returns>
-  Qt::CefContextMenuPolicy cefContextMenuPolicy();
+  /// <returns>True to disable; otherwise false</returns>
+  bool isPopupContextMenuDisabled();
 
 signals:
   /// <summary>
@@ -370,7 +358,7 @@ public slots:
   virtual void onBrowserWindowCreated(QWindow* win);
 
   /// <summary>
-  /// Gets called before the pop-up browser created
+  /// Gets called before the popup browser created
   /// </summary>
   /// <param name="frameId">The source frame id</param>
   /// <param name="targetUrl">The target URL</param>
@@ -382,12 +370,12 @@ public slots:
   virtual bool onBeforePopup(qint64 frameId,
                              const QString& targetUrl,
                              const QString& targetFrameName,
-                             Qt::CefWindowOpenDisposition targetDisposition,
+                             QCefView::CefWindowOpenDisposition targetDisposition,
                              QCefSetting& settings,
                              bool& DisableJavascriptAccess);
 
   /// <summary>
-  /// Gets called right after the pop-up browser was created
+  /// Gets called right after the popup browser was created
   /// </summary>
   /// <param name="wnd">The host window of new created browser</param>
   virtual void onPopupCreated(QWindow* wnd);
@@ -397,10 +385,7 @@ public slots:
   /// <summary>
   ///
   /// </summary>
-  inline void setFocus()
-  {
-    setFocus(Qt::OtherFocusReason);
-  }
+  inline void setFocus() { setFocus(Qt::OtherFocusReason); }
 
 public:
   /// <summary>
@@ -478,6 +463,8 @@ protected:
   /// Please refer to QWidget::wheelEvent
   /// </summary>
   void wheelEvent(QWheelEvent* event) override;
+
+  void contextMenuEvent(QContextMenuEvent* event) override;
 #pragma endregion
 };
 

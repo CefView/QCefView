@@ -1,6 +1,8 @@
-#pragma once
+﻿#pragma once
 #pragma region qt_headers
+#include <QMenu>
 #include <QMutex>
+#include <QPointer>
 #include <QSet>
 #include <QString>
 #include <QWindow>
@@ -15,6 +17,7 @@
 
 #include "CCefClientDelegate.h"
 #include "QCefContextPrivate.h"
+#include "utils/MenuBuilder.h"
 
 #include <QCefView.h>
 
@@ -38,7 +41,7 @@ public:
   /// <summary>
   ///
   /// </summary>
-  Qt::CefContextMenuPolicy cefContextMenuPolicy_ = Qt::CefAllowContextMenu;
+  bool disablePopuContextMenu_ = false;
 
   /// <summary>
   ///
@@ -105,6 +108,21 @@ public:
     ///
     /// </summary>
     QImage qCefPopupFrame_;
+
+    /// <summary>
+    ///
+    /// </summary>
+    bool isShowingContextMenu_ = false;
+
+    /// <summary>
+    ///
+    /// </summary>
+    QMenu* contextMenu_ = nullptr;
+
+    /// <summary>
+    ///
+    /// </summary>
+    CefRefPtr<CefRunContextMenuCallback> contextMenuCallback_;
   } osr;
 #else
   /// <summary>
@@ -181,6 +199,10 @@ public slots:
 
   void onOsrResizePopup(const QRect& rc);
 
+  void onContextMenuTriggered(QAction* action);
+
+  void onContextMenuDestroyed(QObject* obj);
+
 signals:
   void updateOsrFrame();
 
@@ -188,6 +210,12 @@ protected:
   void onOsrUpdateViewFrame(const QImage& frame, const QRegion& region);
 
   void onOsrUpdatePopupFrame(const QImage& frame, const QRegion& region);
+
+  void onBeforeCefContextMenu(const MenuBuilder::MenuData& data);
+
+  void onRunCefContextMenu(QPoint pos, CefRefPtr<CefRunContextMenuCallback> callback);
+
+  void onCefContextMenuDismissed();
 #endif
 
 protected:
