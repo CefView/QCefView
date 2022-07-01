@@ -1,8 +1,6 @@
 #include "CCefClientDelegate.h"
 
 #include <QDebug>
-#include <QImage>
-#include <QScreen>
 
 #include "QCefViewPrivate.h"
 

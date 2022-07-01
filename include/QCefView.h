@@ -27,26 +27,28 @@ class QCEFVIEW_EXPORT QCefView : public QWidget
   QScopedPointer<QCefViewPrivate> d_ptr;
 
 public:
+  /// <summary>
+  /// The main frame identity
+  /// </summary>
   static const qint64 MainFrameID = 0;
 
-public:
   /// <summary>
-  ///
+  /// Represents the CEF popup windows open disposition
   /// </summary>
-  enum WindowOpenDisposition
+  enum CefWindowOpenDisposition
   {
-    WOD_UNKNOWN,
-    WOD_CURRENT_TAB,
-    WOD_SINGLETON_TAB,
-    WOD_NEW_FOREGROUND_TAB,
-    WOD_NEW_BACKGROUND_TAB,
-    WOD_NEW_POPUP,
-    WOD_NEW_WINDOW,
-    WOD_SAVE_TO_DISK,
-    WOD_OFF_THE_RECORD,
-    WOD_IGNORE_ACTION
+    CefWindowOpenDispositionUnknown,
+    CefWindowOpenDispositionCurrentTab,
+    CefWindowOpenDispositionSingletonTab,
+    CefWindowOpenDispositionNewForeGroundTab,
+    CefWindowOpenDispositionNewBackgroundTab,
+    CefWindowOpenDispositionNewPopup,
+    CefWindowOpenDispositionNewWindow,
+    CefWindowOpenDispositionSaveToDisk,
+    CefWindowOpenDispositionOffTheRecord,
+    CefWindowOpenDispositionIgnoreAction,
   };
-  Q_ENUM(WindowOpenDisposition)
+  Q_ENUM(CefWindowOpenDisposition)
 
 public:
   /// <summary>
@@ -205,9 +207,21 @@ public:
   /// The preference value, if this value is QVariant::UnknownType or QVariant::Invalid, the
   /// preference will be restored to default value
   /// </param>
-  /// <param name="error">The error message populated on failure</param> <returns>True
-  /// on successful; otherwise false</returns>
+  /// <param name="error">The error message populated on failure</param>
+  // <returns>True on successful; otherwise false</returns>
   bool setPreference(const QString& name, const QVariant& value, const QString& error);
+
+  /// <summary>
+  /// Sets whether to disable the context menu for popup browser
+  /// </summary>
+  /// <param name="disable">True to disable; otherwise false</param>
+  void setDisablePopupContextMenu(bool disable);
+
+  /// <summary>
+  /// Gets whether to disable the context menu for popup browser
+  /// </summary>
+  /// <returns>True to disable; otherwise false</returns>
+  bool isPopupContextMenuDisabled();
 
 signals:
   /// <summary>
@@ -344,7 +358,7 @@ public slots:
   virtual void onBrowserWindowCreated(QWindow* win);
 
   /// <summary>
-  /// Gets called before the pop-up browser created
+  /// Gets called before the popup browser created
   /// </summary>
   /// <param name="frameId">The source frame id</param>
   /// <param name="targetUrl">The target URL</param>
@@ -356,12 +370,12 @@ public slots:
   virtual bool onBeforePopup(qint64 frameId,
                              const QString& targetUrl,
                              const QString& targetFrameName,
-                             QCefView::WindowOpenDisposition targetDisposition,
+                             QCefView::CefWindowOpenDisposition targetDisposition,
                              QCefSetting& settings,
                              bool& DisableJavascriptAccess);
 
   /// <summary>
-  /// Gets called right after the pop-up browser was created
+  /// Gets called right after the popup browser was created
   /// </summary>
   /// <param name="wnd">The host window of new created browser</param>
   virtual void onPopupCreated(QWindow* wnd);
@@ -449,6 +463,8 @@ protected:
   /// Please refer to QWidget::wheelEvent
   /// </summary>
   void wheelEvent(QWheelEvent* event) override;
+
+  void contextMenuEvent(QContextMenuEvent* event) override;
 #pragma endregion
 };
 

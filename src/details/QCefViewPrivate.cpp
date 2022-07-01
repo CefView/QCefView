@@ -30,7 +30,9 @@
 #include "CCefClientDelegate.h"
 #include "QCefContext.h"
 #include "QCefSettingPrivate.h"
+#include "utils/CommonUtils.h"
 #include "utils/KeyboardUtils.h"
+#include "utils/MenuBuilder.h"
 #include "utils/ValueConvertor.h"
 
 #if defined(Q_OS_LINUX) && !defined(CEF_USE_OSR)
@@ -307,8 +309,8 @@ QCefViewPrivate::onAppFocusChanged(QWidget* old, QWidget* now)
 {
   Q_Q(QCefView);
 
-  // qDebug() << q << q->window()->isActiveWindow() << ":focus changed from:" << old << " -> " << now;
-  // qDebug() << q->windowHandle() << "focusWindow:" << QGuiApplication::focusWindow();
+  qDebug() << q << q->window()->isActiveWindow() << ":focus changed from:" << old << " -> " << now;
+  qDebug() << q->windowHandle() << "focusWindow:" << QGuiApplication::focusWindow();
 
   if (!now || now->window() != q->window())
     return;
@@ -404,7 +406,7 @@ QCefViewPrivate::onOsrShowPopup(bool show)
 {
   osr.showPopup_ = show;
 
-  // clear the previous pop-up frame data if exist
+  // clear the previous popup frame data if exist
   osr.qCefPopupFrame_ = QImage();
   osr.qPopupRect_ = QRect();
 }
@@ -416,17 +418,48 @@ QCefViewPrivate::onOsrResizePopup(const QRect& rc)
 }
 
 void
+QCefViewPrivate::onContextMenuTriggered(QAction* action)
+{
+  FLog();
+
+  if (action && osr.contextMenuCallback_) {
+    // TO-DO (sheen) retrieve correct event flags
+    auto eventFlags = EVENTFLAG_NONE;
+    auto commandId = action->data().toInt();
+    osr.contextMenuCallback_->Continue(commandId, eventFlags);
+    osr.contextMenuCallback_.reset();
+  }
+}
+
+void
+QCefViewPrivate::onContextMenuDestroyed(QObject* obj)
+{
+  FLog();
+
+  if (osr.contextMenu_) {
+    osr.contextMenu_ = nullptr;
+  }
+
+  if (osr.contextMenuCallback_) {
+    osr.contextMenuCallback_->Cancel();
+    osr.contextMenuCallback_.reset();
+  }
+
+  osr.isShowingContextMenu_ = false;
+}
+
+void
 QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region)
 {
-#if defined(QT_DEBUG)
-  qint64 elapsedMs = paintTimer_.restart();
-  // qDebug() << "===== CEF view frame update since last frame:" << elapsedMs;
-  if (elapsedMs >= 20)
-    qDebug() << "===== CEF view frame update stutter detected:" << elapsedMs;
-
-  QElapsedTimer updateDurationTimer;
-  updateDurationTimer.start();
-#endif
+  //#if defined(QT_DEBUG)
+  //  qint64 elapsedMs = paintTimer_.restart();
+  //  // qDebug() << "===== CEF view frame update since last frame:" << elapsedMs;
+  //  if (elapsedMs >= 20)
+  //    qDebug() << "===== CEF view frame update stutter detected:" << elapsedMs;
+  //
+  //  QElapsedTimer updateDurationTimer;
+  //  updateDurationTimer.start();
+  //#endif
 
   if (osr.qCefViewFrame_.size() != frame.size() || osr.transparentPaintingEnabled) {
     // update full image
@@ -442,9 +475,9 @@ QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region
   }
   emit updateOsrFrame();
 
-#if defined(QT_DEBUG)
-  qDebug() << "===== CEF frame update duration:" << elapsedMs;
-#endif
+  //#if defined(QT_DEBUG)
+  //  qDebug() << "===== CEF frame update duration:" << elapsedMs;
+  //#endif
 }
 
 void
@@ -462,6 +495,50 @@ QCefViewPrivate::onOsrUpdatePopupFrame(const QImage& frame, const QRegion& regio
     osr.qCefPopupFrame_ = frame.copy();
   }
   emit updateOsrFrame();
+}
+
+void
+QCefViewPrivate::onBeforeCefContextMenu(const MenuBuilder::MenuData& data)
+{
+  Q_Q(QCefView);
+
+  // clear previous context menu
+  if (osr.contextMenu_) {
+    osr.contextMenu_->close();
+    osr.contextMenu_->deleteLater();
+    osr.contextMenu_ = nullptr;
+  }
+
+  // create context menu
+  osr.contextMenu_ = new QMenu(q);
+  osr.contextMenu_->setAttribute(Qt::WA_DeleteOnClose);
+
+  // connect context menu signals
+  connect(osr.contextMenu_, SIGNAL(triggered(QAction*)), this, SLOT(onContextMenuTriggered(QAction*)));
+  connect(osr.contextMenu_, SIGNAL(destroyed(QObject*)), this, SLOT(onContextMenuDestroyed(QObject*)));
+
+  // build menu from data
+  MenuBuilder::BuildQtMenuFromMenuData(osr.contextMenu_, data);
+}
+
+void
+QCefViewPrivate::onRunCefContextMenu(QPoint pos, CefRefPtr<CefRunContextMenuCallback> callback)
+{
+  Q_Q(QCefView);
+
+  // keep the context menu callback
+  osr.contextMenuCallback_ = callback;
+
+  // show context menu
+  osr.isShowingContextMenu_ = true;
+  QContextMenuEvent* e = new QContextMenuEvent(QContextMenuEvent::Other, pos);
+  qApp->sendEvent(q, e);
+}
+
+void
+QCefViewPrivate::onCefContextMenuDismissed()
+{
+  osr.contextMenuCallback_.reset();
 }
 #endif
 
@@ -614,8 +691,13 @@ void
 QCefViewPrivate::onViewFocusChanged(bool focused)
 {
 #if defined(CEF_USE_OSR)
-  if (pCefBrowser_)
-    pCefBrowser_->GetHost()->SetFocus(focused);
+  if (pCefBrowser_) {
+    if (focused) {
+      pCefBrowser_->GetHost()->SetFocus(focused);
+    } else if (!osr.isShowingContextMenu_) {
+      pCefBrowser_->GetHost()->SetFocus(focused);
+    }
+  }
 #endif
 }
 
