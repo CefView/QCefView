@@ -464,6 +464,9 @@ protected:
   /// </summary>
   void wheelEvent(QWheelEvent* event) override;
 
+  /// <summary>
+  /// Please refer to QWidget::contextMenuEvent
+  /// </summary>
   void contextMenuEvent(QContextMenuEvent* event) override;
 #pragma endregion
 };
