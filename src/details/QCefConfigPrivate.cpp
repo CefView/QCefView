@@ -41,8 +41,8 @@ QCefConfigPrivate::CopyToCefSettings(const QCefConfig* config, CefSettings* sett
     // just copy the mandatory fields
     QCefConfigPrivate cfg;
 
-    settings->background_color = config->d_ptr->backgroundColor_.value<QColor>().rgba();
-    CefString(&settings->user_agent) = config->d_ptr->userAgent_;
+    settings->background_color = cfg.backgroundColor_.value<QColor>().rgba();
+    CefString(&settings->user_agent) = cfg.userAgent_;
 
 #if !defined(Q_OS_MACOS)
     CefString(&settings->browser_subprocess_path) = cfg.browserSubProcessPath_;
