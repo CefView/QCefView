@@ -31,12 +31,15 @@ CCefClientDelegate::onBeforeContextMenu(CefRefPtr<CefBrowser> browser,
   // main browser
   auto policy = pCefViewPrivate_->q_ptr->contextMenuPolicy();
   if (Qt::DefaultContextMenu != policy) {
+    // for all non-default value, we clear the menu info to prevent the showing
     model->Clear();
     return;
   }
 
+#if defined(CEF_USE_OSR)
   auto menuData = MenuBuilder::CreateMenuDataFromCefMenu(model.get());
   QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onBeforeCefContextMenu(menuData); });
+#endif
 
   return;
 }
@@ -54,15 +57,15 @@ CCefClientDelegate::onRunContextMenu(CefRefPtr<CefBrowser> browser,
     return false;
   }
 
-  auto policy = pCefViewPrivate_->q_ptr->contextMenuPolicy();
-  if (Qt::DefaultContextMenu != policy) {
-    return false;
-  }
-
+#if defined(CEF_USE_OSR)
+  // OSR mode, create context menu with CEF built-in menu mode and show as customized context menu
   QPoint pos(params->GetXCoord(), params->GetYCoord());
   QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onRunCefContextMenu(pos, callback); });
-
   return true;
+#else
+  // NCW mode, allow allow CEF native context menu
+  return false;
+#endif
 }
 
 bool
@@ -82,5 +85,7 @@ CCefClientDelegate::onContextMenuDismissed(CefRefPtr<CefBrowser> browser, CefRef
 {
   FLog();
 
+#if defined(CEF_USE_OSR)
   QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefContextMenuDismissed(); });
+#endif
 }

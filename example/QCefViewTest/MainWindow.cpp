@@ -77,7 +77,14 @@ MainWindow::createCefView()
 
   ui.cefContainer->layout()->addWidget(cefViewWidget);
 
-  // cefViewWidget->setCefContextMenuPolicy(Qt::CefDisableAllContextMenu);
+  // allow show context menu for both OSR and NCW mode
+  cefViewWidget->setContextMenuPolicy(Qt::DefaultContextMenu);
+
+  // all the following values will disable the context menu for both NCW and OSR mode
+  // cefViewWidget->setContextMenuPolicy(Qt::NoContextMenu);
+  // cefViewWidget->setContextMenuPolicy(Qt::ActionsContextMenu);
+  // cefViewWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+  // cefViewWidget->setContextMenuPolicy(Qt::PreventContextMenu);
 
   // connect the invokeMethod to the slot
   connect(cefViewWidget, &QCefView::invokeMethod, this, &MainWindow::onInvokeMethod);
