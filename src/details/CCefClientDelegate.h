@@ -123,38 +123,48 @@ public:
   virtual bool setFocus(CefRefPtr<CefBrowser>& browser) override;
   virtual void gotFocus(CefRefPtr<CefBrowser>& browser) override;
 
+  // DownloadHander
+  virtual void onBeforeDownload(CefRefPtr<CefBrowser> browser,
+                                CefRefPtr<CefDownloadItem> download_item,
+                                const CefString& suggested_name,
+                                CefRefPtr<CefBeforeDownloadCallback> callback) override;
+
+  virtual void onDownloadUpdated(CefRefPtr<CefBrowser> browser,
+                                 CefRefPtr<CefDownloadItem> download_item,
+                                 CefRefPtr<CefDownloadItemCallback> callback) override;
+
   // RenderHandler
 #if defined(CEF_USE_OSR)
-  virtual bool GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
-  virtual void GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
-  virtual bool GetScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int viewY, int& screenX, int& screenY) override;
-  virtual bool GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& screen_info) override;
-  virtual void OnPopupShow(CefRefPtr<CefBrowser> browser, bool show) override;
-  virtual void OnPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& rect) override;
-  virtual void OnPaint(CefRefPtr<CefBrowser> browser,
+  virtual bool getRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
+  virtual void getViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
+  virtual bool getScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int viewY, int& screenX, int& screenY) override;
+  virtual bool getScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& screen_info) override;
+  virtual void onPopupShow(CefRefPtr<CefBrowser> browser, bool show) override;
+  virtual void onPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& rect) override;
+  virtual void onPaint(CefRefPtr<CefBrowser> browser,
                        CefRenderHandler::PaintElementType type,
                        const CefRenderHandler::RectList& dirtyRects,
                        const void* buffer,
                        int width,
                        int height) override;
-  virtual void OnAcceleratedPaint(CefRefPtr<CefBrowser> browser,
+  virtual void onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
                                   CefRenderHandler::PaintElementType type,
                                   const CefRenderHandler::RectList& dirtyRects,
                                   void* shared_handle) override;
-  virtual bool StartDragging(CefRefPtr<CefBrowser> browser,
+  virtual bool startDragging(CefRefPtr<CefBrowser> browser,
                              CefRefPtr<CefDragData> drag_data,
                              CefRenderHandler::DragOperationsMask allowed_ops,
                              int x,
                              int y) override;
-  virtual void UpdateDragCursor(CefRefPtr<CefBrowser> browser, CefRenderHandler::DragOperation operation) override;
-  virtual void OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser, double x, double y) override;
-  virtual void OnImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
+  virtual void updateDragCursor(CefRefPtr<CefBrowser> browser, CefRenderHandler::DragOperation operation) override;
+  virtual void onScrollOffsetChanged(CefRefPtr<CefBrowser> browser, double x, double y) override;
+  virtual void onImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
                                             const CefRange& selected_range,
                                             const CefRenderHandler::RectList& character_bounds) override;
-  virtual void OnTextSelectionChanged(CefRefPtr<CefBrowser> browser,
+  virtual void onTextSelectionChanged(CefRefPtr<CefBrowser> browser,
                                       const CefString& selected_text,
                                       const CefRange& selected_range) override;
-  virtual void OnVirtualKeyboardRequested(CefRefPtr<CefBrowser> browser,
+  virtual void onVirtualKeyboardRequested(CefRefPtr<CefBrowser> browser,
                                           CefRenderHandler::TextInputMode input_mode) override;
 #endif
 };
