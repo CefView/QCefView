@@ -264,6 +264,29 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
 #endif
 }
 
+// download hander
+void
+QCefViewPrivate::onBeforeDownload(CefRefPtr<CefBrowser> browser,
+                              CefRefPtr<CefDownloadItem> download_item,
+                              const CefString& suggested_name,
+                              CefRefPtr<CefBeforeDownloadCallback> callback)
+{
+    Q_Q(QCefView);
+
+    q->onBeforeDownload(browser, download_item, suggested_name, callback);
+}
+
+void
+QCefViewPrivate::onDownloadUpdated(CefRefPtr<CefBrowser> browser,
+                               CefRefPtr<CefDownloadItem> download_item,
+                               CefRefPtr<CefDownloadItemCallback> callback)
+{
+    Q_Q(QCefView);
+
+    q->onDownloadUpdated(browser, download_item, callback);
+}
+
+
 void
 QCefViewPrivate::onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window)
 {

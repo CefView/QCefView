@@ -405,6 +405,28 @@ public slots:
   ///
   /// </summary>
   /// <param name="browser"></param>
+  /// <param name="download_item"></param>
+  /// <param name="suggested_name"></param>
+  /// <param name="callback"></param>
+  void onBeforeDownload(CefRefPtr<CefBrowser> browser,
+                                CefRefPtr<CefDownloadItem> download_item,
+                                const CefString& suggested_name,
+                                CefRefPtr<CefBeforeDownloadCallback> callback);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="browser"></param>
+  /// <param name="download_item"></param>
+  /// <param name="callback"></param>
+  void onDownloadUpdated(CefRefPtr<CefBrowser> browser,
+                         CefRefPtr<CefDownloadItem> download_item,
+                         CefRefPtr<CefDownloadItemCallback> callback);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="browser"></param>
   /// <param name="frame"></param>
   /// <param name="request"></param>
   /// <param name="response"></param>

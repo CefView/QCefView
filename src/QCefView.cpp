@@ -261,6 +261,19 @@ QCefView::onPopupCreated(QWindow* wnd)
 {}
 
 void
+QCefView::onBeforeDownload(CefRefPtr<CefBrowser> browser,
+                           CefRefPtr<CefDownloadItem> download_item,
+                           const CefString& suggested_name,
+                           CefRefPtr<CefBeforeDownloadCallback> callback)
+{}
+
+void
+QCefView::onDownloadUpdated(CefRefPtr<CefBrowser> browser,
+                            CefRefPtr<CefDownloadItem> download_item,
+                            CefRefPtr<CefDownloadItemCallback> callback)
+{}
+
+void
 QCefView::onResourceLoadComplete(CefRefPtr<CefBrowser> browser,
                                  CefRefPtr<CefFrame> frame,
                                  CefRefPtr<CefRequest> request,

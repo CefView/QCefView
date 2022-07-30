@@ -169,6 +169,16 @@ protected:
 
   void onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
 
+  // download hander
+  void onBeforeDownload(CefRefPtr<CefBrowser> browser,
+                                CefRefPtr<CefDownloadItem> download_item,
+                                const CefString& suggested_name,
+                                CefRefPtr<CefBeforeDownloadCallback> callback);
+
+  void onDownloadUpdated(CefRefPtr<CefBrowser> browser,
+                                 CefRefPtr<CefDownloadItem> download_item,
+                                 CefRefPtr<CefDownloadItemCallback> callback);
+
   void onResourceLoadComplete(CefRefPtr<CefBrowser> browser,
                               CefRefPtr<CefFrame> frame,
                               CefRefPtr<CefRequest> request,
