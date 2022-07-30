@@ -169,6 +169,18 @@ protected:
 
   void onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
 
+  void onResourceLoadComplete(CefRefPtr<CefBrowser> browser,
+                              CefRefPtr<CefFrame> frame,
+                              CefRefPtr<CefRequest> request,
+                              CefRefPtr<CefResponse> response,
+                              CefResourceRequestHandler::URLRequestStatus status,
+                              int64 received_content_length);
+
+  CefRefPtr<CefResponseFilter> onGetResourceResponseFilter(CefRefPtr<CefBrowser> browser,
+                                                           CefRefPtr<CefFrame> frame,
+                                                           CefRefPtr<CefRequest> request,
+                                                           CefRefPtr<CefResponse> response);
+
   bool onCefDoCloseBrowser(CefRefPtr<CefBrowser>& browser);
 
   void onCefBeforeCloseBrowser(CefRefPtr<CefBrowser>& browser);
@@ -271,4 +283,10 @@ public:
   bool sendEventNotifyMessage(int64_t frameId, const QString& name, const QVariantList& args);
 
   bool setPreference(const QString& name, const QVariant& value, const QString& error);
+
+  QString getUrl();
+
+  void setUrl(const QString& url);
+
+  void LoadRequest(CefRefPtr<CefRequest> request);
 };

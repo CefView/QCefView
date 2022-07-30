@@ -14,6 +14,9 @@
 #include <QWindow>
 #pragma endregion qt_headers
 
+#include <CefViewBrowserApp.h>
+#include <CefViewBrowserClient.h>
+
 class QCefViewPrivate;
 
 /// <summary>
@@ -223,6 +226,24 @@ public:
   /// <returns>True to disable; otherwise false</returns>
   bool isPopupContextMenuDisabled();
 
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
+  QString getUrl();
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
+  void setUrl(const QString& url);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
+  void LoadRequest(CefRefPtr<CefRequest> request);
+
 signals:
   /// <summary>
   /// Gets called on loading state changed
@@ -379,6 +400,32 @@ public slots:
   /// </summary>
   /// <param name="wnd">The host window of new created browser</param>
   virtual void onPopupCreated(QWindow* wnd);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="browser"></param>
+  /// <param name="frame"></param>
+  /// <param name="request"></param>
+  /// <param name="response"></param>
+  virtual void onResourceLoadComplete(CefRefPtr<CefBrowser> browser,
+                                      CefRefPtr<CefFrame> frame,
+                                      CefRefPtr<CefRequest> request,
+                                      CefRefPtr<CefResponse> response,
+                                      CefResourceRequestHandler::URLRequestStatus status,
+                                      int64 received_content_length);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="browser"></param>
+  /// <param name="frame"></param>
+  /// <param name="request"></param>
+  /// <param name="response"></param>
+  virtual CefRefPtr<CefResponseFilter> onGetResourceResponseFilter(CefRefPtr<CefBrowser> browser,
+                                                                   CefRefPtr<CefFrame> frame,
+                                                                   CefRefPtr<CefRequest> request,
+                                                                   CefRefPtr<CefResponse> response);
 
 #pragma region QWidget
 public slots:

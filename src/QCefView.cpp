@@ -208,6 +208,30 @@ QCefView::isPopupContextMenuDisabled()
   return d->disablePopuContextMenu_;
 }
 
+QString
+QCefView::getUrl()
+{
+    Q_D(QCefView);
+
+    return d->getUrl();
+}
+
+void
+QCefView::setUrl(const QString& url)
+{
+    Q_D(QCefView);
+
+    return d->setUrl(url);
+}
+
+void
+QCefView::LoadRequest(CefRefPtr<CefRequest> request)
+{
+    Q_D(QCefView);
+
+    return d->LoadRequest(request);
+}
+
 void
 QCefView::setFocus(Qt::FocusReason reason)
 {
@@ -235,6 +259,24 @@ QCefView::onBeforePopup(qint64 frameId,
 void
 QCefView::onPopupCreated(QWindow* wnd)
 {}
+
+void
+QCefView::onResourceLoadComplete(CefRefPtr<CefBrowser> browser,
+                                 CefRefPtr<CefFrame> frame,
+                                 CefRefPtr<CefRequest> request,
+                                 CefRefPtr<CefResponse> response,
+                                 CefResourceRequestHandler::URLRequestStatus status,
+                                 int64 received_content_length)
+{}
+
+CefRefPtr<CefResponseFilter>
+QCefView::onGetResourceResponseFilter(CefRefPtr<CefBrowser> browser,
+                                      CefRefPtr<CefFrame> frame,
+                                      CefRefPtr<CefRequest> request,
+                                      CefRefPtr<CefResponse> response)
+{
+  return nullptr;
+}
 
 QVariant
 QCefView::inputMethodQuery(Qt::InputMethodQuery query) const

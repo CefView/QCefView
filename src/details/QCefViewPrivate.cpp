@@ -272,6 +272,30 @@ QCefViewPrivate::onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindo
   q->onPopupCreated(window);
 }
 
+void
+QCefViewPrivate::onResourceLoadComplete(CefRefPtr<CefBrowser> browser,
+                                        CefRefPtr<CefFrame> frame,
+                                        CefRefPtr<CefRequest> request,
+                                        CefRefPtr<CefResponse> response,
+                                        CefResourceRequestHandler::URLRequestStatus status,
+                                        int64 received_content_length)
+{
+  Q_Q(QCefView);
+
+  return q->onResourceLoadComplete(browser, frame, request, response, status, received_content_length);
+}
+
+CefRefPtr<CefResponseFilter>
+QCefViewPrivate::onGetResourceResponseFilter(CefRefPtr<CefBrowser> browser,
+                                             CefRefPtr<CefFrame> frame,
+                                             CefRefPtr<CefRequest> request,
+                                             CefRefPtr<CefResponse> response)
+{
+  Q_Q(QCefView);
+
+  return q->onGetResourceResponseFilter(browser, frame, request, response);
+}
+
 bool
 QCefViewPrivate::onCefDoCloseBrowser(CefRefPtr<CefBrowser>& browser)
 {
@@ -1049,4 +1073,40 @@ QCefViewPrivate::setPreference(const QString& name, const QVariant& value, const
   }
 
   return false;
+}
+
+QString
+QCefViewPrivate::getUrl()
+{
+    if (pCefBrowser_)
+    {
+        CefRefPtr<CefFrame> mainFrame = pCefBrowser_->GetMainFrame();
+        if (mainFrame)
+        {
+            CefString strUrl = mainFrame->GetURL();
+
+            return QString::fromStdString(strUrl.ToString());
+        }
+    }
+
+    return "";
+}
+
+void
+QCefViewPrivate::setUrl(const QString& url)
+{
+    this->navigateToUrl(QUrl::fromUserInput(url).url());
+}
+
+void
+QCefViewPrivate::LoadRequest(CefRefPtr<CefRequest> request)
+{
+    if (pCefBrowser_)
+    {
+        CefRefPtr<CefFrame> mainFrame = pCefBrowser_->GetMainFrame();
+        if (mainFrame)
+        {
+            mainFrame->LoadRequest(request);
+        }
+    }
 }

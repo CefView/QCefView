@@ -123,6 +123,19 @@ public:
   virtual bool setFocus(CefRefPtr<CefBrowser>& browser) override;
   virtual void gotFocus(CefRefPtr<CefBrowser>& browser) override;
 
+  //ResourceRequestHandler
+  virtual void onResourceLoadComplete(CefRefPtr<CefBrowser> browser,
+                                      CefRefPtr<CefFrame> frame,
+                                      CefRefPtr<CefRequest> request,
+                                      CefRefPtr<CefResponse> response,
+                                      CefResourceRequestHandler::URLRequestStatus status,
+                                      int64 received_content_length) override;
+
+  virtual CefRefPtr<CefResponseFilter> onGetResourceResponseFilter(CefRefPtr<CefBrowser> browser,
+                                                                   CefRefPtr<CefFrame> frame,
+                                                                   CefRefPtr<CefRequest> request,
+                                                                   CefRefPtr<CefResponse> response) override;
+
   // RenderHandler
 #if defined(CEF_USE_OSR)
   virtual bool GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
