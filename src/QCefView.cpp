@@ -233,6 +233,16 @@ QCefView::LoadRequest(CefRefPtr<CefRequest> request)
 }
 
 void
+QCefView::printToPdf(const QString& path,
+        const CefPdfPrintSettings& settings,
+        CefRefPtr<CefPdfPrintCallback> callback)
+{
+    Q_D(QCefView);
+
+    return d->printToPdf(path, settings, callback);
+}
+
+void
 QCefView::setFocus(Qt::FocusReason reason)
 {
   Q_D(QCefView);

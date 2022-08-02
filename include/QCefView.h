@@ -244,6 +244,14 @@ public:
   /// <returns></returns>
   void LoadRequest(CefRefPtr<CefRequest> request);
 
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
+  void printToPdf(const QString& path,
+                  const CefPdfPrintSettings& settings,
+                  CefRefPtr<CefPdfPrintCallback> callback = nullptr);
+
 signals:
   /// <summary>
   /// Gets called on loading state changed

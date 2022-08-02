@@ -1133,3 +1133,18 @@ QCefViewPrivate::LoadRequest(CefRefPtr<CefRequest> request)
         }
     }
 }
+
+
+void QCefViewPrivate::printToPdf(const QString& path, const CefPdfPrintSettings& settings, CefRefPtr<CefPdfPrintCallback> callback)
+{
+    if (pCefBrowser_)
+    {
+        CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+        if (host)
+        {
+            CefString p;
+            p.FromString(path.toStdString());
+            host->PrintToPDF(p, settings, callback);
+        }
+    }
+}
