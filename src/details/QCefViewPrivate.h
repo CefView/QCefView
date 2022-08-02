@@ -301,4 +301,6 @@ public:
   void LoadRequest(CefRefPtr<CefRequest> request);
 
   void printToPdf(const QString& path, const CefPdfPrintSettings& settings, CefRefPtr<CefPdfPrintCallback> callback = nullptr);
+  
+  void download(const QString& url);
 };

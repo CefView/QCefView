@@ -1134,7 +1134,6 @@ QCefViewPrivate::LoadRequest(CefRefPtr<CefRequest> request)
     }
 }
 
-
 void QCefViewPrivate::printToPdf(const QString& path, const CefPdfPrintSettings& settings, CefRefPtr<CefPdfPrintCallback> callback)
 {
     if (pCefBrowser_)
@@ -1145,6 +1144,22 @@ void QCefViewPrivate::printToPdf(const QString& path, const CefPdfPrintSettings&
             CefString p;
             p.FromString(path.toStdString());
             host->PrintToPDF(p, settings, callback);
+        }
+    }
+}
+
+void
+QCefViewPrivate::download(const QString& url)
+{
+    if (pCefBrowser_)
+    {
+        CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+        if (host)
+        {
+            CefString strUrl;
+            strUrl.FromString(url.toStdString());
+
+            host->StartDownload(strUrl);
         }
     }
 }

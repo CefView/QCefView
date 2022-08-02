@@ -232,7 +232,7 @@ QCefView::LoadRequest(CefRefPtr<CefRequest> request)
     return d->LoadRequest(request);
 }
 
-void
+void 
 QCefView::printToPdf(const QString& path,
         const CefPdfPrintSettings& settings,
         CefRefPtr<CefPdfPrintCallback> callback)
@@ -242,7 +242,15 @@ QCefView::printToPdf(const QString& path,
     return d->printToPdf(path, settings, callback);
 }
 
-void
+void 
+QCefView::download(const QString& url)
+{
+    Q_D(QCefView);
+
+    return d->download(url);
+}
+
+void 
 QCefView::setFocus(Qt::FocusReason reason)
 {
   Q_D(QCefView);
