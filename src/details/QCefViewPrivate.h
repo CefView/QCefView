@@ -299,4 +299,6 @@ public:
   void setUrl(const QString& url);
 
   void LoadRequest(CefRefPtr<CefRequest> request);
+
+  void download(const QString& url);
 };

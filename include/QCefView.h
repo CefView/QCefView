@@ -244,6 +244,12 @@ public:
   /// <returns></returns>
   void LoadRequest(CefRefPtr<CefRequest> request);
 
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
+  void download(const QString& url);
+
 signals:
   /// <summary>
   /// Gets called on loading state changed
@@ -408,7 +414,7 @@ public slots:
   /// <param name="download_item"></param>
   /// <param name="suggested_name"></param>
   /// <param name="callback"></param>
-  void onBeforeDownload(CefRefPtr<CefBrowser> browser,
+  virtual void onBeforeDownload(CefRefPtr<CefBrowser> browser,
                                 CefRefPtr<CefDownloadItem> download_item,
                                 const CefString& suggested_name,
                                 CefRefPtr<CefBeforeDownloadCallback> callback);
@@ -419,7 +425,7 @@ public slots:
   /// <param name="browser"></param>
   /// <param name="download_item"></param>
   /// <param name="callback"></param>
-  void onDownloadUpdated(CefRefPtr<CefBrowser> browser,
+  virtual void onDownloadUpdated(CefRefPtr<CefBrowser> browser,
                          CefRefPtr<CefDownloadItem> download_item,
                          CefRefPtr<CefDownloadItemCallback> callback);
 

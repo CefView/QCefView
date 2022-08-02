@@ -1133,3 +1133,19 @@ QCefViewPrivate::LoadRequest(CefRefPtr<CefRequest> request)
         }
     }
 }
+
+void
+QCefViewPrivate::download(const QString& url)
+{
+    if (pCefBrowser_)
+    {
+        CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+        if (host)
+        {
+            CefString strUrl;
+            strUrl.FromString(url.toStdString());
+
+            host->StartDownload(strUrl);
+        }
+    }
+}

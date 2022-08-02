@@ -233,6 +233,14 @@ QCefView::LoadRequest(CefRefPtr<CefRequest> request)
 }
 
 void
+QCefView::download(const QString& url)
+{
+    Q_D(QCefView);
+
+    return d->download(url);
+}
+
+void
 QCefView::setFocus(Qt::FocusReason reason)
 {
   Q_D(QCefView);
