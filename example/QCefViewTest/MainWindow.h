@@ -42,6 +42,10 @@ protected slots:
                    const QString& errorMsg,
                    const QString& failedUrl);
 
+  void onNewDownloadItem(QCefDownloadItemPointer item);
+
+  void onUpdateDownloadItem(QCefDownloadItemPointer item);
+
   // ui slots
 protected slots:
   void onBtnRecreateClicked();

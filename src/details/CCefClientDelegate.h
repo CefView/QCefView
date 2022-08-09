@@ -2,7 +2,6 @@
 
 #pragma region std_headers
 #include <string>
-#include <unordered_map>
 #include <vector>
 #pragma endregion std_headers
 
@@ -12,6 +11,7 @@
 
 #include <CefViewBrowserClientDelegate.h>
 
+#include <QCefDownloadItem.h>
 #include <QCefQuery.h>
 
 class QCefViewPrivate;
@@ -19,10 +19,18 @@ class QCefViewPrivate;
 #define IsValidBrowser(browser)                                                                                        \
   (pCefViewPrivate_ && pCefViewPrivate_->pCefBrowser_ && browser->IsSame(pCefViewPrivate_->pCefBrowser_))
 
-class CCefClientDelegate : public CefViewBrowserClientDelegateInterface
+class CCefClientDelegate
+  : public CefViewBrowserClientDelegateInterface
+  , public std::enable_shared_from_this<CCefClientDelegate>
 {
+public:
+  typedef std::shared_ptr<CCefClientDelegate> RefPtr;
+  typedef std::weak_ptr<CCefClientDelegate> WeakPtr;
+
 private:
   QCefViewPrivate* pCefViewPrivate_;
+
+  QMap<qint32, QCefDownloadItemPointer> downloadItemMap_;
 
 public:
   CCefClientDelegate(QCefViewPrivate* p);
@@ -48,6 +56,7 @@ public:
                               int64_t frameId,
                               int64_t contextId,
                               const CefRefPtr<CefValue>& result) override;
+
   // CefContextMenuHandler
   virtual void onBeforeContextMenu(CefRefPtr<CefBrowser> browser,
                                    CefRefPtr<CefFrame> frame,
@@ -124,6 +133,10 @@ public:
   virtual void gotFocus(CefRefPtr<CefBrowser>& browser) override;
 
   // DownloadHander
+  void insertDownloadItem(QCefDownloadItemPointer item);
+
+  void removeDownloadItem(QCefDownloadItemPointer item);
+
   virtual void onBeforeDownload(CefRefPtr<CefBrowser> browser,
                                 CefRefPtr<CefDownloadItem> download_item,
                                 const CefString& suggested_name,

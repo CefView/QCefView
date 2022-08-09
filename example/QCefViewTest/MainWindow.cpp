@@ -64,7 +64,7 @@ MainWindow::createCefView()
   // cefViewWidget = new CefViewWidget(INDEX_URL, &setting);
 
   // this site is for test web events
-  cefViewWidget = new CefViewWidget("http://output.jsbin.com/rinece", &setting, this);
+  cefViewWidget = new CefViewWidget("http://xcal1.vodafone.co.uk/", &setting, this);
 
   //
   // cefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);
@@ -99,6 +99,8 @@ MainWindow::createCefView()
   connect(cefViewWidget, &QCefView::loadStart, this, &MainWindow::onLoadStart);
   connect(cefViewWidget, &QCefView::loadEnd, this, &MainWindow::onLoadEnd);
   connect(cefViewWidget, &QCefView::loadError, this, &MainWindow::onLoadError);
+  connect(cefViewWidget, &QCefView::newDownloadItem, this, &MainWindow::onNewDownloadItem);
+  connect(cefViewWidget, &QCefView::updateDownloadItem, this, &MainWindow::onUpdateDownloadItem);
   //*/
 }
 
@@ -200,6 +202,46 @@ MainWindow::onLoadError(int browserId,
 {
   qDebug() << "onLoadError, browserId:" << browserId << ", frameId:" << frameId << ", isMainFrame:" << isMainFrame
            << ", errorCode:" << errorCode;
+}
+
+void
+MainWindow::onNewDownloadItem(QCefDownloadItemPointer item)
+{
+  qDebug("onNewDownloadItem: id: %d\n"
+         "name: %s\n"
+         "path: %s\n"
+         "percent: %d, %d/%d\n"
+         "canceled: %d\n"
+         "complete: %d",
+         item->id(),
+         item->suggestedFileName(),
+         item->fullPath(),
+         item->percentComplete(),
+         item->totalBytes(),
+         item->receivedBytes(),
+         item->isCanceled(),
+         item->isComplete());
+
+  item->start("", true);
+}
+
+void
+MainWindow::onUpdateDownloadItem(QCefDownloadItemPointer item)
+{
+  qDebug("onUpdateDownloadItem: id: %d\n"
+         "name: %s\n"
+         "path: %s\n"
+         "percent: %d, %d/%d\n"
+         "canceled: %d\n"
+         "complete: %d",
+         item->id(),
+         item->suggestedFileName(),
+         item->fullPath(),
+         item->percentComplete(),
+         item->totalBytes(),
+         item->receivedBytes(),
+         item->isCanceled(),
+         item->isComplete());
 }
 
 void
