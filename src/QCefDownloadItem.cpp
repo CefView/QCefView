@@ -5,8 +5,6 @@
 #include "details/QCefDownloadItemPrivate.h"
 #include "details/utils/CommonUtils.h"
 
-REGISTER_METATYPE(QCefDownloadItem);
-
 QCefDownloadItem::QCefDownloadItem()
   : d_ptr(new QCefDownloadItemPrivate())
 {}

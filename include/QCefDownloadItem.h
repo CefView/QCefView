@@ -137,8 +137,6 @@ public:
   QString mimeType() const;
 };
 
-Q_DECLARE_METATYPE(QCefDownloadItem);
-
 typedef QSharedPointer<QCefDownloadItem> QCefDownloadItemPointer;
 
 #endif // QCEFDOWNLOADITEM_H
