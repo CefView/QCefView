@@ -3,6 +3,7 @@
 #pragma once
 #include <QCefView_global.h>
 
+#include <QCefDownloadItem.h>
 #include <QCefEvent.h>
 #include <QCefQuery.h>
 #include <QCefSetting.h>
@@ -349,6 +350,18 @@ signals:
   /// <param name="context">The context</param>
   /// <param name="result">The result</param>
   void reportJavascriptResult(int browserId, qint64 frameId, qint64 context, const QVariant& result);
+
+  /// <summary>
+  /// Gets called on new download item.
+  /// </summary>
+  /// <param name="item">The new download item</param>
+  void newDownloadItem(QCefDownloadItemPointer item);
+
+  /// <summary>
+  /// Gets called on download item updated
+  /// </summary>
+  /// <param name="item">The download item</param>
+  void updateDownloadItem(QCefDownloadItemPointer item);
 
 public slots:
   /// <summary>

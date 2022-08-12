@@ -1,4 +1,4 @@
-#include "CCefClientDelegate.h"
+﻿#include "CCefClientDelegate.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -10,7 +10,7 @@
 #if defined(CEF_USE_OSR)
 
 bool
-CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
+CCefClientDelegate::getRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
   if (!IsValidBrowser(browser)) {
     return false;
@@ -24,7 +24,7 @@ CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& re
   QWindow* ancestorWindow = ancestorWidget ? ancestorWidget->windowHandle() : nullptr;
   QScreen* currentScreen = ancestorWindow ? ancestorWindow->screen() : nullptr;
 #endif
-  
+
   if (!currentScreen) {
     // the view is not visible so we retrieve the main screen info
     currentScreen = QApplication::screens().at(0);
@@ -39,7 +39,7 @@ CCefClientDelegate::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& re
 }
 
 void
-CCefClientDelegate::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
+CCefClientDelegate::getViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
   if (!IsValidBrowser(browser)) {
     rect.Set(0, 0, 1, 1);
@@ -59,7 +59,7 @@ CCefClientDelegate::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 }
 
 bool
-CCefClientDelegate::GetScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int viewY, int& screenX, int& screenY)
+CCefClientDelegate::getScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int viewY, int& screenX, int& screenY)
 {
   if (!IsValidBrowser(browser))
     return false;
@@ -71,12 +71,12 @@ CCefClientDelegate::GetScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int
 }
 
 bool
-CCefClientDelegate::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& screen_info)
+CCefClientDelegate::getScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& screen_info)
 {
   if (!IsValidBrowser(browser))
     return false;
-  
-  // get the screen which the view is currently residing in
+
+    // get the screen which the view is currently residing in
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
   QScreen* currentScreen = pCefViewPrivate_->q_ptr->screen();
 #else
@@ -84,7 +84,7 @@ CCefClientDelegate::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& 
   QWindow* ancestorWindow = ancestorWidget ? ancestorWidget->windowHandle() : nullptr;
   QScreen* currentScreen = ancestorWindow ? ancestorWindow->screen() : nullptr;
 #endif
-  
+
   if (!currentScreen) {
     // the view is not visible so we retrieve the main screen info
     currentScreen = QApplication::screens().at(0);
@@ -107,7 +107,7 @@ CCefClientDelegate::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& 
 }
 
 void
-CCefClientDelegate::OnPopupShow(CefRefPtr<CefBrowser> browser, bool show)
+CCefClientDelegate::onPopupShow(CefRefPtr<CefBrowser> browser, bool show)
 {
   if (!IsValidBrowser(browser))
     return;
@@ -116,7 +116,7 @@ CCefClientDelegate::OnPopupShow(CefRefPtr<CefBrowser> browser, bool show)
 }
 
 void
-CCefClientDelegate::OnPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& rect)
+CCefClientDelegate::onPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& rect)
 {
   if (!IsValidBrowser(browser))
     return;
@@ -125,7 +125,7 @@ CCefClientDelegate::OnPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& re
 }
 
 void
-CCefClientDelegate::OnPaint(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onPaint(CefRefPtr<CefBrowser> browser,
                             CefRenderHandler::PaintElementType type,
                             const CefRenderHandler::RectList& dirtyRects,
                             const void* buffer,
@@ -152,14 +152,14 @@ CCefClientDelegate::OnPaint(CefRefPtr<CefBrowser> browser,
 }
 
 void
-CCefClientDelegate::OnAcceleratedPaint(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
                                        CefRenderHandler::PaintElementType type,
                                        const CefRenderHandler::RectList& dirtyRects,
                                        void* shared_handle)
 {}
 
 bool
-CCefClientDelegate::StartDragging(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::startDragging(CefRefPtr<CefBrowser> browser,
                                   CefRefPtr<CefDragData> drag_data,
                                   CefRenderHandler::DragOperationsMask allowed_ops,
                                   int x,
@@ -169,17 +169,17 @@ CCefClientDelegate::StartDragging(CefRefPtr<CefBrowser> browser,
 }
 
 void
-CCefClientDelegate::UpdateDragCursor(CefRefPtr<CefBrowser> browser, CefRenderHandler::DragOperation operation)
+CCefClientDelegate::updateDragCursor(CefRefPtr<CefBrowser> browser, CefRenderHandler::DragOperation operation)
 {
   return;
 }
 
 void
-CCefClientDelegate::OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser, double x, double y)
+CCefClientDelegate::onScrollOffsetChanged(CefRefPtr<CefBrowser> browser, double x, double y)
 {}
 
 void
-CCefClientDelegate::OnImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
                                                  const CefRange& selected_range,
                                                  const CefRenderHandler::RectList& character_bounds)
 {
@@ -201,13 +201,13 @@ CCefClientDelegate::OnImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
 }
 
 void
-CCefClientDelegate::OnTextSelectionChanged(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onTextSelectionChanged(CefRefPtr<CefBrowser> browser,
                                            const CefString& selected_text,
                                            const CefRange& selected_range)
 {}
 
 void
-CCefClientDelegate::OnVirtualKeyboardRequested(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onVirtualKeyboardRequested(CefRefPtr<CefBrowser> browser,
                                                CefRenderHandler::TextInputMode input_mode)
 {}
 
