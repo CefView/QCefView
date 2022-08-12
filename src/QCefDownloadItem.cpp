@@ -77,21 +77,21 @@ int
 QCefDownloadItem::percentComplete() const
 {
   Q_D(const QCefDownloadItem);
-  return d_ptr->isCanceled;
+  return d_ptr->percentComplete;
 }
 
 qint64
 QCefDownloadItem::totalBytes() const
 {
   Q_D(const QCefDownloadItem);
-  return d_ptr->isCanceled;
+  return d_ptr->totalBytes;
 }
 
 qint64
 QCefDownloadItem::receivedBytes() const
 {
   Q_D(const QCefDownloadItem);
-  return d_ptr->isCanceled;
+  return d_ptr->receivedBytes;
 }
 
 QDateTime

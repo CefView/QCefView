@@ -1,6 +1,7 @@
 ﻿#include "MainWindow.h"
 
 #include <QCoreApplication>
+#include <QDebug>
 #include <QDir>
 #include <QHBoxLayout>
 #include <QJsonDocument>
@@ -207,20 +208,14 @@ MainWindow::onLoadError(int browserId,
 void
 MainWindow::onNewDownloadItem(QCefDownloadItemPointer item)
 {
-  qDebug("onNewDownloadItem: id: %d\n"
-         "name: %s\n"
-         "path: %s\n"
-         "percent: %d, %d/%d\n"
-         "canceled: %d\n"
-         "complete: %d",
-         item->id(),
-         item->suggestedFileName(),
-         item->fullPath(),
-         item->percentComplete(),
-         item->totalBytes(),
-         item->receivedBytes(),
-         item->isCanceled(),
-         item->isComplete());
+  qDebug() << "onNewDownloadItem:"
+           << "  id: " << item->id() << "\n"
+           << "  name: " << item->suggestedFileName() << "\n"
+           << "  path: " << item->fullPath() << "\n"
+           << "  percent: " << item->percentComplete() << "%, " << item->totalBytes() << "/" << item->receivedBytes()
+           << "\n"
+           << "  canceled: " << item->isCanceled() << "\n"
+           << "  complete: " << item->isComplete();
 
   item->start("", true);
 }
@@ -228,20 +223,14 @@ MainWindow::onNewDownloadItem(QCefDownloadItemPointer item)
 void
 MainWindow::onUpdateDownloadItem(QCefDownloadItemPointer item)
 {
-  qDebug("onUpdateDownloadItem: id: %d\n"
-         "name: %s\n"
-         "path: %s\n"
-         "percent: %d, %d/%d\n"
-         "canceled: %d\n"
-         "complete: %d",
-         item->id(),
-         item->suggestedFileName(),
-         item->fullPath(),
-         item->percentComplete(),
-         item->totalBytes(),
-         item->receivedBytes(),
-         item->isCanceled(),
-         item->isComplete());
+  qDebug() << "onNewDownloadItem:"
+           << "  id: " << item->id() << "\n"
+           << "  name: " << item->suggestedFileName() << "\n"
+           << "  path: " << item->fullPath() << "\n"
+           << "  percent: " << item->percentComplete() << "%, " << item->totalBytes() << "/" << item->receivedBytes()
+           << "\n"
+           << "  canceled: " << item->isCanceled() << "\n"
+           << "  complete: " << item->isComplete();
 }
 
 void
