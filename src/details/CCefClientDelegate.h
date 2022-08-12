@@ -9,6 +9,10 @@
 #include <include/cef_app.h>
 #pragma endregion cef_headers
 
+#pragma region qt_headers
+#include <QMap>
+#pragma endregion qt_headers
+
 #include <CefViewBrowserClientDelegate.h>
 
 #include <QCefDownloadItem.h>
