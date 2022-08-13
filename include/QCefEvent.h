@@ -1,4 +1,12 @@
-﻿#ifndef QCEFEVENT_H
+﻿/*
+ * File: QCefEvent.h
+ * Project: QCefView
+ * Created: 29th March 2016
+ * Author: Sheen
+ * Source: https://github.com/cefview/qcefview
+ * Docs: https://cefview.github.io/QCefView/
+ */
+#ifndef QCEFEVENT_H
 #define QCEFEVENT_H
 #pragma once
 #include <QCefView_global.h>

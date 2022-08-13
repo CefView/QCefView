@@ -1,4 +1,12 @@
-﻿#ifndef QCEFEVIEW_GLOBAL_H
+﻿/*
+ * File: QCefView_global.h
+ * Project: QCefView
+ * Created: 29th March 2016
+ * Author: Sheen
+ * Source: https://github.com/cefview/qcefview
+ * Docs: https://cefview.github.io/QCefView/
+ */
+#ifndef QCEFEVIEW_GLOBAL_H
 #define QCEFEVIEW_GLOBAL_H
 #pragma once
 

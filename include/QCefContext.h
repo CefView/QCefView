@@ -1,3 +1,11 @@
+/*
+ * File: QCefContext.h
+ * Project: QCefView
+ * Created: 29th March 2016
+ * Author: Sheen
+ * Source: https://github.com/cefview/qcefview
+ * Docs: https://cefview.github.io/QCefView/
+ */
 #ifndef QCEF_H
 #define QCEF_H
 #pragma once
@@ -45,7 +53,8 @@ public:
   ~QCefContext();
 
   /// <summary>
-  /// Adds a url mapping item with local web resource directory. This works for all <see ref="QCefView" /> instances created subsequently
+  /// Adds a url mapping item with local web resource directory. This works for all <see ref="QCefView" /> instances
+  /// created subsequently
   /// </summary>
   /// <param name="path">The path to the local resource directory</param>
   /// <param name="url">The url to be mapped to</param>
@@ -53,7 +62,8 @@ public:
   void addLocalFolderResource(const QString& path, const QString& url, int priority = 0);
 
   /// <summary>
-  /// Adds a url mapping item with local archive (.zip) file which contains the web resource. This works for all <see ref="QCefView" /> instances created subsequently
+  /// Adds a url mapping item with local archive (.zip) file which contains the web resource. This works for all <see
+  /// ref="QCefView" /> instances created subsequently
   /// </summary>
   /// <param name="path">The path to the local archive file</param>
   /// <param name="url">The url to be mapped to</param>

@@ -1,4 +1,12 @@
-﻿#ifndef QCEFDOWNLOADITEM_H
+﻿/*
+ * File: QCefDownloadItem.h
+ * Project: QCefView
+ * Created: 13th July 2022
+ * Author: Sheen
+ * Source: https://github.com/cefview/qcefview
+ * Docs: https://cefview.github.io/QCefView/
+ */
+#ifndef QCEFDOWNLOADITEM_H
 #define QCEFDOWNLOADITEM_H
 #pragma once
 #include <QCefView_global.h>

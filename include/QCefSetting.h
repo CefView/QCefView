@@ -1,4 +1,12 @@
-﻿#ifndef QCEFSETTING_H
+﻿/*
+ * File: QCefSetting.h
+ * Project: QCefView
+ * Created: 29th March 2016
+ * Author: Sheen
+ * Source: https://github.com/cefview/qcefview
+ * Docs: https://cefview.github.io/QCefView/
+ */
+#ifndef QCEFSETTING_H
 #define QCEFSETTING_H
 #pragma once
 #include <QCefView_global.h>

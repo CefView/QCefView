@@ -1,4 +1,12 @@
-﻿#ifndef QCEFVIEW_H
+﻿/*
+ * File: QCefView.h
+ * Project: QCefView
+ * Created: 29th March 2016
+ * Author: Sheen
+ * Source: https://github.com/cefview/qcefview
+ * Docs: https://cefview.github.io/QCefView/
+ */
+#ifndef QCEFVIEW_H
 #define QCEFVIEW_H
 #pragma once
 #include <QCefView_global.h>
@@ -401,7 +409,10 @@ public slots:
   /// <summary>
   ///
   /// </summary>
-  inline void setFocus() { setFocus(Qt::OtherFocusReason); }
+  inline void setFocus()
+  {
+    setFocus(Qt::OtherFocusReason);
+  }
 
 public:
   /// <summary>
