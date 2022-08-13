@@ -30,113 +30,127 @@ class QCEFVIEW_EXPORT QCefDownloadItem : public QEnableSharedFromThis<QCefDownlo
 
 public:
   /// <summary>
-  /// Destructs the event instance
+  /// Destructs the download item instance
   /// </summary>
   ~QCefDownloadItem();
 
   /// <summary>
-  ///
+  /// Starts the download
   /// </summary>
   void start(const QString& path, bool useDefaultDialog = true);
 
   /// <summary>
-  ///
+  /// Pauses the download
   /// </summary>
   void pause() const;
 
   /// <summary>
-  ///
+  /// Resume the download
   /// </summary>
   void resume() const;
 
   /// <summary>
-  ///
+  /// Cancels the download
   /// </summary>
   void cancel() const;
 
   /// <summary>
-  // Returns true if the download is in progress.
+  /// Gets whether the download is in progress
   /// </summary>
-  /// <returns></returns>
+  /// <returns>True if the download is in progress; otherwise false</returns>
   bool isInProgress() const;
 
   /// <summary>
-  // Returns true if the download is complete.
+  /// Gets whether the download is complete
   /// </summary>
+  /// <returns>True if the download is complete; otherwise false</returns>
   bool isComplete() const;
 
   /// <summary>
-  // Returns true if the download has been canceled or interrupted.
+  /// Gets whether the download has been canceled or interrupted
   /// </summary>
+  /// <returns>True if the download has been canceled or interrupted; otherwise false</returns>
   bool isCanceled() const;
 
   /// <summary>
-  // Returns a simple speed estimate in bytes/s.
+  /// Gets current download speed
   /// </summary>
+  /// <returns>A simple speed estimate in bytes/s</returns>
   qint64 currentSpeed() const;
 
   /// <summary>
-  // Returns the rough percent complete or -1 if the receive total size is
-  // unknown.
+  /// Gets the completion percentage
   /// </summary>
+  /// <returns>The rough percent complete or -1 if the receive total size is unknown</returns>
   int percentComplete() const;
 
   /// <summary>
-  // Returns the total number of bytes.
+  /// Gets total number of bytes
   /// </summary>
+  /// <returns>The total number of bytes</returns>
   qint64 totalBytes() const;
 
   /// <summary>
-  // Returns the number of received bytes.
+  /// Gets number of received bytes
   /// </summary>
+  /// <returns>The number of received bytes</returns>
   qint64 receivedBytes() const;
 
   /// <summary>
-  // Returns the time that the download started.
+  /// Gets the time that the download started
   /// </summary>
+  /// <returns>The time that the download started</returns>
   QDateTime startTime() const;
 
   /// <summary>
-  // Returns the time that the download ended.
+  /// Gets the time that the download ended
   /// </summary>
+  /// <returns>The time that the download ended</returns>
   QDateTime endTime() const;
 
   /// <summary>
-  // Returns the full path to the downloaded or downloading file.
+  /// Gets the full path to the downloaded or downloading file
   /// </summary>
+  /// <returns>The full path to the downloaded or downloading file</returns>
   QString fullPath() const;
 
   /// <summary>
-  // Returns the unique identifier for this download.
+  /// Gets the unique identifier for this download
   /// </summary>
+  /// <returns>The unique identifier for this download</returns>
   quint32 id() const;
 
   /// <summary>
-  // Returns the URL.
+  /// Gets the URL
   /// </summary>
+  /// <returns>The the URL</returns>
   QString url() const;
 
   /// <summary>
-  // Returns the original URL before any redirections.
+  /// Gets the original URL before any redirections
   /// </summary>
+  /// <returns>The original URL before any redirections</returns>
   QString originalUrl() const;
 
   /// <summary>
-  // Returns the suggested file name.
+  /// Gets the suggested file name
   /// </summary>
+  /// <returns>The suggested file name</returns>
   QString suggestedFileName() const;
 
   /// <summary>
-  // Returns the content disposition.
+  /// Gets the content disposition
   /// </summary>
+  /// <returns>The the content disposition</returns>
   QString contentDisposition() const;
 
   /// <summary>
-  // Returns the mime type.
+  /// Gets the mime type
   /// </summary>
+  /// <returns>The mime type</returns>
   QString mimeType() const;
 };
 
 typedef QSharedPointer<QCefDownloadItem> QCefDownloadItemPointer;
 
-#endif // QCEFDOWNLOADITEM_H
+#endif /// QCEFDOWNLOADITEM_H

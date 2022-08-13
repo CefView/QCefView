@@ -352,13 +352,16 @@ signals:
   void reportJavascriptResult(int browserId, qint64 frameId, qint64 context, const QVariant& result);
 
   /// <summary>
-  /// Gets called on new download item.
+  /// Gets called on new download item was required. Keep reference to the download item
+  /// and call <see cref="QCefDownloadItem::start"/> method to allow and start the download, then get the updated
+  /// information on <see cref="updateDownloadItem"/> method. Ignore the download item to disallow the download
   /// </summary>
   /// <param name="item">The new download item</param>
   void newDownloadItem(QCefDownloadItemPointer item);
 
   /// <summary>
-  /// Gets called on download item updated
+  /// Gets called on download item updated. To get this method called <see cref="QCefDownloadItem::start"/> method must
+  /// be called in <see cref="newDownloadItem"/> method
   /// </summary>
   /// <param name="item">The download item</param>
   void updateDownloadItem(QCefDownloadItemPointer item);
