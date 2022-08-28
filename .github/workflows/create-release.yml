@@ -24,7 +24,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
 
       - name: Checkout Source
         uses: actions/checkout@v2
@@ -64,7 +64,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
           setup-python: 'false'
 
@@ -112,7 +112,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
 
       - name: Checkout Source
         uses: actions/checkout@v2
