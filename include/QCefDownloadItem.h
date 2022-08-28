@@ -25,9 +25,12 @@ class QCefDownloadItemPrivate;
 /// </summary>
 class QCEFVIEW_EXPORT QCefDownloadItem : public QEnableSharedFromThis<QCefDownloadItem>
 {
-  Q_DISABLE_COPY_MOVE(QCefDownloadItem)
   Q_DECLARE_PRIVATE(QCefDownloadItem)
   QScopedPointer<QCefDownloadItemPrivate> d_ptr;
+
+  Q_DISABLE_COPY(QCefDownloadItem)
+  QCefDownloadItem(QCefDownloadItem&&) = delete;
+  QCefDownloadItem& operator=(QCefDownloadItem&&) = delete;
 
   friend class QCefView;
 
