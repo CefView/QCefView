@@ -79,8 +79,6 @@ CefViewWidget::onScreenChanged(QScreen* screen)
   if (!m_cefWindow)
     return;
 
-  qDebug() << "============== CefViewWidget::resizeEvent(QResizeEvent* event)";
-
   // initialize the region with rounded-corners for CEF window
   ::SetWindowRgn((HWND)(m_cefWindow->winId()),
                  ::CreateRoundRectRgnEx(
@@ -143,7 +141,6 @@ CefViewWidget::onBrowserWindowCreated(QWindow* win)
 void
 CefViewWidget::resizeEvent(QResizeEvent* event)
 {
-  qDebug() << "============== CefViewWidget::resizeEvent(QResizeEvent* event)";
   QCefView::resizeEvent(event);
 
   // update the region with rounded-corners for CEF window
