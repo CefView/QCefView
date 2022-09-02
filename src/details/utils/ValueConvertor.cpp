@@ -40,7 +40,7 @@ ValueConvertor::CefValueToQVariant(QVariant* qVariant, CefValue* cValue)
     case CefValueType::VTYPE_BINARY: {
       auto cData = cValue->GetBinary();
       auto cLen = cData->GetSize();
-      QByteArray qData(cLen, 0);
+      QByteArray qData((int)cLen, 0);
       cValue->GetBinary()->GetData(qData.data(), qData.size(), 0);
       qVariant->setValue(qData);
     } break;

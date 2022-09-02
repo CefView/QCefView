@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.4" xml:lang="en-US">
+  <compounddef id="_q_cef_view__global_8h" kind="file" language="C++">
+    <compoundname>QCefView_global.h</compoundname>
+    <includes local="no">QtCore/qglobal.h</includes>
+    <includes local="no">QMetaType</includes>
+    <includedby refid="_q_cef_config_8h" local="no">QCefConfig.h</includedby>
+    <includedby refid="_q_cef_context_8h" local="no">QCefContext.h</includedby>
+    <includedby refid="_q_cef_download_item_8h" local="no">QCefDownloadItem.h</includedby>
+    <includedby refid="_q_cef_event_8h" local="no">QCefEvent.h</includedby>
+    <includedby refid="_q_cef_query_8h" local="no">QCefQuery.h</includedby>
+    <includedby refid="_q_cef_setting_8h" local="no">QCefSetting.h</includedby>
+    <includedby refid="_q_cef_view_8h" local="no">QCefView.h</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>QCefView_global.h</label>
+        <link refid="_q_cef_view__global_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>QMetaType</label>
+      </node>
+      <node id="2">
+        <label>QtCore/qglobal.h</label>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="_q_cef_view__global_8h_1a4489f56825bd83a3b95b3d18fdca331f" prot="public" static="no">
+        <name>QCEFVIEW_EXPORT</name>
+        <initializer>Q_DECL_IMPORT</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefView_global.h" line="25" column="11" bodyfile="C:/Users/sheen/Projects/CefView/QCefView/include/QCefView_global.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefView_global.h"/>
+  </compounddef>
+</doxygen>

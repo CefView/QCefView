@@ -1,0 +1,273 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.4" xml:lang="en-US">
+  <compounddef id="class_q_cef_event" kind="class" language="C++" prot="public">
+    <compoundname>QCefEvent</compoundname>
+    <includes local="no">QCefEvent.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_q_cef_event_1aa4e043ac8c5d7c5d75ca878ca75ab017" prot="private" static="no" mutable="no">
+        <type>QScopedPointer&lt; QCefEventPrivate &gt;</type>
+        <definition>QScopedPointer&lt;QCefEventPrivate&gt; QCefEvent::d_ptr</definition>
+        <argsstring></argsstring>
+        <name>d_ptr</name>
+        <qualifiedname>QCefEvent::d_ptr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" line="28" column="18" bodyfile="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="class_q_cef_event_1a5a3b8eafc568f47fa0dc1f5232277a29" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class QCefView</definition>
+        <argsstring></argsstring>
+        <name>QCefView</name>
+        <qualifiedname>QCefEvent::QCefView</qualifiedname>
+        <param>
+          <type><ref refid="class_q_cef_view" kindref="compound">QCefView</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" line="30" column="16" bodyfile="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_q_cef_event_1ab444dcc856db38dcc679db326ef22bf5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>QCefEvent::QCefEvent</definition>
+        <argsstring>()</argsstring>
+        <name>QCefEvent</name>
+        <qualifiedname>QCefEvent::QCefEvent</qualifiedname>
+        <briefdescription>
+<para>Constructs an event instance </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" line="36" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_event_1a2b2b8bacbfebefe302cd1fab91cd5e8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>QCefEvent::QCefEvent</definition>
+        <argsstring>(const QString &amp;name)</argsstring>
+        <name>QCefEvent</name>
+        <qualifiedname>QCefEvent::QCefEvent</qualifiedname>
+        <param>
+          <type>const QString &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Constructs an event instance with name </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The event name</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" line="42" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_event_1a357d5cb242977682523e69d501c673d4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>QCefEvent::QCefEvent</definition>
+        <argsstring>(const QCefEvent &amp;other)</argsstring>
+        <name>QCefEvent</name>
+        <qualifiedname>QCefEvent::QCefEvent</qualifiedname>
+        <param>
+          <type>const <ref refid="class_q_cef_event" kindref="compound">QCefEvent</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Constructs an event instance from existing one </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The other event instance</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" line="48" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_event_1a95e2f8c582270de0f9501945a6e063ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_q_cef_event" kindref="compound">QCefEvent</ref> &amp;</type>
+        <definition>QCefEvent &amp; QCefEvent::operator=</definition>
+        <argsstring>(const QCefEvent &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>QCefEvent::operator=</qualifiedname>
+        <param>
+          <type>const <ref refid="class_q_cef_event" kindref="compound">QCefEvent</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Assigns an existing event instance to current </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The other event instance</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" line="54" column="13"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_event_1a5c0e38242fa1ba823f1664232966787c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>QCefEvent::~QCefEvent</definition>
+        <argsstring>()</argsstring>
+        <name>~QCefEvent</name>
+        <qualifiedname>QCefEvent::~QCefEvent</qualifiedname>
+        <briefdescription>
+<para>Destructs the event instance </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" line="59" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_event_1a5db1273fdda416900f5b7b26a119c85a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefEvent::setEventName</definition>
+        <argsstring>(const QString &amp;name)</argsstring>
+        <name>setEventName</name>
+        <qualifiedname>QCefEvent::setEventName</qualifiedname>
+        <param>
+          <type>const QString &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Sets the event name </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name to be set</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" line="65" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_event_1a5a970c76a348788b15a040c8c405a103" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QString</type>
+        <definition>const QString QCefEvent::eventName</definition>
+        <argsstring>() const</argsstring>
+        <name>eventName</name>
+        <qualifiedname>QCefEvent::eventName</qualifiedname>
+        <briefdescription>
+<para>Gets the event name </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The event name</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" line="71" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_event_1ac84ba1292bcf56abdc5c6c4245aa6c04" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefEvent::setArguments</definition>
+        <argsstring>(const QVariantList &amp;args)</argsstring>
+        <name>setArguments</name>
+        <qualifiedname>QCefEvent::setArguments</qualifiedname>
+        <param>
+          <type>const QVariantList &amp;</type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+<para>Sets the argument list </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>args</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The argument list</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" line="77" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_event_1a4cf70fa60235d723b9e578cded919327" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>QVariantList &amp;</type>
+        <definition>QVariantList &amp; QCefEvent::arguments</definition>
+        <argsstring>()</argsstring>
+        <name>arguments</name>
+        <qualifiedname>QCefEvent::arguments</qualifiedname>
+        <briefdescription>
+<para>Gets the argument list </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The argument list</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" line="83" column="16"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Represents the event sent from native context(C/C++ code) to the web context(javascript) </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" line="25" column="1" bodyfile="C:/Users/sheen/Projects/CefView/QCefView/include/QCefEvent.h" bodystart="26" bodyend="84"/>
+    <listofallmembers>
+      <member refid="class_q_cef_event_1a4cf70fa60235d723b9e578cded919327" prot="public" virt="non-virtual"><scope>QCefEvent</scope><name>arguments</name></member>
+      <member refid="class_q_cef_event_1aa4e043ac8c5d7c5d75ca878ca75ab017" prot="private" virt="non-virtual"><scope>QCefEvent</scope><name>d_ptr</name></member>
+      <member refid="class_q_cef_event_1a5a970c76a348788b15a040c8c405a103" prot="public" virt="non-virtual"><scope>QCefEvent</scope><name>eventName</name></member>
+      <member refid="class_q_cef_event_1a95e2f8c582270de0f9501945a6e063ee" prot="public" virt="non-virtual"><scope>QCefEvent</scope><name>operator=</name></member>
+      <member refid="class_q_cef_event_1ab444dcc856db38dcc679db326ef22bf5" prot="public" virt="non-virtual"><scope>QCefEvent</scope><name>QCefEvent</name></member>
+      <member refid="class_q_cef_event_1a2b2b8bacbfebefe302cd1fab91cd5e8c" prot="public" virt="non-virtual"><scope>QCefEvent</scope><name>QCefEvent</name></member>
+      <member refid="class_q_cef_event_1a357d5cb242977682523e69d501c673d4" prot="public" virt="non-virtual"><scope>QCefEvent</scope><name>QCefEvent</name></member>
+      <member refid="class_q_cef_event_1ac84ba1292bcf56abdc5c6c4245aa6c04" prot="public" virt="non-virtual"><scope>QCefEvent</scope><name>setArguments</name></member>
+      <member refid="class_q_cef_event_1a5db1273fdda416900f5b7b26a119c85a" prot="public" virt="non-virtual"><scope>QCefEvent</scope><name>setEventName</name></member>
+      <member refid="class_q_cef_event_1a5c0e38242fa1ba823f1664232966787c" prot="public" virt="non-virtual"><scope>QCefEvent</scope><name>~QCefEvent</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

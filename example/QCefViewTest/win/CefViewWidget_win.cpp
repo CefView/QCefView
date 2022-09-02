@@ -17,8 +17,7 @@ CreateRoundRectRgnEx(int width,
                      int x3,
                      int y3, //
                      int x4,
-                     int y4 //
-)
+                     int y4)
 {
   // create main rect region
   HRGN result = ::CreateRectRgn(0, 0, width, height);
@@ -81,26 +80,16 @@ CefViewWidget::onScreenChanged(QScreen* screen)
 
   // initialize the region with rounded-corners for CEF window
   ::SetWindowRgn((HWND)(m_cefWindow->winId()),
-                 ::CreateRoundRectRgnEx(
-                   //
-                   size().width() * screen->devicePixelRatio(),
-                   size().height() * screen->devicePixelRatio(),
-
-                   //
-                   m_cornerRadius * screen->devicePixelRatio(),
-                   m_cornerRadius * screen->devicePixelRatio(),
-
-                   //
-                   0,
-                   0,
-
-                   //
-                   m_cornerRadius * screen->devicePixelRatio(),
-                   m_cornerRadius * screen->devicePixelRatio(),
-
-                   //
-                   0,
-                   0),
+                 ::CreateRoundRectRgnEx(size().width() * screen->devicePixelRatio(),
+                                        size().height() * screen->devicePixelRatio(),
+                                        m_cornerRadius * screen->devicePixelRatio(),
+                                        m_cornerRadius * screen->devicePixelRatio(),
+                                        0,
+                                        0,
+                                        m_cornerRadius * screen->devicePixelRatio(),
+                                        m_cornerRadius * screen->devicePixelRatio(),
+                                        0,
+                                        0),
                  TRUE);
 }
 
@@ -113,26 +102,16 @@ CefViewWidget::onBrowserWindowCreated(QWindow* win)
 
   // initialize the region with rounded-corners for CEF window
   ::SetWindowRgn((HWND)(m_cefWindow->winId()),
-                 ::CreateRoundRectRgnEx(
-                   //
-                   size().width() * devicePixelRatio(),
-                   size().height() * devicePixelRatio(),
-
-                   //
-                   m_cornerRadius * devicePixelRatio(),
-                   m_cornerRadius * devicePixelRatio(),
-
-                   //
-                   0,
-                   0,
-
-                   //
-                   m_cornerRadius * devicePixelRatio(),
-                   m_cornerRadius * devicePixelRatio(),
-
-                   //
-                   0,
-                   0),
+                 ::CreateRoundRectRgnEx(size().width() * devicePixelRatio(),
+                                        size().height() * devicePixelRatio(),
+                                        m_cornerRadius * devicePixelRatio(),
+                                        m_cornerRadius * devicePixelRatio(),
+                                        0,
+                                        0,
+                                        m_cornerRadius * devicePixelRatio(),
+                                        m_cornerRadius * devicePixelRatio(),
+                                        0,
+                                        0),
                  TRUE);
 
   connect(window()->windowHandle(), SIGNAL(screenChanged(QScreen*)), this, SLOT(onScreenChanged(QScreen*)));
@@ -146,26 +125,16 @@ CefViewWidget::resizeEvent(QResizeEvent* event)
   // update the region with rounded-corners for CEF window
   if (m_cefWindow) {
     ::SetWindowRgn((HWND)(m_cefWindow->winId()),
-                   ::CreateRoundRectRgnEx(
-                     //
-                     size().width() * devicePixelRatio(),
-                     size().height() * devicePixelRatio(),
-
-                     //
-                     m_cornerRadius * devicePixelRatio(),
-                     m_cornerRadius * devicePixelRatio(),
-
-                     //
-                     0,
-                     0,
-
-                     //
-                     m_cornerRadius * devicePixelRatio(),
-                     m_cornerRadius * devicePixelRatio(),
-
-                     //
-                     0,
-                     0),
+                   ::CreateRoundRectRgnEx(size().width() * devicePixelRatio(),
+                                          size().height() * devicePixelRatio(),
+                                          m_cornerRadius * devicePixelRatio(),
+                                          m_cornerRadius * devicePixelRatio(),
+                                          0,
+                                          0,
+                                          m_cornerRadius * devicePixelRatio(),
+                                          m_cornerRadius * devicePixelRatio(),
+                                          0,
+                                          0),
                    TRUE);
   }
 }

@@ -1,0 +1,1468 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.4" xml:lang="en-US">
+  <compounddef id="class_q_cef_setting" kind="class" language="C++" prot="public">
+    <compoundname>QCefSetting</compoundname>
+    <includes local="no">QCefSetting.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_q_cef_setting_1ab47508d9301964f7c77c49150d942813" prot="private" static="no" mutable="no">
+        <type>QScopedPointer&lt; QCefSettingPrivate &gt;</type>
+        <definition>QScopedPointer&lt;QCefSettingPrivate&gt; QCefSetting::d_ptr</definition>
+        <argsstring></argsstring>
+        <name>d_ptr</name>
+        <qualifiedname>QCefSetting::d_ptr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="28" column="18" bodyfile="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="class_q_cef_setting_1a5a3b8eafc568f47fa0dc1f5232277a29" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class QCefView</definition>
+        <argsstring></argsstring>
+        <name>QCefView</name>
+        <qualifiedname>QCefSetting::QCefView</qualifiedname>
+        <param>
+          <type><ref refid="class_q_cef_view" kindref="compound">QCefView</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="30" column="16" bodyfile="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_q_cef_setting_1afb8450a162ed9ce3f59a37491147db8d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>QCefSetting::QCefSetting</definition>
+        <argsstring>()</argsstring>
+        <name>QCefSetting</name>
+        <qualifiedname>QCefSetting::QCefSetting</qualifiedname>
+        <briefdescription>
+<para>Constructs the <ref refid="class_q_cef_setting" kindref="compound">QCefSetting</ref> instance </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="36" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1af650fcab674f8c33a996a2d8cd34eaef" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>QCefSetting::QCefSetting</definition>
+        <argsstring>(const QCefSetting &amp;other)</argsstring>
+        <name>QCefSetting</name>
+        <qualifiedname>QCefSetting::QCefSetting</qualifiedname>
+        <param>
+          <type>const <ref refid="class_q_cef_setting" kindref="compound">QCefSetting</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Constructs the <ref refid="class_q_cef_setting" kindref="compound">QCefSetting</ref> instance from existing one </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The existing <ref refid="class_q_cef_setting" kindref="compound">QCefSetting</ref> instance</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="42" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a486f0c9edda93fb30c75608ac9b98ba2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_q_cef_setting" kindref="compound">QCefSetting</ref> &amp;</type>
+        <definition>QCefSetting &amp; QCefSetting::operator=</definition>
+        <argsstring>(const QCefSetting &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>QCefSetting::operator=</qualifiedname>
+        <param>
+          <type>const <ref refid="class_q_cef_setting" kindref="compound">QCefSetting</ref> &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+<para>Assigns the existing <ref refid="class_q_cef_setting" kindref="compound">QCefSetting</ref> instance to current </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>other</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="48" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a589b16fe883213d0e330503c0ccab218" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>QCefSetting::~QCefSetting</definition>
+        <argsstring>()</argsstring>
+        <name>~QCefSetting</name>
+        <qualifiedname>QCefSetting::~QCefSetting</qualifiedname>
+        <briefdescription>
+<para>Destructs the instance </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="53" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a882bfa1507ecea7d13dafc432c541585" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setStandardFontFamily</definition>
+        <argsstring>(const QString value)</argsstring>
+        <name>setStandardFontFamily</name>
+        <qualifiedname>QCefSetting::setStandardFontFamily</qualifiedname>
+        <param>
+          <type>const QString</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the standard font family </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The font family</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="59" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1aa7a0cfa4086251bdfc95c4ae72e52896" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QString</type>
+        <definition>const QString QCefSetting::standardFontFamily</definition>
+        <argsstring>() const</argsstring>
+        <name>standardFontFamily</name>
+        <qualifiedname>QCefSetting::standardFontFamily</qualifiedname>
+        <briefdescription>
+<para>Gets the standard font family </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The font family</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="65" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1af11ccd0529a79efee12a3e728d24e641" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setFixedFontFamily</definition>
+        <argsstring>(const QString &amp;value)</argsstring>
+        <name>setFixedFontFamily</name>
+        <qualifiedname>QCefSetting::setFixedFontFamily</qualifiedname>
+        <param>
+          <type>const QString &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the fixed font family </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The font family</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="71" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a239e1982f4ab4198a62f9c00ae17bcbb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QString</type>
+        <definition>const QString QCefSetting::fixedFontFamily</definition>
+        <argsstring>() const</argsstring>
+        <name>fixedFontFamily</name>
+        <qualifiedname>QCefSetting::fixedFontFamily</qualifiedname>
+        <briefdescription>
+<para>Gets the fixed font family </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The font family</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="77" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a9eadb4d8d6567c78d80f09e1ace1dd30" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setSerifFontFamily</definition>
+        <argsstring>(const QString &amp;value)</argsstring>
+        <name>setSerifFontFamily</name>
+        <qualifiedname>QCefSetting::setSerifFontFamily</qualifiedname>
+        <param>
+          <type>const QString &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the serif font family </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The font family</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="83" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a43ab6247cbbaa59652846eb84760c1fb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QString</type>
+        <definition>const QString QCefSetting::serifFontFamily</definition>
+        <argsstring>() const</argsstring>
+        <name>serifFontFamily</name>
+        <qualifiedname>QCefSetting::serifFontFamily</qualifiedname>
+        <briefdescription>
+<para>Gets the fixed font family </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The font family</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="89" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1aa07d27c4a22dc2ec0d041c9deda1d71b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setSansSerifFontFamily</definition>
+        <argsstring>(const QString &amp;value)</argsstring>
+        <name>setSansSerifFontFamily</name>
+        <qualifiedname>QCefSetting::setSansSerifFontFamily</qualifiedname>
+        <param>
+          <type>const QString &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the sans serif font family </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The font family</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="95" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a861fccc511473f01f74a5199d2660126" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QString</type>
+        <definition>const QString QCefSetting::sansSerifFontFamily</definition>
+        <argsstring>() const</argsstring>
+        <name>sansSerifFontFamily</name>
+        <qualifiedname>QCefSetting::sansSerifFontFamily</qualifiedname>
+        <briefdescription>
+<para>Gets the sans serif font family </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The font family</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="101" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1aef4eb96f03003eb774924fe418a7edf1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setCursiveFontFamily</definition>
+        <argsstring>(const QString &amp;value)</argsstring>
+        <name>setCursiveFontFamily</name>
+        <qualifiedname>QCefSetting::setCursiveFontFamily</qualifiedname>
+        <param>
+          <type>const QString &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the cursive font family </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The font family</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="107" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a86526505941342ffbc96b6e5226ffcbe" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QString</type>
+        <definition>const QString QCefSetting::cursiveFontFamily</definition>
+        <argsstring>() const</argsstring>
+        <name>cursiveFontFamily</name>
+        <qualifiedname>QCefSetting::cursiveFontFamily</qualifiedname>
+        <briefdescription>
+<para>Gets the cursive font family </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The font family</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="113" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a831bed0440aed06894a85ee8dde74a05" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setFantasyFontFamily</definition>
+        <argsstring>(const QString &amp;value)</argsstring>
+        <name>setFantasyFontFamily</name>
+        <qualifiedname>QCefSetting::setFantasyFontFamily</qualifiedname>
+        <param>
+          <type>const QString &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the fantasy font family </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The font family</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="119" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a0acd7303ff77ae1eff9fa579fc96e97a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QString</type>
+        <definition>const QString QCefSetting::fantasyFontFamily</definition>
+        <argsstring>() const</argsstring>
+        <name>fantasyFontFamily</name>
+        <qualifiedname>QCefSetting::fantasyFontFamily</qualifiedname>
+        <briefdescription>
+<para>Gets the fantasy font family </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The font family</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="125" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a599a011dff8d11c8201036238016a77f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setDefaultEncoding</definition>
+        <argsstring>(const QString &amp;value)</argsstring>
+        <name>setDefaultEncoding</name>
+        <qualifiedname>QCefSetting::setDefaultEncoding</qualifiedname>
+        <param>
+          <type>const QString &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the default encoding </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The encoding name</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="131" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a2de89967072377f279b36e821bde18e1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QString</type>
+        <definition>const QString QCefSetting::defaultEncoding</definition>
+        <argsstring>() const</argsstring>
+        <name>defaultEncoding</name>
+        <qualifiedname>QCefSetting::defaultEncoding</qualifiedname>
+        <briefdescription>
+<para>Gets the default encoding </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The encoding name</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="137" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1af98c67b11610aa7d62cfae040086afcb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setAcceptLanguageList</definition>
+        <argsstring>(const QString &amp;value)</argsstring>
+        <name>setAcceptLanguageList</name>
+        <qualifiedname>QCefSetting::setAcceptLanguageList</qualifiedname>
+        <param>
+          <type>const QString &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the acceptable language list </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The acceptable languate list</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="143" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1aee323c86faebc36358a92c931c500478" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QString</type>
+        <definition>const QString QCefSetting::acceptLanguageList</definition>
+        <argsstring>() const</argsstring>
+        <name>acceptLanguageList</name>
+        <qualifiedname>QCefSetting::acceptLanguageList</qualifiedname>
+        <briefdescription>
+<para>Gets the acceptable language list </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The acceptable languate list</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="149" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a4a5810da8e070288ff80c069f5b52f23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setWindowlessFrameRate</definition>
+        <argsstring>(const int value)</argsstring>
+        <name>setWindowlessFrameRate</name>
+        <qualifiedname>QCefSetting::setWindowlessFrameRate</qualifiedname>
+        <param>
+          <type>const int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the frame rate in window less mode </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The frame rate</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="155" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1adfc424688213e0e695b6b84681581135" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::windowlessFrameRate</definition>
+        <argsstring>() const</argsstring>
+        <name>windowlessFrameRate</name>
+        <qualifiedname>QCefSetting::windowlessFrameRate</qualifiedname>
+        <briefdescription>
+<para>Gets the frame rate in window less mode </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The frame rate</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="161" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a85b9cadc6df83a3addbaf567df791339" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setDefaultFontSize</definition>
+        <argsstring>(const int value)</argsstring>
+        <name>setDefaultFontSize</name>
+        <qualifiedname>QCefSetting::setDefaultFontSize</qualifiedname>
+        <param>
+          <type>const int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the default font size </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The font size</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="167" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a4a38db62a20b2e8e7a26029f0b928689" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::defaultFontSize</definition>
+        <argsstring>() const</argsstring>
+        <name>defaultFontSize</name>
+        <qualifiedname>QCefSetting::defaultFontSize</qualifiedname>
+        <briefdescription>
+<para>Gets the default font size </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The font size</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="173" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a4dddf809104f676469fc03b266d7a2ff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setDefaultFixedFontSize</definition>
+        <argsstring>(const int value)</argsstring>
+        <name>setDefaultFixedFontSize</name>
+        <qualifiedname>QCefSetting::setDefaultFixedFontSize</qualifiedname>
+        <param>
+          <type>const int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the default fixed font size </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The font size</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="179" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1ab25a8bd4b9d5acb865c840b8c4320f5d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::defaultFixedFontSize</definition>
+        <argsstring>() const</argsstring>
+        <name>defaultFixedFontSize</name>
+        <qualifiedname>QCefSetting::defaultFixedFontSize</qualifiedname>
+        <briefdescription>
+<para>Gets the default fixed font size </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The font size</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="185" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a0c1733e2e173cb462f0ec21a613b628e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setMinimumFontSize</definition>
+        <argsstring>(const int value)</argsstring>
+        <name>setMinimumFontSize</name>
+        <qualifiedname>QCefSetting::setMinimumFontSize</qualifiedname>
+        <param>
+          <type>const int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the minimum font size </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The font size</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="191" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a3b263c84f28ef76fc1dc4cd4dfad8e5d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::minimumFontSize</definition>
+        <argsstring>() const</argsstring>
+        <name>minimumFontSize</name>
+        <qualifiedname>QCefSetting::minimumFontSize</qualifiedname>
+        <briefdescription>
+<para>Gets the minimum font size </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The font size</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="197" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1aa6e22cc3cfa68ad13809b6766e9cafab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setMinimumLogicalFontSize</definition>
+        <argsstring>(const int value)</argsstring>
+        <name>setMinimumLogicalFontSize</name>
+        <qualifiedname>QCefSetting::setMinimumLogicalFontSize</qualifiedname>
+        <param>
+          <type>const int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the minimum logical font size </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The font size</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="203" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a3f0801d8ecbc7fe86df805dc6db3aad9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::minimumLogicalFontSize</definition>
+        <argsstring>() const</argsstring>
+        <name>minimumLogicalFontSize</name>
+        <qualifiedname>QCefSetting::minimumLogicalFontSize</qualifiedname>
+        <briefdescription>
+<para>Gets the minimum logical font size </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The font size</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="209" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1aba88a474960049cda01c7295e514eb8a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setRemoteFonts</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setRemoteFonts</name>
+        <qualifiedname>QCefSetting::setRemoteFonts</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable remote fonts </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="215" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a6b503e82defe4c57a88936fb2cec2509" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::remoteFonts</definition>
+        <argsstring>() const</argsstring>
+        <name>remoteFonts</name>
+        <qualifiedname>QCefSetting::remoteFonts</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable the remote fonts </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="221" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a884abf03a17dc3fa4343b578445219c0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setJavascript</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setJavascript</name>
+        <qualifiedname>QCefSetting::setJavascript</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable Javascript </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="227" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1abfa7cceca149b6311e7a28e6ae4e2853" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::javascript</definition>
+        <argsstring>() const</argsstring>
+        <name>javascript</name>
+        <qualifiedname>QCefSetting::javascript</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable Javascript </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="233" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a7c3755e100310ab63a98cbd6b7c89a6b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setJavascriptCloseWindows</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setJavascriptCloseWindows</name>
+        <qualifiedname>QCefSetting::setJavascriptCloseWindows</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable the permission of closing window from Javascript </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="239" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a8cab27275ce36cb0b1477a85b6694f3b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::javascriptCloseWindows</definition>
+        <argsstring>() const</argsstring>
+        <name>javascriptCloseWindows</name>
+        <qualifiedname>QCefSetting::javascriptCloseWindows</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable the permission of closing window from Javascript </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="245" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1aff0a7e72f55a002f5731f4e202e45d63" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setJavascriptAccessClipboard</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setJavascriptAccessClipboard</name>
+        <qualifiedname>QCefSetting::setJavascriptAccessClipboard</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable the permission of accessing clipboard from Javascript </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="251" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1aff511401ea2d0453583db4b642526dbd" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::javascriptAccessClipboard</definition>
+        <argsstring>() const</argsstring>
+        <name>javascriptAccessClipboard</name>
+        <qualifiedname>QCefSetting::javascriptAccessClipboard</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable the permission of accessing clipboard from Javascript </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="257" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a61c6207fc6fb05b71248fee8766d21a2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setJavascriptDomPaste</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setJavascriptDomPaste</name>
+        <qualifiedname>QCefSetting::setJavascriptDomPaste</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable the permission of pasting DOM in Javascript </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="263" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a6696cc8fa0b4ea1ef14d71259cd4350d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::javascriptDomPaste</definition>
+        <argsstring>() const</argsstring>
+        <name>javascriptDomPaste</name>
+        <qualifiedname>QCefSetting::javascriptDomPaste</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable the permission of pasting DOM in Javascript </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="269" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1afd5813a87ece2924265a90544885e2c0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setPlugins</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setPlugins</name>
+        <qualifiedname>QCefSetting::setPlugins</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable plugins </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="275" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a99c3a6c649171d42402af815f6628f03" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::plugins</definition>
+        <argsstring>() const</argsstring>
+        <name>plugins</name>
+        <qualifiedname>QCefSetting::plugins</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable plugins </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="281" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a15457b991b298a722cbc9f9507d109fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setImageLoading</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setImageLoading</name>
+        <qualifiedname>QCefSetting::setImageLoading</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable the permission of loading images </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="287" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1aa06779c82a28a01bd862ac605356be40" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::imageLoading</definition>
+        <argsstring>() const</argsstring>
+        <name>imageLoading</name>
+        <qualifiedname>QCefSetting::imageLoading</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable the permission of loading images </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="293" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a562e4477613234a906b2d167473b0627" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setImageShrinkStandaloneToFit</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setImageShrinkStandaloneToFit</name>
+        <qualifiedname>QCefSetting::setImageShrinkStandaloneToFit</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable the shrinking image standalone to fit </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="299" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a7374edce9be761b5d40edef80f42f7b9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::imageShrinkStandaloneToFit</definition>
+        <argsstring>() const</argsstring>
+        <name>imageShrinkStandaloneToFit</name>
+        <qualifiedname>QCefSetting::imageShrinkStandaloneToFit</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable the shrinking image standalone to fit </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="305" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a159239d8d7d5b4f944db0c9f37b10509" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setTextAreaResize</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setTextAreaResize</name>
+        <qualifiedname>QCefSetting::setTextAreaResize</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable the resizing of text area </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="311" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a8d88588797f311f71c55073f95dafafe" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::textAreaResize</definition>
+        <argsstring>() const</argsstring>
+        <name>textAreaResize</name>
+        <qualifiedname>QCefSetting::textAreaResize</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable the resizing of text area </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="317" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a8ccb815304eeadba9d679186472d4e40" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setTabToLinks</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setTabToLinks</name>
+        <qualifiedname>QCefSetting::setTabToLinks</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable tab to links </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="323" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a9b81d1bcf47146dfc5eeeabeb583e627" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::tabToLinks</definition>
+        <argsstring>() const</argsstring>
+        <name>tabToLinks</name>
+        <qualifiedname>QCefSetting::tabToLinks</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable tab to links </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="329" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1afca6695cdffbb1734588c33ffff3aa3c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setLocalStorage</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setLocalStorage</name>
+        <qualifiedname>QCefSetting::setLocalStorage</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable local storage </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="335" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a4fffdf46c7617f7b116e2e836dbb48d0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::localStorage</definition>
+        <argsstring>() const</argsstring>
+        <name>localStorage</name>
+        <qualifiedname>QCefSetting::localStorage</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable local storage </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="341" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1ad0680b646641dd568b7de8ae072670db" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setDatabases</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setDatabases</name>
+        <qualifiedname>QCefSetting::setDatabases</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable database </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="347" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a94b2a957c8754619df7a37258a41c31d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::databases</definition>
+        <argsstring>() const</argsstring>
+        <name>databases</name>
+        <qualifiedname>QCefSetting::databases</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable database </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="353" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a984a074332bd07b78da2079d1d333209" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setWebGL</definition>
+        <argsstring>(const bool value)</argsstring>
+        <name>setWebGL</name>
+        <qualifiedname>QCefSetting::setWebGL</qualifiedname>
+        <param>
+          <type>const bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets to enable or disable webGL </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True to enalbe; false to disable</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="359" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1aca84c981db4fcc2cf6aa3ece7c44973c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::webGL</definition>
+        <argsstring>() const</argsstring>
+        <name>webGL</name>
+        <qualifiedname>QCefSetting::webGL</qualifiedname>
+        <briefdescription>
+<para>Gets whether to enable or disable webGL </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True to enalbe; false to disable</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="365" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a6dbd7b1da3a151294e8bf020a16687be" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void QCefSetting::setBackgroundColor</definition>
+        <argsstring>(const QColor &amp;value)</argsstring>
+        <name>setBackgroundColor</name>
+        <qualifiedname>QCefSetting::setBackgroundColor</qualifiedname>
+        <param>
+          <type>const QColor &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Sets the background color </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The color</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+<para>This only works if the web page has no background color set. The alpha component value will be adjusted to 0 or 255, it means if you pass a value with alpha value in the range of [1, 255], it will be accepted as 255. The default value is inherited from <ref refid="class_q_cef_config_1aa04db9637f47424834bbcdf05a8b640b" kindref="member">QCefConfig::backgroundColor()</ref> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="377" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="class_q_cef_setting_1a9db276640c98e1d5d38290e06ae17d1a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const QVariant</type>
+        <definition>const QVariant QCefSetting::backgroundColor</definition>
+        <argsstring>() const</argsstring>
+        <name>backgroundColor</name>
+        <qualifiedname>QCefSetting::backgroundColor</qualifiedname>
+        <briefdescription>
+<para>Gets the background color </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>The color</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="383" column="18"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Represents the settings for individual browser </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" line="25" column="1" bodyfile="C:/Users/sheen/Projects/CefView/QCefView/include/QCefSetting.h" bodystart="26" bodyend="384"/>
+    <listofallmembers>
+      <member refid="class_q_cef_setting_1aee323c86faebc36358a92c931c500478" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>acceptLanguageList</name></member>
+      <member refid="class_q_cef_setting_1a9db276640c98e1d5d38290e06ae17d1a" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>backgroundColor</name></member>
+      <member refid="class_q_cef_setting_1a86526505941342ffbc96b6e5226ffcbe" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>cursiveFontFamily</name></member>
+      <member refid="class_q_cef_setting_1ab47508d9301964f7c77c49150d942813" prot="private" virt="non-virtual"><scope>QCefSetting</scope><name>d_ptr</name></member>
+      <member refid="class_q_cef_setting_1a94b2a957c8754619df7a37258a41c31d" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>databases</name></member>
+      <member refid="class_q_cef_setting_1a2de89967072377f279b36e821bde18e1" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>defaultEncoding</name></member>
+      <member refid="class_q_cef_setting_1ab25a8bd4b9d5acb865c840b8c4320f5d" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>defaultFixedFontSize</name></member>
+      <member refid="class_q_cef_setting_1a4a38db62a20b2e8e7a26029f0b928689" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>defaultFontSize</name></member>
+      <member refid="class_q_cef_setting_1a0acd7303ff77ae1eff9fa579fc96e97a" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>fantasyFontFamily</name></member>
+      <member refid="class_q_cef_setting_1a239e1982f4ab4198a62f9c00ae17bcbb" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>fixedFontFamily</name></member>
+      <member refid="class_q_cef_setting_1aa06779c82a28a01bd862ac605356be40" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>imageLoading</name></member>
+      <member refid="class_q_cef_setting_1a7374edce9be761b5d40edef80f42f7b9" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>imageShrinkStandaloneToFit</name></member>
+      <member refid="class_q_cef_setting_1abfa7cceca149b6311e7a28e6ae4e2853" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>javascript</name></member>
+      <member refid="class_q_cef_setting_1aff511401ea2d0453583db4b642526dbd" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>javascriptAccessClipboard</name></member>
+      <member refid="class_q_cef_setting_1a8cab27275ce36cb0b1477a85b6694f3b" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>javascriptCloseWindows</name></member>
+      <member refid="class_q_cef_setting_1a6696cc8fa0b4ea1ef14d71259cd4350d" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>javascriptDomPaste</name></member>
+      <member refid="class_q_cef_setting_1a4fffdf46c7617f7b116e2e836dbb48d0" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>localStorage</name></member>
+      <member refid="class_q_cef_setting_1a3b263c84f28ef76fc1dc4cd4dfad8e5d" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>minimumFontSize</name></member>
+      <member refid="class_q_cef_setting_1a3f0801d8ecbc7fe86df805dc6db3aad9" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>minimumLogicalFontSize</name></member>
+      <member refid="class_q_cef_setting_1a486f0c9edda93fb30c75608ac9b98ba2" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>operator=</name></member>
+      <member refid="class_q_cef_setting_1a99c3a6c649171d42402af815f6628f03" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>plugins</name></member>
+      <member refid="class_q_cef_setting_1afb8450a162ed9ce3f59a37491147db8d" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>QCefSetting</name></member>
+      <member refid="class_q_cef_setting_1af650fcab674f8c33a996a2d8cd34eaef" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>QCefSetting</name></member>
+      <member refid="class_q_cef_setting_1a6b503e82defe4c57a88936fb2cec2509" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>remoteFonts</name></member>
+      <member refid="class_q_cef_setting_1a861fccc511473f01f74a5199d2660126" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>sansSerifFontFamily</name></member>
+      <member refid="class_q_cef_setting_1a43ab6247cbbaa59652846eb84760c1fb" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>serifFontFamily</name></member>
+      <member refid="class_q_cef_setting_1af98c67b11610aa7d62cfae040086afcb" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setAcceptLanguageList</name></member>
+      <member refid="class_q_cef_setting_1a6dbd7b1da3a151294e8bf020a16687be" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setBackgroundColor</name></member>
+      <member refid="class_q_cef_setting_1aef4eb96f03003eb774924fe418a7edf1" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setCursiveFontFamily</name></member>
+      <member refid="class_q_cef_setting_1ad0680b646641dd568b7de8ae072670db" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setDatabases</name></member>
+      <member refid="class_q_cef_setting_1a599a011dff8d11c8201036238016a77f" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setDefaultEncoding</name></member>
+      <member refid="class_q_cef_setting_1a4dddf809104f676469fc03b266d7a2ff" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setDefaultFixedFontSize</name></member>
+      <member refid="class_q_cef_setting_1a85b9cadc6df83a3addbaf567df791339" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setDefaultFontSize</name></member>
+      <member refid="class_q_cef_setting_1a831bed0440aed06894a85ee8dde74a05" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setFantasyFontFamily</name></member>
+      <member refid="class_q_cef_setting_1af11ccd0529a79efee12a3e728d24e641" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setFixedFontFamily</name></member>
+      <member refid="class_q_cef_setting_1a15457b991b298a722cbc9f9507d109fb" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setImageLoading</name></member>
+      <member refid="class_q_cef_setting_1a562e4477613234a906b2d167473b0627" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setImageShrinkStandaloneToFit</name></member>
+      <member refid="class_q_cef_setting_1a884abf03a17dc3fa4343b578445219c0" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setJavascript</name></member>
+      <member refid="class_q_cef_setting_1aff0a7e72f55a002f5731f4e202e45d63" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setJavascriptAccessClipboard</name></member>
+      <member refid="class_q_cef_setting_1a7c3755e100310ab63a98cbd6b7c89a6b" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setJavascriptCloseWindows</name></member>
+      <member refid="class_q_cef_setting_1a61c6207fc6fb05b71248fee8766d21a2" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setJavascriptDomPaste</name></member>
+      <member refid="class_q_cef_setting_1afca6695cdffbb1734588c33ffff3aa3c" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setLocalStorage</name></member>
+      <member refid="class_q_cef_setting_1a0c1733e2e173cb462f0ec21a613b628e" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setMinimumFontSize</name></member>
+      <member refid="class_q_cef_setting_1aa6e22cc3cfa68ad13809b6766e9cafab" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setMinimumLogicalFontSize</name></member>
+      <member refid="class_q_cef_setting_1afd5813a87ece2924265a90544885e2c0" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setPlugins</name></member>
+      <member refid="class_q_cef_setting_1aba88a474960049cda01c7295e514eb8a" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setRemoteFonts</name></member>
+      <member refid="class_q_cef_setting_1aa07d27c4a22dc2ec0d041c9deda1d71b" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setSansSerifFontFamily</name></member>
+      <member refid="class_q_cef_setting_1a9eadb4d8d6567c78d80f09e1ace1dd30" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setSerifFontFamily</name></member>
+      <member refid="class_q_cef_setting_1a882bfa1507ecea7d13dafc432c541585" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setStandardFontFamily</name></member>
+      <member refid="class_q_cef_setting_1a8ccb815304eeadba9d679186472d4e40" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setTabToLinks</name></member>
+      <member refid="class_q_cef_setting_1a159239d8d7d5b4f944db0c9f37b10509" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setTextAreaResize</name></member>
+      <member refid="class_q_cef_setting_1a984a074332bd07b78da2079d1d333209" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setWebGL</name></member>
+      <member refid="class_q_cef_setting_1a4a5810da8e070288ff80c069f5b52f23" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>setWindowlessFrameRate</name></member>
+      <member refid="class_q_cef_setting_1aa7a0cfa4086251bdfc95c4ae72e52896" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>standardFontFamily</name></member>
+      <member refid="class_q_cef_setting_1a9b81d1bcf47146dfc5eeeabeb583e627" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>tabToLinks</name></member>
+      <member refid="class_q_cef_setting_1a8d88588797f311f71c55073f95dafafe" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>textAreaResize</name></member>
+      <member refid="class_q_cef_setting_1aca84c981db4fcc2cf6aa3ece7c44973c" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>webGL</name></member>
+      <member refid="class_q_cef_setting_1adfc424688213e0e695b6b84681581135" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>windowlessFrameRate</name></member>
+      <member refid="class_q_cef_setting_1a589b16fe883213d0e330503c0ccab218" prot="public" virt="non-virtual"><scope>QCefSetting</scope><name>~QCefSetting</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

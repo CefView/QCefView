@@ -1,6 +1,8 @@
 ﻿#ifndef CUSTOMCEFVIEW_H
 #define CUSTOMCEFVIEW_H
 
+#include <QScreen>
+
 #include <QCefView.h>
 
 /// <summary>

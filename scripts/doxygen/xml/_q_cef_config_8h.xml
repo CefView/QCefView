@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.4" xml:lang="en-US">
+  <compounddef id="_q_cef_config_8h" kind="file" language="C++">
+    <compoundname>QCefConfig.h</compoundname>
+    <includes refid="_q_cef_view__global_8h" local="no">QCefView_global.h</includes>
+    <includes local="no">QColor</includes>
+    <includes local="no">QScopedPointer</includes>
+    <includes local="no">QString</includes>
+    <includes local="no">QVariant</includes>
+    <includedby refid="_q_cef_context_8h" local="no">QCefContext.h</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>QCefConfig.h</label>
+        <link refid="_q_cef_config_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>QColor</label>
+      </node>
+      <node id="3">
+        <label>QScopedPointer</label>
+      </node>
+      <node id="4">
+        <label>QString</label>
+      </node>
+      <node id="5">
+        <label>QVariant</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="class_q_cef_config" prot="public">QCefConfig</innerclass>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="_q_cef_config_8h_1a9c4f9b520ed6a74eb2f7c521c08471c6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>Q_DECLARE_METATYPE</definition>
+        <argsstring>(QCefConfig)</argsstring>
+        <name>Q_DECLARE_METATYPE</name>
+        <param>
+          <type><ref refid="class_q_cef_config" kindref="compound">QCefConfig</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefConfig.h" line="274" column="1" declfile="C:/Users/sheen/Projects/CefView/QCefView/include/QCefConfig.h" declline="274" declcolumn="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="C:/Users/sheen/Projects/CefView/QCefView/include/QCefConfig.h"/>
+  </compounddef>
+</doxygen>
