@@ -15,6 +15,10 @@ public:
 
   ~CefViewWidget();
 
+protected slots:
+  void onScreenChanged(QScreen* screen);
+
+private:
   virtual void onBrowserWindowCreated(QWindow* win);
 
   virtual void resizeEvent(QResizeEvent* event);

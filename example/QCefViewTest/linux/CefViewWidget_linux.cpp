@@ -6,6 +6,11 @@
 #include <QWindow>
 
 void
+CefViewWidget::onScreenChanged(QScreen* screen)
+{
+}
+
+void
 CefViewWidget::onBrowserWindowCreated(QWindow* win)
 {
   m_cefWindow = win;
