@@ -268,7 +268,11 @@ QCefView::paintEvent(QPaintEvent* event)
 
   // 4. paint the CEF view and popup
   // get current scale factor
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
+  qreal scaleFactor = devicePixelRatioF();
+#else
   qreal scaleFactor = devicePixelRatio();
+#endif
 
   // perform the painting
   {
