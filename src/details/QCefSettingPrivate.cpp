@@ -99,7 +99,8 @@ QCefSettingPrivate::CopyToCefBrowserSettings(const QCefSetting* qs, CefBrowserSe
 
   if (!qs) {
     QCefSettingPrivate defaultSettings;
-    cs->background_color = qs->d_ptr->backgroundColor_.value<QColor>().rgba();
+    cs->background_color = defaultSettings.backgroundColor_.value<QColor>().rgba();
+    return;
   }
 
   if (!qs->d_ptr->standardFontFamily_.empty())
