@@ -20,6 +20,9 @@ MainWindow::MainWindow(QWidget* parent)
 {
   ui.setupUi(this);
 
+  // setWindowFlags(Qt::FramelessWindowHint);
+  // setAttribute(Qt::WA_TranslucentBackground);
+
   connect(ui.btn_reCreate, &QPushButton::clicked, this, &MainWindow::onBtnRecreateClicked);
   connect(ui.btn_changeColor, &QPushButton::clicked, this, &MainWindow::onBtnChangeColorClicked);
   connect(ui.btn_setFocus, &QPushButton::clicked, this, &MainWindow::onBtnSetFocusClicked);
@@ -65,13 +68,13 @@ MainWindow::createCefView()
   // cefViewWidget = new CefViewWidget(INDEX_URL, &setting);
 
   // this site is for test web events
-  cefViewWidget = new CefViewWidget("http://xcal1.vodafone.co.uk/", &setting, this);
+  // cefViewWidget = new CefViewWidget("http://xcal1.vodafone.co.uk/", &setting, this);
 
   //
   // cefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);
 
   // this site is for test OSR performance
-  // cefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
+  cefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
 
   // this site is test for input devices
   // cefViewWidget = new CefViewWidget("https://devicetests.com", &setting);

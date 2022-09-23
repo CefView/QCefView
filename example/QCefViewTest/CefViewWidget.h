@@ -26,6 +26,9 @@ private:
   virtual void resizeEvent(QResizeEvent* event);
 
 private:
+  void updateMask();
+
+private:
   QWindow* m_cefWindow = nullptr;
 
   int m_cornerRadius = 50;

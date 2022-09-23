@@ -254,13 +254,15 @@ QCefView::paintEvent(QPaintEvent* event)
 {
   Q_D(QCefView);
 
-#if defined(CEF_USE_OSR)
-  // 1. constructs painter for current widget
+  // 1. construct painter for current widget
   QPainter painter(this);
 
   // 2. paint background with background role
+  // for OSR mode, this makes sure the surface will be cleared before a new drawing
+  // for NCW mode, this makes sure QCefView will not be treated as transparent background
   painter.fillRect(rect(), palette().color(backgroundRole()));
 
+#if defined(CEF_USE_OSR)
   // 3. paint widget with its stylesheet
   QStyleOption opt;
   opt.initFrom(this);

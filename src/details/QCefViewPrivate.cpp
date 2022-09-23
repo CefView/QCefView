@@ -12,11 +12,16 @@
 #include <QPlatformSurfaceEvent>
 #include <QVBoxLayout>
 #include <QWindow>
+#pragma endregion qt_headers
+
+#if defined(Q_OS_WINDOWS) && !defined(CEF_USE_OSR)
+#include <Windows.h>
+#endif
+
 #if defined(Q_OS_LINUX) && !defined(CEF_USE_OSR)
 #include <X11/Xlib.h>
 #include <qpa/qplatformnativeinterface.h>
 #endif
-#pragma endregion qt_headers
 
 #pragma region cef_headers
 #include <include/cef_app.h>
@@ -35,7 +40,28 @@
 #include "utils/MenuBuilder.h"
 #include "utils/ValueConvertor.h"
 
-#if defined(Q_OS_LINUX) && !defined(CEF_USE_OSR)
+#if !defined(CEF_USE_OSR)
+
+#if defined(Q_OS_WINDOWS)
+void
+UpdateCefWindowMask(QWindow* w, const QRegion& r)
+{
+  if (w) {
+    // this doesn't work
+    // ncw.qBrowserWindow_->setMask(q->mask());
+#if defined(Q_OS_WINDOWS)
+    // for Windows
+    ::SetWindowRgn((HWND)w->winId(), r.toHRGN(), true);
+#elif defined(Q_OS_MACOS)
+    // for macOS
+#elif defined(Q_OS_LINUX)
+    // for Linux
+#endif
+  }
+}
+#endif
+
+#if defined(Q_OS_LINUX)
 Display*
 X11GetDisplay(QWidget* widget)
 {
@@ -61,6 +87,8 @@ X11GetDisplay(QWidget* widget)
 
   return (Display*)platformInterface->nativeResourceForScreen("display", screen);
 }
+#endif
+
 #endif
 
 QSet<QCefViewPrivate*> QCefViewPrivate::sLiveInstances;
@@ -261,6 +289,9 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
   layout->setSpacing(0);
   layout->addWidget(ncw.qBrowserWidget_);
   q_ptr->setLayout(layout);
+
+  // update mask
+  UpdateCefWindowMask(ncw.qBrowserWindow_, q_ptr->mask());
 #endif
 }
 
@@ -336,6 +367,9 @@ QCefViewPrivate::onViewScreenChanged(QScreen* screen)
 #if defined(CEF_USE_OSR)
   if (pCefBrowser_)
     pCefBrowser_->GetHost()->NotifyScreenInfoChanged();
+#else
+  Q_Q(QCefView);
+  UpdateCefWindowMask(ncw.qBrowserWindow_, q->mask());
 #endif
 }
 
@@ -707,6 +741,9 @@ QCefViewPrivate::onViewSizeChanged(const QSize& size, const QSize& oldSize)
 #if defined(CEF_USE_OSR)
   if (pCefBrowser_)
     pCefBrowser_->GetHost()->WasResized();
+#else
+  Q_Q(QCefView);
+  UpdateCefWindowMask(ncw.qBrowserWindow_, q->mask());
 #endif
 }
 
