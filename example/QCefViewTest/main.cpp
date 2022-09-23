@@ -1,4 +1,4 @@
-#include <QApplication>
+﻿#include <QApplication>
 
 #include <QCefContext.h>
 
@@ -16,6 +16,9 @@ main(int argc, char* argv[])
   config.setBridgeObjectName("CallBridge");
   config.setRemoteDebuggingPort(9000);
   config.setBackgroundColor(Qt::lightGray);
+
+  // WindowlessRenderingEnabled is set to true by default, set to false to disable the OSR mode
+  // config.setWindowlessRenderingEnabled(false);
 
   // add command line args
   // config.addCommandLineSwitch("allow-universal-access-from-files");

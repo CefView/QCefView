@@ -49,21 +49,26 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
     return;
 
   QWindow* w = nullptr;
-#if !defined(CEF_USE_OSR)
-  // create QWindow from native browser window handle
-  w = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));
-#endif
+  //#if !defined(CEF_USE_OSR)
+  if (!pCefViewPrivate_->isOSRModeEnabled()) {
+    // create QWindow from native browser window handle
+    w = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));
+  }
+  //#endif
 
   Qt::ConnectionType c = Qt::DirectConnection;
 
   if (pCefViewPrivate_->q_ptr->thread() != QThread::currentThread()) {
     // change connection type
-#if defined(CEF_USE_OSR)
-    c = Qt::BlockingQueuedConnection;
-#else
-    w->moveToThread(pCefViewPrivate_->q_ptr->thread());
-    c = Qt::QueuedConnection;
-#endif
+    //#if defined(CEF_USE_OSR)
+    if (pCefViewPrivate_->isOSRModeEnabled()) {
+      c = Qt::BlockingQueuedConnection;
+    } else {
+      //#else
+      w->moveToThread(pCefViewPrivate_->q_ptr->thread());
+      c = Qt::QueuedConnection;
+    }
+    //#endif
   }
 
   QMetaObject::invokeMethod(

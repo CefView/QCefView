@@ -94,6 +94,18 @@ public:
   /// <param name="v">The switch value</param>
   void addCommandLineSwitchWithValue(const QString& smitch, const QString& v);
 
+  /// <summary>
+  /// Sets the flag to enable/disable OSR mode
+  /// </summary>
+  /// <param name="enabled">True to enable OSR mode, false to disable</param>
+  void setWindowlessRenderingEnabled(const bool enabled);
+
+  /// <summary>
+  /// Gets the OSR mode flag
+  /// </summary>
+  /// <returns>The flag indicates the enable/disable of OSR mode</returns>
+  const QVariant WindowlessRenderingEnabled() const;
+
 #if !defined(Q_OS_MACOS)
   /// <summary>
   /// Sets the browser subprocess path

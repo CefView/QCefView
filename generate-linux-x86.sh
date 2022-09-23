@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# OSR mode is enabled by default, add -DUSE_OSR=OFF to disable the OSR mode
-
 BUILD_PROJECT=0
 
 BUILD_DIR="$(pwd)/.build/linux.x86"

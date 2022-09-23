@@ -19,10 +19,12 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
   : QWidget(parent)
   , d_ptr(new QCefViewPrivate(QCefContext::instance()->d_func(), this, url, setting))
 {
-#if defined(CEF_USE_OSR)
-  setBackgroundRole(QPalette::Window);
-  setAttribute(Qt::WA_OpaquePaintEvent);
-#endif
+  //#if defined(CEF_USE_OSR)
+  if (d_ptr->isOSRModeEnabled()) {
+    setBackgroundRole(QPalette::Window);
+    setAttribute(Qt::WA_OpaquePaintEvent);
+  }
+  //#endif
 
   setMouseTracking(true);
   setFocusPolicy(Qt::WheelFocus);
@@ -239,12 +241,15 @@ QCefView::onPopupCreated(QWindow* wnd)
 QVariant
 QCefView::inputMethodQuery(Qt::InputMethodQuery query) const
 {
-#if defined(CEF_USE_OSR)
   Q_D(const QCefView);
-  auto r = d->onViewInputMethodQuery(query);
-  if (r.isValid())
-    return r;
-#endif
+
+  //#if defined(CEF_USE_OSR)
+  if (d->isOSRModeEnabled()) {
+    auto r = d->onViewInputMethodQuery(query);
+    if (r.isValid())
+      return r;
+  }
+  //#endif
 
   return QWidget::inputMethodQuery(query);
 }
@@ -262,36 +267,38 @@ QCefView::paintEvent(QPaintEvent* event)
   // for NCW mode, this makes sure QCefView will not be treated as transparent background
   painter.fillRect(rect(), palette().color(backgroundRole()));
 
-#if defined(CEF_USE_OSR)
-  // 3. paint widget with its stylesheet
-  QStyleOption opt;
-  opt.initFrom(this);
-  style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+  //#if defined(CEF_USE_OSR)
+  if (d->isOSRModeEnabled()) {
+    // 3. paint widget with its stylesheet
+    QStyleOption opt;
+    opt.initFrom(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
 
-  // 4. paint the CEF view and popup
-  // get current scale factor
+    // 4. paint the CEF view and popup
+    // get current scale factor
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
-  qreal scaleFactor = devicePixelRatioF();
+    qreal scaleFactor = devicePixelRatioF();
 #else
-  qreal scaleFactor = devicePixelRatio();
+    qreal scaleFactor = devicePixelRatio();
 #endif
 
-  // perform the painting
-  {
-    // paint cef view
-    QMutexLocker lock(&(d->osr.qViewPaintLock_));
-    int width = d->osr.qCefViewFrame_.width() / scaleFactor;
-    int height = d->osr.qCefViewFrame_.height() / scaleFactor;
-    painter.drawImage(QRect{ 0, 0, width, height }, d->osr.qCefViewFrame_);
-  }
-  {
-    // paint cef popup
-    QMutexLocker lock(&(d->osr.qPopupPaintLock_));
-    if (d->osr.showPopup_) {
-      painter.drawImage(d->osr.qPopupRect_, d->osr.qCefPopupFrame_);
+    // perform the painting
+    {
+      // paint cef view
+      QMutexLocker lock(&(d->osr.qViewPaintLock_));
+      int width = d->osr.qCefViewFrame_.width() / scaleFactor;
+      int height = d->osr.qCefViewFrame_.height() / scaleFactor;
+      painter.drawImage(QRect{ 0, 0, width, height }, d->osr.qCefViewFrame_);
+    }
+    {
+      // paint cef popup
+      QMutexLocker lock(&(d->osr.qPopupPaintLock_));
+      if (d->osr.showPopup_) {
+        painter.drawImage(d->osr.qPopupRect_, d->osr.qCefPopupFrame_);
+      }
     }
   }
-#endif
+  //#endif
 
   // 5. call base paintEvent (empty implementation)
   QWidget::paintEvent(event);
@@ -397,11 +404,13 @@ QCefView::contextMenuEvent(QContextMenuEvent* event)
 {
   FLog();
 
-#if defined(CEF_USE_OSR)
-  Q_D(QCefView);
+  Q_D(const QCefView);
 
-  if (d->osr.isShowingContextMenu_) {
-    d->osr.contextMenu_->popup(mapToGlobal(event->pos()));
+  //#if defined(CEF_USE_OSR)
+  if (d->isOSRModeEnabled()) {
+    if (d->osr.isShowingContextMenu_) {
+      d->osr.contextMenu_->popup(mapToGlobal(event->pos()));
+    }
   }
-#endif
+  //#endif
 }

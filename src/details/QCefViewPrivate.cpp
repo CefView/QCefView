@@ -14,14 +14,16 @@
 #include <QWindow>
 #pragma endregion qt_headers
 
-#if defined(Q_OS_WINDOWS) && !defined(CEF_USE_OSR)
+//#if !defined(CEF_USE_OSR)
+#if defined(Q_OS_WINDOWS)
 #include <Windows.h>
 #endif
 
-#if defined(Q_OS_LINUX) && !defined(CEF_USE_OSR)
+#if defined(Q_OS_LINUX)
 #include <X11/Xlib.h>
 #include <qpa/qplatformnativeinterface.h>
 #endif
+//#endif
 
 #pragma region cef_headers
 #include <include/cef_app.h>
@@ -40,8 +42,7 @@
 #include "utils/MenuBuilder.h"
 #include "utils/ValueConvertor.h"
 
-#if !defined(CEF_USE_OSR)
-
+//#if !defined(CEF_USE_OSR)
 #if defined(Q_OS_WINDOWS)
 void
 UpdateCefWindowMask(QWindow* w, const QRegion& r)
@@ -88,8 +89,7 @@ X11GetDisplay(QWidget* widget)
   return (Display*)platformInterface->nativeResourceForScreen("display", screen);
 }
 #endif
-
-#endif
+//#endif
 
 QSet<QCefViewPrivate*> QCefViewPrivate::sLiveInstances;
 
@@ -110,6 +110,8 @@ QCefViewPrivate::QCefViewPrivate(QCefContextPrivate* ctx,
   , pContextPrivate_(ctx)
 {
   sLiveInstances.insert(this);
+
+  isOSRModeEnabled_ = pContextPrivate_->cefConfig()->WindowlessRenderingEnabled().toBool();
 
   createCefBrowser(view, url, setting);
 }
@@ -144,31 +146,35 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
 
   // Set window info
   CefWindowInfo window_info;
-#if defined(CEF_USE_OSR)
-  window_info.SetAsWindowless(0);
-#else
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    window_info.SetAsWindowless(0);
+  } else { // #else
 #if defined(OS_LINUX)
-  // Don't know why, on Linux platform if we use QCefView's winId() as
-  // the parent, it will complain about `BadWindow`,
-  // and the browser window will not be created, this never happens
-  // on Windows and macOS, so we create a temporal QWindow as the
-  // parent to create CEF browser window.
-  QWindow w;
-  CefWindowHandle p = (CefWindowHandle)(w.winId());
-  window_info.SetAsChild(p, { 0, 0, 0, 0 });
+    // Don't know why, on Linux platform if we use QCefView's winId() as
+    // the parent, it will complain about `BadWindow`,
+    // and the browser window will not be created, this never happens
+    // on Windows and macOS, so we create a temporal QWindow as the
+    // parent to create CEF browser window.
+    QWindow w;
+    CefWindowHandle p = (CefWindowHandle)(w.winId());
+    window_info.SetAsChild(p, { 0, 0, 0, 0 });
 #else
-  window_info.SetAsChild((CefWindowHandle)view->winId(), { 0, 0, view->maximumWidth(), view->maximumHeight() });
+    window_info.SetAsChild((CefWindowHandle)view->winId(), { 0, 0, view->maximumWidth(), view->maximumHeight() });
 #endif
-#endif
+  }
+  //#endif
 
   // create the browser settings
   CefBrowserSettings browserSettings;
   QCefSettingPrivate::CopyToCefBrowserSettings(setting, &browserSettings);
 
-#if defined(CEF_USE_OSR)
-  if (CefColorGetA(browserSettings.background_color) == 0)
-    osr.transparentPaintingEnabled = true;
-#endif
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    if (CefColorGetA(browserSettings.background_color) == 0)
+      osr.transparentPaintingEnabled = true;
+  }
+  //#endif
 
   // create browser object
   bool success = CefBrowserHost::CreateBrowser(window_info,       // window info
@@ -197,11 +203,13 @@ QCefViewPrivate::destroyCefBrowser()
   if (!pClient_)
     return;
 
-#if !defined(CEF_USE_OSR)
-  // remove parent, or CEF will send close to the parent
-  // this will lead the top level window to be closed
-  ncw.qBrowserWindow_->setParent(nullptr);
-#endif
+  //#if !defined(CEF_USE_OSR)
+  if (!isOSRModeEnabled_) {
+    // remove parent, or CEF will send close to the parent
+    // this will lead the top level window to be closed
+    ncw.qBrowserWindow_->setParent(nullptr);
+  }
+  //#endif
 
   // clean all browsers
   pClient_->CloseAllBrowsers();
@@ -239,60 +247,68 @@ QCefViewPrivate::setCefWindowFocus(bool focus)
   }
 }
 
+bool
+QCefViewPrivate::isOSRModeEnabled() const
+{
+  return isOSRModeEnabled_;
+}
+
 void
 QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window)
 {
   // capture the browser
   pCefBrowser_ = browser;
 
-#if defined(CEF_USE_OSR)
-  // notify the visibility and size
-  pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
-  pCefBrowser_->GetHost()->WasResized();
-  connect(this, SIGNAL(updateOsrFrame()), q_ptr, SLOT(update()));
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    // notify the visibility and size
+    pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
+    pCefBrowser_->GetHost()->WasResized();
+    connect(this, SIGNAL(updateOsrFrame()), q_ptr, SLOT(update()));
 
-  // monitor the screenChanged signal from the top-level window
-  disconnect(this, SLOT(onViewScreenChanged(QScreen*)));
-  if (q_ptr->window()->windowHandle()) {
-    connect(q_ptr->window()->windowHandle(),    //
-            SIGNAL(screenChanged(QScreen*)),    //
-            this,                               //
-            SLOT(onViewScreenChanged(QScreen*)) //
-    );
+    // monitor the screenChanged signal from the top-level window
+    disconnect(this, SLOT(onViewScreenChanged(QScreen*)));
+    if (q_ptr->window()->windowHandle()) {
+      connect(q_ptr->window()->windowHandle(),    //
+              SIGNAL(screenChanged(QScreen*)),    //
+              this,                               //
+              SLOT(onViewScreenChanged(QScreen*)) //
+      );
+    }
+  } else { //#else
+    // call slot
+    q_ptr->onBrowserWindowCreated(window);
+
+    // create QWidget from cef browser widow, this will re-parent the CEF browser window
+    QWidget* browserWidget = QWidget::createWindowContainer(
+      window,
+      q_ptr,
+      Qt::CustomizeWindowHint | Qt::FramelessWindowHint | Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
+    Q_ASSERT_X(browserWidget, "QCefViewPrivateNCW::createBrowser", "Failed to create QWidget from cef browser window");
+    if (!browserWidget) {
+      qWarning("Failed to create QWidget from cef browser window");
+      browser->GetHost()->CloseBrowser(true);
+      return;
+    }
+
+    // capture the resource
+    ncw.qBrowserWindow_ = window;
+    ncw.qBrowserWidget_ = browserWidget;
+
+    // monitor the focus changed event globally
+    connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::onAppFocusChanged);
+
+    // initialize the layout and add browser widget to the layout
+    QVBoxLayout* layout = new QVBoxLayout();
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
+    layout->addWidget(ncw.qBrowserWidget_);
+    q_ptr->setLayout(layout);
+
+    // update mask
+    UpdateCefWindowMask(ncw.qBrowserWindow_, q_ptr->mask());
   }
-#else
-  // call slot
-  q_ptr->onBrowserWindowCreated(window);
-
-  // create QWidget from cef browser widow, this will re-parent the CEF browser window
-  QWidget* browserWidget = QWidget::createWindowContainer(
-    window,
-    q_ptr,
-    Qt::CustomizeWindowHint | Qt::FramelessWindowHint | Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
-  Q_ASSERT_X(browserWidget, "QCefViewPrivateNCW::createBrowser", "Failed to create QWidget from cef browser window");
-  if (!browserWidget) {
-    qWarning("Failed to create QWidget from cef browser window");
-    browser->GetHost()->CloseBrowser(true);
-    return;
-  }
-
-  // capture the resource
-  ncw.qBrowserWindow_ = window;
-  ncw.qBrowserWidget_ = browserWidget;
-
-  // monitor the focus changed event globally
-  connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::onAppFocusChanged);
-
-  // initialize the layout and add browser widget to the layout
-  QVBoxLayout* layout = new QVBoxLayout();
-  layout->setContentsMargins(0, 0, 0, 0);
-  layout->setSpacing(0);
-  layout->addWidget(ncw.qBrowserWidget_);
-  q_ptr->setLayout(layout);
-
-  // update mask
-  UpdateCefWindowMask(ncw.qBrowserWindow_, q_ptr->mask());
-#endif
+  //#endif
 }
 
 void
@@ -364,13 +380,15 @@ QCefViewPrivate::onAppFocusChanged(QWidget* old, QWidget* now)
 void
 QCefViewPrivate::onViewScreenChanged(QScreen* screen)
 {
-#if defined(CEF_USE_OSR)
-  if (pCefBrowser_)
-    pCefBrowser_->GetHost()->NotifyScreenInfoChanged();
-#else
-  Q_Q(QCefView);
-  UpdateCefWindowMask(ncw.qBrowserWindow_, q->mask());
-#endif
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    if (pCefBrowser_)
+      pCefBrowser_->GetHost()->NotifyScreenInfoChanged();
+  } else { //#else
+    Q_Q(QCefView);
+    UpdateCefWindowMask(ncw.qBrowserWindow_, q->mask());
+  }
+  //#endif
 }
 
 void
@@ -411,10 +429,12 @@ QCefViewPrivate::onCefWindowGotFocus()
 void
 QCefViewPrivate::onCefUpdateCursor(const QCursor& cursor)
 {
-#if defined(CEF_USE_OSR)
-  Q_Q(QCefView);
-  q->setCursor(cursor);
-#endif
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    Q_Q(QCefView);
+    q->setCursor(cursor);
+  }
+  //#endif
 }
 
 void
@@ -424,7 +444,6 @@ QCefViewPrivate::onCefInputStateChanged(bool editable)
   q->setAttribute(Qt::WA_InputMethodEnabled, editable);
 }
 
-#if defined(CEF_USE_OSR)
 void
 QCefViewPrivate::onOsrImeCursorRectChanged(const QRect& rc)
 {
@@ -574,7 +593,6 @@ QCefViewPrivate::onCefContextMenuDismissed()
 {
   osr.contextMenuCallback_.reset();
 }
-#endif
 
 bool
 QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
@@ -590,40 +608,43 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
   }
 #endif
 
-#if defined(CEF_USE_OSR)
-  // if the parent chain changed, we need to re-connect the screenChanged signal
-  if (et == QEvent::ParentChange) {
-    QWidget* w = qobject_cast<QWidget*>(watched);
-    if (w && (w == q || w->isAncestorOf(q))) {
-      // reconnect the screenChanged
-      disconnect(this, SLOT(onViewScreenChanged(QScreen*)));
-      if (q->window()->windowHandle()) {
-        connect(q->window()->windowHandle(),        //
-                SIGNAL(screenChanged(QScreen*)),    //
-                this,                               //
-                SLOT(onViewScreenChanged(QScreen*)) //
-        );
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+
+    // if the parent chain changed, we need to re-connect the screenChanged signal
+    if (et == QEvent::ParentChange) {
+      QWidget* w = qobject_cast<QWidget*>(watched);
+      if (w && (w == q || w->isAncestorOf(q))) {
+        // reconnect the screenChanged
+        disconnect(this, SLOT(onViewScreenChanged(QScreen*)));
+        if (q->window()->windowHandle()) {
+          connect(q->window()->windowHandle(),        //
+                  SIGNAL(screenChanged(QScreen*)),    //
+                  this,                               //
+                  SLOT(onViewScreenChanged(QScreen*)) //
+          );
+        }
+      }
+    }
+
+    if (watched == q && (et == QEvent::KeyPress || et == QEvent::KeyRelease)) {
+      QKeyEvent* ke = (QKeyEvent*)event;
+      if (ke->key() == Qt::Key_Tab || ke->key() == Qt::Key_Backtab) {
+        onViewKeyEvent(ke);
+        return true;
+      }
+    }
+  } else { //#else
+    // filter event to the browser window
+    if (watched == ncw.qBrowserWindow_ && et == QEvent::PlatformSurface) {
+      auto t = ((QPlatformSurfaceEvent*)event)->surfaceEventType();
+      if (QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed == t) {
+        // browser window is being destroyed, need to close the browser window in advance
+        destroyCefBrowser();
       }
     }
   }
-
-  if (watched == q && (et == QEvent::KeyPress || et == QEvent::KeyRelease)) {
-    QKeyEvent* ke = (QKeyEvent*)event;
-    if (ke->key() == Qt::Key_Tab || ke->key() == Qt::Key_Backtab) {
-      onViewKeyEvent(ke);
-      return true;
-    }
-  }
-#else
-  // filter event to the browser window
-  if (watched == ncw.qBrowserWindow_ && et == QEvent::PlatformSurface) {
-    auto t = ((QPlatformSurfaceEvent*)event)->surfaceEventType();
-    if (QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed == t) {
-      // browser window is being destroyed, need to close the browser window in advance
-      destroyCefBrowser();
-    }
-  }
-#endif
+  //#endif
 
   return QObject::eventFilter(watched, event);
 }
@@ -631,235 +652,256 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 QVariant
 QCefViewPrivate::onViewInputMethodQuery(Qt::InputMethodQuery query) const
 {
-#if defined(CEF_USE_OSR)
-  switch (query) {
-    case Qt::ImCursorRectangle:
-      return QVariant(osr.qImeCursorRect_);
-    case Qt::ImAnchorRectangle:
-      break;
-    case Qt::ImFont:
-      break;
-    case Qt::ImCursorPosition:
-      break;
-    case Qt::ImSurroundingText:
-      break;
-    case Qt::ImCurrentSelection:
-      break;
-    case Qt::ImMaximumTextLength:
-      break;
-    case Qt::ImAnchorPosition:
-      break;
-    default:
-      break;
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    switch (query) {
+      case Qt::ImCursorRectangle:
+        return QVariant(osr.qImeCursorRect_);
+      case Qt::ImAnchorRectangle:
+        break;
+      case Qt::ImFont:
+        break;
+      case Qt::ImCursorPosition:
+        break;
+      case Qt::ImSurroundingText:
+        break;
+      case Qt::ImCurrentSelection:
+        break;
+      case Qt::ImMaximumTextLength:
+        break;
+      case Qt::ImAnchorPosition:
+        break;
+      default:
+        break;
+    }
   }
-#endif
+  //#endif
   return QVariant();
 }
 
 void
 QCefViewPrivate::onViewInputMethodEvent(QInputMethodEvent* event)
 {
-#if defined(CEF_USE_OSR)
-  if (!pCefBrowser_)
-    return;
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    if (!pCefBrowser_)
+      return;
 
-  auto composingText = event->preeditString();
-  auto composedText = event->commitString();
+    auto composingText = event->preeditString();
+    auto composedText = event->commitString();
 
-  if (!composedText.isEmpty()) {
-    pCefBrowser_->GetHost()->ImeCommitText(composedText.toStdString(), CefRange(UINT32_MAX, UINT32_MAX), 0);
-  } else if (!composingText.isEmpty()) {
-    CefCompositionUnderline underline;
-    underline.background_color = 0;
-    underline.range = { 0, (int)composingText.length() };
+    if (!composedText.isEmpty()) {
+      pCefBrowser_->GetHost()->ImeCommitText(composedText.toStdString(), CefRange(UINT32_MAX, UINT32_MAX), 0);
+    } else if (!composingText.isEmpty()) {
+      CefCompositionUnderline underline;
+      underline.background_color = 0;
+      underline.range = { 0, (int)composingText.length() };
 
-    CefRange selectionRange;
-    for (auto& attr : event->attributes()) {
-      switch (attr.type) {
-        case QInputMethodEvent::TextFormat:
-          break;
-        case QInputMethodEvent::Cursor:
-          selectionRange.Set(attr.start, attr.start);
-          break;
-        case QInputMethodEvent::Language:
-        case QInputMethodEvent::Ruby:
-        case QInputMethodEvent::Selection:
-          break;
-        default:
-          break;
+      CefRange selectionRange;
+      for (auto& attr : event->attributes()) {
+        switch (attr.type) {
+          case QInputMethodEvent::TextFormat:
+            break;
+          case QInputMethodEvent::Cursor:
+            selectionRange.Set(attr.start, attr.start);
+            break;
+          case QInputMethodEvent::Language:
+          case QInputMethodEvent::Ruby:
+          case QInputMethodEvent::Selection:
+            break;
+          default:
+            break;
+        }
       }
+      pCefBrowser_->GetHost()->ImeSetComposition(
+        composingText.toStdString(), { underline }, CefRange(UINT32_MAX, UINT32_MAX), selectionRange);
+    } else {
+      pCefBrowser_->GetHost()->ImeCancelComposition();
     }
-    pCefBrowser_->GetHost()->ImeSetComposition(
-      composingText.toStdString(), { underline }, CefRange(UINT32_MAX, UINT32_MAX), selectionRange);
-  } else {
-    pCefBrowser_->GetHost()->ImeCancelComposition();
   }
-#endif
+  //#endif
 }
 
 void
 QCefViewPrivate::onViewVisibilityChanged(bool visible)
 {
-#if defined(CEF_USE_OSR)
-  if (pCefBrowser_)
-    pCefBrowser_->GetHost()->WasHidden(!visible);
-#else
-  Q_Q(QCefView);
-  if (ncw.qBrowserWidget_) {
-    if (visible) {
-#if defined(Q_OS_LINUX) && !defined(CEF_USE_OSR)
-      if (::XMapWindow(X11GetDisplay(ncw.qBrowserWidget_), ncw.qBrowserWindow_->winId()) <= 0)
-        qWarning() << "Failed to move input focus";
-        // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
-        // with the QCefView widget
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    if (pCefBrowser_)
+      pCefBrowser_->GetHost()->WasHidden(!visible);
+  } else { //#else
+    Q_Q(QCefView);
+    if (ncw.qBrowserWidget_) {
+      if (visible) {
+        //#if !defined(CEF_USE_OSR)
+        if (!isOSRModeEnabled_) {
+#if defined(Q_OS_LINUX)
+          if (::XMapWindow(X11GetDisplay(ncw.qBrowserWidget_), ncw.qBrowserWindow_->winId()) <= 0)
+            qWarning() << "Failed to move input focus";
+            // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
+            // with the QCefView widget
 #endif
-      ncw.qBrowserWidget_->resize(q->frameSize());
-    } else {
-      ncw.qBrowserWidget_->resize(0, 0);
+        }
+        //#endif
+        ncw.qBrowserWidget_->resize(q->frameSize());
+      } else {
+        ncw.qBrowserWidget_->resize(0, 0);
+      }
     }
   }
-#endif
+  //#endif
 }
 
 void
 QCefViewPrivate::onViewFocusChanged(bool focused)
 {
-#if defined(CEF_USE_OSR)
-  if (pCefBrowser_) {
-    if (focused) {
-      pCefBrowser_->GetHost()->SetFocus(focused);
-    } else if (!osr.isShowingContextMenu_) {
-      pCefBrowser_->GetHost()->SetFocus(focused);
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    if (pCefBrowser_) {
+      if (focused) {
+        pCefBrowser_->GetHost()->SetFocus(focused);
+      } else if (!osr.isShowingContextMenu_) {
+        pCefBrowser_->GetHost()->SetFocus(focused);
+      }
     }
   }
-#endif
+  //#endif
 }
 
 void
 QCefViewPrivate::onViewSizeChanged(const QSize& size, const QSize& oldSize)
 {
-#if defined(CEF_USE_OSR)
-  if (pCefBrowser_)
-    pCefBrowser_->GetHost()->WasResized();
-#else
-  Q_Q(QCefView);
-  UpdateCefWindowMask(ncw.qBrowserWindow_, q->mask());
-#endif
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    if (pCefBrowser_)
+      pCefBrowser_->GetHost()->WasResized();
+  } else { //#else
+    Q_Q(QCefView);
+    UpdateCefWindowMask(ncw.qBrowserWindow_, q->mask());
+  }
+  //#endif
 }
 
 void
 QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
 {
-#if defined(CEF_USE_OSR)
-  if (!pCefBrowser_)
-    return;
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    if (!pCefBrowser_)
+      return;
 
-  // qDebug("==== onViewKeyEvent:key=%d, nativeVirtualKey=0x%02x, nativeScanCode=0x%02x, modifiers=0x%08x, "
-  //       "nativeModifiers=0x%08x, text=%s",
-  //       (Qt::Key)(event->key()),
-  //       event->nativeVirtualKey(),
-  //       event->nativeScanCode(),
-  //       (quint32)(event->modifiers()),
-  //       event->nativeModifiers(),
-  //       event->text().toStdString().c_str());
+    // qDebug("==== onViewKeyEvent:key=%d, nativeVirtualKey=0x%02x, nativeScanCode=0x%02x, modifiers=0x%08x, "
+    //       "nativeModifiers=0x%08x, text=%s",
+    //       (Qt::Key)(event->key()),
+    //       event->nativeVirtualKey(),
+    //       event->nativeScanCode(),
+    //       (quint32)(event->modifiers()),
+    //       event->nativeModifiers(),
+    //       event->text().toStdString().c_str());
 
-  CefKeyEvent e;
-  MapQKeyEventToCefKeyEvent(event, e);
+    CefKeyEvent e;
+    MapQKeyEventToCefKeyEvent(event, e);
 
-  // QEvent::KeyRelease - send key release event
-  if (event->type() == QEvent::KeyRelease) {
-    e.type = KEYEVENT_KEYUP;
+    // QEvent::KeyRelease - send key release event
+    if (event->type() == QEvent::KeyRelease) {
+      e.type = KEYEVENT_KEYUP;
+      pCefBrowser_->GetHost()->SendKeyEvent(e);
+      return;
+    }
+
+    // QEvent::KeyPress - send key down event
+    e.type = KEYEVENT_RAWKEYDOWN;
     pCefBrowser_->GetHost()->SendKeyEvent(e);
-    return;
-  }
 
-  // QEvent::KeyPress - send key down event
-  e.type = KEYEVENT_RAWKEYDOWN;
-  pCefBrowser_->GetHost()->SendKeyEvent(e);
-
-  // send key char event
-  if (ShouldSendKeyCharEvent(event)) {
-    AdjustCefKeyCharEvent(event, e);
-    e.type = KEYEVENT_CHAR;
-    pCefBrowser_->GetHost()->SendKeyEvent(e);
+    // send key char event
+    if (ShouldSendKeyCharEvent(event)) {
+      AdjustCefKeyCharEvent(event, e);
+      e.type = KEYEVENT_CHAR;
+      pCefBrowser_->GetHost()->SendKeyEvent(e);
+    }
   }
-#endif
+  //#endif
 }
 
 void
 QCefViewPrivate::onViewMouseEvent(QMouseEvent* event)
 {
-#if defined(CEF_USE_OSR)
-  if (!pCefBrowser_)
-    return;
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    if (!pCefBrowser_)
+      return;
 
-  auto b = event->buttons();
-  auto m = event->modifiers();
+    auto b = event->buttons();
+    auto m = event->modifiers();
 
-  CefMouseEvent e;
-  e.x = ((QMouseEvent*)event)->pos().x();
-  e.y = ((QMouseEvent*)event)->pos().y();
-  e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
-  e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
-  e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
-  e.modifiers |= b & Qt::LeftButton ? EVENTFLAG_LEFT_MOUSE_BUTTON : 0;
-  e.modifiers |= b & Qt::RightButton ? EVENTFLAG_RIGHT_MOUSE_BUTTON : 0;
-  e.modifiers |= b & Qt::MiddleButton ? EVENTFLAG_MIDDLE_MOUSE_BUTTON : 0;
+    CefMouseEvent e;
+    e.x = ((QMouseEvent*)event)->pos().x();
+    e.y = ((QMouseEvent*)event)->pos().y();
+    e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
+    e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
+    e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
+    e.modifiers |= b & Qt::LeftButton ? EVENTFLAG_LEFT_MOUSE_BUTTON : 0;
+    e.modifiers |= b & Qt::RightButton ? EVENTFLAG_RIGHT_MOUSE_BUTTON : 0;
+    e.modifiers |= b & Qt::MiddleButton ? EVENTFLAG_MIDDLE_MOUSE_BUTTON : 0;
 
-  if (QEvent::MouseMove == event->type()) {
-    pCefBrowser_->GetHost()->SendMouseMoveEvent(e, false);
-    return;
+    if (QEvent::MouseMove == event->type()) {
+      pCefBrowser_->GetHost()->SendMouseMoveEvent(e, false);
+      return;
+    }
+
+    // qDebug() << "====== onViewMouseEvent:" << event;
+
+    CefBrowserHost::MouseButtonType mbt = MBT_LEFT;
+    switch (event->button()) {
+      case Qt::LeftButton: {
+        mbt = MBT_LEFT;
+      } break;
+      case Qt::RightButton: {
+        mbt = MBT_RIGHT;
+      } break;
+      case Qt::MiddleButton: {
+        mbt = MBT_MIDDLE;
+      } break;
+      default:
+        break;
+    }
+
+    if (QEvent::MouseButtonPress == event->type()) {
+      pCefBrowser_->GetHost()->SendMouseClickEvent(e, mbt, false, 1);
+    } else if (QEvent::MouseButtonDblClick == event->type()) {
+      pCefBrowser_->GetHost()->SendMouseClickEvent(e, mbt, false, 2);
+    } else if (QEvent::MouseButtonRelease == event->type()) {
+      // if the release was generated right after a popup, we must discard it
+      pCefBrowser_->GetHost()->SendMouseClickEvent(e, mbt, true, 1);
+    }
   }
-
-  // qDebug() << "====== onViewMouseEvent:" << event;
-
-  CefBrowserHost::MouseButtonType mbt = MBT_LEFT;
-  switch (event->button()) {
-    case Qt::LeftButton: {
-      mbt = MBT_LEFT;
-    } break;
-    case Qt::RightButton: {
-      mbt = MBT_RIGHT;
-    } break;
-    case Qt::MiddleButton: {
-      mbt = MBT_MIDDLE;
-    } break;
-    default:
-      break;
-  }
-
-  if (QEvent::MouseButtonPress == event->type()) {
-    pCefBrowser_->GetHost()->SendMouseClickEvent(e, mbt, false, 1);
-  } else if (QEvent::MouseButtonDblClick == event->type()) {
-    pCefBrowser_->GetHost()->SendMouseClickEvent(e, mbt, false, 2);
-  } else if (QEvent::MouseButtonRelease == event->type()) {
-    // if the release was generated right after a popup, we must discard it
-    pCefBrowser_->GetHost()->SendMouseClickEvent(e, mbt, true, 1);
-  }
-#endif
+  //#endif
 }
 
 void
 QCefViewPrivate::onViewWheelEvent(QWheelEvent* event)
 {
-#if defined(CEF_USE_OSR)
-  auto p = event->position();
-  auto d = event->angleDelta();
-  auto m = event->modifiers();
-  auto b = event->buttons();
+  //#if defined(CEF_USE_OSR)
+  if (isOSRModeEnabled_) {
+    auto p = event->position();
+    auto d = event->angleDelta();
+    auto m = event->modifiers();
+    auto b = event->buttons();
 
-  CefMouseEvent e;
-  e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
-  e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
-  e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
-  e.modifiers |= b & Qt::LeftButton ? EVENTFLAG_LEFT_MOUSE_BUTTON : 0;
-  e.modifiers |= b & Qt::RightButton ? EVENTFLAG_RIGHT_MOUSE_BUTTON : 0;
-  e.modifiers |= b & Qt::MiddleButton ? EVENTFLAG_MIDDLE_MOUSE_BUTTON : 0;
+    CefMouseEvent e;
+    e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
+    e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
+    e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
+    e.modifiers |= b & Qt::LeftButton ? EVENTFLAG_LEFT_MOUSE_BUTTON : 0;
+    e.modifiers |= b & Qt::RightButton ? EVENTFLAG_RIGHT_MOUSE_BUTTON : 0;
+    e.modifiers |= b & Qt::MiddleButton ? EVENTFLAG_MIDDLE_MOUSE_BUTTON : 0;
 
-  e.x = p.x();
-  e.y = p.y();
-  pCefBrowser_->GetHost()->SendMouseWheelEvent(e, m & Qt::ShiftModifier ? 0 : d.x(), m & Qt::ShiftModifier ? 0 : d.y());
-#endif
+    e.x = p.x();
+    e.y = p.y();
+    pCefBrowser_->GetHost()->SendMouseWheelEvent(
+      e, m & Qt::ShiftModifier ? 0 : d.x(), m & Qt::ShiftModifier ? 0 : d.y());
+  }
+  //#endif
 }
 
 int

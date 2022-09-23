@@ -44,6 +44,20 @@ QCefConfig::addCommandLineSwitchWithValue(const QString& smitch, const QString& 
   d->commandLineArgs_[smitch.toStdString()] = v.toStdString();
 }
 
+void
+QCefConfig::setWindowlessRenderingEnabled(const bool enabled)
+{
+  Q_D(QCefConfig);
+  d->windowlessRenderingEnabled_ = enabled;
+}
+
+const QVariant
+QCefConfig::WindowlessRenderingEnabled() const
+{
+  Q_D(const QCefConfig);
+  return d->windowlessRenderingEnabled_;
+}
+
 #if !defined(Q_OS_MACOS)
 void
 QCefConfig::setBrowserSubProcessPath(const QString& path)

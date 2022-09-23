@@ -1,5 +1,4 @@
-﻿#if defined(CEF_USE_OSR)
-#pragma once
+﻿#pragma once
 #include <QKeyEvent>
 
 #include <include/cef_app.h>
@@ -12,5 +11,3 @@ ShouldSendKeyCharEvent(QKeyEvent* qe);
 
 void
 AdjustCefKeyCharEvent(QKeyEvent* qe, CefKeyEvent& ce);
-
-#endif
