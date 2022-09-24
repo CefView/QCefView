@@ -14,17 +14,6 @@
 #include <QWindow>
 #pragma endregion qt_headers
 
-//#if !defined(CEF_USE_OSR)
-#if defined(Q_OS_WINDOWS)
-#include <Windows.h>
-#endif
-
-#if defined(Q_OS_LINUX)
-#include <X11/Xlib.h>
-#include <qpa/qplatformnativeinterface.h>
-#endif
-//#endif
-
 #pragma region cef_headers
 #include <include/cef_app.h>
 #include <include/cef_browser.h>
@@ -41,55 +30,6 @@
 #include "utils/KeyboardUtils.h"
 #include "utils/MenuBuilder.h"
 #include "utils/ValueConvertor.h"
-
-//#if !defined(CEF_USE_OSR)
-#if defined(Q_OS_WINDOWS)
-void
-UpdateCefWindowMask(QWindow* w, const QRegion& r)
-{
-  if (w) {
-    // this doesn't work
-    // ncw.qBrowserWindow_->setMask(q->mask());
-#if defined(Q_OS_WINDOWS)
-    // for Windows
-    ::SetWindowRgn((HWND)w->winId(), r.toHRGN(), true);
-#elif defined(Q_OS_MACOS)
-    // for macOS
-#elif defined(Q_OS_LINUX)
-    // for Linux
-#endif
-  }
-}
-#endif
-
-#if defined(Q_OS_LINUX)
-Display*
-X11GetDisplay(QWidget* widget)
-{
-  Q_ASSERT_X(widget, "X11GetDisplay", "Invalid parameter widget");
-  if (!widget) {
-    qWarning("Invalid parameter widget");
-    return nullptr;
-  }
-
-  auto platformInterface = QApplication::platformNativeInterface();
-  Q_ASSERT_X(platformInterface, "X11GetDisplay", "Failed to get platform native interface");
-  if (!platformInterface) {
-    qWarning("Failed to get platform native interface");
-    return nullptr;
-  }
-
-  auto screen = widget->window()->windowHandle()->screen();
-  Q_ASSERT_X(screen, "X11GetDisplay", "Failed to get screen");
-  if (!screen) {
-    qWarning("Failed to get screen");
-    return nullptr;
-  }
-
-  return (Display*)platformInterface->nativeResourceForScreen("display", screen);
-}
-#endif
-//#endif
 
 QSet<QCefViewPrivate*> QCefViewPrivate::sLiveInstances;
 
@@ -610,7 +550,6 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 
   //#if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
-
     // if the parent chain changed, we need to re-connect the screenChanged signal
     if (et == QEvent::ParentChange) {
       QWidget* w = qobject_cast<QWidget*>(watched);
@@ -627,7 +566,7 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
       }
     }
 
-    if (watched == q && (et == QEvent::KeyPress || et == QEvent::KeyRelease)) {
+    if (watched == q && (et == QEvent::Type::KeyPress || et == QEvent::Type::KeyRelease)) {
       QKeyEvent* ke = (QKeyEvent*)event;
       if (ke->key() == Qt::Key_Tab || ke->key() == Qt::Key_Backtab) {
         onViewKeyEvent(ke);
@@ -736,10 +675,9 @@ QCefViewPrivate::onViewVisibilityChanged(bool visible)
         //#if !defined(CEF_USE_OSR)
         if (!isOSRModeEnabled_) {
 #if defined(Q_OS_LINUX)
-          if (::XMapWindow(X11GetDisplay(ncw.qBrowserWidget_), ncw.qBrowserWindow_->winId()) <= 0)
-            qWarning() << "Failed to move input focus";
-            // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
-            // with the QCefView widget
+          XRemapWindow(ncw.qBrowserWidget_, ncw.qBrowserWindow_);
+          // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
+          // with the QCefView widget
 #endif
         }
         //#endif
