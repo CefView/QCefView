@@ -151,7 +151,6 @@ public:
                                  CefRefPtr<CefDownloadItemCallback> callback) override;
 
   // RenderHandler
-#if defined(CEF_USE_OSR)
   virtual bool getRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
   virtual void getViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
   virtual bool getScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int viewY, int& screenX, int& screenY) override;
@@ -183,5 +182,4 @@ public:
                                       const CefRange& selected_range) override;
   virtual void onVirtualKeyboardRequested(CefRefPtr<CefBrowser> browser,
                                           CefRenderHandler::TextInputMode input_mode) override;
-#endif
 };

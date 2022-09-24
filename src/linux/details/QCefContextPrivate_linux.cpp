@@ -14,10 +14,6 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   cef_settings.multi_threaded_message_loop = true;
   cef_settings.external_message_pump = false;
 
-#if defined(CEF_USE_OSR)
-  cef_settings.windowless_rendering_enabled = true;
-#endif
-
 #if !defined(CEF_USE_SANDBOX)
   cef_settings.no_sandbox = true;
 #endif

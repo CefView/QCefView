@@ -1,5 +1,4 @@
-#if defined(CEF_USE_OSR)
-#include "KeyboardUtils.h"
+﻿#include "KeyboardUtils.h"
 
 #if defined(Q_OS_MACOS)
 /* MacRoman character codes*/
@@ -235,15 +234,15 @@ macGetKeyCharacter(QKeyEvent* qe)
 {
   if (qe->key() == Qt::Key_Meta)
     return 0;
-  
+
   if (qe->key() >= Qt::Key_F1 && qe->key() <= Qt::Key_F35) {
     return qe->key() + 0xf704 - Qt::Key_F1;
   }
-  
+
   if (macOSCharCodeMap.contains(qe->key())) {
     return macOSCharCodeMap[qe->key()];
   }
-  
+
   if (!qe->text().isEmpty()) {
     return qe->text().at(0).unicode();
   }
@@ -256,15 +255,15 @@ macGetUnmodifiedKeyCharacter(QKeyEvent* qe)
 {
   if (qe->key() == Qt::Key_Meta)
     return 0;
-  
+
   if (qe->key() >= Qt::Key_F1 && qe->key() <= Qt::Key_F35) {
     return qe->key() + 0xf704 - Qt::Key_F1;
   }
-  
+
   if (macOSCharCodeMap.contains(qe->key())) {
     return macOSCharCodeMap[qe->key()];
   }
-  
+
   return qe->key();
 }
 
@@ -712,5 +711,3 @@ AdjustCefKeyCharEvent(QKeyEvent* qe, CefKeyEvent& ce)
   }
 #endif
 }
-
-#endif

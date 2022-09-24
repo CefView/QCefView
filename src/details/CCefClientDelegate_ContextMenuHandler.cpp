@@ -36,10 +36,12 @@ CCefClientDelegate::onBeforeContextMenu(CefRefPtr<CefBrowser> browser,
     return;
   }
 
-#if defined(CEF_USE_OSR)
-  auto menuData = MenuBuilder::CreateMenuDataFromCefMenu(model.get());
-  QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onBeforeCefContextMenu(menuData); });
-#endif
+  //#if defined(CEF_USE_OSR)
+  if (pCefViewPrivate_->isOSRModeEnabled()) {
+    auto menuData = MenuBuilder::CreateMenuDataFromCefMenu(model.get());
+    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onBeforeCefContextMenu(menuData); });
+  }
+  //#endif
 
   return;
 }
@@ -57,15 +59,17 @@ CCefClientDelegate::onRunContextMenu(CefRefPtr<CefBrowser> browser,
     return false;
   }
 
-#if defined(CEF_USE_OSR)
-  // OSR mode, create context menu with CEF built-in menu mode and show as customized context menu
-  QPoint pos(params->GetXCoord(), params->GetYCoord());
-  QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onRunCefContextMenu(pos, callback); });
-  return true;
-#else
-  // NCW mode, allow allow CEF native context menu
-  return false;
-#endif
+  //#if defined(CEF_USE_OSR)
+  if (pCefViewPrivate_->isOSRModeEnabled()) {
+    // OSR mode, create context menu with CEF built-in menu mode and show as customized context menu
+    QPoint pos(params->GetXCoord(), params->GetYCoord());
+    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onRunCefContextMenu(pos, callback); });
+    return true;
+  } else { //#else
+    // NCW mode, allow allow CEF native context menu
+    return false;
+  }
+  //#endif
 }
 
 bool
@@ -85,7 +89,9 @@ CCefClientDelegate::onContextMenuDismissed(CefRefPtr<CefBrowser> browser, CefRef
 {
   FLog();
 
-#if defined(CEF_USE_OSR)
-  QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefContextMenuDismissed(); });
-#endif
+  //#if defined(CEF_USE_OSR)
+  if (pCefViewPrivate_->isOSRModeEnabled()) {
+    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefContextMenuDismissed(); });
+  }
+  //#endif
 }

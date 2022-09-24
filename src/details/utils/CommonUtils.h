@@ -1,6 +1,8 @@
-#pragma once
+﻿#pragma once
 #include <QDebug>
 #include <QMetaType>
+#include <QRegion>
+#include <QWindow>
 
 #define REGISTER_METATYPE(TYPE)                                                                                        \
   static struct TYPE##_MetaTypeRegister                                                                                \
@@ -27,3 +29,9 @@ public:
 #else
 #define FLog()
 #endif
+
+void
+UpdateCefWindowMask(QWindow* w, const QRegion& r);
+
+void
+XRemapWindow(QWidget* widget, QWindow* window);

@@ -197,17 +197,19 @@ CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser> browser,
   if (!IsValidBrowser(browser))
     return false;
 
-#if defined(CEF_USE_OSR)
-  QCursor cur;
-  if (type != CT_CUSTOM) {
-    cur.setShape(mapCursorShape(type));
-  } else {
+  //#if defined(CEF_USE_OSR)
+  if (pCefViewPrivate_->isOSRModeEnabled()) {
+    QCursor cur;
+    if (type != CT_CUSTOM) {
+      cur.setShape(mapCursorShape(type));
+    } else {
+    }
+
+    QMetaObject::invokeMethod(pCefViewPrivate_, "onCefUpdateCursor", Q_ARG(const QCursor&, cur));
+
+    return true;
+  } else { //#else
+    return false;
   }
-
-  QMetaObject::invokeMethod(pCefViewPrivate_, "onCefUpdateCursor", Q_ARG(const QCursor&, cur));
-
-  return true;
-#else
-  return false;
-#endif
+  //#endif
 }

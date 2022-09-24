@@ -63,7 +63,13 @@ public:
   /// </summary>
   CefRefPtr<CefBrowser> pCefBrowser_ = nullptr;
 
-#if defined(CEF_USE_OSR)
+  /// <summary>
+  ///
+  /// </summary>
+  bool isOSRModeEnabled_ = false;
+
+  //#if defined(CEF_USE_OSR)
+
   /// <summary>
   /// Offscreen rendering private data
   /// </summary>
@@ -124,7 +130,9 @@ public:
     /// </summary>
     CefRefPtr<CefRunContextMenuCallback> contextMenuCallback_;
   } osr;
-#else
+
+  //#else
+
   /// <summary>
   /// Native child window private data
   /// </summary>
@@ -140,7 +148,8 @@ public:
     /// </summary>
     QWidget* qBrowserWidget_ = nullptr;
   } ncw;
-#endif
+
+  //#endif
 
 #if defined(QT_DEBUG)
   QElapsedTimer paintTimer_;
@@ -163,6 +172,8 @@ public:
   void addArchiveResource(const QString& path, const QString& url, const QString& password = "", int priority = 0);
 
   void setCefWindowFocus(bool focus);
+
+  bool isOSRModeEnabled() const;
 
 protected:
   void onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
@@ -192,7 +203,7 @@ public slots:
 
   void onCefInputStateChanged(bool editable);
 
-#if defined(CEF_USE_OSR)
+  //#if defined(CEF_USE_OSR)
   void onOsrImeCursorRectChanged(const QRect& rc);
 
   void onOsrShowPopup(bool show);
@@ -216,7 +227,7 @@ protected:
   void onRunCefContextMenu(QPoint pos, CefRefPtr<CefRunContextMenuCallback> callback);
 
   void onCefContextMenuDismissed();
-#endif
+  //#endif
 
 protected:
   virtual bool eventFilter(QObject* watched, QEvent* event) override;
