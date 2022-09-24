@@ -61,7 +61,8 @@ protected slots:
 private:
   Ui::MainWindow ui;
 
-  CefViewWidget* cefViewWidget = nullptr;
+  CefViewWidget* leftCefViewWidget = nullptr;
+  CefViewWidget* rightCefViewWidget = nullptr;
   QRegion draggableRegion_;
   QRegion nonDraggableRegion_;
 };
