@@ -46,16 +46,11 @@ CCefClientDelegate::getViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
     return;
   }
 
-  // Note: the documentation of the CefRenderHandler::GetViewRect
-  // says `the rect is relative to the screen coordinates` but actually
-  // it is relative to the top level window. In the source code of of the cefclient example
-  // it just returns the rect retrieved from GetClinetRect which is relative to the window
   QSize rcSize = pCefViewPrivate_->q_ptr->size();
-  QPoint ptWindow = pCefViewPrivate_->q_ptr->mapTo(pCefViewPrivate_->q_ptr->window(), QPoint(0, 0));
 
   // qDebug() << "CCefClientDelegate::GetViewRect:" << QRect(ptWindow, rcSize);
 
-  rect.Set(ptWindow.x(), ptWindow.y(), rcSize.width() ? rcSize.width() : 1, rcSize.height() ? rcSize.height() : 1);
+  rect.Set(0, 0, rcSize.width() ? rcSize.width() : 1, rcSize.height() ? rcSize.height() : 1);
 }
 
 bool
