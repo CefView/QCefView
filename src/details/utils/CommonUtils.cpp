@@ -1,5 +1,7 @@
-﻿#pragma once
 #include "CommonUtils.h"
+#include <QWidget>
+#include <QWindow>
+
 
 #if defined(Q_OS_WINDOWS)
 #include <Windows.h>
@@ -36,7 +38,7 @@ QRegionToHRGN(const QRegion& region)
 
 #if defined(Q_OS_LINUX)
 #include <X11/Xlib.h>
-#include <QWidget>
+#include <QApplication>
 #include <QScreen>
 #include <qpa/qplatformnativeinterface.h>
 
