@@ -86,37 +86,11 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 bool
 CCefClientDelegate::doClose(CefRefPtr<CefBrowser> browser)
 {
-  if (!pCefViewPrivate_)
-    return false;
-
-  Qt::ConnectionType c =
-    pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection : Qt::BlockingQueuedConnection;
-
-  bool rt = false;
-  QMetaObject::invokeMethod(
-    pCefViewPrivate_,
-    [this, browser, &rt]() {
-      CefRefPtr<CefBrowser> b(browser);
-      rt = pCefViewPrivate_->onCefDoCloseBrowser(b);
-    },
-    c);
-  return rt;
+  return false;
 }
 
 void
 CCefClientDelegate::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 {
-  if (!pCefViewPrivate_)
-    return;
-
-  Qt::ConnectionType c =
-    pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection : Qt::BlockingQueuedConnection;
-
-  QMetaObject::invokeMethod(
-    pCefViewPrivate_,
-    [this, browser]() {
-      CefRefPtr<CefBrowser> b(browser);
-      pCefViewPrivate_->onCefBeforeCloseBrowser(b);
-    },
-    c);
+  return;
 }

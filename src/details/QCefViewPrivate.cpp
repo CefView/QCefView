@@ -260,18 +260,6 @@ QCefViewPrivate::onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindo
 }
 
 bool
-QCefViewPrivate::onCefDoCloseBrowser(CefRefPtr<CefBrowser>& browser)
-{
-  return false;
-}
-
-void
-QCefViewPrivate::onCefBeforeCloseBrowser(CefRefPtr<CefBrowser>& browser)
-{
-  return;
-}
-
-bool
 QCefViewPrivate::handleLoadError(CefRefPtr<CefBrowser>& browser,
                                  CefRefPtr<CefFrame>& frame,
                                  int errorCode,

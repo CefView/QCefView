@@ -180,10 +180,6 @@ protected:
 
   void onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
 
-  bool onCefDoCloseBrowser(CefRefPtr<CefBrowser>& browser);
-
-  void onCefBeforeCloseBrowser(CefRefPtr<CefBrowser>& browser);
-
   bool handleLoadError(CefRefPtr<CefBrowser>& browser,
                        CefRefPtr<CefFrame>& frame,
                        int errorCode,
