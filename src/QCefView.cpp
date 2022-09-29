@@ -28,6 +28,9 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
 
   setMouseTracking(true);
   setFocusPolicy(Qt::WheelFocus);
+
+  // create browser
+  d_ptr->createCefBrowser(this, url, setting);
 }
 
 QCefView::QCefView(QWidget* parent /*= 0*/)
@@ -37,6 +40,11 @@ QCefView::QCefView(QWidget* parent /*= 0*/)
 QCefView::~QCefView()
 {
   qDebug() << this << "is being destructed";
+
+  if (d_ptr) {
+    d_ptr->destroyCefBrowser();
+    d_ptr.reset();
+  }
 }
 
 void

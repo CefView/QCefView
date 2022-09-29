@@ -52,14 +52,10 @@ QCefViewPrivate::QCefViewPrivate(QCefContextPrivate* ctx,
   sLiveInstances.insert(this);
 
   isOSRModeEnabled_ = pContextPrivate_->cefConfig()->WindowlessRenderingEnabled().toBool();
-
-  createCefBrowser(view, url, setting);
 }
 
 QCefViewPrivate::~QCefViewPrivate()
 {
-  destroyCefBrowser();
-
   sLiveInstances.remove(this);
 }
 
