@@ -50,7 +50,7 @@ public:
   /* bool */ QVariant javascriptCloseWindows_;
   /* bool */ QVariant javascriptAccessClipboard_;
   /* bool */ QVariant javascriptDomPaste_;
-  /* bool */ QVariant plugins_;
+  /* bool */ //QVariant plugins_;
   /* bool */ QVariant imageLoading_;
   /* bool */ QVariant imageShrinkStandaloneToFit_;
   /* bool */ QVariant textAreaResize_;

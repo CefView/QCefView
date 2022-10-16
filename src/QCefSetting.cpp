@@ -280,15 +280,15 @@ void
 QCefSetting::setPlugins(const bool value)
 {
   Q_D(QCefSetting);
-  d->plugins_ = value;
+  //d->plugins_ = value;
 }
 
-const QVariant
-QCefSetting::plugins() const
-{
-  Q_D(const QCefSetting);
-  return d->plugins_;
-}
+//const QVariant
+//QCefSetting::plugins() const
+//{
+//  Q_D(const QCefSetting);
+//  //return d->plugins_;
+//}
 
 void
 QCefSetting::setImageLoading(const bool value)
