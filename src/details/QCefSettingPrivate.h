@@ -7,6 +7,7 @@
 
 #pragma region cef_headers
 #include <include/cef_app.h>
+#include <include/cef_version.h>
 #pragma endregion cef_headers
 
 #pragma region qt_headers
@@ -50,7 +51,9 @@ public:
   /* bool */ QVariant javascriptCloseWindows_;
   /* bool */ QVariant javascriptAccessClipboard_;
   /* bool */ QVariant javascriptDomPaste_;
-  /* bool */ //QVariant plugins_;
+  #if CEF_VERSION_MAJOR < 100
+  /* bool */ QVariant plugins_;
+  #endif
   /* bool */ QVariant imageLoading_;
   /* bool */ QVariant imageShrinkStandaloneToFit_;
   /* bool */ QVariant textAreaResize_;
