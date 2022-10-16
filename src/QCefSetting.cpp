@@ -276,19 +276,21 @@ QCefSetting::javascriptDomPaste() const
   return d->javascriptDomPaste_;
 }
 
+#if CEF_VERSION_MAJOR < 100
 void
 QCefSetting::setPlugins(const bool value)
 {
   Q_D(QCefSetting);
-  //d->plugins_ = value;
+  d->plugins_ = value;
 }
 
-//const QVariant
-//QCefSetting::plugins() const
-//{
-//  Q_D(const QCefSetting);
-//  //return d->plugins_;
-//}
+const QVariant
+QCefSetting::plugins() const
+{
+  Q_D(const QCefSetting);
+  return d->plugins_;
+}
+#endif
 
 void
 QCefSetting::setImageLoading(const bool value)
