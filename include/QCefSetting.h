@@ -17,6 +17,10 @@
 #include <QString>
 #pragma endregion qt_headers
 
+#pragma region cef_headers
+#include <include/cef_version.h>
+#pragma endregion cef_headers
+
 class QCefSettingPrivate;
 
 /// <summary>
