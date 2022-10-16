@@ -24,11 +24,12 @@ QCefDownloadItemPrivate::createQCefDownloadItem(CCefClientDelegate::RefPtr handl
   double t = 0;
   cef_time_t ct;
 
-  ct = cefItem.GetStartTime();
+  cef_time_from_basetime(cefItem.GetStartTime(), &ct);
+
   if (cef_time_to_doublet(&ct, &t))
     p->d_ptr->startTime = QDateTime::fromSecsSinceEpoch(t);
 
-  ct = cefItem.GetEndTime();
+  cef_time_from_basetime(cefItem.GetEndTime(), &ct);
   if (cef_time_to_doublet(&ct, &t))
     p->d_ptr->endTime = QDateTime::fromSecsSinceEpoch(t);
 
@@ -62,11 +63,11 @@ QCefDownloadItemPrivate::updateDownloadItem(QCefDownloadItem* p,
   double t = 0;
   cef_time_t ct;
 
-  ct = cefItem.GetStartTime();
+  cef_time_from_basetime(cefItem.GetStartTime(), &ct);
   if (cef_time_to_doublet(&ct, &t))
     p->d_ptr->startTime = QDateTime::fromSecsSinceEpoch(t);
 
-  ct = cefItem.GetEndTime();
+  cef_time_from_basetime(cefItem.GetEndTime(), &ct);
   if (cef_time_to_doublet(&ct, &t))
     p->d_ptr->endTime = QDateTime::fromSecsSinceEpoch(t);
 

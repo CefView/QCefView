@@ -274,11 +274,11 @@ public:
   /// <param name="value">True to enalbe; false to disable</param>
   void setPlugins(const bool value);
 
-  /// <summary>
-  /// Gets whether to enable or disable plugins
-  /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
-  const QVariant plugins() const;
+  ///// <summary>
+  ///// Gets whether to enable or disable plugins
+  ///// </summary>
+  ///// <returns>True to enalbe; false to disable</returns>
+  //const QVariant plugins() const;
 
   /// <summary>
   /// Sets to enable or disable the permission of loading images
