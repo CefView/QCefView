@@ -7,7 +7,6 @@
 
 #pragma region cef_headers
 #include <include/cef_app.h>
-#include <include/cef_version.h>
 #pragma endregion cef_headers
 
 #pragma region qt_headers

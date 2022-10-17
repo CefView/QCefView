@@ -27,7 +27,6 @@ file(WRITE ${CMAKE_BINARY_DIR}/auto_rebuild.cpp "/* Auto Rebuild Trigger */")
 
 include_directories(
   ${CMAKE_SOURCE_DIR}/include
-  ${CefViewCore_EXPORT_INCLUDE_PATH}
 )
 
 file(GLOB _SRC_FILES

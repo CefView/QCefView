@@ -1,7 +1,6 @@
 ﻿#include "QCefDownloadItemPrivate.h"
 
 #include <QCefDownloadItem.h>
-#include <include/cef_version.h>
 
 QSharedPointer<QCefDownloadItem>
 QCefDownloadItemPrivate::createQCefDownloadItem(CCefClientDelegate::RefPtr handler,
