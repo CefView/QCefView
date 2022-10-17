@@ -118,6 +118,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/lib)
 # Include CefViewCore
 add_subdirectory(CefViewCore)
 set_target_properties(CefViewCore PROPERTIES FOLDER core)
+add_compile_definitions(CEF_VERSION_MAJOR=${CEF_VERSION})
 
 foreach(CefViewWingTarget ${CefViewCore_HELPER_APP_TARGETS})
   set_target_properties(${CefViewWingTarget} PROPERTIES FOLDER core)
