@@ -1,5 +1,5 @@
 ---
-name: Bug Report [BUG报告]
+name: Bug Report [报告你发现的缺陷]
 about: Create a bug report to help us improve 【请使用此模板提交BUG报告，没有使用模板的issue将被直接关闭】
 title: "[BUG]: "
 labels: bug, feature, triage

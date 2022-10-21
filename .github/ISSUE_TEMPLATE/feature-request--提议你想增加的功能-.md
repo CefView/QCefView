@@ -1,5 +1,5 @@
 ---
-name: Feature request 【增加新特性需求】
+name: Feature request 【提议你想增加的功能】
 about: Suggest an idea for this project 【请使用此模板发起新特性需求】
 title: "[FEATURE]"
 labels: triage
