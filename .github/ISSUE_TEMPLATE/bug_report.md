@@ -2,10 +2,11 @@
 name: Bug Report [BUG报告]
 about: Create a bug report to help us improve 【请使用此模板提交BUG报告，没有使用模板的issue将被直接关闭】
 title: "[BUG]: "
-labels: ["bug", "triage"]
+labels: bug, feature, triage
 assignees: tishion
 
 ---
+
 [//]: # (以下所有的以"[//]: #"开始的文字都是注释，不会被markdown渲染，所以无需删除)
 [//]: # (All lines start "with [//]: #" below are comment lines and will not be rebdered by markdown, so there's no need to delete them)
 
