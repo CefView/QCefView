@@ -1,6 +1,6 @@
 ---
 name: Bug Report [BUG报告]
-about: Create a bug report to help us improve 【请使用此模板提交BUG报告】
+about: Create a bug report to help us improve 【请使用此模板提交BUG报告，没有使用模板的issue将被直接关闭】
 title: "[BUG]: "
 labels: ["bug", "triage"]
 assignees: tishion
@@ -43,12 +43,12 @@ assignees: tishion
 
 **Environment 【BUG产生的环境】**
 
-[//]: # (请提供以下信息)
-[//]: # (Please complete the following information)
+[//]: # (请提供以下信息，OSR和非OSR模式为必须提供项目，无此项目issue不会被处理)
+[//]: # (Please complete the following information, OSR/NCW is mandatory)
+ - OSR/NCW Mode:
  - OS & Version: [e.g. Windows/macOS/Linux]
  - Qt Version:
  - CEF Version:
- - OSR/NCW Mode:
  
 
 **Additional context 【更多额外信息】**
