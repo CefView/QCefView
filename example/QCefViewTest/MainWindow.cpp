@@ -55,11 +55,11 @@ MainWindow::createCefView()
   ///*
   // build settings for per QCefView
   QCefSetting setting;
-  
-  #if CEF_VERSION_MAJOR < 100
+
+#if CEF_VERSION_MAJOR < 100
   setting.setPlugins(false);
-  #endif
-  
+#endif
+
   setting.setWindowlessFrameRate(60);
   setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
   // setting.setBackgroundColor(Qt::blue);

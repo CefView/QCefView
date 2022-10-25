@@ -17,8 +17,6 @@
 #include <QString>
 #pragma endregion qt_headers
 
-
-
 class QCefSettingPrivate;
 
 /// <summary>
@@ -270,7 +268,7 @@ public:
   /// <returns>True to enalbe; false to disable</returns>
   const QVariant javascriptDomPaste() const;
 
-  #if CEF_VERSION_MAJOR < 100
+#if CEF_VERSION_MAJOR < 100
   /// <summary>
   /// Sets to enable or disable plugins
   /// </summary>
@@ -282,7 +280,7 @@ public:
   /// </summary>
   /// <returns>True to enalbe; false to disable</returns>
   const QVariant plugins() const;
-  #endif
+#endif
 
   /// <summary>
   /// Sets to enable or disable the permission of loading images

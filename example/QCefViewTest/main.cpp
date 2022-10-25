@@ -18,7 +18,7 @@ main(int argc, char* argv[])
   config.setBackgroundColor(Qt::lightGray);
 
   // WindowlessRenderingEnabled is set to true by default, set to false to disable the OSR mode
-  config.setWindowlessRenderingEnabled(false);
+  // config.setWindowlessRenderingEnabled(false);
   // config.addCommandLineSwitch("disable-gpu");
 
   // add command line args

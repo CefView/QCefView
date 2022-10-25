@@ -1,5 +1,9 @@
 ﻿#include "QCefSetting.h"
 
+#pragma region cef_headers
+#include <include/cef_version.h>
+#pragma endregion cef_headers
+
 #include "details/QCefSettingPrivate.h"
 #include "details/utils/CommonUtils.h"
 
@@ -7,7 +11,8 @@ REGISTER_METATYPE(QCefSetting);
 
 QCefSetting::QCefSetting()
   : d_ptr(new QCefSettingPrivate)
-{}
+{
+}
 
 QCefSetting::QCefSetting(const QCefSetting& other)
   : d_ptr(new QCefSettingPrivate)

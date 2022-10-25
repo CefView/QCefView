@@ -1,5 +1,9 @@
 ﻿#include "QCefDownloadItemPrivate.h"
 
+#pragma region cef_headers
+#include <include/cef_version.h>
+#pragma endregion cef_headers
+
 #include <QCefDownloadItem.h>
 
 QSharedPointer<QCefDownloadItem>
@@ -24,19 +28,19 @@ QCefDownloadItemPrivate::createQCefDownloadItem(CCefClientDelegate::RefPtr handl
   double t = 0;
   cef_time_t ct;
 
-  #if CEF_VERSION_MAJOR >= 104
+#if CEF_VERSION_MAJOR >= 104
   cef_time_from_basetime(cefItem.GetStartTime(), &ct);
-  #else
+#else
   ct = cefItem.GetStartTime();
-  #endif
+#endif
   if (cef_time_to_doublet(&ct, &t))
     p->d_ptr->startTime = QDateTime::fromSecsSinceEpoch(t);
 
-  #if CEF_VERSION_MAJOR >= 104
+#if CEF_VERSION_MAJOR >= 104
   cef_time_from_basetime(cefItem.GetEndTime(), &ct);
-  #else
+#else
   ct = cefItem.GetEndTime();
-  #endif
+#endif
   if (cef_time_to_doublet(&ct, &t))
     p->d_ptr->endTime = QDateTime::fromSecsSinceEpoch(t);
 
@@ -70,19 +74,19 @@ QCefDownloadItemPrivate::updateDownloadItem(QCefDownloadItem* p,
   double t = 0;
   cef_time_t ct;
 
-  #if CEF_VERSION_MAJOR >= 104
+#if CEF_VERSION_MAJOR >= 104
   cef_time_from_basetime(cefItem.GetStartTime(), &ct);
-  #else
+#else
   ct = cefItem.GetStartTime();
-  #endif
+#endif
   if (cef_time_to_doublet(&ct, &t))
     p->d_ptr->startTime = QDateTime::fromSecsSinceEpoch(t);
 
-  #if CEF_VERSION_MAJOR >= 104
+#if CEF_VERSION_MAJOR >= 104
   cef_time_from_basetime(cefItem.GetEndTime(), &ct);
-  #else
+#else
   ct = cefItem.GetEndTime();
-  #endif
+#endif
   if (cef_time_to_doublet(&ct, &t))
     p->d_ptr->endTime = QDateTime::fromSecsSinceEpoch(t);
 

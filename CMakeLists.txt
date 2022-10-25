@@ -118,13 +118,32 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/lib)
 # Include CefViewCore
 add_subdirectory(CefViewCore)
 set_target_properties(CefViewCore PROPERTIES FOLDER core)
-add_compile_definitions(CEF_VERSION_MAJOR=${CEF_VERSION})
 
 foreach(CefViewWingTarget ${CefViewCore_HELPER_APP_TARGETS})
   set_target_properties(${CefViewWingTarget} PROPERTIES FOLDER core)
 endforeach(CefViewWingTarget)
 
 set_target_properties(libcef_dll_wrapper PROPERTIES FOLDER core)
+
+# read CEF version from cef_version.h
+file(READ "${CefViewCore_CEF_INCLUDE_DIR}/cef_version.h" cef_version_content)
+string(REGEX MATCH "#define CEF_VERSION_MAJOR ([0-9]+)" _ ${cef_version_content})
+set(CEF_VERSION_MAJOR ${CMAKE_MATCH_1})
+message(STATUS "CEF_VERSION_MAJOR: ${CEF_VERSION_MAJOR}")
+
+string(REGEX MATCH "#define CEF_VERSION_MINOR ([0-9]+)" _ ${cef_version_content})
+set(CEF_VERSION_MINOR ${CMAKE_MATCH_1})
+message(STATUS "CEF_VERSION_MINOR: ${CEF_VERSION_MINOR}")
+
+string(REGEX MATCH "#define CEF_VERSION_PATCH ([0-9]+)" _ ${cef_version_content})
+set(CEF_VERSION_PATCH ${CMAKE_MATCH_1})
+message(STATUS "CEF_VERSION_PATCH: ${CEF_VERSION_PATCH}")
+
+configure_file(
+  "${CMAKE_SOURCE_DIR}/src/QCefView_global.h.in"
+  "${CMAKE_SOURCE_DIR}/include/QCefView_global.h"
+  @ONLY
+)
 
 # Config QCefView target
 # ##############################################################
