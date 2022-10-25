@@ -107,10 +107,6 @@ else()
   )
 endif()
 
-if(OS_MACOS)
-  set(CMAKE_OSX_DEPLOYMENT_TARGET 10.11)
-endif()
-
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/lib)
@@ -144,6 +140,14 @@ configure_file(
   "${CMAKE_SOURCE_DIR}/include/QCefView_global.h"
   @ONLY
 )
+
+if(OS_MACOS)
+  if(CEF_VERSION_MAJOR LESS 104)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.11)
+  else()
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
+  endif()
+endif()
 
 # Config QCefView target
 # ##############################################################
