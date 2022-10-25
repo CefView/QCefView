@@ -268,6 +268,7 @@ public:
   /// <returns>True to enalbe; false to disable</returns>
   const QVariant javascriptDomPaste() const;
 
+#if CEF_VERSION_MAJOR < 100
   /// <summary>
   /// Sets to enable or disable plugins
   /// </summary>
@@ -279,6 +280,7 @@ public:
   /// </summary>
   /// <returns>True to enalbe; false to disable</returns>
   const QVariant plugins() const;
+#endif
 
   /// <summary>
   /// Sets to enable or disable the permission of loading images

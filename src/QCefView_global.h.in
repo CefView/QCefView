@@ -34,7 +34,7 @@
 #endif
 
 // CEF major version number
-#define CEF_VERSION_MAJOR 106
+#cmakedefine CEF_VERSION_MAJOR @CEF_VERSION_MAJOR@
 // clang-format on
 
 #endif // QCEFEVIEW_GLOBAL_H

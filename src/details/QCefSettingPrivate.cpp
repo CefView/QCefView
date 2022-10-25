@@ -7,6 +7,10 @@
 #include <QString>
 #pragma endregion qt_headers
 
+#pragma region cef_headers
+#include <include/cef_version.h>
+#pragma endregion cef_headers
+
 #include <QCefContext.h>
 
 #include <CefViewCoreProtocol.h>
@@ -64,8 +68,10 @@ QCefSettingPrivate::CopyFromCefBrowserSettings(QCefSetting* qs, const CefBrowser
   if (cs->javascript_dom_paste != STATE_DEFAULT)
     qs->d_ptr->javascriptDomPaste_ = cs->javascript_dom_paste == STATE_ENABLED;
 
+#if CEF_VERSION_MAJOR < 100
   if (cs->plugins != STATE_DEFAULT)
     qs->d_ptr->plugins_ = cs->plugins == STATE_ENABLED;
+#endif
 
   if (cs->image_loading != STATE_DEFAULT)
     qs->d_ptr->imageLoading_ = cs->image_loading == STATE_ENABLED;
@@ -157,8 +163,10 @@ QCefSettingPrivate::CopyToCefBrowserSettings(const QCefSetting* qs, CefBrowserSe
   if (qs->d_ptr->javascriptDomPaste_.canConvert<bool>())
     cs->javascript_dom_paste = qs->d_ptr->javascriptDomPaste_.toBool() ? STATE_ENABLED : STATE_DISABLED;
 
+#if CEF_VERSION_MAJOR < 100
   if (qs->d_ptr->plugins_.canConvert<bool>())
     cs->plugins = qs->d_ptr->plugins_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+#endif
 
   if (qs->d_ptr->imageLoading_.canConvert<bool>())
     cs->image_loading = qs->d_ptr->imageLoading_.toBool() ? STATE_ENABLED : STATE_DISABLED;
