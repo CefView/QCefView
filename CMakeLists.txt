@@ -136,8 +136,8 @@ set(CEF_VERSION_PATCH ${CMAKE_MATCH_1})
 message(STATUS "CEF_VERSION_PATCH: ${CEF_VERSION_PATCH}")
 
 configure_file(
-  "${CMAKE_SOURCE_DIR}/src/QCefView_global.h.in"
-  "${CMAKE_SOURCE_DIR}/include/QCefView_global.h"
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/QCefView_global.h.in"
+  "${CMAKE_CURRENT_SOURCE_DIR}/include/QCefView_global.h"
   @ONLY
 )
 
