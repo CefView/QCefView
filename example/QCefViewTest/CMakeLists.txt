@@ -92,15 +92,6 @@ if(OS_WINDOWS)
   )
 
   add_custom_command(TARGET ${PROJECT_NAME}
-    PRE_BUILD
-
-    # Copy QCefView binary to output folder
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    $<TARGET_FILE_DIR:QCefView>
-    $<TARGET_FILE_DIR:${PROJECT_NAME}>
-  )
-
-  add_custom_command(TARGET ${PROJECT_NAME}
     POST_BUILD
 
     # Embed the manifest file into the target
@@ -166,15 +157,6 @@ if(OS_LINUX)
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Widgets
     QCefView
-  )
-
-  add_custom_command(TARGET ${PROJECT_NAME}
-    PRE_BUILD
-
-    # Copy QCefView binary to output folder
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    $<TARGET_FILE_DIR:QCefView>
-    $<TARGET_FILE_DIR:${PROJECT_NAME}>
   )
 
   add_custom_command(TARGET ${PROJECT_NAME}

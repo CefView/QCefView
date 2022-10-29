@@ -9,6 +9,8 @@ option(BUILD_STATIC "Build QCefView as static library" OFF)
 option(USE_SANDBOX "Enable CEF Sandbox" OFF)
 option(STATIC_CRT "Use MultiThreaded linkage for MSVC" OFF)
 
+get_directory_property(QCefView_HAS_PARENT_DIRECTORY PARENT_DIRECTORY)
+
 # Only generate Debug and Release configuration types.
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
 
@@ -107,9 +109,12 @@ else()
   )
 endif()
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/bin)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/lib)
+if(NOT QCefView_HAS_PARENT_DIRECTORY)
+  message(STATUS "QCefView is not in subdirectory, put all output together")
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/bin)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/bin)
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/lib)
+endif()
 
 # Include CefViewCore
 add_subdirectory(CefViewCore)
