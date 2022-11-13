@@ -28,7 +28,7 @@ QCefDownloadItemPrivate::createQCefDownloadItem(CCefClientDelegate::RefPtr handl
   double t = 0;
   cef_time_t ct;
 
-#if CEF_VERSION_MAJOR >= 104
+#if (CEF_VERSION_MAJOR) > 104 || (CEF_VERSION_MAJOR == 104 && CEF_VERSION_MINOR > 4)
   cef_time_from_basetime(cefItem.GetStartTime(), &ct);
 #else
   ct = cefItem.GetStartTime();
@@ -36,7 +36,7 @@ QCefDownloadItemPrivate::createQCefDownloadItem(CCefClientDelegate::RefPtr handl
   if (cef_time_to_doublet(&ct, &t))
     p->d_ptr->startTime = QDateTime::fromSecsSinceEpoch(t);
 
-#if CEF_VERSION_MAJOR >= 104
+#if (CEF_VERSION_MAJOR) > 104 || (CEF_VERSION_MAJOR == 104 && CEF_VERSION_MINOR > 4)
   cef_time_from_basetime(cefItem.GetEndTime(), &ct);
 #else
   ct = cefItem.GetEndTime();
@@ -74,7 +74,7 @@ QCefDownloadItemPrivate::updateDownloadItem(QCefDownloadItem* p,
   double t = 0;
   cef_time_t ct;
 
-#if CEF_VERSION_MAJOR >= 104
+#if (CEF_VERSION_MAJOR) > 104 || (CEF_VERSION_MAJOR == 104 && CEF_VERSION_MINOR > 4)
   cef_time_from_basetime(cefItem.GetStartTime(), &ct);
 #else
   ct = cefItem.GetStartTime();
@@ -82,7 +82,7 @@ QCefDownloadItemPrivate::updateDownloadItem(QCefDownloadItem* p,
   if (cef_time_to_doublet(&ct, &t))
     p->d_ptr->startTime = QDateTime::fromSecsSinceEpoch(t);
 
-#if CEF_VERSION_MAJOR >= 104
+#if (CEF_VERSION_MAJOR) > 104 || (CEF_VERSION_MAJOR == 104 && CEF_VERSION_MINOR > 4)
   cef_time_from_basetime(cefItem.GetEndTime(), &ct);
 #else
   ct = cefItem.GetEndTime();

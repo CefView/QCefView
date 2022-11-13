@@ -33,8 +33,11 @@
     #endif
 #endif
 
-// CEF major version number
+// CEF version numbers
 #cmakedefine CEF_VERSION_MAJOR @CEF_VERSION_MAJOR@
+#cmakedefine CEF_VERSION_MINOR @CEF_VERSION_MINOR@
+#cmakedefine CEF_VERSION_PATCH @CEF_VERSION_PATCH@
+
 // clang-format on
 
 #endif // QCEFEVIEW_GLOBAL_H
