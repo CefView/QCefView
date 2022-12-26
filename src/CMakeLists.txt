@@ -176,18 +176,18 @@ if(OS_MACOS)
 
     # create plugins directory
     COMMAND mkdir -p
-    "$<TARGET_BUNDLE_DIR:QCefView>/PlugIns/"
+    "$<TARGET_BUNDLE_DIR:QCefView>/Resources/PlugIns/"
 
     # copy the CefViewCore binaries to resource directory
     COMMAND cp -a
     "$<TARGET_BUNDLE_DIR:CefViewWing>/../"
-    "$<TARGET_BUNDLE_DIR:QCefView>/PlugIns/"
+    "$<TARGET_BUNDLE_DIR:QCefView>/Resources/PlugIns/"
 
     # sign the cef framework
     COMMAND codesign
     --force
     --sign -
-    "$<TARGET_BUNDLE_DIR:QCefView>/PlugIns/Chromium Embedded Framework.framework"
+    "$<TARGET_BUNDLE_DIR:QCefView>/Resources/PlugIns/Chromium Embedded Framework.framework"
   )
 endif() # OS_MACOS
 
