@@ -205,15 +205,6 @@ if(OS_MACOS)
     ${_WEB_FILES}
   )
 
-  add_library(QCefViewFramework ${QCEFVIEW_LIB_TYPE} IMPORTED)
-  set_target_properties(QCefViewFramework
-    PROPERTIES
-    FRAMEWORK TRUE
-    IMPORTED_LOCATION "${CMAKE_BINARY_DIR}/output/Release/bin/QCefView.framework"
-    IMPORTED_LOCATION_DEBUG "${CMAKE_BINARY_DIR}/output/Debug/bin/QCefView.framework"
-    IMPORTED_LOCATION_RELEASE "${CMAKE_BINARY_DIR}/output/Release/bin/QCefView.framework"
-  )
-
   set_target_properties(${PROJECT_NAME}
     PROPERTIES
     CLANG_ENABLE_OBJC_ARC "YES"
@@ -234,7 +225,7 @@ if(OS_MACOS)
     # following target propertis XCODE_EMBED_FRAMEWORKS, XCODE_EMBED_FRAMEWORKS_CODE_SIGN_ON_COPY
     COMMAND rm -fr "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-    "$<TARGET_FILE:QCefViewFramework>"
+    "$<TARGET_BUNDLE_DIR:QCefView>"
     "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
 
     # copy the webres to the bundle
@@ -259,7 +250,7 @@ if(OS_MACOS)
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Widgets
-    QCefViewFramework
+    QCefView
   )
 endif()
 
