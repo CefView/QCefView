@@ -1,4 +1,4 @@
-﻿#include "MainWindow.h"
+#include "MainWindow.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -19,6 +19,12 @@ MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent /*, Qt::FramelessWindowHint*/)
 {
   ui.setupUi(this);
+
+#ifdef Q_OS_MACOS
+  this->ui.nativeContainer->setContentsMargins(0, 28, 0, 0);
+#endif
+
+  setupWindow();
 
   // setWindowFlags(Qt::FramelessWindowHint);
   // setAttribute(Qt::WA_TranslucentBackground);
@@ -292,3 +298,10 @@ MainWindow::onBtnNewBrowserClicked()
   w->resize(1024, 768);
   w->show();
 }
+
+#ifndef Q_OS_MACOS
+void
+MainWindow::setupWindow()
+{
+}
+#endif
