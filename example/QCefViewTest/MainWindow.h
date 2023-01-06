@@ -17,6 +17,7 @@ public:
 
 protected:
   void createCefView();
+  void setupWindow();
 
   // QCefView slots
 protected slots:
