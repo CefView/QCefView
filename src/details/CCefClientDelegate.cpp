@@ -9,7 +9,8 @@
 
 CCefClientDelegate::CCefClientDelegate(QCefViewPrivate* p)
   : pCefViewPrivate_(p)
-{}
+{
+}
 
 CCefClientDelegate::~CCefClientDelegate()
 {

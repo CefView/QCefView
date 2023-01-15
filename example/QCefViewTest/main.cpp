@@ -22,15 +22,14 @@ main(int argc, char* argv[])
   // config.addCommandLineSwitch("disable-gpu");
 
   // add command line args
-  // config.addCommandLineSwitch("allow-universal-access-from-files");
   config.addCommandLineSwitch("enable-media-stream");
-  config.addCommandLineSwitch("use-mock-keychain");
-  config.addCommandLineSwitch("allow-file-access-from-files");
-  config.addCommandLineSwitch("disable-spell-checking");
-  config.addCommandLineSwitch("disable-site-isolation-trials");
-  config.addCommandLineSwitch("enable-aggressive-domstorage-flushing");
-  config.addCommandLineSwitchWithValue("renderer-process-limit", "1");
-  config.addCommandLineSwitchWithValue("disable-features", "BlinkGenPropertyTrees,TranslateUI,site-per-process");
+  // config.addCommandLineSwitch("use-mock-keychain");
+  // config.addCommandLineSwitch("allow-file-access-from-files");
+  // config.addCommandLineSwitch("disable-spell-checking");
+  // config.addCommandLineSwitch("disable-site-isolation-trials");
+  // config.addCommandLineSwitch("enable-aggressive-domstorage-flushing");
+  // config.addCommandLineSwitchWithValue("renderer-process-limit", "1");
+  // config.addCommandLineSwitchWithValue("disable-features", "BlinkGenPropertyTrees,TranslateUI,site-per-process");
 
   // initialize QCefContext instance with config
   QCefContext cefContext(&a, argc, argv, &config);

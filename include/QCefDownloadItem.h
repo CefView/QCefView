@@ -13,8 +13,7 @@
 
 #pragma region qt_headers
 #include <QDateTime>
-#include <QEnableSharedFromThis>
-#include <QSharedPointer>
+#include <QScopedPointer>
 #include <QString>
 #pragma endregion qt_headers
 
@@ -23,7 +22,7 @@ class QCefDownloadItemPrivate;
 /// <summary>
 /// Represents the download item
 /// </summary>
-class QCEFVIEW_EXPORT QCefDownloadItem : public QEnableSharedFromThis<QCefDownloadItem>
+class QCEFVIEW_EXPORT QCefDownloadItem
 {
   Q_DECLARE_PRIVATE(QCefDownloadItem)
   QScopedPointer<QCefDownloadItemPrivate> d_ptr;
@@ -48,7 +47,7 @@ public:
   /// <summary>
   /// Starts the download
   /// </summary>
-  void start(const QString& path, bool useDefaultDialog = true);
+  void start(const QString& path, bool useDefaultDialog = true) const;
 
   /// <summary>
   /// Pauses the download
@@ -64,6 +63,12 @@ public:
   /// Cancels the download
   /// </summary>
   void cancel() const;
+
+  /// <summary>
+  /// Gets whether the download is started
+  /// </summary>
+  /// <returns></returns>
+  bool isStarted() const;
 
   /// <summary>
   /// Gets whether the download is in progress
@@ -161,7 +166,5 @@ public:
   /// <returns>The mime type</returns>
   QString mimeType() const;
 };
-
-typedef QSharedPointer<QCefDownloadItem> QCefDownloadItemPointer;
 
 #endif /// QCEFDOWNLOADITEM_H
