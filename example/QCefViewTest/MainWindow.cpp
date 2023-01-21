@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+﻿#include "MainWindow.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -18,10 +18,10 @@
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent /*, Qt::FramelessWindowHint*/)
 {
-  ui.setupUi(this);
+  m_ui.setupUi(this);
 
 #ifdef Q_OS_MACOS
-  this->ui.nativeContainer->setContentsMargins(0, 28, 0, 0);
+  this->m_ui.nativeContainer->setContentsMargins(0, 28, 0, 0);
 #endif
 
   setupWindow();
@@ -29,12 +29,12 @@ MainWindow::MainWindow(QWidget* parent)
   // setWindowFlags(Qt::FramelessWindowHint);
   // setAttribute(Qt::WA_TranslucentBackground);
 
-  connect(ui.btn_reCreate, &QPushButton::clicked, this, &MainWindow::onBtnRecreateClicked);
-  connect(ui.btn_changeColor, &QPushButton::clicked, this, &MainWindow::onBtnChangeColorClicked);
-  connect(ui.btn_setFocus, &QPushButton::clicked, this, &MainWindow::onBtnSetFocusClicked);
-  connect(ui.btn_callJSCode, &QPushButton::clicked, this, &MainWindow::onBtnCallJSCodeClicked);
-  connect(ui.btn_newBrowser, &QPushButton::clicked, this, &MainWindow::onBtnNewBrowserClicked);
-  connect(ui.btn_quitApp, &QPushButton::clicked, qApp, &QCoreApplication::quit);
+  connect(m_ui.btn_reCreate, &QPushButton::clicked, this, &MainWindow::onBtnRecreateClicked);
+  connect(m_ui.btn_changeColor, &QPushButton::clicked, this, &MainWindow::onBtnChangeColorClicked);
+  connect(m_ui.btn_setFocus, &QPushButton::clicked, this, &MainWindow::onBtnSetFocusClicked);
+  connect(m_ui.btn_callJSCode, &QPushButton::clicked, this, &MainWindow::onBtnCallJSCodeClicked);
+  connect(m_ui.btn_newBrowser, &QPushButton::clicked, this, &MainWindow::onBtnNewBrowserClicked);
+  connect(m_ui.btn_quitApp, &QPushButton::clicked, qApp, &QCoreApplication::quit);
 
   // build the path to the web resource
   QDir dir = QCoreApplication::applicationDirPath();
@@ -49,8 +49,8 @@ MainWindow::MainWindow(QWidget* parent)
 
   createCefView();
 
-  rightCefViewWidget = new CefViewWidget("https://www.testufo.com", nullptr, this);
-  ui.rightCefViewContainer->layout()->addWidget(rightCefViewWidget);
+  m_pRightCefViewWidget = new CefViewWidget("https://www.testufo.com", nullptr, this);
+  m_ui.rightCefViewContainer->layout()->addWidget(m_pRightCefViewWidget);
 }
 
 MainWindow::~MainWindow() {}
@@ -71,24 +71,25 @@ MainWindow::createCefView()
   // setting.setBackgroundColor(Qt::blue);
 
   // create the QCefView widget and add it to the layout container
-  leftCefViewWidget = new CefViewWidget(INDEX_URL, &setting);
+  m_pLeftCefViewWidget = new CefViewWidget("https://www.thinkbroadband.com/download", &setting);
+  // m_pLeftCefViewWidget = new CefViewWidget("https://codepen.io/tishion/pen/qBKEYXL", &setting);
 
   // this site is for test web events
-  // leftCefViewContainer = new CefViewWidget("http://xcal1.vodafone.co.uk/", &setting, this);
+  // m_pLeftCefViewWidget = new CefViewWidget("http://xcal1.vodafone.co.uk/", &setting, this);
 
   //
-  // leftCefViewContainer = new CefViewWidget("https://mdn.dev/", &setting, this);
+  // m_pLeftCefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);
 
   // this site is for test OSR performance
   // rightCefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
 
   // this site is test for input devices
-  // leftCefViewContainer = new CefViewWidget("https://devicetests.com", &setting);
+  // leftCefViewWidget = new CefViewWidget("https://devicetests.com", &setting);
 
-  ui.leftCefViewContainer->layout()->addWidget(leftCefViewWidget);
+  m_ui.leftCefViewContainer->layout()->addWidget(m_pLeftCefViewWidget);
 
   // allow show context menu for both OSR and NCW mode
-  leftCefViewWidget->setContextMenuPolicy(Qt::DefaultContextMenu);
+  m_pLeftCefViewWidget->setContextMenuPolicy(Qt::DefaultContextMenu);
 
   // all the following values will disable the context menu for both NCW and OSR mode
   // cefViewWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -97,28 +98,26 @@ MainWindow::createCefView()
   // cefViewWidget->setContextMenuPolicy(Qt::PreventContextMenu);
 
   // connect the invokeMethod to the slot
-  connect(leftCefViewWidget, &QCefView::invokeMethod, this, &MainWindow::onInvokeMethod);
+  connect(m_pLeftCefViewWidget, &QCefView::invokeMethod, this, &MainWindow::onInvokeMethod);
 
   // connect the cefQueryRequest to the slot
-  connect(leftCefViewWidget, &QCefView::cefQueryRequest, this, &MainWindow::onQCefQueryRequest);
+  connect(m_pLeftCefViewWidget, &QCefView::cefQueryRequest, this, &MainWindow::onQCefQueryRequest);
 
-  connect(leftCefViewWidget, &QCefView::draggableRegionChanged, this, &MainWindow::onDraggableRegionChanged);
+  connect(m_pLeftCefViewWidget, &QCefView::draggableRegionChanged, this, &MainWindow::onDraggableRegionChanged);
 
-  connect(leftCefViewWidget, &QCefView::reportJavascriptResult, this, &MainWindow::onJavascriptResult);
+  connect(m_pLeftCefViewWidget, &QCefView::reportJavascriptResult, this, &MainWindow::onJavascriptResult);
 
-  connect(leftCefViewWidget, &QCefView::loadStart, this, &MainWindow::onLoadStart);
-  connect(leftCefViewWidget, &QCefView::loadEnd, this, &MainWindow::onLoadEnd);
-  connect(leftCefViewWidget, &QCefView::loadError, this, &MainWindow::onLoadError);
-  connect(leftCefViewWidget, &QCefView::newDownloadItem, this, &MainWindow::onNewDownloadItem);
-  connect(leftCefViewWidget, &QCefView::updateDownloadItem, this, &MainWindow::onUpdateDownloadItem);
+  connect(m_pLeftCefViewWidget, &QCefView::loadStart, this, &MainWindow::onLoadStart);
+  connect(m_pLeftCefViewWidget, &QCefView::loadEnd, this, &MainWindow::onLoadEnd);
+  connect(m_pLeftCefViewWidget, &QCefView::loadError, this, &MainWindow::onLoadError);
   //*/
 }
 
 void
 MainWindow::onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion)
 {
-  draggableRegion_ = draggableRegion;
-  nonDraggableRegion_ = nonDraggableRegion;
+  m_draggableRegion = draggableRegion;
+  m_nonDraggableRegion = nonDraggableRegion;
 }
 
 void
@@ -166,7 +165,7 @@ MainWindow::onQCefQueryRequest(int browserId, int64_t frameId, const QCefQuery& 
 
   QString response = query.request().toUpper();
   query.setResponseResult(true, response);
-  leftCefViewWidget->responseQCefQuery(query);
+  m_pLeftCefViewWidget->responseQCefQuery(query);
 }
 
 void
@@ -215,39 +214,11 @@ MainWindow::onLoadError(int browserId,
 }
 
 void
-MainWindow::onNewDownloadItem(QCefDownloadItemPointer item)
-{
-  qDebug() << "onNewDownloadItem:"
-           << "  id: " << item->id() << "\n"
-           << "  name: " << item->suggestedFileName() << "\n"
-           << "  path: " << item->fullPath() << "\n"
-           << "  percent: " << item->percentComplete() << "%, " << item->totalBytes() << "/" << item->receivedBytes()
-           << "\n"
-           << "  canceled: " << item->isCanceled() << "\n"
-           << "  complete: " << item->isComplete();
-
-  item->start("", true);
-}
-
-void
-MainWindow::onUpdateDownloadItem(QCefDownloadItemPointer item)
-{
-  qDebug() << "onNewDownloadItem:"
-           << "  id: " << item->id() << "\n"
-           << "  name: " << item->suggestedFileName() << "\n"
-           << "  path: " << item->fullPath() << "\n"
-           << "  percent: " << item->percentComplete() << "%, " << item->totalBytes() << "/" << item->receivedBytes()
-           << "\n"
-           << "  canceled: " << item->isCanceled() << "\n"
-           << "  complete: " << item->isComplete();
-}
-
-void
 MainWindow::onBtnRecreateClicked()
 {
-  if (leftCefViewWidget) {
-    leftCefViewWidget->deleteLater();
-    leftCefViewWidget = nullptr;
+  if (m_pLeftCefViewWidget) {
+    m_pLeftCefViewWidget->deleteLater();
+    m_pLeftCefViewWidget = nullptr;
   }
 
   createCefView();
@@ -256,7 +227,7 @@ MainWindow::onBtnRecreateClicked()
 void
 MainWindow::onBtnChangeColorClicked()
 {
-  if (leftCefViewWidget) {
+  if (m_pLeftCefViewWidget) {
     // create a random color
     QColor color(QRandomGenerator::global()->generate());
 
@@ -265,7 +236,7 @@ MainWindow::onBtnChangeColorClicked()
     event.arguments().append(QVariant::fromValue(color.name(QColor::HexArgb)));
 
     // broadcast the event to all frames in all browsers created by this QCefView widget
-    leftCefViewWidget->broadcastEvent(event);
+    m_pLeftCefViewWidget->broadcastEvent(event);
   }
 }
 
@@ -274,14 +245,14 @@ MainWindow::onBtnCallJSCodeClicked()
 {
   int64_t context = 1000;
   QString code = "alert('hello QCefView'); return {k1: 'str', k2: true, k3: 100};";
-  leftCefViewWidget->executeJavascriptWithResult(QCefView::MainFrameID, code, "", context);
+  m_pLeftCefViewWidget->executeJavascriptWithResult(QCefView::MainFrameID, code, "", context);
 }
 
 void
 MainWindow::onBtnSetFocusClicked()
 {
-  if (leftCefViewWidget) {
-    leftCefViewWidget->setFocus();
+  if (m_pLeftCefViewWidget) {
+    m_pLeftCefViewWidget->setFocus();
   }
 }
 

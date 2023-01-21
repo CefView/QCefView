@@ -15,6 +15,7 @@ class QCefDownloadItemPrivate
 {
 public:
   CCefClientDelegate::WeakPtr handler;
+  bool isStarted = false;
 
   quint32 id = 0;
 
@@ -37,17 +38,18 @@ public:
   QString contentDisposition;
   QString mimeType;
 
-  CefRefPtr<CefBeforeDownloadCallback> downloadCallback;
-  CefRefPtr<CefDownloadItemCallback> itemCallback;
+  CefRefPtr<CefBeforeDownloadCallback> beforeDownloadCallback;
+  CefRefPtr<CefDownloadItemCallback> downloadItemCallback;
 
 public:
-  static QSharedPointer<QCefDownloadItem> createQCefDownloadItem(CCefClientDelegate::RefPtr handerl,
-                                                                 CefDownloadItem& cefItem,
-                                                                 CefRefPtr<CefBeforeDownloadCallback>& callback);
+  static QSharedPointer<QCefDownloadItem> create(CCefClientDelegate::RefPtr handler);
 
-  static void updateDownloadItem(QCefDownloadItem* p,
-                                 CefDownloadItem& cefItem,
-                                 CefRefPtr<CefDownloadItemCallback>& requestCallback);
+  static void update(QCefDownloadItem* item, CefDownloadItem& cefItem);
 
-  static void destroyQCefDownloadItem(QCefDownloadItem* p);
+  static void setBeforeDownloadCallback(QCefDownloadItem* item,
+                                        CefRefPtr<CefBeforeDownloadCallback> beforeDownloadCallback);
+
+  static void setDownloadItemCallback(QCefDownloadItem* item, CefRefPtr<CefDownloadItemCallback> downloadItemCallback);
+
+  static void destroy(QCefDownloadItem* item);
 };

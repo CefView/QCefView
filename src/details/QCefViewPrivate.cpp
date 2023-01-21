@@ -255,6 +255,22 @@ QCefViewPrivate::onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindo
   q->onPopupCreated(window);
 }
 
+void
+QCefViewPrivate::onNewDownloadItem(QSharedPointer<QCefDownloadItem> item, const QString& suggestedName)
+{
+  Q_Q(QCefView);
+
+  q->onNewDownloadItem(item, suggestedName);
+}
+
+void
+QCefViewPrivate::onUpdateDownloadItem(QSharedPointer<QCefDownloadItem> item)
+{
+  Q_Q(QCefView);
+
+  q->onUpdateDownloadItem(item);
+}
+
 bool
 QCefViewPrivate::handleLoadError(CefRefPtr<CefBrowser>& browser,
                                  CefRefPtr<CefFrame>& frame,

@@ -7,42 +7,53 @@
 
 QCefDownloadItem::QCefDownloadItem()
   : d_ptr(new QCefDownloadItemPrivate())
-{}
+{
+}
 
 QCefDownloadItem::~QCefDownloadItem() {}
 
 void
-QCefDownloadItem::start(const QString& path, bool useDefaultDialog)
+QCefDownloadItem::start(const QString& path, bool useDefaultDialog) const
 {
-  Q_D(QCefDownloadItem);
-  d_ptr->downloadCallback->Continue(path.toStdString(), useDefaultDialog);
-
-  auto handler = d_ptr->handler.lock();
-  if (!handler)
+  Q_D(const QCefDownloadItem);
+  if (d_ptr->isStarted)
     return;
 
-  handler->insertDownloadItem(sharedFromThis());
+  if (d_ptr->downloadItemCallback) {
+    d_ptr->downloadItemCallback->Resume();
+  }
+
+  d_ptr->beforeDownloadCallback->Continue(path.toStdString(), useDefaultDialog);
+
+  d_ptr->isStarted = true;
 }
 
 void
 QCefDownloadItem::pause() const
 {
   Q_D(const QCefDownloadItem);
-  d_ptr->itemCallback->Pause();
+  d_ptr->downloadItemCallback->Pause();
 }
 
 void
 QCefDownloadItem::resume() const
 {
   Q_D(const QCefDownloadItem);
-  d_ptr->itemCallback->Resume();
+  d_ptr->downloadItemCallback->Resume();
 }
 
 void
 QCefDownloadItem::cancel() const
 {
   Q_D(const QCefDownloadItem);
-  d_ptr->itemCallback->Cancel();
+  d_ptr->downloadItemCallback->Cancel();
+}
+
+bool
+QCefDownloadItem::isStarted() const
+{
+  Q_D(const QCefDownloadItem);
+  return d_ptr->isStarted;
 }
 
 bool

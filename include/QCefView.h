@@ -359,21 +359,6 @@ signals:
   /// <param name="result">The result</param>
   void reportJavascriptResult(int browserId, qint64 frameId, qint64 context, const QVariant& result);
 
-  /// <summary>
-  /// Gets called on new download item was required. Keep reference to the download item
-  /// and call <see cref="QCefDownloadItem::start"/> method to allow and start the download, then get the updated
-  /// information on <see cref="updateDownloadItem"/> method. Ignore the download item to disallow the download
-  /// </summary>
-  /// <param name="item">The new download item</param>
-  void newDownloadItem(QCefDownloadItemPointer item);
-
-  /// <summary>
-  /// Gets called on download item updated. To get this method called <see cref="QCefDownloadItem::start"/> method must
-  /// be called in <see cref="newDownloadItem"/> method
-  /// </summary>
-  /// <param name="item">The download item</param>
-  void updateDownloadItem(QCefDownloadItemPointer item);
-
 public slots:
   /// <summary>
   /// Gets called after the main browser window created. This slot does not work for OSR mode.
@@ -398,11 +383,28 @@ public slots:
                              QCefSetting& settings,
                              bool& DisableJavascriptAccess);
 
+protected:
   /// <summary>
   /// Gets called right after the popup browser was created
   /// </summary>
   /// <param name="wnd">The host window of new created browser</param>
   virtual void onPopupCreated(QWindow* wnd);
+
+  /// <summary>
+  /// Gets called on new download item was required. Keep reference to the download item
+  /// and call <see cref="QCefDownloadItem::start"/> method to allow and start the download,
+  /// Ignore the download item to disallow the download
+  /// </summary>
+  /// <param name="item">The new download item</param>
+  /// <param name="suggestedName">The nesuggested name</param>
+  virtual void onNewDownloadItem(const QSharedPointer<QCefDownloadItem>& item, const QString& suggestedName);
+
+  /// <summary>
+  /// Gets called on download item updated. To get this method called <see cref="QCefDownloadItem::start"/> method must
+  /// be called in <see cref="newDownloadItem"/> method
+  /// </summary>
+  /// <param name="item">The download item</param>
+  virtual void onUpdateDownloadItem(const QSharedPointer<QCefDownloadItem>& item);
 
 #pragma region QWidget
 public slots:

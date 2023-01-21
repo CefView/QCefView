@@ -180,6 +180,10 @@ protected:
 
   void onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
 
+  void onNewDownloadItem(QSharedPointer<QCefDownloadItem> item, const QString& suggestedName);
+
+  void onUpdateDownloadItem(QSharedPointer<QCefDownloadItem> item);
+
   bool handleLoadError(CefRefPtr<CefBrowser>& browser,
                        CefRefPtr<CefFrame>& frame,
                        int errorCode,

@@ -43,10 +43,6 @@ protected slots:
                    const QString& errorMsg,
                    const QString& failedUrl);
 
-  void onNewDownloadItem(QCefDownloadItemPointer item);
-
-  void onUpdateDownloadItem(QCefDownloadItemPointer item);
-
   // ui slots
 protected slots:
   void onBtnRecreateClicked();
@@ -60,12 +56,12 @@ protected slots:
   void onBtnNewBrowserClicked();
 
 private:
-  Ui::MainWindow ui;
+  Ui::MainWindow m_ui;
 
-  CefViewWidget* leftCefViewWidget = nullptr;
-  CefViewWidget* rightCefViewWidget = nullptr;
-  QRegion draggableRegion_;
-  QRegion nonDraggableRegion_;
+  CefViewWidget* m_pLeftCefViewWidget = nullptr;
+  CefViewWidget* m_pRightCefViewWidget = nullptr;
+  QRegion m_draggableRegion;
+  QRegion m_nonDraggableRegion;
 };
 
 #endif // QCEFVIEWTEST_H

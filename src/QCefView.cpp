@@ -35,7 +35,8 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
 
 QCefView::QCefView(QWidget* parent /*= 0*/)
   : QCefView("about:blank", nullptr, parent)
-{}
+{
+}
 
 QCefView::~QCefView()
 {
@@ -228,7 +229,8 @@ QCefView::setFocus(Qt::FocusReason reason)
 
 void
 QCefView::onBrowserWindowCreated(QWindow* win)
-{}
+{
+}
 
 bool
 QCefView::onBeforePopup(qint64 frameId,
@@ -244,7 +246,18 @@ QCefView::onBeforePopup(qint64 frameId,
 
 void
 QCefView::onPopupCreated(QWindow* wnd)
-{}
+{
+}
+
+void
+QCefView::onNewDownloadItem(const QSharedPointer<QCefDownloadItem>& item, const QString& suggestedName)
+{
+}
+
+void
+QCefView::onUpdateDownloadItem(const QSharedPointer<QCefDownloadItem>& item)
+{
+}
 
 QVariant
 QCefView::inputMethodQuery(Qt::InputMethodQuery query) const

@@ -17,6 +17,10 @@ public:
 
   ~CefViewWidget();
 
+signals:
+  void newDownloadItem(const QSharedPointer<QCefDownloadItem>& item, const QString& suggestedName);
+  void updateDownloadItem(const QSharedPointer<QCefDownloadItem>& item);
+
 protected slots:
   void onScreenChanged(QScreen* screen);
 
@@ -29,9 +33,14 @@ private:
   void updateMask();
 
 private:
-  QWindow* m_cefWindow = nullptr;
+  QWindow* m_pCefWindow = nullptr;
 
-  int m_cornerRadius = 50;
+  int m_iCornerRadius = 50;
+
+protected:
+  void onNewDownloadItem(const QSharedPointer<QCefDownloadItem>& item, const QString& suggestedName) override;
+
+  void onUpdateDownloadItem(const QSharedPointer<QCefDownloadItem>& item) override;
 };
 
 #endif // CUSTOMCEFVIEW_H

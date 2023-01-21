@@ -34,7 +34,9 @@ public:
 private:
   QCefViewPrivate* pCefViewPrivate_;
 
-  QMap<qint32, QCefDownloadItemPointer> downloadItemMap_;
+  QMap<qint32, QSharedPointer<QCefDownloadItem>> pendingDownloadItemMap_;
+
+  QMap<qint32, QWeakPointer<QCefDownloadItem>> confirmedDownloadItemMap_;
 
 public:
   CCefClientDelegate(QCefViewPrivate* p);
@@ -137,10 +139,6 @@ public:
   virtual void gotFocus(CefRefPtr<CefBrowser>& browser) override;
 
   // DownloadHander
-  void insertDownloadItem(QCefDownloadItemPointer item);
-
-  void removeDownloadItem(QCefDownloadItemPointer item);
-
   virtual void onBeforeDownload(CefRefPtr<CefBrowser> browser,
                                 CefRefPtr<CefDownloadItem> download_item,
                                 const CefString& suggested_name,
