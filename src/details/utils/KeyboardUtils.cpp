@@ -417,26 +417,39 @@ winGetKeyboardModifiers(QKeyEvent* qe)
       break;
   }
 
-  // mimic alt-gr check behavior from
+  // mimic alt-gr check behavior
   if (!qe->text().isEmpty() && (::GetKeyState(VK_RMENU) & 0x8000)) {
-    // reverse AltGr detection taken from PlatformKeyMap::UsesAltGraph
-    // instead of checking all combination for ctrl-alt, just check current char
-    HKL current_layout = ::GetKeyboardLayout(0);
-
-    // https://docs.microsoft.com/en-gb/windows/win32/api/winuser/nf-winuser-vkkeyscanexw
-    // ... high-order byte contains the shift state,
-    // which can be a combination of the following flag bits.
-    // 2 Either CTRL key is pressed.
-    // 4 Either ALT key is pressed.
-    SHORT scan_res = ::VkKeyScanExW(vk, current_layout);
-    if (((scan_res >> 8) & 0xFF) == (2 | 4)) {
+    if ((m & (Qt::ControlModifier | Qt::AltModifier)) == (Qt::ControlModifier | Qt::AltModifier)) {
       // ctrl-alt pressed
       cm &= ~(EVENTFLAG_CONTROL_DOWN | EVENTFLAG_ALT_DOWN);
       cm |= EVENTFLAG_ALTGR_DOWN;
     }
-  }
 
-  return cm;
+    //////////////////////////////////////////////////////////////////////////
+    // because ::VkKeyScanExW needs wParam from Windows message as the parameter to
+    // extract the scan code and here we cannot get it so the following code doesn't
+    // work for windows
+
+    //// reverse AltGr detection taken from PlatformKeyMap::UsesAltGraph
+    //// instead of checking all combination for ctrl-alt, just check current char
+    // HKL current_layout = ::GetKeyboardLayout(0);
+
+    //// https://docs.microsoft.com/en-gb/windows/win32/api/winuser/nf-winuser-vkkeyscanexw
+    //// ... high-order byte contains the shift state,
+    //// which can be a combination of the following flag bits.
+    //// 1 Either SHIFT key is pressed.
+    //// 2 Either CTRL key is pressed.
+    //// 4 Either ALT key is pressed.
+    // SHORT scan_res = ::VkKeyScanExW(vk, current_layout);
+    // constexpr auto ctrlAlt = (2 | 4);
+    // if (((scan_res >> 8) & ctrlAlt) == ctrlAlt) { // ctrl-alt pressed
+    //   // ctrl-alt pressed
+    //   cm &= ~(EVENTFLAG_CONTROL_DOWN | EVENTFLAG_ALT_DOWN);
+    //   cm |= EVENTFLAG_ALTGR_DOWN;
+    // }
+
+    return cm;
+  }
 }
 
 static void
