@@ -447,9 +447,9 @@ winGetKeyboardModifiers(QKeyEvent* qe)
     //   cm &= ~(EVENTFLAG_CONTROL_DOWN | EVENTFLAG_ALT_DOWN);
     //   cm |= EVENTFLAG_ALTGR_DOWN;
     // }
-
-    return cm;
   }
+
+  return cm;
 }
 
 static void
