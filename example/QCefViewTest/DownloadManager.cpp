@@ -1,5 +1,7 @@
 ﻿#include "DownloadManager.h"
 
+#include <QDebug>
+
 DownloadManager&
 DownloadManager::getInstance()
 {

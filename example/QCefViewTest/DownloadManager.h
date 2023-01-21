@@ -2,6 +2,7 @@
 #define DOWNLOADMANAGER_H
 #pragma once
 
+#include <QMap>
 #include <QSharedPointer>
 
 #include <QCefDownloadItem.h>
