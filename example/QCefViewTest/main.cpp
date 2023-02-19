@@ -1,4 +1,4 @@
-﻿#include <QApplication>
+#include <QApplication>
 
 #include <QCefContext.h>
 
@@ -18,12 +18,12 @@ main(int argc, char* argv[])
   config.setBackgroundColor(Qt::lightGray);
 
   // WindowlessRenderingEnabled is set to true by default, set to false to disable the OSR mode
-  // config.setWindowlessRenderingEnabled(false);
-  // config.addCommandLineSwitch("disable-gpu");
-
+  config.setWindowlessRenderingEnabled(false);
+  
   // add command line args
-  config.addCommandLineSwitch("enable-media-stream");
-  // config.addCommandLineSwitch("use-mock-keychain");
+  config.addCommandLineSwitch("use-mock-keychain");
+  // config.addCommandLineSwitch("disable-gpu");
+  // config.addCommandLineSwitch("enable-media-stream");
   // config.addCommandLineSwitch("allow-file-access-from-files");
   // config.addCommandLineSwitch("disable-spell-checking");
   // config.addCommandLineSwitch("disable-site-isolation-trials");

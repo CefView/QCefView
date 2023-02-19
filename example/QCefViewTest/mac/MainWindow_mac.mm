@@ -3,12 +3,12 @@
 
 void
 MainWindow::setupWindow() {
-    [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+    // [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
     
-    id hwnd = (id)this->winId();
-    NSWindow* window = [hwnd window];
-    window.titlebarAppearsTransparent = true;
-    [window setTitle: @""];
-    window.movableByWindowBackground = true;
-    window.styleMask |= NSWindowStyleMaskFullSizeContentView;
+    // id hwnd = (id)this->winId();
+    // NSWindow* window = [hwnd window];
+    // window.titlebarAppearsTransparent = true;
+    // [window setTitle: @""];
+    // window.movableByWindowBackground = true;
+    // window.styleMask |= NSWindowStyleMaskFullSizeContentView;
 }
