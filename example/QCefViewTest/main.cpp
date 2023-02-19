@@ -18,7 +18,7 @@ main(int argc, char* argv[])
   config.setBackgroundColor(Qt::lightGray);
 
   // WindowlessRenderingEnabled is set to true by default, set to false to disable the OSR mode
-  config.setWindowlessRenderingEnabled(false);
+  // config.setWindowlessRenderingEnabled(false);
   
   // add command line args
   config.addCommandLineSwitch("use-mock-keychain");
