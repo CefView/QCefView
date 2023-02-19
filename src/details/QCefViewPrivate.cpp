@@ -1,4 +1,4 @@
-﻿#include "QCefViewPrivate.h"
+#include "QCefViewPrivate.h"
 
 #pragma region std_headers
 #include <stdexcept>
@@ -96,7 +96,11 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
     CefWindowHandle p = (CefWindowHandle)(w.winId());
     window_info.SetAsChild(p, { 0, 0, 0, 0 });
 #else
+#if CEF_VERSION_MAJOR > 91
     window_info.SetAsChild((CefWindowHandle)view->winId(), { 0, 0, view->maximumWidth(), view->maximumHeight() });
+#else
+    window_info.SetAsChild((CefWindowHandle)view->winId(), 0, 0, view->maximumWidth(), view->maximumHeight());
+#endif
 #endif
   }
   //#endif
@@ -420,7 +424,7 @@ QCefViewPrivate::onContextMenuTriggered(QAction* action)
     auto eventFlags = EVENTFLAG_NONE;
     auto commandId = action->data().toInt();
     osr.contextMenuCallback_->Continue(commandId, eventFlags);
-    osr.contextMenuCallback_.reset();
+    osr.contextMenuCallback_ = nullptr;
   }
 }
 
@@ -435,7 +439,7 @@ QCefViewPrivate::onContextMenuDestroyed(QObject* obj)
 
   if (osr.contextMenuCallback_) {
     osr.contextMenuCallback_->Cancel();
-    osr.contextMenuCallback_.reset();
+    osr.contextMenuCallback_ = nullptr;
   }
 
   osr.isShowingContextMenu_ = false;
@@ -531,7 +535,7 @@ QCefViewPrivate::onRunCefContextMenu(QPoint pos, CefRefPtr<CefRunContextMenuCall
 void
 QCefViewPrivate::onCefContextMenuDismissed()
 {
-  osr.contextMenuCallback_.reset();
+  osr.contextMenuCallback_ = nullptr;
 }
 
 bool
@@ -681,9 +685,9 @@ QCefViewPrivate::onViewVisibilityChanged(bool visible)
 #endif
         }
         //#endif
-        ncw.qBrowserWidget_->resize(q->frameSize());
+        //ncw.qBrowserWidget_->resize(q->frameSize());
       } else {
-        ncw.qBrowserWidget_->resize(0, 0);
+        //ncw.qBrowserWidget_->resize(0, 0);
       }
     }
   }
