@@ -7,7 +7,7 @@
 
 #include "QCefViewPrivate.h"
 
-//#if defined(CEF_USE_OSR)
+// #if defined(CEF_USE_OSR)
 
 bool
 CCefClientDelegate::getRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
@@ -151,7 +151,8 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
                                        CefRenderHandler::PaintElementType type,
                                        const CefRenderHandler::RectList& dirtyRects,
                                        void* shared_handle)
-{}
+{
+}
 
 bool
 CCefClientDelegate::startDragging(CefRefPtr<CefBrowser> browser,
@@ -171,7 +172,8 @@ CCefClientDelegate::updateDragCursor(CefRefPtr<CefBrowser> browser, CefRenderHan
 
 void
 CCefClientDelegate::onScrollOffsetChanged(CefRefPtr<CefBrowser> browser, double x, double y)
-{}
+{
+}
 
 void
 CCefClientDelegate::onImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
@@ -199,11 +201,13 @@ void
 CCefClientDelegate::onTextSelectionChanged(CefRefPtr<CefBrowser> browser,
                                            const CefString& selected_text,
                                            const CefRange& selected_range)
-{}
+{
+}
 
 void
 CCefClientDelegate::onVirtualKeyboardRequested(CefRefPtr<CefBrowser> browser,
                                                CefRenderHandler::TextInputMode input_mode)
-{}
+{
+}
 
-//#endif
+// #endif

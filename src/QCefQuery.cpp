@@ -14,7 +14,8 @@ REGISTER_METATYPE(QCefQuery);
 
 QCefQuery::QCefQuery()
   : d_ptr(new QCefQueryPrivate)
-{}
+{
+}
 
 QCefQuery::QCefQuery(const QString& req, const int64_t query)
   : QCefQuery()

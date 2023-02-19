@@ -7,7 +7,8 @@ REGISTER_METATYPE(QCefConfig);
 
 QCefConfig::QCefConfig()
   : d_ptr(new QCefConfigPrivate)
-{}
+{
+}
 
 QCefConfig::QCefConfig(const QCefConfig& other)
   : d_ptr(new QCefConfigPrivate)

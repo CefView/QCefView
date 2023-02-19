@@ -82,7 +82,7 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
 
   // Set window info
   CefWindowInfo window_info;
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     window_info.SetAsWindowless(0);
   } else { // #else
@@ -103,18 +103,18 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
 #endif
 #endif
   }
-  //#endif
+  // #endif
 
   // create the browser settings
   CefBrowserSettings browserSettings;
   QCefSettingPrivate::CopyToCefBrowserSettings(setting, &browserSettings);
 
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     if (CefColorGetA(browserSettings.background_color) == 0)
       osr.transparentPaintingEnabled = true;
   }
-  //#endif
+  // #endif
 
   // create browser object
   bool success = CefBrowserHost::CreateBrowser(window_info,       // window info
@@ -143,13 +143,13 @@ QCefViewPrivate::destroyCefBrowser()
   if (!pClient_)
     return;
 
-  //#if !defined(CEF_USE_OSR)
+  // #if !defined(CEF_USE_OSR)
   if (!isOSRModeEnabled_) {
     // remove parent, or CEF will send close to the parent
     // this will lead the top level window to be closed
     ncw.qBrowserWindow_->setParent(nullptr);
   }
-  //#endif
+  // #endif
 
   // clean all browsers
   pClient_->CloseAllBrowsers();
@@ -199,7 +199,7 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
   // capture the browser
   pCefBrowser_ = browser;
 
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     // notify the visibility and size
     pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
@@ -215,7 +215,7 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
               SLOT(onViewScreenChanged(QScreen*)) //
       );
     }
-  } else { //#else
+  } else { // #else
     // call slot
     q_ptr->onBrowserWindowCreated(window);
 
@@ -248,7 +248,7 @@ QCefViewPrivate::onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow
     // update mask
     UpdateCefWindowMask(ncw.qBrowserWindow_, q_ptr->mask());
   }
-  //#endif
+  // #endif
 }
 
 void
@@ -324,15 +324,15 @@ QCefViewPrivate::onAppFocusChanged(QWidget* old, QWidget* now)
 void
 QCefViewPrivate::onViewScreenChanged(QScreen* screen)
 {
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     if (pCefBrowser_)
       pCefBrowser_->GetHost()->NotifyScreenInfoChanged();
-  } else { //#else
+  } else { // #else
     Q_Q(QCefView);
     UpdateCefWindowMask(ncw.qBrowserWindow_, q->mask());
   }
-  //#endif
+  // #endif
 }
 
 void
@@ -373,12 +373,12 @@ QCefViewPrivate::onCefWindowGotFocus()
 void
 QCefViewPrivate::onCefUpdateCursor(const QCursor& cursor)
 {
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     Q_Q(QCefView);
     q->setCursor(cursor);
   }
-  //#endif
+  // #endif
 }
 
 void
@@ -448,15 +448,15 @@ QCefViewPrivate::onContextMenuDestroyed(QObject* obj)
 void
 QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region)
 {
-  //#if defined(QT_DEBUG)
-  //  qint64 elapsedMs = paintTimer_.restart();
-  //  // qDebug() << "===== CEF view frame update since last frame:" << elapsedMs;
-  //  if (elapsedMs >= 20)
-  //    qDebug() << "===== CEF view frame update stutter detected:" << elapsedMs;
+  // #if defined(QT_DEBUG)
+  //   qint64 elapsedMs = paintTimer_.restart();
+  //   // qDebug() << "===== CEF view frame update since last frame:" << elapsedMs;
+  //   if (elapsedMs >= 20)
+  //     qDebug() << "===== CEF view frame update stutter detected:" << elapsedMs;
   //
-  //  QElapsedTimer updateDurationTimer;
-  //  updateDurationTimer.start();
-  //#endif
+  //   QElapsedTimer updateDurationTimer;
+  //   updateDurationTimer.start();
+  // #endif
 
   if (osr.qCefViewFrame_.size() != frame.size() || osr.transparentPaintingEnabled) {
     // update full image
@@ -472,9 +472,9 @@ QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region
   }
   emit updateOsrFrame();
 
-  //#if defined(QT_DEBUG)
-  //  qDebug() << "===== CEF frame update duration:" << elapsedMs;
-  //#endif
+  // #if defined(QT_DEBUG)
+  //   qDebug() << "===== CEF frame update duration:" << elapsedMs;
+  // #endif
 }
 
 void
@@ -552,7 +552,7 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
   }
 #endif
 
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     // if the parent chain changed, we need to re-connect the screenChanged signal
     if (et == QEvent::ParentChange) {
@@ -577,7 +577,7 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
         return true;
       }
     }
-  } else { //#else
+  } else { // #else
     // filter event to the browser window
     if (watched == ncw.qBrowserWindow_ && et == QEvent::PlatformSurface) {
       auto t = ((QPlatformSurfaceEvent*)event)->surfaceEventType();
@@ -587,7 +587,7 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
       }
     }
   }
-  //#endif
+  // #endif
 
   return QObject::eventFilter(watched, event);
 }
@@ -595,7 +595,7 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 QVariant
 QCefViewPrivate::onViewInputMethodQuery(Qt::InputMethodQuery query) const
 {
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     switch (query) {
       case Qt::ImCursorRectangle:
@@ -618,14 +618,14 @@ QCefViewPrivate::onViewInputMethodQuery(Qt::InputMethodQuery query) const
         break;
     }
   }
-  //#endif
+  // #endif
   return QVariant();
 }
 
 void
 QCefViewPrivate::onViewInputMethodEvent(QInputMethodEvent* event)
 {
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     if (!pCefBrowser_)
       return;
@@ -662,7 +662,7 @@ QCefViewPrivate::onViewInputMethodEvent(QInputMethodEvent* event)
       pCefBrowser_->GetHost()->ImeCancelComposition();
     }
   }
-  //#endif
+  // #endif
 }
 
 void
@@ -699,7 +699,7 @@ QCefViewPrivate::onViewVisibilityChanged(bool visible)
 void
 QCefViewPrivate::onViewFocusChanged(bool focused)
 {
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     if (pCefBrowser_) {
       if (focused) {
@@ -709,27 +709,27 @@ QCefViewPrivate::onViewFocusChanged(bool focused)
       }
     }
   }
-  //#endif
+  // #endif
 }
 
 void
 QCefViewPrivate::onViewSizeChanged(const QSize& size, const QSize& oldSize)
 {
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     if (pCefBrowser_)
       pCefBrowser_->GetHost()->WasResized();
-  } else { //#else
+  } else { // #else
     Q_Q(QCefView);
     UpdateCefWindowMask(ncw.qBrowserWindow_, q->mask());
   }
-  //#endif
+  // #endif
 }
 
 void
 QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
 {
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     if (!pCefBrowser_)
       return;
@@ -764,13 +764,13 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
       pCefBrowser_->GetHost()->SendKeyEvent(e);
     }
   }
-  //#endif
+  // #endif
 }
 
 void
 QCefViewPrivate::onViewMouseEvent(QMouseEvent* event)
 {
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     if (!pCefBrowser_)
       return;
@@ -819,13 +819,13 @@ QCefViewPrivate::onViewMouseEvent(QMouseEvent* event)
       pCefBrowser_->GetHost()->SendMouseClickEvent(e, mbt, true, 1);
     }
   }
-  //#endif
+  // #endif
 }
 
 void
 QCefViewPrivate::onViewWheelEvent(QWheelEvent* event)
 {
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     auto p = event->position();
     auto d = event->angleDelta();
@@ -845,7 +845,7 @@ QCefViewPrivate::onViewWheelEvent(QWheelEvent* event)
     pCefBrowser_->GetHost()->SendMouseWheelEvent(
       e, m & Qt::ShiftModifier ? 0 : d.x(), m & Qt::ShiftModifier ? 0 : d.y());
   }
-  //#endif
+  // #endif
 }
 
 int

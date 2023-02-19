@@ -12,7 +12,8 @@ REGISTER_METATYPE(QCefEvent);
 
 QCefEvent::QCefEvent()
   : d_ptr(new QCefEventPrivate)
-{}
+{
+}
 
 QCefEvent::QCefEvent(const QString& name)
   : QCefEvent()

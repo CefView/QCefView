@@ -68,7 +68,7 @@ public:
   /// </summary>
   bool isOSRModeEnabled_ = false;
 
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
 
   /// <summary>
   /// Offscreen rendering private data
@@ -131,7 +131,7 @@ public:
     CefRefPtr<CefRunContextMenuCallback> contextMenuCallback_;
   } osr;
 
-  //#else
+  // #else
 
   /// <summary>
   /// Native child window private data
@@ -149,7 +149,7 @@ public:
     QWidget* qBrowserWidget_ = nullptr;
   } ncw;
 
-  //#endif
+  // #endif
 
 #if defined(QT_DEBUG)
   QElapsedTimer paintTimer_;
@@ -203,7 +203,7 @@ public slots:
 
   void onCefInputStateChanged(bool editable);
 
-  //#if defined(CEF_USE_OSR)
+  // #if defined(CEF_USE_OSR)
   void onOsrImeCursorRectChanged(const QRect& rc);
 
   void onOsrShowPopup(bool show);
@@ -227,7 +227,7 @@ protected:
   void onRunCefContextMenu(QPoint pos, CefRefPtr<CefRunContextMenuCallback> callback);
 
   void onCefContextMenuDismissed();
-  //#endif
+  // #endif
 
 protected:
   virtual bool eventFilter(QObject* watched, QEvent* event) override;

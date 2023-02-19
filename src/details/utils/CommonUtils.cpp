@@ -2,7 +2,6 @@
 #include <QWidget>
 #include <QWindow>
 
-
 #if defined(Q_OS_WINDOWS)
 #include <Windows.h>
 
@@ -37,9 +36,9 @@ QRegionToHRGN(const QRegion& region)
 #endif
 
 #if defined(Q_OS_LINUX)
-#include <X11/Xlib.h>
 #include <QApplication>
 #include <QScreen>
+#include <X11/Xlib.h>
 #include <qpa/qplatformnativeinterface.h>
 
 Display*

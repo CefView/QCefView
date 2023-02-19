@@ -7,7 +7,8 @@
 CCefAppDelegate::CCefAppDelegate(QCefContextPrivate* context, CommandLineArgs args)
   : pContext_(context)
   , commandLineArgs_(args)
-{}
+{
+}
 
 void
 CCefAppDelegate::onBeforeCommandLineProcessing(const CefString& process_type, CefRefPtr<CefCommandLine> command_line)
