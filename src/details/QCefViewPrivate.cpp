@@ -668,30 +668,32 @@ QCefViewPrivate::onViewInputMethodEvent(QInputMethodEvent* event)
 void
 QCefViewPrivate::onViewVisibilityChanged(bool visible)
 {
-  //#if defined(CEF_USE_OSR)
+  // tell cef to start/stop rendering
+  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     if (pCefBrowser_)
       pCefBrowser_->GetHost()->WasHidden(!visible);
-  } else { //#else
+  } else { // #else
     Q_Q(QCefView);
-    if (ncw.qBrowserWidget_) {
-      if (visible) {
-        //#if !defined(CEF_USE_OSR)
-        if (!isOSRModeEnabled_) {
+    if (!ncw.qBrowserWidget_)
+      return;
+
+    if (visible) {
 #if defined(Q_OS_LINUX)
-          XRemapWindow(ncw.qBrowserWidget_, ncw.qBrowserWindow_);
-          // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
-          // with the QCefView widget
+      XRemapWindow(ncw.qBrowserWidget_, ncw.qBrowserWindow_);
+      // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
+      // with the QCefView widget
 #endif
-        }
-        //#endif
-        //ncw.qBrowserWidget_->resize(q->frameSize());
-      } else {
-        //ncw.qBrowserWidget_->resize(0, 0);
-      }
+      // restore cef window size
+      ncw.qBrowserWidget_->resize(q->frameSize());
+    } else {
+      // set cef window size to 0x0 to stop rendering and reduce resource usage
+      // please refer to:
+      // https://bitbucket.org/chromiumembedded/cef/issues/2310/allow-cefbrowser-washidden-to-work-for
+      ncw.qBrowserWidget_->resize(0, 0);
     }
   }
-  //#endif
+  // #endif
 }
 
 void
