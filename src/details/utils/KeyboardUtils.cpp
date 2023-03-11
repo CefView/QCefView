@@ -373,7 +373,7 @@ macQKeyEventToCefKeyEvent(QKeyEvent* qe, CefKeyEvent& ce)
     ce.is_system_key = true;
 }
 
-#elif defined(Q_OS_WINDOWS)
+#elif defined(Q_OS_WINDOWS) || defined(Q_OS_WIN)
 static uint32_t
 winGetKeyboardModifiers(QKeyEvent* qe)
 {
@@ -694,7 +694,7 @@ MapQKeyEventToCefKeyEvent(QKeyEvent* qe, CefKeyEvent& ce)
 {
 #if defined(Q_OS_MACOS)
   macQKeyEventToCefKeyEvent(qe, ce);
-#elif defined(Q_OS_WINDOWS)
+#elif defined(Q_OS_WINDOWS) || defined(Q_OS_WIN)
   winQKeyEventToCefKeyEvent(qe, ce);
 #elif defined(Q_OS_LINUX)
   linuxQKeyEventToCefKeyEvent(qe, ce);

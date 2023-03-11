@@ -827,7 +827,12 @@ QCefViewPrivate::onViewWheelEvent(QWheelEvent* event)
 {
   // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+    auto p = event->pos();
+#else
     auto p = event->position();
+#endif
+
     auto d = event->angleDelta();
     auto m = event->modifiers();
     auto b = event->buttons();

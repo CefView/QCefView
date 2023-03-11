@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget* parent)
 
   createCefView();
 
-  m_pRightCefViewWidget = new CefViewWidget("https://www.testufo.com", nullptr, this);
+  m_pRightCefViewWidget = new CefViewWidget(INDEX_URL, nullptr, this);
   m_ui.rightCefViewContainer->layout()->addWidget(m_pRightCefViewWidget);
 }
 
@@ -72,7 +72,6 @@ MainWindow::createCefView()
 
   // create the QCefView widget and add it to the layout container
   m_pLeftCefViewWidget = new CefViewWidget("https://www.thinkbroadband.com/download", &setting);
-  // m_pLeftCefViewWidget = new CefViewWidget("https://codepen.io/tishion/pen/qBKEYXL", &setting);
 
   // this site is for test web events
   // m_pLeftCefViewWidget = new CefViewWidget("http://xcal1.vodafone.co.uk/", &setting, this);
@@ -81,10 +80,10 @@ MainWindow::createCefView()
   // m_pLeftCefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);
 
   // this site is for test OSR performance
-  // rightCefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
+  // m_pLeftCefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
 
   // this site is test for input devices
-  // leftCefViewWidget = new CefViewWidget("https://devicetests.com", &setting);
+  m_pLeftCefViewWidget = new CefViewWidget("https://devicetests.com", &setting);
 
   m_ui.leftCefViewContainer->layout()->addWidget(m_pLeftCefViewWidget);
 

@@ -1,8 +1,8 @@
-#include "CommonUtils.h"
+﻿#include "CommonUtils.h"
 #include <QWidget>
 #include <QWindow>
 
-#if defined(Q_OS_WINDOWS)
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_WIN)
 #include <Windows.h>
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -74,7 +74,7 @@ UpdateCefWindowMask(QWindow* w, const QRegion& r)
   if (w) {
     // this doesn't work
     // ncw.qBrowserWindow_->setMask(q->mask());
-#if defined(Q_OS_WINDOWS)
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_WIN)
     // for Windows
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ::SetWindowRgn((HWND)w->winId(), QRegionToHRGN(r), true);
