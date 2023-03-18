@@ -16,7 +16,8 @@ public:
   ~MainWindow();
 
 protected:
-  void createCefView();
+  void createLeftCefView();
+  void createRightCefView();
   void setupWindow();
 
   // QCefView slots
@@ -45,7 +46,7 @@ protected slots:
 
   // ui slots
 protected slots:
-  void onBtnRecreateClicked();
+  void onBtnRecreateRightViewClicked();
 
   void onBtnChangeColorClicked();
 

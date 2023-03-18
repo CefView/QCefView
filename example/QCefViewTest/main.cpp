@@ -1,4 +1,4 @@
-#include <QApplication>
+﻿#include <QApplication>
 
 #include <QCefContext.h>
 
@@ -19,7 +19,7 @@ main(int argc, char* argv[])
 
   // WindowlessRenderingEnabled is set to true by default, set to false to disable the OSR mode
   // config.setWindowlessRenderingEnabled(false);
-  
+
   // add command line args
   config.addCommandLineSwitch("use-mock-keychain");
   // config.addCommandLineSwitch("disable-gpu");
@@ -28,7 +28,7 @@ main(int argc, char* argv[])
   // config.addCommandLineSwitch("disable-spell-checking");
   // config.addCommandLineSwitch("disable-site-isolation-trials");
   // config.addCommandLineSwitch("enable-aggressive-domstorage-flushing");
-  // config.addCommandLineSwitchWithValue("renderer-process-limit", "1");
+  config.addCommandLineSwitchWithValue("renderer-process-limit", "1");
   // config.addCommandLineSwitchWithValue("disable-features", "BlinkGenPropertyTrees,TranslateUI,site-per-process");
 
   // initialize QCefContext instance with config

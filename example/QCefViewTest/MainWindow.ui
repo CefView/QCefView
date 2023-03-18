@@ -1,224 +1,224 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>1280</width>
-    <height>900</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>QCefViewTest</string>
-  </property>
-  <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="spacing">
-     <number>3</number>
-    </property>
-    <property name="leftMargin">
-     <number>2</number>
-    </property>
-    <property name="topMargin">
-     <number>2</number>
-    </property>
-    <property name="rightMargin">
-     <number>2</number>
-    </property>
-    <property name="bottomMargin">
-     <number>2</number>
-    </property>
-    <item>
-     <widget class="QWidget" name="nativeContainer" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
-						#nativeContainer {
-						background-color: rgb(170, 255, 255);
-						}
-					</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_nativeContainer">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">
-									#label{
-									font: 12pt &quot;MS Shell Dlg 2&quot;;
-									}
-								</string>
-         </property>
-         <property name="text">
-          <string>Native Area</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_reCreate">
-         <property name="text">
-          <string>Recreate QCefView</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_changeColor">
-         <property name="text">
-          <string>ChangeColor</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_setFocus">
-         <property name="text">
-          <string>SetFocus</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_2"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_callJSCode">
-         <property name="text">
-          <string>CallJSCode</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_3"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_newBrowser">
-         <property name="text">
-          <string>NewBrowser</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_quitApp">
-         <property name="text">
-          <string>Exit App</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QSplitter" name="splitter">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <widget class="QWidget" name="leftCefViewContainer" native="true">
-       <layout class="QVBoxLayout" name="verticalLayout_cefContainer">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="rightCefViewContainer" native="true">
-       <layout class="QVBoxLayout" name="verticalLayout_cefContainer_2">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-       </layout>
-      </widget>
-     </widget>
-    </item>
-   </layout>
-  </widget>
- </widget>
- <layoutdefault spacing="6" margin="11"/>
- <tabstops>
-  <tabstop>btn_reCreate</tabstop>
-  <tabstop>btn_changeColor</tabstop>
-  <tabstop>lineEdit</tabstop>
-  <tabstop>lineEdit_2</tabstop>
-  <tabstop>btn_callJSCode</tabstop>
-  <tabstop>lineEdit_3</tabstop>
-  <tabstop>btn_newBrowser</tabstop>
-  <tabstop>btn_quitApp</tabstop>
- </tabstops>
- <resources/>
- <connections/>
+	<class>MainWindow</class>
+	<widget class="QMainWindow" name="MainWindow">
+		<property name="geometry">
+			<rect>
+				<x>0</x>
+				<y>0</y>
+				<width>1280</width>
+				<height>900</height>
+			</rect>
+		</property>
+		<property name="windowTitle">
+			<string>QCefViewTest</string>
+		</property>
+		<widget class="QWidget" name="centralWidget">
+			<layout class="QHBoxLayout" name="horizontalLayout">
+				<property name="spacing">
+					<number>3</number>
+				</property>
+				<property name="leftMargin">
+					<number>2</number>
+				</property>
+				<property name="topMargin">
+					<number>2</number>
+				</property>
+				<property name="rightMargin">
+					<number>2</number>
+				</property>
+				<property name="bottomMargin">
+					<number>2</number>
+				</property>
+				<item>
+					<widget class="QWidget" name="nativeContainer" native="true">
+						<property name="sizePolicy">
+							<sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+								<horstretch>0</horstretch>
+								<verstretch>0</verstretch>
+							</sizepolicy>
+						</property>
+						<property name="styleSheet">
+							<string notr="true">
+								#nativeContainer {
+								background-color: rgb(170, 255, 255);
+								}
+							</string>
+						</property>
+						<layout class="QVBoxLayout" name="verticalLayout_nativeContainer">
+							<property name="spacing">
+								<number>6</number>
+							</property>
+							<property name="leftMargin">
+								<number>0</number>
+							</property>
+							<property name="topMargin">
+								<number>0</number>
+							</property>
+							<property name="rightMargin">
+								<number>0</number>
+							</property>
+							<property name="bottomMargin">
+								<number>0</number>
+							</property>
+							<item>
+								<widget class="QLabel" name="label">
+									<property name="sizePolicy">
+										<sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+											<horstretch>0</horstretch>
+											<verstretch>0</verstretch>
+										</sizepolicy>
+									</property>
+									<property name="styleSheet">
+										<string notr="true">
+											#label{
+											font: 12pt &quot;MS Shell Dlg 2&quot;;
+											}
+										</string>
+									</property>
+									<property name="text">
+										<string>Native Area</string>
+									</property>
+									<property name="alignment">
+										<set>Qt::AlignCenter</set>
+									</property>
+								</widget>
+							</item>
+							<item>
+								<widget class="QPushButton" name="btn_reCreate">
+									<property name="text">
+										<string>Recreate Right QCefView</string>
+									</property>
+								</widget>
+							</item>
+							<item>
+								<widget class="QPushButton" name="btn_changeColor">
+									<property name="text">
+										<string>ChangeColor</string>
+									</property>
+								</widget>
+							</item>
+							<item>
+								<widget class="QLineEdit" name="lineEdit"/>
+							</item>
+							<item>
+								<widget class="QPushButton" name="btn_setFocus">
+									<property name="text">
+										<string>SetFocus</string>
+									</property>
+								</widget>
+							</item>
+							<item>
+								<widget class="QLineEdit" name="lineEdit_2"/>
+							</item>
+							<item>
+								<widget class="QPushButton" name="btn_callJSCode">
+									<property name="text">
+										<string>CallJSCode</string>
+									</property>
+								</widget>
+							</item>
+							<item>
+								<widget class="QLineEdit" name="lineEdit_3"/>
+							</item>
+							<item>
+								<widget class="QPushButton" name="btn_newBrowser">
+									<property name="text">
+										<string>NewBrowser</string>
+									</property>
+								</widget>
+							</item>
+							<item>
+								<widget class="QPushButton" name="btn_quitApp">
+									<property name="text">
+										<string>Exit App</string>
+									</property>
+								</widget>
+							</item>
+							<item>
+								<spacer name="verticalSpacer">
+									<property name="orientation">
+										<enum>Qt::Vertical</enum>
+									</property>
+									<property name="sizeHint" stdset="0">
+										<size>
+											<width>20</width>
+											<height>40</height>
+										</size>
+									</property>
+								</spacer>
+							</item>
+						</layout>
+					</widget>
+				</item>
+				<item>
+					<widget class="QSplitter" name="splitter">
+						<property name="sizePolicy">
+							<sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+								<horstretch>0</horstretch>
+								<verstretch>0</verstretch>
+							</sizepolicy>
+						</property>
+						<property name="frameShadow">
+							<enum>QFrame::Plain</enum>
+						</property>
+						<property name="orientation">
+							<enum>Qt::Horizontal</enum>
+						</property>
+						<widget class="QWidget" name="leftCefViewContainer" native="true">
+							<layout class="QVBoxLayout" name="verticalLayout_cefContainer">
+								<property name="spacing">
+									<number>0</number>
+								</property>
+								<property name="leftMargin">
+									<number>0</number>
+								</property>
+								<property name="topMargin">
+									<number>0</number>
+								</property>
+								<property name="rightMargin">
+									<number>0</number>
+								</property>
+								<property name="bottomMargin">
+									<number>0</number>
+								</property>
+							</layout>
+						</widget>
+						<widget class="QWidget" name="rightCefViewContainer" native="true">
+							<layout class="QVBoxLayout" name="verticalLayout_cefContainer_2">
+								<property name="spacing">
+									<number>0</number>
+								</property>
+								<property name="leftMargin">
+									<number>0</number>
+								</property>
+								<property name="topMargin">
+									<number>0</number>
+								</property>
+								<property name="rightMargin">
+									<number>0</number>
+								</property>
+								<property name="bottomMargin">
+									<number>0</number>
+								</property>
+							</layout>
+						</widget>
+					</widget>
+				</item>
+			</layout>
+		</widget>
+	</widget>
+	<layoutdefault spacing="6" margin="11"/>
+	<tabstops>
+		<tabstop>btn_reCreate</tabstop>
+		<tabstop>btn_changeColor</tabstop>
+		<tabstop>lineEdit</tabstop>
+		<tabstop>lineEdit_2</tabstop>
+		<tabstop>btn_callJSCode</tabstop>
+		<tabstop>lineEdit_3</tabstop>
+		<tabstop>btn_newBrowser</tabstop>
+		<tabstop>btn_quitApp</tabstop>
+	</tabstops>
+	<resources/>
+	<connections/>
 </ui>

@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget* parent)
   // setWindowFlags(Qt::FramelessWindowHint);
   // setAttribute(Qt::WA_TranslucentBackground);
 
-  connect(m_ui.btn_reCreate, &QPushButton::clicked, this, &MainWindow::onBtnRecreateClicked);
+  connect(m_ui.btn_reCreate, &QPushButton::clicked, this, &MainWindow::onBtnRecreateRightViewClicked);
   connect(m_ui.btn_changeColor, &QPushButton::clicked, this, &MainWindow::onBtnChangeColorClicked);
   connect(m_ui.btn_setFocus, &QPushButton::clicked, this, &MainWindow::onBtnSetFocusClicked);
   connect(m_ui.btn_callJSCode, &QPushButton::clicked, this, &MainWindow::onBtnCallJSCodeClicked);
@@ -47,55 +47,21 @@ MainWindow::MainWindow(QWidget* parent)
   // add a local folder to URL map (global)
   QCefContext::instance()->addLocalFolderResource(webResourceDir, URL_ROOT);
 
-  createCefView();
-
-  m_pRightCefViewWidget = new CefViewWidget(INDEX_URL, nullptr, this);
-  m_ui.rightCefViewContainer->layout()->addWidget(m_pRightCefViewWidget);
+  createLeftCefView();
+  createRightCefView();
 }
 
 MainWindow::~MainWindow() {}
 
 void
-MainWindow::createCefView()
+MainWindow::createLeftCefView()
 {
-  ///*
-  // build settings for per QCefView
-  QCefSetting setting;
+  if (m_pLeftCefViewWidget) {
+    m_pLeftCefViewWidget->deleteLater();
+    m_pLeftCefViewWidget = nullptr;
+  }
 
-#if CEF_VERSION_MAJOR < 100
-  setting.setPlugins(false);
-#endif
-
-  setting.setWindowlessFrameRate(60);
-  setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
-  // setting.setBackgroundColor(Qt::blue);
-
-  // create the QCefView widget and add it to the layout container
-  m_pLeftCefViewWidget = new CefViewWidget("https://www.thinkbroadband.com/download", &setting);
-
-  // this site is for test web events
-  // m_pLeftCefViewWidget = new CefViewWidget("http://xcal1.vodafone.co.uk/", &setting, this);
-
-  //
-  // m_pLeftCefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);
-
-  // this site is for test OSR performance
-  // m_pLeftCefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
-
-  // this site is test for input devices
-  m_pLeftCefViewWidget = new CefViewWidget("https://devicetests.com", &setting);
-
-  m_ui.leftCefViewContainer->layout()->addWidget(m_pLeftCefViewWidget);
-
-  // allow show context menu for both OSR and NCW mode
-  m_pLeftCefViewWidget->setContextMenuPolicy(Qt::DefaultContextMenu);
-
-  // all the following values will disable the context menu for both NCW and OSR mode
-  // cefViewWidget->setContextMenuPolicy(Qt::NoContextMenu);
-  // cefViewWidget->setContextMenuPolicy(Qt::ActionsContextMenu);
-  // cefViewWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-  // cefViewWidget->setContextMenuPolicy(Qt::PreventContextMenu);
-
+  m_pLeftCefViewWidget = new CefViewWidget(INDEX_URL, nullptr, this);
   // connect the invokeMethod to the slot
   connect(m_pLeftCefViewWidget, &QCefView::invokeMethod, this, &MainWindow::onInvokeMethod);
 
@@ -109,6 +75,56 @@ MainWindow::createCefView()
   connect(m_pLeftCefViewWidget, &QCefView::loadStart, this, &MainWindow::onLoadStart);
   connect(m_pLeftCefViewWidget, &QCefView::loadEnd, this, &MainWindow::onLoadEnd);
   connect(m_pLeftCefViewWidget, &QCefView::loadError, this, &MainWindow::onLoadError);
+
+  m_ui.leftCefViewContainer->layout()->addWidget(m_pLeftCefViewWidget);
+}
+
+void
+MainWindow::createRightCefView()
+{
+  if (m_pRightCefViewWidget) {
+    m_pRightCefViewWidget->deleteLater();
+    m_pRightCefViewWidget = nullptr;
+  }
+
+  ///*
+  // build settings for per QCefView
+  QCefSetting setting;
+
+#if CEF_VERSION_MAJOR < 100
+  setting.setPlugins(false);
+#endif
+
+  setting.setWindowlessFrameRate(60);
+  setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
+  // setting.setBackgroundColor(Qt::blue);
+
+  // create the QCefView widget and add it to the layout container
+  m_pRightCefViewWidget = new CefViewWidget("https://www.thinkbroadband.com/download", &setting);
+
+  // this site is for test web events
+  // m_pRightCefViewWidget = new CefViewWidget("http://xcal1.vodafone.co.uk/", &setting, this);
+
+  //
+  // m_pRightCefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);
+
+  // this site is for test OSR performance
+  // m_pRightCefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
+
+  // this site is test for input devices
+  m_pRightCefViewWidget = new CefViewWidget("https://devicetests.com", &setting);
+
+  m_ui.rightCefViewContainer->layout()->addWidget(m_pRightCefViewWidget);
+
+  // allow show context menu for both OSR and NCW mode
+  m_pRightCefViewWidget->setContextMenuPolicy(Qt::DefaultContextMenu);
+
+  // all the following values will disable the context menu for both NCW and OSR mode
+  // m_pRightCefViewWidget->setContextMenuPolicy(Qt::NoContextMenu);
+  // m_pRightCefViewWidget->setContextMenuPolicy(Qt::ActionsContextMenu);
+  // m_pRightCefViewWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+  // m_pRightCefViewWidget->setContextMenuPolicy(Qt::PreventContextMenu);
+
   //*/
 }
 
@@ -213,14 +229,9 @@ MainWindow::onLoadError(int browserId,
 }
 
 void
-MainWindow::onBtnRecreateClicked()
+MainWindow::onBtnRecreateRightViewClicked()
 {
-  if (m_pLeftCefViewWidget) {
-    m_pLeftCefViewWidget->deleteLater();
-    m_pLeftCefViewWidget = nullptr;
-  }
-
-  createCefView();
+  createRightCefView();
 }
 
 void
