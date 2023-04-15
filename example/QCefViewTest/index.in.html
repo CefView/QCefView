@@ -1,6 +1,10 @@
 <html>
   <head>
     <script>
+      console.log("page script starts.....");
+
+      window.onwheel = e => console.log(`wheel event: altKey=${e.altKey} ctrlKey=${e.ctrlKey}`);
+      
       function onLoad() {
         if (typeof CallBridge == "undefined") {
           alert("Not in CefView context");
