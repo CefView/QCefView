@@ -16,7 +16,7 @@ QCefView is a Qt based QWidget which encapsulates [CEF](https://bitbucket.org/ch
 **NCW** = Native Child Window Mode
 ### Download
 ```
-git clone --recursive git@github.com:CefView/QCefView.git
+git clone --recursive https://github.com/CefView/QCefView.git
 ```
 
 # Note For Debugging With xCode
