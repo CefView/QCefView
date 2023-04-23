@@ -14,7 +14,10 @@ QCefView is a Qt based QWidget which encapsulates [CEF](https://bitbucket.org/ch
 **OSR** = Offscreen Rendering Mode 
 
 **NCW** = Native Child Window Mode
-
+### Download
+```
+git clone --recursive git@github.com:CefView/QCefView.git
+```
 
 # Note For Debugging With xCode
 
