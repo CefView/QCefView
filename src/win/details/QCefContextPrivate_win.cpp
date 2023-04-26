@@ -5,8 +5,10 @@
 bool
 QCefContextPrivate::initializeCef(const QCefConfig* config)
 {
+#if CEF_VERSION_MAJOR < 112
   // Enable High-DPI support on Windows 7 or newer.
   CefEnableHighDPISupport();
+#endif
 
   // Build CefSettings
   CefSettings cef_settings;
