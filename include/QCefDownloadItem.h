@@ -6,8 +6,6 @@
  * Source: https://github.com/cefview/qcefview
  * Docs: https://cefview.github.io/QCefView/
  */
-#ifndef QCEFDOWNLOADITEM_H
-#define QCEFDOWNLOADITEM_H
 #pragma once
 #include "QCefView_global.h"
 
@@ -167,4 +165,3 @@ public:
   QString mimeType() const;
 };
 
-#endif /// QCEFDOWNLOADITEM_H

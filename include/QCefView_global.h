@@ -6,8 +6,6 @@
  * Source: https://github.com/cefview/qcefview
  * Docs: https://cefview.github.io/QCefView/
  */
-#ifndef QCEFEVIEW_GLOBAL_H
-#define QCEFEVIEW_GLOBAL_H
 #pragma once
 
 // clang-format off
@@ -40,4 +38,3 @@
 
 // clang-format on
 
-#endif // QCEFEVIEW_GLOBAL_H

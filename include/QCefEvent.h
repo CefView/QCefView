@@ -6,8 +6,6 @@
  * Source: https://github.com/cefview/qcefview
  * Docs: https://cefview.github.io/QCefView/
  */
-#ifndef QCEFEVENT_H
-#define QCEFEVENT_H
 #pragma once
 #include "QCefView_global.h"
 
@@ -85,4 +83,3 @@ public:
 
 Q_DECLARE_METATYPE(QCefEvent);
 
-#endif // QCEFEVENT_H

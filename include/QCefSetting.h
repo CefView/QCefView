@@ -6,8 +6,6 @@
  * Source: https://github.com/cefview/qcefview
  * Docs: https://cefview.github.io/QCefView/
  */
-#ifndef QCEFSETTING_H
-#define QCEFSETTING_H
 #pragma once
 #include "QCefView_global.h"
 
@@ -387,4 +385,3 @@ public:
 
 Q_DECLARE_METATYPE(QCefSetting);
 
-#endif

@@ -6,8 +6,6 @@
  * Source: https://github.com/cefview/qcefview
  * Docs: https://cefview.github.io/QCefView/
  */
-#ifndef QCEF_H
-#define QCEF_H
 #pragma once
 #include "QCefView_global.h"
 
@@ -107,4 +105,3 @@ private:
   static QCefContext* s_self;
 };
 
-#endif // QCEF_H

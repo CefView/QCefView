@@ -6,8 +6,6 @@
  * Source: https://github.com/cefview/qcefview
  * Docs: https://cefview.github.io/QCefView/
  */
-#ifndef QCEFVIEW_H
-#define QCEFVIEW_H
 #pragma once
 #include "QCefView_global.h"
 
@@ -500,4 +498,3 @@ protected:
 #pragma endregion
 };
 
-#endif // QCEFVIEW_H

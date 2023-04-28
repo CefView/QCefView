@@ -6,8 +6,6 @@
  * Source: https://github.com/cefview/qcefview
  * Docs: https://cefview.github.io/QCefView/
  */
-#ifndef QCEFQUERY_H
-#define QCEFQUERY_H
 #pragma once
 #include "QCefView_global.h"
 
@@ -101,4 +99,3 @@ public:
 
 Q_DECLARE_METATYPE(QCefQuery);
 
-#endif // QCEFQUERY_H
