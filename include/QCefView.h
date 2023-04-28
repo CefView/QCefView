@@ -9,12 +9,12 @@
 #ifndef QCEFVIEW_H
 #define QCEFVIEW_H
 #pragma once
-#include <QCefView_global.h>
+#include "QCefView_global.h"
 
-#include <QCefDownloadItem.h>
-#include <QCefEvent.h>
-#include <QCefQuery.h>
-#include <QCefSetting.h>
+#include "QCefDownloadItem.h"
+#include "QCefEvent.h"
+#include "QCefQuery.h"
+#include "QCefSetting.h"
 
 #pragma region qt_headers
 #include <QScopedPointer>

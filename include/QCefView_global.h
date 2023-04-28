@@ -12,7 +12,7 @@
 
 // clang-format off
 #pragma region qt_headers
-#include <QtCore/qglobal.h>
+#include "QtCore/qglobal.h"
 #include <QMetaType>
 #pragma endregion qt_headers
 

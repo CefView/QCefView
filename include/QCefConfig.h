@@ -9,7 +9,7 @@
 #ifndef QCEFCONFIG_H
 #define QCEFCONFIG_H
 #pragma once
-#include <QCefView_global.h>
+#include "QCefView_global.h"
 
 #pragma region qt_headers
 #include <QColor>

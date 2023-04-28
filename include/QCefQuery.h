@@ -9,7 +9,7 @@
 #ifndef QCEFQUERY_H
 #define QCEFQUERY_H
 #pragma once
-#include <QCefView_global.h>
+#include "QCefView_global.h"
 
 #pragma region std_headers
 #include <cstdint>

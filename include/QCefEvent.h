@@ -9,7 +9,7 @@
 #ifndef QCEFEVENT_H
 #define QCEFEVENT_H
 #pragma once
-#include <QCefView_global.h>
+#include "QCefView_global.h"
 
 #pragma region qt_headers
 #include <QScopedPointer>
