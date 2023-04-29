@@ -39,6 +39,11 @@ public:
   static void destroyAllInstance();
 
   /// <summary>
+  /// 
+  /// </summary>
+  bool isPopup_ = false;
+
+  /// <summary>
   ///
   /// </summary>
   bool disablePopuContextMenu_ = false;
@@ -155,6 +160,11 @@ public:
   QElapsedTimer paintTimer_;
 #endif
 
+  /// <summary>
+  /// The list of popup child-browsers of this browser.
+  /// </summary>
+  QSet<QCefView*> popupBrowsers_;
+
 public:
   explicit QCefViewPrivate(QCefContextPrivate* ctx,
                            QCefView* view,
@@ -167,6 +177,8 @@ public:
 
   void destroyCefBrowser();
 
+  void closeAllPopupBrowsers();
+
   void addLocalFolderResource(const QString& path, const QString& url, int priority = 0);
 
   void addArchiveResource(const QString& path, const QString& url, const QString& password = "", int priority = 0);
@@ -176,9 +188,15 @@ public:
   bool isOSRModeEnabled() const;
 
 protected:
-  void onCefMainBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
+  void onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* window);
 
-  void onCefPopupBrowserCreated(CefRefPtr<CefBrowser>& browser, QWindow* window);
+  void onBeforeCefPopupCreate(const CefRefPtr<CefBrowser>& browser,
+                              int64_t frameId,
+                              const std::string& targetUrl,
+                              const std::string& targetFrameName,
+                              CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
+                              const CefWindowInfo& windowInfo,
+                              const CefBrowserSettings& settings);
 
   void onNewDownloadItem(QSharedPointer<QCefDownloadItem> item, const QString& suggestedName);
 
@@ -191,6 +209,10 @@ protected:
                        const std::string& failedUrl);
 
 public slots:
+  void onPopupBrowserCreated(QCefView* popup);
+
+  void onPopupBrowserDestroyed(QObject* popup);
+
   void onAppFocusChanged(QWidget* old, QWidget* now);
 
   void onViewScreenChanged(QScreen* screen);
@@ -250,6 +272,8 @@ protected:
 
 public:
   int browserId();
+
+  bool isPopup();
 
   void navigateToString(const QString& content);
 

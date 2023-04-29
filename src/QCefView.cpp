@@ -15,8 +15,11 @@
 #include "details/QCefViewPrivate.h"
 #include "details/utils/CommonUtils.h"
 
-QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* parent /*= 0*/)
-  : QWidget(parent)
+QCefView::QCefView(const QString url,
+                   const QCefSetting* setting,
+                   QWidget* parent /*= 0*/,
+                   Qt::WindowFlags f /*= Qt::WindowFlags()*/)
+  : QWidget(parent, f)
   , d_ptr(new QCefViewPrivate(QCefContext::instance()->d_func(), this, url, setting))
 {
   // #if defined(CEF_USE_OSR)
@@ -33,8 +36,8 @@ QCefView::QCefView(const QString url, const QCefSetting* setting, QWidget* paren
   d_ptr->createCefBrowser(this, url, setting);
 }
 
-QCefView::QCefView(QWidget* parent /*= 0*/)
-  : QCefView("about:blank", nullptr, parent)
+QCefView::QCefView(QWidget* parent /*= 0*/, Qt::WindowFlags f /*= Qt::WindowFlags()*/)
+  : QCefView("about:blank", nullptr, parent, f)
 {
 }
 
@@ -43,6 +46,10 @@ QCefView::~QCefView()
   qDebug() << this << "is being destructed";
 
   if (d_ptr) {
+    // close all popup browsers
+    d_ptr->closeAllPopupBrowsers();
+
+    // destroy under layer cef browser
     d_ptr->destroyCefBrowser();
     d_ptr.reset();
   }
@@ -73,6 +80,15 @@ QCefView::browserId()
   Q_D(QCefView);
 
   return d->browserId();
+}
+
+
+bool
+QCefView::isPopup()
+{
+  Q_D(QCefView);
+
+  return d->isPopup();
 }
 
 void
@@ -227,26 +243,15 @@ QCefView::setFocus(Qt::FocusReason reason)
   d->setCefWindowFocus(true);
 }
 
-void
-QCefView::onBrowserWindowCreated(QWindow* win)
-{
-}
-
 bool
 QCefView::onBeforePopup(qint64 frameId,
                         const QString& targetUrl,
                         const QString& targetFrameName,
                         QCefView::CefWindowOpenDisposition targetDisposition,
-                        QCefSetting& settings,
-                        bool& DisableJavascriptAccess)
+                        QRect& rect,
+                        QCefSetting& settings)
 {
-  // return false to allow the popup browser
   return false;
-}
-
-void
-QCefView::onPopupCreated(QWindow* wnd)
-{
 }
 
 void
