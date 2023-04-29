@@ -7,3 +7,4 @@ output
 CMakeLists.txt.user
 docs/doxygen/xml
 out
+scripts/doxygen/xml
