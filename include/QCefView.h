@@ -385,9 +385,9 @@ public slots:
 
 protected:
   /// <summary>
-  /// Gets called right after the popup browser was created
+  /// Gets called right after the popup browser was created.
   /// </summary>
-  /// <param name="wnd">The host window of new created browser</param>
+  /// <param name="wnd">The host window of new created popup browser</param>
   virtual void onPopupCreated(QWindow* wnd);
 
   /// <summary>

@@ -38,6 +38,15 @@ private:
   int m_iCornerRadius = 50;
 
 protected:
+  bool onBeforePopup(qint64 frameId,
+                     const QString& targetUrl,
+                     const QString& targetFrameName,
+                     QCefView::CefWindowOpenDisposition targetDisposition,
+                     QCefSetting& settings,
+                     bool& DisableJavascriptAccess) override;
+
+  void onPopupCreated(QWindow* wnd) override;
+
   void onNewDownloadItem(const QSharedPointer<QCefDownloadItem>& item, const QString& suggestedName) override;
 
   void onUpdateDownloadItem(const QSharedPointer<QCefDownloadItem>& item) override;
