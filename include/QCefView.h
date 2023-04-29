@@ -66,13 +66,13 @@ public:
   /// <param name="url">The target url</param>
   /// <param name="setting">The <see cref="QCefSetting"/> instance</param>
   /// <param name="parent">The parent</param>
-  QCefView(const QString url, const QCefSetting* setting, QWidget* parent = 0);
+  QCefView(const QString url, const QCefSetting* setting, QWidget* parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
 
   /// <summary>
   /// Constructs a QCefView instance
   /// </summary>
   /// <param name="parent">The parent</param>
-  QCefView(QWidget* parent = 0);
+  QCefView(QWidget* parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
 
   /// <summary>
   /// Destructs the QCefView instance
@@ -101,6 +101,12 @@ public:
   /// </summary>
   /// <returns>The browser id</returns>
   int browserId();
+
+  /// <summary>
+  /// Gets whether the browser is created as popup browser
+  /// </summary>
+  /// <returns>True if it is popup browser; otherwise false</returns>
+  bool isPopup();
 
   /// <summary>
   /// Navigates to the content.
@@ -359,13 +365,26 @@ signals:
   /// <param name="result">The result</param>
   void reportJavascriptResult(int browserId, qint64 frameId, qint64 context, const QVariant& result);
 
-public slots:
   /// <summary>
   /// Gets called after the main browser window created. This slot does not work for OSR mode.
   /// </summary>
   /// <param name="win">The CEF window</param>
-  virtual void onBrowserWindowCreated(QWindow* win);
+  void browserCreated(QCefView* browser);
 
+  /// <summary>
+  /// Gets called right after the popup browser was created.
+  /// </summary>
+  /// <param name="wnd">The new created popup QCefView instance</param>
+  /// <remarks>
+  /// The lifecycle of the popup browser is managed by the owner of the popup browser,
+  /// thus do not try to hold the popup browser instance.
+  /// If you need to implement browser tab, you should override the <see cref="onBeforePopup"/> method
+  /// and create your own QCefView browser instance then you can manipulate the created one as whatever
+  /// you want.
+  /// </remarks>
+  void popupCreated(QCefView* popup);
+
+protected:
   /// <summary>
   /// Gets called before the popup browser created
   /// </summary>
@@ -374,21 +393,14 @@ public slots:
   /// <param name="targetFrameName">The target name</param>
   /// <param name="targetDisposition">Target window open method</param>
   /// <param name="settings">Settings to be used for the popup</param>
-  /// <param name="DisableJavascriptAccess">Disable the access to Javascript</param>
+  /// <param name="rect">Rect to be used for the popup</param>
   /// <returns>True to cancel the popup; false to allow</returns>
   virtual bool onBeforePopup(qint64 frameId,
                              const QString& targetUrl,
                              const QString& targetFrameName,
                              QCefView::CefWindowOpenDisposition targetDisposition,
-                             QCefSetting& settings,
-                             bool& DisableJavascriptAccess);
-
-protected:
-  /// <summary>
-  /// Gets called right after the popup browser was created.
-  /// </summary>
-  /// <param name="wnd">The host window of new created popup browser</param>
-  virtual void onPopupCreated(QWindow* wnd);
+                             QRect& rect,
+                             QCefSetting& settings);
 
   /// <summary>
   /// Gets called on new download item was required. Keep reference to the download item

@@ -2,6 +2,7 @@
 #define QCEFVIEWTEST_H
 
 #include <QMainWindow>
+#include <QCloseEvent>
 
 #include "ui_MainWindow.h"
 
@@ -55,6 +56,9 @@ protected slots:
   void onBtnCallJSCodeClicked();
 
   void onBtnNewBrowserClicked();
+
+  private:
+  void closeEvent(QCloseEvent* event) override;
 
 private:
   Ui::MainWindow m_ui;

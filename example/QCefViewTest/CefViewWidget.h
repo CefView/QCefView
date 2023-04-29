@@ -42,10 +42,8 @@ protected:
                      const QString& targetUrl,
                      const QString& targetFrameName,
                      QCefView::CefWindowOpenDisposition targetDisposition,
-                     QCefSetting& settings,
-                     bool& DisableJavascriptAccess) override;
-
-  void onPopupCreated(QWindow* wnd) override;
+                     QRect& rect,
+                     QCefSetting& settings) override;
 
   void onNewDownloadItem(const QSharedPointer<QCefDownloadItem>& item, const QString& suggestedName) override;
 
