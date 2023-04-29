@@ -1,6 +1,7 @@
 ﻿#include "CefViewWidget.h"
 
 #include <QColor>
+#include <QDebug>
 #include <QPainterPath>
 #include <QRandomGenerator>
 #include <QResizeEvent>
