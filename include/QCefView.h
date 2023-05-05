@@ -66,12 +66,14 @@ public:
   /// <param name="url">The target url</param>
   /// <param name="setting">The <see cref="QCefSetting"/> instance</param>
   /// <param name="parent">The parent</param>
+  /// <param name="f">The Qt WindowFlags</param>
   QCefView(const QString url, const QCefSetting* setting, QWidget* parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
 
   /// <summary>
   /// Constructs a QCefView instance
   /// </summary>
   /// <param name="parent">The parent</param>
+  /// <param name="f">The Qt WindowFlags</param>
   QCefView(QWidget* parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
 
   /// <summary>
@@ -384,13 +386,13 @@ signals:
   /// <summary>
   /// Gets called after the main browser window created. This slot does not work for OSR mode.
   /// </summary>
-  /// <param name="win">The CEF window</param>
+  /// <param name="browser">The QCefView instance</param>
   void browserCreated(QCefView* browser);
 
   /// <summary>
   /// Gets called right after the popup browser was created.
   /// </summary>
-  /// <param name="wnd">The new created popup QCefView instance</param>
+  /// <param name="popup">The new created popup QCefView instance</param>
   /// <remarks>
   /// The lifecycle of the popup browser is managed by the owner of the popup browser,
   /// thus do not try to hold the popup browser instance.
@@ -408,8 +410,8 @@ protected:
   /// <param name="targetUrl">The target URL</param>
   /// <param name="targetFrameName">The target name</param>
   /// <param name="targetDisposition">Target window open method</param>
-  /// <param name="settings">Settings to be used for the popup</param>
   /// <param name="rect">Rect to be used for the popup</param>
+  /// <param name="settings">Settings to be used for the popup</param>
   /// <returns>True to cancel the popup; false to allow</returns>
   virtual bool onBeforePopup(qint64 frameId,
                              const QString& targetUrl,
