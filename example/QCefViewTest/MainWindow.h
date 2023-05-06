@@ -47,6 +47,8 @@ protected slots:
 
   // ui slots
 protected slots:
+  void onBtnShowDevToolsClicked();
+
   void onBtnRecreateRightViewClicked();
 
   void onBtnChangeColorClicked();

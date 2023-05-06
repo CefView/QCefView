@@ -251,6 +251,12 @@ protected:
   void onCefContextMenuDismissed();
   // #endif
 
+  bool hasDevTools();
+
+  void showDevTools();
+
+  void closeDevTools();
+
 protected:
   virtual bool eventFilter(QObject* watched, QEvent* event) override;
 

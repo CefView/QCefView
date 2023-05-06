@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget* parent)
   // setWindowFlags(Qt::FramelessWindowHint);
   // setAttribute(Qt::WA_TranslucentBackground);
 
+  connect(m_ui.btn_showDevTools, &QPushButton::clicked, this, &MainWindow::onBtnShowDevToolsClicked);
   connect(m_ui.btn_reCreate, &QPushButton::clicked, this, &MainWindow::onBtnRecreateRightViewClicked);
   connect(m_ui.btn_changeColor, &QPushButton::clicked, this, &MainWindow::onBtnChangeColorClicked);
   connect(m_ui.btn_setFocus, &QPushButton::clicked, this, &MainWindow::onBtnSetFocusClicked);
@@ -226,6 +227,15 @@ MainWindow::onLoadError(int browserId,
 {
   qDebug() << "onLoadError, browserId:" << browserId << ", frameId:" << frameId << ", isMainFrame:" << isMainFrame
            << ", errorCode:" << errorCode;
+}
+
+
+void
+MainWindow::onBtnShowDevToolsClicked()
+{
+  if (m_pLeftCefViewWidget) {
+    m_pLeftCefViewWidget->showDevTools();
+  }
 }
 
 void

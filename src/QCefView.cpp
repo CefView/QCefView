@@ -235,6 +235,33 @@ QCefView::isPopupContextMenuDisabled()
   return d->disablePopuContextMenu_;
 }
 
+
+bool
+QCefView::hasDevTools()
+{
+  Q_D(QCefView);
+
+  return d->hasDevTools();
+}
+
+
+void
+QCefView::showDevTools()
+{
+  Q_D(QCefView);
+
+  d->showDevTools();
+}
+
+
+void
+QCefView::closeDevTools()
+{
+  Q_D(QCefView);
+
+  d->closeDevTools();
+}
+
 void
 QCefView::setFocus(Qt::FocusReason reason)
 {

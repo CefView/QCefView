@@ -238,6 +238,22 @@ public:
   /// <returns>True to disable; otherwise false</returns>
   bool isPopupContextMenuDisabled();
 
+  /// <summary>
+  /// Detects whether this browser has a devtools opened
+  /// </summary>
+  /// <returns>True if opend already; otherwise false</returns>
+  bool hasDevTools();
+
+  /// <summary>
+  /// Opens the devtools dialog
+  /// </summary>
+  void showDevTools();
+
+  /// <summary>
+  /// Closes the devtools dialog
+  /// </summary>
+  void closeDevTools();
+
 signals:
   /// <summary>
   /// Gets called on loading state changed

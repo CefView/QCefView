@@ -617,6 +617,47 @@ QCefViewPrivate::onCefContextMenuDismissed()
   osr.contextMenuCallback_ = nullptr;
 }
 
+
+bool
+QCefViewPrivate::hasDevTools()
+{
+  if (pCefBrowser_) {
+    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+    if (host) {
+      return host->HasDevTools();
+    }
+  }
+
+  return false;
+}
+
+
+void
+QCefViewPrivate::showDevTools()
+{
+  if (pCefBrowser_) {
+    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+    if (host) {
+      CefWindowInfo info;
+      CefBrowserSettings settings;
+      CefPoint point;
+      host->ShowDevTools(info, nullptr, settings, point);
+    }
+  }
+}
+
+
+void
+QCefViewPrivate::closeDevTools()
+{
+  if (pCefBrowser_) {
+    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+    if (host) {
+      host->CloseDevTools();
+    }
+  }
+}
+
 bool
 QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 {

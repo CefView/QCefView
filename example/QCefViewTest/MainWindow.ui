@@ -85,6 +85,13 @@
 								</widget>
 							</item>
 							<item>
+								<widget class="QPushButton" name="btn_showDevTools">
+									<property name="text">
+										<string>Show Left DevTools</string>
+									</property>
+								</widget>
+							</item>
+							<item>
 								<widget class="QPushButton" name="btn_reCreate">
 									<property name="text">
 										<string>Recreate Right QCefView</string>
@@ -210,6 +217,7 @@
 	</widget>
 	<layoutdefault spacing="6" margin="11"/>
 	<tabstops>
+		<tabstop>btn_showDevTools</tabstop>
 		<tabstop>btn_reCreate</tabstop>
 		<tabstop>btn_changeColor</tabstop>
 		<tabstop>lineEdit</tabstop>
