@@ -210,53 +210,58 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
   // capture the browser
   pCefBrowser_ = browser;
 
-  // #if defined(CEF_USE_OSR)
-  if (isOSRModeEnabled_) {
-    // notify the visibility and size
-    pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
-    pCefBrowser_->GetHost()->WasResized();
-    connect(this, SIGNAL(updateOsrFrame()), q_ptr, SLOT(update()));
+  // if browser is popup, don't re-manager by qt.
+  if (!browser->IsPopup()) {
+    // #if defined(CEF_USE_OSR)
+    if (isOSRModeEnabled_) {
+      // notify the visibility and size
+      pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
+      pCefBrowser_->GetHost()->WasResized();
+      connect(this, SIGNAL(updateOsrFrame()), q_ptr, SLOT(update()));
 
-    // monitor the screenChanged signal from the top-level window
-    disconnect(this, SLOT(onViewScreenChanged(QScreen*)));
-    if (q_ptr->window()->windowHandle()) {
-      connect(q_ptr->window()->windowHandle(),    //
-              SIGNAL(screenChanged(QScreen*)),    //
-              this,                               //
-              SLOT(onViewScreenChanged(QScreen*)) //
-      );
+      // monitor the screenChanged signal from the top-level window
+      disconnect(this, SLOT(onViewScreenChanged(QScreen*)));
+      if (q_ptr->window()->windowHandle()) {
+        connect(q_ptr->window()->windowHandle(),    //
+                SIGNAL(screenChanged(QScreen*)),    //
+                this,                               //
+                SLOT(onViewScreenChanged(QScreen*)) //
+        );
+      }
+    } else { // #else
+      // create QWidget from cef browser widow, this will re-parent the CEF browser window
+      QWidget* browserWidget =
+        QWidget::createWindowContainer(window,
+                                       q_ptr,
+                                       Qt::CustomizeWindowHint | Qt::FramelessWindowHint |
+                                         Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
+      Q_ASSERT_X(
+        browserWidget, "QCefViewPrivateNCW::createBrowser", "Failed to create QWidget from cef browser window");
+      if (!browserWidget) {
+        qWarning("Failed to create QWidget from cef browser window");
+        browser->GetHost()->CloseBrowser(true);
+        return;
+      }
+
+      // capture the resource
+      ncw.qBrowserWindow_ = window;
+      ncw.qBrowserWidget_ = browserWidget;
+
+      // monitor the focus changed event globally
+      connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::onAppFocusChanged);
+
+      // initialize the layout and add browser widget to the layout
+      QVBoxLayout* layout = new QVBoxLayout();
+      layout->setContentsMargins(0, 0, 0, 0);
+      layout->setSpacing(0);
+      layout->addWidget(ncw.qBrowserWidget_);
+      q_ptr->setLayout(layout);
+
+      // update mask
+      UpdateCefWindowMask(ncw.qBrowserWindow_, q_ptr->mask());
     }
-  } else { // #else
-    // create QWidget from cef browser widow, this will re-parent the CEF browser window
-    QWidget* browserWidget = QWidget::createWindowContainer(
-      window,
-      q_ptr,
-      Qt::CustomizeWindowHint | Qt::FramelessWindowHint | Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
-    Q_ASSERT_X(browserWidget, "QCefViewPrivateNCW::createBrowser", "Failed to create QWidget from cef browser window");
-    if (!browserWidget) {
-      qWarning("Failed to create QWidget from cef browser window");
-      browser->GetHost()->CloseBrowser(true);
-      return;
-    }
-
-    // capture the resource
-    ncw.qBrowserWindow_ = window;
-    ncw.qBrowserWidget_ = browserWidget;
-
-    // monitor the focus changed event globally
-    connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::onAppFocusChanged);
-
-    // initialize the layout and add browser widget to the layout
-    QVBoxLayout* layout = new QVBoxLayout();
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->setSpacing(0);
-    layout->addWidget(ncw.qBrowserWidget_);
-    q_ptr->setLayout(layout);
-
-    // update mask
-    UpdateCefWindowMask(ncw.qBrowserWindow_, q_ptr->mask());
+    // #endif
   }
-  // #endif
 
   // emit signal
   q_ptr->browserCreated(q_ptr);
