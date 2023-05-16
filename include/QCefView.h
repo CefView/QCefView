@@ -384,10 +384,10 @@ signals:
   void reportJavascriptResult(int browserId, qint64 frameId, qint64 context, const QVariant& result);
 
   /// <summary>
-  /// Gets called after the main browser window created. This slot does not work for OSR mode.
+  /// Gets called after the native browser window created. This slot does not work for OSR mode.
   /// </summary>
-  /// <param name="browser">The QCefView instance</param>
-  void browserCreated(QCefView* browser);
+  /// <param name="window">The native browser windows</param>
+  void nativeBrowserCreated(QWindow* window);
 
   /// <summary>
   /// Gets called right after the popup browser was created.

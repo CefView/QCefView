@@ -227,6 +227,9 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
       );
     }
   } else { // #else
+    // emit signal
+    q_ptr->nativeBrowserCreated(window);
+
     // create QWidget from cef browser widow, this will re-parent the CEF browser window
     QWidget* browserWidget = QWidget::createWindowContainer(
       window,
@@ -258,8 +261,17 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
   }
   // #endif
 
-  // emit signal
-  q_ptr->browserCreated(q_ptr);
+  // if is popup browser record and show
+  if (isPopup_) {
+    // record
+    popupBrowsers_.insert(q_ptr);
+
+    // show
+    q_ptr->show();
+
+    // emit the signal
+    q_ptr->popupCreated(q_ptr);
+  }
 }
 
 void
@@ -302,7 +314,6 @@ QCefViewPrivate::onBeforeCefPopupCreate(const CefRefPtr<CefBrowser>& browser,
   }
   popup->d_ptr->isPopup_ = true;
 
-  connect(popup, SIGNAL(browserCreated(QCefView*)), this, SLOT(onPopupBrowserCreated(QCefView*)));
   connect(popup, SIGNAL(destroyed(QObject*)), this, SLOT(onPopupBrowserDestroyed(QObject*)));
 
   // config the popup QCefView
@@ -349,17 +360,6 @@ QCefViewPrivate::handleLoadError(CefRefPtr<CefBrowser>& browser,
   }
 
   return false;
-}
-
-void
-QCefViewPrivate::onPopupBrowserCreated(QCefView* popup)
-{
-  if (!popup) {
-    return;
-  }
-
-  popupBrowsers_.insert(popup);
-  popup->show();
 }
 
 void
@@ -617,7 +617,6 @@ QCefViewPrivate::onCefContextMenuDismissed()
   osr.contextMenuCallback_ = nullptr;
 }
 
-
 bool
 QCefViewPrivate::hasDevTools()
 {
@@ -630,7 +629,6 @@ QCefViewPrivate::hasDevTools()
 
   return false;
 }
-
 
 void
 QCefViewPrivate::showDevTools()
@@ -645,7 +643,6 @@ QCefViewPrivate::showDevTools()
     }
   }
 }
-
 
 void
 QCefViewPrivate::closeDevTools()

@@ -39,7 +39,7 @@ public:
   static void destroyAllInstance();
 
   /// <summary>
-  /// 
+  ///
   /// </summary>
   bool isPopup_ = false;
 
@@ -209,8 +209,6 @@ protected:
                        const std::string& failedUrl);
 
 public slots:
-  void onPopupBrowserCreated(QCefView* popup);
-
   void onPopupBrowserDestroyed(QObject* popup);
 
   void onAppFocusChanged(QWidget* old, QWidget* now);
