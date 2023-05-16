@@ -1,5 +1,12 @@
 ﻿#include "CefViewWidget.h"
 
+#if defined(Q_OS_WIN)
+#include <windows.h>
+#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_LINUX)
+#else
+#endif
+
 #include <QColor>
 #include <QDebug>
 #include <QPainterPath>
@@ -12,46 +19,11 @@
 CefViewWidget::CefViewWidget(const QString url, const QCefSetting* setting, QWidget* parent /* = 0*/)
   : QCefView(url, setting, parent)
 {
+  connect(this, &CefViewWidget::draggableRegionChanged, this, &CefViewWidget::onDraggableRegionChanged);
+  connect(this, &CefViewWidget::nativeBrowserCreated, this, &CefViewWidget::onNativeBrowserWindowCreated);
 }
 
 CefViewWidget::~CefViewWidget() {}
-
-void
-CefViewWidget::onScreenChanged(QScreen* screen)
-{
-  if (!m_pCefWindow)
-    return;
-
-  updateMask();
-}
-
-void
-CefViewWidget::onBrowserWindowCreated(QWindow* win)
-{
-  m_pCefWindow = win;
-  if (!m_pCefWindow)
-    return;
-
-  connect(window()->windowHandle(), SIGNAL(screenChanged(QScreen*)), this, SLOT(onScreenChanged(QScreen*)));
-
-  updateMask();
-}
-
-void
-CefViewWidget::resizeEvent(QResizeEvent* event)
-{
-  QCefView::resizeEvent(event);
-  updateMask();
-}
-
-void
-CefViewWidget::updateMask()
-{
-  QPainterPath path;
-  path.addRoundedRect(rect(), 50, 50);
-  QRegion mask = QRegion(path.toFillPolygon().toPolygon());
-  setMask(mask);
-}
 
 bool
 CefViewWidget::onBeforePopup(qint64 frameId,
@@ -81,4 +53,68 @@ CefViewWidget::onUpdateDownloadItem(const QSharedPointer<QCefDownloadItem>& item
   // control the download by invoking item->pause(), item->resume(), item->cancel()
 
   DownloadManager::getInstance().UpdateDownloadItem(item);
+}
+
+void
+CefViewWidget::onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion)
+{
+  m_draggableRegion = draggableRegion;
+  m_nonDraggableRegion = nonDraggableRegion;
+}
+
+void
+CefViewWidget::onScreenChanged(QScreen* screen)
+{
+  if (!m_pCefWindow)
+    return;
+
+  updateMask();
+}
+
+void
+CefViewWidget::onNativeBrowserWindowCreated(QWindow* window)
+{
+  m_pCefWindow = window;
+  if (!m_pCefWindow)
+    return;
+
+  connect(this->window()->windowHandle(), SIGNAL(screenChanged(QScreen*)), this, SLOT(onScreenChanged(QScreen*)));
+
+  updateMask();
+}
+
+void
+CefViewWidget::resizeEvent(QResizeEvent* event)
+{
+  QCefView::resizeEvent(event);
+
+  updateMask();
+}
+
+void
+CefViewWidget::mousePressEvent(QMouseEvent* event)
+{
+  QCefView::mousePressEvent(event);
+
+#if defined(Q_OS_WIN)
+  if (event->buttons().testFlag(Qt::LeftButton) && m_draggableRegion.contains(event->pos())) {
+    HWND hWnd = ::GetAncestor((HWND)(window()->windowHandle()->winId()), GA_ROOT);
+    POINT pt;
+    ::GetCursorPos(&pt);
+    ::ReleaseCapture();
+    ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
+  }
+#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_LINUX)
+#else
+#endif
+}
+
+void
+CefViewWidget::updateMask()
+{
+  QPainterPath path;
+  path.addRoundedRect(rect(), 50, 50);
+  QRegion mask = QRegion(path.toFillPolygon().toPolygon());
+  setMask(mask);
 }

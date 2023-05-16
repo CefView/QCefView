@@ -19,23 +19,8 @@ public:
 
 signals:
   void newDownloadItem(const QSharedPointer<QCefDownloadItem>& item, const QString& suggestedName);
+
   void updateDownloadItem(const QSharedPointer<QCefDownloadItem>& item);
-
-protected slots:
-  void onScreenChanged(QScreen* screen);
-
-private:
-  virtual void onBrowserWindowCreated(QWindow* win);
-
-  virtual void resizeEvent(QResizeEvent* event);
-
-private:
-  void updateMask();
-
-private:
-  QWindow* m_pCefWindow = nullptr;
-
-  int m_iCornerRadius = 50;
 
 protected:
   bool onBeforePopup(qint64 frameId,
@@ -48,6 +33,30 @@ protected:
   void onNewDownloadItem(const QSharedPointer<QCefDownloadItem>& item, const QString& suggestedName) override;
 
   void onUpdateDownloadItem(const QSharedPointer<QCefDownloadItem>& item) override;
+
+  void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
+
+protected slots:
+  void onScreenChanged(QScreen* screen);
+
+  void onNativeBrowserWindowCreated(QWindow* window);
+
+protected:
+  virtual void resizeEvent(QResizeEvent* event);
+
+  virtual void mousePressEvent(QMouseEvent* event);
+
+private:
+  void updateMask();
+
+private:
+  QWindow* m_pCefWindow = nullptr;
+
+  int m_iCornerRadius = 50;
+
+  QRegion m_draggableRegion;
+
+  QRegion m_nonDraggableRegion;
 };
 
 #endif // CUSTOMCEFVIEW_H

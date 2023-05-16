@@ -68,11 +68,7 @@ MainWindow::createLeftCefView()
 
   // connect the cefQueryRequest to the slot
   connect(m_pLeftCefViewWidget, &QCefView::cefQueryRequest, this, &MainWindow::onQCefQueryRequest);
-
-  connect(m_pLeftCefViewWidget, &QCefView::draggableRegionChanged, this, &MainWindow::onDraggableRegionChanged);
-
   connect(m_pLeftCefViewWidget, &QCefView::reportJavascriptResult, this, &MainWindow::onJavascriptResult);
-
   connect(m_pLeftCefViewWidget, &QCefView::loadStart, this, &MainWindow::onLoadStart);
   connect(m_pLeftCefViewWidget, &QCefView::loadEnd, this, &MainWindow::onLoadEnd);
   connect(m_pLeftCefViewWidget, &QCefView::loadError, this, &MainWindow::onLoadError);
@@ -127,13 +123,6 @@ MainWindow::createRightCefView()
   // m_pRightCefViewWidget->setContextMenuPolicy(Qt::PreventContextMenu);
 
   //*/
-}
-
-void
-MainWindow::onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion)
-{
-  m_draggableRegion = draggableRegion;
-  m_nonDraggableRegion = nonDraggableRegion;
 }
 
 void
@@ -228,7 +217,6 @@ MainWindow::onLoadError(int browserId,
   qDebug() << "onLoadError, browserId:" << browserId << ", frameId:" << frameId << ", isMainFrame:" << isMainFrame
            << ", errorCode:" << errorCode;
 }
-
 
 void
 MainWindow::onBtnShowDevToolsClicked()

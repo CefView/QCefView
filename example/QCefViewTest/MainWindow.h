@@ -1,8 +1,8 @@
 ﻿#ifndef QCEFVIEWTEST_H
 #define QCEFVIEWTEST_H
 
-#include <QMainWindow>
 #include <QCloseEvent>
+#include <QMainWindow>
 
 #include "ui_MainWindow.h"
 
@@ -23,8 +23,6 @@ protected:
 
   // QCefView slots
 protected slots:
-
-  void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
 
   void onInvokeMethod(int browserId, int64_t frameId, const QString& method, const QVariantList& arguments);
 
@@ -59,7 +57,7 @@ protected slots:
 
   void onBtnNewBrowserClicked();
 
-  private:
+private:
   void closeEvent(QCloseEvent* event) override;
 
 private:
@@ -67,8 +65,6 @@ private:
 
   CefViewWidget* m_pLeftCefViewWidget = nullptr;
   CefViewWidget* m_pRightCefViewWidget = nullptr;
-  QRegion m_draggableRegion;
-  QRegion m_nonDraggableRegion;
 };
 
 #endif // QCEFVIEWTEST_H
