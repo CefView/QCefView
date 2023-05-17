@@ -86,9 +86,11 @@ CefViewWidget::onNativeBrowserWindowCreated(QWindow* window)
 void
 CefViewWidget::resizeEvent(QResizeEvent* event)
 {
-  QCefView::resizeEvent(event);
-
+  // update mask first, because the new mask will be
+  // used in the QCefView::resizeEvent
   updateMask();
+
+  QCefView::resizeEvent(event);
 }
 
 void
@@ -113,8 +115,11 @@ CefViewWidget::mousePressEvent(QMouseEvent* event)
 void
 CefViewWidget::updateMask()
 {
+  // create a rect with rounded corner (50px radius) as mask
   QPainterPath path;
   path.addRoundedRect(rect(), 50, 50);
   QRegion mask = QRegion(path.toFillPolygon().toPolygon());
+
+  // apply the mask
   setMask(mask);
 }
