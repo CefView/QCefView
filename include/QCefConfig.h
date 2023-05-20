@@ -224,7 +224,7 @@ public:
   /// <remarks>
   /// This only works if the web page has no background color set. The alpha component value
   /// will be adjusted to 0 or 255, it means if you pass a value with alpha value
-  /// in the range of [1, 255], it will be accepted as 255. The default value is qRgba(255, 255,. 255, 255)
+  /// in the range of [1, 255], it will be accepted as 255. The default value is qRgba(255, 255, 255, 255)
   /// </remarks>
   void setBackgroundColor(const QColor& color);
 
@@ -236,7 +236,8 @@ public:
   /// <summary>
   /// Sets the acceptable language list
   /// </summary>
-  /// <param name="languages"></param>
+  /// <param name="languages">Comma delimited ordered list of language codes without any whitespace 
+  /// that will be used in the "Accept-Language" HTTP header.</param>
   void setAcceptLanguageList(const QString& languages);
 
   /// <summary>
