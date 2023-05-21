@@ -22,6 +22,13 @@ signals:
 
   void updateDownloadItem(const QSharedPointer<QCefDownloadItem>& item);
 
+protected slots:
+  void onScreenChanged(QScreen* screen);
+
+  void onNativeBrowserWindowCreated(QWindow* window);
+
+  void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
+
 protected:
   bool onBeforePopup(qint64 frameId,
                      const QString& targetUrl,
@@ -34,17 +41,10 @@ protected:
 
   void onUpdateDownloadItem(const QSharedPointer<QCefDownloadItem>& item) override;
 
-  void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
-
-protected slots:
-  void onScreenChanged(QScreen* screen);
-
-  void onNativeBrowserWindowCreated(QWindow* window);
-
 protected:
-  virtual void resizeEvent(QResizeEvent* event);
+  void resizeEvent(QResizeEvent* event) override;
 
-  virtual void mousePressEvent(QMouseEvent* event);
+  void mousePressEvent(QMouseEvent* event) override;
 
 private:
   void updateMask();

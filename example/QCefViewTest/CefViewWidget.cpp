@@ -25,6 +25,34 @@ CefViewWidget::CefViewWidget(const QString url, const QCefSetting* setting, QWid
 
 CefViewWidget::~CefViewWidget() {}
 
+void
+CefViewWidget::onScreenChanged(QScreen* screen)
+{
+  if (!m_pCefWindow)
+    return;
+
+  updateMask();
+}
+
+void
+CefViewWidget::onNativeBrowserWindowCreated(QWindow* window)
+{
+  m_pCefWindow = window;
+  if (!m_pCefWindow)
+    return;
+
+  connect(this->window()->windowHandle(), SIGNAL(screenChanged(QScreen*)), this, SLOT(onScreenChanged(QScreen*)));
+
+  updateMask();
+}
+
+void
+CefViewWidget::onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion)
+{
+  m_draggableRegion = draggableRegion;
+  m_nonDraggableRegion = nonDraggableRegion;
+}
+
 bool
 CefViewWidget::onBeforePopup(qint64 frameId,
                              const QString& targetUrl,
@@ -53,34 +81,6 @@ CefViewWidget::onUpdateDownloadItem(const QSharedPointer<QCefDownloadItem>& item
   // control the download by invoking item->pause(), item->resume(), item->cancel()
 
   DownloadManager::getInstance().UpdateDownloadItem(item);
-}
-
-void
-CefViewWidget::onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion)
-{
-  m_draggableRegion = draggableRegion;
-  m_nonDraggableRegion = nonDraggableRegion;
-}
-
-void
-CefViewWidget::onScreenChanged(QScreen* screen)
-{
-  if (!m_pCefWindow)
-    return;
-
-  updateMask();
-}
-
-void
-CefViewWidget::onNativeBrowserWindowCreated(QWindow* window)
-{
-  m_pCefWindow = window;
-  if (!m_pCefWindow)
-    return;
-
-  connect(this->window()->windowHandle(), SIGNAL(screenChanged(QScreen*)), this, SLOT(onScreenChanged(QScreen*)));
-
-  updateMask();
 }
 
 void
