@@ -83,7 +83,7 @@ public:
   void setSerifFontFamily(const QString& value);
 
   /// <summary>
-  /// Gets the fixed font family
+  /// Gets the serif font family
   /// </summary>
   /// <returns>The font family</returns>
   const QString serifFontFamily() const;
@@ -211,159 +211,159 @@ public:
   /// <summary>
   /// Sets to enable or disable remote fonts
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setRemoteFonts(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable the remote fonts
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant remoteFonts() const;
 
   /// <summary>
   /// Sets to enable or disable Javascript
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setJavascript(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable Javascript
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant javascript() const;
 
   /// <summary>
   /// Sets to enable or disable the permission of closing window from Javascript
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setJavascriptCloseWindows(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable the permission of closing window from Javascript
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant javascriptCloseWindows() const;
 
   /// <summary>
   /// Sets to enable or disable the permission of accessing clipboard from Javascript
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setJavascriptAccessClipboard(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable the permission of accessing clipboard from Javascript
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant javascriptAccessClipboard() const;
 
   /// <summary>
   /// Sets to enable or disable the permission of pasting DOM in Javascript
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setJavascriptDomPaste(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable the permission of pasting DOM in Javascript
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant javascriptDomPaste() const;
 
 #if CEF_VERSION_MAJOR < 100
   /// <summary>
   /// Sets to enable or disable plugins
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setPlugins(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable plugins
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant plugins() const;
 #endif
 
   /// <summary>
   /// Sets to enable or disable the permission of loading images
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setImageLoading(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable the permission of loading images
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant imageLoading() const;
 
   /// <summary>
   /// Sets to enable or disable the shrinking image standalone to fit
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setImageShrinkStandaloneToFit(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable the shrinking image standalone to fit
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant imageShrinkStandaloneToFit() const;
 
   /// <summary>
   /// Sets to enable or disable the resizing of text area
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setTextAreaResize(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable the resizing of text area
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant textAreaResize() const;
 
   /// <summary>
   /// Sets to enable or disable tab to links
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setTabToLinks(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable  tab to links
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant tabToLinks() const;
 
   /// <summary>
   /// Sets to enable or disable local storage
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setLocalStorage(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable local storage
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant localStorage() const;
 
   /// <summary>
   /// Sets to enable or disable database
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setDatabases(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable database
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant databases() const;
 
   /// <summary>
   /// Sets to enable or disable webGL
   /// </summary>
-  /// <param name="value">True to enalbe; false to disable</param>
+  /// <param name="value">True to enable; false to disable</param>
   void setWebGL(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable webGL
   /// </summary>
-  /// <returns>True to enalbe; false to disable</returns>
+  /// <returns>True to enable; false to disable</returns>
   const QVariant webGL() const;
 
   /// <summary>
