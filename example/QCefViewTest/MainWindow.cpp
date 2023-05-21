@@ -97,10 +97,10 @@ MainWindow::createRightCefView()
   // setting.setBackgroundColor(Qt::blue);
 
   // create the QCefView widget and add it to the layout container
-  m_pRightCefViewWidget = new CefViewWidget("https://cefview.github.io/QCefView/", &setting);
+  // m_pRightCefViewWidget = new CefViewWidget("https://cefview.github.io/QCefView/", &setting, this);
 
   // this site is for test web events
-  // m_pRightCefViewWidget = new CefViewWidget("http://xcal1.vodafone.co.uk/", &setting, this);
+  m_pRightCefViewWidget = new CefViewWidget("https://fastest.fish/test-files", &setting, this);
 
   //
   // m_pRightCefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);

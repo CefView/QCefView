@@ -47,8 +47,8 @@ public:
   /// <summary>
   /// Starts to download the item.
   /// </summary>
-  /// <param name="path">The full path name to save the downloaded item.</param>
-  /// <param name="useDefaultDialog">Whether to use the default 'Save As...' dialog or not.</param>
+  /// <param name="path">The full path name (must include file name) to save the downloaded item</param>
+  /// <param name="useDefaultDialog">Whether to use the default 'Save As...' dialog or not</param>
   void start(const QString& path, bool useDefaultDialog = true) const;
 
   /// <summary>
