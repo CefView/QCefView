@@ -67,14 +67,14 @@ public:
   /// <param name="setting">The <see cref="QCefSetting"/> instance</param>
   /// <param name="parent">The parent</param>
   /// <param name="f">The Qt WindowFlags</param>
-  QCefView(const QString url, const QCefSetting* setting, QWidget* parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
+  QCefView(const QString url, const QCefSetting* setting, QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
 
   /// <summary>
   /// Constructs a QCefView instance
   /// </summary>
   /// <param name="parent">The parent</param>
   /// <param name="f">The Qt WindowFlags</param>
-  QCefView(QWidget* parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
+  QCefView(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
 
   /// <summary>
   /// Destructs the QCefView instance
