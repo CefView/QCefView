@@ -86,7 +86,7 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
   CefWindowInfo window_info;
   // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
-    window_info.SetAsWindowless(nullptr);
+    window_info.SetAsWindowless(0);
   } else { // #else
 #if defined(OS_LINUX)
     // Don't know why, on Linux platform if we use QCefView's winId() as
