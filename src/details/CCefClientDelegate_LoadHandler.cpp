@@ -15,13 +15,13 @@ CCefClientDelegate::loadingStateChanged(CefRefPtr<CefBrowser>& browser,
 }
 
 void
-CCefClientDelegate::loadStart(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>& frame, int transition_type)
+CCefClientDelegate::loadStart(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>& frame, int transitionType)
 {
   if (!IsValidBrowser(browser))
     return;
 
   pCefViewPrivate_->q_ptr->loadStart(
-    browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), transition_type);
+    browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), transitionType);
 }
 
 void
