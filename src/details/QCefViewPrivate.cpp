@@ -9,7 +9,6 @@
 #include <QDebug>
 #include <QInputMethodQueryEvent>
 #include <QPainter>
-#include <QPlatformSurfaceEvent>
 #include <QVBoxLayout>
 #include <QWindow>
 #pragma endregion qt_headers
@@ -87,7 +86,7 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
   CefWindowInfo window_info;
   // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
-    window_info.SetAsWindowless(0);
+    window_info.SetAsWindowless(nullptr);
   } else { // #else
 #if defined(OS_LINUX)
     // Don't know why, on Linux platform if we use QCefView's winId() as
@@ -137,7 +136,6 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
 
   pClient_ = pClient;
   pClientDelegate_ = pClientDelegate;
-  return;
 }
 
 void
@@ -322,8 +320,6 @@ QCefViewPrivate::onBeforeCefPopupCreate(const CefRefPtr<CefBrowser>& browser,
   }
   popup->setAttribute(Qt::WA_DeleteOnClose, true);
   popup->resize(rc.size());
-
-  return;
 }
 
 void
@@ -755,7 +751,7 @@ QCefViewPrivate::onViewInputMethodEvent(QInputMethodEvent* event)
     } else if (!composingText.isEmpty()) {
       CefCompositionUnderline underline;
       underline.background_color = 0;
-      underline.range = { 0, (int)composingText.length() };
+      underline.range = { 0, static_cast<decltype(CefRange::to)>(composingText.length()) };
 
       CefRange selectionRange;
       for (auto& attr : event->attributes()) {
