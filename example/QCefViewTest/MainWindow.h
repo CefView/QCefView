@@ -32,7 +32,7 @@ protected slots:
 
   void onLoadingStateChanged(int browserId, bool isLoading, bool canGoBack, bool canGoForward);
 
-  void onLoadStart(int browserId, qint64 frameId, bool isMainFrame, int transition_type);
+  void onLoadStart(int browserId, qint64 frameId, bool isMainFrame, int transitionType);
 
   void onLoadEnd(int browserId, qint64 frameId, bool isMainFrame, int httpStatusCode);
 

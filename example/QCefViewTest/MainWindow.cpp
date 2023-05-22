@@ -193,10 +193,10 @@ MainWindow::onLoadingStateChanged(int browserId, bool isLoading, bool canGoBack,
 }
 
 void
-MainWindow::onLoadStart(int browserId, qint64 frameId, bool isMainFrame, int transition_type)
+MainWindow::onLoadStart(int browserId, qint64 frameId, bool isMainFrame, int transitionType)
 {
   qDebug() << "onLoadStart, browserId:" << browserId << ", frameId:" << frameId << ", isMainFrame:" << isMainFrame
-           << ", transitionType:" << transition_type;
+           << ", transitionType:" << transitionType;
 }
 
 void

@@ -272,8 +272,8 @@ signals:
   /// <param name="browserId">Indicates the browser id</param>
   /// <param name="frameId">Indicates the frame id</param>
   /// <param name="isMainFrame">Indicates the whether this is the main frame</param>
-  /// <param name="transition_type">transition type</param>
-  void loadStart(int browserId, qint64 frameId, bool isMainFrame, int transition_type);
+  /// <param name="transitionType">transition type</param>
+  void loadStart(int browserId, qint64 frameId, bool isMainFrame, int transitionType);
 
   /// <summary>
   /// Gets called on loading ends
@@ -321,13 +321,13 @@ signals:
   void titleChanged(const QString& title);
 
   /// <summary>
-  /// Gets called on title changed
+  /// Gets called on favicon url changed
   /// </summary>
   /// <param name="urls">The urls</param>
   void faviconURLChanged(const QStringList& urls);
 
   /// <summary>
-  /// Gets called on title changed
+  /// Gets called on favicon changed
   /// </summary>
   /// <param name="icon">The icon</param>
   void faviconChanged(const QIcon& icon);
@@ -426,7 +426,7 @@ protected:
   /// Ignore the download item to disallow the download
   /// </summary>
   /// <param name="item">The new download item</param>
-  /// <param name="suggestedName">The nesuggested name</param>
+  /// <param name="suggestedName">The new suggested name</param>
   virtual void onNewDownloadItem(const QSharedPointer<QCefDownloadItem>& item, const QString& suggestedName);
 
   /// <summary>
