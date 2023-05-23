@@ -1,25 +1,33 @@
-# QCefView https://cefview.github.io/QCefView/
+# QCefView
 
-## [Quick Start](https://cefview.github.io/QCefView/)
+## Introduction
 
 
-QCefView is a Qt based QWidget which encapsulates [CEF](https://bitbucket.org/chromiumembedded/cef). With QCefView you can build your application UI in frontend developing way to boost your project. And what's more you can completely decouple the UI and business logic in your project.
-
+QCefView is a Qt based QWidget which encapsulates [CEF](https://bitbucket.org/chromiumembedded/cef). With QCefView you can build your application UI in frontend developing way to boost your project. And what's more you can completely decouple the UI and business logic in your project. The most important thing is to be able to better use CEF in Qt.
+### Support platform
 | Platform |  Lastest Build Status  | OSR Production Ready  | NCW Production Ready  |
 |---|---|---|---|
 | Windows-x86_64 | [![Build on Windows](https://github.com/CefView/QCefView/actions/workflows/build-windows-x86_64.yml/badge.svg)](https://github.com/CefView/QCefView/actions/workflows/build-windows-x86_64.yml) | :heavy_check_mark: | :heavy_check_mark: |
 | macOS-x86_64 | [![Build on macOS](https://github.com/CefView/QCefView/actions/workflows/build-macos-x86_64.yml/badge.svg)](https://github.com/CefView/QCefView/actions/workflows/build-macos-x86_64.yml)          | :heavy_check_mark: | :heavy_check_mark: |
 | Linux-x86_64 | [![Build on Linux](https://github.com/CefView/QCefView/actions/workflows/build-linux-x86_64.yml/badge.svg)](https://github.com/CefView/QCefView/actions/workflows/build-linux-x86_64.yml)         | :heavy_check_mark: | :x: |
 
-**OSR** = Offscreen Rendering Mode 
++ **OSR** = Offscreen Rendering Mode 
 
-**NCW** = Native Child Window Mode
++ **NCW** = Native Child Window Mode
+
+## Quick Start
 ### Clone With Submodule
 ```
 git clone --recursive https://github.com/CefView/QCefView.git
 ```
+### Documentation
+You can find the latest documentation here:
++ [English Documentation](https://cefview.github.io/QCefView/)
++ [中文文档](https://cefview.github.io/QCefView/zh/)
 
-# Note For Debugging With xCode
+It can help you quickly understand how to use it.
+
+## Note For Debugging With xCode
 
 if you want to debug the project with xCode, you need to take some action to make sure the demo project could load CocoaCefView at correct location.
 
@@ -44,6 +52,7 @@ QCefView supports CEF offscreen rendering mode and this feature is enabled by de
 
 QCefView currently uses Qt Software Rasterizer as the backend paint engine for best compatibility, thus the rendering performance is not so good to be applied for all business scenarios. If you are going to host WegGL games, video sites or some other Web Apps with high rendering performance, Non OSR mode (Native Child Window mode) is recommended.
 
+## Question
 ### Why not OpenGL/DirectX/Metal?
 
 QCefView was designed to be a common Qt widget for Desktop application, so the compatibility is the first important requirement. We can switch the backend engine from Software Rasterizer to OpenGL/DirectX/Metal but this will increase the complexity and decrease the compatibility of QCefView. 
