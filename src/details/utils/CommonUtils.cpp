@@ -22,7 +22,13 @@ QRegionToHRGN(const QRegion& region)
   }
 
   HRGN resultRgn = 0;
+
+#if (QT_VERSION < QT_VERSION_CHECK(5, 11, 0))
   QVector<QRect> rects = region.rects();
+#else
+  QVector<QRect> rects{region.begin(), region.end()};
+#endif
+
   resultRgn = QRectToHRGN(rects.at(0));
   const int size = rects.size();
   for (int i = 1; i < size; i++) {
