@@ -22,11 +22,12 @@ QRegionToHRGN(const QRegion& region)
   }
 
   HRGN resultRgn = 0;
-  
+
+  QVector<QRect> rects;
 #if (QT_VERSION < QT_VERSION_CHECK(5, 11, 0))
-  QVector<QRect> rects = region.rects();
+  rects = region.rects();
 #else
-  QVector<QRect> rects{region.begin(), region.end()};
+  std::copy(region.begin(), region.end(), std::back_inserter(rects));
 #endif
 
   resultRgn = QRectToHRGN(rects.at(0));
