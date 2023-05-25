@@ -100,7 +100,8 @@ MainWindow::createRightCefView()
   // m_pRightCefViewWidget = new CefViewWidget("https://cefview.github.io/QCefView/", &setting, this);
 
   // this site is for test web events
-  m_pRightCefViewWidget = new CefViewWidget("https://fastest.fish/test-files", &setting, this);
+  m_pRightCefViewWidget = new CefViewWidget("", &setting, this);
+  m_pRightCefViewWidget->navigateToUrl("https://fastest.fish/test-files");
 
   //
   // m_pRightCefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);

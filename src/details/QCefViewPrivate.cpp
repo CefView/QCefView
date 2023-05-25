@@ -208,6 +208,11 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
   // capture the browser
   pCefBrowser_ = browser;
 
+  // if last url is not empty, need to navigate to it
+  if (!lastUrl_.empty()) {
+    browser->GetMainFrame()->LoadURL(lastUrl_);
+  }
+
   // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     // notify the visibility and size
@@ -984,21 +989,23 @@ QCefViewPrivate::isPopup()
 void
 QCefViewPrivate::navigateToString(const QString& content)
 {
+  std::string data = content.toStdString();
+  data = CefURIEncode(CefBase64Encode(data.c_str(), data.size()), false).ToString();
+  data = "data:text/html;base64," + data;
+  lastUrl_.FromString(data);
+
   if (pCefBrowser_) {
-    std::string data = content.toStdString();
-    data = CefURIEncode(CefBase64Encode(data.c_str(), data.size()), false).ToString();
-    data = "data:text/html;base64," + data;
-    pCefBrowser_->GetMainFrame()->LoadURL(data);
+    pCefBrowser_->GetMainFrame()->LoadURL(lastUrl_);
   }
 }
 
 void
 QCefViewPrivate::navigateToUrl(const QString& url)
 {
+  lastUrl_.FromString(url.toStdString());
+
   if (pCefBrowser_) {
-    CefString strUrl;
-    strUrl.FromString(url.toStdString());
-    pCefBrowser_->GetMainFrame()->LoadURL(strUrl);
+    pCefBrowser_->GetMainFrame()->LoadURL(lastUrl_);
   }
 }
 

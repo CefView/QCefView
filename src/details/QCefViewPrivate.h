@@ -156,6 +156,11 @@ public:
 
   // #endif
 
+  /// <summary>
+  /// The last visited URL
+  /// </summary>
+  CefString lastUrl_;
+
 #if defined(QT_DEBUG)
   QElapsedTimer paintTimer_;
 #endif
