@@ -191,6 +191,8 @@ if(OS_MACOS)
   )
 endif() # OS_MACOS
 
+target_compile_definitions(QCefView PRIVATE NOMINMAX)
+
 target_include_directories(QCefView PRIVATE
   "${CMAKE_CURRENT_SOURCE_DIR}/../include"
   ${CefViewCore_EXPORT_INCLUDE_PATH}
