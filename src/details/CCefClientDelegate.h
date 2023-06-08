@@ -63,7 +63,7 @@ public:
                               int64_t contextId,
                               const CefRefPtr<CefValue>& result) override;
 
-  // CefContextMenuHandler
+  // ContextMenuHandler
   virtual void onBeforeContextMenu(CefRefPtr<CefBrowser> browser,
                                    CefRefPtr<CefFrame> frame,
                                    CefRefPtr<CefContextMenuParams> params,
@@ -82,6 +82,53 @@ public:
                                     CefContextMenuHandler::EventFlags event_flags) override;
 
   virtual void onContextMenuDismissed(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame) override;
+
+  // DialogHandler
+  virtual bool onFileDialog(CefRefPtr<CefBrowser> browser,
+                            CefBrowserHost::FileDialogMode mode,
+                            const CefString& title,
+                            const CefString& default_file_path,
+                            const std::vector<CefString>& accept_filters,
+                            CefRefPtr<CefFileDialogCallback> callback) override;
+
+  // DisplayHandler
+  virtual void draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
+                                      const std::vector<CefDraggableRegion>& regions) override;
+  virtual void addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url) override;
+  virtual void titleChanged(CefRefPtr<CefBrowser>& browser, const std::string& title) override;
+  virtual void faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::vector<CefString>& icon_urls) override;
+  virtual void faviconChanged(CefRefPtr<CefImage> image) override;
+  virtual void fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool fullscreen) override;
+  virtual bool tooltipMessage(CefRefPtr<CefBrowser>& browser, const std::string& text) override;
+  virtual void statusMessage(CefRefPtr<CefBrowser>& browser, const std::string& value) override;
+  virtual void consoleMessage(CefRefPtr<CefBrowser>& browser, const std::string& message, int level) override;
+  virtual void loadingProgressChanged(CefRefPtr<CefBrowser>& browser, double progress) override;
+  virtual bool cursorChanged(CefRefPtr<CefBrowser> browser,
+                             CefCursorHandle cursor,
+                             cef_cursor_type_t type,
+                             const CefCursorInfo& custom_cursor_info) override;
+
+  // DownloadHander
+  virtual void onBeforeDownload(CefRefPtr<CefBrowser> browser,
+                                CefRefPtr<CefDownloadItem> download_item,
+                                const CefString& suggested_name,
+                                CefRefPtr<CefBeforeDownloadCallback> callback) override;
+
+  virtual void onDownloadUpdated(CefRefPtr<CefBrowser> browser,
+                                 CefRefPtr<CefDownloadItem> download_item,
+                                 CefRefPtr<CefDownloadItemCallback> callback) override;
+
+  // FocusHandler
+  virtual void takeFocus(CefRefPtr<CefBrowser>& browser, bool next) override;
+  virtual bool setFocus(CefRefPtr<CefBrowser>& browser) override;
+  virtual void gotFocus(CefRefPtr<CefBrowser>& browser) override;
+
+  // KeyboardHandler
+  virtual bool onPreKeyEvent(CefRefPtr<CefBrowser> browser,
+                             const CefKeyEvent& event,
+                             CefEventHandle os_event,
+                             bool* is_keyboard_shortcut) override;
+  virtual bool onKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent& event, CefEventHandle os_event) override;
 
   // LifSpanHandler
   virtual bool onBeforePopup(CefRefPtr<CefBrowser>& browser,
@@ -109,44 +156,6 @@ public:
                          const std::string& errorMsg,
                          const std::string& failedUrl,
                          bool& handled) override;
-
-  // DisplayHandler
-  virtual void draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
-                                      const std::vector<CefDraggableRegion>& regions) override;
-  virtual void addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url) override;
-  virtual void titleChanged(CefRefPtr<CefBrowser>& browser, const std::string& title) override;
-  virtual void faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::vector<CefString>& icon_urls) override;
-  virtual void faviconChanged(CefRefPtr<CefImage> image) override;
-  virtual void fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool fullscreen) override;
-  virtual bool tooltipMessage(CefRefPtr<CefBrowser>& browser, const std::string& text) override;
-  virtual void statusMessage(CefRefPtr<CefBrowser>& browser, const std::string& value) override;
-  virtual void consoleMessage(CefRefPtr<CefBrowser>& browser, const std::string& message, int level) override;
-  virtual void loadingProgressChanged(CefRefPtr<CefBrowser>& browser, double progress) override;
-  virtual bool cursorChanged(CefRefPtr<CefBrowser> browser,
-                             CefCursorHandle cursor,
-                             cef_cursor_type_t type,
-                             const CefCursorInfo& custom_cursor_info) override;
-
-  virtual bool onPreKeyEvent(CefRefPtr<CefBrowser> browser,
-                             const CefKeyEvent& event,
-                             CefEventHandle os_event,
-                             bool* is_keyboard_shortcut) override;
-  virtual bool onKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent& event, CefEventHandle os_event) override;
-
-  // FocusHandler
-  virtual void takeFocus(CefRefPtr<CefBrowser>& browser, bool next) override;
-  virtual bool setFocus(CefRefPtr<CefBrowser>& browser) override;
-  virtual void gotFocus(CefRefPtr<CefBrowser>& browser) override;
-
-  // DownloadHander
-  virtual void onBeforeDownload(CefRefPtr<CefBrowser> browser,
-                                CefRefPtr<CefDownloadItem> download_item,
-                                const CefString& suggested_name,
-                                CefRefPtr<CefBeforeDownloadCallback> callback) override;
-
-  virtual void onDownloadUpdated(CefRefPtr<CefBrowser> browser,
-                                 CefRefPtr<CefDownloadItem> download_item,
-                                 CefRefPtr<CefDownloadItemCallback> callback) override;
 
   // RenderHandler
   virtual bool getRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
