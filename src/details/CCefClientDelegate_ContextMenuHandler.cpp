@@ -20,13 +20,13 @@ CCefClientDelegate::onBeforeContextMenu(CefRefPtr<CefBrowser> browser,
     return;
 
   // popup browser doesn't involve off-screen rendering
-  if (browser->IsPopup()) {
-    if (pCefViewPrivate_->disablePopuContextMenu_) {
-      model->Clear();
-    }
+  // if (browser->IsPopup()) {
+  //  if (pCefViewPrivate_->disablePopuContextMenu_) {
+  //    model->Clear();
+  //  }
 
-    return;
-  }
+  //  return;
+  //}
 
   // main browser
   auto policy = pCefViewPrivate_->q_ptr->contextMenuPolicy();
@@ -55,9 +55,9 @@ CCefClientDelegate::onRunContextMenu(CefRefPtr<CefBrowser> browser,
 {
   FLog();
 
-  if (browser->IsPopup()) {
-    return false;
-  }
+  // if (browser->IsPopup()) {
+  //   return false;
+  // }
 
   // #if defined(CEF_USE_OSR)
   if (pCefViewPrivate_->isOSRModeEnabled()) {
