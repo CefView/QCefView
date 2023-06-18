@@ -4,6 +4,10 @@
 #include <QThread>
 #pragma endregion qt_headers
 
+#pragma region cef_headers
+#include <include/cef_origin_whitelist.h>
+#pragma endregion cef_headers
+
 #include <QCefContext.h>
 
 #include "CCefAppDelegate.h"
@@ -76,6 +80,49 @@ const QList<ArchiveResourceMapping>&
 QCefContextPrivate::archiveResourceMappingList()
 {
   return archiveResourceMappingList_;
+}
+
+bool
+QCefContextPrivate::addGlobalCookie(const std::string& name,
+                                    const std::string& value,
+                                    const std::string& domain,
+                                    const std::string& url)
+{
+  CefCookie cookie;
+  CefString(&cookie.name).FromString(name);
+  CefString(&cookie.value).FromString(value);
+  CefString(&cookie.domain).FromString(domain);
+  return CefCookieManager::GetGlobalManager(nullptr)->SetCookie(CefString(url), cookie, nullptr);
+}
+
+bool
+QCefContextPrivate::addCrossOriginWhitelistEntry(const QString& sourceOrigin,
+                                                 const QString& targetSchema,
+                                                 const QString& targetDomain,
+                                                 bool allowTargetSubdomains)
+{
+  CefString source(sourceOrigin.toStdString());
+  CefString schema(targetSchema.toStdString());
+  CefString domain(targetDomain.toStdString());
+  return CefAddCrossOriginWhitelistEntry(source, schema, domain, allowTargetSubdomains);
+}
+
+bool
+QCefContextPrivate::removeCrossOriginWhitelistEntry(const QString& sourceOrigin,
+                                                    const QString& targetSchema,
+                                                    const QString& targetDomain,
+                                                    bool allowTargetSubdomains)
+{
+  CefString source(sourceOrigin.toStdString());
+  CefString schema(targetSchema.toStdString());
+  CefString domain(targetDomain.toStdString());
+  return CefRemoveCrossOriginWhitelistEntry(source, schema, domain, allowTargetSubdomains);
+}
+
+bool
+QCefContextPrivate::clearCrossOriginWhitelistEntry()
+{
+  remove CefClearCrossOriginWhitelist();
 }
 
 void

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * File: QCefContext.h
  * Project: QCefView
  * Created: 29th March 2016
@@ -80,6 +80,37 @@ public:
   /// <param name="url">The applicable url</param>
   /// <returns>True on success; otherwise false</returns>
   bool addCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
+
+  /// <summary>
+  /// Adds an entry to the cross-origin access whitelist.
+  /// </summary>
+  /// <param name="sourceOrigin"></param>
+  /// <param name="targetSchema"></param>
+  /// <param name="targetDomain"></param>
+  /// <param name="allowTargetSubdomains"></param>
+  /// <returns>True on success; otherwise false</returns>
+  bool addCrossOriginWhitelistEntry(const QString& sourceOrigin,
+                                    const QString& targetSchema,
+                                    const QString& targetDomain,
+                                    bool allowTargetSubdomains);
+
+  /// <summary>
+  /// Removes an entry from the cross-origin access whitelist.
+  /// </summary>
+  /// <param name="sourceOrigin"></param>
+  /// <param name="targetSchema"></param>
+  /// <param name="targetDomain"></param>
+  /// <param name="allowTargetSubdomains"></param>
+  /// <returns>True on success; otherwise false</returns>
+  bool removeCrossOriginWhitelistEntry(const QString& sourceOrigin,
+                                       const QString& targetSchema,
+                                       const QString& targetDomain,
+                                       bool allowTargetSubdomains);
+
+  /// <summary>
+  /// Removes all entries from the cross-origin access whitelist.
+  /// </summary>
+  bool clearCrossOriginWhitelistEntry();
 
   /// <summary>
   /// Gets the QCefConfig

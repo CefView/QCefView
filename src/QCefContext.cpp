@@ -53,6 +53,36 @@ QCefContext::addCookie(const QString& name, const QString& value, const QString&
   return d->addGlobalCookie(name.toStdString(), value.toStdString(), domain.toStdString(), url.toStdString());
 }
 
+bool
+QCefContext::addCrossOriginWhitelistEntry(const QString& sourceOrigin,
+                                          const QString& targetSchema,
+                                          const QString& targetDomain,
+                                          bool allowTargetSubdomains)
+{
+  Q_D(QCefContext);
+
+  d->addCrossOriginWhitelistEntry(sourceOrigin, targetSchema, targetDomain, allowTargetSubdomains);
+}
+
+bool
+QCefContext::removeCrossOriginWhitelistEntry(const QString& sourceOrigin,
+                                             const QString& targetSchema,
+                                             const QString& targetDomain,
+                                             bool allowTargetSubdomains)
+{
+  Q_D(QCefContext);
+
+  d->removeCrossOriginWhitelistEntry(sourceOrigin, targetSchema, targetDomain, allowTargetSubdomains);
+}
+
+bool
+QCefContext::clearCrossOriginWhitelistEntry()
+{
+  Q_D(QCefContext);
+
+  d->clearCrossOriginWhitelistEntry();
+}
+
 const QCefConfig*
 QCefContext::cefConfig() const
 {

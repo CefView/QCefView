@@ -111,6 +111,48 @@ public:
   /// <summary>
   ///
   /// </summary>
+  /// <param name="name"></param>
+  /// <param name="value"></param>
+  /// <param name="domain"></param>
+  /// <param name="url"></param>
+  /// <returns></returns>
+  bool addGlobalCookie(const std::string& name,
+                       const std::string& value,
+                       const std::string& domain,
+                       const std::string& url);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="sourceOrigin"></param>
+  /// <param name="targetSchema"></param>
+  /// <param name="targetDomain"></param>
+  /// <param name="allowTargetSubdomains"></param>
+  bool addCrossOriginWhitelistEntry(const QString& sourceOrigin,
+                                    const QString& targetSchema,
+                                    const QString& targetDomain,
+                                    bool allowTargetSubdomains);
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="sourceOrigin"></param>
+  /// <param name="targetSchema"></param>
+  /// <param name="targetDomain"></param>
+  /// <param name="allowTargetSubdomains"></param>
+  bool removeCrossOriginWhitelistEntry(const QString& sourceOrigin,
+                                       const QString& targetSchema,
+                                       const QString& targetDomain,
+                                       bool allowTargetSubdomains);
+
+  /// <summary>
+  ///
+  /// </summary>
+  bool clearCrossOriginWhitelistEntry();
+
+  /// <summary>
+  ///
+  /// </summary>
   void uninitialize();
 
   /// <summary>
@@ -118,27 +160,6 @@ public:
   /// </summary>
   /// <param name="delayMs"></param>
   void scheduleCefLoopWork(int64_t delayMs);
-
-  /// <summary>
-  ///
-  /// </summary>
-  /// <param name="name"></param>
-  /// <param name="value"></param>
-  /// <param name="domain"></param>
-  /// <param name="url"></param>
-  /// <returns></returns>
-
-  bool addGlobalCookie(const std::string& name,
-                       const std::string& value,
-                       const std::string& domain,
-                       const std::string& url)
-  {
-    CefCookie cookie;
-    CefString(&cookie.name).FromString(name);
-    CefString(&cookie.value).FromString(value);
-    CefString(&cookie.domain).FromString(domain);
-    return CefCookieManager::GetGlobalManager(nullptr)->SetCookie(CefString(url), cookie, nullptr);
-  }
 
 public slots:
   /// <summary>
