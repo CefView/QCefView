@@ -122,7 +122,7 @@ QCefContextPrivate::removeCrossOriginWhitelistEntry(const QString& sourceOrigin,
 bool
 QCefContextPrivate::clearCrossOriginWhitelistEntry()
 {
-  remove CefClearCrossOriginWhitelist();
+  return CefClearCrossOriginWhitelist();
 }
 
 void
