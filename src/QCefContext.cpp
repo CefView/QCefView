@@ -61,7 +61,7 @@ QCefContext::addCrossOriginWhitelistEntry(const QString& sourceOrigin,
 {
   Q_D(QCefContext);
 
-  d->addCrossOriginWhitelistEntry(sourceOrigin, targetSchema, targetDomain, allowTargetSubdomains);
+  return d->addCrossOriginWhitelistEntry(sourceOrigin, targetSchema, targetDomain, allowTargetSubdomains);
 }
 
 bool
@@ -72,7 +72,7 @@ QCefContext::removeCrossOriginWhitelistEntry(const QString& sourceOrigin,
 {
   Q_D(QCefContext);
 
-  d->removeCrossOriginWhitelistEntry(sourceOrigin, targetSchema, targetDomain, allowTargetSubdomains);
+  return d->removeCrossOriginWhitelistEntry(sourceOrigin, targetSchema, targetDomain, allowTargetSubdomains);
 }
 
 bool
@@ -80,7 +80,7 @@ QCefContext::clearCrossOriginWhitelistEntry()
 {
   Q_D(QCefContext);
 
-  d->clearCrossOriginWhitelistEntry();
+  return d->clearCrossOriginWhitelistEntry();
 }
 
 const QCefConfig*
