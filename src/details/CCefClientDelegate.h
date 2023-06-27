@@ -92,6 +92,9 @@ public:
                             CefRefPtr<CefFileDialogCallback> callback) override;
 
   // DisplayHandler
+  virtual bool onDragEnter(CefRefPtr<CefBrowser> browser,
+                           CefRefPtr<CefDragData> dragData,
+                           CefDragHandler::DragOperationsMask mask) override;
   virtual void draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
                                       const std::vector<CefDraggableRegion>& regions) override;
   virtual void addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url) override;
