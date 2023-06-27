@@ -51,6 +51,11 @@ public:
   /// <summary>
   ///
   /// </summary>
+  bool enableDragAndDrop_ = false;
+
+  /// <summary>
+  ///
+  /// </summary>
   QCefContextPrivate* pContextPrivate_ = nullptr;
 
   /// <summary>

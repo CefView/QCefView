@@ -256,6 +256,18 @@ public:
   /// </summary>
   void closeDevTools();
 
+  /// <summary>
+  /// Sets whether to enable drag and drop
+  /// </summary>
+  /// <param name="enable">True to enable; otherwise false</param>
+  void setEnableDragAndDrop(bool enable);
+
+  /// <summary>
+  /// Gets whether to enable drag and drop
+  /// </summary>
+  /// <returns>True to enable; otherwise false</returns>
+  bool isDragAndDropEnabled() const;
+
 signals:
   /// <summary>
   /// Gets called on loading state changed

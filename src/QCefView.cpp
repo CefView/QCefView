@@ -82,7 +82,6 @@ QCefView::browserId()
   return d->browserId();
 }
 
-
 bool
 QCefView::isPopup()
 {
@@ -235,7 +234,6 @@ QCefView::isPopupContextMenuDisabled()
   return d->disablePopupContextMenu_;
 }
 
-
 bool
 QCefView::hasDevTools()
 {
@@ -243,7 +241,6 @@ QCefView::hasDevTools()
 
   return d->hasDevTools();
 }
-
 
 void
 QCefView::showDevTools()
@@ -253,13 +250,28 @@ QCefView::showDevTools()
   d->showDevTools();
 }
 
-
 void
 QCefView::closeDevTools()
 {
   Q_D(QCefView);
 
   d->closeDevTools();
+}
+
+void
+QCefView::setEnableDragAndDrop(bool enable)
+{
+  Q_D(QCefView);
+
+  d->enableDragAndDrop_ = enable;
+}
+
+bool
+QCefView::isDragAndDropEnabled() const
+{
+  Q_D(const QCefView);
+
+  return d->enableDragAndDrop_;
 }
 
 void
