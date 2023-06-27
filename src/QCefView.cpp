@@ -224,7 +224,7 @@ QCefView::setDisablePopupContextMenu(bool disable)
 {
   Q_D(QCefView);
 
-  d->disablePopuContextMenu_ = disable;
+  d->disablePopupContextMenu_ = disable;
 }
 
 bool
@@ -232,7 +232,7 @@ QCefView::isPopupContextMenuDisabled()
 {
   Q_D(QCefView);
 
-  return d->disablePopuContextMenu_;
+  return d->disablePopupContextMenu_;
 }
 
 

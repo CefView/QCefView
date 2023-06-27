@@ -46,7 +46,7 @@ public:
   /// <summary>
   ///
   /// </summary>
-  bool disablePopuContextMenu_ = false;
+  bool disablePopupContextMenu_ = false;
 
   /// <summary>
   ///
