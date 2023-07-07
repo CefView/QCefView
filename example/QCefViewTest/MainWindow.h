@@ -47,6 +47,8 @@ protected slots:
 protected slots:
   void onBtnShowDevToolsClicked();
 
+  void onBtnReloadRightViewClicked();
+
   void onBtnRecreateRightViewClicked();
 
   void onBtnChangeColorClicked();
