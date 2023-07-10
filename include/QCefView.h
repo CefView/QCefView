@@ -67,7 +67,10 @@ public:
   /// <param name="setting">The <see cref="QCefSetting"/> instance</param>
   /// <param name="parent">The parent</param>
   /// <param name="f">The Qt WindowFlags</param>
-  QCefView(const QString url, const QCefSetting* setting, QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
+  QCefView(const QString url,
+           const QCefSetting* setting,
+           QWidget* parent = nullptr,
+           Qt::WindowFlags f = Qt::WindowFlags());
 
   /// <summary>
   /// Constructs a QCefView instance
@@ -260,6 +263,10 @@ public:
   /// Sets whether to enable drag and drop
   /// </summary>
   /// <param name="enable">True to enable; otherwise false</param>
+  /// <remarks>
+  /// This function does not work for OSR mode. There is a problem, when dragging a file to a non dragging area,
+  /// the content of the file will be displayed. You need to solve the problem yourself.
+  /// </remarks>
   void setEnableDragAndDrop(bool enable);
 
   /// <summary>
@@ -453,10 +460,7 @@ public slots:
   /// <summary>
   ///
   /// </summary>
-  inline void setFocus()
-  {
-    setFocus(Qt::OtherFocusReason);
-  }
+  inline void setFocus() { setFocus(Qt::OtherFocusReason); }
 
 public:
   /// <summary>

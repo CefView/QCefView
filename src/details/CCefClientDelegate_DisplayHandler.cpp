@@ -64,14 +64,13 @@ mapCursorShape(cef_cursor_type_t& type)
   };
   return sCursorTable[type];
 }
-#include <QDebug>
+
 bool
 CCefClientDelegate::onDragEnter(CefRefPtr<CefBrowser> browser,
                                 CefRefPtr<CefDragData> dragData,
                                 CefDragHandler::DragOperationsMask mask)
 {
   // Return false for default drag handling behavior or true to cancel the drag event.
-  qDebug()<<"\033[33m"<<"["<<__FILE__<<__func__<<__LINE__<<"]"<< "\033[0m";
   return !pCefViewPrivate_->q_ptr->isDragAndDropEnabled();
 }
 
