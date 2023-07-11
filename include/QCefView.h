@@ -228,7 +228,7 @@ public:
   /// preference will be restored to default value
   /// </param>
   /// <param name="error">The error message populated on failure</param>
-  // <returns>True on successful; otherwise false</returns>
+  /// <returns>True on successful; otherwise false</returns>
   bool setPreference(const QString& name, const QVariant& value, const QString& error);
 
   /// <summary>
