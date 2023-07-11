@@ -30,7 +30,8 @@ MainWindow::MainWindow(QWidget* parent)
   // setAttribute(Qt::WA_TranslucentBackground);
 
   connect(m_ui.btn_showDevTools, &QPushButton::clicked, this, &MainWindow::onBtnShowDevToolsClicked);
-  connect(m_ui.btn_reCreate, &QPushButton::clicked, this, &MainWindow::onBtnRecreateRightViewClicked);
+  connect(m_ui.btn_reloadRight, &QPushButton::clicked, this, &MainWindow::onBtnReloadRightViewClicked);
+  connect(m_ui.btn_recreateRight, &QPushButton::clicked, this, &MainWindow::onBtnRecreateRightViewClicked);
   connect(m_ui.btn_changeColor, &QPushButton::clicked, this, &MainWindow::onBtnChangeColorClicked);
   connect(m_ui.btn_setFocus, &QPushButton::clicked, this, &MainWindow::onBtnSetFocusClicked);
   connect(m_ui.btn_callJSCode, &QPushButton::clicked, this, &MainWindow::onBtnCallJSCodeClicked);
@@ -224,6 +225,14 @@ MainWindow::onBtnShowDevToolsClicked()
 {
   if (m_pLeftCefViewWidget) {
     m_pLeftCefViewWidget->showDevTools();
+  }
+}
+
+void
+MainWindow::onBtnReloadRightViewClicked()
+{
+  if (m_pRightCefViewWidget) {
+    m_pRightCefViewWidget->navigateToUrl("https://www.google.com");
   }
 }
 

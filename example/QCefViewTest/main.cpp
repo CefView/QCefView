@@ -37,6 +37,8 @@ main(int argc, char* argv[])
   // config.addCommandLineSwitch("disable-site-isolation-trials");
   // config.addCommandLineSwitch("enable-aggressive-domstorage-flushing");
   config.addCommandLineSwitchWithValue("renderer-process-limit", "1");
+  // allow remote debugging
+  config.addCommandLineSwitchWithValue("remote-allow-origins", "*");
   // config.addCommandLineSwitchWithValue("disable-features", "BlinkGenPropertyTrees,TranslateUI,site-per-process");
 
   // create QCefContext instance with config,
@@ -50,3 +52,4 @@ main(int argc, char* argv[])
   // flying
   return a.exec();
 }
+
