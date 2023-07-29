@@ -13,6 +13,13 @@ QCefDownloadItemPrivate::create(CCefClientDelegate::RefPtr handler)
 }
 
 void
+QCefDownloadItemPrivate::setSuggestedName(QCefDownloadItem* item, const QString& suggestedFileName)
+{
+  auto p = item->d_ptr.data();
+  p->suggestedFileName = suggestedFileName;
+}
+
+void
 QCefDownloadItemPrivate::update(QCefDownloadItem* item, CefDownloadItem& cefItem)
 {
   auto p = item->d_ptr.data();
@@ -49,9 +56,19 @@ QCefDownloadItemPrivate::update(QCefDownloadItem* item, CefDownloadItem& cefItem
   p->fullPath = QString::fromStdString(cefItem.GetFullPath().ToString());
   p->url = QString::fromStdString(cefItem.GetURL().ToString());
   p->originalUrl = QString::fromStdString(cefItem.GetOriginalUrl().ToString());
-  p->suggestedFileName = QString::fromStdString(cefItem.GetSuggestedFileName().ToString());
-  p->contentDisposition = QString::fromStdString(cefItem.GetContentDisposition().ToString());
   p->mimeType = QString::fromStdString(cefItem.GetMimeType().ToString());
+
+  // update suggested name if not empty
+  auto suggestedFileName = QString::fromStdString(cefItem.GetSuggestedFileName().ToString());
+  if (!suggestedFileName.isEmpty()) {
+    p->suggestedFileName = suggestedFileName;
+  }
+
+  // update content disposition if not empty
+  auto contentDisposition = QString::fromStdString(cefItem.GetContentDisposition().ToString());
+  if (!contentDisposition.isEmpty()) {
+    p->contentDisposition = contentDisposition;
+  }
 }
 
 void

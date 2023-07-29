@@ -49,6 +49,11 @@ public:
   /// </summary>
   /// <param name="path">The full path name (must include file name) to save the downloaded item</param>
   /// <param name="useDefaultDialog">Whether to use the default 'Save As...' dialog or not</param>
+  /// <remarks>
+  /// The 'path' parameter only works when 'useDefaultDialog' is set to false.
+  /// If you set 'useDefaultDialog' to true then you cannot control the initial
+  /// locatio nof the opened 'Save As...' dialog, it is determined by CEF internal implementation.
+  /// </remarks>
   void start(const QString& path, bool useDefaultDialog = true) const;
 
   /// <summary>

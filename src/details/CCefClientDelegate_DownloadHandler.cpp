@@ -48,13 +48,17 @@ CCefClientDelegate::onBeforeDownload(CefRefPtr<CefBrowser> browser,
       item = QCefDownloadItemPrivate::create(shared_from_this());
     }
 
+    // set suggested file name
+    auto suggestedFileName = QString::fromStdString(suggested_name);
+    QCefDownloadItemPrivate::setSuggestedName(item.data(), suggestedFileName);
+
     // update
     QCefDownloadItemPrivate::update(item.data(), *(download_item.get()));
     QCefDownloadItemPrivate::setBeforeDownloadCallback(item.data(), callback);
 
     // notify user of the new download item
     weakRefItem = item;
-    pCefViewPrivate_->onNewDownloadItem(item, QString::fromStdString(suggested_name));
+    pCefViewPrivate_->onNewDownloadItem(item, suggestedFileName);
     item.reset();
   }
 
