@@ -29,11 +29,11 @@ It can help you quickly understand how to use it.
 
 ## Note For Debugging With xCode
 
-if you want to debug the project with xCode, you need to take some action to make sure the demo project could load CocoaCefView at correct location.
+if you want to debug the project with xCode, you need to take some action to make sure the demo project could load QCefView at correct location.
 
 1. Generate project with cmake
 2. Build demo project with xcode, do not run (actually you will encounter errors if you run directly)
-3. Go to the **Build Phases** for target CocoaCefViewDemo and perform the actions below
+3. Go to the **Build Phases** for target QCefViewDemo and perform the actions below
     - remove all items under **Target Dependencies**
     - remove all items under **Link Binary With Libraries**
 4. Now you can debug demo project in xCode without errors
