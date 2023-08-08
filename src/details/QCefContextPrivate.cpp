@@ -96,6 +96,12 @@ QCefContextPrivate::addGlobalCookie(const std::string& name,
 }
 
 bool
+QCefContextPrivate::deleteAllCookies()
+{
+  return CefCookieManager::GetGlobalManager(nullptr)->DeleteCookies(CefString(), CefString(), nullptr);
+}
+
+bool
 QCefContextPrivate::addCrossOriginWhitelistEntry(const QString& sourceOrigin,
                                                  const QString& targetSchema,
                                                  const QString& targetDomain,

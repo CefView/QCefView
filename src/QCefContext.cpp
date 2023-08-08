@@ -54,6 +54,13 @@ QCefContext::addCookie(const QString& name, const QString& value, const QString&
 }
 
 bool
+QCefContext::deleteAllCookies() {
+  Q_D(QCefContext);
+
+  return d->deleteAllCookies();
+}
+
+bool
 QCefContext::addCrossOriginWhitelistEntry(const QString& sourceOrigin,
                                           const QString& targetSchema,
                                           const QString& targetDomain,

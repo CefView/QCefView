@@ -82,6 +82,12 @@ public:
   bool addCookie(const QString& name, const QString& value, const QString& domain, const QString& url);
 
   /// <summary>
+  /// Deletes all cookies from the CEF context
+  /// </summary>
+  /// <returns>True on success; otherwise false</returns>
+  bool deleteAllCookies();
+
+  /// <summary>
   /// Adds an entry to the cross-origin access whitelist.
   /// </summary>
   /// <param name="sourceOrigin"></param>
