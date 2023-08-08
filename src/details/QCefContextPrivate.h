@@ -124,6 +124,11 @@ public:
   /// <summary>
   ///
   /// </summary>
+  bool deleteAllCookies();
+
+  /// <summary>
+  ///
+  /// </summary>
   /// <param name="sourceOrigin"></param>
   /// <param name="targetSchema"></param>
   /// <param name="targetDomain"></param>
