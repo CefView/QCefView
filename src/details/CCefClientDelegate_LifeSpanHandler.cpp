@@ -13,24 +13,34 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
                                   CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
                                   CefWindowInfo& windowInfo,
                                   CefBrowserSettings& settings,
-                                  bool& DisableJavascriptAccess)
+                                  bool& disableJavascriptAccess)
 {
-  if (pCefViewPrivate_) {
+  bool cancelPopup = true;
 
-    Qt::ConnectionType c =
-      pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection : Qt::QueuedConnection;
+  if (!pCefViewPrivate_)
+    return cancelPopup;
 
-    QMetaObject::invokeMethod(
-      pCefViewPrivate_,
-      [=]() {
-        pCefViewPrivate_->onBeforeCefPopupCreate(
-          browser, frameId, targetUrl, targetFrameName, targetDisposition, windowInfo, settings);
-      },
-      c);
-  }
+  // determine the connection type
+  Qt::ConnectionType c =
+    pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection : Qt::BlockingQueuedConnection;
 
-  // QCefView doesn't use CEF built-in popup browser
-  return true;
+  // invoke the method
+  QMetaObject::invokeMethod(
+    pCefViewPrivate_,
+    [&]() {
+      cancelPopup = pCefViewPrivate_->onBeforeCefPopupBrowserCreate(browser,                //
+                                                                    frameId,                //
+                                                                    targetUrl,              //
+                                                                    targetFrameName,        //
+                                                                    targetDisposition,      //
+                                                                    windowInfo,             //
+                                                                    settings,               //
+                                                                    disableJavascriptAccess //
+      );
+    },
+    c);
+
+  return cancelPopup;
 }
 
 void
@@ -41,7 +51,7 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 
   QWindow* w = nullptr;
   // #if !defined(CEF_USE_OSR)
-  if (!pCefViewPrivate_->isOSRModeEnabled() /*|| browser->IsPopup()*/) {
+  if (!pCefViewPrivate_->isOSRModeEnabled() || browser->IsPopup()) {
     // create QWindow from native browser window handle
     w = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));
   }
@@ -51,7 +61,7 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
   if (pCefViewPrivate_->q_ptr->thread() != QThread::currentThread()) {
     // change connection type
     // #if !defined(CEF_USE_OSR)
-    if (!pCefViewPrivate_->isOSRModeEnabled() /*|| browser->IsPopup()*/) {
+    if (!pCefViewPrivate_->isOSRModeEnabled() || browser->IsPopup()) {
       c = Qt::QueuedConnection;
     } else {
       // #else
@@ -65,8 +75,13 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
     }
   }
 
-  QMetaObject::invokeMethod(
-    pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefBrowserCreated(browser, w); }, c);
+  if (browser->IsPopup()) {
+    QMetaObject::invokeMethod(
+      pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefPopupBrowserCreated(browser, w); }, c);
+  } else {
+    QMetaObject::invokeMethod(
+      pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefBrowserCreated(browser, w); }, c);
+  }
 }
 
 bool

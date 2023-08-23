@@ -35,7 +35,8 @@ protected:
                      const QString& targetFrameName,
                      QCefView::CefWindowOpenDisposition targetDisposition,
                      QRect& rect,
-                     QCefSetting& settings) override;
+                     QCefSetting& settings,
+                     bool& disableJavascript) override;
 
   void onNewDownloadItem(const QSharedPointer<QCefDownloadItem>& item, const QString& suggestedName) override;
 

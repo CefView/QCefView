@@ -7,6 +7,7 @@
 #include <QStyleOption>
 #include <QVBoxLayout>
 #include <QtDebug>
+#include <QMainWindow>
 #pragma endregion qt_headers
 
 #include <QCefContext.h>
@@ -32,7 +33,7 @@ QCefView::QCefView(const QString url,
   setMouseTracking(true);
   setFocusPolicy(Qt::WheelFocus);
 
-  // create browser
+  // create cef browser
   d_ptr->createCefBrowser(this, url, setting);
 }
 
@@ -46,9 +47,6 @@ QCefView::~QCefView()
   qDebug() << this << "is being destructed";
 
   if (d_ptr) {
-    // close all popup browsers
-    d_ptr->closeAllPopupBrowsers();
-
     // destroy under layer cef browser
     d_ptr->destroyCefBrowser();
     d_ptr.reset();
@@ -80,14 +78,6 @@ QCefView::browserId()
   Q_D(QCefView);
 
   return d->browserId();
-}
-
-bool
-QCefView::isPopup()
-{
-  Q_D(QCefView);
-
-  return d->isPopup();
 }
 
 void
@@ -288,9 +278,26 @@ QCefView::onBeforePopup(qint64 frameId,
                         const QString& targetFrameName,
                         QCefView::CefWindowOpenDisposition targetDisposition,
                         QRect& rect,
-                        QCefSetting& settings)
+                        QCefSetting& settings,
+                        bool& disableJavascript)
 {
   return false;
+}
+
+void
+QCefView::onPopupCreated(QWidget* popup, const QString& url, const QString& name)
+{
+  // create a top level window container
+  QMainWindow* popupWin = new QMainWindow();
+  popupWin->setAttribute(Qt::WA_DeleteOnClose, true);
+  popupWin->setWindowTitle(name);
+  popupWin->resize(popup->size());
+
+  // add the popup browser widget into the window
+  popupWin->setCentralWidget(popup);
+
+  // show window
+  popupWin->show();
 }
 
 void

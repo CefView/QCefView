@@ -3,7 +3,6 @@
 #include <QMenu>
 #include <QMutex>
 #include <QPointer>
-#include <QSet>
 #include <QString>
 #include <QWindow>
 
@@ -37,11 +36,6 @@ public:
   ///
   /// </summary>
   static void destroyAllInstance();
-
-  /// <summary>
-  ///
-  /// </summary>
-  bool isPopup_ = false;
 
   /// <summary>
   ///
@@ -170,11 +164,6 @@ public:
   QElapsedTimer paintTimer_;
 #endif
 
-  /// <summary>
-  /// The list of popup child-browsers of this browser.
-  /// </summary>
-  QSet<QCefView*> popupBrowsers_;
-
 public:
   explicit QCefViewPrivate(QCefContextPrivate* ctx,
                            QCefView* view,
@@ -183,11 +172,9 @@ public:
 
   ~QCefViewPrivate();
 
-  void createCefBrowser(QCefView* view, const QString url, const QCefSetting* setting);
+  void createCefBrowser(QCefView* view, const QString url, const QCefSetting* setting, bool isPopup = false);
 
   void destroyCefBrowser();
-
-  void closeAllPopupBrowsers();
 
   void addLocalFolderResource(const QString& path, const QString& url, int priority = 0);
 
@@ -200,13 +187,16 @@ public:
 protected:
   void onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* window);
 
-  void onBeforeCefPopupCreate(const CefRefPtr<CefBrowser>& browser,
-                              int64_t frameId,
-                              const std::string& targetUrl,
-                              const std::string& targetFrameName,
-                              CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
-                              const CefWindowInfo& windowInfo,
-                              const CefBrowserSettings& settings);
+  bool onBeforeCefPopupBrowserCreate(const CefRefPtr<CefBrowser>& browser,
+                                  int64_t frameId,
+                                  const std::string& targetUrl,
+                                  const std::string& targetFrameName,
+                                  CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
+                                  CefWindowInfo& windowInfo,
+                                  CefBrowserSettings& settings,
+                                  bool& disableJavascript);
+
+  void onCefPopupBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* window);
 
   void onNewDownloadItem(QSharedPointer<QCefDownloadItem> item, const QString& suggestedName);
 
@@ -219,8 +209,6 @@ protected:
                        const std::string& failedUrl);
 
 public slots:
-  void onPopupBrowserDestroyed(QObject* popup);
-
   void onAppFocusChanged(QWidget* old, QWidget* now);
 
   void onViewScreenChanged(QScreen* screen);
@@ -286,8 +274,6 @@ protected:
 
 public:
   int browserId();
-
-  bool isPopup();
 
   void navigateToString(const QString& content);
 

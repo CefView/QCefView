@@ -59,7 +59,8 @@ CefViewWidget::onBeforePopup(qint64 frameId,
                              const QString& targetFrameName,
                              QCefView::CefWindowOpenDisposition targetDisposition,
                              QRect& rect,
-                             QCefSetting& settings)
+                             QCefSetting& settings,
+                             bool& disableJavascript)
 {
   // create new QCefView as popup browser
   settings.setBackgroundColor(Qt::red);

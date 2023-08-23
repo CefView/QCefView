@@ -62,7 +62,10 @@ QCefViewPrivate::~QCefViewPrivate()
 }
 
 void
-QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefSetting* setting)
+QCefViewPrivate::createCefBrowser(QCefView* view,
+                                  const QString url,
+                                  const QCefSetting* setting,
+                                  bool isPopup /*= false*/)
 {
   // create browser client handler delegate
   auto pClientDelegate = std::make_shared<CCefClientDelegate>(this);
@@ -156,14 +159,6 @@ QCefViewPrivate::destroyCefBrowser()
   pClient_->CloseAllBrowsers();
   pClient_ = nullptr;
   pCefBrowser_ = nullptr;
-}
-
-void
-QCefViewPrivate::closeAllPopupBrowsers()
-{
-  for (auto popup : popupBrowsers_) {
-    popup->close();
-  }
 }
 
 void
@@ -263,28 +258,17 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
     UpdateCefWindowMask(ncw.qBrowserWindow_, q_ptr->mask());
   }
   // #endif
-
-  // if is popup browser record and show
-  if (isPopup_) {
-    // record
-    popupBrowsers_.insert(q_ptr);
-
-    // show
-    q_ptr->show();
-
-    // emit the signal
-    q_ptr->popupCreated(q_ptr);
-  }
 }
 
-void
-QCefViewPrivate::onBeforeCefPopupCreate(const CefRefPtr<CefBrowser>& browser,
-                                        int64_t frameId,
-                                        const std::string& targetUrl,
-                                        const std::string& targetFrameName,
-                                        CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
-                                        const CefWindowInfo& windowInfo,
-                                        const CefBrowserSettings& settings)
+bool
+QCefViewPrivate::onBeforeCefPopupBrowserCreate(const CefRefPtr<CefBrowser>& browser,
+                                            int64_t frameId,
+                                            const std::string& targetUrl,
+                                            const std::string& targetFrameName,
+                                            CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
+                                            CefWindowInfo& windowInfo,
+                                            CefBrowserSettings& settings,
+                                            bool& disableJavascript)
 {
   Q_Q(QCefView);
 
@@ -293,38 +277,47 @@ QCefViewPrivate::onBeforeCefPopupCreate(const CefRefPtr<CefBrowser>& browser,
   auto d = (QCefView::CefWindowOpenDisposition)targetDisposition;
   auto rc = QRect(windowInfo.bounds.x, windowInfo.bounds.y, windowInfo.bounds.width, windowInfo.bounds.height);
 
-  if (rc.width() <= 0) {
+  if (rc.width() <= 0)
     rc.setWidth(DEFAULT_POPUP_WIDTH);
-  }
-
-  if (rc.height() <= 0) {
+  if (rc.height() <= 0)
     rc.setHeight(DEFAULT_POPUP_HEIGHT);
-  }
+
 
   QCefSetting s;
   QCefSettingPrivate::CopyFromCefBrowserSettings(&s, &settings);
+  bool cancelPopup = q->onBeforePopup(frameId, url, name, d, rc, s, disableJavascript);
+  QCefSettingPrivate::CopyToCefBrowserSettings(&s, &settings);
 
-  if (q->onBeforePopup(frameId, url, name, d, rc, s)) {
-    // cancel popup
-    return;
+  if (!cancelPopup) {
+#if CEF_VERSION_MAJOR > 85
+    windowInfo.SetAsChild((CefWindowHandle)q->winId(), { 0, 0, rc.width(), rc.height() });
+#else
+    windowInfo.SetAsChild((CefWindowHandle)q->winId(), 0, 0, rc.width(), rc.height());
+#endif
   }
 
-  // allow popup, create QCefView as new popup browser
-  QCefView* popup = new QCefView(url, &s, nullptr, Qt::Window);
-  if (!popup) {
-    // failed to create QCefView, cancel popup
-    return;
-  }
-  popup->d_ptr->isPopup_ = true;
+  return cancelPopup;
+}
 
-  connect(popup, SIGNAL(destroyed(QObject*)), this, SLOT(onPopupBrowserDestroyed(QObject*)));
+void
+QCefViewPrivate::onCefPopupBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* window)
+{
+  // extract parameters
+  auto frame = browser->GetMainFrame();
+  auto name = QString::fromStdString(frame->GetName());
+  auto url = QString::fromStdString(frame->GetURL());
 
-  // config the popup QCefView
-  if (!name.isEmpty()) {
-    popup->setWindowTitle(name);
-  }
+  // create widget for browser
+  QWidget* popup = QWidget::createWindowContainer(window, nullptr, Qt::WindowFlags());
   popup->setAttribute(Qt::WA_DeleteOnClose, true);
-  popup->resize(rc.size());
+  popup->setWindowTitle(name);
+  popup->resize(window->size() * window->devicePixelRatio());
+
+  // notify the event of popup browser
+  q_ptr->onPopupCreated(popup, url, name);
+
+  // show widget
+  popup->show();
 }
 
 void
@@ -361,12 +354,6 @@ QCefViewPrivate::handleLoadError(CefRefPtr<CefBrowser>& browser,
   }
 
   return false;
-}
-
-void
-QCefViewPrivate::onPopupBrowserDestroyed(QObject* popup)
-{
-  popupBrowsers_.remove(static_cast<QCefView*>(popup));
 }
 
 void
@@ -978,12 +965,6 @@ QCefViewPrivate::browserId()
     return pCefBrowser_->GetIdentifier();
 
   return -1;
-}
-
-bool
-QCefViewPrivate::isPopup()
-{
-  return isPopup_;
 }
 
 void

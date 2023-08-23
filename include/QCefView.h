@@ -77,7 +77,7 @@ public:
   /// </summary>
   /// <param name="parent">The parent</param>
   /// <param name="f">The Qt WindowFlags</param>
-  QCefView(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
+  explicit QCefView(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
 
   /// <summary>
   /// Destructs the QCefView instance
@@ -106,12 +106,6 @@ public:
   /// </summary>
   /// <returns>The browser id</returns>
   int browserId();
-
-  /// <summary>
-  /// Gets whether the browser is created as popup browser
-  /// </summary>
-  /// <returns>True if it is popup browser; otherwise false</returns>
-  bool isPopup();
 
   /// <summary>
   /// Navigates to the content.
@@ -408,19 +402,6 @@ signals:
   /// <param name="window">The native browser windows</param>
   void nativeBrowserCreated(QWindow* window);
 
-  /// <summary>
-  /// Gets called right after the popup browser was created.
-  /// </summary>
-  /// <param name="popup">The new created popup QCefView instance</param>
-  /// <remarks>
-  /// The lifecycle of the popup browser is managed by the owner of the popup browser,
-  /// thus do not try to hold the popup browser instance.
-  /// If you need to implement browser tab, you should override the <see cref="onBeforePopup"/> method
-  /// and create your own QCefView browser instance then you can manipulate the created one as whatever
-  /// you want.
-  /// </remarks>
-  void popupCreated(QCefView* popup);
-
 protected:
   /// <summary>
   /// Gets called before the popup browser created
@@ -437,7 +418,21 @@ protected:
                              const QString& targetFrameName,
                              QCefView::CefWindowOpenDisposition targetDisposition,
                              QRect& rect,
-                             QCefSetting& settings);
+                             QCefSetting& settings,
+                             bool& disableJavascript);
+
+  /// <summary>
+  /// Gets called right after the popup browser was created.
+  /// </summary>
+  /// <param name="popup">The new created popup QCefView instance</param>
+  /// <remarks>
+  /// The lifecycle of the popup browser is managed by the owner of the popup browser,
+  /// thus do not try to hold the popup browser instance.
+  /// If you need to implement browser tab, you should override the <see cref="onBeforePopup"/> method
+  /// and create your own QCefView browser instance then you can manipulate the created one as whatever
+  /// you want.
+  /// </remarks>
+  void onPopupCreated(QWidget* popup, const QString& url, const QString& name);
 
   /// <summary>
   /// Gets called on new download item was required. Keep reference to the download item
