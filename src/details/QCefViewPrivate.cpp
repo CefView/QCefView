@@ -88,7 +88,7 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
   if (isOSRModeEnabled_) {
     window_info.SetAsWindowless(0);
   } else { // #else
-#if defined(OS_LINUX)
+#if defined(Q_OS_LINUX)
     // Don't know why, on Linux platform if we use QCefView's winId() as
     // the parent, it will complain about `BadWindow`,
     // and the browser window will not be created, this never happens
