@@ -108,6 +108,7 @@ public:
   /// <param name="sourceOrigin">The source origin</param>
   /// <param name="targetSchema">The target schema</param>
   /// <param name="targetDomain">The target domain</param>
+  /// <param name="allowTargetSubdomains">Whether to allow subdomain or not</param>
   /// <returns>True on success; otherwise false</returns>
   bool removeCrossOriginWhitelistEntry(const QString& sourceOrigin,
                                        const QString& targetSchema,
