@@ -46,9 +46,6 @@ QCefView::~QCefView()
   qDebug() << this << "is being destructed";
 
   if (d_ptr) {
-    // close all popup browsers
-    d_ptr->closeAllPopupBrowsers();
-
     // destroy under layer cef browser
     d_ptr->destroyCefBrowser();
     d_ptr.reset();
@@ -80,14 +77,6 @@ QCefView::browserId()
   Q_D(QCefView);
 
   return d->browserId();
-}
-
-bool
-QCefView::isPopup()
-{
-  Q_D(QCefView);
-
-  return d->isPopup();
 }
 
 void
@@ -282,13 +271,38 @@ QCefView::setFocus(Qt::FocusReason reason)
   d->setCefWindowFocus(true);
 }
 
+QCefView*
+QCefView::onNewBrowser(qint64 sourceFrameId,
+                       const QString& url,
+                       const QString& name,
+                       CefWindowOpenDisposition targetDisposition,
+                       QRect& rect,
+                       QCefSetting& settings)
+{
+  QCefView* popup = new QCefView(url, &settings, nullptr, Qt::WindowFlags());
+  if (!popup) {
+    // failed to create QCefView, cancel popup
+    return nullptr;
+  }
+
+  // config the popup QCefView
+  if (!name.isEmpty()) {
+    popup->setWindowTitle(name);
+  }
+  popup->resize(rect.size());
+  popup->show();
+
+  return popup;
+}
+
 bool
-QCefView::onBeforePopup(qint64 frameId,
-                        const QString& targetUrl,
-                        const QString& targetFrameName,
-                        QCefView::CefWindowOpenDisposition targetDisposition,
-                        QRect& rect,
-                        QCefSetting& settings)
+QCefView::onNewPopup(qint64 frameId,
+                     const QString& targetUrl,
+                     QString& targetFrameName,
+                     QCefView::CefWindowOpenDisposition targetDisposition,
+                     QRect& rect,
+                     QCefSetting& settings,
+                     bool& disableJavascriptAccess)
 {
   return false;
 }
