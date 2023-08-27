@@ -54,12 +54,13 @@ CefViewWidget::onDraggableRegionChanged(const QRegion& draggableRegion, const QR
 }
 
 bool
-CefViewWidget::onBeforePopup(qint64 frameId,
-                             const QString& targetUrl,
-                             const QString& targetFrameName,
-                             QCefView::CefWindowOpenDisposition targetDisposition,
-                             QRect& rect,
-                             QCefSetting& settings)
+CefViewWidget::onNewPopup(qint64 sourceFrameId,
+                          const QString& targetUrl,
+                          QString& targetFrameName,
+                          QCefView::CefWindowOpenDisposition targetDisposition,
+                          QRect& rect,
+                          QCefSetting& settings,
+                          bool& disableJavascriptAccess)
 {
   // create new QCefView as popup browser
   settings.setBackgroundColor(Qt::red);

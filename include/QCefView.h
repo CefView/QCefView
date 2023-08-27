@@ -108,12 +108,6 @@ public:
   int browserId();
 
   /// <summary>
-  /// Gets whether the browser is created as popup browser
-  /// </summary>
-  /// <returns>True if it is popup browser; otherwise false</returns>
-  bool isPopup();
-
-  /// <summary>
   /// Navigates to the content.
   /// </summary>
   /// <param name="content">The content</param>
@@ -408,20 +402,25 @@ signals:
   /// <param name="window">The native browser windows</param>
   void nativeBrowserCreated(QWindow* window);
 
-  /// <summary>
-  /// Gets called right after the popup browser was created.
-  /// </summary>
-  /// <param name="popup">The new created popup QCefView instance</param>
-  /// <remarks>
-  /// The lifecycle of the popup browser is managed by the owner of the popup browser,
-  /// thus do not try to hold the popup browser instance.
-  /// If you need to implement browser tab, you should override the <see cref="onBeforePopup"/> method
-  /// and create your own QCefView browser instance then you can manipulate the created one as whatever
-  /// you want.
-  /// </remarks>
-  void popupCreated(QCefView* popup);
-
 protected:
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="sourceFrameId"></param>
+  /// <param name="url"></param>
+  /// <param name="name"></param>
+  /// <param name="targetDisposition"></param>
+  /// <param name="rect"></param>
+  /// <param name="settings"></param>
+  /// <param name="disableJavascriptAccess"></param>
+  /// <returns></returns>
+  virtual QCefView* onNewBrowser(qint64 sourceFrameId,
+                                 const QString& url,
+                                 const QString& name,
+                                 QCefView::CefWindowOpenDisposition targetDisposition,
+                                 QRect& rect,
+                                 QCefSetting& settings);
+
   /// <summary>
   /// Gets called before the popup browser created
   /// </summary>
@@ -432,12 +431,13 @@ protected:
   /// <param name="rect">Rect to be used for the popup</param>
   /// <param name="settings">Settings to be used for the popup</param>
   /// <returns>True to cancel the popup; false to allow</returns>
-  virtual bool onBeforePopup(qint64 frameId,
-                             const QString& targetUrl,
-                             const QString& targetFrameName,
-                             QCefView::CefWindowOpenDisposition targetDisposition,
-                             QRect& rect,
-                             QCefSetting& settings);
+  virtual bool onNewPopup(qint64 frameId,
+                          const QString& targetUrl,
+                          QString& targetFrameName,
+                          QCefView::CefWindowOpenDisposition targetDisposition,
+                          QRect& rect,
+                          QCefSetting& settings,
+                          bool& disableJavascriptAccess);
 
   /// <summary>
   /// Gets called on new download item was required. Keep reference to the download item

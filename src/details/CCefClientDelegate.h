@@ -141,7 +141,7 @@ public:
                              CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
                              CefWindowInfo& windowInfo,
                              CefBrowserSettings& settings,
-                             bool& DisableJavascriptAccess) override;
+                             bool& disableJavascriptAccess) override;
   virtual void onAfterCreate(CefRefPtr<CefBrowser>& browser) override;
   virtual bool doClose(CefRefPtr<CefBrowser> browser) override;
   virtual void onBeforeClose(CefRefPtr<CefBrowser> browser) override;
