@@ -32,9 +32,3 @@ public:
 #else
 #define FLog()
 #endif
-
-void
-UpdateCefWindowMask(QWindow* w, const QRegion& r);
-
-void
-XRemapWindow(QWidget* widget, QWindow* window);

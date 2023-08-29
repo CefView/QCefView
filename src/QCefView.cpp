@@ -289,6 +289,7 @@ QCefView::onNewBrowser(qint64 sourceFrameId,
   if (!name.isEmpty()) {
     popup->setWindowTitle(name);
   }
+  popup->setAttribute(Qt::WA_DeleteOnClose, true);
   popup->resize(rect.size());
   popup->show();
 

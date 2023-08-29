@@ -4,7 +4,6 @@
 #include <QMutex>
 #include <QPointer>
 #include <QString>
-#include <QWindow>
 
 #if defined(QT_DEBUG)
 #include <QElapsedTimer>
@@ -16,9 +15,12 @@
 
 #include "CCefClientDelegate.h"
 #include "QCefContextPrivate.h"
+#include "QCefWindow.h"
 #include "utils/MenuBuilder.h"
 
 #include <QCefView.h>
+
+class QAutoResizeWindow;
 
 class QCefViewPrivate : public QObject
 {
@@ -145,7 +147,7 @@ public:
     /// <summary>
     ///
     /// </summary>
-    QWindow* qBrowserWindow_ = nullptr;
+    QCefWindow* qBrowserWindow_ = nullptr;
 
     /// <summary>
     ///
