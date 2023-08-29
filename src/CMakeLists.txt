@@ -105,11 +105,6 @@ if(OS_LINUX)
     BUILD_WITH_INSTALL_RPATH TRUE
   )
 
-  target_link_libraries(QCefView
-    PRIVATE
-    Qt${QT_VERSION_MAJOR}::GuiPrivate
-  )
-
   add_custom_command(TARGET QCefView
     PRE_BUILD
 

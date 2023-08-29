@@ -85,22 +85,15 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString url, const QCefS
   if (isOSRModeEnabled_) {
     windowInfo.SetAsWindowless(0);
   } else { // #else
-#if defined(Q_OS_LINUX)
-    // Don't know why, on Linux platform if we use QCefView's winId() as
-    // the parent, it will complain about `BadWindow`,
-    // and the browser window will not be created, this never happens
-    // on Windows and macOS, so we create a temporal QWindow as the
-    // parent to create CEF browser window.
-    QWindow* win = new QWindow();
-    CefWindowHandle parent = (CefWindowHandle)win->winId();
-#else
-    CefWindowHandle parent = (CefWindowHandle)view->winId();
-#endif
+    // create CEF browser parent window
+    ncw.qBrowserWindow_ = new QCefWindow();
+    ncw.qBrowserWindow_->setFlags(Qt::Window | Qt::FramelessWindowHint);
 
+    // use INT_MAX as the width and height to prevent black screen blink
 #if CEF_VERSION_MAJOR > 85
-    windowInfo.SetAsChild(parent, { 0, 0, 0, 0 });
+    windowInfo.SetAsChild((CefWindowHandle)ncw.qBrowserWindow_->winId(), { 0, 0, INT_MAX, INT_MAX });
 #else
-    windowInfo.SetAsChild(parent, 0, 0, 0, 0);
+    windowInfo.SetAsChild((CefWindowHandle)ncw.qBrowserWindow_->winId(), 0, 0, INT_MAX, INT_MAX);
 #endif
   }
   // #endif
@@ -142,13 +135,10 @@ QCefViewPrivate::destroyCefBrowser()
   if (!pClient_)
     return;
 
-  // #if !defined(CEF_USE_OSR)
   if (!isOSRModeEnabled_) {
-    // remove parent, or CEF will send close to the parent
-    // this will lead the top level window to be closed
-    ncw.qBrowserWindow_->setParent(nullptr);
+    // remove from children, prevent from being destroyed
+    ncw.qBrowserWindow_->detachCefWindow();
   }
-  // #endif
 
   // clean all browsers
   pClient_->CloseAllBrowsers();
@@ -223,33 +213,40 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
     // emit signal
     q_ptr->nativeBrowserCreated(window);
 
+    qDebug() << "CEF Window Native ID:" << window->winId();
+
+    // adjust size and attach to cef window
+    ncw.qBrowserWindow_->resize(q_ptr->size());
+    ncw.qBrowserWindow_->attachCefWindow(window);
+
     // create QWidget from cef browser widow, this will re-parent the CEF browser window
     QWidget* browserWidget = QWidget::createWindowContainer(
-      window,
-      q_ptr,
-      Qt::CustomizeWindowHint | Qt::FramelessWindowHint | Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
+      ncw.qBrowserWindow_, q_ptr, Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
+
     Q_ASSERT_X(browserWidget, "QCefViewPrivateNCW::createBrowser", "Failed to create QWidget from cef browser window");
     if (!browserWidget) {
-      qWarning("Failed to create QWidget from cef browser window");
+      qWarning() << "Failed to create QWidget from cef browser window";
       browser->GetHost()->CloseBrowser(true);
       return;
     }
 
     // capture the resource
-    ncw.qBrowserWindow_ = window;
     ncw.qBrowserWidget_ = browserWidget;
+    ncw.qBrowserWidget_->resize(q_ptr->size());
 
     // monitor the focus changed event globally
     connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::onAppFocusChanged);
 
     // initialize the layout and add browser widget to the layout
-    auto* layout = new QGridLayout();
+    QGridLayout* layout = new QGridLayout();
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(ncw.qBrowserWidget_);
     q_ptr->setLayout(layout);
 
     // update mask
-    UpdateCefWindowMask(ncw.qBrowserWindow_, q_ptr->mask());
+    if (ncw.qBrowserWindow_) {
+      ncw.qBrowserWindow_->setMask(q_ptr->mask());
+    }
   }
   // #endif
 }
@@ -371,7 +368,8 @@ QCefViewPrivate::onViewScreenChanged(QScreen* screen)
       pCefBrowser_->GetHost()->NotifyScreenInfoChanged();
   } else { // #else
     Q_Q(QCefView);
-    UpdateCefWindowMask(ncw.qBrowserWindow_, q->mask());
+    if (ncw.qBrowserWindow_)
+      ncw.qBrowserWindow_->setMask(q->mask());
   }
   // #endif
 }
@@ -489,15 +487,15 @@ QCefViewPrivate::onContextMenuDestroyed(QObject* obj)
 void
 QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region)
 {
-  // #if defined(QT_DEBUG)
-  //   qint64 elapsedMs = paintTimer_.restart();
-  //   // qDebug() << "===== CEF view frame update since last frame:" << elapsedMs;
-  //   if (elapsedMs >= 20)
-  //     qDebug() << "===== CEF view frame update stutter detected:" << elapsedMs;
-  //
-  //   QElapsedTimer updateDurationTimer;
-  //   updateDurationTimer.start();
-  // #endif
+//#if defined(QT_DEBUG)
+//  qint64 elapsedMs = paintTimer_.restart();
+//  // qDebug() << "===== CEF view frame update since last frame:" << elapsedMs;
+//  if (elapsedMs >= 20)
+//    qDebug() << "===== CEF view frame update stutter detected:" << elapsedMs;
+//
+//  QElapsedTimer updateDurationTimer;
+//  updateDurationTimer.start();
+//#endif
 
   if (osr.qCefViewFrame_.size() != frame.size() || osr.transparentPaintingEnabled) {
     // update full image
@@ -513,9 +511,9 @@ QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region
   }
   emit updateOsrFrame();
 
-  // #if defined(QT_DEBUG)
-  //   qDebug() << "===== CEF frame update duration:" << elapsedMs;
-  // #endif
+//#if defined(QT_DEBUG)
+//  qDebug() << "===== CEF frame update duration:" << elapsedMs;
+//#endif
 }
 
 void
@@ -637,7 +635,6 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
   }
 #endif
 
-  // #if defined(CEF_USE_OSR)
   if (isOSRModeEnabled_) {
     // if the parent chain changed, we need to re-connect the screenChanged signal
     if (et == QEvent::ParentChange) {
@@ -662,17 +659,18 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
         return true;
       }
     }
-  } else { // #else
-    // filter event to the browser window
-    if (watched == ncw.qBrowserWindow_ && et == QEvent::PlatformSurface) {
+  } else {
+    // the surface is about to be destroyed (top-level window is being closed)
+    if (et == QEvent::PlatformSurface) {
       auto t = ((QPlatformSurfaceEvent*)event)->surfaceEventType();
       if (QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed == t) {
-        // browser window is being destroyed, need to close the browser window in advance
-        destroyCefBrowser();
+        if (watched == ncw.qBrowserWindow_->cefWindow()) {
+          // detach the cef window
+          ncw.qBrowserWindow_->detachCefWindow();
+        }
       }
     }
   }
-  // #endif
 
   return QObject::eventFilter(watched, event);
 }
@@ -764,11 +762,6 @@ QCefViewPrivate::onViewVisibilityChanged(bool visible)
       return;
 
     if (visible) {
-#if defined(Q_OS_LINUX)
-      XRemapWindow(ncw.qBrowserWidget_, ncw.qBrowserWindow_);
-      // BUG-TO-BE-FIXED after remap, the browser window will not resize automatically
-      // with the QCefView widget
-#endif
       // restore cef window size
       ncw.qBrowserWidget_->resize(q->frameSize());
     } else {
@@ -806,7 +799,8 @@ QCefViewPrivate::onViewSizeChanged(const QSize& size, const QSize& oldSize)
       pCefBrowser_->GetHost()->WasResized();
   } else { // #else
     Q_Q(QCefView);
-    UpdateCefWindowMask(ncw.qBrowserWindow_, q->mask());
+    if (ncw.qBrowserWindow_)
+      ncw.qBrowserWindow_->setMask(q->mask());
   }
   // #endif
 }
@@ -819,14 +813,16 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
     if (!pCefBrowser_)
       return;
 
-    // qDebug("==== onViewKeyEvent:key=%d, nativeVirtualKey=0x%02x, nativeScanCode=0x%02x, modifiers=0x%08x, "
-    //       "nativeModifiers=0x%08x, text=%s",
-    //       (Qt::Key)(event->key()),
-    //       event->nativeVirtualKey(),
-    //       event->nativeScanCode(),
-    //       (quint32)(event->modifiers()),
-    //       event->nativeModifiers(),
-    //       event->text().toStdString().c_str());
+//#if defined(QT_DEBUG)
+//    qDebug("==== onViewKeyEvent:key=%d, nativeVirtualKey=0x%02x, nativeScanCode=0x%02x, modifiers=0x%08x, "
+//           "nativeModifiers=0x%08x, text=%s",
+//           (Qt::Key)(event->key()),
+//           event->nativeVirtualKey(),
+//           event->nativeScanCode(),
+//           (quint32)(event->modifiers()),
+//           event->nativeModifiers(),
+//           event->text().toStdString().c_str());
+//#endif
 
     CefKeyEvent e;
     MapQKeyEventToCefKeyEvent(event, e);

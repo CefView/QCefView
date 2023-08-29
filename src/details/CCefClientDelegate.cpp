@@ -1,5 +1,6 @@
 ﻿#include "CCefClientDelegate.h"
 
+#include <QDebug>
 #include <QImage>
 #include <QScreen>
 
@@ -14,7 +15,7 @@ CCefClientDelegate::CCefClientDelegate(QCefViewPrivate* p)
 
 CCefClientDelegate::~CCefClientDelegate()
 {
-  return;
+  qDebug() << "CCefClientDelegate is being destructed";
 }
 
 void

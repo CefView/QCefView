@@ -100,16 +100,11 @@ MainWindow::createRightCefView()
   // create the QCefView widget and add it to the layout container
   // m_pRightCefViewWidget = new CefViewWidget("https://cefview.github.io/QCefView/", &setting, this);
 
-  // this site is for test web events
-  m_pRightCefViewWidget = new CefViewWidget("", &setting, this);
-  m_pRightCefViewWidget->navigateToUrl(
-    "https://www.javatpoint.com/oprweb/test.jsp?filename=javascript-window-close-method1");
-
   //
   // m_pRightCefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);
 
   // this site is for test OSR performance
-  // m_pRightCefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
+  m_pRightCefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
 
   // this site is test for input devices
   // m_pRightCefViewWidget = new CefViewWidget("https://devicetests.com", &setting);

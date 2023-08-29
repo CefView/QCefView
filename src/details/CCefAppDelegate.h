@@ -13,6 +13,8 @@ class CCefAppDelegate : public CefViewBrowserAppDelegateInterface
 public:
   CCefAppDelegate(QCefContextPrivate* context, CommandLineArgs args);
 
+  ~CCefAppDelegate();
+
   virtual void onBeforeCommandLineProcessing(const CefString& process_type,
                                              CefRefPtr<CefCommandLine> command_line) override;
 
