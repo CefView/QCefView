@@ -100,7 +100,6 @@ public:
   virtual void addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url) override;
   virtual void titleChanged(CefRefPtr<CefBrowser>& browser, const std::string& title) override;
   virtual void faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::vector<CefString>& icon_urls) override;
-  virtual void faviconChanged(CefRefPtr<CefImage> image) override;
   virtual void fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool fullscreen) override;
   virtual bool tooltipMessage(CefRefPtr<CefBrowser>& browser, const std::string& text) override;
   virtual void statusMessage(CefRefPtr<CefBrowser>& browser, const std::string& value) override;
