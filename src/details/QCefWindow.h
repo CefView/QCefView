@@ -23,14 +23,8 @@ public:
   QWindow* cefWindow();
 
 protected:
-  virtual void exposeEvent(QExposeEvent* e) override;
-
   virtual void resizeEvent(QResizeEvent* e) override;
 
-  virtual void showEvent(QShowEvent* e) override;
-
-  virtual void hideEvent(QHideEvent* e) override;
-
-protected:
+private:
   QWindow* cefWindow_ = nullptr;
 };
