@@ -131,28 +131,6 @@ CCefClientDelegate::faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::
 }
 
 void
-CCefClientDelegate::faviconChanged(CefRefPtr<CefImage> image)
-{
-  QIcon icon;
-
-  int width = 0;
-  int height = 0;
-  CefRefPtr<CefBinaryValue> data = image->GetAsPNG(1.0, true, width, height);
-  int bufsize = (int)data->GetSize();
-  if (bufsize > 0) {
-    QByteArray buffer(bufsize + 4, char(0));
-    data->GetData(buffer.data(), bufsize, 0);
-
-    QBitmap bitmap;
-    bitmap.loadFromData(buffer);
-
-    icon = QIcon(bitmap);
-  }
-
-  pCefViewPrivate_->q_ptr->faviconChanged(icon);
-}
-
-void
 CCefClientDelegate::fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool fullscreen)
 {
   if (!IsValidBrowser(browser))
