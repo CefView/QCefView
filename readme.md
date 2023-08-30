@@ -50,7 +50,7 @@ QCefView supports CEF offscreen rendering mode and this feature is enabled by de
  config.setWindowlessRenderingEnabled(false)
  ```
 
-QCefView currently uses Qt Software Rasterizer as the backend paint engine for best compatibility, thus the rendering performance is not so good to be applied for all business scenarios. If you are going to host WegGL games, video sites or some other Web Apps with high rendering performance, Non OSR mode (Native Child Window mode) is recommended.
+QCefView currently uses Qt Software Rasterizer as the backend paint engine for best compatibility, thus the rendering performance is not so good to be applied for all business scenarios. If you want to host WebGL games, video sites or some other Web Apps with high rendering performance, Non OSR mode (Native Child Window mode) is recommended.
 
 ## Question
 ### Why not OpenGL/DirectX/Metal?
