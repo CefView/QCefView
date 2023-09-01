@@ -929,7 +929,7 @@ QCefViewPrivate::onViewWheelEvent(QWheelEvent* event)
     e.x = p.x();
     e.y = p.y();
     pCefBrowser_->GetHost()->SendMouseWheelEvent(
-      e, m & Qt::ShiftModifier ? 0 : d.x(), m & Qt::ShiftModifier ? 0 : d.y());
+      e, m & Qt::ShiftModifier ? d.x() : 0, m & Qt::ShiftModifier ? d.y() : 0);
   }
   // #endif
 }
