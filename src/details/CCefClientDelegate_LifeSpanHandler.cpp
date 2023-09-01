@@ -85,24 +85,21 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
     return;
 
   QWindow* w = nullptr;
-  // #if !defined(CEF_USE_OSR)
+
   if (!pCefViewPrivate_->isOSRModeEnabled() /*|| browser->IsPopup()*/) {
     // create QWindow from native browser window handle
     w = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));
   }
-  // #endif
 
   Qt::ConnectionType c = Qt::DirectConnection;
   if (pCefViewPrivate_->q_ptr->thread() != QThread::currentThread()) {
     // change connection type
-    // #if !defined(CEF_USE_OSR)
     if (!pCefViewPrivate_->isOSRModeEnabled() /*|| browser->IsPopup()*/) {
       c = Qt::QueuedConnection;
     } else {
-      // #else
+      // OSR mode
       c = Qt::BlockingQueuedConnection;
     }
-    // #endif
 
     // move window to main thread
     if (w != nullptr) {
@@ -128,5 +125,4 @@ CCefClientDelegate::doClose(CefRefPtr<CefBrowser> browser)
 void
 CCefClientDelegate::onBeforeClose(CefRefPtr<CefBrowser> browser)
 {
-  return;
 }

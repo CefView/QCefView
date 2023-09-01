@@ -20,13 +20,9 @@ CCefClientDelegate::onBeforeContextMenu(CefRefPtr<CefBrowser> browser,
     return;
 
   // popup browser doesn't involve off-screen rendering
-  // if (browser->IsPopup()) {
-  //  if (pCefViewPrivate_->disablePopuContextMenu_) {
-  //    model->Clear();
-  //  }
-
-  //  return;
-  //}
+  if (browser->IsPopup()) {
+    return;
+  }
 
   // main browser
   auto policy = pCefViewPrivate_->q_ptr->contextMenuPolicy();
@@ -36,14 +32,11 @@ CCefClientDelegate::onBeforeContextMenu(CefRefPtr<CefBrowser> browser,
     return;
   }
 
-  // #if defined(CEF_USE_OSR)
   if (pCefViewPrivate_->isOSRModeEnabled()) {
+    // OSR mode
     auto menuData = MenuBuilder::CreateMenuDataFromCefMenu(model.get());
     QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onBeforeCefContextMenu(menuData); });
   }
-  // #endif
-
-  return;
 }
 
 bool
@@ -55,21 +48,20 @@ CCefClientDelegate::onRunContextMenu(CefRefPtr<CefBrowser> browser,
 {
   FLog();
 
-  // if (browser->IsPopup()) {
-  //   return false;
-  // }
+  // popup browser doesn't involve off-screen rendering
+   if (browser->IsPopup()) {
+     return false;
+   }
 
-  // #if defined(CEF_USE_OSR)
   if (pCefViewPrivate_->isOSRModeEnabled()) {
     // OSR mode, create context menu with CEF built-in menu mode and show as customized context menu
     QPoint pos(params->GetXCoord(), params->GetYCoord());
     QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onRunCefContextMenu(pos, callback); });
     return true;
-  } else { // #else
-    // NCW mode, allow allow CEF native context menu
+  } else {
+    // NCW mode, to allow CEF native context menu
     return false;
   }
-  // #endif
 }
 
 bool
@@ -89,9 +81,8 @@ CCefClientDelegate::onContextMenuDismissed(CefRefPtr<CefBrowser> browser, CefRef
 {
   FLog();
 
-  // #if defined(CEF_USE_OSR)
   if (pCefViewPrivate_->isOSRModeEnabled()) {
+    // OSR mode
     QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefContextMenuDismissed(); });
   }
-  // #endif
 }

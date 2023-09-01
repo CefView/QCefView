@@ -184,8 +184,8 @@ CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser> browser,
   if (!IsValidBrowser(browser))
     return false;
 
-  // #if defined(CEF_USE_OSR)
   if (pCefViewPrivate_->isOSRModeEnabled()) {
+    // OSR mode
     QCursor cur;
     if (type != CT_CUSTOM) {
       cur.setShape(mapCursorShape(type));
@@ -195,8 +195,7 @@ CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser> browser,
     QMetaObject::invokeMethod(pCefViewPrivate_, "onCefUpdateCursor", Q_ARG(const QCursor&, cur));
 
     return true;
-  } else { // #else
+  } else {
     return false;
   }
-  // #endif
 }

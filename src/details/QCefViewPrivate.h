@@ -20,8 +20,6 @@
 
 #include <QCefView.h>
 
-class QAutoResizeWindow;
-
 class QCefViewPrivate : public QObject
 {
   Q_OBJECT
@@ -73,8 +71,6 @@ public:
   ///
   /// </summary>
   bool isOSRModeEnabled_ = false;
-
-  // #if defined(CEF_USE_OSR)
 
   /// <summary>
   /// Offscreen rendering private data
@@ -137,8 +133,6 @@ public:
     CefRefPtr<CefRunContextMenuCallback> contextMenuCallback_;
   } osr;
 
-  // #else
-
   /// <summary>
   /// Native child window private data
   /// </summary>
@@ -154,8 +148,6 @@ public:
     /// </summary>
     QWidget* qBrowserWidget_ = nullptr;
   } ncw;
-
-  // #endif
 
   /// <summary>
   /// The last visited URL
@@ -174,7 +166,7 @@ public:
 
   ~QCefViewPrivate();
 
-  void createCefBrowser(QCefView* view, const QString url, const QCefSetting* setting);
+  void createCefBrowser(QCefView* view, const QString& url, const QCefSetting* setting);
 
   void destroyCefBrowser();
 
@@ -190,8 +182,8 @@ protected:
   void onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* window);
 
   bool onBeforeNewBrowserCreate(qint64 sourceFrameId,
-                                QString targetUrl,
-                                QString targetFrameName,
+                                const QString& targetUrl,
+                                const QString& targetFrameName,
                                 QCefView::CefWindowOpenDisposition targetDisposition,
                                 QRect rect,
                                 QCefSetting settings);
@@ -229,7 +221,6 @@ public slots:
 
   void onCefInputStateChanged(bool editable);
 
-  // #if defined(CEF_USE_OSR)
   void onOsrImeCursorRectChanged(const QRect& rc);
 
   void onOsrShowPopup(bool show);
@@ -253,7 +244,6 @@ protected:
   void onRunCefContextMenu(QPoint pos, CefRefPtr<CefRunContextMenuCallback> callback);
 
   void onCefContextMenuDismissed();
-  // #endif
 
   bool hasDevTools();
 

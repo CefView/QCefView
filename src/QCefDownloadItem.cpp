@@ -1,7 +1,5 @@
 ﻿#include <QCefDownloadItem.h>
 
-#include <QSharedPointer>
-
 #include "details/QCefDownloadItemPrivate.h"
 #include "details/utils/CommonUtils.h"
 

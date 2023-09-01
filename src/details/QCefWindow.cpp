@@ -1,6 +1,6 @@
 ﻿#include "QCefWindow.h"
 
-#include <QtDebug>
+#include <QDebug>
 
 QCefWindow::QCefWindow()
   : QWindow()

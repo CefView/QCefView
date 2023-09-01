@@ -2,8 +2,6 @@
 
 #include <QDebug>
 
-#include <CefViewCoreProtocol.h>
-
 #include "QCefContextPrivate.h"
 
 CCefAppDelegate::CCefAppDelegate(QCefContextPrivate* context, CommandLineArgs args)

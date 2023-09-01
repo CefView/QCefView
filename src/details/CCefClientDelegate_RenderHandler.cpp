@@ -7,7 +7,7 @@
 
 #include "QCefViewPrivate.h"
 
-// #if defined(CEF_USE_OSR)
+// OSR mode
 
 bool
 CCefClientDelegate::getRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
@@ -26,7 +26,7 @@ CCefClientDelegate::getRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& re
 #endif
 
   if (!currentScreen) {
-    // the view is not visible so we retrieve the main screen info
+    // the view is not visible, so we retrieve the main screen info
     currentScreen = QApplication::screens().at(0);
   }
 
@@ -81,7 +81,7 @@ CCefClientDelegate::getScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& 
 #endif
 
   if (!currentScreen) {
-    // the view is not visible so we retrieve the main screen info
+    // the view is not visible, so we retrieve the main screen info
     currentScreen = QApplication::screens().at(0);
   }
 
@@ -167,7 +167,6 @@ CCefClientDelegate::startDragging(CefRefPtr<CefBrowser> browser,
 void
 CCefClientDelegate::updateDragCursor(CefRefPtr<CefBrowser> browser, CefRenderHandler::DragOperation operation)
 {
-  return;
 }
 
 void
@@ -193,8 +192,6 @@ CCefClientDelegate::onImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
                               "onOsrImeCursorRectChanged", //
                               Q_ARG(const QRect&, rc));
   }
-
-  return;
 }
 
 void
@@ -209,5 +206,3 @@ CCefClientDelegate::onVirtualKeyboardRequested(CefRefPtr<CefBrowser> browser,
                                                CefRenderHandler::TextInputMode input_mode)
 {
 }
-
-// #endif
