@@ -2,9 +2,6 @@
 
 #pragma region qt_headers
 #include <QColor>
-#include <QCoreApplication>
-#include <QDir>
-#include <QString>
 #pragma endregion qt_headers
 
 #pragma region cef_headers
@@ -12,8 +9,6 @@
 #pragma endregion cef_headers
 
 #include <QCefContext.h>
-
-#include <CefViewCoreProtocol.h>
 
 QCefSettingPrivate::QCefSettingPrivate()
 {

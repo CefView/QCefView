@@ -11,7 +11,7 @@ CCefClientDelegate::loadingStateChanged(CefRefPtr<CefBrowser>& browser,
   if (!IsValidBrowser(browser))
     return;
 
-  pCefViewPrivate_->q_ptr->loadingStateChanged(isLoading, canGoBack, canGoForward, browser->GetIdentifier());
+  pCefViewPrivate_->q_ptr->loadingStateChanged(browser->GetIdentifier(), isLoading, canGoBack, canGoForward);
 }
 
 void
@@ -45,5 +45,4 @@ CCefClientDelegate::loadError(CefRefPtr<CefBrowser>& browser,
     return;
 
   handled = pCefViewPrivate_->handleLoadError(browser, frame, errorCode, errorMsg, failedUrl);
-  return;
 }

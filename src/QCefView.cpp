@@ -15,19 +15,19 @@
 #include "details/QCefViewPrivate.h"
 #include "details/utils/CommonUtils.h"
 
-QCefView::QCefView(const QString url,
+QCefView::QCefView(const QString& url,
                    const QCefSetting* setting,
                    QWidget* parent /*= 0*/,
                    Qt::WindowFlags f /*= Qt::WindowFlags()*/)
   : QWidget(parent, f)
   , d_ptr(new QCefViewPrivate(QCefContext::instance()->d_func(), this, url, setting))
 {
-  // #if defined(CEF_USE_OSR)
+  
   if (d_ptr->isOSRModeEnabled()) {
+    // OSR mode
     setBackgroundRole(QPalette::Window);
     setAttribute(Qt::WA_OpaquePaintEvent);
   }
-  // #endif
 
   setMouseTracking(true);
   setFocusPolicy(Qt::WheelFocus);
@@ -323,13 +323,13 @@ QCefView::inputMethodQuery(Qt::InputMethodQuery query) const
 {
   Q_D(const QCefView);
 
-  // #if defined(CEF_USE_OSR)
+  
   if (d->isOSRModeEnabled()) {
+    // OSR mode
     auto r = d->onViewInputMethodQuery(query);
     if (r.isValid())
       return r;
   }
-  // #endif
 
   return QWidget::inputMethodQuery(query);
 }
@@ -347,8 +347,9 @@ QCefView::paintEvent(QPaintEvent* event)
   // for NCW mode, this makes sure QCefView will not be treated as transparent background
   painter.fillRect(rect(), palette().color(backgroundRole()));
 
-  // #if defined(CEF_USE_OSR)
+  
   if (d->isOSRModeEnabled()) {
+    // OSR mode
     // 3. paint widget with its stylesheet
     QStyleOption opt;
     opt.initFrom(this);
@@ -378,7 +379,6 @@ QCefView::paintEvent(QPaintEvent* event)
       }
     }
   }
-  // #endif
 
   // 5. call base paintEvent (empty implementation)
   QWidget::paintEvent(event);
@@ -486,11 +486,10 @@ QCefView::contextMenuEvent(QContextMenuEvent* event)
 
   Q_D(const QCefView);
 
-  // #if defined(CEF_USE_OSR)
   if (d->isOSRModeEnabled()) {
+    // OSR mode
     if (d->osr.isShowingContextMenu_) {
       d->osr.contextMenu_->popup(mapToGlobal(event->pos()));
     }
   }
-  // #endif
 }

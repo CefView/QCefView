@@ -4,8 +4,6 @@
 #include <include/cef_version.h>
 #pragma endregion cef_headers
 
-#include <QCefDownloadItem.h>
-
 QSharedPointer<QCefDownloadItem>
 QCefDownloadItemPrivate::create(CCefClientDelegate::RefPtr handler)
 {

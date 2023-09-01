@@ -18,7 +18,7 @@
 class QCefSettingPrivate
 {
   Q_DECLARE_PUBLIC(QCefSetting)
-  QCefSetting* q_ptr;
+  QCefSetting* q_ptr{};
 
   friend class CCefClientDelegate;
 

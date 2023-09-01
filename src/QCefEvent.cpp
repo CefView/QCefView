@@ -1,7 +1,6 @@
 ﻿#include <QCefEvent.h>
 
 #pragma region cef_headers
-#include <include/cef_app.h>
 #include <include/wrapper/cef_message_router.h>
 #pragma endregion cef_headers
 

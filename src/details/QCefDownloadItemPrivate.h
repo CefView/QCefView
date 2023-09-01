@@ -19,7 +19,7 @@ public:
 
   quint32 id = 0;
 
-  bool isInProgress = 0;
+  bool isInProgress = false;
   bool isComplete = false;
   bool isCanceled = false;
 
