@@ -191,6 +191,10 @@ public:
   /// <summary>
   /// Sets the user data directory path
   /// </summary>
+  /// <remarks>
+  /// Not available after cef version 115. See
+  /// https://github.com/chromiumembedded/cef/commit/b5386249bd9075982db0874d3a981c44adc4c420
+  /// </remarks>
   /// <param name="path">The user data directory path</param>
   void setUserDataPath(const QString& path);
 
