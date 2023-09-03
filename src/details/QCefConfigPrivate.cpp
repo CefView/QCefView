@@ -72,8 +72,13 @@ QCefConfigPrivate::CopyToCefSettings(const QCefConfig* config, CefSettings* sett
   if (!config->d_ptr->cachePath_.empty())
     CefString(&settings->cache_path) = config->d_ptr->cachePath_;
 
+#if CEF_VERSION_MAJOR < 115
   if (!config->d_ptr->userDataPath_.empty())
     CefString(&settings->user_data_path) = config->d_ptr->userDataPath_;
+#else
+  if (!config->d_ptr->rootCachePath_.empty())
+    CefString(&settings->root_cache_path) = config->d_ptr->rootCachePath_;
+#endif
 
   if (!config->d_ptr->locale_.empty())
     CefString(&settings->locale) = config->d_ptr->locale_;

@@ -31,7 +31,13 @@ public:
   std::string locale_;
   std::string userAgent_;
   std::string cachePath_;
+
+#if CEF_VERSION_MAJOR < 115
   std::string userDataPath_;
+#else
+  std::string rootCachePath_;
+#endif
+
   std::string bridgeObjectName_;
   std::string acceptLanguageList_;
 
