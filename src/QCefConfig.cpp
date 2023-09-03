@@ -159,6 +159,7 @@ QCefConfig::cachePath() const
   return QString::fromStdString(d->cachePath_);
 }
 
+#if CEF_VERSION_MAJOR < 115
 void
 QCefConfig::setUserDataPath(const QString& path)
 {
@@ -172,6 +173,23 @@ QCefConfig::userDataPath() const
   Q_D(const QCefConfig);
   return QString::fromStdString(d->userDataPath_);
 }
+
+#else
+
+const QString
+QCefConfig::rootCachePath() const
+{
+  Q_D(const QCefConfig);
+  return QString::fromStdString(d->rootCachePath_);
+}
+
+void
+QCefConfig::setRootCachePath(const QString& path)
+{
+  Q_D(QCefConfig);
+  d->rootCachePath_ = path.toStdString();
+}
+#endif
 
 void
 QCefConfig::setBridgeObjectName(const QString& name)

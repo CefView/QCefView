@@ -188,6 +188,7 @@ public:
   /// </summary>
   const QString cachePath() const;
 
+#if CEF_VERSION_MAJOR < 115
   /// <summary>
   /// Sets the user data directory path
   /// </summary>
@@ -198,6 +199,20 @@ public:
   /// Gets the user data directory path
   /// </summary>
   const QString userDataPath() const;
+
+#else
+
+  /// <summary>
+  /// Gets the root cache directory path
+  /// </summary>
+  const QString rootCachePath() const;
+
+  /// <summary>
+  /// Sets the root cache directory path
+  /// </summary>
+  /// <param name="path">The root cache directory path</param>
+  void setRootCachePath(const QString& path);
+#endif
 
   /// <summary>
   /// Sets the bridge object name
