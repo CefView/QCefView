@@ -188,6 +188,7 @@ public:
   /// </summary>
   const QString cachePath() const;
 
+#if CEF_VERSION_MAJOR < 115
   /// <summary>
   /// Sets the user data directory path
   /// </summary>
@@ -202,6 +203,7 @@ public:
   /// Gets the user data directory path
   /// </summary>
   const QString userDataPath() const;
+#endif
 
   /// <summary>
   /// Sets the bridge object name
