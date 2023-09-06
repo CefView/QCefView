@@ -34,9 +34,9 @@
 #endif
 
 // CEF version numbers
-#define CEF_VERSION_MAJOR 115
+#define CEF_VERSION_MAJOR 113
 #define CEF_VERSION_MINOR 3
-#define CEF_VERSION_PATCH 15
+#define CEF_VERSION_PATCH 1
 
 // clang-format on
 
