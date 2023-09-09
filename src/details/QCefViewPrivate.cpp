@@ -916,8 +916,12 @@ QCefViewPrivate::onViewWheelEvent(QWheelEvent* event)
 
     e.x = p.x();
     e.y = p.y();
+
+    // angleDelta().y() provides the angle through which the common vertical mouse wheel was rotated since the previous
+    // event. angleDelta().x() provides the angle through which the horizontal mouse wheel was rotated, if the mouse has
+    // a horizontal wheel; otherwise it stays at zero. 
     pCefBrowser_->GetHost()->SendMouseWheelEvent(
-      e, m & Qt::ShiftModifier ? d.x() : 0, m & Qt::ShiftModifier ? d.y() : 0);
+      e, m & Qt::ShiftModifier ? d.x() : 0, m & Qt::ShiftModifier ? d.y() : d.y());
   }
 }
 
