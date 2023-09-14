@@ -35,6 +35,10 @@ source_group(
   FILES ${QCefView_details_SRC_FILES}
 )
 
+if(USE_SANDBOX AND(OS_WINDOWS OR OS_MACOS))
+  add_definitions(-DCEF_USE_SANDBOX)
+endif()
+
 if(OS_WINDOWS)
   file(GLOB_RECURSE QCefView_Windows_SRC_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/win/*.h"

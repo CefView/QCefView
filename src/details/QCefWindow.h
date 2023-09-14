@@ -4,6 +4,7 @@
 #include <QHideEvent>
 #include <QResizeEvent>
 #include <QShowEvent>
+#include <QWidget>
 #include <QWindow>
 #pragma endregion qt_headers
 
@@ -16,9 +17,11 @@ public:
 
   ~QCefWindow();
 
-  void attachCefWindow(QWindow* win);
+  QWidget* attachCefWindow(QWindow* win, QWidget* parent);
 
   void detachCefWindow();
+
+  void applyMask(const QRegion& region);
 
   QWindow* cefWindow();
 

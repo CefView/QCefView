@@ -1,4 +1,4 @@
-﻿#include "QCefContextPrivate.h"
+#include "QCefContextPrivate.h"
 
 #pragma region qt_headers
 #include <QThread>
@@ -178,11 +178,9 @@ QCefContextPrivate::onAboutToQuit()
   }
 }
 
-#if defined(Q_OS_MACOS)
 void
 QCefContextPrivate::performCefLoopWork()
 {
   // process cef work
   CefDoMessageLoopWork();
 }
-#endif

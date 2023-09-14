@@ -1,4 +1,5 @@
-﻿#include <QApplication>
+#include <QApplication>
+#include <QDir>
 
 #include <QCefContext.h>
 
@@ -41,6 +42,11 @@ main(int argc, char* argv[])
   config.addCommandLineSwitchWithValue("remote-allow-origins", "*");
   // config.addCommandLineSwitchWithValue("disable-features", "BlinkGenPropertyTrees,TranslateUI,site-per-process");
 
+#if defined(Q_OS_MACOS) && defined(QT_DEBUG)
+  // cef bugs on macos debug build
+  config.setCachePath(QDir::tempPath());
+#endif
+  
   // create QCefContext instance with config,
   // the lifecycle of cefContext must be the same as QApplication instance
   QCefContext cefContext(&a, argc, argv, &config);
