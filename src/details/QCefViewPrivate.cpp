@@ -135,7 +135,9 @@ QCefViewPrivate::destroyCefBrowser()
     return;
 
   if (!isOSRModeEnabled_) {
-    // remove from children, prevent from being destroyed
+    // remove from parent, prevent from being destroyed
+    ncw.qBrowserWidget_->setParent(nullptr);
+    ncw.qBrowserWidget_->deleteLater();
     ncw.qBrowserWindow_->detachCefWindow();
   }
 
@@ -214,38 +216,35 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
 
     qDebug() << "CEF Window Native ID:" << window->winId();
 
-    // adjust size and attach to cef window
-    ncw.qBrowserWindow_->resize(q_ptr->size());
-    ncw.qBrowserWindow_->attachCefWindow(window);
-
-    // create QWidget from cef browser widow, this will re-parent the CEF browser window
-    QWidget* browserWidget = QWidget::createWindowContainer(
-      ncw.qBrowserWindow_, q_ptr, Qt::WindowTransparentForInput | Qt::WindowDoesNotAcceptFocus);
-
-    Q_ASSERT_X(browserWidget, "QCefViewPrivateNCW::createBrowser", "Failed to create QWidget from cef browser window");
-    if (!browserWidget) {
+    // create widget for cef window
+    ncw.qBrowserWidget_ = ncw.qBrowserWindow_->attachCefWindow(window, q_ptr);
+    Q_ASSERT_X(ncw.qBrowserWidget_,                 //
+               "QCefViewPrivateNCW::createBrowser", //
+               "Failed to create QWidget from cef browser window");
+    if (!ncw.qBrowserWidget_) {
       qWarning() << "Failed to create QWidget from cef browser window";
       browser->GetHost()->CloseBrowser(true);
       return;
     }
+    
+    // adjust size/mask and attach to cef window
+    ncw.qBrowserWindow_->applyMask(q_ptr->mask());
 
-    // capture the resource
-    ncw.qBrowserWidget_ = browserWidget;
+    // resize to eliminate flicker
     ncw.qBrowserWidget_->resize(q_ptr->size());
 
-    // monitor the focus changed event globally
-    connect(qApp, &QApplication::focusChanged, this, &QCefViewPrivate::onAppFocusChanged);
-
     // initialize the layout and add browser widget to the layout
-    QGridLayout* layout = new QGridLayout();
+    QGridLayout* layout = new QGridLayout(q_ptr);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(ncw.qBrowserWidget_);
-    q_ptr->setLayout(layout);
 
-    // update mask
-    if (ncw.qBrowserWindow_) {
-      ncw.qBrowserWindow_->setMask(q_ptr->mask());
-    }
+    // monitor the focus changed event globally
+    disconnect(this, SLOT(onAppFocusChanged(QWidget*, QWidget*)));
+    connect(qApp,                                       //
+            SIGNAL(focusChanged(QWidget*, QWidget*)),   //
+            this,                                       //
+            SLOT(onAppFocusChanged(QWidget*, QWidget*)) //
+    );
   }
 }
 
@@ -259,8 +258,8 @@ QCefViewPrivate::onBeforeNewBrowserCreate(qint64 sourceFrameId,
 {
   Q_Q(QCefView);
 
-  // this is a fake popup browser, we just cancel it and then
-  // we create a new QCefView instance to replace the fake popup browser
+  // this is a fake pop-up browser, we just cancel it and then
+  // we create a new QCefView instance to replace the fake pop-up browser
   q->onNewBrowser(sourceFrameId,     //
                   targetUrl,         //
                   targetFrameName,   //
@@ -367,7 +366,7 @@ QCefViewPrivate::onViewScreenChanged(QScreen* screen)
   } else {
     Q_Q(QCefView);
     if (ncw.qBrowserWindow_)
-      ncw.qBrowserWindow_->setMask(q->mask());
+      ncw.qBrowserWindow_->applyMask(q->mask());
   }
 }
 
@@ -482,15 +481,15 @@ QCefViewPrivate::onContextMenuDestroyed(QObject* obj)
 void
 QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region)
 {
-//#if defined(QT_DEBUG)
-//  qint64 elapsedMs = paintTimer_.restart();
-//  // qDebug() << "===== CEF view frame update since last frame:" << elapsedMs;
-//  if (elapsedMs >= 20)
-//    qDebug() << "===== CEF view frame update stutter detected:" << elapsedMs;
-//
-//  QElapsedTimer updateDurationTimer;
-//  updateDurationTimer.start();
-//#endif
+  // #if defined(QT_DEBUG)
+  //   qint64 elapsedMs = paintTimer_.restart();
+  //   // qDebug() << "===== CEF view frame update since last frame:" << elapsedMs;
+  //   if (elapsedMs >= 20)
+  //     qDebug() << "===== CEF view frame update stutter detected:" << elapsedMs;
+  //
+  //   QElapsedTimer updateDurationTimer;
+  //   updateDurationTimer.start();
+  // #endif
 
   if (osr.qCefViewFrame_.size() != frame.size() || osr.transparentPaintingEnabled) {
     // update full image
@@ -506,9 +505,9 @@ QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region
   }
   emit updateOsrFrame();
 
-//#if defined(QT_DEBUG)
-//  qDebug() << "===== CEF frame update duration:" << elapsedMs;
-//#endif
+  // #if defined(QT_DEBUG)
+  //   qDebug() << "===== CEF frame update duration:" << elapsedMs;
+  // #endif
 }
 
 void
@@ -791,7 +790,7 @@ QCefViewPrivate::onViewSizeChanged(const QSize& size, const QSize& oldSize)
   } else {
     Q_Q(QCefView);
     if (ncw.qBrowserWindow_)
-      ncw.qBrowserWindow_->setMask(q->mask());
+      ncw.qBrowserWindow_->applyMask(q->mask());
   }
 }
 
@@ -803,16 +802,16 @@ QCefViewPrivate::onViewKeyEvent(QKeyEvent* event)
     if (!pCefBrowser_)
       return;
 
-//#if defined(QT_DEBUG)
-//    qDebug("==== onViewKeyEvent:key=%d, nativeVirtualKey=0x%02x, nativeScanCode=0x%02x, modifiers=0x%08x, "
-//           "nativeModifiers=0x%08x, text=%s",
-//           (Qt::Key)(event->key()),
-//           event->nativeVirtualKey(),
-//           event->nativeScanCode(),
-//           (quint32)(event->modifiers()),
-//           event->nativeModifiers(),
-//           event->text().toStdString().c_str());
-//#endif
+    // #if defined(QT_DEBUG)
+    //     qDebug("==== onViewKeyEvent:key=%d, nativeVirtualKey=0x%02x, nativeScanCode=0x%02x, modifiers=0x%08x, "
+    //            "nativeModifiers=0x%08x, text=%s",
+    //            (Qt::Key)(event->key()),
+    //            event->nativeVirtualKey(),
+    //            event->nativeScanCode(),
+    //            (quint32)(event->modifiers()),
+    //            event->nativeModifiers(),
+    //            event->text().toStdString().c_str());
+    // #endif
 
     CefKeyEvent e;
     MapQKeyEventToCefKeyEvent(event, e);

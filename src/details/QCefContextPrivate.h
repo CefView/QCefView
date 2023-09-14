@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #pragma region std_headers
 #include <atomic>
@@ -172,12 +172,10 @@ public slots:
   /// </summary>
   void onAboutToQuit();
 
-#if defined(Q_OS_MACOS)
   /// <summary>
   ///
   /// </summary>
   void performCefLoopWork();
-#endif
 
 protected:
   /// <summary>

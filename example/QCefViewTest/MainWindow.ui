@@ -180,6 +180,9 @@
        <enum>Qt::Horizontal</enum>
       </property>
       <widget class="QWidget" name="leftCefViewContainer" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(217, 183, 255)</string>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_cefContainer">
         <property name="spacing">
          <number>0</number>
@@ -199,6 +202,9 @@
        </layout>
       </widget>
       <widget class="QWidget" name="rightCefViewContainer" native="true">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(217, 183, 255)</string>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_cefContainer_2">
         <property name="spacing">
          <number>0</number>

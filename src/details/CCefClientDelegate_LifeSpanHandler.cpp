@@ -86,15 +86,16 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 
   QWindow* w = nullptr;
 
-  if (!pCefViewPrivate_->isOSRModeEnabled() /*|| browser->IsPopup()*/) {
-    // create QWindow from native browser window handle
+  if (!pCefViewPrivate_->isOSRModeEnabled() && !browser->IsPopup()) {
+    // NCW mode and not pop-up browser
     w = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));
   }
 
   Qt::ConnectionType c = Qt::DirectConnection;
   if (pCefViewPrivate_->q_ptr->thread() != QThread::currentThread()) {
     // change connection type
-    if (!pCefViewPrivate_->isOSRModeEnabled() /*|| browser->IsPopup()*/) {
+    if (!pCefViewPrivate_->isOSRModeEnabled()) {
+      // NCW mode
       c = Qt::QueuedConnection;
     } else {
       // OSR mode
@@ -108,9 +109,11 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
   }
 
   if (browser->IsPopup()) {
+    // pop-up window
     QMetaObject::invokeMethod(
       pCefViewPrivate_, [=]() { pCefViewPrivate_->onAfterCefPopupCreated(browser); }, c);
   } else {
+    // new normal browser
     QMetaObject::invokeMethod(
       pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefBrowserCreated(browser, w); }, c);
   }
