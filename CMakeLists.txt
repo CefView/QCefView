@@ -1,7 +1,7 @@
 #
 # The main config file for QCefView
 #
-cmake_minimum_required(VERSION 3.9.1)
+cmake_minimum_required(VERSION 3.18)
 project(QCefView)
 
 option(BUILD_DEMO "Build the demo" OFF)
