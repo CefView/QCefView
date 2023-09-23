@@ -211,7 +211,7 @@ public:
   /// </param>
   /// <param name="context">The context used to identify the one execution</param>
   /// <returns>True on successful; otherwise false</returns>
-  bool executeJavascriptWithResult(qint64 frameId, const QString& code, const QString& url, qint64 context);
+  bool executeJavascriptWithResult(qint64 frameId, const QString& code, const QString& url, const QString& context);
 
   /// <summary>
   /// Sets the preference for this browser
@@ -388,7 +388,7 @@ signals:
   /// <param name="frameId">The frame id</param>
   /// <param name="context">The context</param>
   /// <param name="result">The result</param>
-  void reportJavascriptResult(int browserId, qint64 frameId, qint64 context, const QVariant& result);
+  void reportJavascriptResult(int browserId, qint64 frameId, const QString& context, const QVariant& result);
 
   /// <summary>
   /// Gets called after the native browser window created. This slot does not work for OSR mode.

@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+﻿#include "MainWindow.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -172,13 +172,13 @@ MainWindow::onQCefQueryRequest(int browserId, int64_t frameId, const QCefQuery& 
 }
 
 void
-MainWindow::onJavascriptResult(int browserId, int64_t frameId, int64_t context, const QVariant& result)
+MainWindow::onJavascriptResult(int browserId, int64_t frameId, const QString& context, const QVariant& result)
 {
   auto jsonValue = QJsonDocument::fromVariant(result);
   auto jsonString = QString(jsonValue.toJson());
 
   QString title("Javascript result notification");
-  QString text = QString("Context id: %1\r\nResult in JSON format:\r\n%2").arg(context).arg(jsonString);
+  QString text = QString("Context: %1\r\nResult in JSON format:\r\n%2").arg(context).arg(jsonString);
 
   QMessageBox::information(this->window(), title, text);
 }
@@ -257,7 +257,7 @@ MainWindow::onBtnChangeColorClicked()
 void
 MainWindow::onBtnCallJSCodeClicked()
 {
-  int64_t context = 1000;
+  QString context = "helloQCefView";
   QString code = "alert('hello QCefView'); return {k1: 'str', k2: true, k3: 100};";
   m_pLeftCefViewWidget->executeJavascriptWithResult(QCefView::MainFrameID, code, "", context);
 }

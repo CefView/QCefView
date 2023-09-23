@@ -297,7 +297,7 @@ public:
 
   bool executeJavascript(int64_t frameId, const QString& code, const QString& url);
 
-  bool executeJavascriptWithResult(int64_t frameId, const QString& code, const QString& url, int64_t context);
+  bool executeJavascriptWithResult(int64_t frameId, const QString& code, const QString& url, const QString& context);
 
   void notifyMoveOrResizeStarted();
 
