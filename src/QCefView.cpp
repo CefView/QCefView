@@ -192,7 +192,7 @@ QCefView::executeJavascript(qint64 frameId, const QString& code, const QString& 
 }
 
 bool
-QCefView::executeJavascriptWithResult(qint64 frameId, const QString& code, const QString& url, qint64 context)
+QCefView::executeJavascriptWithResult(qint64 frameId, const QString& code, const QString& url, const QString& context)
 {
   Q_D(QCefView);
 

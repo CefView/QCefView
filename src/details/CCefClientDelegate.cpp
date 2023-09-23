@@ -78,7 +78,7 @@ CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
 void
 CCefClientDelegate::reportJSResult(CefRefPtr<CefBrowser>& browser,
                                    int64_t frameId,
-                                   int64_t contextId,
+                                   const std::string& context,
                                    const CefRefPtr<CefValue>& result)
 {
   if (!IsValidBrowser(browser))
@@ -87,5 +87,6 @@ CCefClientDelegate::reportJSResult(CefRefPtr<CefBrowser>& browser,
   auto browserId = browser->GetIdentifier();
   QVariant qV;
   ValueConvertor::CefValueToQVariant(&qV, result.get());
-  pCefViewPrivate_->q_ptr->reportJavascriptResult(browserId, frameId, contextId, qV);
+  auto c = QString::fromStdString(context);
+  pCefViewPrivate_->q_ptr->reportJavascriptResult(browserId, frameId, c, qV);
 }

@@ -1063,7 +1063,10 @@ QCefViewPrivate::executeJavascript(int64_t frameId, const QString& code, const Q
 }
 
 bool
-QCefViewPrivate::executeJavascriptWithResult(int64_t frameId, const QString& code, const QString& url, int64_t context)
+QCefViewPrivate::executeJavascriptWithResult(int64_t frameId,
+                                             const QString& code,
+                                             const QString& url,
+                                             const QString& context)
 {
   if (code.isEmpty())
     return false;
@@ -1083,7 +1086,10 @@ QCefViewPrivate::executeJavascriptWithResult(int64_t frameId, const QString& cod
       u.FromString(url.toStdString());
     }
 
-    return pClient_->AsyncExecuteJSCode(pCefBrowser_, frame, c, u, context);
+    CefString ctx;
+    ctx.FromString(context.toStdString());
+
+    return pClient_->AsyncExecuteJSCode(pCefBrowser_, frame, c, u, ctx);
   }
 
   return false;
