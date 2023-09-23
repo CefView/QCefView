@@ -1,4 +1,4 @@
-#include <QApplication>
+﻿#include <QApplication>
 #include <QDir>
 
 #include <QCefContext.h>
@@ -8,6 +8,15 @@
 int
 main(int argc, char* argv[])
 {
+#if (QT_VERSION <= QT_VERSION_CHECK(6, 0, 0))
+  // For off-screen rendering, Qt::AA_EnableHighDpiScaling must be enabled. If not,
+  // then all devicePixelRatio methods will always return 1.0,
+  // so CEF will not scale the web content
+  // NOET: There is bugs in Qt 6.2.4, the HighDpi doesn't work 
+  QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+#endif
+
   // create QApplication instance
   QApplication a(argc, argv);
 
@@ -27,7 +36,7 @@ main(int argc, char* argv[])
 
   // WindowlessRenderingEnabled is set to true by default,
   // set to false to disable the OSR mode
-  config.setWindowlessRenderingEnabled(false);
+  config.setWindowlessRenderingEnabled(true);
 
   // add command line args, you can any cef supported switches or parameters
   config.addCommandLineSwitch("use-mock-keychain");
@@ -43,7 +52,7 @@ main(int argc, char* argv[])
   // config.addCommandLineSwitchWithValue("disable-features", "BlinkGenPropertyTrees,TranslateUI,site-per-process");
 
 #if defined(Q_OS_MACOS) && defined(QT_DEBUG)
-  // cef bugs on macos debug build
+  // cef bugs on macOS debug build
   config.setCachePath(QDir::tempPath());
 #endif
   
