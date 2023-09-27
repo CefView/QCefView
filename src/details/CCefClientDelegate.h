@@ -92,11 +92,6 @@ public:
                             CefRefPtr<CefFileDialogCallback> callback) override;
 
   // DisplayHandler
-  virtual bool onDragEnter(CefRefPtr<CefBrowser> browser,
-                           CefRefPtr<CefDragData> dragData,
-                           CefDragHandler::DragOperationsMask mask) override;
-  virtual void draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
-                                      const std::vector<CefDraggableRegion>& regions) override;
   virtual void addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url) override;
   virtual void titleChanged(CefRefPtr<CefBrowser>& browser, const std::string& title) override;
   virtual void faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::vector<CefString>& icon_urls) override;
@@ -119,6 +114,12 @@ public:
   virtual void onDownloadUpdated(CefRefPtr<CefBrowser> browser,
                                  CefRefPtr<CefDownloadItem> download_item,
                                  CefRefPtr<CefDownloadItemCallback> callback) override;
+  // DragHandler
+  virtual bool onDragEnter(CefRefPtr<CefBrowser> browser,
+                           CefRefPtr<CefDragData> dragData,
+                           CefDragHandler::DragOperationsMask mask) override;
+  virtual void draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
+                                      const std::vector<CefDraggableRegion>& regions) override;
 
   // FocusHandler
   virtual void takeFocus(CefRefPtr<CefBrowser>& browser, bool next) override;
