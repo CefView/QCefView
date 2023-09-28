@@ -60,9 +60,6 @@ protected slots:
   void onBtnNewBrowserClicked();
 
 private:
-  void closeEvent(QCloseEvent* event) override;
-
-private:
   Ui::MainWindow m_ui;
 
   CefViewWidget* m_pLeftCefViewWidget = nullptr;

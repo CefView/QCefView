@@ -208,6 +208,8 @@ protected:
                        const std::string& errorMsg,
                        const std::string& failedUrl);
 
+  bool requestCloseFromWeb(CefRefPtr<CefBrowser>& browser);
+
 public slots:
   void onAppFocusChanged(QWidget* old, QWidget* now);
 

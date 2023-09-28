@@ -284,22 +284,6 @@ MainWindow::onBtnNewBrowserClicked()
   w->show();
 }
 
-void
-MainWindow::closeEvent(QCloseEvent* event)
-{
-  if (m_pLeftCefViewWidget) {
-    m_pLeftCefViewWidget->deleteLater();
-    m_pLeftCefViewWidget = nullptr;
-  }
-
-  if (m_pRightCefViewWidget) {
-    m_pRightCefViewWidget->deleteLater();
-    m_pRightCefViewWidget = nullptr;
-  }
-
-  event->accept();
-}
-
 #ifndef Q_OS_MACOS
 void
 MainWindow::setupWindow()

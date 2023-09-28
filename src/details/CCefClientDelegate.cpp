@@ -39,7 +39,7 @@ CCefClientDelegate::processQueryRequest(CefRefPtr<CefBrowser>& browser,
 
   auto browserId = browser->GetIdentifier();
   auto req = QString::fromStdString(request);
-  pCefViewPrivate_->q_ptr->cefQueryRequest(browserId, frameId, QCefQuery(req, query_id));
+  emit pCefViewPrivate_->q_ptr->cefQueryRequest(browserId, frameId, QCefQuery(req, query_id));
 }
 
 void
@@ -72,7 +72,7 @@ CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
   }
 
   auto browserId = browser->GetIdentifier();
-  pCefViewPrivate_->q_ptr->invokeMethod(browserId, frameId, m, args);
+  emit pCefViewPrivate_->q_ptr->invokeMethod(browserId, frameId, m, args);
 }
 
 void
@@ -88,5 +88,5 @@ CCefClientDelegate::reportJSResult(CefRefPtr<CefBrowser>& browser,
   QVariant qV;
   ValueConvertor::CefValueToQVariant(&qV, result.get());
   auto c = QString::fromStdString(context);
-  pCefViewPrivate_->q_ptr->reportJavascriptResult(browserId, frameId, c, qV);
+  emit pCefViewPrivate_->q_ptr->reportJavascriptResult(browserId, frameId, c, qV);
 }

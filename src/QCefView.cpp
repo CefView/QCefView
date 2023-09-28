@@ -22,7 +22,7 @@ QCefView::QCefView(const QString& url,
   : QWidget(parent, f)
   , d_ptr(new QCefViewPrivate(QCefContext::instance()->d_func(), this, url, setting))
 {
-  
+
   if (d_ptr->isOSRModeEnabled()) {
     // OSR mode
     setBackgroundRole(QPalette::Window);
@@ -318,12 +318,20 @@ QCefView::onUpdateDownloadItem(const QSharedPointer<QCefDownloadItem>& item)
 {
 }
 
+bool
+QCefView::onRequestCloseFromWeb()
+{
+  // delete self
+  deleteLater();
+
+  return true;
+}
+
 QVariant
 QCefView::inputMethodQuery(Qt::InputMethodQuery query) const
 {
   Q_D(const QCefView);
 
-  
   if (d->isOSRModeEnabled()) {
     // OSR mode
     auto r = d->onViewInputMethodQuery(query);
@@ -347,7 +355,6 @@ QCefView::paintEvent(QPaintEvent* event)
   // for NCW mode, this makes sure QCefView will not be treated as transparent background
   painter.fillRect(rect(), palette().color(backgroundRole()));
 
-  
   if (d->isOSRModeEnabled()) {
     // OSR mode
     // 3. paint widget with its stylesheet

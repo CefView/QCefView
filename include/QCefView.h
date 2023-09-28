@@ -449,6 +449,12 @@ protected:
   /// <param name="item">The download item</param>
   virtual void onUpdateDownloadItem(const QSharedPointer<QCefDownloadItem>& item);
 
+  /// <summary>
+  /// Gets called on close request from web
+  /// </summary>
+  /// <returns>True to allow the close, false to cancel the close</returns>
+  virtual bool onRequestCloseFromWeb();
+
 #pragma region QWidget
 public slots:
   /// <summary>

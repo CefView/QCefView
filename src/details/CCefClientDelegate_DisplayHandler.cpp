@@ -72,7 +72,7 @@ CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frame
     return;
 
   auto u = QString::fromStdString(url);
-  pCefViewPrivate_->q_ptr->addressChanged(frameId, u);
+  emit pCefViewPrivate_->q_ptr->addressChanged(frameId, u);
 }
 
 void
@@ -82,7 +82,7 @@ CCefClientDelegate::titleChanged(CefRefPtr<CefBrowser>& browser, const std::stri
     return;
 
   auto t = QString::fromStdString(title);
-  pCefViewPrivate_->q_ptr->titleChanged(t);
+  emit pCefViewPrivate_->q_ptr->titleChanged(t);
 }
 
 void
@@ -96,7 +96,7 @@ CCefClientDelegate::faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::
     urls.append(QString::fromStdString(iconUrl.ToString()));
   }
 
-  pCefViewPrivate_->q_ptr->faviconURLChanged(urls);
+  emit pCefViewPrivate_->q_ptr->faviconURLChanged(urls);
 }
 
 void
@@ -105,7 +105,7 @@ CCefClientDelegate::fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool f
   if (!IsValidBrowser(browser))
     return;
 
-  pCefViewPrivate_->q_ptr->fullscreenModeChanged(fullscreen);
+  emit pCefViewPrivate_->q_ptr->fullscreenModeChanged(fullscreen);
 }
 
 bool
@@ -122,7 +122,7 @@ CCefClientDelegate::statusMessage(CefRefPtr<CefBrowser>& browser, const std::str
     return;
 
   auto msg = QString::fromStdString(value);
-  pCefViewPrivate_->q_ptr->statusMessage(msg);
+  emit pCefViewPrivate_->q_ptr->statusMessage(msg);
 }
 
 void
@@ -132,7 +132,7 @@ CCefClientDelegate::consoleMessage(CefRefPtr<CefBrowser>& browser, const std::st
     return;
 
   auto msg = QString::fromStdString(message);
-  pCefViewPrivate_->q_ptr->consoleMessage(msg, level);
+  emit pCefViewPrivate_->q_ptr->consoleMessage(msg, level);
 }
 
 void
@@ -141,7 +141,7 @@ CCefClientDelegate::loadingProgressChanged(CefRefPtr<CefBrowser>& browser, doubl
   if (!IsValidBrowser(browser))
     return;
 
-  pCefViewPrivate_->q_ptr->loadingProgressChanged(progress);
+  emit pCefViewPrivate_->q_ptr->loadingProgressChanged(progress);
 }
 
 bool
