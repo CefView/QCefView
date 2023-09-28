@@ -34,5 +34,5 @@ CCefClientDelegate::draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
     }
   }
 
-  pCefViewPrivate_->q_ptr->draggableRegionChanged(draggableRegion, nonDraggableRegion);
+  emit pCefViewPrivate_->q_ptr->draggableRegionChanged(draggableRegion, nonDraggableRegion);
 }

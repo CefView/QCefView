@@ -144,6 +144,7 @@ public:
                              bool& disableJavascriptAccess) override;
   virtual void onAfterCreate(CefRefPtr<CefBrowser>& browser) override;
   virtual bool doClose(CefRefPtr<CefBrowser> browser) override;
+  virtual bool requestClose(CefRefPtr<CefBrowser> browser) override;
   virtual void onBeforeClose(CefRefPtr<CefBrowser> browser) override;
 
   // LoadHandler

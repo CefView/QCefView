@@ -1,6 +1,7 @@
 ﻿#include "CCefClientDelegate.h"
 
 #include <QThread>
+#include <QDebug>
 
 #include "QCefSettingPrivate.h"
 #include "QCefViewPrivate.h"
@@ -40,6 +41,8 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
   QCefSettingPrivate::CopyFromCefBrowserSettings(&s, &settings);
 
   if (targetDisposition == CefLifeSpanHandler::WindowOpenDisposition::WOD_NEW_POPUP) {
+    // the new browser was created from javascript, we need to conform the CEF pop-up browser lifecycle
+    // because CEF need to return the new browser identity to javascript context
     Qt::ConnectionType c = pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection
                                                                                          : Qt::BlockingQueuedConnection;
 
@@ -61,6 +64,7 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
       },
       c);
   } else {
+    // the new browser was created from non-javascript, we create a new browser instead
     cancel = true;
     QMetaObject::invokeMethod(
       pCefViewPrivate_,
@@ -122,7 +126,29 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 bool
 CCefClientDelegate::doClose(CefRefPtr<CefBrowser> browser)
 {
+  qDebug() << "destroy browser from native";
+
   return false;
+}
+
+bool
+CCefClientDelegate::requestClose(CefRefPtr<CefBrowser> browser)
+{
+  qDebug() << "destroy browser request from web";
+
+  Qt::ConnectionType c =
+    pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection : Qt::BlockingQueuedConnection;
+
+  bool ignoreClose = false;
+  QMetaObject::invokeMethod(
+    pCefViewPrivate_,
+    [&]() {
+      //
+      ignoreClose = !(pCefViewPrivate_->requestCloseFromWeb(browser));
+    },
+    c);
+
+  return ignoreClose;
 }
 
 void

@@ -131,6 +131,8 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
 void
 QCefViewPrivate::destroyCefBrowser()
 {
+  qDebug() << "destroy browser from native";
+
   if (!pClient_)
     return;
 
@@ -226,7 +228,7 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
       browser->GetHost()->CloseBrowser(true);
       return;
     }
-    
+
     // adjust size/mask and attach to cef window
     ncw.qBrowserWindow_->applyMask(q_ptr->mask());
 
@@ -323,11 +325,19 @@ QCefViewPrivate::handleLoadError(CefRefPtr<CefBrowser>& browser,
   if (q->receivers(SIGNAL(loadError(int, qint64, bool, int, const QString&, const QString&))) > 0) {
     auto msg = QString::fromStdString(errorMsg);
     auto url = QString::fromStdString(failedUrl);
-    q->loadError(browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), errorCode, msg, url);
+    emit q->loadError(browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), errorCode, msg, url);
     return true;
   }
 
   return false;
+}
+
+bool
+QCefViewPrivate::requestCloseFromWeb(CefRefPtr<CefBrowser>& browser)
+{
+  Q_Q(QCefView);
+
+  return q->onRequestCloseFromWeb();
 }
 
 void
@@ -918,7 +928,7 @@ QCefViewPrivate::onViewWheelEvent(QWheelEvent* event)
 
     // angleDelta().y() provides the angle through which the common vertical mouse wheel was rotated since the previous
     // event. angleDelta().x() provides the angle through which the horizontal mouse wheel was rotated, if the mouse has
-    // a horizontal wheel; otherwise it stays at zero. 
+    // a horizontal wheel; otherwise it stays at zero.
     pCefBrowser_->GetHost()->SendMouseWheelEvent(
       e, m & Qt::ShiftModifier ? d.x() : 0, m & Qt::ShiftModifier ? d.y() : d.y());
   }
