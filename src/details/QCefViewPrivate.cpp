@@ -7,6 +7,8 @@
 #pragma region qt_headers
 #include <QApplication>
 #include <QDebug>
+#include <QDir>
+#include <QFileDialog>
 #include <QGridLayout>
 #include <QInputMethodQueryEvent>
 #include <QPainter>
@@ -579,6 +581,78 @@ QCefViewPrivate::onRunCefContextMenu(QPoint pos, CefRefPtr<CefRunContextMenuCall
     new QContextMenuEvent(QContextMenuEvent::Other, pos, globalPos, QGuiApplication::keyboardModifiers());
 #endif
   qApp->sendEvent(q, e);
+}
+
+void
+QCefViewPrivate::onFileDialog(CefRefPtr<CefBrowser> browser,
+                              CefBrowserHost::FileDialogMode mode,
+                              const CefString& title,
+                              const CefString& default_file_path,
+                              const std::vector<CefString>& accept_filters,
+                              CefRefPtr<CefFileDialogCallback> callback)
+{
+  Q_Q(QCefView);
+  QFileDialog dialog;
+  if (mode == FILE_DIALOG_OPEN) {
+    dialog.setFileMode(QFileDialog::ExistingFile);
+  } else if (mode == FILE_DIALOG_OPEN_MULTIPLE) {
+    dialog.setFileMode(QFileDialog::ExistingFiles);
+  } else if (mode == FILE_DIALOG_OPEN_FOLDER) {
+    dialog.setFileMode(QFileDialog::Directory);
+  } else if (mode == FILE_DIALOG_SAVE) {
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+  } else {
+    NOTREACHED();
+    callback->Cancel();
+    return;
+  }
+  QString title_str;
+  if (!title.empty()) {
+    title_str = title.ToString().c_str();
+  } else {
+    switch (mode) {
+      case FILE_DIALOG_OPEN:
+        title_str = "Open File";
+        break;
+      case FILE_DIALOG_OPEN_MULTIPLE:
+        title_str = "Open Files";
+        break;
+      case FILE_DIALOG_OPEN_FOLDER:
+        title_str = "Open Folder";
+        break;
+      case FILE_DIALOG_SAVE:
+        title_str = "Save File";
+        break;
+      default:
+        break;
+    }
+  }
+  dialog.setWindowTitle(title_str);
+  if (!default_file_path.empty() && mode == FILE_DIALOG_SAVE) {
+    QDir dir(QString::fromStdString(default_file_path.ToString()));
+    if (dir.exists()) {
+      dialog.setDirectory(dir);
+    } else {
+      dialog.setDirectory(QDir::homePath());
+    }
+  }
+  if (!accept_filters.empty()) {
+    QStringList filters;
+    for (const auto& filter : accept_filters) {
+      filters << "*" + QString::fromStdString(filter.ToString());
+    }
+    dialog.setNameFilter(QString("(%1)").arg(filters.join(" ")));
+  }
+  if (dialog.exec()) {
+    std::vector<CefString> file_paths;
+    auto selected_files = dialog.selectedFiles();
+    for (const auto& file : selected_files) {
+      file_paths.push_back(file.toStdString());
+    }
+    callback->Continue(file_paths);
+  } else {
+    callback->Cancel();
+  }
 }
 
 void
