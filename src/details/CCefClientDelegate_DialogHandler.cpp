@@ -16,5 +16,11 @@ CCefClientDelegate::onFileDialog(CefRefPtr<CefBrowser> browser,
                                  const std::vector<CefString>& accept_filters,
                                  CefRefPtr<CefFileDialogCallback> callback)
 {
+#if defined (Q_OS_LINUX)
+  QMetaObject::invokeMethod(pCefViewPrivate_, [=]() {
+    pCefViewPrivate_->onFileDialog(browser, mode, title, default_file_path, accept_filters, callback);
+  });
+  return true;
+#endif
   return false;
 }
