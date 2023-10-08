@@ -17,11 +17,6 @@ public:
 
   ~CefViewWidget();
 
-signals:
-  void newDownloadItem(const QSharedPointer<QCefDownloadItem>& item, const QString& suggestedName);
-
-  void updateDownloadItem(const QSharedPointer<QCefDownloadItem>& item);
-
 protected slots:
   void onScreenChanged(QScreen* screen);
 

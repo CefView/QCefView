@@ -101,10 +101,13 @@ MainWindow::createRightCefView()
   // m_pRightCefViewWidget = new CefViewWidget("https://cefview.github.io/QCefView/", &setting, this);
 
   //
+  m_pRightCefViewWidget = new CefViewWidget("https://fastest.fish/test-files", &setting, this);
+
+  //
   // m_pRightCefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);
 
   // this site is for test OSR performance
-  m_pRightCefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
+  // m_pRightCefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
 
   // this site is test for input devices
   // m_pRightCefViewWidget = new CefViewWidget("https://devicetests.com", &setting);

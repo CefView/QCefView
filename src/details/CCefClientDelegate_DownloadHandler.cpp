@@ -58,7 +58,13 @@ CCefClientDelegate::onBeforeDownload(CefRefPtr<CefBrowser> browser,
 
     // notify user of the new download item
     weakRefItem = item;
-    pCefViewPrivate_->onNewDownloadItem(item, suggestedFileName);
+
+    // marshal to main UI thread and need to block
+    Qt::ConnectionType c = pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection
+                                                                                         : Qt::BlockingQueuedConnection;
+    QMetaObject::invokeMethod(
+      pCefViewPrivate_, [=]() { pCefViewPrivate_->onNewDownloadItem(item, suggestedFileName); }, c);
+
     item.reset();
   }
 
@@ -117,8 +123,8 @@ CCefClientDelegate::onDownloadUpdated(CefRefPtr<CefBrowser> browser,
       QCefDownloadItemPrivate::update(item.data(), *(download_item.get()));
       QCefDownloadItemPrivate::setDownloadItemCallback(item.data(), callback);
 
-      // notify
-      pCefViewPrivate_->onUpdateDownloadItem(item);
+      // notify (marshal to main UI thread but no need to block)
+      QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onUpdateDownloadItem(item); });
 
       // check status
       if (download_item->IsCanceled() || download_item->IsComplete()) {
