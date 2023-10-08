@@ -18,7 +18,7 @@ CCefClientDelegate::onFileDialog(CefRefPtr<CefBrowser> browser,
 {
 #if defined (Q_OS_LINUX)
   QMetaObject::invokeMethod(pCefViewPrivate_, [=]() {
-    pCefViewPrivate_->onFileDialog(browser, mode, title, default_file_path, accept_filters, callback);
+    pCefViewPrivate_->onFileDialog(mode, title, default_file_path, accept_filters, callback);
   });
   return true;
 #endif

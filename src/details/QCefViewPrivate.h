@@ -245,14 +245,13 @@ protected:
 
   void onRunCefContextMenu(QPoint pos, CefRefPtr<CefRunContextMenuCallback> callback);
 
-  void onFileDialog(CefRefPtr<CefBrowser> browser,
-                    CefBrowserHost::FileDialogMode mode,
+  void onCefContextMenuDismissed();
+
+  void onFileDialog(CefBrowserHost::FileDialogMode mode,
                     const CefString& title,
                     const CefString& default_file_path,
                     const std::vector<CefString>& accept_filters,
                     CefRefPtr<CefFileDialogCallback> callback);
-
-  void onCefContextMenuDismissed();
 
   bool hasDevTools();
 
