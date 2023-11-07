@@ -473,6 +473,12 @@ public:
   /// </summary>
   QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
 
+  /// <summary>
+  /// Renders the view content to target painter
+  /// </summary>
+  /// <param name="painter">The target painter</param>
+  void render(QPainter* painter);
+
 protected:
   /// <summary>
   /// Please refer to QWidget::paintEvent
