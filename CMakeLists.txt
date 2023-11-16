@@ -89,6 +89,7 @@ message(STATUS "Qt SDK dir: " ${QT_SDK_DIR})
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT_SDK_DIR})
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets REQUIRED)
+set(Qt_VERSION ${Qt${QT_VERSION_MAJOR}Core_VERSION})
 
 # ##############################################################
 
@@ -147,10 +148,33 @@ configure_file(
 )
 
 if(OS_MACOS)
-  if(CEF_VERSION_MAJOR LESS 104)
-    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.11)
+  # detect minimum deployment target by Qt
+  if(${Qt_VERSION} VERSION_GREATER_EQUAL 6.5)
+    set(QT_MIN_DEPLOYMENT_TARGET 11.0)
+  elseif(${Qt_VERSION} VERSION_GREATER_EQUAL 6.2)
+    set(QT_MIN_DEPLOYMENT_TARGET 10.14)
+  elseif(${Qt_VERSION} VERSION_GREATER_EQUAL 5.14)
+    set(QT_MIN_DEPLOYMENT_TARGET 10.13)
+  elseif(${Qt_VERSION} VERSION_GREATER_EQUAL 5.13)
+    set(QT_MIN_DEPLOYMENT_TARGET 10.12)
+  elseif(${Qt_VERSION} VERSION_GREATER_EQUAL 5.10)
+    set(QT_MIN_DEPLOYMENT_TARGET 10.11)
   else()
-    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
+    set(QT_MIN_DEPLOYMENT_TARGET 10.10)
+  endif()
+
+  # detect minimum deployment target by CEF
+  if(${CEF_VERSION_MAJOR} VERSION_GREATER_EQUAL 104)
+    set(CEF_MIN_DEPLOYMENT_TARGET 10.13)
+  else()
+    set(CEF_MIN_DEPLOYMENT_TARGET 10.11)
+  endif()
+
+  # use the greater one as the minimum deployment target
+  if(${QT_MIN_DEPLOYMENT_TARGET} VERSION_LESS ${CEF_MIN_DEPLOYMENT_TARGET})
+    set(CMAKE_OSX_DEPLOYMENT_TARGET ${CEF_MIN_DEPLOYMENT_TARGET})
+  else()
+    set(CMAKE_OSX_DEPLOYMENT_TARGET ${QT_MIN_DEPLOYMENT_TARGET})
   endif()
 endif()
 
