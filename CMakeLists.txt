@@ -9,6 +9,8 @@ option(BUILD_STATIC "Build QCefView as static library" OFF)
 option(USE_SANDBOX "Enable CEF Sandbox" OFF)
 option(STATIC_CRT "Use MultiThreaded linkage for MSVC" OFF)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 get_directory_property(QCefView_HAS_PARENT_DIRECTORY PARENT_DIRECTORY)
 
 # Only generate Debug and Release configuration types.
@@ -84,11 +86,8 @@ endif()
 
 # Config the QT package
 # ##############################################################
-include(QtConfig.cmake)
-message(STATUS "Qt SDK dir: " ${QT_SDK_DIR})
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT_SDK_DIR})
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets REQUIRED)
+set(QT_SDK_DIR "" CACHE PATH "Qt build toolchain path")
+include(QtConfig)
 set(Qt_VERSION ${Qt${QT_VERSION_MAJOR}Core_VERSION})
 
 # ##############################################################
