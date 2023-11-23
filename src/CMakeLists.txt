@@ -69,7 +69,7 @@ if(OS_WINDOWS)
     # copy binary files of CefViewCore
     COMMAND ${CMAKE_COMMAND}
     -E copy_directory
-    "$<TARGET_FILE_DIR:CefViewWing>"
+    "$<TARGET_FILE_DIR:${CEFVIEW_WING_NAME}>"
     "$<TARGET_FILE_DIR:QCefView>"
 
     # gnerate a file contains timestamp

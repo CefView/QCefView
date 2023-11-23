@@ -398,15 +398,15 @@ signals:
 
 protected:
   /// <summary>
-  ///
+  /// Gets called before a new browser created (only for browser created by non-JavaScript)
   /// </summary>
-  /// <param name="sourceFrameId"></param>
-  /// <param name="url"></param>
-  /// <param name="name"></param>
-  /// <param name="targetDisposition"></param>
-  /// <param name="rect"></param>
-  /// <param name="settings"></param>
-  /// <param name="disableJavascriptAccess"></param>
+  /// <param name="frameId">The source frame id</param>
+  /// <param name="url">The target URL</param>
+  /// <param name="name">The target name</param>
+  /// <param name="targetDisposition">Target window open method</param>
+  /// <param name="rect">Rect to be used for the popup</param>
+  /// <param name="settings">Settings to be used for the popup</param>
+  /// <returns>True to cancel the popup; false to allow</returns>
   /// <returns></returns>
   virtual QCefView* onNewBrowser(qint64 sourceFrameId,
                                  const QString& url,
@@ -416,7 +416,7 @@ protected:
                                  QCefSetting& settings);
 
   /// <summary>
-  /// Gets called before the popup browser created
+  /// Gets called before the popup browser created (only for browser created by JavaScript)
   /// </summary>
   /// <param name="frameId">The source frame id</param>
   /// <param name="targetUrl">The target URL</param>

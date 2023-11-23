@@ -7,6 +7,7 @@
 #pragma endregion qt_headers
 
 #include <CefViewCoreProtocol.h>
+#include <CefViewWingProcessName.h>
 
 QCefConfigPrivate::QCefConfigPrivate()
 {

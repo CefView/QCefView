@@ -9,12 +9,15 @@
 #include <include/wrapper/cef_library_loader.h>
 #pragma endregion cef_headers
 
+#include <CefViewCoreProtocol.h>
+#include <CefViewWingProcessName.h>
+
 #include "../../details/QCefConfigPrivate.h"
 
 #define CEF_BINARY_NAME "Chromium Embedded Framework"
 #define CEF_FRAMEWORK_NAME "Chromium Embedded Framework.framework"
-#define HELPER_BUNDLE_NAME "CefViewWing.app"
-#define HELPER_BINARY_NAME "CefViewWing"
+#define HELPER_BINARY_NAME kCefViewRenderProcessName
+#define HELPER_BUNDLE_NAME HELPER_BINARY_NAME ".app"
 #define PLUGINS_NAME "PlugIns"
 
 @interface PathFactory : NSObject
