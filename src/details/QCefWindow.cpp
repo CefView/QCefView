@@ -5,7 +5,6 @@
 QCefWindow::QCefWindow()
   : QWindow()
 {
-  this->setFlag(Qt::FramelessWindowHint);
 }
 
 QCefWindow::~QCefWindow()
@@ -43,7 +42,9 @@ QCefWindow::detachCefWindow()
 
 #else
     cefWindow_->hide();
+#if defined(Q_OS_LINUX)
     cefWindow_->setParent(nullptr);
+#endif
 #endif
     cefWindow_ = nullptr;
   }

@@ -89,14 +89,27 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
     windowInfo.SetAsWindowless(0);
   } else {
     // create CEF browser parent window
+    auto initSize = q_ptr->size();
+    if (setting) {
+      initSize = setting->initSize();
+    }
+    qDebug() << "Browser init size:" << initSize;
+
     ncw.qBrowserWindow_ = new QCefWindow();
+    ncw.qBrowserWindow_->resize(initSize);
     ncw.qBrowserWindow_->setFlags(Qt::Window | Qt::FramelessWindowHint);
 
-    // use INT_MAX as the width and height to prevent black screen blink
-#if CEF_VERSION_MAJOR > 85
-    windowInfo.SetAsChild((CefWindowHandle)ncw.qBrowserWindow_->winId(), { 0, 0, INT_MAX, INT_MAX });
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
+    qreal scaleFactor = q_ptr->devicePixelRatioF();
 #else
-    windowInfo.SetAsChild((CefWindowHandle)ncw.qBrowserWindow_->winId(), 0, 0, INT_MAX, INT_MAX);
+    qreal scaleFactor = q_ptr->devicePixelRatio();
+#endif
+    auto width = initSize.width() * scaleFactor;
+    auto height = initSize.height() * scaleFactor;
+#if CEF_VERSION_MAJOR > 85
+    windowInfo.SetAsChild((CefWindowHandle)ncw.qBrowserWindow_->winId(), { 0, 0, (int)width, (int)height });
+#else
+    windowInfo.SetAsChild((CefWindowHandle)ncw.qBrowserWindow_->winId(), 0, 0, (int)width, (int)height);
 #endif
   }
 
@@ -235,6 +248,7 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
     ncw.qBrowserWindow_->applyMask(q_ptr->mask());
 
     // resize to eliminate flicker
+    qDebug() << "Host QCefView size:" << q_ptr->size();
     ncw.qBrowserWidget_->resize(q_ptr->size());
 
     // initialize the layout and add browser widget to the layout
