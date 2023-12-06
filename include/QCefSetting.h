@@ -14,6 +14,7 @@
 #pragma region qt_headers
 #include <QColor>
 #include <QScopedPointer>
+#include <QSize>
 #include <QString>
 #pragma endregion qt_headers
 
@@ -53,10 +54,22 @@ public:
   ~QCefSetting();
 
   /// <summary>
+  /// Sets the initial size of the browser
+  /// </summary>
+  /// <param name="size">The initial size</param>
+  void setInitSize(const QSize& size);
+
+  /// <summary>
+  /// Gets the initial size of the browser
+  /// </summary>
+  /// <returns></returns>
+  const QSize initSize() const;
+
+  /// <summary>
   /// Sets the standard font family
   /// </summary>
   /// <param name="value">The font family</param>
-  void setStandardFontFamily(const QString value);
+  void setStandardFontFamily(const QString& value);
 
   /// <summary>
   /// Gets the standard font family

@@ -30,6 +30,8 @@ public:
 public:
   explicit QCefSettingPrivate();
 
+  QSize initSize_;
+
   std::string standardFontFamily_;
   std::string fixedFontFamily_;
   std::string serifFontFamily_;

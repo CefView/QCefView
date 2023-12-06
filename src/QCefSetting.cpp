@@ -30,7 +30,21 @@ QCefSetting::operator=(const QCefSetting& other)
 QCefSetting::~QCefSetting() {}
 
 void
-QCefSetting::setStandardFontFamily(const QString value)
+QCefSetting::setInitSize(const QSize& size)
+{
+  Q_D(QCefSetting);
+  d->initSize_ = size;
+}
+
+const QSize
+QCefSetting::initSize() const
+{
+  Q_D(const QCefSetting);
+  return d->initSize_;
+}
+
+void
+QCefSetting::setStandardFontFamily(const QString& value)
 {
   Q_D(QCefSetting);
   d->standardFontFamily_ = value.toStdString();
