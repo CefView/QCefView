@@ -829,15 +829,18 @@ QCefViewPrivate::onViewVisibilityChanged(bool visible)
     if (!ncw.qBrowserWidget_)
       return;
 
-    if (visible) {
-      // restore cef window size
-      ncw.qBrowserWidget_->resize(q->frameSize());
-    } else {
-      // set cef window size to 0x0 to stop rendering and reduce resource usage
-      // please refer to:
-      // https://bitbucket.org/chromiumembedded/cef/issues/2310/allow-cefbrowser-washidden-to-work-for
-      ncw.qBrowserWidget_->resize(0, 0);
-    }
+    // for better user experience (eliminate flicker), we don't change the size here
+    // if the consumer of QCefView need to constraint the resource
+    // then they need to handle the size change themselves
+    // if (visible) {
+    //   // restore cef window size
+    //   ncw.qBrowserWidget_->resize(q->frameSize());
+    // } else {
+    //   // set cef window size to 0x0 to stop rendering and reduce resource usage
+    //   // please refer to:
+    //   // https://bitbucket.org/chromiumembedded/cef/issues/2310/allow-cefbrowser-washidden-to-work-for
+    //   ncw.qBrowserWidget_->resize(0, 0);
+    // }
   }
 }
 
