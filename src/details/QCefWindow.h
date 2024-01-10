@@ -26,8 +26,14 @@ public:
   QWindow* cefWindow();
 
 protected:
+  void syncCefWindowPos();
+
+protected:
+  virtual void exposeEvent(QExposeEvent* e) override;
+
   virtual void resizeEvent(QResizeEvent* e) override;
 
 private:
+  QWidget* cefWidget_ = nullptr;
   QWindow* cefWindow_ = nullptr;
 };
