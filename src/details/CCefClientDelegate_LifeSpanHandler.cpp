@@ -92,7 +92,42 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 
   if (!pCefViewPrivate_->isOSRModeEnabled() && !browser->IsPopup()) {
     // NCW mode and not pop-up browser
-    w = QWindow::fromWinId((WId)(browser->GetHost()->GetWindowHandle()));
+    auto winHandle = browser->GetHost()->GetWindowHandle();
+
+#if defined(Q_OS_WINDOWS)
+    // get native window size
+    RECT rect = { 0 };
+    ::GetWindowRect(winHandle, &rect);
+    auto width = rect.right - rect.left;
+    auto height = rect.bottom - rect.top;
+
+#if defined(DEBUG) || defined(_DEBUG)
+    qDebug() << "Native CEF window size:" << width << ", " << height;
+#endif
+
+    // strange behavior: when we create QWindow from native window handle
+    // the size will be modified by the QWindow, for example:
+    // before the invocation of QWindow::fromWinId,
+    // the window size is (1920 * 1080),but after the invocation,
+    // the QWindow size becomes to (1280 * 720) = (1920 * 1080) / X.
+    // which x = primary screen scale factor
+    w = QWindow::fromWinId((WId)(winHandle));
+
+#if defined(DEBUG) || defined(_DEBUG)
+    qDebug() << "Before fix, QWindow size:" << w->size();
+#endif
+
+    // fix the window size
+    if (width > 0 && height > 0) {
+      w->resize(width, height);
+    }
+
+#if defined(DEBUG) || defined(_DEBUG)
+    qDebug() << "Before fix, QWindow size:" << w->size();
+#endif
+#else
+    w = QWindow::fromWinId((WId)(winHandle));
+#endif
   }
 
   Qt::ConnectionType c = Qt::DirectConnection;
