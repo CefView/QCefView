@@ -1202,6 +1202,10 @@ QCefViewPrivate::notifyMoveOrResizeStarted()
 bool
 QCefViewPrivate::sendEventNotifyMessage(int64_t frameId, const QString& name, const QVariantList& args)
 {
+  if (!pClient_) {
+    return false;
+  }
+
   CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create(kCefViewClientBrowserTriggerEventMessage);
   CefRefPtr<CefListValue> arguments = msg->GetArgumentList();
 

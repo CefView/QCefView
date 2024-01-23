@@ -102,7 +102,7 @@ QCefConfigPrivate::CopyToCefSettings(const QCefConfig* config, CefSettings* sett
   settings->log_severity = (cef_log_severity_t)config->d_ptr->logLevel_;
 }
 
-const QCefConfigPrivate::ArgsMap&
+QCefConfigPrivate::ArgsMap&
 QCefConfigPrivate::GetCommandLineArgs(const QCefConfig* config)
 {
   if (!config) {

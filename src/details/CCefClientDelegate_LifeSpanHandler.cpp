@@ -1,7 +1,12 @@
 ﻿#include "CCefClientDelegate.h"
 
-#include <QThread>
+#if defined(Q_OS_WINDOWS)
+#include <windows.h>
+#endif
+
 #include <QDebug>
+#include <QScreen>
+#include <QThread>
 
 #include "QCefSettingPrivate.h"
 #include "QCefViewPrivate.h"

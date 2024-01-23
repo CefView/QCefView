@@ -1,4 +1,4 @@
-#include "QCefContextPrivate.h"
+﻿#include "QCefContextPrivate.h"
 
 #pragma region qt_headers
 #include <QThread>

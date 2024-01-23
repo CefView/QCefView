@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #pragma region std_headers
 #include <atomic>
@@ -53,6 +53,11 @@ private:
 
 #if defined(Q_OS_MACOS)
   QTimer cefWorkerTimer_;
+#endif
+
+#if defined(Q_OS_WINDOWS)
+  HANDLE windowsJobHandle_ = nullptr;
+  QString windowsJobName_;
 #endif
 
 private:

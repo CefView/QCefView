@@ -25,7 +25,7 @@ public:
 
   static void CopyToCefSettings(const QCefConfig* config, CefSettings* settings);
 
-  static const ArgsMap& GetCommandLineArgs(const QCefConfig* config);
+  static ArgsMap& GetCommandLineArgs(const QCefConfig* config);
 
 public:
   std::string locale_;
