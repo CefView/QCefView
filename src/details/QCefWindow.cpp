@@ -86,7 +86,13 @@ QCefWindow::syncCefWindowPos()
 #endif
     auto w = width() * scaleFactor;
     auto h = height() * scaleFactor;
-    ::SetWindowPos((HWND)(cefWindow_->winId()), NULL, 0, 0, w, h, SWP_NOZORDER | SWP_NOSENDCHANGING | SWP_DEFERERASE);
+    ::SetWindowPos((HWND)(cefWindow_->winId()),
+                   NULL,
+                   0,
+                   0,
+                   w,
+                   h,
+                   SWP_NOOWNERZORDER | SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSENDCHANGING | SWP_DEFERERASE);
   }
 #endif
 }

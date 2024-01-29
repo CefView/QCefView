@@ -35,7 +35,7 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   } else {
     JOBOBJECT_EXTENDED_LIMIT_INFORMATION info;
     ::memset(&info, 0, sizeof(info));
-    info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
+    info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE | JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK;
     if (!::SetInformationJobObject(windowsJobHandle_, JobObjectExtendedLimitInformation, &info, sizeof(info))) {
       logE("Failed to set information for windows job object: %d", ::GetLastError());
     }
