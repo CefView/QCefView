@@ -18,6 +18,7 @@
 #include "QCefWindow.h"
 #include "utils/MenuBuilder.h"
 
+#include <QCefQuery.h>
 #include <QCefView.h>
 
 class QCefViewPrivate : public QObject
@@ -178,6 +179,8 @@ public:
 
   bool isOSRModeEnabled() const;
 
+  QCefQuery createQuery(const QString& req, const int64_t id);
+
 protected:
   void onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* window);
 
@@ -302,6 +305,8 @@ public:
   bool triggerEvent(const QString& name, const QVariantList& args, int64_t frameId = CefViewBrowserClient::MAIN_FRAME);
 
   bool responseQCefQuery(const QCefQuery& query);
+
+  bool responseQCefQuery(const int64_t query, bool success, const QString& response, int error);
 
   bool executeJavascript(int64_t frameId, const QString& code, const QString& url);
 

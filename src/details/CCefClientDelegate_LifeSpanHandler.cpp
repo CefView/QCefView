@@ -123,6 +123,7 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 #endif
 
     // fix the window size
+
     if (width > 0 && height > 0) {
       w->resize(width, height);
     }

@@ -4,7 +4,9 @@
 #include <QString>
 #pragma endregion qt_headers
 
-#include <QCefQuery.h>
+#include <QPointer>
+
+#include "QCefViewPrivate.h"
 
 class QCefQueryPrivate
 {
@@ -16,6 +18,9 @@ public:
   int64_t id_ = -1;
   QString request_;
   QString response_;
-  bool restult_ = false;
+  bool restult_ = true;
   int error_ = 0;
+
+  bool replyed_ = false;
+  QPointer<QCefViewPrivate> source_;
 };

@@ -39,7 +39,10 @@ CCefClientDelegate::processQueryRequest(CefRefPtr<CefBrowser>& browser,
 
   auto browserId = browser->GetIdentifier();
   auto req = QString::fromStdString(request);
-  emit pCefViewPrivate_->q_ptr->cefQueryRequest(browserId, frameId, QCefQuery(req, query_id));
+  auto source = pCefViewPrivate_->q_ptr;
+  auto query = pCefViewPrivate_->createQuery(req, query_id);
+
+  emit source->cefQueryRequest(browserId, frameId, query);
 }
 
 void
@@ -50,7 +53,10 @@ CCefClientDelegate::focusedEditableNodeChanged(CefRefPtr<CefBrowser>& browser,
   if (!IsValidBrowser(browser))
     return;
 
-  QMetaObject::invokeMethod(pCefViewPrivate_, "onCefInputStateChanged", Q_ARG(bool, focusOnEditableNode));
+  QMetaObject::invokeMethod(pCefViewPrivate_,                //
+                            "onCefInputStateChanged",        //
+                            Q_ARG(bool, focusOnEditableNode) //
+  );
 }
 
 void

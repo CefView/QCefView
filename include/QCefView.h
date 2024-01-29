@@ -11,17 +11,17 @@
 #pragma once
 #include <QCefView_global.h>
 
-#include <QCefDownloadItem.h>
-#include <QCefEvent.h>
-#include <QCefQuery.h>
-#include <QCefSetting.h>
-
 #pragma region qt_headers
 #include <QScopedPointer>
 #include <QVariantList>
 #include <QWidget>
 #include <QWindow>
 #pragma endregion qt_headers
+
+#include <QCefDownloadItem.h>
+#include <QCefEvent.h>
+#include <QCefQuery.h>
+#include <QCefSetting.h>
 
 class QCefViewPrivate;
 

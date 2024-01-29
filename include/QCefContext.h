@@ -11,12 +11,12 @@
 #pragma once
 #include <QCefView_global.h>
 
-#include <QCefConfig.h>
-
 #pragma region qt_headers
 #include <QCoreApplication>
 #include <QScopedPointer>
 #pragma endregion qt_headers
+
+#include <QCefConfig.h>
 
 class QCefContextPrivate;
 

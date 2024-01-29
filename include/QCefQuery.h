@@ -16,11 +16,12 @@
 #pragma endregion std_headers
 
 #pragma region qt_headers
-#include <QScopedPointer>
+#include <QSharedPointer>
 #include <QString>
 #pragma endregion qt_headers
 
 class QCefQueryPrivate;
+class QCefViewPrivate;
 
 /// <summary>
 /// Represents the query request sent from the web content(Javascript)
@@ -28,32 +29,29 @@ class QCefQueryPrivate;
 class QCEFVIEW_EXPORT QCefQuery
 {
   Q_DECLARE_PRIVATE(QCefQuery)
-  QScopedPointer<QCefQueryPrivate> d_ptr;
+  QSharedPointer<QCefQueryPrivate> d_ptr;
+
+  friend class QCefViewPrivate;
+
+protected:
+  /// <summary>
+  /// Constructs a query instance with request context and query id
+  /// </summary>
+  /// <param name="source">The source CefView</param>
+  /// <param name="req">The request context</param>
+  /// <param name="query">The query id</param>
+  QCefQuery(QCefViewPrivate* source, const QString& req, const int64_t query);
+
+  /// <summary>
+  /// Marks the query as replied (for internal use only)
+  /// </summary>
+  void markAsReplied() const;
 
 public:
   /// <summary>
   /// Constructs a query instance
   /// </summary>
   QCefQuery();
-
-  /// <summary>
-  /// Constructs a query instance with request context and query id
-  /// </summary>
-  /// <param name="req">The request context</param>
-  /// <param name="query">The query id</param>
-  QCefQuery(const QString& req, const int64_t query);
-
-  /// <summary>
-  /// Constructs a query instance from existing one
-  /// </summary>
-  /// <param name="other">The other query instance</param>
-  QCefQuery(const QCefQuery& other);
-
-  /// <summary>
-  /// Assigns an existing query instance to current
-  /// </summary>
-  /// <param name="other">The other query instance</param>
-  QCefQuery& operator=(const QCefQuery& other);
 
   /// <summary>
   /// Destructs a query instance
@@ -97,8 +95,15 @@ public:
   /// <param name="response">The response content string</param>
   /// <param name="error">The response error</param>
   void setResponseResult(bool success, const QString& response, int error = 0) const;
+
+  /// <summary>
+  /// Replies the query
+  /// </summary>
+  /// <param name="success">The result</param>
+  /// <param name="response">The response data</param>
+  /// <param name="error">The error code</param>
+  void reply(bool success, const QString& response, int error = 0) const;
 };
 
 Q_DECLARE_METATYPE(QCefQuery);
-
 #endif // QCEFQUERY_H

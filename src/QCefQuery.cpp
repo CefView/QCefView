@@ -11,32 +11,29 @@
 
 REGISTER_METATYPE(QCefQuery);
 
+QCefQuery::QCefQuery(QCefViewPrivate* source, const QString& req, const int64_t query)
+  : d_ptr(new QCefQueryPrivate)
+{
+  d_ptr->source_ = source;
+  d_ptr->id_ = query;
+  d_ptr->request_ = req;
+}
+
+void
+QCefQuery::markAsReplied() const
+{
+  d_ptr->replyed_ = true;
+}
+
 QCefQuery::QCefQuery()
   : d_ptr(new QCefQueryPrivate)
 {
 }
 
-QCefQuery::QCefQuery(const QString& req, const int64_t query)
-  : QCefQuery()
+QCefQuery::~QCefQuery()
 {
-  d_ptr->id_ = query;
-  d_ptr->request_ = req;
+  d_ptr.reset();
 }
-
-QCefQuery::QCefQuery(const QCefQuery& other)
-  : QCefQuery()
-{
-  *d_ptr = *(other.d_ptr);
-}
-
-QCefQuery&
-QCefQuery::operator=(const QCefQuery& other)
-{
-  *d_ptr = *(other.d_ptr);
-  return *this;
-}
-
-QCefQuery::~QCefQuery() {}
 
 const QString
 QCefQuery::request() const
@@ -76,8 +73,18 @@ QCefQuery::error() const
 void
 QCefQuery::setResponseResult(bool success, const QString& response, int error /*= 0*/) const
 {
-  Q_ASSERT(d_ptr);
   d_ptr->restult_ = success;
   d_ptr->response_ = response;
   d_ptr->error_ = error;
+}
+
+void
+QCefQuery::reply(bool success, const QString& response, int error /*= 0*/) const
+{
+  if (d_ptr->source_) {
+    d_ptr->restult_ = success;
+    d_ptr->response_ = response;
+    d_ptr->error_ = error;
+    d_ptr->source_->responseQCefQuery(*this);
+  }
 }

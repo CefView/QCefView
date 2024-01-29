@@ -200,6 +200,12 @@ QCefViewPrivate::isOSRModeEnabled() const
   return isOSRModeEnabled_;
 }
 
+QCefQuery
+QCefViewPrivate::createQuery(const QString& req, const int64_t id)
+{
+  return QCefQuery(this, req, id);
+}
+
 void
 QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* window)
 {
@@ -843,9 +849,9 @@ QCefViewPrivate::onViewVisibilityChanged(bool visible)
     if (!ncw.qBrowserWidget_)
       return;
 
-    // for better user experience (eliminate flicker), we don't change the size here
-    // if the consumer of QCefView need to constraint the resource
-    // then they need to handle the size change themselves
+    //// for better user experience (eliminate flicker), we don't change the size here
+    //// if the consumer of QCefView need to constraint the resource
+    //// then they need to handle the size change themselves
     // if (visible) {
     //   // restore cef window size
     //   ncw.qBrowserWidget_->resize(q->frameSize());
@@ -1122,7 +1128,19 @@ QCefViewPrivate::responseQCefQuery(const QCefQuery& query)
   if (pClient_) {
     CefString res;
     res.FromString(query.response().toStdString());
+    query.markAsReplied();
     return pClient_->ResponseQuery(query.id(), query.result(), res, query.error());
+  }
+  return false;
+}
+
+bool
+QCefViewPrivate::responseQCefQuery(const int64_t query, bool success, const QString& response, int error)
+{
+  if (pClient_) {
+    CefString res;
+    res.FromString(response.toStdString());
+    return pClient_->ResponseQuery(query, success, res, error);
   }
   return false;
 }
