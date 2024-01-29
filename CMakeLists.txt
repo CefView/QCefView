@@ -127,24 +127,57 @@ endforeach(CefViewWingTarget)
 set_target_properties(libcef_dll_wrapper PROPERTIES FOLDER core)
 
 # read CEF version from cef_version.h
+# set need configure QCefView_global to false
+set(NEED_CONFIGURE_QCefView_global FALSE)
+
 file(READ "${CefViewCore_CEF_INCLUDE_DIR}/cef_version.h" cef_version_content)
 string(REGEX MATCH "#define CEF_VERSION_MAJOR ([0-9]+)" _ ${cef_version_content})
-set(CEF_VERSION_MAJOR ${CMAKE_MATCH_1})
-message(STATUS "CEF_VERSION_MAJOR: ${CEF_VERSION_MAJOR}")
 
+# check CEF_VERSION_MAJOR
+if(NOT "${CMAKE_MATCH_1}" STREQUAL "${CEF_VERSION_MAJOR}")
+  set(CEF_VERSION_MAJOR ${CMAKE_MATCH_1} CACHE STRING "CEF Major Version")
+  set(NEED_CONFIGURE_QCefView_global TRUE)
+  message(STATUS "CEF_VERSION_MAJOR: ${CEF_VERSION_MAJOR} - Updated!")
+else()
+  message(STATUS "CEF_VERSION_MAJOR: ${CEF_VERSION_MAJOR} - No Change!")
+endif()
+
+# check CEF_VERSION_MAJOR
 string(REGEX MATCH "#define CEF_VERSION_MINOR ([0-9]+)" _ ${cef_version_content})
-set(CEF_VERSION_MINOR ${CMAKE_MATCH_1})
-message(STATUS "CEF_VERSION_MINOR: ${CEF_VERSION_MINOR}")
+
+if(NOT "${CMAKE_MATCH_1}" STREQUAL "${CEF_VERSION_MINOR}")
+  set(CEF_VERSION_MINOR ${CMAKE_MATCH_1} CACHE STRING "CEF Minor Version")
+  set(NEED_CONFIGURE_QCefView_global TRUE)
+  message(STATUS "CEF_VERSION_MINOR: ${CEF_VERSION_MINOR} - Updated!")
+else()
+  message(STATUS "CEF_VERSION_MINOR: ${CEF_VERSION_MINOR} - No Change!")
+endif()
 
 string(REGEX MATCH "#define CEF_VERSION_PATCH ([0-9]+)" _ ${cef_version_content})
-set(CEF_VERSION_PATCH ${CMAKE_MATCH_1})
-message(STATUS "CEF_VERSION_PATCH: ${CEF_VERSION_PATCH}")
 
-configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/src/QCefView_global.h.in"
-  "${CMAKE_CURRENT_SOURCE_DIR}/include/QCefView_global.h"
-  @ONLY
-)
+if(NOT "${CMAKE_MATCH_1}" STREQUAL "${CEF_VERSION_PATCH}")
+  set(CEF_VERSION_PATCH ${CMAKE_MATCH_1} CACHE STRING "CEF Patch Version")
+  set(NEED_CONFIGURE_QCefView_global TRUE)
+  message(STATUS "CEF_VERSION_PATCH: ${CEF_VERSION_PATCH} - Updated!")
+else()
+  message(STATUS "CEF_VERSION_PATCH: ${CEF_VERSION_PATCH} - No Change!")
+endif()
+
+if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/include/QCefView_global.h")
+  set(NEED_CONFIGURE_QCefView_global TRUE)
+endif()
+
+if(${NEED_CONFIGURE_QCefView_global})
+  message(STATUS "Need configure QCefView_global.h file")
+  configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/QCefView_global.h.in"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/QCefView_global.h"
+    @ONLY
+    NEWLINE_STYLE UNIX
+  )
+else()
+  message(STATUS "No need to configure QCefView_global.h file")
+endif()
 
 if(OS_MACOS)
   # detect minimum deployment target by Qt
