@@ -217,22 +217,22 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
     browser->GetMainFrame()->LoadURL(lastUrl_);
   }
 
+  // monitor the screenChanged signal from the top-level window
+  if (q_ptr->window()->windowHandle()) {
+    connect(q_ptr->window()->windowHandle(),     //
+            SIGNAL(screenChanged(QScreen*)),     //
+            this,                                //
+            SLOT(onViewScreenChanged(QScreen*)), //
+            Qt::UniqueConnection                 //
+    );
+  }
+
   if (isOSRModeEnabled_) {
     // OSR mode
     // notify the visibility and size
     pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
     pCefBrowser_->GetHost()->WasResized();
     connect(this, SIGNAL(updateOsrFrame()), q_ptr, SLOT(update()));
-
-    // monitor the screenChanged signal from the top-level window
-    disconnect(this, SLOT(onViewScreenChanged(QScreen*)));
-    if (q_ptr->window()->windowHandle()) {
-      connect(q_ptr->window()->windowHandle(),    //
-              SIGNAL(screenChanged(QScreen*)),    //
-              this,                               //
-              SLOT(onViewScreenChanged(QScreen*)) //
-      );
-    }
   } else {
     // emit signal
     emit q_ptr->nativeBrowserCreated(window);
@@ -263,11 +263,11 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
     layout->addWidget(ncw.qBrowserWidget_);
 
     // monitor the focus changed event globally
-    disconnect(this, SLOT(onAppFocusChanged(QWidget*, QWidget*)));
-    connect(qApp,                                       //
-            SIGNAL(focusChanged(QWidget*, QWidget*)),   //
-            this,                                       //
-            SLOT(onAppFocusChanged(QWidget*, QWidget*)) //
+    connect(qApp,                                        //
+            SIGNAL(focusChanged(QWidget*, QWidget*)),    //
+            this,                                        //
+            SLOT(onAppFocusChanged(QWidget*, QWidget*)), //
+            Qt::UniqueConnection                         //
     );
   }
 }
@@ -391,12 +391,18 @@ QCefViewPrivate::onAppFocusChanged(QWidget* old, QWidget* now)
 void
 QCefViewPrivate::onViewScreenChanged(QScreen* screen)
 {
+  Q_Q(QCefView);
+
+  // no matter what reason, we need to update the geometry
+  // because some system/Qt version will not notify the new
+  // size information correctly when screen change
+  q->updateGeometry();
+
   if (isOSRModeEnabled_) {
     // OSR mode
     if (pCefBrowser_)
       pCefBrowser_->GetHost()->NotifyScreenInfoChanged();
   } else {
-    Q_Q(QCefView);
     if (ncw.qBrowserWindow_)
       ncw.qBrowserWindow_->applyMask(q->mask());
   }
@@ -725,23 +731,23 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
   }
 #endif
 
-  if (isOSRModeEnabled_) {
-    // if the parent chain changed, we need to re-connect the screenChanged signal
-    if (et == QEvent::ParentChange) {
-      QWidget* w = qobject_cast<QWidget*>(watched);
-      if (w && (w == q || w->isAncestorOf(q))) {
-        // reconnect the screenChanged
-        disconnect(this, SLOT(onViewScreenChanged(QScreen*)));
-        if (q->window()->windowHandle()) {
-          connect(q->window()->windowHandle(),        //
-                  SIGNAL(screenChanged(QScreen*)),    //
-                  this,                               //
-                  SLOT(onViewScreenChanged(QScreen*)) //
-          );
-        }
+  // if the parent chain changed, we need to re-connect the screenChanged signal
+  if (et == QEvent::ParentChange) {
+    QWidget* w = qobject_cast<QWidget*>(watched);
+    if (w && (w == q || w->isAncestorOf(q))) {
+      // reconnect the screenChanged
+      if (q->window()->windowHandle()) {
+        connect(q->window()->windowHandle(),         //
+                SIGNAL(screenChanged(QScreen*)),     //
+                this,                                //
+                SLOT(onViewScreenChanged(QScreen*)), //
+                Qt::UniqueConnection                 //
+        );
       }
     }
+  }
 
+  if (isOSRModeEnabled_) {
     if (watched == q && (et == QEvent::Type::KeyPress || et == QEvent::Type::KeyRelease)) {
       QKeyEvent* ke = (QKeyEvent*)event;
       if (ke->key() == Qt::Key_Tab || ke->key() == Qt::Key_Backtab) {
@@ -839,6 +845,14 @@ QCefViewPrivate::onViewInputMethodEvent(QInputMethodEvent* event)
 void
 QCefViewPrivate::onViewVisibilityChanged(bool visible)
 {
+  if (q_ptr->window()->windowHandle()) {
+    connect(q_ptr->window()->windowHandle(),     //
+            SIGNAL(screenChanged(QScreen*)),     //
+            this,                                //
+            SLOT(onViewScreenChanged(QScreen*)), //
+            Qt::UniqueConnection);
+  }
+
   // tell cef to start/stop rendering
   if (isOSRModeEnabled_) {
     // OSR mode
