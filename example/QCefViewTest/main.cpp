@@ -14,7 +14,9 @@ main(int argc, char* argv[])
   // so CEF will not scale the web content
   // NOET: There is bugs in Qt 6.2.4, the HighDpi doesn't work 
   QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-  QApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+  #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    QApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+  #endif
 #endif
 
   // create QApplication instance
