@@ -130,12 +130,13 @@ set_target_properties(libcef_dll_wrapper PROPERTIES FOLDER core)
 # set need configure QCefView_global to false
 set(NEED_CONFIGURE_QCefView_global FALSE)
 
+message(STATUS "${CefViewCore_CEF_INCLUDE_DIR}/cef_version.h")
 file(READ "${CefViewCore_CEF_INCLUDE_DIR}/cef_version.h" cef_version_content)
 string(REGEX MATCH "#define CEF_VERSION_MAJOR ([0-9]+)" _ ${cef_version_content})
 
 # check CEF_VERSION_MAJOR
 if(NOT "${CMAKE_MATCH_1}" STREQUAL "${CEF_VERSION_MAJOR}")
-  set(CEF_VERSION_MAJOR ${CMAKE_MATCH_1} CACHE STRING "CEF Major Version")
+  set(CEF_VERSION_MAJOR ${CMAKE_MATCH_1} CACHE STRING "CEF Major Version" FORCE)
   set(NEED_CONFIGURE_QCefView_global TRUE)
   message(STATUS "CEF_VERSION_MAJOR: ${CEF_VERSION_MAJOR} - Updated!")
 else()
@@ -146,7 +147,7 @@ endif()
 string(REGEX MATCH "#define CEF_VERSION_MINOR ([0-9]+)" _ ${cef_version_content})
 
 if(NOT "${CMAKE_MATCH_1}" STREQUAL "${CEF_VERSION_MINOR}")
-  set(CEF_VERSION_MINOR ${CMAKE_MATCH_1} CACHE STRING "CEF Minor Version")
+  set(CEF_VERSION_MINOR ${CMAKE_MATCH_1} CACHE STRING "CEF Minor Version" FORCE)
   set(NEED_CONFIGURE_QCefView_global TRUE)
   message(STATUS "CEF_VERSION_MINOR: ${CEF_VERSION_MINOR} - Updated!")
 else()
@@ -156,7 +157,7 @@ endif()
 string(REGEX MATCH "#define CEF_VERSION_PATCH ([0-9]+)" _ ${cef_version_content})
 
 if(NOT "${CMAKE_MATCH_1}" STREQUAL "${CEF_VERSION_PATCH}")
-  set(CEF_VERSION_PATCH ${CMAKE_MATCH_1} CACHE STRING "CEF Patch Version")
+  set(CEF_VERSION_PATCH ${CMAKE_MATCH_1} CACHE STRING "CEF Patch Version" FORCE)
   set(NEED_CONFIGURE_QCefView_global TRUE)
   message(STATUS "CEF_VERSION_PATCH: ${CEF_VERSION_PATCH} - Updated!")
 else()
