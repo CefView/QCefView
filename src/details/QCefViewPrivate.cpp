@@ -1166,22 +1166,22 @@ QCefViewPrivate::executeJavascript(int64_t frameId, const QString& code, const Q
     return false;
 
   if (pCefBrowser_) {
-    CefRefPtr<CefFrame> frame = pCefBrowser_->GetFrame(frameId);
-    if (frame) {
-      CefString c;
-      c.FromString(code.toStdString());
+    auto frame = frameId == 0 ? pCefBrowser_->GetMainFrame() : pCefBrowser_->GetFrame(frameId);
+    if (!frame)
+      return false;
 
-      CefString u;
-      if (url.isEmpty()) {
-        u = frame->GetURL();
-      } else {
-        u.FromString(url.toStdString());
-      }
+    CefString c;
+    c.FromString(code.toStdString());
 
-      frame->ExecuteJavaScript(c, u, 0);
-
-      return true;
+    CefString u;
+    if (url.isEmpty()) {
+      u = frame->GetURL();
+    } else {
+      u.FromString(url.toStdString());
     }
+
+    frame->ExecuteJavaScript(c, u, 0);
+    return true;
   }
 
   return false;
@@ -1196,7 +1196,7 @@ QCefViewPrivate::executeJavascriptWithResult(int64_t frameId,
   if (code.isEmpty())
     return false;
 
-  if (pClient_) {
+  if (pClient_ && pCefBrowser_) {
     auto frame = frameId == 0 ? pCefBrowser_->GetMainFrame() : pCefBrowser_->GetFrame(frameId);
     if (!frame)
       return false;
