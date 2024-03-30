@@ -14,12 +14,15 @@ QCefView is a Qt based QWidget which encapsulates [CEF](https://bitbucket.org/ch
 + **OSR** = Offscreen Rendering Mode 
 
 + **NCW** = Native Child Window Mode
-
 ## Quick Start
-### Clone With Submodule
+### Clone this project
 ```
-git clone --recursive https://github.com/CefView/QCefView.git
+git clone https://github.com/CefView/QCefView.git
 ```
+The dependency to CefViewCore has been converted to CMake FetchContent, submodule is not needed anymore.
+Pleaser refer to: cmake/CefViewCoreConfig.cmake
+
+
 ### Documentation
 You can find the latest documentation here:
 + [English Documentation](https://cefview.github.io/QCefView/)
