@@ -9,6 +9,9 @@ option(BUILD_STATIC "Build QCefView as static library" OFF)
 option(USE_SANDBOX "Enable CEF Sandbox" OFF)
 option(STATIC_CRT "Use MultiThreaded linkage for MSVC" OFF)
 
+# set(CEF_SDK_VERSION "109.1.18+gf1c41e4+chromium-109.0.5414.120")
+set(CEF_SDK_VERSION "113.3.1+g525fa10+chromium-113.0.5672.128")
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 get_directory_property(QCefView_HAS_PARENT_DIRECTORY PARENT_DIRECTORY)
@@ -117,8 +120,7 @@ if(NOT QCefView_HAS_PARENT_DIRECTORY)
 endif()
 
 # Include CefViewCore
-add_subdirectory(CefViewCore)
-set_target_properties(CefViewCore PROPERTIES FOLDER core)
+add_subdirectory(core)
 
 foreach(CefViewWingTarget ${CefViewCore_HELPER_APP_TARGETS})
   set_target_properties(${CefViewWingTarget} PROPERTIES FOLDER core)
