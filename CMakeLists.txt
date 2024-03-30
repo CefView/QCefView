@@ -4,16 +4,20 @@
 cmake_minimum_required(VERSION 3.18)
 project(QCefView)
 
+# arguments:
+# CEF_SDK_VERSION: specify the CEF version to be used
+# QT_SDK_DIR: specify the Qt SDK path
+
+# options
 option(BUILD_DEMO "Build the demo" OFF)
 option(BUILD_STATIC "Build QCefView as static library" OFF)
 option(USE_SANDBOX "Enable CEF Sandbox" OFF)
 option(STATIC_CRT "Use MultiThreaded linkage for MSVC" OFF)
 
-# set(CEF_SDK_VERSION "109.1.18+gf1c41e4+chromium-109.0.5414.120")
-set(CEF_SDK_VERSION "113.3.1+g525fa10+chromium-113.0.5672.128")
-
+# append cmake config module path
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+# detect whether we are in sub folder
 get_directory_property(QCefView_HAS_PARENT_DIRECTORY PARENT_DIRECTORY)
 
 # Only generate Debug and Release configuration types.
@@ -119,14 +123,8 @@ if(NOT QCefView_HAS_PARENT_DIRECTORY)
   set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/lib)
 endif()
 
-# Include CefViewCore
-add_subdirectory(core)
-
-foreach(CefViewWingTarget ${CefViewCore_HELPER_APP_TARGETS})
-  set_target_properties(${CefViewWingTarget} PROPERTIES FOLDER core)
-endforeach(CefViewWingTarget)
-
-set_target_properties(libcef_dll_wrapper PROPERTIES FOLDER core)
+# Fetch CefViewCore
+include(CefViewCoreConfig)
 
 # read CEF version from cef_version.h
 # set need configure QCefView_global to false

@@ -27,7 +27,7 @@ endif()
 #
 
 # find required components
-message(STATUS " Qt SDK dir: " ${QT_SDK_DIR})
+message(STATUS "Qt SDK dir: " ${QT_SDK_DIR})
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT_SDK_DIR})
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets REQUIRED)
