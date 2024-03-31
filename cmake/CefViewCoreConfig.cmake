@@ -35,3 +35,10 @@ endforeach(CefViewWingTarget)
 
 # set sub-folder for all libcef_dll_wrapper target
 set_target_properties(libcef_dll_wrapper PROPERTIES FOLDER core)
+
+# export all CefViewCore variables
+set(CefViewCore_EXPORT_INCLUDE_PATH ${CefViewCore_EXPORT_INCLUDE_PATH} PARENT_SCOPE)
+set(CefViewCore_HELPER_APP_TARGETS ${CefViewCore_HELPER_APP_TARGETS} PARENT_SCOPE)
+set(CefViewCore_CEF_BINARY_DIR ${CefViewCore_CEF_BINARY_DIR} PARENT_SCOPE)
+set(CefViewCore_CEF_RESOURCE_DIR ${CefViewCore_CEF_RESOURCE_DIR} PARENT_SCOPE)
+set(CefViewCore_CEF_INCLUDE_DIR ${CefViewCore_CEF_INCLUDE_DIR} PARENT_SCOPE)
