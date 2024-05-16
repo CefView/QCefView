@@ -51,7 +51,7 @@ private:
   QList<FolderResourceMapping> folderResourceMappingList_;
   QList<ArchiveResourceMapping> archiveResourceMappingList_;
 
-#if defined(Q_OS_MACOS)
+#if defined(Q_OS_MACOS) || defined(CEF_USE_QT_EVENT_LOOP)
   QTimer cefWorkerTimer_;
 #endif
 
