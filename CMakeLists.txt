@@ -5,20 +5,45 @@ cmake_minimum_required(VERSION 3.18)
 project(QCefView)
 
 # arguments:
-# CEF_SDK_VERSION: specify the CEF version to be used
-# QT_SDK_DIR: specify the Qt SDK path
+# CEF_SDK_VERSION:
+# - specify the CEF version to be used,
+# - refer to: cmake\CefViewCoreConfig.cmake
+#
+# QT_SDK_DIR:
+# - specify the Qt SDK path
+# - refer to: cmake\QtConfig.cmake
+#
 
 # options
-option(BUILD_DEMO "Build the demo" OFF)
-option(BUILD_STATIC "Build QCefView as static library" OFF)
-option(USE_SANDBOX "Enable CEF Sandbox" OFF)
-option(STATIC_CRT "Use MultiThreaded linkage for MSVC" OFF)
+option(BUILD_DEMO
+  "Build the demo"
+  OFF
+)
+option(BUILD_STATIC
+  "Build QCefView as static library"
+  OFF
+)
+option(STATIC_CRT
+  "Use MultiThreaded linkage for MSVC"
+  OFF
+)
+option(USE_SANDBOX
+  "Enable CEF Sandbox"
+  OFF
+)
+
+# Only works for Windows & Linux, always enabled on macOS
+# If enable then:
+# CefSettings.multi_threaded_message_loop = false && CefSettings.external_message_pump = true
+# else:
+# CefSettings.multi_threaded_message_loop = true && CefSettings.external_message_pump = false
+option(USE_QT_EVENT_LOOP
+  "Enable the integration of CEF message loop thread into Qt event loop"
+  OFF
+)
 
 # append cmake config module path
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-
-# detect whether we are in sub folder
-get_directory_property(QCefView_HAS_PARENT_DIRECTORY PARENT_DIRECTORY)
 
 # Only generate Debug and Release configuration types.
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
@@ -55,6 +80,11 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
   set(OS_MACOS 1)
   set(OS_POSIX 1)
   add_definitions(-DOS_MACOS=1 -DOS_POSIX=1)
+  add_compile_options(
+    "-g"
+    "$<$<CONFIG:DEBUG>:-O0>"
+    "$<$<CONFIG:RELEASE>:-O3>"
+  )
 
   # Target architecture.
   if(PROJECT_ARCH STREQUAL "x86_64")
@@ -68,6 +98,11 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
   set(OS_LINUX 1)
   set(OS_POSIX 1)
   add_definitions(-DOS_LINUX=1 -DOS_POSIX=1)
+  add_compile_options(
+    "-g"
+    "$<$<CONFIG:DEBUG>:-O0>"
+    "$<$<CONFIG:RELEASE>:-O3>"
+  )
 
   # Target architecture.
   if(PROJECT_ARCH STREQUAL "x86_64")
@@ -81,7 +116,12 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
   endif()
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
   set(OS_WINDOWS 1)
+
+  # Disable the sandbox on Windows, because the sandbox.lib is MT which is conflict with Qt
+  set(USE_SANDBOX OFF CACHE BOOL "Disable sandbox on Windows" FORCE)
   add_definitions(-DOS_WINDOWS=1)
+  add_compile_options("/M$<IF:$<BOOL:${STATIC_CRT}>,T,D>$<$<CONFIG:Debug>:d>")
+  add_link_options(/DEBUG)
 endif()
 
 if(BUILD_STATIC)
@@ -89,6 +129,16 @@ if(BUILD_STATIC)
   add_definitions(-DQCEFVIEW_STATIC=1)
 else()
   set(QCEFVIEW_LIB_TYPE SHARED)
+endif()
+
+# detect whether we are in sub folder
+get_directory_property(QCefView_HAS_PARENT_DIRECTORY PARENT_DIRECTORY)
+
+if(NOT QCefView_HAS_PARENT_DIRECTORY)
+  message(STATUS "QCefView is not in subdirectory, put all output together")
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/bin)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/bin)
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/lib)
 endif()
 
 # Config the QT package
@@ -101,28 +151,6 @@ set(Qt_VERSION ${Qt${QT_VERSION_MAJOR}Core_VERSION})
 
 # Config the CEF
 # ##############################################################
-if(OS_WINDOWS)
-  add_link_options(/DEBUG)
-
-  # Disable the sandbox on Windows, because the sandbox.lib is MT which
-  # is conflict with Qt
-  set(USE_SANDBOX OFF CACHE BOOL "Disable sandbox on Windows" FORCE)
-  add_compile_options("/M$<IF:$<BOOL:${STATIC_CRT}>,T,D>$<$<CONFIG:Debug>:d>")
-else()
-  add_compile_options(
-    "-g"
-    "$<$<CONFIG:DEBUG>:-O0>"
-    "$<$<CONFIG:RELEASE>:-O3>"
-  )
-endif()
-
-if(NOT QCefView_HAS_PARENT_DIRECTORY)
-  message(STATUS "QCefView is not in subdirectory, put all output together")
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/bin)
-  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/bin)
-  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/$<CONFIG>/lib)
-endif()
-
 # Fetch CefViewCore
 include(CefViewCoreConfig)
 

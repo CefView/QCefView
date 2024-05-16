@@ -21,7 +21,7 @@ QCefContextPrivate::QCefContextPrivate(QCoreApplication* app, int argc, char** a
   : argc_(argc)
   , argv_(argv)
 {
-#if defined(Q_OS_MACOS)
+#if defined(Q_OS_MACOS) || defined(CEF_USE_QT_EVENT_LOOP)
   cefWorkerTimer_.setTimerType(Qt::PreciseTimer);
   cefWorkerTimer_.start(kCefWorkerIntervalMs);
   connect(&cefWorkerTimer_, SIGNAL(timeout()), this, SLOT(performCefLoopWork()));
