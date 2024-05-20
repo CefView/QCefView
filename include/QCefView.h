@@ -197,7 +197,11 @@ public:
   /// the source of the error
   /// </param>
   /// <returns>True on successful; otherwise false</returns>
+#if CEF_VERSION_MAJOR >= 122
+  bool executeJavascript(const QString& frameId, const QString& code, const QString& url);
+#else
   bool executeJavascript(qint64 frameId, const QString& code, const QString& url);
+#endif
 
   /// <summary>
   /// Executes javascript code in specified frame and the result will be reported through <see
@@ -211,7 +215,11 @@ public:
   /// </param>
   /// <param name="context">The context used to identify the one execution</param>
   /// <returns>True on successful; otherwise false</returns>
+#if CEF_VERSION_MAJOR >= 122
+  bool executeJavascriptWithResult(const QString& frameId, const QString& code, const QString& url, const QString& context);
+#else
   bool executeJavascriptWithResult(qint64 frameId, const QString& code, const QString& url, const QString& context);
+#endif
 
   /// <summary>
   /// Sets the preference for this browser
@@ -286,7 +294,11 @@ signals:
   /// <param name="frameId">Indicates the frame id</param>
   /// <param name="isMainFrame">Indicates the whether this is the main frame</param>
   /// <param name="transitionType">transition type</param>
+#if CEF_VERSION_MAJOR >= 122
+  void loadStart(int browserId, const QString& frameId, bool isMainFrame, int transitionType);
+#else
   void loadStart(int browserId, qint64 frameId, bool isMainFrame, int transitionType);
+#endif
 
   /// <summary>
   /// Gets called on loading ends
@@ -295,7 +307,11 @@ signals:
   /// <param name="frameId">Indicates the frame id</param>
   /// <param name="isMainFrame">Indicates the whether this is the main frame</param>
   /// <param name="httpStatusCode">The HTTP status code</param>
+#if CEF_VERSION_MAJOR >= 122
+  void loadEnd(int browserId, const QString& frameId, bool isMainFrame, int httpStatusCode);
+#else
   void loadEnd(int browserId, qint64 frameId, bool isMainFrame, int httpStatusCode);
+#endif
 
   /// <summary>
   /// Gets called on loading failed due to error
@@ -306,12 +322,21 @@ signals:
   /// <param name="errorCode">The error code</param>
   /// <param name="errorMsg">The error message</param>
   /// <param name="failedUrl">The url caused the failure</param>
+#if CEF_VERSION_MAJOR >= 122
+  void loadError(int browserId,
+                 const QString& frameId,
+                 bool isMainFrame,
+                 int errorCode,
+                 const QString& errorMsg,
+                 const QString& failedUrl);
+#else
   void loadError(int browserId,
                  qint64 frameId,
                  bool isMainFrame,
                  int errorCode,
                  const QString& errorMsg,
                  const QString& failedUrl);
+#endif
 
   /// <summary>
   /// Gets called on draggable region changed
@@ -325,7 +350,11 @@ signals:
   /// </summary>
   /// <param name="frameId">The frame id</param>
   /// <param name="url">The address</param>
+#if CEF_VERSION_MAJOR >= 122
+  void addressChanged(const QString& frameId, const QString& url);
+#else
   void addressChanged(qint64 frameId, const QString& url);
+#endif
 
   /// <summary>
   /// Gets called on title changed
@@ -370,7 +399,11 @@ signals:
   /// <param name="browserId">The browser id</param>
   /// <param name="frameId">The frame id</param>
   /// <param name="query">The query request</param>
+#if CEF_VERSION_MAJOR >= 122
+  void cefQueryRequest(int browserId, const QString& frameId, const QCefQuery& query);
+#else
   void cefQueryRequest(int browserId, qint64 frameId, const QCefQuery& query);
+#endif
 
   /// <summary>
   /// Gets called on invoking method request from web content(Javascript)
@@ -379,7 +412,11 @@ signals:
   /// <param name="frameId">The frame id</param>
   /// <param name="method">The method name</param>
   /// <param name="arguments">The arguments list</param>
+#if CEF_VERSION_MAJOR >= 122
+  void invokeMethod(int browserId, const QString& frameId, const QString& method, const QVariantList& arguments);
+#else
   void invokeMethod(int browserId, qint64 frameId, const QString& method, const QVariantList& arguments);
+#endif
 
   /// <summary>
   /// Gets called on the result of the javascript executed with <see cref="executeJavascriptWithResult"/> returned
@@ -388,7 +425,11 @@ signals:
   /// <param name="frameId">The frame id</param>
   /// <param name="context">The context</param>
   /// <param name="result">The result</param>
+#if CEF_VERSION_MAJOR >= 122
+  void reportJavascriptResult(int browserId, const QString& frameId, const QString& context, const QVariant& result);
+#else
   void reportJavascriptResult(int browserId, qint64 frameId, const QString& context, const QVariant& result);
+#endif
 
   /// <summary>
   /// Gets called after the native browser window created. This slot does not work for OSR mode.
@@ -408,12 +449,21 @@ protected:
   /// <param name="settings">Settings to be used for the popup</param>
   /// <returns>True to cancel the popup; false to allow</returns>
   /// <returns></returns>
+#if CEF_VERSION_MAJOR >= 122
+  virtual QCefView* onNewBrowser(const QString& sourceFrameId,
+                                 const QString& url,
+                                 const QString& name,
+                                 QCefView::CefWindowOpenDisposition targetDisposition,
+                                 QRect& rect,
+                                 QCefSetting& settings);
+#else
   virtual QCefView* onNewBrowser(qint64 sourceFrameId,
                                  const QString& url,
                                  const QString& name,
                                  QCefView::CefWindowOpenDisposition targetDisposition,
                                  QRect& rect,
                                  QCefSetting& settings);
+#endif
 
   /// <summary>
   /// Gets called before the popup browser created (only for browser created by JavaScript)
@@ -425,6 +475,15 @@ protected:
   /// <param name="rect">Rect to be used for the popup</param>
   /// <param name="settings">Settings to be used for the popup</param>
   /// <returns>True to cancel the popup; false to allow</returns>
+#if CEF_VERSION_MAJOR >= 122
+  virtual bool onNewPopup(const QString& frameId,
+                          const QString& targetUrl,
+                          QString& targetFrameName,
+                          QCefView::CefWindowOpenDisposition targetDisposition,
+                          QRect& rect,
+                          QCefSetting& settings,
+                          bool& disableJavascriptAccess);
+#else
   virtual bool onNewPopup(qint64 frameId,
                           const QString& targetUrl,
                           QString& targetFrameName,
@@ -432,6 +491,7 @@ protected:
                           QRect& rect,
                           QCefSetting& settings,
                           bool& disableJavascriptAccess);
+#endif
 
   /// <summary>
   /// Gets called on new download item was required. Keep reference to the download item

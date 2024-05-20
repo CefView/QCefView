@@ -183,7 +183,22 @@ public:
 
 protected:
   void onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* window);
+#if CEF_VERSION_MAJOR >= 122
+  bool onBeforeNewBrowserCreate(const QString& sourceFrameId,
+                                const QString& targetUrl,
+                                const QString& targetFrameName,
+                                QCefView::CefWindowOpenDisposition targetDisposition,
+                                QRect rect,
+                                QCefSetting settings);
 
+  bool onBeforeNewPopupCreate(const QString& sourceFrameId,
+                              const QString& targetUrl,
+                              QString& targetFrameName,
+                              QCefView::CefWindowOpenDisposition targetDisposition,
+                              QRect& rect,
+                              QCefSetting& settings,
+                              bool& disableJavascriptAccess);
+#else
   bool onBeforeNewBrowserCreate(qint64 sourceFrameId,
                                 const QString& targetUrl,
                                 const QString& targetFrameName,
@@ -198,6 +213,7 @@ protected:
                               QRect& rect,
                               QCefSetting& settings,
                               bool& disableJavascriptAccess);
+#endif
 
   void onAfterCefPopupCreated(CefRefPtr<CefBrowser> browser);
 
@@ -308,9 +324,15 @@ public:
 
   bool responseQCefQuery(const int64_t query, bool success, const QString& response, int error);
 
+#if CEF_VERSION_MAJOR >= 122
+  bool executeJavascript(const QString& frameId, const QString& code, const QString& url);
+
+  bool executeJavascriptWithResult(const QString& frameId, const QString& code, const QString& url, const QString& context);
+#else
   bool executeJavascript(int64_t frameId, const QString& code, const QString& url);
 
   bool executeJavascriptWithResult(int64_t frameId, const QString& code, const QString& url, const QString& context);
+#endif
 
   void notifyMoveOrResizeStarted();
 

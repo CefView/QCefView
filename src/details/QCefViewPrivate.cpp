@@ -272,6 +272,15 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
   }
 }
 
+#if CEF_VERSION_MAJOR >= 122
+bool
+QCefViewPrivate::onBeforeNewBrowserCreate(const QString& sourceFrameId,
+                                          const QString& targetUrl,
+                                          const QString& targetFrameName,
+                                          QCefView::CefWindowOpenDisposition targetDisposition,
+                                          QRect rect,
+                                          QCefSetting settings)
+#else
 bool
 QCefViewPrivate::onBeforeNewBrowserCreate(qint64 sourceFrameId,
                                           const QString& targetUrl,
@@ -279,6 +288,7 @@ QCefViewPrivate::onBeforeNewBrowserCreate(qint64 sourceFrameId,
                                           QCefView::CefWindowOpenDisposition targetDisposition,
                                           QRect rect,
                                           QCefSetting settings)
+#endif
 {
   Q_Q(QCefView);
 
@@ -293,6 +303,16 @@ QCefViewPrivate::onBeforeNewBrowserCreate(qint64 sourceFrameId,
   return true;
 }
 
+#if CEF_VERSION_MAJOR >= 122
+bool
+QCefViewPrivate::onBeforeNewPopupCreate(const QString& sourceFrameId,
+                                        const QString& targetUrl,
+                                        QString& targetFrameName,
+                                        QCefView::CefWindowOpenDisposition targetDisposition,
+                                        QRect& rect,
+                                        QCefSetting& settings,
+                                        bool& disableJavascriptAccess)
+#else
 bool
 QCefViewPrivate::onBeforeNewPopupCreate(qint64 sourceFrameId,
                                         const QString& targetUrl,
@@ -301,6 +321,7 @@ QCefViewPrivate::onBeforeNewPopupCreate(qint64 sourceFrameId,
                                         QRect& rect,
                                         QCefSetting& settings,
                                         bool& disableJavascriptAccess)
+#endif
 {
   Q_Q(QCefView);
 
@@ -347,7 +368,11 @@ QCefViewPrivate::handleLoadError(CefRefPtr<CefBrowser>& browser,
   if (q->receivers(SIGNAL(loadError(int, qint64, bool, int, const QString&, const QString&))) > 0) {
     auto msg = QString::fromStdString(errorMsg);
     auto url = QString::fromStdString(failedUrl);
+#if CEF_VERSION_MAJOR >= 122
+    emit q->loadError(browser->GetIdentifier(), QString::fromStdString(frame->GetIdentifier()), frame->IsMain(), errorCode, msg, url);
+#else
     emit q->loadError(browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), errorCode, msg, url);
+#endif
     return true;
   }
 
@@ -1159,6 +1184,70 @@ QCefViewPrivate::responseQCefQuery(const int64_t query, bool success, const QStr
   return false;
 }
 
+#if CEF_VERSION_MAJOR >= 122
+bool
+QCefViewPrivate::executeJavascript(const QString& frameId, const QString& code, const QString& url)
+{
+  if (code.isEmpty())
+    return false;
+
+  if (pCefBrowser_) {
+    // TODO: fixme
+    auto frame = frameId == 0 ? pCefBrowser_->GetMainFrame() : pCefBrowser_->GetFrameByIdentifier(frameId.toStdString());
+    if (!frame->IsValid())
+      return false;
+
+    CefString c;
+    c.FromString(code.toStdString());
+
+    CefString u;
+    if (url.isEmpty()) {
+      u = frame->GetURL();
+    } else {
+      u.FromString(url.toStdString());
+    }
+
+    frame->ExecuteJavaScript(c, u, 0);
+    return true;
+  }
+
+  return false;
+}
+
+bool
+QCefViewPrivate::executeJavascriptWithResult(const QString& frameId,
+                                             const QString& code,
+                                             const QString& url,
+                                             const QString& context)
+{
+  if (code.isEmpty())
+    return false;
+
+  if (pClient_ && pCefBrowser_) {
+    // TODO: fixme
+    auto frame = frameId == 0 ? pCefBrowser_->GetMainFrame() : pCefBrowser_->GetFrameByIdentifier(frameId.toStdString());
+    if (!frame)
+      return false;
+
+    CefString c;
+    c.FromString(code.toStdString());
+
+    CefString u;
+    if (url.isEmpty()) {
+      u = frame->GetURL();
+    } else {
+      u.FromString(url.toStdString());
+    }
+
+    CefString ctx;
+    ctx.FromString(context.toStdString());
+
+    return pClient_->AsyncExecuteJSCode(pCefBrowser_, frame, c, u, ctx);
+  }
+
+  return false;
+}
+#else
 bool
 QCefViewPrivate::executeJavascript(int64_t frameId, const QString& code, const QString& url)
 {
@@ -1219,6 +1308,7 @@ QCefViewPrivate::executeJavascriptWithResult(int64_t frameId,
 
   return false;
 }
+#endif
 
 void
 QCefViewPrivate::notifyMoveOrResizeStarted()

@@ -14,6 +14,17 @@
 #define DEFAULT_POPUP_WIDTH 800
 #define DEFAULT_POPUP_HEIGHT 600
 
+#if CEF_VERSION_MAJOR >= 122
+bool
+CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
+                                  const std::string& frameId,
+                                  const std::string& targetUrl,
+                                  const std::string& targetFrameName,
+                                  CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
+                                  CefWindowInfo& windowInfo,
+                                  CefBrowserSettings& settings,
+                                  bool& disableJavascriptAccess)
+#else
 bool
 CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
                                   int64_t frameId,
@@ -23,6 +34,7 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
                                   CefWindowInfo& windowInfo,
                                   CefBrowserSettings& settings,
                                   bool& disableJavascriptAccess)
+#endif
 {
   bool cancel = true;
   if (!pCefViewPrivate_) {
@@ -44,8 +56,11 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
 
   QCefSetting s;
   QCefSettingPrivate::CopyFromCefBrowserSettings(&s, &settings);
-
+#if CEF_VERSION_MAJOR > 119
+  if (targetDisposition == CefLifeSpanHandler::WindowOpenDisposition::CEF_WOD_NEW_POPUP) {
+#else
   if (targetDisposition == CefLifeSpanHandler::WindowOpenDisposition::WOD_NEW_POPUP) {
+#endif
     // the new browser was created from javascript, we need to conform the CEF pop-up browser lifecycle
     // because CEF need to return the new browser identity to javascript context
     Qt::ConnectionType c = pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection
@@ -54,6 +69,15 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
     QMetaObject::invokeMethod(
       pCefViewPrivate_,
       [&]() {
+#if CEF_VERSION_MAJOR >= 122
+        cancel = pCefViewPrivate_->onBeforeNewPopupCreate(QString::fromStdString(frameId), //
+                                                          url,     //
+                                                          name,    //
+                                                          d,       //
+                                                          rc,      //
+                                                          s,       //
+                                                          disableJavascriptAccess);
+#else
         cancel = pCefViewPrivate_->onBeforeNewPopupCreate(frameId, //
                                                           url,     //
                                                           name,    //
@@ -61,6 +85,7 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
                                                           rc,      //
                                                           s,       //
                                                           disableJavascriptAccess);
+#endif
         if (!cancel) {
           QCefSettingPrivate::CopyToCefBrowserSettings(&s, &settings);
           CefString(&windowInfo.window_name) = name.toStdString();
@@ -74,12 +99,21 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
     QMetaObject::invokeMethod(
       pCefViewPrivate_,
       [=]() {
+#if CEF_VERSION_MAJOR >= 122
+        pCefViewPrivate_->onBeforeNewBrowserCreate(QString::fromStdString(frameId), //
+                                                   url,     //
+                                                   name,    //
+                                                   d,       //
+                                                   rc,      //
+                                                   s);
+#else
         pCefViewPrivate_->onBeforeNewBrowserCreate(frameId, //
                                                    url,     //
                                                    name,    //
                                                    d,       //
                                                    rc,      //
                                                    s);
+#endif
       },
       Qt::QueuedConnection);
   }

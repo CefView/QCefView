@@ -183,16 +183,26 @@ QCefView::responseQCefQuery(const QCefQuery& query)
   return d->responseQCefQuery(query);
 }
 
+#if CEF_VERSION_MAJOR >= 122
+bool
+QCefView::executeJavascript(const QString& frameId, const QString& code, const QString& url)
+#else
 bool
 QCefView::executeJavascript(qint64 frameId, const QString& code, const QString& url)
+#endif
 {
   Q_D(QCefView);
 
   return d->executeJavascript(frameId, code, url);
 }
 
+#if CEF_VERSION_MAJOR >= 122
+bool
+QCefView::executeJavascriptWithResult(const QString& frameId, const QString& code, const QString& url, const QString& context)
+#else
 bool
 QCefView::executeJavascriptWithResult(qint64 frameId, const QString& code, const QString& url, const QString& context)
+#endif
 {
   Q_D(QCefView);
 
@@ -271,6 +281,15 @@ QCefView::setFocus(Qt::FocusReason reason)
   d->setCefWindowFocus(true);
 }
 
+#if CEF_VERSION_MAJOR >= 122
+QCefView*
+QCefView::onNewBrowser(const QString& sourceFrameId,
+                       const QString& url,
+                       const QString& name,
+                       CefWindowOpenDisposition targetDisposition,
+                       QRect& rect,
+                       QCefSetting& settings)
+#else
 QCefView*
 QCefView::onNewBrowser(qint64 sourceFrameId,
                        const QString& url,
@@ -278,6 +297,7 @@ QCefView::onNewBrowser(qint64 sourceFrameId,
                        CefWindowOpenDisposition targetDisposition,
                        QRect& rect,
                        QCefSetting& settings)
+#endif
 {
   QCefView* popup = new QCefView(url, &settings, nullptr, Qt::WindowFlags());
   if (!popup) {
@@ -296,6 +316,16 @@ QCefView::onNewBrowser(qint64 sourceFrameId,
   return popup;
 }
 
+#if CEF_VERSION_MAJOR >= 122
+bool
+QCefView::onNewPopup(const QString& frameId,
+                     const QString& targetUrl,
+                     QString& targetFrameName,
+                     QCefView::CefWindowOpenDisposition targetDisposition,
+                     QRect& rect,
+                     QCefSetting& settings,
+                     bool& disableJavascriptAccess)
+#else
 bool
 QCefView::onNewPopup(qint64 frameId,
                      const QString& targetUrl,
@@ -304,6 +334,7 @@ QCefView::onNewPopup(qint64 frameId,
                      QRect& rect,
                      QCefSetting& settings,
                      bool& disableJavascriptAccess)
+#endif
 {
   return false;
 }
