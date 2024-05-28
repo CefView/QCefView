@@ -37,6 +37,11 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           setup-python: 'true'
+      
+      - name: Setup Xcode version
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14'
 
       - name: Checkout Source
         uses: actions/checkout@v2
