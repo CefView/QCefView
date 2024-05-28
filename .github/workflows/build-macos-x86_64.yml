@@ -36,7 +36,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          setup-python: 'false'
+          setup-python: 'true'
 
       - name: Checkout Source
         uses: actions/checkout@v2
