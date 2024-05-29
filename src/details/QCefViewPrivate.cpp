@@ -12,7 +12,6 @@
 #include <QGridLayout>
 #include <QInputMethodQueryEvent>
 #include <QPainter>
-#include <QStandardPaths>
 #include <QWindow>
 #pragma endregion qt_headers
 
@@ -648,11 +647,14 @@ QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
     dialog.setWindowTitle(caption);
   }
 
-  // set initial folder & default file name
+  // set initial folder
   if (!default_file_path.empty() && mode == FILE_DIALOG_SAVE) {
-    QString initialPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-    dialog.setDirectory(initialPath);
-    dialog.selectFile(initialPath + "/" + QString::fromStdString(default_file_path.ToString()));
+    QDir dir(QString::fromStdString(default_file_path.ToString()));
+    if (dir.exists()) {
+      dialog.setDirectory(dir);
+    } else {
+      dialog.setDirectory(QDir::homePath());
+    }
   }
 
   // set accepted file types
@@ -667,16 +669,9 @@ QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
   // execute the dialog
   if (dialog.exec()) {
     std::vector<CefString> file_paths;
-    if (mode == FILE_DIALOG_SAVE) {
-      QString filePath = dialog.selectedFiles().first();
-      QString selectedFilter = dialog.selectedNameFilter();
-      filePath = addExtensionIfNeeded(filePath, selectedFilter);
-      file_paths.push_back(filePath.toStdString());
-    } else {
-      auto selected_files = dialog.selectedFiles();
-      for (const auto& file : selected_files) {
-        file_paths.push_back(file.toStdString());
-      }
+    auto selected_files = dialog.selectedFiles();
+    for (const auto& file : selected_files) {
+      file_paths.push_back(file.toStdString());
     }
     callback->Continue(file_paths);
   } else {
@@ -1290,20 +1285,4 @@ QCefViewPrivate::setPreference(const QString& name, const QVariant& value, const
   }
 
   return false;
-}
-
-QString
-QCefViewPrivate::addExtensionIfNeeded(const QString &filePath, const QString &selectedFilter)
-{
-  QFileInfo fileInfo(filePath);
-
-  if (fileInfo.suffix().isEmpty()) {
-    QRegExp rx("\\*\\.([^\\s\\);]+)");
-    if (rx.indexIn(selectedFilter) != -1) {
-      QString extension = rx.cap(1);
-      return filePath + "." + extension;
-    }
-  }
-
-  return filePath;
 }
