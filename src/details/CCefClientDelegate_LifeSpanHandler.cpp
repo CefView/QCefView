@@ -32,7 +32,11 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
   auto url = QString::fromStdString(targetUrl);
   auto name = QString::fromStdString(targetFrameName);
   auto d = (QCefView::CefWindowOpenDisposition)targetDisposition;
+#if CEF_VERSION_MAJOR > 95
   auto rc = QRect(windowInfo.bounds.x, windowInfo.bounds.y, windowInfo.bounds.width, windowInfo.bounds.height);
+#else
+  auto rc = QRect(windowInfo.x, windowInfo.y, windowInfo.width, windowInfo.height);
+#endif
 
   if (rc.width() <= 0) {
     rc.setWidth(DEFAULT_POPUP_WIDTH);
@@ -64,7 +68,15 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
         if (!cancel) {
           QCefSettingPrivate::CopyToCefBrowserSettings(&s, &settings);
           CefString(&windowInfo.window_name) = name.toStdString();
+
+#if CEF_VERSION_MAJOR > 95
           windowInfo.bounds = { rc.x(), rc.y(), rc.width(), rc.height() };
+#else
+          windowInfo.x = rc.x();
+          windowInfo.y = rc.y();
+          windowInfo.width = rc.width();
+          windowInfo.height = rc.height();
+#endif
         }
       },
       c);

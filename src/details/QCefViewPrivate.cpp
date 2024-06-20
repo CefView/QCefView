@@ -620,6 +620,9 @@ QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
                               const CefString& title,
                               const CefString& default_file_path,
                               const std::vector<CefString>& accept_filters,
+#if CEF_VERSION_MAJOR < 102
+                              int selected_accept_filter,
+#endif
                               CefRefPtr<CefFileDialogCallback> callback)
 {
   Q_Q(QCefView);
@@ -658,12 +661,12 @@ QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
   }
 
   // set accepted file types
+  QStringList filters;
   if (!accept_filters.empty()) {
-    QStringList filters;
     for (const auto& filter : accept_filters) {
       filters << "*" + QString::fromStdString(filter.ToString());
     }
-    dialog.setNameFilter(QString("(%1)").arg(filters.join(" ")));
+    dialog.setNameFilters(filters);
   }
 
   // execute the dialog
@@ -673,7 +676,13 @@ QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
     for (const auto& file : selected_files) {
       file_paths.push_back(file.toStdString());
     }
+
+#if CEF_VERSION_MAJOR < 102
+    int index = filters.indexOf(dialog.selectedNameFilter());
+    callback->Continue(index, file_paths);
+#else
     callback->Continue(file_paths);
+#endif
   } else {
     callback->Cancel();
   }
