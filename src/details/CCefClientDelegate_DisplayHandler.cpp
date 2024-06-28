@@ -65,6 +65,17 @@ mapCursorShape(cef_cursor_type_t& type)
   return sCursorTable[type];
 }
 
+#if CEF_VERSION_MAJOR >= 122
+void
+CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, const std::string& frameId, const std::string& url)
+{
+  if (!IsValidBrowser(browser))
+    return;
+
+  auto u = QString::fromStdString(url);
+  emit pCefViewPrivate_->q_ptr->addressChanged(QString::fromStdString(frameId), u);
+}
+#else
 void
 CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url)
 {
@@ -74,6 +85,7 @@ CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frame
   auto u = QString::fromStdString(url);
   emit pCefViewPrivate_->q_ptr->addressChanged(frameId, u);
 }
+#endif
 
 void
 CCefClientDelegate::titleChanged(CefRefPtr<CefBrowser>& browser, const std::string& title)

@@ -20,8 +20,13 @@ CCefClientDelegate::loadStart(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame
   if (!IsValidBrowser(browser))
     return;
 
+#if CEF_VERSION_MAJOR >= 122
+  emit pCefViewPrivate_->q_ptr->loadStart(
+    browser->GetIdentifier(), QString::fromStdString(frame->GetIdentifier()), frame->IsMain(), transitionType);
+#else
   emit pCefViewPrivate_->q_ptr->loadStart(
     browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), transitionType);
+#endif
 }
 
 void
@@ -30,7 +35,11 @@ CCefClientDelegate::loadEnd(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>&
   if (!IsValidBrowser(browser))
     return;
 
+#if CEF_VERSION_MAJOR >= 122
+  emit pCefViewPrivate_->q_ptr->loadEnd(browser->GetIdentifier(), QString::fromStdString(frame->GetIdentifier()), frame->IsMain(), httpStatusCode);
+#else
   emit pCefViewPrivate_->q_ptr->loadEnd(browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), httpStatusCode);
+#endif
 }
 
 void

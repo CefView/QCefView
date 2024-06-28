@@ -146,6 +146,15 @@ CCefClientDelegate::onPaint(CefRefPtr<CefBrowser> browser,
   }
 }
 
+#if CEF_VERSION_MAJOR >= 122
+void
+CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
+                                       CefRenderHandler::PaintElementType type,
+                                       const CefRenderHandler::RectList& dirtyRects,
+                                       const CefAcceleratedPaintInfo& info)
+{
+}
+#else
 void
 CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
                                        CefRenderHandler::PaintElementType type,
@@ -153,6 +162,7 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
                                        void* shared_handle)
 {
 }
+#endif
 
 bool
 CCefClientDelegate::startDragging(CefRefPtr<CefBrowser> browser,
