@@ -26,6 +26,8 @@ QCefWindow::attachCefWindow(QWindow* win, QWidget* parent)
   // for macOS we just create the widget with CEF window,
   // and current QCefWindow is useless
   QWindow* widgetSourceWindow = cefWindow_;
+  // assign parent so it will be destroyed by the parent
+  this->setParent(cefWindow_);
 #else
   // for Windows & Linux we create the widget with
   // current QCefWindow
