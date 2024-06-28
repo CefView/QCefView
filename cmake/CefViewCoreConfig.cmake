@@ -19,8 +19,9 @@ FetchContent_Declare(
 # "105.3.28+g002805e+chromium-105.0.5195.54"  # BAD   # debugbreak - debug mode
 # "107.1.9+g1f0a21a+chromium-107.0.5304.110"  # BAD   # debugbreak - debug mode
 # "110.0.26+g732747f+chromium-110.0.5481.97"  # BAD   # TO-BE-FIXED
-# "113.3.1+g525fa10+chromium-113.0.5672.128"  # So far so good
-set(CEF_SDK_VERSION "113.3.1+g525fa10+chromium-113.0.5672.128")
+# "113.3.1+g525fa10+chromium-113.0.5672.128"  # So far so good - doesn't support Xcode 15
+# "119.4.7+g55e15c8+chromium-119.0.6045.199"
+set(CEF_SDK_VERSION "119.4.7+g55e15c8+chromium-119.0.6045.199")
 
 # populate CefViewCore project
 FetchContent_MakeAvailable(CefViewCore)

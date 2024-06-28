@@ -1,4 +1,4 @@
-﻿#include "CCefClientDelegate.h"
+#include "CCefClientDelegate.h"
 
 #if defined(Q_OS_WINDOWS)
 #include <windows.h>
@@ -49,7 +49,13 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
   QCefSetting s;
   QCefSettingPrivate::CopyFromCefBrowserSettings(&s, &settings);
 
-  if (targetDisposition == CefLifeSpanHandler::WindowOpenDisposition::WOD_NEW_POPUP) {
+#if CEF_VERSION_MAJOR < 119
+  auto CefNewPopupValue = CefLifeSpanHandler::WindowOpenDisposition::WOD_NEW_POPUP;
+#else
+  auto CefNewPopupValue = CefLifeSpanHandler::WindowOpenDisposition::CEF_WOD_NEW_POPUP;
+#endif
+
+  if (targetDisposition == CefNewPopupValue) {
     // the new browser was created from javascript, we need to conform the CEF pop-up browser lifecycle
     // because CEF need to return the new browser identity to javascript context
     Qt::ConnectionType c = pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection
@@ -167,12 +173,10 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 
   if (browser->IsPopup()) {
     // pop-up window
-    QMetaObject::invokeMethod(
-      pCefViewPrivate_, [=]() { pCefViewPrivate_->onAfterCefPopupCreated(browser); }, c);
+    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onAfterCefPopupCreated(browser); }, c);
   } else {
     // new normal browser
-    QMetaObject::invokeMethod(
-      pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefBrowserCreated(browser, w); }, c);
+    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefBrowserCreated(browser, w); }, c);
   }
 }
 
