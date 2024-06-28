@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #pragma region stl_headers
 #include <list>
@@ -39,7 +39,9 @@ public:
   std::string cursiveFontFamily_;
   std::string fantasyFontFamily_;
   std::string defaultEncoding_;
+#if CEF_VERSION_MAJOR < 118
   std::string acceptLanguageList_;
+#endif
 
   /* int */ QVariant windowlessFrameRate_;
   /* int */ QVariant defaultFontSize_;

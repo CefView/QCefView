@@ -1,4 +1,4 @@
-﻿#include "QCefSetting.h"
+#include "QCefSetting.h"
 
 #pragma region cef_headers
 #include <include/cef_version.h>
@@ -141,6 +141,7 @@ QCefSetting::defaultEncoding() const
   return QString::fromStdString(d->defaultEncoding_);
 }
 
+#if CEF_VERSION_MAJOR < 118
 void
 QCefSetting::setAcceptLanguageList(const QString& value)
 {
@@ -154,6 +155,7 @@ QCefSetting::acceptLanguageList() const
   Q_D(const QCefSetting);
   return QString::fromStdString(d->acceptLanguageList_);
 }
+#endif
 
 void
 QCefSetting::setWindowlessFrameRate(const int value)
