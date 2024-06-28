@@ -186,6 +186,10 @@ if(OS_MACOS)
     "$<TARGET_BUNDLE_DIR:CefViewWing>/../"
     "$<TARGET_BUNDLE_DIR:QCefView>/Resources/PlugIns/"
 
+    # adjust file permission
+    COMMAND
+    cd "$<TARGET_BUNDLE_DIR:QCefView>/Resources/PlugIns/Chromium Embedded Framework.framework/Resources" && chmod +rw *.bin
+
     # sign the cef framework
     COMMAND codesign
     --force
