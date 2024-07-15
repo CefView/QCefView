@@ -327,6 +327,20 @@ QCefView::onRequestCloseFromWeb()
   return true;
 }
 
+void
+QCefView::leaveEvent(QEvent* event)
+{
+  QWidget::leaveEvent(event);
+
+  if (d_ptr->isOSRModeEnabled()) {
+    QPointF localPos{ -1, -1 };
+    QPointF globalPos = mapToGlobal(localPos);
+
+    QMouseEvent moveEvent(QEvent::MouseMove, localPos, globalPos, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+    mouseMoveEvent(&moveEvent);
+  }
+}
+
 QVariant
 QCefView::inputMethodQuery(Qt::InputMethodQuery query) const
 {
