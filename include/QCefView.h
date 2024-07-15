@@ -455,6 +455,8 @@ protected:
   /// <returns>True to allow the close, false to cancel the close</returns>
   virtual bool onRequestCloseFromWeb();
 
+  virtual void leaveEvent(QEvent* event) override;
+
 #pragma region QWidget
 public slots:
   /// <summary>
