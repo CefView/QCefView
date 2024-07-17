@@ -330,15 +330,15 @@ QCefView::onRequestCloseFromWeb()
 void
 QCefView::leaveEvent(QEvent* event)
 {
+  Q_D(QCefView);
+
+  QPoint localPos = QCursor::pos();
+  QPoint globalPos = mapToGlobal(localPos);
+
+  QMouseEvent moveEvent(QEvent::MouseMove, localPos, globalPos, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+  d->onViewMouseEvent(&moveEvent);
+
   QWidget::leaveEvent(event);
-
-  if (d_ptr->isOSRModeEnabled()) {
-    QPoint localPos{ -1, -1 };
-    QPoint globalPos = mapToGlobal(localPos);
-
-    QMouseEvent moveEvent(QEvent::MouseMove, localPos, globalPos, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
-    mouseMoveEvent(&moveEvent);
-  }
 }
 
 QVariant
