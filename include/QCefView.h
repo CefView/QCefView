@@ -455,8 +455,6 @@ protected:
   /// <returns>True to allow the close, false to cancel the close</returns>
   virtual bool onRequestCloseFromWeb();
 
-  virtual void leaveEvent(QEvent* event) override;
-
 #pragma region QWidget
 public slots:
   /// <summary>
@@ -546,6 +544,11 @@ protected:
   /// Please refer to QWidget::wheelEvent
   /// </summary>
   void wheelEvent(QWheelEvent* event) override;
+
+  /// <summary>
+  /// Please refer to QWidget::leaveEvent
+  /// </summary>
+  void leaveEvent(QEvent* event) override;
 
   /// <summary>
   /// Please refer to QWidget::contextMenuEvent
