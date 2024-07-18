@@ -332,10 +332,8 @@ QCefView::leaveEvent(QEvent* event)
 {
   Q_D(QCefView);
 
-  QPoint localPos = QCursor::pos();
-  QPoint globalPos = mapToGlobal(localPos);
-
-  QMouseEvent moveEvent(QEvent::MouseMove, localPos, globalPos, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+  QPoint mousePos = QCursor::pos();
+  QMouseEvent moveEvent(QEvent::MouseMove, mousePos, mousePos, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
   d->onViewMouseEvent(&moveEvent);
 
   QWidget::leaveEvent(event);
