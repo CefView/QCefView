@@ -327,6 +327,18 @@ QCefView::onRequestCloseFromWeb()
   return true;
 }
 
+void
+QCefView::leaveEvent(QEvent* event)
+{
+  Q_D(QCefView);
+
+  QPoint mousePos = QCursor::pos();
+  QMouseEvent moveEvent(QEvent::MouseMove, mousePos, mousePos, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+  d->onViewMouseEvent(&moveEvent);
+
+  QWidget::leaveEvent(event);
+}
+
 QVariant
 QCefView::inputMethodQuery(Qt::InputMethodQuery query) const
 {

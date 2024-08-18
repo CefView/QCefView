@@ -546,6 +546,11 @@ protected:
   void wheelEvent(QWheelEvent* event) override;
 
   /// <summary>
+  /// Please refer to QWidget::leaveEvent
+  /// </summary>
+  void leaveEvent(QEvent* event) override;
+
+  /// <summary>
   /// Please refer to QWidget::contextMenuEvent
   /// </summary>
   void contextMenuEvent(QContextMenuEvent* event) override;
