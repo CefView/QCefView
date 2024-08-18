@@ -615,6 +615,32 @@ QCefViewPrivate::onCefContextMenuDismissed()
   osr.contextMenuCallback_ = nullptr;
 }
 
+bool
+QCefViewPrivate::onJsDialog(const QString& origin_url,
+                            int dialog_type,
+                            const QString& message_text,
+                            const QString& default_prompt_text,
+                            CefRefPtr<CefJSDialogCallback> callback,
+                            bool& suppress_message)
+{
+  Q_Q(QCefView);
+
+  bool ret = false;
+
+  QPair<bool, QString> callbackResult;
+
+  ret = q->onJsDialog(origin_url,
+                      (QCefView::CefJsDialogType)dialog_type,
+                      message_text,
+                      default_prompt_text,
+                      suppress_message,
+                      callbackResult);
+
+  callback->Continue(callbackResult.first, callbackResult.second.toStdString());
+
+  return ret;
+}
+
 void
 QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
                               const CefString& title,

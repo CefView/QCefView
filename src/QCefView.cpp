@@ -1,6 +1,8 @@
 ﻿#include <QCefView.h>
 
 #pragma region qt_headers
+#include <QInputDialog>
+#include <QMessageBox>
 #include <QPainter>
 #include <QPoint>
 #include <QResizeEvent>
@@ -323,6 +325,40 @@ QCefView::onRequestCloseFromWeb()
 {
   // delete self
   deleteLater();
+
+  return true;
+}
+
+bool
+QCefView::onJsDialog(const QString& originUrl,
+                     QCefView::CefJsDialogType dialogType,
+                     const QString& messageText,
+                     const QString& defaultPromptText,
+                     bool& suppressMessage,
+                     QPair<bool, QString>& callbackResult)
+{
+  suppressMessage = false;
+
+  QMessageBox::StandardButton button = QMessageBox::NoButton;
+  if (dialogType == QCefView::CefJsDialogType::JSDIALOGTYPE_ALERT) {
+    button = QMessageBox::warning(this, "Alert", messageText);
+    callbackResult.first = true;
+    callbackResult.second = "";
+  } else if (dialogType == QCefView::CefJsDialogType::JSDIALOGTYPE_CONFIRM) {
+    button = QMessageBox::question(this, "Confirm", messageText, QMessageBox::Yes | QMessageBox::No);
+    callbackResult.first = button == QMessageBox::Yes;
+    callbackResult.second = "";
+  } else if (dialogType == QCefView::CefJsDialogType::JSDIALOGTYPE_PROMPT) {
+    bool ok = false;
+    QString text = QInputDialog::getText(this, "Prompt", messageText, QLineEdit::Normal, defaultPromptText, &ok);
+    if (ok) {
+      callbackResult.first = true;
+      callbackResult.second = text;
+    } else {
+      callbackResult.first = false;
+      callbackResult.second = "";
+    }
+  }
 
   return true;
 }

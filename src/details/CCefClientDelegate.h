@@ -94,6 +94,14 @@ public:
 #endif
                             CefRefPtr<CefFileDialogCallback> callback) override;
 
+  virtual bool OnJSDialog(CefRefPtr<CefBrowser> browser,
+                          const CefString& origin_url,
+                          CefJSDialogHandler::JSDialogType dialog_type,
+                          const CefString& message_text,
+                          const CefString& default_prompt_text,
+                          CefRefPtr<CefJSDialogCallback> callback,
+                          bool& suppress_message) override;
+
   // DisplayHandler
   virtual void addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url) override;
   virtual void titleChanged(CefRefPtr<CefBrowser>& browser, const std::string& title) override;

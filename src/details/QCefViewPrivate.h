@@ -236,6 +236,13 @@ public slots:
 
   void onContextMenuDestroyed(QObject* obj);
 
+  bool onJsDialog(const QString& origin_url,
+                  int dialog_type,
+                  const QString& message_text,
+                  const QString& default_prompt_text,
+                  CefRefPtr<CefJSDialogCallback> callback,
+                  bool& suppress_message);
+
 signals:
   void updateOsrFrame();
 
