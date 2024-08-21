@@ -64,9 +64,9 @@ public:
   /// </summary>
   enum CefJsDialogType
   {
-    JSDIALOGTYPE_ALERT = 0,
-    JSDIALOGTYPE_CONFIRM,
-    JSDIALOGTYPE_PROMPT,
+    CefJsDialogTypeAlert = 0,
+    CefJsDialogTypeConfirm,
+    CefJsDialogTypePrompt
   };
   Q_ENUM(CefJsDialogType)
 

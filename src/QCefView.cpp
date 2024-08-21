@@ -340,15 +340,15 @@ QCefView::onJsDialog(const QString& originUrl,
   suppressMessage = false;
 
   QMessageBox::StandardButton button = QMessageBox::NoButton;
-  if (dialogType == QCefView::CefJsDialogType::JSDIALOGTYPE_ALERT) {
+  if (dialogType == QCefView::CefJsDialogType::CefJsDialogTypeAlert) {
     button = QMessageBox::warning(this, "Alert", messageText);
     callbackResult.first = true;
     callbackResult.second = "";
-  } else if (dialogType == QCefView::CefJsDialogType::JSDIALOGTYPE_CONFIRM) {
+  } else if (dialogType == QCefView::CefJsDialogType::CefJsDialogTypeConfirm) {
     button = QMessageBox::question(this, "Confirm", messageText, QMessageBox::Yes | QMessageBox::No);
     callbackResult.first = button == QMessageBox::Yes;
     callbackResult.second = "";
-  } else if (dialogType == QCefView::CefJsDialogType::JSDIALOGTYPE_PROMPT) {
+  } else if (dialogType == QCefView::CefJsDialogType::CefJsDialogTypePrompt) {
     bool ok = false;
     QString text = QInputDialog::getText(this, "Prompt", messageText, QLineEdit::Normal, defaultPromptText, &ok);
     if (ok) {
