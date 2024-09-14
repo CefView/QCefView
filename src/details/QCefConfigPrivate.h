@@ -53,7 +53,9 @@ public:
   /* bool   */ QVariant windowlessRenderingEnabled_ = true;
 
   /* bool   */ QVariant persistSessionCookies_;
+#if CEF_VERSION_MAJOR < 128
   /* bool   */ QVariant persistUserPreferences_;
+#endif
   /* short  */ QVariant remoteDebuggingport_;
   /* QColor */ QVariant backgroundColor_;
 

@@ -251,7 +251,7 @@ public:
   /// <summary>
   /// Sets the acceptable language list
   /// </summary>
-  /// <param name="languages">Comma delimited ordered list of language codes without any whitespace 
+  /// <param name="languages">Comma delimited ordered list of language codes without any whitespace
   /// that will be used in the "Accept-Language" HTTP header.</param>
   void setAcceptLanguageList(const QString& languages);
 
@@ -271,6 +271,7 @@ public:
   /// </summary>
   const QVariant persistSessionCookies() const;
 
+#if CEF_VERSION_MAJOR < 128
   /// <summary>
   /// Sets whether to persist user preferences
   /// </summary>
@@ -281,6 +282,7 @@ public:
   /// Gets whether to persist user preferences
   /// </summary>
   const QVariant persistUserPreferences() const;
+#endif
 
   /// <summary>
   /// Sets the remote debugging port

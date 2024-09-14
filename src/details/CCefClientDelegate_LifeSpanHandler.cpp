@@ -1,4 +1,4 @@
-#include "CCefClientDelegate.h"
+﻿#include "CCefClientDelegate.h"
 
 #if defined(Q_OS_WINDOWS)
 #include <windows.h>
@@ -16,7 +16,7 @@
 
 bool
 CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
-                                  int64_t frameId,
+                                  const CefFrameId& frameId,
                                   const std::string& targetUrl,
                                   const std::string& targetFrameName,
                                   CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
@@ -173,10 +173,12 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 
   if (browser->IsPopup()) {
     // pop-up window
-    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onAfterCefPopupCreated(browser); }, c);
+    QMetaObject::invokeMethod(
+      pCefViewPrivate_, [=]() { pCefViewPrivate_->onAfterCefPopupCreated(browser); }, c);
   } else {
     // new normal browser
-    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefBrowserCreated(browser, w); }, c);
+    QMetaObject::invokeMethod(
+      pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefBrowserCreated(browser, w); }, c);
   }
 }
 

@@ -247,6 +247,7 @@ QCefConfig::persistSessionCookies() const
   return d->persistSessionCookies_;
 }
 
+#if CEF_VERSION_MAJOR < 128
 void
 QCefConfig::setPersistUserPreferences(bool enabled)
 {
@@ -260,6 +261,7 @@ QCefConfig::persistUserPreferences() const
   Q_D(const QCefConfig);
   return d->persistUserPreferences_;
 }
+#endif
 
 void
 QCefConfig::setRemoteDebuggingPort(short port)

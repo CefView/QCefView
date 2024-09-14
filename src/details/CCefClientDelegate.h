@@ -46,20 +46,20 @@ public:
   virtual void processUrlRequest(const std::string& url) override;
 
   virtual void processQueryRequest(CefRefPtr<CefBrowser>& browser,
-                                   int64_t frameId,
+                                   const CefFrameId& frameId,
                                    const std::string& query,
                                    const int64_t query_id) override;
 
   virtual void focusedEditableNodeChanged(CefRefPtr<CefBrowser>& browser,
-                                          int64_t frameId,
+                                          const CefFrameId& frameId,
                                           bool focusOnEditableNode) override;
 
   virtual void invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
-                                  int64_t frameId,
+                                  const CefFrameId& frameId,
                                   const std::string& method,
                                   const CefRefPtr<CefListValue>& arguments) override;
   virtual void reportJSResult(CefRefPtr<CefBrowser>& browser,
-                              int64_t frameId,
+                              const CefFrameId& frameId,
                               const std::string& context,
                               const CefRefPtr<CefValue>& result) override;
 
@@ -95,7 +95,9 @@ public:
                             CefRefPtr<CefFileDialogCallback> callback) override;
 
   // DisplayHandler
-  virtual void addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url) override;
+  virtual void addressChanged(CefRefPtr<CefBrowser>& browser,
+                              const CefFrameId& frameId,
+                              const std::string& url) override;
   virtual void titleChanged(CefRefPtr<CefBrowser>& browser, const std::string& title) override;
   virtual void faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::vector<CefString>& icon_urls) override;
   virtual void fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool fullscreen) override;
@@ -138,7 +140,7 @@ public:
 
   // LifSpanHandler
   virtual bool onBeforePopup(CefRefPtr<CefBrowser>& browser,
-                             int64_t frameId,
+                             const CefFrameId& frameId,
                              const std::string& targetUrl,
                              const std::string& targetFrameName,
                              CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
@@ -177,17 +179,17 @@ public:
                        const void* buffer,
                        int width,
                        int height) override;
-  #if CEF_VERSION_MAJOR < 124
+#if CEF_VERSION_MAJOR < 124
   virtual void onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
                                   CefRenderHandler::PaintElementType type,
                                   const CefRenderHandler::RectList& dirtyRects,
                                   void* shared_handle) override;
-  #else
+#else
   virtual void onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
                                   CefRenderHandler::PaintElementType type,
                                   const CefRenderHandler::RectList& dirtyRects,
                                   const CefAcceleratedPaintInfo& info) override;
-  #endif
+#endif
   virtual bool startDragging(CefRefPtr<CefBrowser> browser,
                              CefRefPtr<CefDragData> drag_data,
                              CefRenderHandler::DragOperationsMask allowed_ops,
