@@ -1180,12 +1180,19 @@ QCefViewPrivate::executeJavascript(const QCefFrameId& frameId, const QString& co
     return false;
 
   if (pCefBrowser_) {
-    auto frame =
-#if CEF_VERSION_MAJOR < 122
-      pCefBrowser_->GetFrame(ValueConvertor::FrameIdQ2C(frameId));
+    // convert frame id
+    auto fid = ValueConvertor::FrameIdQ2C(frameId);
+    // get frame instance
+    auto frame = (frameId == QCefView::MainFrameID) ? //
+                   pCefBrowser_->GetMainFrame()       // get main frame
+                                                    : //
+#if CEF_VERSION_MAJOR < 122                           // get frame by id
+                   pCefBrowser_->GetFrame(fid);
 #else
-      pCefBrowser_->GetFrameByIdentifier(ValueConvertor::FrameIdQ2C(frameId));
+                   pCefBrowser_->GetFrameByIdentifier(fid);
 #endif
+
+    // validate frame instance
     if (!frame)
       return false;
 
@@ -1216,12 +1223,19 @@ QCefViewPrivate::executeJavascriptWithResult(const QCefFrameId& frameId,
     return false;
 
   if (pClient_ && pCefBrowser_) {
-    auto frame =
-#if CEF_VERSION_MAJOR < 122
-      pCefBrowser_->GetFrame(ValueConvertor::FrameIdQ2C(frameId));
+    // convert frame id
+    auto fid = ValueConvertor::FrameIdQ2C(frameId);
+    // get frame instance
+    auto frame = (frameId == QCefView::MainFrameID) ? //
+                   pCefBrowser_->GetMainFrame()       // get main frame
+                                                    : //
+#if CEF_VERSION_MAJOR < 122                           // get frame by id
+                   pCefBrowser_->GetFrame(fid);
 #else
-      pCefBrowser_->GetFrameByIdentifier(ValueConvertor::FrameIdQ2C(frameId));
+                   pCefBrowser_->GetFrameByIdentifier(fid);
 #endif
+
+    // validate frame instance
     if (!frame)
       return false;
 

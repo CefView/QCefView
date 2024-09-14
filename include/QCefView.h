@@ -26,15 +26,15 @@
 /// <summary>
 /// Type alias for CEF browser id
 /// </summary>
-using QCefBrowserId = int;
+#define QCefBrowserId int
 
 /// <summary>
 /// Type alias for CEF frame id
 /// </summary>
 #if CEF_VERSION_MAJOR < 122
-using QCefFrameId = qint64;
+#define QCefFrameId qint64
 #else
-using QCefFrameId = QString;
+#define QCefFrameId QString
 #endif
 
 /// <summary>
