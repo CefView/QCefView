@@ -225,7 +225,10 @@ if(OS_MACOS)
   endif()
 
   # detect minimum deployment target by CEF
-  if(${CEF_VERSION_MAJOR} VERSION_GREATER_EQUAL 104)
+  # plese refere to: https://bitbucket.org/chromiumembedded/cef/wiki/BranchesAndBuilding.md
+  if(${CEF_VERSION_MAJOR} VERSION_GREATER_EQUAL 117)
+    set(CEF_MIN_DEPLOYMENT_TARGET 10.15)
+  elseif(${CEF_VERSION_MAJOR} VERSION_GREATER_EQUAL 104)
     set(CEF_MIN_DEPLOYMENT_TARGET 10.13)
   else()
     set(CEF_MIN_DEPLOYMENT_TARGET 10.11)
