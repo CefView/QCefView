@@ -177,10 +177,17 @@ public:
                        const void* buffer,
                        int width,
                        int height) override;
+  #if CEF_VERSION_MAJOR < 124
   virtual void onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
                                   CefRenderHandler::PaintElementType type,
                                   const CefRenderHandler::RectList& dirtyRects,
                                   void* shared_handle) override;
+  #else
+  virtual void onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
+                                  CefRenderHandler::PaintElementType type,
+                                  const CefRenderHandler::RectList& dirtyRects,
+                                  const CefAcceleratedPaintInfo& info) override;
+  #endif
   virtual bool startDragging(CefRefPtr<CefBrowser> browser,
                              CefRefPtr<CefDragData> drag_data,
                              CefRenderHandler::DragOperationsMask allowed_ops,

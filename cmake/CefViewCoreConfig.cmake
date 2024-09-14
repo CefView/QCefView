@@ -4,7 +4,7 @@ include(FetchContent)
 FetchContent_Declare(
     CefViewCore
     GIT_REPOSITORY https://github.com/CefView/CefViewCore.git
-    GIT_TAG 8443548ddba2474e53304c0e602c23b988a16496
+    GIT_TAG 33b71d0b31ec3b5de0ba561e0630134ec865b6ec
 )
 
 # set CEF version to be used
@@ -21,7 +21,16 @@ FetchContent_Declare(
 # "110.0.26+g732747f+chromium-110.0.5481.97"  # BAD   # TO-BE-FIXED
 # "113.3.1+g525fa10+chromium-113.0.5672.128"  # So far so good - doesn't support Xcode 15
 # "119.4.7+g55e15c8+chromium-119.0.6045.199"
-set(CEF_SDK_VERSION "119.4.7+g55e15c8+chromium-119.0.6045.199")
+# "120.1.6+gf08b1fd+chromium-120.0.6099.71"   # GOOD
+# "121.3.15+g4d3b0b4+chromium-121.0.6167.184" # GOOD
+# "122.1.13+gde5b724+chromium-122.0.6261.130"
+# "123.0.13+gfc703fb+chromium-123.0.6312.124"
+# "124.3.9+g9bd638f+chromium-124.0.6367.207"
+# "125.0.22+gc410c95+chromium-125.0.6422.142"
+# "126.2.18+g3647d39+chromium-126.0.6478.183"
+# "127.3.5+g114ea2a+chromium-127.0.6533.120"
+# "128.4.9+g9840ad9+chromium-128.0.6613.120"
+set(CEF_SDK_VERSION "128.4.9+g9840ad9+chromium-128.0.6613.120")
 
 # populate CefViewCore project
 FetchContent_MakeAvailable(CefViewCore)
