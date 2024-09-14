@@ -1180,7 +1180,12 @@ QCefViewPrivate::executeJavascript(const QCefFrameId& frameId, const QString& co
     return false;
 
   if (pCefBrowser_) {
-    auto frame = pCefBrowser_->GetFrameByIdentifier(ValueConvertor::FrameIdQ2C(frameId));
+    auto frame =
+#if CEF_VERSION_MAJOR < 122
+      pCefBrowser_->GetFrame(ValueConvertor::FrameIdQ2C(frameId));
+#else
+      pCefBrowser_->GetFrameByIdentifier(ValueConvertor::FrameIdQ2C(frameId));
+#endif
     if (!frame)
       return false;
 
@@ -1211,7 +1216,12 @@ QCefViewPrivate::executeJavascriptWithResult(const QCefFrameId& frameId,
     return false;
 
   if (pClient_ && pCefBrowser_) {
-    auto frame = pCefBrowser_->GetFrameByIdentifier(ValueConvertor::FrameIdQ2C(frameId));
+    auto frame =
+#if CEF_VERSION_MAJOR < 122
+      pCefBrowser_->GetFrame(ValueConvertor::FrameIdQ2C(frameId));
+#else
+      pCefBrowser_->GetFrameByIdentifier(ValueConvertor::FrameIdQ2C(frameId));
+#endif
     if (!frame)
       return false;
 
