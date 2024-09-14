@@ -18,7 +18,9 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   QCefConfigPrivate::CopyToCefSettings(config, &cef_settings);
 
   // fixed values
+#if CEF_VERSION_MAJOR < 128
   cef_settings.pack_loading_disabled = false;
+#endif
 
 #if defined(CEF_USE_QT_EVENT_LOOP)
   cef_settings.multi_threaded_message_loop = false;

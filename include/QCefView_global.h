@@ -32,12 +32,12 @@
         #endif
     #endif
 #endif
+// clang-format on
 
 // CEF version numbers
-#define CEF_VERSION_MAJOR 119
+#define CEF_VERSION_MAJOR 128
 #define CEF_VERSION_MINOR 4
-#define CEF_VERSION_PATCH 7
+#define CEF_VERSION_PATCH 9
 
-// clang-format on
 
 #endif // QCEFEVIEW_GLOBAL_H

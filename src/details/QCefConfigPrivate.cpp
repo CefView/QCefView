@@ -90,8 +90,10 @@ QCefConfigPrivate::CopyToCefSettings(const QCefConfig* config, CefSettings* sett
   if (config->d_ptr->persistSessionCookies_.canConvert<int>())
     settings->persist_session_cookies = config->d_ptr->persistSessionCookies_.toInt();
 
+#if CEF_VERSION_MAJOR < 128
   if (config->d_ptr->persistUserPreferences_.canConvert<int>())
     settings->persist_user_preferences = config->d_ptr->persistUserPreferences_.toInt();
+#endif
 
   if (config->d_ptr->backgroundColor_.canConvert<QColor>())
     settings->background_color = config->d_ptr->backgroundColor_.value<QColor>().rgba();

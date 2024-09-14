@@ -66,7 +66,7 @@ mapCursorShape(cef_cursor_type_t& type)
 }
 
 void
-CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, int64_t frameId, const std::string& url)
+CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, const CefFrameId& frameId, const std::string& url)
 {
   if (!IsValidBrowser(browser))
     return;
