@@ -72,7 +72,7 @@ CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, const CefFram
     return;
 
   auto u = QString::fromStdString(url);
-  emit pCefViewPrivate_->q_ptr->addressChanged(frameId, u);
+  emit pCefViewPrivate_->q_ptr->addressChanged(ValueConvertor::FrameIdC2Q(frameId), u);
 }
 
 void

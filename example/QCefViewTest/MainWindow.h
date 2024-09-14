@@ -24,20 +24,26 @@ protected:
   // QCefView slots
 protected slots:
 
-  void onInvokeMethod(int browserId, int64_t frameId, const QString& method, const QVariantList& arguments);
+  void onInvokeMethod(const QCefBrowserId& browserId,
+                      const QCefFrameId& frameId,
+                      const QString& method,
+                      const QVariantList& arguments);
 
-  void onQCefQueryRequest(int browserId, int64_t frameId, const QCefQuery& query);
+  void onQCefQueryRequest(const QCefBrowserId& browserId, const QCefFrameId& frameId, const QCefQuery& query);
 
-  void onJavascriptResult(int browserId, int64_t frameId, const QString& context, const QVariant& result);
+  void onJavascriptResult(const QCefBrowserId& browserId,
+                          const QCefFrameId& frameId,
+                          const QString& context,
+                          const QVariant& result);
 
-  void onLoadingStateChanged(int browserId, bool isLoading, bool canGoBack, bool canGoForward);
+  void onLoadingStateChanged(const QCefBrowserId& browserId, bool isLoading, bool canGoBack, bool canGoForward);
 
-  void onLoadStart(int browserId, qint64 frameId, bool isMainFrame, int transitionType);
+  void onLoadStart(const QCefBrowserId& browserId, const QCefFrameId& frameId, bool isMainFrame, int transitionType);
 
-  void onLoadEnd(int browserId, qint64 frameId, bool isMainFrame, int httpStatusCode);
+  void onLoadEnd(const QCefBrowserId& browserId, const QCefFrameId& frameId, bool isMainFrame, int httpStatusCode);
 
-  void onLoadError(int browserId,
-                   qint64 frameId,
+  void onLoadError(const QCefBrowserId& browserId,
+                   const QCefFrameId& frameId,
                    bool isMainFrame,
                    int errorCode,
                    const QString& errorMsg,

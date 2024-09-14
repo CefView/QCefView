@@ -127,7 +127,10 @@ MainWindow::createRightCefView()
 }
 
 void
-MainWindow::onInvokeMethod(int browserId, int64_t frameId, const QString& method, const QVariantList& arguments)
+MainWindow::onInvokeMethod(const QCefBrowserId& browserId,
+                           const QCefFrameId& frameId,
+                           const QString& method,
+                           const QVariantList& arguments)
 {
   // extract the arguments and dispatch the invocation to corresponding handler
   if (0 == method.compare("TestMethod")) {
@@ -160,7 +163,7 @@ MainWindow::onInvokeMethod(int browserId, int64_t frameId, const QString& method
 }
 
 void
-MainWindow::onQCefQueryRequest(int browserId, int64_t frameId, const QCefQuery& query)
+MainWindow::onQCefQueryRequest(const QCefBrowserId& browserId, const QCefFrameId& frameId, const QCefQuery& query)
 {
   QString title("QCef Query Request");
   QString text = QString("Current Thread: QT_UI\r\n"
@@ -175,7 +178,10 @@ MainWindow::onQCefQueryRequest(int browserId, int64_t frameId, const QCefQuery& 
 }
 
 void
-MainWindow::onJavascriptResult(int browserId, int64_t frameId, const QString& context, const QVariant& result)
+MainWindow::onJavascriptResult(const QCefBrowserId& browserId,
+                               const QCefFrameId& frameId,
+                               const QString& context,
+                               const QVariant& result)
 {
   auto jsonValue = QJsonDocument::fromVariant(result);
   auto jsonString = QString(jsonValue.toJson());
@@ -187,29 +193,32 @@ MainWindow::onJavascriptResult(int browserId, int64_t frameId, const QString& co
 }
 
 void
-MainWindow::onLoadingStateChanged(int browserId, bool isLoading, bool canGoBack, bool canGoForward)
+MainWindow::onLoadingStateChanged(const QCefBrowserId& browserId, bool isLoading, bool canGoBack, bool canGoForward)
 {
   qDebug() << "onLoadingStateChanged, browserId:" << browserId << ", isLoading:" << isLoading
            << ", canGoBack:" << canGoBack << ", canGoForward:" << canGoForward;
 }
 
 void
-MainWindow::onLoadStart(int browserId, qint64 frameId, bool isMainFrame, int transitionType)
+MainWindow::onLoadStart(const QCefBrowserId& browserId,
+                        const QCefFrameId& frameId,
+                        bool isMainFrame,
+                        int transitionType)
 {
   qDebug() << "onLoadStart, browserId:" << browserId << ", frameId:" << frameId << ", isMainFrame:" << isMainFrame
            << ", transitionType:" << transitionType;
 }
 
 void
-MainWindow::onLoadEnd(int browserId, qint64 frameId, bool isMainFrame, int httpStatusCode)
+MainWindow::onLoadEnd(const QCefBrowserId& browserId, const QCefFrameId& frameId, bool isMainFrame, int httpStatusCode)
 {
   qDebug() << "onLoadEnd, browserId:" << browserId << ", frameId:" << frameId << ", isMainFrame:" << isMainFrame
            << ", httpStatusCode:" << httpStatusCode;
 }
 
 void
-MainWindow::onLoadError(int browserId,
-                        qint64 frameId,
+MainWindow::onLoadError(const QCefBrowserId& browserId,
+                        const QCefFrameId& frameId,
                         bool isMainFrame,
                         int errorCode,
                         const QString& errorMsg,

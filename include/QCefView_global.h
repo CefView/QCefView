@@ -39,5 +39,4 @@
 #define CEF_VERSION_MINOR 4
 #define CEF_VERSION_PATCH 9
 
-
 #endif // QCEFEVIEW_GLOBAL_H

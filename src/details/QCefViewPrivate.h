@@ -17,6 +17,7 @@
 #include "QCefContextPrivate.h"
 #include "QCefWindow.h"
 #include "utils/MenuBuilder.h"
+#include "utils/ValueConvertor.h"
 
 #include <QCefQuery.h>
 #include <QCefView.h>
@@ -184,14 +185,14 @@ public:
 protected:
   void onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* window);
 
-  bool onBeforeNewBrowserCreate(qint64 sourceFrameId,
+  bool onBeforeNewBrowserCreate(const QCefFrameId& sourceFrameId,
                                 const QString& targetUrl,
                                 const QString& targetFrameName,
                                 QCefView::CefWindowOpenDisposition targetDisposition,
                                 QRect rect,
                                 QCefSetting settings);
 
-  bool onBeforeNewPopupCreate(qint64 sourceFrameId,
+  bool onBeforeNewPopupCreate(const QCefFrameId& sourceFrameId,
                               const QString& targetUrl,
                               QString& targetFrameName,
                               QCefView::CefWindowOpenDisposition targetDisposition,
@@ -305,19 +306,24 @@ public:
 
   void browserStopLoad();
 
-  bool triggerEvent(const QString& name, const QVariantList& args, int64_t frameId = CefViewBrowserClient::MAIN_FRAME);
+  bool triggerEvent(const QString& name,
+                    const QVariantList& args,
+                    const QCefFrameId& frameId = ValueConvertor::FrameIdC2Q(CefViewBrowserClient::MAIN_FRAME));
 
   bool responseQCefQuery(const QCefQuery& query);
 
   bool responseQCefQuery(const int64_t query, bool success, const QString& response, int error);
 
-  bool executeJavascript(int64_t frameId, const QString& code, const QString& url);
+  bool executeJavascript(const QCefFrameId& frameId, const QString& code, const QString& url);
 
-  bool executeJavascriptWithResult(int64_t frameId, const QString& code, const QString& url, const QString& context);
+  bool executeJavascriptWithResult(const QCefFrameId& frameId,
+                                   const QString& code,
+                                   const QString& url,
+                                   const QString& context);
 
   void notifyMoveOrResizeStarted();
 
-  bool sendEventNotifyMessage(int64_t frameId, const QString& name, const QVariantList& args);
+  bool sendEventNotifyMessage(const QCefFrameId& frameId, const QString& name, const QVariantList& args);
 
   bool setPreference(const QString& name, const QVariant& value, const QString& error);
 };

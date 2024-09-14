@@ -23,6 +23,23 @@
 #include <QCefQuery.h>
 #include <QCefSetting.h>
 
+/// <summary>
+/// Type alias for CEF browser id
+/// </summary>
+using QCefBrowserId = int;
+
+/// <summary>
+/// Type alias for CEF frame id
+/// </summary>
+#if CEF_VERSION_MAJOR < 122
+using QCefFrameId = qint64;
+#else
+using QCefFrameId = QString;
+#endif
+
+/// <summary>
+///  Private implementation
+/// </summary>
 class QCefViewPrivate;
 
 /// <summary>
@@ -39,10 +56,10 @@ public:
   /// <summary>
   /// The main frame identity
   /// </summary>
-  static const qint64 MainFrameID = 0;
+  static const QCefFrameId MainFrameID;
 
   /// <summary>
-  /// Represents the CEF popup windows open disposition
+  /// Represents the CEF pop-up windows open disposition
   /// </summary>
   enum CefWindowOpenDisposition
   {
@@ -105,7 +122,7 @@ public:
   /// Gets the browser id
   /// </summary>
   /// <returns>The browser id</returns>
-  int browserId();
+  QCefBrowserId browserId();
 
   /// <summary>
   /// Navigates to the content.
@@ -170,7 +187,7 @@ public:
   /// <param name="event">The <see cref="QCefEvent"/> instance</param>
   /// <param name="frameId">The frame id</param>
   /// <returns>True on successful; otherwise false</returns>
-  bool triggerEvent(const QCefEvent& event, qint64 frameId);
+  bool triggerEvent(const QCefEvent& event, const QCefFrameId& frameId);
 
   /// <summary>
   /// Broad cast the event for all frames
@@ -197,7 +214,7 @@ public:
   /// the source of the error
   /// </param>
   /// <returns>True on successful; otherwise false</returns>
-  bool executeJavascript(qint64 frameId, const QString& code, const QString& url);
+  bool executeJavascript(const QCefFrameId& frameId, const QString& code, const QString& url);
 
   /// <summary>
   /// Executes javascript code in specified frame and the result will be reported through <see
@@ -211,7 +228,10 @@ public:
   /// </param>
   /// <param name="context">The context used to identify the one execution</param>
   /// <returns>True on successful; otherwise false</returns>
-  bool executeJavascriptWithResult(qint64 frameId, const QString& code, const QString& url, const QString& context);
+  bool executeJavascriptWithResult(const QCefFrameId& frameId,
+                                   const QString& code,
+                                   const QString& url,
+                                   const QString& context);
 
   /// <summary>
   /// Sets the preference for this browser
@@ -277,7 +297,7 @@ signals:
   /// <param name="isLoading">Indicates the browser is loading</param>
   /// <param name="canGoBack">Indicates the browser can go back</param>
   /// <param name="canGoForward">Indicates the browser can go forward</param>
-  void loadingStateChanged(int browserId, bool isLoading, bool canGoBack, bool canGoForward);
+  void loadingStateChanged(const QCefBrowserId& browserId, bool isLoading, bool canGoBack, bool canGoForward);
 
   /// <summary>
   /// Gets called on loading starts
@@ -286,7 +306,7 @@ signals:
   /// <param name="frameId">Indicates the frame id</param>
   /// <param name="isMainFrame">Indicates the whether this is the main frame</param>
   /// <param name="transitionType">transition type</param>
-  void loadStart(int browserId, qint64 frameId, bool isMainFrame, int transitionType);
+  void loadStart(const QCefBrowserId& browserId, const QCefFrameId& frameId, bool isMainFrame, int transitionType);
 
   /// <summary>
   /// Gets called on loading ends
@@ -295,7 +315,7 @@ signals:
   /// <param name="frameId">Indicates the frame id</param>
   /// <param name="isMainFrame">Indicates the whether this is the main frame</param>
   /// <param name="httpStatusCode">The HTTP status code</param>
-  void loadEnd(int browserId, qint64 frameId, bool isMainFrame, int httpStatusCode);
+  void loadEnd(const QCefBrowserId& browserId, const QCefFrameId& frameId, bool isMainFrame, int httpStatusCode);
 
   /// <summary>
   /// Gets called on loading failed due to error
@@ -306,8 +326,8 @@ signals:
   /// <param name="errorCode">The error code</param>
   /// <param name="errorMsg">The error message</param>
   /// <param name="failedUrl">The url caused the failure</param>
-  void loadError(int browserId,
-                 qint64 frameId,
+  void loadError(const QCefBrowserId& browserId,
+                 const QCefFrameId& frameId,
                  bool isMainFrame,
                  int errorCode,
                  const QString& errorMsg,
@@ -325,7 +345,7 @@ signals:
   /// </summary>
   /// <param name="frameId">The frame id</param>
   /// <param name="url">The address</param>
-  void addressChanged(qint64 frameId, const QString& url);
+  void addressChanged(const QCefFrameId& frameId, const QString& url);
 
   /// <summary>
   /// Gets called on title changed
@@ -370,7 +390,7 @@ signals:
   /// <param name="browserId">The browser id</param>
   /// <param name="frameId">The frame id</param>
   /// <param name="query">The query request</param>
-  void cefQueryRequest(int browserId, qint64 frameId, const QCefQuery& query);
+  void cefQueryRequest(const QCefBrowserId& browserId, const QCefFrameId& frameId, const QCefQuery& query);
 
   /// <summary>
   /// Gets called on invoking method request from web content(Javascript)
@@ -379,7 +399,10 @@ signals:
   /// <param name="frameId">The frame id</param>
   /// <param name="method">The method name</param>
   /// <param name="arguments">The arguments list</param>
-  void invokeMethod(int browserId, qint64 frameId, const QString& method, const QVariantList& arguments);
+  void invokeMethod(const QCefBrowserId& browserId,
+                    const QCefFrameId& frameId,
+                    const QString& method,
+                    const QVariantList& arguments);
 
   /// <summary>
   /// Gets called on the result of the javascript executed with <see cref="executeJavascriptWithResult"/> returned
@@ -388,7 +411,10 @@ signals:
   /// <param name="frameId">The frame id</param>
   /// <param name="context">The context</param>
   /// <param name="result">The result</param>
-  void reportJavascriptResult(int browserId, qint64 frameId, const QString& context, const QVariant& result);
+  void reportJavascriptResult(const QCefBrowserId& browserId,
+                              const QCefFrameId& frameId,
+                              const QString& context,
+                              const QVariant& result);
 
   /// <summary>
   /// Gets called after the native browser window created. This slot does not work for OSR mode.
@@ -408,7 +434,7 @@ protected:
   /// <param name="settings">Settings to be used for the popup</param>
   /// <returns>True to cancel the popup; false to allow</returns>
   /// <returns></returns>
-  virtual QCefView* onNewBrowser(qint64 sourceFrameId,
+  virtual QCefView* onNewBrowser(const QCefFrameId& sourceFrameId,
                                  const QString& url,
                                  const QString& name,
                                  QCefView::CefWindowOpenDisposition targetDisposition,
@@ -425,7 +451,7 @@ protected:
   /// <param name="rect">Rect to be used for the popup</param>
   /// <param name="settings">Settings to be used for the popup</param>
   /// <returns>True to cancel the popup; false to allow</returns>
-  virtual bool onNewPopup(qint64 frameId,
+  virtual bool onNewPopup(const QCefFrameId& frameId,
                           const QString& targetUrl,
                           QString& targetFrameName,
                           QCefView::CefWindowOpenDisposition targetDisposition,
