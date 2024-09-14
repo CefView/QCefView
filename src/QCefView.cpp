@@ -15,6 +15,12 @@
 #include "details/QCefViewPrivate.h"
 #include "details/utils/CommonUtils.h"
 
+#if CEF_VERSION_MAJOR < 122
+const QCefFrameId QCefView::MainFrameID = 0;
+#else
+const QCefFrameId QCefView::MainFrameID = "0";
+#endif
+
 QCefView::QCefView(const QString& url,
                    const QCefSetting* setting,
                    QWidget* parent /*= 0*/,
@@ -71,7 +77,7 @@ QCefView::addArchiveResource(const QString& path,
   d->addArchiveResource(path, url, password, priority);
 }
 
-int
+QCefBrowserId
 QCefView::browserId()
 {
   Q_D(QCefView);
@@ -156,11 +162,12 @@ QCefView::triggerEvent(const QCefEvent& event)
 {
   Q_D(QCefView);
 
-  return d->triggerEvent(event.eventName(), event.d_func()->args, CefViewBrowserClient::MAIN_FRAME);
+  return d->triggerEvent(
+    event.eventName(), event.d_func()->args, ValueConvertor::FrameIdC2Q(CefViewBrowserClient::MAIN_FRAME));
 }
 
 bool
-QCefView::triggerEvent(const QCefEvent& event, qint64 frameId)
+QCefView::triggerEvent(const QCefEvent& event, const QCefFrameId& frameId)
 {
   Q_D(QCefView);
 
@@ -172,7 +179,8 @@ QCefView::broadcastEvent(const QCefEvent& event)
 {
   Q_D(QCefView);
 
-  return d->triggerEvent(event.eventName(), event.d_func()->args, CefViewBrowserClient::ALL_FRAMES);
+  return d->triggerEvent(
+    event.eventName(), event.d_func()->args, ValueConvertor::FrameIdC2Q(CefViewBrowserClient::ALL_FRAMES));
 }
 
 bool
@@ -184,7 +192,7 @@ QCefView::responseQCefQuery(const QCefQuery& query)
 }
 
 bool
-QCefView::executeJavascript(qint64 frameId, const QString& code, const QString& url)
+QCefView::executeJavascript(const QCefFrameId& frameId, const QString& code, const QString& url)
 {
   Q_D(QCefView);
 
@@ -192,7 +200,10 @@ QCefView::executeJavascript(qint64 frameId, const QString& code, const QString& 
 }
 
 bool
-QCefView::executeJavascriptWithResult(qint64 frameId, const QString& code, const QString& url, const QString& context)
+QCefView::executeJavascriptWithResult(const QCefFrameId& frameId,
+                                      const QString& code,
+                                      const QString& url,
+                                      const QString& context)
 {
   Q_D(QCefView);
 
@@ -272,7 +283,7 @@ QCefView::setFocus(Qt::FocusReason reason)
 }
 
 QCefView*
-QCefView::onNewBrowser(qint64 sourceFrameId,
+QCefView::onNewBrowser(const QCefFrameId& sourceFrameId,
                        const QString& url,
                        const QString& name,
                        CefWindowOpenDisposition targetDisposition,
@@ -297,7 +308,7 @@ QCefView::onNewBrowser(qint64 sourceFrameId,
 }
 
 bool
-QCefView::onNewPopup(qint64 frameId,
+QCefView::onNewPopup(const QCefFrameId& frameId,
                      const QString& targetUrl,
                      QString& targetFrameName,
                      QCefView::CefWindowOpenDisposition targetDisposition,

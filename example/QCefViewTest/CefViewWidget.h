@@ -25,7 +25,7 @@ protected slots:
   void onDraggableRegionChanged(const QRegion& draggableRegion, const QRegion& nonDraggableRegion);
 
 protected:
-  bool onNewPopup(qint64 sourceFrameId,
+  bool onNewPopup(const QCefFrameId& sourceFrameId,
                   const QString& targetUrl,
                   QString& targetFrameName,
                   QCefView::CefWindowOpenDisposition targetDisposition,

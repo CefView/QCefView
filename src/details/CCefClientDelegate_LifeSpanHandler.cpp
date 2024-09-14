@@ -64,12 +64,12 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
     QMetaObject::invokeMethod(
       pCefViewPrivate_,
       [&]() {
-        cancel = pCefViewPrivate_->onBeforeNewPopupCreate(frameId, //
-                                                          url,     //
-                                                          name,    //
-                                                          d,       //
-                                                          rc,      //
-                                                          s,       //
+        cancel = pCefViewPrivate_->onBeforeNewPopupCreate(ValueConvertor::FrameIdC2Q(frameId), //
+                                                          url,                                 //
+                                                          name,                                //
+                                                          d,                                   //
+                                                          rc,                                  //
+                                                          s,                                   //
                                                           disableJavascriptAccess);
         if (!cancel) {
           QCefSettingPrivate::CopyToCefBrowserSettings(&s, &settings);
@@ -92,11 +92,11 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
     QMetaObject::invokeMethod(
       pCefViewPrivate_,
       [=]() {
-        pCefViewPrivate_->onBeforeNewBrowserCreate(frameId, //
-                                                   url,     //
-                                                   name,    //
-                                                   d,       //
-                                                   rc,      //
+        pCefViewPrivate_->onBeforeNewBrowserCreate(ValueConvertor::FrameIdC2Q(frameId), //
+                                                   url,                                 //
+                                                   name,                                //
+                                                   d,                                   //
+                                                   rc,                                  //
                                                    s);
       },
       Qt::QueuedConnection);

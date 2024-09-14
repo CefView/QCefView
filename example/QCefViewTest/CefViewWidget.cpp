@@ -1,4 +1,4 @@
-#include "CefViewWidget.h"
+﻿#include "CefViewWidget.h"
 
 #if defined(Q_OS_WIN)
 #include <windows.h>
@@ -20,7 +20,7 @@ CefViewWidget::CefViewWidget(const QString url, const QCefSetting* setting, QWid
   : QCefView(url, setting, parent)
 {
   setStyleSheet("background: blue;");
-  
+
   connect(this, &CefViewWidget::draggableRegionChanged, this, &CefViewWidget::onDraggableRegionChanged);
   connect(this, &CefViewWidget::nativeBrowserCreated, this, &CefViewWidget::onNativeBrowserWindowCreated);
 }
@@ -56,7 +56,7 @@ CefViewWidget::onDraggableRegionChanged(const QRegion& draggableRegion, const QR
 }
 
 bool
-CefViewWidget::onNewPopup(qint64 sourceFrameId,
+CefViewWidget::onNewPopup(const QCefFrameId& sourceFrameId,
                           const QString& targetUrl,
                           QString& targetFrameName,
                           QCefView::CefWindowOpenDisposition targetDisposition,

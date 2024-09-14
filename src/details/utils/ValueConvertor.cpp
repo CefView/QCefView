@@ -173,3 +173,23 @@ ValueConvertor::QVariantToCefValue(CefValue* cValue, const QVariant* qVariant)
       break;
   }
 }
+
+QCefFrameId
+ValueConvertor::FrameIdC2Q(const CefFrameId& id)
+{
+#if CEF_VERSION_MAJOR < 122
+  return id;
+#else
+  return QCefFrameId::fromUtf8(id.ToString().c_str(), id.ToString().length());
+#endif
+}
+
+CefFrameId
+ValueConvertor::FrameIdQ2C(const QCefFrameId& id)
+{
+#if CEF_VERSION_MAJOR < 122
+  return id;
+#else
+  return CefFrameId(id.toStdString());
+#endif
+}

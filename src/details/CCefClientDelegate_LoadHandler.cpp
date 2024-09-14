@@ -1,4 +1,4 @@
-#include "CCefClientDelegate.h"
+﻿#include "CCefClientDelegate.h"
 
 #include "QCefViewPrivate.h"
 
@@ -21,7 +21,7 @@ CCefClientDelegate::loadStart(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame
     return;
 
   emit pCefViewPrivate_->q_ptr->loadStart(
-    browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), transitionType);
+    browser->GetIdentifier(), ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), frame->IsMain(), transitionType);
 }
 
 void
@@ -30,7 +30,8 @@ CCefClientDelegate::loadEnd(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>&
   if (!IsValidBrowser(browser))
     return;
 
-  emit pCefViewPrivate_->q_ptr->loadEnd(browser->GetIdentifier(), frame->GetIdentifier(), frame->IsMain(), httpStatusCode);
+  emit pCefViewPrivate_->q_ptr->loadEnd(
+    browser->GetIdentifier(), ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), frame->IsMain(), httpStatusCode);
 }
 
 void
