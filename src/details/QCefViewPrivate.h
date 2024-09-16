@@ -3,6 +3,7 @@
 #include <QMenu>
 #include <QMutex>
 #include <QPointer>
+#include <QScopedPointer>
 #include <QString>
 #include <QStringList>
 
@@ -17,6 +18,7 @@
 #include "CCefClientDelegate.h"
 #include "QCefContextPrivate.h"
 #include "QCefWindow.h"
+#include "render/CefViewRendererFactory.h"
 #include "utils/MenuBuilder.h"
 #include "utils/ValueConvertor.h"
 
@@ -80,60 +82,16 @@ public:
   /// </summary>
   struct OsrPrivateData
   {
-    /// <summary>
-    ///
-    /// </summary>
-    bool transparentPaintingEnabled_ = false;
-
-    /// <summary>
-    ///
-    /// </summary>
-    bool showPopup_ = false;
-
-    /// <summary>
-    ///
-    /// </summary>
-    QRect qPopupRect_;
-
-    /// <summary>
-    ///
-    /// </summary>
+    // IME parameters
     QRect qImeCursorRect_;
 
-    /// <summary>
-    ///
-    /// </summary>
-    QMutex qViewPaintLock_;
-
-    /// <summary>
-    ///
-    /// </summary>
-    QImage qCefViewFrame_;
-
-    /// <summary>
-    ///
-    /// </summary>
-    QMutex qPopupPaintLock_;
-
-    /// <summary>
-    ///
-    /// </summary>
-    QImage qCefPopupFrame_;
-
-    /// <summary>
-    ///
-    /// </summary>
+    // context menu status and parameters
     bool isShowingContextMenu_ = false;
-
-    /// <summary>
-    ///
-    /// </summary>
     QMenu* contextMenu_ = nullptr;
-
-    /// <summary>
-    ///
-    /// </summary>
     CefRefPtr<CefRunContextMenuCallback> contextMenuCallback_;
+
+    // OSR renderer
+    std::shared_ptr<ICefViewRenderer> pRenderer_;
   } osr;
 
   /// <summary>
@@ -227,10 +185,6 @@ public slots:
 
   void onOsrImeCursorRectChanged(const QRect& rc);
 
-  void onOsrShowPopup(bool show);
-
-  void onOsrResizePopup(const QRect& rc);
-
   void onContextMenuTriggered(QAction* action);
 
   void onContextMenuDestroyed(QObject* obj);
@@ -239,23 +193,6 @@ signals:
   void updateOsrFrame();
 
 protected:
-  void onOsrUpdateViewFrame(const QImage& frame, const QRegion& region);
-
-  void onOsrUpdatePopupFrame(const QImage& frame, const QRegion& region);
-
-  //////////////////////////////////////////////////////////////////////////
-  // for hardware acceleration, currently not supported
-#if CEF_VERSION_MAJOR < 124
-  // for CEF version below 124, these two methods do not work.
-  void onOsrUpdateViewTexture(void* shared_handle, const QRegion& region);
-  void onOsrUpdatePopupTexture(void* shared_handle, const QRegion& region);
-#else
-  // CEF offers the GPU resoruces for rendering
-  void onOsrUpdateViewTexture(const CefAcceleratedPaintInfo& info, const QRegion& region);
-  void onOsrUpdatePopupTexture(const CefAcceleratedPaintInfo& info, const QRegion& region);
-#endif
-  //////////////////////////////////////////////////////////////////////////
-
   void onBeforeCefContextMenu(const MenuBuilder::MenuData& data);
 
   void onRunCefContextMenu(QPoint pos, CefRefPtr<CefRunContextMenuCallback> callback);

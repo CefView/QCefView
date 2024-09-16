@@ -107,7 +107,7 @@ CCefClientDelegate::onPopupShow(CefRefPtr<CefBrowser>& browser, bool show)
   if (!IsValidBrowser(browser))
     return;
 
-  pCefViewPrivate_->onOsrShowPopup(show);
+  pCefViewPrivate_->osr.pRenderer_->updatePopupVisibility(show);
 }
 
 void
@@ -116,7 +116,7 @@ CCefClientDelegate::onPopupSize(CefRefPtr<CefBrowser>& browser, const CefRect& r
   if (!IsValidBrowser(browser))
     return;
 
-  pCefViewPrivate_->onOsrResizePopup(QRect{ rect.x, rect.y, rect.width, rect.height });
+  pCefViewPrivate_->osr.pRenderer_->updatePopupRect(rect);
 }
 
 void
@@ -130,20 +130,9 @@ CCefClientDelegate::onPaint(CefRefPtr<CefBrowser>& browser,
   if (!IsValidBrowser(browser))
     return;
 
-  QImage frame;
-  QRegion region;
+  pCefViewPrivate_->osr.pRenderer_->updateFrame(type, dirtyRects, buffer, CefSize(width, height));
 
-  frame = QImage(static_cast<const uchar*>(buffer), width, height, QImage::Format_ARGB32_Premultiplied);
-  for (auto& rect : dirtyRects) {
-    region += QRect{ rect.x, rect.y, rect.width, rect.height };
-  }
-
-  if (PET_VIEW == type) {
-    pCefViewPrivate_->onOsrUpdateViewFrame(frame, region);
-  } else if (PET_POPUP == type) {
-    pCefViewPrivate_->onOsrUpdatePopupFrame(frame, region);
-  } else {
-  }
+  emit pCefViewPrivate_->updateOsrFrame();
 }
 
 #if CEF_VERSION_MAJOR < 124
@@ -153,17 +142,10 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
                                        const CefRenderHandler::RectList& dirtyRects,
                                        void* shared_handle)
 {
-  QRegion region;
-  for (auto& rect : dirtyRects) {
-    region += QRect{ rect.x, rect.y, rect.width, rect.height };
-  }
+  if (!IsValidBrowser(browser))
+    return;
 
-  if (PET_VIEW == type) {
-    pCefViewPrivate_->onOsrUpdateViewTexture(shared_handle, region);
-  } else if (PET_POPUP == type) {
-    pCefViewPrivate_->onOsrUpdatePopupTexture(shared_handle, region);
-  } else {
-  }
+  pCefViewPrivate_->osr.pRenderer_->updateTexture(type, dirtyRects, shared_handle, 0);
 }
 #else
 void
@@ -172,17 +154,10 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
                                        const CefRenderHandler::RectList& dirtyRects,
                                        const CefAcceleratedPaintInfo& info)
 {
-  QRegion region;
-  for (auto& rect : dirtyRects) {
-    region += QRect{ rect.x, rect.y, rect.width, rect.height };
-  }
+  if (!IsValidBrowser(browser))
+    return;
 
-  if (PET_VIEW == type) {
-    pCefViewPrivate_->onOsrUpdateViewTexture(info, region);
-  } else if (PET_POPUP == type) {
-    pCefViewPrivate_->onOsrUpdatePopupTexture(info, region);
-  } else {
-  }
+  pCefViewPrivate_->osr.pRenderer_->updateTexture(type, dirtyRects, info.shared_texture_handle, info.format);
 }
 #endif
 

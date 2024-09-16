@@ -92,6 +92,7 @@ MainWindow::createRightCefView()
   setting.setPlugins(false);
 #endif
   setting.setWindowlessFrameRate(60);
+  setting.setHardwareAcceleration(false);
   //setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
   //setting.setBackgroundColor(Qt::blue);
 

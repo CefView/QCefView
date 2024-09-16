@@ -61,18 +61,29 @@ QCefViewPrivate::~QCefViewPrivate()
 void
 QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCefSettingPrivate* setting)
 {
-  // create browser client handler delegate
+  // 1. create browser client handler delegate
   auto pClientDelegate = std::make_shared<CCefClientDelegate>(this);
 
-  // create browser client handler
+  // 2. create browser client handler
   auto pClient = new CefViewBrowserClient(pContextPrivate_->getCefApp(), pClientDelegate);
 
-  // Set window info
+  // 3. set window info
   CefWindowInfo windowInfo;
-
   if (isOSRModeEnabled_) {
     // OSR mode
     windowInfo.SetAsWindowless(0);
+
+    // set hardware acceleration
+    if (setting && setting->hardwareAcceleration_) {
+      osr.pRenderer_ = CefViewRendererFactory::createRenderer(true);
+      // get window native handle
+      void* wid = reinterpret_cast<void*>(view->winId());
+      // enable hardware acceleration
+      windowInfo.shared_texture_enabled = true;
+    } else {
+      osr.pRenderer_ = CefViewRendererFactory::createRenderer(false);
+      windowInfo.shared_texture_enabled = false;
+    }
   } else {
 #if CEF_VERSION_MAJOR >= 125
     // https://github.com/chromiumembedded/cef/issues/3685
@@ -103,17 +114,15 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
 #endif
   }
 
-  // create the browser settings
+  // 4. create the browser settings
   CefBrowserSettings browserSettings;
   QCefSettingPrivate::CopyToCefBrowserSettings(setting, &browserSettings);
 
-  if (isOSRModeEnabled_) {
-    // OSR mode
-    if (CefColorGetA(browserSettings.background_color) == 0)
-      osr.transparentPaintingEnabled_ = true;
+  if (isOSRModeEnabled_ && osr.pRenderer_) {
+    osr.pRenderer_->setBackgroundColor(browserSettings.background_color);
   }
 
-  // create browser object
+  // 5. create browser object
   bool success = CefBrowserHost::CreateBrowser(windowInfo,        // window info
                                                pClient,           // handler
                                                url.toStdString(), // url
@@ -363,29 +372,8 @@ QCefViewPrivate::render(QPainter* painter)
     opt.initFrom(q);
     q->style()->drawPrimitive(QStyle::PE_Widget, &opt, painter, q);
 
-    // 2. paint the CEF view and popup
-    // get current scale factor
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
-    qreal scaleFactor = q->devicePixelRatioF();
-#else
-    qreal scaleFactor = q->devicePixelRatio();
-#endif
-
-    // perform the painting
-    {
-      // paint cef view
-      QMutexLocker lock(&(osr.qViewPaintLock_));
-      int width = osr.qCefViewFrame_.width() / scaleFactor;
-      int height = osr.qCefViewFrame_.height() / scaleFactor;
-      painter->drawImage(QRect{ 0, 0, width, height }, osr.qCefViewFrame_);
-    }
-    {
-      // paint cef popup
-      QMutexLocker lock(&(osr.qPopupPaintLock_));
-      if (osr.showPopup_) {
-        painter->drawImage(osr.qPopupRect_, osr.qCefPopupFrame_);
-      }
-    }
+    // 2. render cef view
+    osr.pRenderer_->render(painter, q->width(), q->height());
   }
 }
 
@@ -497,22 +485,6 @@ QCefViewPrivate::onOsrImeCursorRectChanged(const QRect& rc)
 }
 
 void
-QCefViewPrivate::onOsrShowPopup(bool show)
-{
-  osr.showPopup_ = show;
-
-  // clear the previous popup frame data if exist
-  osr.qCefPopupFrame_ = QImage();
-  osr.qPopupRect_ = QRect();
-}
-
-void
-QCefViewPrivate::onOsrResizePopup(const QRect& rc)
-{
-  osr.qPopupRect_ = rc;
-}
-
-void
 QCefViewPrivate::onContextMenuTriggered(QAction* action)
 {
   FLog();
@@ -542,78 +514,6 @@ QCefViewPrivate::onContextMenuDestroyed(QObject* obj)
 
   osr.isShowingContextMenu_ = false;
 }
-
-void
-QCefViewPrivate::onOsrUpdateViewFrame(const QImage& frame, const QRegion& region)
-{
-  // #if defined(QT_DEBUG)
-  //   qint64 elapsedMs = paintTimer_.restart();
-  //   // qDebug() << "===== CEF view frame update since last frame:" << elapsedMs;
-  //   if (elapsedMs >= 20)
-  //     qDebug() << "===== CEF view frame update stutter detected:" << elapsedMs;
-  //
-  //   QElapsedTimer updateDurationTimer;
-  //   updateDurationTimer.start();
-  // #endif
-
-  if (osr.qCefViewFrame_.size() != frame.size() || osr.transparentPaintingEnabled_) {
-    // update full image
-    QMutexLocker lock(&(osr.qViewPaintLock_));
-    osr.qCefViewFrame_ = frame.copy();
-  } else {
-    QMutexLocker lock(&(osr.qViewPaintLock_));
-    // update only dirty regions
-    QPainter painter(&osr.qCefViewFrame_);
-    for (auto& rc : region) {
-      painter.drawImage(rc, frame, rc);
-    }
-  }
-  emit updateOsrFrame();
-
-  // #if defined(QT_DEBUG)
-  //   qDebug() << "===== CEF frame update duration:" << elapsedMs;
-  // #endif
-}
-
-void
-QCefViewPrivate::onOsrUpdatePopupFrame(const QImage& frame, const QRegion& region)
-{
-  if (osr.qCefPopupFrame_.size() == frame.size()) {
-    QMutexLocker lock(&(osr.qPopupPaintLock_));
-    // update region
-    QPainter painter(&osr.qCefPopupFrame_);
-    for (auto& rc : region) {
-      painter.drawImage(rc, frame, rc);
-    }
-  } else {
-    QMutexLocker lock(&(osr.qPopupPaintLock_));
-    osr.qCefPopupFrame_ = frame.copy();
-  }
-  emit updateOsrFrame();
-}
-
-#if CEF_VERSION_MAJOR < 124
-void
-QCefViewPrivate::onOsrUpdateViewTexture(void* shared_handle, const QRegion& region)
-{
-}
-void
-QCefViewPrivate::onOsrUpdatePopupTexture(void* shared_handle, const QRegion& region)
-{
-}
-
-#else
-void
-QCefViewPrivate::onOsrUpdateViewTexture(const CefAcceleratedPaintInfo& info, const QRegion& region)
-{
-}
-
-void
-QCefViewPrivate::onOsrUpdatePopupTexture(const CefAcceleratedPaintInfo& info, const QRegion& region)
-{
-}
-
-#endif
 
 void
 QCefViewPrivate::onBeforeCefContextMenu(const MenuBuilder::MenuData& data)
@@ -851,12 +751,21 @@ QCefViewPrivate::onViewInputMethodQuery(Qt::InputMethodQuery query) const
 void
 QCefViewPrivate::onPaintEngine(QPaintEngine*& engine) const
 {
+  // if hardware acceleration is available then disable Qt paint
+  if (isOSRModeEnabled_ && osr.pRenderer_ && osr.pRenderer_->isHardware()) {
+    engine = nullptr;
+  }
 }
 
 void
 QCefViewPrivate::onPaintEvent(QPaintEvent* event)
 {
   Q_Q(QCefView);
+
+  // if hardware acceleration is available then disable Qt paint
+  if (isOSRModeEnabled_ && osr.pRenderer_ && osr.pRenderer_->isHardware()) {
+    return;
+  }
 
   // 1. construct painter for current widget
   QPainter painter(q);

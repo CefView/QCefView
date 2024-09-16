@@ -398,6 +398,20 @@ public:
   /// </summary>
   /// <returns>The color</returns>
   const QVariant backgroundColor() const;
+
+  #if CEF_VERSION_MAJOR >= 125
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <param name="value"></param>
+  void setHardwareAcceleration(const bool value);
+
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <returns></returns>
+  const bool hardwareAcceleration() const;
+  #endif
 };
 
 Q_DECLARE_METATYPE(QCefSetting);

@@ -424,3 +424,19 @@ QCefSetting::backgroundColor() const
   Q_D(const QCefSetting);
   return d->backgroundColor_;
 }
+
+#if CEF_VERSION_MAJOR >= 125
+void
+QCefSetting::setHardwareAcceleration(const bool value)
+{
+  Q_D(QCefSetting);
+  d->hardwareAcceleration_ = value;
+}
+
+const bool
+QCefSetting::hardwareAcceleration() const
+{
+  Q_D(const QCefSetting);
+  return d->hardwareAcceleration_;
+}
+#endif]
