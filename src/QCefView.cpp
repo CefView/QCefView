@@ -1,4 +1,4 @@
-#include <QCefView.h>
+﻿#include <QCefView.h>
 
 #pragma region qt_headers
 #include <QPainter>
@@ -6,7 +6,7 @@
 #include <QResizeEvent>
 #include <QVBoxLayout>
 #include <QtDebug>
-#pragma endregion 
+#pragma endregion
 
 #include <QCefContext.h>
 
@@ -167,8 +167,7 @@ QCefView::triggerEvent(const QCefEvent& event)
 {
   Q_D(QCefView);
 
-  return d->triggerEvent(
-                         event.eventName(), event.d_func()->args, QCefView::MainFrameID);
+  return d->triggerEvent(event.eventName(), event.d_func()->args, QCefView::MainFrameID);
 }
 
 bool
@@ -184,8 +183,7 @@ QCefView::broadcastEvent(const QCefEvent& event)
 {
   Q_D(QCefView);
 
-  return d->triggerEvent(
-                         event.eventName(), event.d_func()->args, QCefView::AllFrameID);
+  return d->triggerEvent(event.eventName(), event.d_func()->args, QCefView::AllFrameID);
 }
 
 bool
@@ -383,10 +381,11 @@ QCefView::paintEngine() const
 {
   Q_D(const QCefView);
 
-  auto engine = QWidget::paintEngine();
-  d->onPaintEngine(engine);
+  if (d->isOSRModeEnabled_ && d->osr.pRenderer_ && d->osr.pRenderer_->isHardware()) {
+    return nullptr;
+  }
 
-  return engine;
+  return QWidget::paintEngine();
 }
 
 void
