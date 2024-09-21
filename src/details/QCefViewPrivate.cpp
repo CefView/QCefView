@@ -1036,6 +1036,7 @@ QCefViewPrivate::onViewWheelEvent(QWheelEvent* event)
     e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
     e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
     e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
+    e.modifiers |= b & Qt::LeftButton ? EVENTFLAG_LEFT_MOUSE_BUTTON : 0;
     e.modifiers |= b & Qt::RightButton ? EVENTFLAG_RIGHT_MOUSE_BUTTON : 0;
     e.modifiers |= b & Qt::MiddleButton ? EVENTFLAG_MIDDLE_MOUSE_BUTTON : 0;
 
@@ -1043,12 +1044,10 @@ QCefViewPrivate::onViewWheelEvent(QWheelEvent* event)
     e.y = p.y();
 
     // Prevent diagonal scrolling: only allow scrolling in one direction at a time
-    if (d.x() != 0 && d.y() != 0) {
-      if (std::abs(d.x()) > std::abs(d.y())) {
-        d.setY(0);
-      } else {
-        d.setX(0);
-      }
+    if (qAbs(d.x()) > qAbs(d.y())) {
+      d.setY(0);
+    } else {
+      d.setX(0);
     }
 
     pCefBrowser_->GetHost()->SendMouseWheelEvent(e, d.x(), d.y());
