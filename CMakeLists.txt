@@ -197,7 +197,7 @@ if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/include/QCefView_global.h")
 endif()
 
 if(${NEED_CONFIGURE_QCefView_global})
-  message(STATUS "Need configure QCefView_global.h file")
+  message(STATUS "Need to configure QCefView_global.h file")
   configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/include/QCefView_global.h.in"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/QCefView_global.h"
