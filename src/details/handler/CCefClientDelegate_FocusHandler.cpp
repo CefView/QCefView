@@ -1,6 +1,6 @@
-﻿#include "CCefClientDelegate.h"
+﻿#include "details/CCefClientDelegate.h"
 
-#include "QCefViewPrivate.h"
+#include "details/QCefViewPrivate.h"
 
 void
 CCefClientDelegate::takeFocus(CefRefPtr<CefBrowser>& browser, bool next)

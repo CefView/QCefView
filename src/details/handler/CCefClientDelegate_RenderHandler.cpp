@@ -1,11 +1,11 @@
-﻿#include "CCefClientDelegate.h"
+﻿#include "details/CCefClientDelegate.h"
 
 #include <QApplication>
 #include <QDebug>
 #include <QImage>
 #include <QScreen>
 
-#include "QCefViewPrivate.h"
+#include "details/QCefViewPrivate.h"
 
 // OSR mode
 
@@ -161,6 +161,17 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
                                        const CefRenderHandler::RectList& dirtyRects,
                                        const CefAcceleratedPaintInfo& info)
 {
+  QRegion region;
+  for (auto& rect : dirtyRects) {
+    region += QRect{ rect.x, rect.y, rect.width, rect.height };
+  }
+
+  if (PET_VIEW == type) {
+    pCefViewPrivate_->onOsrUpdateViewTexture(info, region);
+  } else if (PET_POPUP == type) {
+    pCefViewPrivate_->onOsrUpdatePopupTexture(info, region);
+  } else {
+  }
 }
 #endif
 

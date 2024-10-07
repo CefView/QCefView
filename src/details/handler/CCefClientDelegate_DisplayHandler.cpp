@@ -1,11 +1,11 @@
-﻿#include "CCefClientDelegate.h"
+﻿#include "details/CCefClientDelegate.h"
 
 #include <QBitmap>
 #include <QByteArray>
 #include <QCursor>
 #include <QIcon>
 
-#include "QCefViewPrivate.h"
+#include "details/QCefViewPrivate.h"
 
 Qt::CursorShape
 mapCursorShape(cef_cursor_type_t& type)
@@ -153,7 +153,7 @@ CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser> browser,
   if (!IsValidBrowser(browser))
     return false;
 
-  if (pCefViewPrivate_->isOSRModeEnabled()) {
+  if (pCefViewPrivate_->isOSRModeEnabled_) {
     // OSR mode
     QCursor cur;
     if (type != CT_CUSTOM) {

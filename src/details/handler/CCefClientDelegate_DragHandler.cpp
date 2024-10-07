@@ -1,10 +1,10 @@
-﻿#include "CCefClientDelegate.h"
+﻿#include "details/CCefClientDelegate.h"
 
 #include <QDebug>
 #include <QSharedPointer>
 #include <QThread>
 
-#include "QCefViewPrivate.h"
+#include "details/QCefViewPrivate.h"
 
 bool
 CCefClientDelegate::onDragEnter(CefRefPtr<CefBrowser> browser,

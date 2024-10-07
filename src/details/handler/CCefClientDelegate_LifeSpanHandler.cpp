@@ -1,4 +1,4 @@
-﻿#include "CCefClientDelegate.h"
+﻿#include "details/CCefClientDelegate.h"
 
 #if defined(Q_OS_WINDOWS)
 #include <windows.h>
@@ -8,8 +8,8 @@
 #include <QScreen>
 #include <QThread>
 
-#include "QCefSettingPrivate.h"
-#include "QCefViewPrivate.h"
+#include "details/QCefSettingPrivate.h"
+#include "details/QCefViewPrivate.h"
 
 #define DEFAULT_POPUP_WIDTH 800
 #define DEFAULT_POPUP_HEIGHT 600
@@ -113,7 +113,7 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 
   QWindow* w = nullptr;
 
-  if (!pCefViewPrivate_->isOSRModeEnabled() && !browser->IsPopup()) {
+  if (!pCefViewPrivate_->isOSRModeEnabled_ && !browser->IsPopup()) {
     // NCW mode and not pop-up browser
     auto winHandle = browser->GetHost()->GetWindowHandle();
 
@@ -157,7 +157,7 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
   Qt::ConnectionType c = Qt::DirectConnection;
   if (pCefViewPrivate_->q_ptr->thread() != QThread::currentThread()) {
     // change connection type
-    if (!pCefViewPrivate_->isOSRModeEnabled()) {
+    if (!pCefViewPrivate_->isOSRModeEnabled_) {
       // NCW mode
       c = Qt::QueuedConnection;
     } else {

@@ -54,7 +54,8 @@ QCefContext::addCookie(const QString& name, const QString& value, const QString&
 }
 
 bool
-QCefContext::deleteAllCookies() {
+QCefContext::deleteAllCookies()
+{
   Q_D(QCefContext);
 
   return d->deleteAllCookies();

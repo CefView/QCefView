@@ -1,12 +1,12 @@
-﻿#include "CCefClientDelegate.h"
+﻿#include "details/CCefClientDelegate.h"
 
 #include <QDebug>
 #include <QSharedPointer>
 #include <QThread>
 
-#include "QCefViewPrivate.h"
-#include "utils/CommonUtils.h"
-#include "utils/ValueConvertor.h"
+#include "details/QCefViewPrivate.h"
+#include "details/utils/CommonUtils.h"
+#include "details/utils/ValueConvertor.h"
 
 bool
 CCefClientDelegate::onFileDialog(CefRefPtr<CefBrowser> browser,

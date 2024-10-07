@@ -46,7 +46,7 @@ QCefWindow::detachCefWindow()
 {
   if (cefWindow_) {
 #if defined(Q_OS_MACOS)
-    
+
 #else
     cefWindow_->hide();
 #if defined(Q_OS_LINUX)
@@ -98,8 +98,8 @@ QCefWindow::syncCefWindowPosOnExpose()
     qreal windowScaleFactor = this->devicePixelRatio();
     int windowWidth = this->width();
     int windowHeight = this->height();
-    qDebug() << "------------- container window:" << "(" << windowWidth << " x " << windowHeight << ") @ "
-             << windowScaleFactor;
+    qDebug() << "------------- container window:"
+             << "(" << windowWidth << " x " << windowHeight << ") @ " << windowScaleFactor;
     qreal width = windowWidth * windowScaleFactor;
     qreal height = windowHeight * windowScaleFactor;
     qDebug() << "------------- width:" << windowWidth << " x " << windowScaleFactor << " = " << width;
@@ -128,8 +128,8 @@ QCefWindow::syncCefWindowPosOnResize()
 #endif
     int widgetWidth = cefWidget_->width();
     int widgetHeigth = cefWidget_->height();
-    qDebug() << "------------- container widget:" << "(" << widgetWidth << " x " << widgetHeigth << ") @ "
-             << widgetScaleFactor;
+    qDebug() << "------------- container widget:"
+             << "(" << widgetWidth << " x " << widgetHeigth << ") @ " << widgetScaleFactor;
     qreal width = widgetWidth * widgetScaleFactor;
     qreal height = widgetHeigth * widgetScaleFactor;
     qDebug() << "------------- width:" << widgetWidth << " x " << widgetScaleFactor << " = " << width;

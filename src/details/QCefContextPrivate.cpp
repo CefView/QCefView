@@ -20,6 +20,7 @@ const int64_t kCefWorkerIntervalMs = (1000 / 60); // 60 fps
 QCefContextPrivate::QCefContextPrivate(QCoreApplication* app, int argc, char** argv)
   : argc_(argc)
   , argv_(argv)
+  , config_(nullptr)
 {
 #if defined(Q_OS_MACOS) || defined(CEF_USE_QT_EVENT_LOOP)
   cefWorkerTimer_.setTimerType(Qt::PreciseTimer);
@@ -42,6 +43,8 @@ bool
 QCefContextPrivate::initialize(const QCefConfig* config)
 {
   config_ = config;
+
+  // initialize CEF
   if (!initializeCef(config)) {
     return false;
   }

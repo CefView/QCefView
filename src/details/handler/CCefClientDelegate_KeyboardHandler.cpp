@@ -1,8 +1,8 @@
-﻿#include "CCefClientDelegate.h"
+﻿#include "details/CCefClientDelegate.h"
 
 #include <QDebug>
 
-#include "QCefViewPrivate.h"
+#include "details/QCefViewPrivate.h"
 
 bool
 CCefClientDelegate::onPreKeyEvent(CefRefPtr<CefBrowser> browser,

@@ -507,6 +507,11 @@ public:
 
 protected:
   /// <summary>
+  /// Please refer to QWidget::paintEngine
+  /// </summary>
+  QPaintEngine* paintEngine() const override;
+
+  /// <summary>
   /// Please refer to QWidget::paintEvent
   /// </summary>
   void paintEvent(QPaintEvent* event) override;

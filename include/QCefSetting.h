@@ -1,4 +1,4 @@
-/*
+﻿/*
  * File: QCefSetting.h
  * Project: QCefView
  * Created: 29th March 2016
@@ -57,13 +57,13 @@ public:
   /// Sets the initial size of the browser
   /// </summary>
   /// <param name="size">The initial size</param>
-  void setInitSize(const QSize& size);
+  void setWindowInitialSize(const QSize& size);
 
   /// <summary>
   /// Gets the initial size of the browser
   /// </summary>
   /// <returns></returns>
-  const QSize initSize() const;
+  const QSize windowInitialSize() const;
 
   /// <summary>
   /// Sets the standard font family
