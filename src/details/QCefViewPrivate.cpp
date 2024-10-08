@@ -111,6 +111,13 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
 #endif
   }
 
+// Only test for CEF_VERSION_MAJOR 102
+#if CEF_VERSION_MAJOR == 102
+  if (!isOSRModeEnabled_) {
+    //set Popup window to respond cef inputMethodEvent
+    windowInfo.SetAsPopup(nullptr, "QCefView");
+  }
+#endif
   // create the browser settings
   CefBrowserSettings browserSettings;
   QCefSettingPrivate::CopyToCefBrowserSettings(setting, &browserSettings);
