@@ -76,6 +76,17 @@ public:
   };
   Q_ENUM(CefWindowOpenDisposition)
 
+  /// <summary>
+  /// Represents the CEF javascript dialog type
+  /// </summary>
+  enum CefJsDialogType
+  {
+    CefJsDialogTypeAlert = 0,
+    CefJsDialogTypeConfirm,
+    CefJsDialogTypePrompt
+  };
+  Q_ENUM(CefJsDialogType)
+
 public:
   /// <summary>
   /// Constructs a QCefView instance
@@ -288,6 +299,26 @@ public:
   /// </summary>
   /// <returns>True to enable; otherwise false</returns>
   bool isDragAndDropEnabled() const;
+
+  /// <summary>
+  /// Handles custom JavaScript dialogs
+  /// </summary>
+  /// <param name="originUrl">The URL of the page that triggered the dialog</param>
+  /// <param name="dialogType">The type of the JavaScript dialog (alert, confirm, prompt)</param>
+  /// <param name="messageText">The message to be displayed in the dialog</param>
+  /// <param name="defaultPromptText">The default text for the prompt dialog</param>
+  /// <param name="suppressMessage">Set to true to suppress the dialog</param>
+  /// <param name="callbackResult">A pair containing the result of the dialog and the user input</param>
+  /// <remarks>
+  /// This function is called when a JavaScript dialog is triggered. It allows for custom handling of the dialog,
+  /// including modifying the message, suppressing the dialog, and providing a custom result.
+  /// </remarks>
+  bool onJsDialog(const QString& originUrl,
+                  QCefView::CefJsDialogType dialogType,
+                  const QString& messageText,
+                  const QString& defaultPromptText,
+                  bool& suppressMessage,
+                  QPair<bool, QString>& callbackResult);
 
 signals:
   /// <summary>
