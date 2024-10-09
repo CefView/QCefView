@@ -10,7 +10,6 @@
 #pragma endregion 
 
 #include <CefViewCoreProtocol.h>
-#include <CefViewWingProcessName.h>
 
 #include "../../details/QCefConfigPrivate.h"
 
