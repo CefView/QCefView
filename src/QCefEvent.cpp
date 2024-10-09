@@ -2,7 +2,7 @@
 
 #pragma region cef_headers
 #include <include/wrapper/cef_message_router.h>
-#pragma endregion cef_headers
+#pragma endregion 
 
 #include "details/QCefEventPrivate.h"
 #include "details/utils/CommonUtils.h"

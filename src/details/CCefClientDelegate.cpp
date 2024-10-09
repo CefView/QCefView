@@ -18,14 +18,16 @@ CCefClientDelegate::~CCefClientDelegate()
 }
 
 void
-CCefClientDelegate::processUrlRequest(const std::string& url)
+CCefClientDelegate::processUrlRequest(CefRefPtr<CefBrowser>& browser, const CefFrameId& frameId, const std::string& url)
 {
-  // deprecated feature
-  // auto view = take(browser);
-  // if (view) {
-  //  auto u = QString::fromStdString(url);
-  //  view->onQCefUrlRequest(u);
-  //}
+  if (!IsValidBrowser(browser))
+    return;
+
+  auto browserId = browser->GetIdentifier();
+  auto u = QString::fromStdString(url);
+  auto source = pCefViewPrivate_->q_ptr;
+
+  emit source->cefUrlRequest(browserId, ValueConvertor::FrameIdC2Q(frameId), u);
 }
 
 void

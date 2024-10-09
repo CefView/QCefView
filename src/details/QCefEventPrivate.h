@@ -3,7 +3,7 @@
 #pragma region qt_headers
 #include <QString>
 #include <QVariantMap>
-#pragma endregion qt_headers
+#pragma endregion 
 
 class QCefEventPrivate
 {

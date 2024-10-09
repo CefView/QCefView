@@ -68,6 +68,7 @@ MainWindow::createLeftCefView()
   connect(m_pLeftCefViewWidget, &QCefView::invokeMethod, this, &MainWindow::onInvokeMethod);
 
   // connect the cefQueryRequest to the slot
+  connect(m_pLeftCefViewWidget, &QCefView::cefUrlRequest, this, &MainWindow::onQCefUrlRequest);
   connect(m_pLeftCefViewWidget, &QCefView::cefQueryRequest, this, &MainWindow::onQCefQueryRequest);
   connect(m_pLeftCefViewWidget, &QCefView::reportJavascriptResult, this, &MainWindow::onJavascriptResult);
   connect(m_pLeftCefViewWidget, &QCefView::loadStart, this, &MainWindow::onLoadStart);
@@ -160,6 +161,17 @@ MainWindow::onInvokeMethod(const QCefBrowserId& browserId,
     QMessageBox::information(this->window(), title, text);
   } else {
   }
+}
+
+void
+MainWindow::onQCefUrlRequest(const QCefBrowserId& browserId, const QCefFrameId& frameId, const QString& url)
+{
+  QString title("QCef URL Request");
+  QString text = QString("Current Thread: QT_UI\r\n"
+                         "URL: %1")
+                   .arg(url);
+
+  QMessageBox::information(this->window(), title, text);
 }
 
 void

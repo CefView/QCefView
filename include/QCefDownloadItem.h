@@ -15,7 +15,7 @@
 #include <QDateTime>
 #include <QScopedPointer>
 #include <QString>
-#pragma endregion qt_headers
+#pragma endregion 
 
 class QCefDownloadItemPrivate;
 

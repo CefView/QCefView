@@ -6,7 +6,7 @@
 #include <QResizeEvent>
 #include <QVBoxLayout>
 #include <QtDebug>
-#pragma endregion qt_headers
+#pragma endregion 
 
 #include <QCefContext.h>
 

@@ -16,7 +16,7 @@
 #include <QVariantList>
 #include <QWidget>
 #include <QWindow>
-#pragma endregion qt_headers
+#pragma endregion
 
 #include <QCefDownloadItem.h>
 #include <QCefEvent.h>
@@ -383,6 +383,14 @@ signals:
   /// </summary>
   /// <param name="progress">Current progress</param>
   void loadingProgressChanged(double progress);
+
+  /// <summary>
+  /// Gets called on built-in scheme URL access
+  /// </summary>
+  /// <param name="browserId">The browser id</param>
+  /// <param name="frameId">The frame id</param>
+  /// <param name="query">The full url</param>
+  void cefUrlRequest(const QCefBrowserId& browserId, const QCefFrameId& frameId, const QString& url);
 
   /// <summary>
   /// Gets called on new <see cref="QCefQuery"/> request

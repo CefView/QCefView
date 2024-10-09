@@ -11,14 +11,14 @@
 #pragma once
 #include <QCefView_global.h>
 
-#pragma region std_headers
+#pragma region stl_headers
 #include <cstdint>
-#pragma endregion std_headers
+#pragma endregion 
 
 #pragma region qt_headers
 #include <QSharedPointer>
 #include <QString>
-#pragma endregion qt_headers
+#pragma endregion 
 
 class QCefQueryPrivate;
 class QCefViewPrivate;

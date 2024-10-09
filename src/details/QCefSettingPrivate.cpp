@@ -2,11 +2,11 @@
 
 #pragma region qt_headers
 #include <QColor>
-#pragma endregion qt_headers
+#pragma endregion 
 
 #pragma region cef_headers
 #include <include/cef_version.h>
-#pragma endregion cef_headers
+#pragma endregion 
 
 #include <QCefContext.h>
 

@@ -8,7 +8,7 @@
 #if defined(QT_DEBUG)
 #include <QElapsedTimer>
 #endif
-#pragma endregion qt_headers
+#pragma endregion 
 
 #include <CefViewBrowserClient.h>
 #include <CefViewBrowserClientDelegate.h>

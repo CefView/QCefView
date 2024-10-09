@@ -1,8 +1,8 @@
 ﻿#include "QCefViewPrivate.h"
 
-#pragma region std_headers
+#pragma region stl_headers
 #include <stdexcept>
-#pragma endregion std_headers
+#pragma endregion 
 
 #pragma region qt_headers
 #include <QApplication>
@@ -14,14 +14,14 @@
 #include <QPainter>
 #include <QStyleOption>
 #include <QWindow>
-#pragma endregion qt_headers
+#pragma endregion 
 
 #pragma region cef_headers
 #include <include/cef_app.h>
 #include <include/cef_browser.h>
 #include <include/cef_frame.h>
 #include <include/cef_parser.h>
-#pragma endregion cef_headers
+#pragma endregion 
 
 #include <CefViewCoreProtocol.h>
 

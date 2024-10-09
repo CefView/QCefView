@@ -16,7 +16,7 @@
 #include <QScopedPointer>
 #include <QSize>
 #include <QString>
-#pragma endregion qt_headers
+#pragma endregion 
 
 class QCefSettingPrivate;
 

@@ -14,7 +14,7 @@
 #pragma region qt_headers
 #include <QCoreApplication>
 #include <QScopedPointer>
-#pragma endregion qt_headers
+#pragma endregion 
 
 #include <QCefConfig.h>
 

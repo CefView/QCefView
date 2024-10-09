@@ -14,7 +14,7 @@
 #pragma region qt_headers
 #include <QtCore/qglobal.h>
 #include <QMetaType>
-#pragma endregion qt_headers
+#pragma endregion 
 
 #ifdef QCEFVIEW_STATIC
     // Static library, no need export

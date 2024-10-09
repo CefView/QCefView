@@ -4,15 +4,15 @@
 #include <list>
 #include <string>
 #include <unordered_map>
-#pragma endregion stl_headers
+#pragma endregion 
 
 #pragma region cef_headers
 #include <include/cef_app.h>
-#pragma endregion cef_headers
+#pragma endregion 
 
 #pragma region qt_headers
 #include <QVariant>
-#pragma endregion qt_headers
+#pragma endregion 
 
 #include <QCefConfig.h>
 
@@ -39,6 +39,7 @@ public:
 #endif
 
   std::string bridgeObjectName_;
+  std::string builtinSchemeName_;
   std::string acceptLanguageList_;
 
 #if !defined(Q_OS_MACOS)

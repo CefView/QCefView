@@ -206,6 +206,20 @@ QCefConfig::bridgeObjectName() const
 }
 
 void
+QCefConfig::setBuiltinSchemeName(const QString& name)
+{
+  Q_D(QCefConfig);
+  d->builtinSchemeName_ = name.toStdString();
+}
+
+const QString
+QCefConfig::builtinSchemeName() const
+{
+  Q_D(const QCefConfig);
+  return QString::fromStdString(d->builtinSchemeName_);
+}
+
+void
 QCefConfig::setBackgroundColor(const QColor& color)
 {
   Q_D(QCefConfig);

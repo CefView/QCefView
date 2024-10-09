@@ -4,10 +4,9 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QString>
-#pragma endregion qt_headers
+#pragma endregion 
 
 #include <CefViewCoreProtocol.h>
-#include <CefViewWingProcessName.h>
 
 QCefConfigPrivate::QCefConfigPrivate()
 {

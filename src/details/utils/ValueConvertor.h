@@ -2,11 +2,11 @@
 
 #pragma region qt_headers
 #include <QVariant>
-#pragma endregion qt_headers
+#pragma endregion 
 
 #pragma region cef_headers
 #include <include/cef_app.h>
-#pragma endregion cef_headers
+#pragma endregion 
 
 #include <CefViewCoreGlobal.h>
 

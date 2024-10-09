@@ -56,8 +56,9 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   auto cmdArgs = QCefConfigPrivate::GetCommandLineArgs(config);
   cmdArgs[kCefViewWindowsJobNameKey] = windowsJobName_.toStdString();
   auto appDelegate = std::make_shared<CCefAppDelegate>(this, cmdArgs);
+  auto builtinSchemeName = config ? config->builtinSchemeName().toStdString() : std::string();
   auto bridgeObjectName = config ? config->bridgeObjectName().toStdString() : std::string();
-  auto app = new CefViewBrowserApp(bridgeObjectName, appDelegate);
+  auto app = new CefViewBrowserApp(builtinSchemeName, bridgeObjectName, appDelegate);
 
   void* sandboxInfo = nullptr;
 #if defined(CEF_USE_SANDBOX)

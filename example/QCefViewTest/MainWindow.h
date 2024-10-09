@@ -29,6 +29,8 @@ protected slots:
                       const QString& method,
                       const QVariantList& arguments);
 
+  void onQCefUrlRequest(const QCefBrowserId& browserId, const QCefFrameId& frameId, const QString& url);
+
   void onQCefQueryRequest(const QCefBrowserId& browserId, const QCefFrameId& frameId, const QCefQuery& query);
 
   void onJavascriptResult(const QCefBrowserId& browserId,

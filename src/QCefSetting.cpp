@@ -2,7 +2,7 @@
 
 #pragma region cef_headers
 #include <include/cef_version.h>
-#pragma endregion cef_headers
+#pragma endregion 
 
 #include "details/QCefSettingPrivate.h"
 #include "details/utils/CommonUtils.h"

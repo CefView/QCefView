@@ -1,18 +1,18 @@
 ﻿#pragma once
 
-#pragma region std_headers
+#pragma region stl_headers
 #include <atomic>
 #include <memory>
 #include <mutex>
 #include <string>
-#pragma endregion std_headers
+#pragma endregion 
 
 #pragma region qt_headers
 #include <QCoreApplication>
 #include <QList>
 #include <QObject>
 #include <QTimer>
-#pragma endregion qt_headers
+#pragma endregion 
 
 #include <CefViewBrowserApp.h>
 #include <CefViewBrowserClient.h>

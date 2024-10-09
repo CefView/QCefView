@@ -1,17 +1,17 @@
 ﻿#pragma once
 
-#pragma region std_headers
+#pragma region stl_headers
 #include <string>
 #include <vector>
-#pragma endregion std_headers
+#pragma endregion 
 
 #pragma region cef_headers
 #include <include/cef_app.h>
-#pragma endregion cef_headers
+#pragma endregion 
 
 #pragma region qt_headers
 #include <QMap>
-#pragma endregion qt_headers
+#pragma endregion 
 
 #include <CefViewBrowserClientDelegate.h>
 
@@ -43,7 +43,9 @@ public:
 
   ~CCefClientDelegate();
 
-  virtual void processUrlRequest(const std::string& url) override;
+  virtual void processUrlRequest(CefRefPtr<CefBrowser>& browser,
+                                 const CefFrameId& frameId,
+                                 const std::string& url) override;
 
   virtual void processQueryRequest(CefRefPtr<CefBrowser>& browser,
                                    const CefFrameId& frameId,

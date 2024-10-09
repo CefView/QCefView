@@ -16,7 +16,7 @@
 #include <QScopedPointer>
 #include <QString>
 #include <QVariant>
-#pragma endregion qt_headers
+#pragma endregion 
 
 class QCefConfigPrivate;
 
@@ -231,6 +231,20 @@ public:
   /// Gets the bridge object name
   /// </summary>
   const QString bridgeObjectName() const;
+
+  /// <summary>
+  /// Sets the built-in scheme name
+  /// </summary>
+  /// <param name="name">The scheme name</param>
+  /// <remarks>
+  /// The default value is CefView
+  /// </remarks>
+  void setBuiltinSchemeName(const QString& name);
+
+  /// <summary>
+  /// Gets the built-in scheme object name
+  /// </summary>
+  const QString builtinSchemeName() const;
 
   /// <summary>
   /// Sets the background color of the web page

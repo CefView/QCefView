@@ -2,7 +2,7 @@
 
 #pragma region qt_headers
 #include <QDebug>
-#pragma endregion qt_headers
+#pragma endregion 
 
 #include "details/QCefContextPrivate.h"
 

@@ -1,129 +1,135 @@
 <html>
 
 <head>
-  <script>
-    console.log("page script starts.....");
+    <script>
+        console.log("page script starts.....");
 
-    window.onwheel = e => console.log(`wheel event: altKey=${e.altKey} ctrlKey=${e.ctrlKey}`);
+        window.onwheel = e => console.log(`wheel event: altKey=${e.altKey} ctrlKey=${e.ctrlKey}`);
 
-    function onLoad() {
-      if (typeof CallBridge == "undefined") {
-        alert("Not in CefView context");
-        return;
-      }
-    }
+        function onLoad() {
+            if (typeof CallBridge == "undefined") {
+                alert("Not in CefView context");
+                return;
+            }
+        }
 
-    function onChangeColorEvent(color) {
-      console.log("request change background color to: ", color);
-      // change the background color
-      document.getElementById("main").style.backgroundColor = color;
-    }
+        function onChangeColorEvent(color) {
+            console.log("request change background color to: ", color);
+            // change the background color
+            document.getElementById("main").style.backgroundColor = color;
+        }
 
-    function onAddEventListener() {
-      // Add a event listener to handle the event named 'colorChange'
-      CallBridge.addEventListener(
-        // event name
-        "colorChange",
-        // event handler
-        onChangeColorEvent
-      );
-    }
+        function onAddEventListener() {
+            // Add a event listener to handle the event named 'colorChange'
+            CallBridge.addEventListener(
+                // event name
+                "colorChange",
+                // event handler
+                onChangeColorEvent
+            );
+        }
 
-    function onRemoveEventListener() {
-      // Add a event listener to handle the event named 'colorChange'
-      CallBridge.removeEventListener(
-        // event name
-        "colorChange",
-        // event handler
-        onChangeColorEvent
-      );
-    }
+        function onRemoveEventListener() {
+            // Add a event listener to handle the event named 'colorChange'
+            CallBridge.removeEventListener(
+                // event name
+                "colorChange",
+                // event handler
+                onChangeColorEvent
+            );
+        }
 
-    function onInvokeMethodClicked(name, ...arg) {
-      CallBridge.invokeMethod(name, ...arg);
-    }
+        function onInvokeMethodClicked(name, ...arg) {
+            CallBridge.invokeMethod(name, ...arg);
+        }
 
-    function onCallBridgeQueryClicked() {
-      var query = {
-        request: document.getElementById("message").value,
-        onSuccess: function (response) {
-          alert(response);
-        },
-        onFailure: function (error_code, error_message) {
-          alert(error_message);
-        },
-      };
-      window.CefViewQuery(query);
-    }
+        function onCallBridgeQueryClicked() {
+            var query = {
+                request: document.getElementById("message").value,
+                onSuccess: function (response) {
+                    alert(response);
+                },
+                onFailure: function (error_code, error_message) {
+                    alert(error_message);
+                },
+            };
+            window.CefViewQuery(query);
+        }
 
-    function testInvokeMethod() {
-      let d = {
-        d1: true,
-        d2: 5678,
-        d3: "test object",
-        d4: [1, "2", false],
-        d5: {
-          d1: true,
-          d2: 5678,
-          d3: "nested object",
-          d4: [1, "2", true],
-        },
-      };
-      onInvokeMethodClicked("TestMethod", 1, false, "arg3", d);
-    }
-  </script>
-  <style>
-    .noselect {
-      user-select: none;
-      /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-    }
-  </style>
+        function testInvokeMethod() {
+            let d = {
+                d1: true,
+                d2: 5678,
+                d3: "test object",
+                d4: [1, "2", false],
+                d5: {
+                    d1: true,
+                    d2: 5678,
+                    d3: "nested object",
+                    d4: [1, "2", true],
+                },
+            };
+            onInvokeMethodClicked("TestMethod", 1, false, "arg3", d);
+        }
+    </script>
+    <style>
+        .noselect {
+            user-select: none;
+            /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+        }
+    </style>
 </head>
 
 <body onload="onLoad()" id="main" class="noselect">
-  <h1 align="center" style="font-size: 12pt">Web Area</h1>
-  <div align="center">
-    <div style="background-color: green; -webkit-app-region: drag">
-      <h1>Dragging area</h1>
+    <h1 align="center" style="font-size: 12pt">Web Area</h1>
+    <div align="center">
+        <div style="background-color: green; -webkit-app-region: drag">
+            <h1>Dragging area</h1>
+        </div>
+        <br />
+
+        <label> Test Case for Built-in Scheme Handler </label>
+        <br />
+        <a href="cefview://custom.scheme.handler/api/example?arg1=1&args=hello">Built-in Scheme Handler (CefView://)</a>
+        <br />
+        <br />
+
+        <label> Test Case for EventListener</label>
+        <br />
+        <input type="button" value="AddEventListener" onclick="onAddEventListener()" />
+        <input type="button" value="RemoveEventListener" onclick="onRemoveEventListener()" />
+        <br />
+        <br />
+
+        <label> Test Case for InvokeMethod </label>
+        <br />
+        <input type="button" value="Invoke Method" onclick="testInvokeMethod()" />
+        <br />
+        <br />
+
+        <label> Test Case for QCefQuery </label>
+        <br />
+        <textarea id="message" style="width: 320px; height: 120px">this message will be processed by native code.</textarea>
+        <br />
+        <input type="button" value="Query" onclick="onCallBridgeQueryClicked()" />
+        <br />
+        <br />
+
+        <label> Test Case for Popup Browser </label>
+        <br />
+        <a href="#" target="_blank">Popup Browser By HTML</a>
+        <br />
+        <a href="#" onClick="window.open('#','QCefView Popup','width=800, height=600'); return false;">
+            Popup Browser By Script
+        </a>
+
+        <br />
+        <a href="#" onClick="window.close();">Close Current Window</a>
+
+
+        <p>An iframe with default borders:</p>
+        <iframe src="/tutorial.html" width="100%" height="300"> </iframe>
     </div>
-    <br />
-
-    <label> Test Case for EventListener</label>
-    <br />
-    <input type="button" value="AddEventListener" onclick="onAddEventListener()" />
-    <input type="button" value="RemoveEventListener" onclick="onRemoveEventListener()" />
-    <br />
-    <br />
-
-    <label> Test Case for InvokeMethod </label>
-    <br />
-    <input type="button" value="Invoke Method" onclick="testInvokeMethod()" />
-    <br />
-    <br />
-
-    <label> Test Case for QCefQuery </label>
-    <br />
-    <textarea id="message" style="width: 320px; height: 120px">
-this message will be processed by native code.</textarea>
-    <br />
-    <input type="button" value="Query" onclick="onCallBridgeQueryClicked()" />
-    <br />
-    <br />
-
-    <label> Test Case for Popup Browser </label>
-    <br />
-    <a href="#" target="_blank">Popup Browser By HTML</a>
-    <br />
-    <a href="#" onClick="window.open('#','QCefView Popup','width=800, height=600'); return false;">Popup Browser By
-      Script</a>
-
-    <br />
-    <a href="#" onClick="window.close();">Close Current Window</a>
-
-
-    <p>An iframe with default borders:</p>
-    <iframe src="/tutorial.html" width="100%" height="300"> </iframe>
-  </div>
 </body>
 
 </html>

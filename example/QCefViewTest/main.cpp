@@ -28,8 +28,10 @@ main(int argc, char* argv[])
   config.setUserAgent("QCefViewTest");
   // set log level
   config.setLogLevel(QCefConfig::LOGSEVERITY_DEFAULT);
-  // set JSBridge object name (default value is QCefViewClient)
+  // set JSBridge object name (default value is CefViewClient)
   config.setBridgeObjectName("CallBridge");
+  // set Built-in scheme name (default value is CefView)
+  config.setBuiltinSchemeName("CefView");
   // port for remote debugging (default is 0 and means to disable remote debugging)
   config.setRemoteDebuggingPort(9000);
   // set background color for all browsers
