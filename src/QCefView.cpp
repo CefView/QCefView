@@ -32,7 +32,9 @@ QCefView::QCefView(const QString& url,
     // OSR mode
     setBackgroundRole(QPalette::Window);
     setAttribute(Qt::WA_OpaquePaintEvent);
+#ifndef OS_LINUX
     setAttribute(Qt::WA_PaintOnScreen);
+#endif
     setAttribute(Qt::WA_NoSystemBackground);
   }
 
