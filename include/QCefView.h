@@ -1,4 +1,4 @@
-﻿/*
+/*
  * File: QCefView.h
  * Project: QCefView
  * Created: 29th March 2016
@@ -57,6 +57,11 @@ public:
   /// The main frame identity
   /// </summary>
   static const QCefFrameId MainFrameID;
+  
+  /// <summary>
+  /// The identifier for all frames
+  /// </summary>
+  static const QCefFrameId AllFrameID;
 
   /// <summary>
   /// Represents the CEF pop-up windows open disposition

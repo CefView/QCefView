@@ -1,4 +1,4 @@
-﻿#include "QCefViewPrivate.h"
+#include "QCefViewPrivate.h"
 
 #pragma region stl_headers
 #include <stdexcept>
@@ -1217,7 +1217,7 @@ QCefViewPrivate::browserStopLoad()
 bool
 QCefViewPrivate::triggerEvent(const QString& name,
                               const QVariantList& args,
-                              const QCefFrameId& frameId /*= CefViewBrowserHandler::MAIN_FRAME*/)
+                              const QCefFrameId& frameId /*= QCefView::MainFrameID*/)
 {
   if (!name.isEmpty()) {
     return sendEventNotifyMessage(frameId, name, args);

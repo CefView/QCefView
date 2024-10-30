@@ -1,4 +1,4 @@
-﻿#include <QCefView.h>
+#include <QCefView.h>
 
 #pragma region qt_headers
 #include <QPainter>
@@ -16,8 +16,10 @@
 
 #if CEF_VERSION_MAJOR < 122
 const QCefFrameId QCefView::MainFrameID = 0;
+const QCefFrameId QCefView::AllFrameID = -1;
 #else
 const QCefFrameId QCefView::MainFrameID = "0";
+const QCefFrameId QCefView::AllFrameID = "-1";
 #endif
 
 QCefView::QCefView(const QString& url,
@@ -166,7 +168,7 @@ QCefView::triggerEvent(const QCefEvent& event)
   Q_D(QCefView);
 
   return d->triggerEvent(
-    event.eventName(), event.d_func()->args, ValueConvertor::FrameIdC2Q(CefViewBrowserClient::MAIN_FRAME));
+                         event.eventName(), event.d_func()->args, QCefView::MainFrameID);
 }
 
 bool
@@ -183,7 +185,7 @@ QCefView::broadcastEvent(const QCefEvent& event)
   Q_D(QCefView);
 
   return d->triggerEvent(
-    event.eventName(), event.d_func()->args, ValueConvertor::FrameIdC2Q(CefViewBrowserClient::ALL_FRAMES));
+                         event.eventName(), event.d_func()->args, QCefView::AllFrameID);
 }
 
 bool
