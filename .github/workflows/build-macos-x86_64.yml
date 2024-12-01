@@ -4,21 +4,21 @@ on:
   push:
     branches: [main]
     paths:
-      - '.github/workflows/build-macos-x86_64.yml'
-      - 'CMakeLists.txt'
-      - 'CefViewCore'
-      - 'example/**'
-      - 'include/**'
-      - 'src/**'
+      - ".github/workflows/build-macos-x86_64.yml"
+      - "CMakeLists.txt"
+      - "CefViewCore"
+      - "example/**"
+      - "include/**"
+      - "src/**"
   pull_request:
     branches: [main]
     paths:
-      - '.github/workflows/build-macos-x86_64.yml'
-      - 'CMakeLists.txt'
-      - 'CefViewCore'
-      - 'example/**'
-      - 'include/**'
-      - 'src/**'
+      - ".github/workflows/build-macos-x86_64.yml"
+      - "CMakeLists.txt"
+      - "CefViewCore"
+      - "example/**"
+      - "include/**"
+      - "src/**"
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -36,17 +36,17 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          setup-python: 'true'
-      
+          setup-python: "true"
+
       - name: Setup Xcode version
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '14'
+          xcode-version: "15"
 
       - name: Checkout Source
         uses: actions/checkout@v2
         with:
-          submodules: 'true'
+          submodules: "true"
 
       - name: Cache CEF folders
         uses: actions/cache@v3

@@ -4,21 +4,21 @@ on:
   push:
     branches: [main]
     paths:
-      - '.github/workflows/build-linux-x86_64.yml'
-      - 'CMakeLists.txt'
-      - 'CefViewCore'
-      - 'example/**'
-      - 'include/**'
-      - 'src/**'
+      - ".github/workflows/build-linux-x86_64.yml"
+      - "CMakeLists.txt"
+      - "CefViewCore"
+      - "example/**"
+      - "include/**"
+      - "src/**"
   pull_request:
     branches: [main]
     paths:
-      - '.github/workflows/build-linux-x86_64.yml'
-      - 'CMakeLists.txt'
-      - 'CefViewCore'
-      - 'example/**'
-      - 'include/**'
-      - 'src/**'
+      - ".github/workflows/build-linux-x86_64.yml"
+      - "CMakeLists.txt"
+      - "CefViewCore"
+      - "example/**"
+      - "include/**"
+      - "src/**"
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -39,7 +39,7 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v2
         with:
-          submodules: 'true'
+          submodules: "true"
 
       - name: Cache CEF folders
         uses: actions/cache@v3

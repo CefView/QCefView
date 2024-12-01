@@ -3,7 +3,7 @@ name: Create Release
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - "v[0-9]+.[0-9]+.[0-9]+"
 
 env:
   # Customize the CMake build type here (Release, Debug)
@@ -29,14 +29,14 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v2
         with:
-          submodules: 'true'
+          submodules: "true"
 
       - name: Cache CEF folders
         uses: actions/cache@v2
         with:
           path: ${{github.workspace}}/CefViewCore/dep
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-          
+
       - name: Configure CMake
         run: cmake -B ${{github.workspace}}/build -A x64 -DPROJECT_ARCH=x86_64 -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_DEMO=ON -DCMAKE_INSTALL_PREFIX:PATH=${{github.workspace}}/out/install
 
@@ -45,7 +45,7 @@ jobs:
 
       - name: Install
         run: cmake --install ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-      
+
       - name: Create SDK artifact
         uses: actions/upload-artifact@v3
         with:
@@ -66,12 +66,12 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          setup-python: 'false'
+          setup-python: "false"
 
       - name: Checkout Source
         uses: actions/checkout@v2
         with:
-          submodules: 'true'
+          submodules: "true"
 
       - name: Cache CEF folders
         uses: actions/cache@v2
@@ -117,7 +117,7 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v2
         with:
-          submodules: 'true'
+          submodules: "true"
 
       - name: Cache CEF folders
         uses: actions/cache@v2
@@ -162,8 +162,8 @@ jobs:
 
       - name: Archive all artifacts
         run: for dir in ${{github.workspace}}/artifacts/*; do ( cd $dir && zip -r $dir-${{github.ref_name}}.zip . ) done
-      
-      - name: Publish Release 
+
+      - name: Publish Release
         uses: softprops/action-gh-release@v1
         with:
           name: QCefView-${{github.ref_name}}
