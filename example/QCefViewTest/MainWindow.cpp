@@ -102,7 +102,7 @@ MainWindow::createRightCefView()
   // m_pRightCefViewWidget = new CefViewWidget("https://cefview.github.io/QCefView/", &setting, this);
 
   //
-  m_pRightCefViewWidget = new CefViewWidget("https://fastest.fish/test-files", &setting, this);
+  m_pRightCefViewWidget = new CefViewWidget("http://xcal1.vodafone.co.uk/", &setting, this);
 
   //
   // m_pRightCefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);
