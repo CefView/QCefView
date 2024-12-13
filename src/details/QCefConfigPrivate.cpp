@@ -18,12 +18,6 @@ QCefConfigPrivate::QCefConfigPrivate()
 
   QString strExePath = ExeDir.filePath(kCefViewRenderProcessName);
   browserSubProcessPath_ = QDir::toNativeSeparators(strExePath).toStdString();
-
-  QString strResPath = ExeDir.filePath(kCefViewResourceDirectoryName);
-  resourceDirectoryPath_ = QDir::toNativeSeparators(strResPath).toStdString();
-
-  QDir ResPath(strResPath);
-  localesDirectoryPath_ = QDir::toNativeSeparators(ResPath.filePath(kCefViewLocalesDirectoryName)).toStdString();
 #endif
 }
 

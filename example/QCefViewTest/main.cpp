@@ -1,5 +1,6 @@
 ﻿#include <QApplication>
 #include <QDir>
+#include <QStandardPaths>
 
 #include <QCefContext.h>
 
@@ -55,10 +56,8 @@ main(int argc, char* argv[])
   config.addCommandLineSwitchWithValue("remote-allow-origins", "*");
   // config.addCommandLineSwitchWithValue("disable-features", "BlinkGenPropertyTrees,TranslateUI,site-per-process");
 
-#if defined(Q_OS_MACOS) && defined(QT_DEBUG)
-  // cef bugs on macOS debug build
-  config.setCachePath(QDir::tempPath());
-#endif
+  // set cache folder
+  config.setCachePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
 
   // create QCefContext instance with config,
   // the lifecycle of cefContext must be the same as QApplication instance
