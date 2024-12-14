@@ -178,6 +178,11 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   CefSettings cef_settings;
   QCefConfigPrivate::CopyToCefSettings(config, &cef_settings);
 
+#if CEF_VERSION_MAJOR >= 125 && CEF_VERSION_MAJOR <= 127
+  //  https://github.com/chromiumembedded/cef/issues/3685
+  cef_settings.chrome_runtime = true;
+#endif
+
   // fixed values
   CefString(&cef_settings.framework_dir_path) = cefFrameworkPath();
   CefString(&cef_settings.browser_subprocess_path) = cefSubprocessPath();
