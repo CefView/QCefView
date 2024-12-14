@@ -2,7 +2,7 @@
 
 #pragma region stl_headers
 #include <stdexcept>
-#pragma endregion 
+#pragma endregion
 
 #pragma region qt_headers
 #include <QApplication>
@@ -14,14 +14,14 @@
 #include <QPainter>
 #include <QStyleOption>
 #include <QWindow>
-#pragma endregion 
+#pragma endregion
 
 #pragma region cef_headers
 #include <include/cef_app.h>
 #include <include/cef_browser.h>
 #include <include/cef_frame.h>
 #include <include/cef_parser.h>
-#pragma endregion 
+#pragma endregion
 
 #include <CefViewCoreProtocol.h>
 
@@ -86,6 +86,7 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
     // OSR mode
     windowInfo.SetAsWindowless(0);
   } else {
+    windowInfo.runtime_style = CEF_RUNTIME_STYLE_ALLOY;
     // create CEF browser parent window
     auto windowInitialSize = q_ptr->size();
     if (setting) {
@@ -697,12 +698,9 @@ QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
 
   // set initial folder
   if (!default_file_path.empty() && mode == FILE_DIALOG_SAVE) {
-    QDir dir(QString::fromStdString(default_file_path.ToString()));
-    if (dir.exists()) {
-      dialog.setDirectory(dir);
-    } else {
-      dialog.setDirectory(QDir::homePath());
-    }
+    QFileInfo fileInfo(QString::fromStdString(default_file_path.ToString()));
+    dialog.setDirectory(fileInfo.dir());
+    dialog.selectFile(fileInfo.fileName());
   }
 
   // set accepted file types
@@ -719,7 +717,7 @@ QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
     std::vector<CefString> file_paths;
     auto selected_files = dialog.selectedFiles();
     for (const auto& file : selected_files) {
-      file_paths.push_back(file.toStdString());
+      file_paths.push_back(QDir::toNativeSeparators(file).toStdString());
     }
 
 #if CEF_VERSION_MAJOR < 102
