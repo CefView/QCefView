@@ -18,7 +18,7 @@ CCefClientDelegate::~CCefClientDelegate()
 }
 
 void
-CCefClientDelegate::processUrlRequest(CefRefPtr<CefBrowser>& browser, const CefFrameId& frameId, const std::string& url)
+CCefClientDelegate::processUrlRequest(CefRefPtr<CefBrowser>& browser, const CefFrameId& frameId, const CefString& url)
 {
   if (!IsValidBrowser(browser))
     return;
@@ -33,7 +33,7 @@ CCefClientDelegate::processUrlRequest(CefRefPtr<CefBrowser>& browser, const CefF
 void
 CCefClientDelegate::processQueryRequest(CefRefPtr<CefBrowser>& browser,
                                         const CefFrameId& frameId,
-                                        const std::string& request,
+                                        const CefString& request,
                                         const int64_t query_id)
 {
   if (!IsValidBrowser(browser))
@@ -64,7 +64,7 @@ CCefClientDelegate::focusedEditableNodeChanged(CefRefPtr<CefBrowser>& browser,
 void
 CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
                                        const CefFrameId& frameId,
-                                       const std::string& method,
+                                       const CefString& method,
                                        const CefRefPtr<CefListValue>& arguments)
 {
   if (!IsValidBrowser(browser))
@@ -86,7 +86,7 @@ CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
 void
 CCefClientDelegate::reportJSResult(CefRefPtr<CefBrowser>& browser,
                                    const CefFrameId& frameId,
-                                   const std::string& context,
+                                   const CefString& context,
                                    const CefRefPtr<CefValue>& result)
 {
   if (!IsValidBrowser(browser))

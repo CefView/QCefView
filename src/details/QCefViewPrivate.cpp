@@ -67,18 +67,6 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
   // create browser client handler
   auto pClient = new CefViewBrowserClient(pContextPrivate_->getCefApp(), pClientDelegate);
 
-  for (auto& folderMapping : pContextPrivate_->folderResourceMappingList()) {
-    pClient->AddLocalDirectoryResourceProvider(
-      folderMapping.path.toStdString(), folderMapping.url.toStdString(), folderMapping.priority);
-  }
-
-  for (auto& archiveMapping : pContextPrivate_->archiveResourceMappingList()) {
-    pClient->AddArchiveResourceProvider(archiveMapping.path.toStdString(),
-                                        archiveMapping.url.toStdString(),
-                                        archiveMapping.password.toStdString(),
-                                        archiveMapping.priority);
-  }
-
   // Set window info
   CefWindowInfo windowInfo;
 

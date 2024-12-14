@@ -5,35 +5,20 @@
 #include <memory>
 #include <mutex>
 #include <string>
-#pragma endregion 
+#pragma endregion
 
 #pragma region qt_headers
 #include <QCoreApplication>
 #include <QList>
 #include <QObject>
 #include <QTimer>
-#pragma endregion 
+#pragma endregion
 
 #include <CefViewBrowserApp.h>
 #include <CefViewBrowserClient.h>
 
 #include "CCefAppDelegate.h"
 #include "QCefConfigPrivate.h"
-
-typedef struct FolderResourceMapping
-{
-  QString path;
-  QString url;
-  int priority;
-} FolderResourceMapping;
-
-typedef struct ArchiveResourceMapping
-{
-  QString path;
-  QString url;
-  QString password;
-  int priority;
-} ArchiveResourceMapping;
 
 /// <summary>
 ///
@@ -57,16 +42,6 @@ private:
   ///
   /// </summary>
   const QCefConfig* config_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  QList<FolderResourceMapping> folderResourceMappingList_;
-
-  /// <summary>
-  ///
-  /// </summary>
-  QList<ArchiveResourceMapping> archiveResourceMappingList_;
 
 #if defined(Q_OS_MACOS) || defined(CEF_USE_QT_EVENT_LOOP)
   /// <summary>
@@ -134,7 +109,6 @@ public:
   /// <param name="url">The url to be mapped to</param>
   /// <param name="priority">The priority</param>
   void addLocalFolderResource(const QString& path, const QString& url, int priority = 0);
-  const QList<FolderResourceMapping>& folderResourceMappingList();
 
   /// <summary>
   /// Adds a url mapping item with local archive (.zip) file which contains the web resource
@@ -144,7 +118,6 @@ public:
   /// <param name="password">The password of the archive</param>
   /// <param name="priority">The priority</param>
   void addArchiveResource(const QString& path, const QString& url, const QString& password = "", int priority = 0);
-  const QList<ArchiveResourceMapping>& archiveResourceMappingList();
 
   /// <summary>
   ///

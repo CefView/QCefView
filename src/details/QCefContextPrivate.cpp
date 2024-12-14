@@ -2,11 +2,11 @@
 
 #pragma region qt_headers
 #include <QThread>
-#pragma endregion 
+#pragma endregion
 
 #pragma region cef_headers
 #include <include/cef_origin_whitelist.h>
-#pragma endregion 
+#pragma endregion
 
 #include <QCefContext.h>
 
@@ -61,13 +61,7 @@ QCefContextPrivate::cefConfig() const
 void
 QCefContextPrivate::addLocalFolderResource(const QString& path, const QString& url, int priority /*= 0*/)
 {
-  folderResourceMappingList_.append({ path, url, priority });
-}
-
-const QList<FolderResourceMapping>&
-QCefContextPrivate::folderResourceMappingList()
-{
-  return folderResourceMappingList_;
+  pApp_->AddLocalFolderResource(path.toStdString(), url.toStdString(), priority);
 }
 
 void
@@ -76,13 +70,7 @@ QCefContextPrivate::addArchiveResource(const QString& path,
                                        const QString& password /*= ""*/,
                                        int priority /*= 0*/)
 {
-  archiveResourceMappingList_.append({ path, url, password, priority });
-}
-
-const QList<ArchiveResourceMapping>&
-QCefContextPrivate::archiveResourceMappingList()
-{
-  return archiveResourceMappingList_;
+  pApp_->AddArchiveResource(path.toStdString(), url.toStdString(), password.toStdString(), priority);
 }
 
 bool

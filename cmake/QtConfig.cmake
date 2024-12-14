@@ -1,7 +1,7 @@
 # ################################################################################
 #
 # The Qt SDK path
-# You can set the evnironment varibale via
+# You can set the environment variable via
 # 1. command line
 # Windows: SET QTDIR=PATH/TO/QT
 # Non-Windows: export QTDIR=PATH/TO/QT

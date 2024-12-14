@@ -29,7 +29,7 @@ CCefAppDelegate::onBeforeCommandLineProcessing(const CefString& process_type, Ce
 }
 
 void
-CCefAppDelegate::OnBeforeChildProcessLaunch(CefRefPtr<CefCommandLine> command_line)
+CCefAppDelegate::onBeforeChildProcessLaunch(CefRefPtr<CefCommandLine> command_line)
 {
   for (auto& kv : commandLineArgs_) {
     if (!kv.first.empty()) {

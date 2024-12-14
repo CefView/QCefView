@@ -66,7 +66,7 @@ mapCursorShape(cef_cursor_type_t& type)
 }
 
 void
-CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, const CefFrameId& frameId, const std::string& url)
+CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, const CefFrameId& frameId, const CefString& url)
 {
   if (!IsValidBrowser(browser))
     return;
@@ -76,7 +76,7 @@ CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, const CefFram
 }
 
 void
-CCefClientDelegate::titleChanged(CefRefPtr<CefBrowser>& browser, const std::string& title)
+CCefClientDelegate::titleChanged(CefRefPtr<CefBrowser>& browser, const CefString& title)
 {
   if (!IsValidBrowser(browser))
     return;
@@ -109,14 +109,14 @@ CCefClientDelegate::fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool f
 }
 
 bool
-CCefClientDelegate::tooltipMessage(CefRefPtr<CefBrowser>& browser, const std::string& text)
+CCefClientDelegate::tooltipMessage(CefRefPtr<CefBrowser>& browser, const CefString& text)
 {
   // allow the tooltip action
   return false;
 }
 
 void
-CCefClientDelegate::statusMessage(CefRefPtr<CefBrowser>& browser, const std::string& value)
+CCefClientDelegate::statusMessage(CefRefPtr<CefBrowser>& browser, const CefString& value)
 {
   if (!IsValidBrowser(browser))
     return;
@@ -126,7 +126,7 @@ CCefClientDelegate::statusMessage(CefRefPtr<CefBrowser>& browser, const std::str
 }
 
 void
-CCefClientDelegate::consoleMessage(CefRefPtr<CefBrowser>& browser, const std::string& message, int level)
+CCefClientDelegate::consoleMessage(CefRefPtr<CefBrowser>& browser, const CefString& message, int level)
 {
   if (!IsValidBrowser(browser))
     return;

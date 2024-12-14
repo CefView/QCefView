@@ -3,15 +3,15 @@
 #pragma region stl_headers
 #include <string>
 #include <vector>
-#pragma endregion 
+#pragma endregion
 
 #pragma region cef_headers
 #include <include/cef_app.h>
-#pragma endregion 
+#pragma endregion
 
 #pragma region qt_headers
 #include <QMap>
-#pragma endregion 
+#pragma endregion
 
 #include <CefViewBrowserClientDelegate.h>
 
@@ -45,11 +45,11 @@ public:
 
   virtual void processUrlRequest(CefRefPtr<CefBrowser>& browser,
                                  const CefFrameId& frameId,
-                                 const std::string& url) override;
+                                 const CefString& url) override;
 
   virtual void processQueryRequest(CefRefPtr<CefBrowser>& browser,
                                    const CefFrameId& frameId,
-                                   const std::string& query,
+                                   const CefString& query,
                                    const int64_t query_id) override;
 
   virtual void focusedEditableNodeChanged(CefRefPtr<CefBrowser>& browser,
@@ -58,11 +58,11 @@ public:
 
   virtual void invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
                                   const CefFrameId& frameId,
-                                  const std::string& method,
+                                  const CefString& method,
                                   const CefRefPtr<CefListValue>& arguments) override;
   virtual void reportJSResult(CefRefPtr<CefBrowser>& browser,
                               const CefFrameId& frameId,
-                              const std::string& context,
+                              const CefString& context,
                               const CefRefPtr<CefValue>& result) override;
 
   // ContextMenuHandler
@@ -97,15 +97,13 @@ public:
                             CefRefPtr<CefFileDialogCallback> callback) override;
 
   // DisplayHandler
-  virtual void addressChanged(CefRefPtr<CefBrowser>& browser,
-                              const CefFrameId& frameId,
-                              const std::string& url) override;
-  virtual void titleChanged(CefRefPtr<CefBrowser>& browser, const std::string& title) override;
+  virtual void addressChanged(CefRefPtr<CefBrowser>& browser, const CefFrameId& frameId, const CefString& url) override;
+  virtual void titleChanged(CefRefPtr<CefBrowser>& browser, const CefString& title) override;
   virtual void faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::vector<CefString>& icon_urls) override;
   virtual void fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool fullscreen) override;
-  virtual bool tooltipMessage(CefRefPtr<CefBrowser>& browser, const std::string& text) override;
-  virtual void statusMessage(CefRefPtr<CefBrowser>& browser, const std::string& value) override;
-  virtual void consoleMessage(CefRefPtr<CefBrowser>& browser, const std::string& message, int level) override;
+  virtual bool tooltipMessage(CefRefPtr<CefBrowser>& browser, const CefString& text) override;
+  virtual void statusMessage(CefRefPtr<CefBrowser>& browser, const CefString& value) override;
+  virtual void consoleMessage(CefRefPtr<CefBrowser>& browser, const CefString& message, int level) override;
   virtual void loadingProgressChanged(CefRefPtr<CefBrowser>& browser, double progress) override;
   virtual bool cursorChanged(CefRefPtr<CefBrowser> browser,
                              CefCursorHandle cursor,
@@ -143,8 +141,8 @@ public:
   // LifSpanHandler
   virtual bool onBeforePopup(CefRefPtr<CefBrowser>& browser,
                              const CefFrameId& frameId,
-                             const std::string& targetUrl,
-                             const std::string& targetFrameName,
+                             const CefString& targetUrl,
+                             const CefString& targetFrameName,
                              CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
                              CefWindowInfo& windowInfo,
                              CefBrowserSettings& settings,
@@ -164,8 +162,8 @@ public:
   virtual void loadError(CefRefPtr<CefBrowser>& browser,
                          CefRefPtr<CefFrame>& frame,
                          int errorCode,
-                         const std::string& errorMsg,
-                         const std::string& failedUrl,
+                         const CefString& errorMsg,
+                         const CefString& failedUrl,
                          bool& handled) override;
 
   // RenderHandler

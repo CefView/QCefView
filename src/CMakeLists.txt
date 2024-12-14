@@ -206,7 +206,7 @@ target_include_directories(QCefView PRIVATE
 )
 
 add_dependencies(QCefView
-  CefViewCore
+  CefViewCore::CefViewCore
 )
 
 target_link_libraries(QCefView
@@ -215,7 +215,7 @@ target_link_libraries(QCefView
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
   PRIVATE
-  CefViewCore
+  CefViewCore::CefViewCore
 )
 
 # install QCefView files

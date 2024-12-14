@@ -4,7 +4,7 @@ include(FetchContent)
 FetchContent_Declare(
     CefViewCore
     GIT_REPOSITORY https://github.com/CefView/CefViewCore.git
-    GIT_TAG 070672c3fd0f6c3eb990f3581f8e750bb6860c4d
+    GIT_TAG ca2625196e55e31fb576616340b07a426f3bdba5
 )
 
 # set CEF version to be used
@@ -46,25 +46,62 @@ set(CEF_SDK_VERSION "127.3.5+g114ea2a+chromium-127.0.6533.120") # GOOD
 
 # set(CEF_SDK_VERSION "128.4.9+g9840ad9+chromium-128.0.6613.120")   # BAD   # debugbreak - debug mode
 
+# set folder
+set(CMAKE_FOLDER "QCefView/Core")
+
 # populate CefViewCore project
 FetchContent_MakeAvailable(CefViewCore)
 
-# set sub fodler for all CefViewCore targets
-set_target_properties(CefViewCore PROPERTIES FOLDER core)
+# read CEF version from cef_version.h
+# set need configure QCefView_global to false
+set(NEED_CONFIGURE_QCefView_global FALSE)
 
-# set sub-folder for all Helper targets
-foreach(CefViewWingTarget ${CefViewCore_HELPER_APP_TARGETS})
-    set_target_properties(${CefViewWingTarget} PROPERTIES FOLDER core)
-endforeach(CefViewWingTarget)
+message(STATUS "${CefViewCore_CEF_INCLUDE_DIR}/cef_version.h")
+file(READ "${CefViewCore_CEF_INCLUDE_DIR}/cef_version.h" cef_version_content)
+string(REGEX MATCH "#define CEF_VERSION_MAJOR ([0-9]+)" _ ${cef_version_content})
 
-# set sub-folder for all libcef_dll_wrapper target
-set_target_properties(libcef_dll_wrapper PROPERTIES FOLDER core)
+# check CEF_VERSION_MAJOR
+if(NOT "${CMAKE_MATCH_1}" STREQUAL "${CEF_VERSION_MAJOR}")
+    set(CEF_VERSION_MAJOR ${CMAKE_MATCH_1} CACHE STRING "CEF Major Version" FORCE)
+    set(NEED_CONFIGURE_QCefView_global TRUE)
+    message(STATUS "CEF_VERSION_MAJOR: ${CEF_VERSION_MAJOR} - Updated!")
+else()
+    message(STATUS "CEF_VERSION_MAJOR: ${CEF_VERSION_MAJOR} - No Change!")
+endif()
 
-# export all CefViewCore variables
-if(QCefView_HAS_PARENT_DIRECTORY)
-    set(CefViewCore_EXPORT_INCLUDE_PATH ${CefViewCore_EXPORT_INCLUDE_PATH} PARENT_SCOPE)
-    set(CefViewCore_HELPER_APP_TARGETS ${CefViewCore_HELPER_APP_TARGETS} PARENT_SCOPE)
-    set(CefViewCore_CEF_BINARY_DIR ${CefViewCore_CEF_BINARY_DIR} PARENT_SCOPE)
-    set(CefViewCore_CEF_RESOURCE_DIR ${CefViewCore_CEF_RESOURCE_DIR} PARENT_SCOPE)
-    set(CefViewCore_CEF_INCLUDE_DIR ${CefViewCore_CEF_INCLUDE_DIR} PARENT_SCOPE)
+# check CEF_VERSION_MAJOR
+string(REGEX MATCH "#define CEF_VERSION_MINOR ([0-9]+)" _ ${cef_version_content})
+
+if(NOT "${CMAKE_MATCH_1}" STREQUAL "${CEF_VERSION_MINOR}")
+    set(CEF_VERSION_MINOR ${CMAKE_MATCH_1} CACHE STRING "CEF Minor Version" FORCE)
+    set(NEED_CONFIGURE_QCefView_global TRUE)
+    message(STATUS "CEF_VERSION_MINOR: ${CEF_VERSION_MINOR} - Updated!")
+else()
+    message(STATUS "CEF_VERSION_MINOR: ${CEF_VERSION_MINOR} - No Change!")
+endif()
+
+string(REGEX MATCH "#define CEF_VERSION_PATCH ([0-9]+)" _ ${cef_version_content})
+
+if(NOT "${CMAKE_MATCH_1}" STREQUAL "${CEF_VERSION_PATCH}")
+    set(CEF_VERSION_PATCH ${CMAKE_MATCH_1} CACHE STRING "CEF Patch Version" FORCE)
+    set(NEED_CONFIGURE_QCefView_global TRUE)
+    message(STATUS "CEF_VERSION_PATCH: ${CEF_VERSION_PATCH} - Updated!")
+else()
+    message(STATUS "CEF_VERSION_PATCH: ${CEF_VERSION_PATCH} - No Change!")
+endif()
+
+if(NOT EXISTS "${CMAKE_SOURCE_DIR}/include/QCefView_global.h")
+    set(NEED_CONFIGURE_QCefView_global TRUE)
+endif()
+
+if(${NEED_CONFIGURE_QCefView_global})
+    message(STATUS "Need to configure QCefView_global.h file")
+    configure_file(
+        "${CMAKE_SOURCE_DIR}/include/QCefView_global.h.in"
+        "${CMAKE_SOURCE_DIR}/include/QCefView_global.h"
+        @ONLY
+        NEWLINE_STYLE UNIX
+    )
+else()
+    message(STATUS "No need to configure QCefView_global.h file")
 endif()

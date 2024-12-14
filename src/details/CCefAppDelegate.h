@@ -18,7 +18,7 @@ public:
   virtual void onBeforeCommandLineProcessing(const CefString& process_type,
                                              CefRefPtr<CefCommandLine> command_line) override;
 
-  virtual void OnBeforeChildProcessLaunch(CefRefPtr<CefCommandLine> command_line) override;
+  virtual void onBeforeChildProcessLaunch(CefRefPtr<CefCommandLine> command_line) override;
 
   void onScheduleMessageLoopWork(int64_t delay_ms) override;
 

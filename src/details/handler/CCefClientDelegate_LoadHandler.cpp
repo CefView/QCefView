@@ -38,8 +38,8 @@ void
 CCefClientDelegate::loadError(CefRefPtr<CefBrowser>& browser,
                               CefRefPtr<CefFrame>& frame,
                               int errorCode,
-                              const std::string& errorMsg,
-                              const std::string& failedUrl,
+                              const CefString& errorMsg,
+                              const CefString& failedUrl,
                               bool& handled)
 {
   if (!IsValidBrowser(browser))

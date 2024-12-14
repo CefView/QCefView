@@ -1,7 +1,8 @@
 ﻿#include "../../details/QCefContextPrivate.h"
 
+#include <QDebug>
+
 #include <CefViewCoreProtocol.h>
-#include <Common/CefViewCoreLog.h>
 
 #include "../../details/QCefConfigPrivate.h"
 
@@ -44,16 +45,16 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   windowsJobName_ = QString("CefView-Job-{f0a3c1e3-ff89-4581-8a45-f0bfd74c4bb0}-%1").arg(dwProcessId);
   windowsJobHandle_ = ::CreateJobObjectA(nullptr, windowsJobName_.toStdString().c_str());
   if (nullptr == windowsJobHandle_) {
-    logE("Failed to create windows job object: %d", ::GetLastError());
+    qWarning() << "Failed to create windows job object:" << ::GetLastError();
   } else {
     JOBOBJECT_EXTENDED_LIMIT_INFORMATION info;
     ::memset(&info, 0, sizeof(info));
     info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE | JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK;
     if (!::SetInformationJobObject(windowsJobHandle_, JobObjectExtendedLimitInformation, &info, sizeof(info))) {
-      logE("Failed to set information for windows job object: %d", ::GetLastError());
+      qWarning() << "Failed to set information for windows job object:" << GetLastError();
     }
     if (!::AssignProcessToJobObject(windowsJobHandle_, ::GetCurrentProcess())) {
-      logE("Failed to assign current process to windows job object: %d", ::GetLastError());
+      qWarning() << "Failed to assign current process to windows job object:" << ::GetLastError();
     }
   }
 

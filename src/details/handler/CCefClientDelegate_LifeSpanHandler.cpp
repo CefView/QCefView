@@ -17,8 +17,8 @@
 bool
 CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
                                   const CefFrameId& frameId,
-                                  const std::string& targetUrl,
-                                  const std::string& targetFrameName,
+                                  const CefString& targetUrl,
+                                  const CefString& targetFrameName,
                                   CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
                                   CefWindowInfo& windowInfo,
                                   CefBrowserSettings& settings,
