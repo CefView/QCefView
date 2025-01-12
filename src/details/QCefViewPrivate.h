@@ -4,6 +4,7 @@
 #include <QMutex>
 #include <QPointer>
 #include <QString>
+#include <QStringList>
 
 #if defined(QT_DEBUG)
 #include <QElapsedTimer>
@@ -262,9 +263,9 @@ protected:
   void onCefContextMenuDismissed();
 
   void onFileDialog(CefBrowserHost::FileDialogMode mode,
-                    const CefString& title,
-                    const CefString& default_file_path,
-                    const std::vector<CefString>& accept_filters,
+                    const QString& title,
+                    const QString& default_file_path,
+                    const QStringList& accept_filters,
 #if CEF_VERSION_MAJOR < 102
                     int selected_accept_filter,
 #endif

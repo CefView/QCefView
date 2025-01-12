@@ -2,8 +2,15 @@
 
 <head>
     <script>
-        function onLoad() {
+        console.log("page script starts.....");
 
+        window.onwheel = e => console.log(`wheel event: altKey=${e.altKey} ctrlKey=${e.ctrlKey}`);
+
+        function onLoad() {
+            if (typeof CallBridge == "undefined") {
+                alert("Not in CefView context");
+                return;
+            }
         }
 
         function onChangeColorEvent(color) {
@@ -32,6 +39,27 @@
             );
         }
 
+        function onAlert() {
+            alert('JSDialog: alert');
+        }
+
+        function onConfirm() {
+            if (confirm('JSDialog: confirm')) {
+                alert("JSDialog: confirm was accepted by clicking ok");
+            } else {
+                alert("JSDialog: confirm was canceled");
+            }
+        }
+
+        function onPrompt() {
+            let name = prompt("JSDialog: prompt: Please input your name", "Your Name Here");
+            if (name === null) {
+                alert("JSDialog: prompt was canceled");
+            } else {
+                alert("JSDialog: prompt was accepted and hello " + name);
+            }
+        }
+
         function onInvokeMethodClicked(name, ...arg) {
             CallBridge.invoke(name, ...arg);
         }
@@ -48,6 +76,22 @@
             };
             window.cefViewQuery(query);
         }
+
+        function testInvokeMethod() {
+            let d = {
+                d1: true,
+                d2: 5678,
+                d3: "test object",
+                d4: [1, "2", false],
+                d5: {
+                    d1: true,
+                    d2: 5678,
+                    d3: "nested object",
+                    d4: [1, "2", true],
+                },
+            };
+            onInvokeMethodClicked("TestMethod", 1, false, "arg3", d);
+        }
     </script>
     <style>
         .noselect {
@@ -60,11 +104,9 @@
 <body onload="onLoad()" id="main" class="noselect">
     <h1 align="center" style="font-size: 12pt">Web Area</h1>
     <div align="center">
-        <label> Test Case for EventListener</label>
-        <br />
-        <input type="button" value="AddEventListener" onclick="onAddEventListener()" />
-        <input type="button" value="RemoveEventListener" onclick="onRemoveEventListener()" />
-        <br />
+        <div style="background-color: green; -webkit-app-region: drag">
+            <h1>Dragging area</h1>
+        </div>
         <br />
 
         <label> Test Case for Built-in Scheme Handler </label>
@@ -73,9 +115,24 @@
         <br />
         <br />
 
+        <label> Test Case for EventListener (changeColor)</label>
+        <br />
+        <input type="button" value="AddEventListener" onclick="onAddEventListener()" />
+        <input type="button" value="RemoveEventListener" onclick="onRemoveEventListener()" />
+        <br />
+        <br />
+
+        <label> Test Case for JSDialog</label>
+        <br />
+        <input type="button" value="Alert" onclick="onAlert()" />
+        <input type="button" value="Confirm" onclick="onConfirm()" />
+        <input type="button" value="Promt" onclick="onPrompt()" />
+        <br />
+        <br />
+
         <label> Test Case for InvokeMethod </label>
         <br />
-        <input type="button" value="Invoke Method" onclick="onInvokeMethodClicked('TestMethod', 1, false, 'arg3')" />
+        <input type="button" value="Invoke Method" onclick="testInvokeMethod()" />
         <br />
         <br />
 
@@ -87,13 +144,20 @@
         <br />
         <br />
 
-        <!--
-        <div style="background-color: green; -webkit-app-region: drag">
-          <h1>Dragging area</h1>
-        </div>
+        <label> Test Case for Popup Browser </label>
         <br />
+        <a href="#" target="_blank">Popup Browser By HTML</a>
         <br />
-        -->
+        <a href="#" onClick="window.open('#','QCefView Popup','width=800, height=600'); return false;">
+            Popup Browser By Script
+        </a>
+
+        <br />
+        <a href="#" onClick="window.close();">Close Current Window</a>
+
+
+        <p>An iframe with default borders:</p>
+        <iframe src="/tutorial.html" width="100%" height="300"> </iframe>
     </div>
 </body>
 

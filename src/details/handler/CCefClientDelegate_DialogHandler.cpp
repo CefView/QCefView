@@ -20,10 +20,16 @@ CCefClientDelegate::onFileDialog(CefRefPtr<CefBrowser> browser,
                                  CefRefPtr<CefFileDialogCallback> callback)
 {
   QMetaObject::invokeMethod(pCefViewPrivate_, [=]() {
+    QStringList filters;
+    if (!accept_filters.empty()) {
+      for (const auto& filter : accept_filters) {
+        filters << "*" + QString::fromStdString(filter.ToString());
+      }
+    }
     pCefViewPrivate_->onFileDialog(mode,
-                                   title,
-                                   default_file_path,
-                                   accept_filters,
+                                   title.ToString().c_str(),
+                                   default_file_path.ToString().c_str(),
+                                   filters,
 #if CEF_VERSION_MAJOR < 102
                                    selected_accept_filter,
 #endif

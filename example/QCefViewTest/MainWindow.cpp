@@ -95,8 +95,8 @@ MainWindow::createRightCefView()
 #endif
 
   setting.setWindowlessFrameRate(60);
-  setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
-  // setting.setBackgroundColor(Qt::blue);
+  // setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
+  //  setting.setBackgroundColor(Qt::blue);
 
   // create the QCefView widget and add it to the layout container
   // m_pRightCefViewWidget = new CefViewWidget("https://cefview.github.io/QCefView/", &setting, this);

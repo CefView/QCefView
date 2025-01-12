@@ -667,9 +667,9 @@ QCefViewPrivate::onCefContextMenuDismissed()
 
 void
 QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
-                              const CefString& title,
-                              const CefString& default_file_path,
-                              const std::vector<CefString>& accept_filters,
+                              const QString& title,
+                              const QString& default_file_path,
+                              const QStringList& accept_filters,
 #if CEF_VERSION_MAJOR < 102
                               int selected_accept_filter,
 #endif
@@ -694,27 +694,19 @@ QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
   }
 
   // set title
-  QString caption;
-  if (!title.empty()) {
-    caption = title.ToString().c_str();
-    dialog.setWindowTitle(caption);
+  if (!title.isEmpty()) {
+    dialog.setWindowTitle(title);
   }
 
   // set initial folder
-  if (!default_file_path.empty() && mode == FILE_DIALOG_SAVE) {
-    QFileInfo fileInfo(QString::fromStdString(default_file_path.ToString()));
+  if (!default_file_path.isEmpty() && mode == FILE_DIALOG_SAVE) {
+    QFileInfo fileInfo(default_file_path);
     dialog.setDirectory(fileInfo.dir());
     dialog.selectFile(fileInfo.fileName());
   }
 
   // set accepted file types
-  QStringList filters;
-  if (!accept_filters.empty()) {
-    for (const auto& filter : accept_filters) {
-      filters << "*" + QString::fromStdString(filter.ToString());
-    }
-    dialog.setNameFilters(filters);
-  }
+  dialog.setNameFilters(accept_filters);
 
   // execute the dialog
   if (dialog.exec()) {
@@ -725,7 +717,7 @@ QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
     }
 
 #if CEF_VERSION_MAJOR < 102
-    int index = filters.indexOf(dialog.selectedNameFilter());
+    int index = accept_filters.indexOf(dialog.selectedNameFilter());
     callback->Continue(index, file_paths);
 #else
     callback->Continue(file_paths);

@@ -39,6 +39,27 @@
             );
         }
 
+        function onAlert() {
+            alert('JSDialog: alert');
+        }
+
+        function onConfirm() {
+            if (confirm('JSDialog: confirm')) {
+                alert("JSDialog: confirm was accepted by clicking ok");
+            } else {
+                alert("JSDialog: confirm was canceled");
+            }
+        }
+
+        function onPrompt() {
+            let name = prompt("JSDialog: prompt: Please input your name", "Your Name Here");
+            if (name === null) {
+                alert("JSDialog: prompt was canceled");
+            } else {
+                alert("JSDialog: prompt was accepted and hello " + name);
+            }
+        }
+
         function onInvokeMethodClicked(name, ...arg) {
             CallBridge.invoke(name, ...arg);
         }
@@ -94,10 +115,18 @@
         <br />
         <br />
 
-        <label> Test Case for EventListener</label>
+        <label> Test Case for EventListener (changeColor)</label>
         <br />
         <input type="button" value="AddEventListener" onclick="onAddEventListener()" />
         <input type="button" value="RemoveEventListener" onclick="onRemoveEventListener()" />
+        <br />
+        <br />
+
+        <label> Test Case for JSDialog</label>
+        <br />
+        <input type="button" value="Alert" onclick="onAlert()" />
+        <input type="button" value="Confirm" onclick="onConfirm()" />
+        <input type="button" value="Promt" onclick="onPrompt()" />
         <br />
         <br />
 

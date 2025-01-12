@@ -19,7 +19,7 @@
 CefViewWidget::CefViewWidget(const QString url, const QCefSetting* setting, QWidget* parent /* = 0*/)
   : QCefView(url, setting, parent)
 {
-  setStyleSheet("background: blue;");
+  // setStyleSheet("background: blue;");
 
   connect(this, &CefViewWidget::draggableRegionChanged, this, &CefViewWidget::onDraggableRegionChanged);
   connect(this, &CefViewWidget::nativeBrowserCreated, this, &CefViewWidget::onNativeBrowserWindowCreated);
@@ -65,7 +65,7 @@ CefViewWidget::onNewPopup(const QCefFrameId& sourceFrameId,
                           bool& disableJavascriptAccess)
 {
   // create new QCefView as popup browser
-  settings.setBackgroundColor(Qt::red);
+  // settings.setBackgroundColor(Qt::red);
   return false;
 }
 

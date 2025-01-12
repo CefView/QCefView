@@ -37,7 +37,7 @@ main(int argc, char* argv[])
   config.setRemoteDebuggingPort(9000);
   // set background color for all browsers
   // (QCefSetting.setBackgroundColor will overwrite this value for specified browser instance)
-  config.setBackgroundColor(Qt::lightGray);
+  // config.setBackgroundColor(Qt::lightGray);
 
   // WindowlessRenderingEnabled is set to true by default,
   // set to false to disable the OSR mode
