@@ -74,7 +74,10 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
     // OSR mode
     windowInfo.SetAsWindowless(0);
   } else {
+#if CEF_VERSION_MAJOR >= 125
+    // https://github.com/chromiumembedded/cef/issues/3685
     windowInfo.runtime_style = CEF_RUNTIME_STYLE_ALLOY;
+#endif
     // create CEF browser parent window
     auto windowInitialSize = q_ptr->size();
     if (setting) {
