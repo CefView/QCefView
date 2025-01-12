@@ -589,6 +589,17 @@ QCefViewPrivate::onOsrUpdatePopupFrame(const QImage& frame, const QRegion& regio
   emit updateOsrFrame();
 }
 
+#if CEF_VERSION_MAJOR < 124
+void
+QCefViewPrivate::onOsrUpdateViewTexture(void* shared_handle, const QRegion& region)
+{
+}
+void
+QCefViewPrivate::onOsrUpdatePopupTexture(void* shared_handle, const QRegion& region)
+{
+}
+
+#else
 void
 QCefViewPrivate::onOsrUpdateViewTexture(const CefAcceleratedPaintInfo& info, const QRegion& region)
 {
@@ -598,6 +609,8 @@ void
 QCefViewPrivate::onOsrUpdatePopupTexture(const CefAcceleratedPaintInfo& info, const QRegion& region)
 {
 }
+
+#endif
 
 void
 QCefViewPrivate::onBeforeCefContextMenu(const MenuBuilder::MenuData& data)

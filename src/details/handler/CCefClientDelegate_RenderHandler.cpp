@@ -153,6 +153,17 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
                                        const CefRenderHandler::RectList& dirtyRects,
                                        void* shared_handle)
 {
+  QRegion region;
+  for (auto& rect : dirtyRects) {
+    region += QRect{ rect.x, rect.y, rect.width, rect.height };
+  }
+
+  if (PET_VIEW == type) {
+    pCefViewPrivate_->onOsrUpdateViewTexture(shared_handle, region);
+  } else if (PET_POPUP == type) {
+    pCefViewPrivate_->onOsrUpdatePopupTexture(shared_handle, region);
+  } else {
+  }
 }
 #else
 void

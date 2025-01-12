@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #pragma region qt_headers
 #include <QMenu>
 #include <QMutex>
@@ -8,7 +8,7 @@
 #if defined(QT_DEBUG)
 #include <QElapsedTimer>
 #endif
-#pragma endregion 
+#pragma endregion
 
 #include <CefViewBrowserClient.h>
 #include <CefViewBrowserClientDelegate.h>
@@ -242,9 +242,18 @@ protected:
 
   void onOsrUpdatePopupFrame(const QImage& frame, const QRegion& region);
 
+  //////////////////////////////////////////////////////////////////////////
+  // for hardware acceleration, currently not supported
+#if CEF_VERSION_MAJOR < 124
+  // for CEF version below 124, these two methods do not work.
+  void onOsrUpdateViewTexture(void* shared_handle, const QRegion& region);
+  void onOsrUpdatePopupTexture(void* shared_handle, const QRegion& region);
+#else
+  // CEF offers the GPU resoruces for rendering
   void onOsrUpdateViewTexture(const CefAcceleratedPaintInfo& info, const QRegion& region);
-
   void onOsrUpdatePopupTexture(const CefAcceleratedPaintInfo& info, const QRegion& region);
+#endif
+  //////////////////////////////////////////////////////////////////////////
 
   void onBeforeCefContextMenu(const MenuBuilder::MenuData& data);
 
@@ -313,9 +322,7 @@ public:
 
   void browserStopLoad();
 
-  bool triggerEvent(const QString& name,
-                    const QVariantList& args,
-                    const QCefFrameId& frameId = QCefView::MainFrameID);
+  bool triggerEvent(const QString& name, const QVariantList& args, const QCefFrameId& frameId = QCefView::MainFrameID);
 
   bool responseQCefQuery(const QCefQuery& query);
 
