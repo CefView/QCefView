@@ -157,8 +157,14 @@ CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser> browser,
     // OSR mode
     QCursor cur;
     if (type != CT_CUSTOM) {
-      cur.setShape(mapCursorShape(type));
+      // create cursor from shape
+      cur = QCursor(mapCursorShape(type));
     } else {
+      // create cursor from image data
+      cur = QCursor(QPixmap::fromImage(QImage(static_cast<const uchar*>(custom_cursor_info.buffer),
+                                              custom_cursor_info.size.width,
+                                              custom_cursor_info.size.height,
+                                              QImage::Format_ARGB32_Premultiplied)));
     }
 
     QMetaObject::invokeMethod(pCefViewPrivate_, "onCefUpdateCursor", Q_ARG(const QCursor&, cur));
