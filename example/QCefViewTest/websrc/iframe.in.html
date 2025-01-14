@@ -19,6 +19,13 @@
             document.getElementById("main").style.backgroundColor = color;
         }
 
+        function onBuiltInSchemaHandler() {
+            fetch("CefView://custom.scheme.handler/api/example?arg1=1&args=hello")
+                .then((response) => {
+                    alert(`Native Response:${response}`)
+                });;
+        }
+
         function onAddEventListener() {
             // Add a event listener to handle the event named 'colorChange'
             CallBridge.addEventListener(
@@ -56,7 +63,7 @@
             if (name === null) {
                 alert("JSDialog: prompt was canceled");
             } else {
-                alert("JSDialog: prompt was accepted and hello " + name);
+                alert(`JSDialog: prompt was accepted and hello ${name}`);
             }
         }
 
@@ -102,14 +109,10 @@
 </head>
 
 <body onload="onLoad()" id="main" class="noselect">
-    <h1 align="center" style="font-size: 12pt">Web Area</h1>
-    <div align="center">
-        <div style="background-color: green; -webkit-app-region: drag">
-            <h1>Dragging area</h1>
-        </div>
+    <div align="left">
+        <label> Test Case for Built-in Schema Handler (default cefview://) </label>
         <br />
-
-        <label> Test Case for Built-in Scheme Handler </label>
+        <input type="button" value="Request Built-in Scheme Handler (CefView://)" onclick="onBuiltInSchemaHandler()" />
         <br />
         <a href="cefview://custom.scheme.handler/api/example?arg1=1&args=hello">Built-in Scheme Handler (CefView://)</a>
         <br />
@@ -130,15 +133,16 @@
         <br />
         <br />
 
-        <label> Test Case for InvokeMethod </label>
+        <label> Test Case for invoking native method </label>
         <br />
-        <input type="button" value="Invoke Method" onclick="testInvokeMethod()" />
+        <input type="button" value="invoke()" onclick="testInvokeMethod()" />
         <br />
         <br />
 
         <label> Test Case for QCefQuery </label>
         <br />
-        <textarea id="message" style="width: 320px; height: 120px">this message will be processed by native code.</textarea>
+        <textarea id="message"
+                  style="width: 320px; height: 120px">this message will be processed by native code.</textarea>
         <br />
         <input type="button" value="Query" onclick="onCallBridgeQueryClicked()" />
         <br />
@@ -154,10 +158,6 @@
 
         <br />
         <a href="#" onClick="window.close();">Close Current Window</a>
-
-
-        <p>An iframe with default borders:</p>
-        <iframe src="/tutorial.html" width="100%" height="300"> </iframe>
     </div>
 </body>
 

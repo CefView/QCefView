@@ -40,15 +40,19 @@ file(GLOB _SRC_FILES
 file(GLOB_RECURSE _UI_FILES
   "*.ui"
 )
-source_group("Form Files" ${_UI_FILES})
+source_group("Form Files"
+  FILES ${_UI_FILES})
 
-configure_file(index.in.html webres/index.html COPYONLY)
-configure_file(tutorial.in.html webres/tutorial.html COPYONLY)
+configure_file(websrc/left.in.html webres/left.html COPYONLY)
+configure_file(websrc/right.in.html webres/right.html COPYONLY)
+configure_file(websrc/iframe.in.html webres/iframe.html COPYONLY)
 
 file(GLOB_RECURSE _WEB_FILES
   "*.html"
 )
-source_group("Webres Files" ${_WEB_FILES})
+source_group("Webres Files"
+  FILES ${_WEB_FILES}
+)
 
 if(OS_WINDOWS)
   file(GLOB_RECURSE _PLATFORM_SRC_FILES
@@ -60,7 +64,8 @@ if(OS_WINDOWS)
     "*.qrc"
     "*.rc"
   )
-  source_group("Resource Files" ${_RES_FILES})
+  source_group("Resource Files"
+    FILES ${_RES_FILES})
 
   add_executable(${PROJECT_NAME} WIN32
     ${_SRC_FILES}
@@ -130,7 +135,8 @@ if(OS_LINUX)
   file(GLOB_RECURSE _RES_FILES
     "*.qrc"
   )
-  source_group("Resource Files" ${_RES_FILES})
+  source_group("Resource Files"
+    FILES ${_RES_FILES})
 
   add_executable(${PROJECT_NAME}
     ${_SRC_FILES}
@@ -193,7 +199,8 @@ if(OS_MACOS)
   file(GLOB_RECURSE _RES_FILES
     "*.qrc"
   )
-  source_group("Resource Files" ${_RES_FILES})
+  source_group("Resource Files"
+    FILES ${_RES_FILES})
 
   set(QCefViewTest_INFO_PLIST_FILE
     "${CMAKE_CURRENT_LIST_DIR}/mac/Info.plist"

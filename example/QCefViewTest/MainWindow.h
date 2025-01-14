@@ -70,8 +70,8 @@ protected slots:
 private:
   Ui::MainWindow m_ui;
 
-  CefViewWidget* m_pLeftCefViewWidget = nullptr;
-  CefViewWidget* m_pRightCefViewWidget = nullptr;
+  QCefView* m_pLeftCefViewWidget = nullptr;
+  QCefView* m_pRightCefViewWidget = nullptr;
 };
 
 #endif // QCEFVIEWTEST_H

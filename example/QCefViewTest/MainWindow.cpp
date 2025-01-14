@@ -12,8 +12,8 @@
 #include <QCefContext.h>
 
 #define URL_ROOT "http://QCefViewDoc"
-#define INDEX_URL URL_ROOT "/index.html"
-#define TUTORIAL_URL URL_ROOT "/tutorial.html"
+#define LEFT_INDEX_URL URL_ROOT "/left.html"
+#define RIGHT_INDEX_URL URL_ROOT "/right.html"
 
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent /*, Qt::FramelessWindowHint*/)
@@ -63,7 +63,7 @@ MainWindow::createLeftCefView()
     m_pLeftCefViewWidget = nullptr;
   }
 
-  m_pLeftCefViewWidget = new CefViewWidget(INDEX_URL, nullptr, this);
+  m_pLeftCefViewWidget = new CefViewWidget(LEFT_INDEX_URL, nullptr, this);
   // connect the invokeMethod to the slot
   connect(m_pLeftCefViewWidget, &QCefView::invokeMethod, this, &MainWindow::onInvokeMethod);
 
@@ -86,45 +86,27 @@ MainWindow::createRightCefView()
     m_pRightCefViewWidget = nullptr;
   }
 
-  ///*
   // build settings for per QCefView
   QCefSetting setting;
-
 #if CEF_VERSION_MAJOR < 100
   setting.setPlugins(false);
 #endif
-
   setting.setWindowlessFrameRate(60);
-  // setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
-  //  setting.setBackgroundColor(Qt::blue);
+  //setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
+  //setting.setBackgroundColor(Qt::blue);
 
   // create the QCefView widget and add it to the layout container
-  // m_pRightCefViewWidget = new CefViewWidget("https://cefview.github.io/QCefView/", &setting, this);
-
-  //
-  m_pRightCefViewWidget = new CefViewWidget("http://xcal1.vodafone.co.uk/", &setting, this);
-
-  //
-  // m_pRightCefViewWidget = new CefViewWidget("https://mdn.dev/", &setting, this);
-
-  // this site is for test OSR performance
-  // m_pRightCefViewWidget = new CefViewWidget("https://www.testufo.com", &setting, this);
-
-  // this site is test for input devices
-  // m_pRightCefViewWidget = new CefViewWidget("https://devicetests.com", &setting);
-
-  m_ui.rightCefViewContainer->layout()->addWidget(m_pRightCefViewWidget);
-
-  // allow show context menu for both OSR and NCW mode
-  m_pRightCefViewWidget->setContextMenuPolicy(Qt::DefaultContextMenu);
+  m_pRightCefViewWidget = new QCefView(RIGHT_INDEX_URL, &setting, this);
 
   // all the following values will disable the context menu for both NCW and OSR mode
   // m_pRightCefViewWidget->setContextMenuPolicy(Qt::NoContextMenu);
   // m_pRightCefViewWidget->setContextMenuPolicy(Qt::ActionsContextMenu);
   // m_pRightCefViewWidget->setContextMenuPolicy(Qt::CustomContextMenu);
   // m_pRightCefViewWidget->setContextMenuPolicy(Qt::PreventContextMenu);
+  m_pRightCefViewWidget->setContextMenuPolicy(Qt::DefaultContextMenu);
 
-  //*/
+  // add the QCefView widget to the layout
+  m_ui.rightCefViewContainer->layout()->addWidget(m_pRightCefViewWidget);
 }
 
 void
