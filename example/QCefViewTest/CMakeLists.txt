@@ -1,4 +1,3 @@
-cmake_minimum_required(VERSION 3.18)
 project(QCefViewTest)
 
 set(CMAKE_FOLDER "Example")
@@ -156,7 +155,7 @@ if(OS_LINUX)
     PRIVATE
 
     # On linux platform and debug mode, libcef.so MUST be loaded before libc.so.
-    # Gnerally we can achive this by using LD_PRELOAD=libcef.so, but this is not
+    # Generally we can achieve this by using LD_PRELOAD=libcef.so, but this is not
     # convenience for debugging.
     # Thus, here we do a trick to make sure the load order
     "-Wl,--no-as-needed $<TARGET_FILE_DIR:QCefView>/$<TARGET_FILE_NAME:libcef_lib>"
@@ -220,10 +219,9 @@ if(OS_MACOS)
     MACOSX_BUNDLE_INFO_PLIST "${QCefViewTest_INFO_PLIST_FILE}"
     XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "com.cefview.qcefviewtest"
     XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "@executable_path/../Frameworks"
-
-    # the below two properties need CMake >= 3.20.0, we just copy the framework by post build command
-    # XCODE_EMBED_FRAMEWORKS_CODE_SIGN_ON_COPY    "YES"
-    # XCODE_EMBED_FRAMEWORKS                      "${CMAKE_BINARY_DIR}/output/${CMAKE_BUILD_TYPE}/bin/QCefView.framework"
+    XCODE_LINK_BUILD_PHASE_MODE "KNOWN_LOCATION"
+    XCODE_EMBED_FRAMEWORKS_CODE_SIGN_ON_COPY "YES"
+    XCODE_EMBED_FRAMEWORKS "${CMAKE_BINARY_DIR}/output/${CMAKE_BUILD_TYPE}/bin/QCefView.framework"
   )
 
   add_custom_command(TARGET ${PROJECT_NAME}
@@ -232,10 +230,10 @@ if(OS_MACOS)
     # remove the old framework from the bundle if exists then copy the new one
     # the below tow commands can be removed if you use CMake >= 3.20.0 and set the
     # following target propertis XCODE_EMBED_FRAMEWORKS, XCODE_EMBED_FRAMEWORKS_CODE_SIGN_ON_COPY
-    COMMAND rm -fr "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    "$<TARGET_BUNDLE_DIR:QCefView>"
-    "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
+    # COMMAND rm -fr "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
+    # COMMAND ${CMAKE_COMMAND} -E copy_directory
+    # "$<TARGET_BUNDLE_DIR:QCefView>"
+    # "$<TARGET_BUNDLE_CONTENT_DIR:${PROJECT_NAME}>/Frameworks/QCefView.framework"
 
     # copy the webres to the bundle
     COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -259,7 +257,7 @@ if(OS_MACOS)
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Widgets
-    QCefView
+    $<TARGET_BUNDLE_DIR:QCefView>
   )
 endif()
 
