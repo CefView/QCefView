@@ -10,10 +10,10 @@
 #include "details/utils/ValueConvertor.h"
 
 void
-CCefClientDelegate::onBeforeDownload(CefRefPtr<CefBrowser> browser,
-                                     CefRefPtr<CefDownloadItem> download_item,
+CCefClientDelegate::onBeforeDownload(CefRefPtr<CefBrowser>& browser,
+                                     CefRefPtr<CefDownloadItem>& download_item,
                                      const CefString& suggested_name,
-                                     CefRefPtr<CefBeforeDownloadCallback> callback)
+                                     CefRefPtr<CefBeforeDownloadCallback>& callback)
 {
   FLog();
 
@@ -80,9 +80,9 @@ CCefClientDelegate::onBeforeDownload(CefRefPtr<CefBrowser> browser,
 }
 
 void
-CCefClientDelegate::onDownloadUpdated(CefRefPtr<CefBrowser> browser,
-                                      CefRefPtr<CefDownloadItem> download_item,
-                                      CefRefPtr<CefDownloadItemCallback> callback)
+CCefClientDelegate::onDownloadUpdated(CefRefPtr<CefBrowser>& browser,
+                                      CefRefPtr<CefDownloadItem>& download_item,
+                                      CefRefPtr<CefDownloadItemCallback>& callback)
 {
   FLog();
 

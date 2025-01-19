@@ -86,7 +86,7 @@ CCefClientDelegate::titleChanged(CefRefPtr<CefBrowser>& browser, const CefString
 }
 
 void
-CCefClientDelegate::faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::vector<CefString>& icon_urls)
+CCefClientDelegate::faviconURLChanged(CefRefPtr<CefBrowser>& browser, const std::vector<CefString>& icon_urls)
 {
   if (!IsValidBrowser(browser))
     return;
@@ -145,7 +145,7 @@ CCefClientDelegate::loadingProgressChanged(CefRefPtr<CefBrowser>& browser, doubl
 }
 
 bool
-CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser>& browser,
                                   CefCursorHandle cursor,
                                   cef_cursor_type_t type,
                                   const CefCursorInfo& custom_cursor_info)

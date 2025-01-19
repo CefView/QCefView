@@ -5,7 +5,7 @@
 #include "details/QCefViewPrivate.h"
 
 bool
-CCefClientDelegate::onPreKeyEvent(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onPreKeyEvent(CefRefPtr<CefBrowser>& browser,
                                   const CefKeyEvent& event,
                                   CefEventHandle os_event,
                                   bool* is_keyboard_shortcut)
@@ -39,7 +39,7 @@ CCefClientDelegate::onPreKeyEvent(CefRefPtr<CefBrowser> browser,
 }
 
 bool
-CCefClientDelegate::onKeyEvent(CefRefPtr<CefBrowser> browser, const CefKeyEvent& event, CefEventHandle os_event)
+CCefClientDelegate::onKeyEvent(CefRefPtr<CefBrowser>& browser, const CefKeyEvent& event, CefEventHandle os_event)
 {
 #if defined(Q_OS_MACOS)
   // it seems Qt breaks the macOS shortcut key, so we need to fix it

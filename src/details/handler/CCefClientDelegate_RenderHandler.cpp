@@ -10,7 +10,7 @@
 // OSR mode
 
 bool
-CCefClientDelegate::getRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
+CCefClientDelegate::getRootScreenRect(CefRefPtr<CefBrowser>& browser, CefRect& rect)
 {
   if (!IsValidBrowser(browser)) {
     return false;
@@ -39,7 +39,7 @@ CCefClientDelegate::getRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& re
 }
 
 void
-CCefClientDelegate::getViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
+CCefClientDelegate::getViewRect(CefRefPtr<CefBrowser>& browser, CefRect& rect)
 {
   if (!IsValidBrowser(browser)) {
     rect.Set(0, 0, 1, 1);
@@ -54,7 +54,7 @@ CCefClientDelegate::getViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 }
 
 bool
-CCefClientDelegate::getScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int viewY, int& screenX, int& screenY)
+CCefClientDelegate::getScreenPoint(CefRefPtr<CefBrowser>& browser, int viewX, int viewY, int& screenX, int& screenY)
 {
   if (!IsValidBrowser(browser))
     return false;
@@ -66,7 +66,7 @@ CCefClientDelegate::getScreenPoint(CefRefPtr<CefBrowser> browser, int viewX, int
 }
 
 bool
-CCefClientDelegate::getScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& screen_info)
+CCefClientDelegate::getScreenInfo(CefRefPtr<CefBrowser>& browser, CefScreenInfo& screen_info)
 {
   if (!IsValidBrowser(browser))
     return false;
@@ -102,7 +102,7 @@ CCefClientDelegate::getScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& 
 }
 
 void
-CCefClientDelegate::onPopupShow(CefRefPtr<CefBrowser> browser, bool show)
+CCefClientDelegate::onPopupShow(CefRefPtr<CefBrowser>& browser, bool show)
 {
   if (!IsValidBrowser(browser))
     return;
@@ -111,7 +111,7 @@ CCefClientDelegate::onPopupShow(CefRefPtr<CefBrowser> browser, bool show)
 }
 
 void
-CCefClientDelegate::onPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& rect)
+CCefClientDelegate::onPopupSize(CefRefPtr<CefBrowser>& browser, const CefRect& rect)
 {
   if (!IsValidBrowser(browser))
     return;
@@ -120,7 +120,7 @@ CCefClientDelegate::onPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& re
 }
 
 void
-CCefClientDelegate::onPaint(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onPaint(CefRefPtr<CefBrowser>& browser,
                             CefRenderHandler::PaintElementType type,
                             const CefRenderHandler::RectList& dirtyRects,
                             const void* buffer,
@@ -167,7 +167,7 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
 }
 #else
 void
-CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
                                        CefRenderHandler::PaintElementType type,
                                        const CefRenderHandler::RectList& dirtyRects,
                                        const CefAcceleratedPaintInfo& info)
@@ -187,8 +187,8 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
 #endif
 
 bool
-CCefClientDelegate::startDragging(CefRefPtr<CefBrowser> browser,
-                                  CefRefPtr<CefDragData> drag_data,
+CCefClientDelegate::startDragging(CefRefPtr<CefBrowser>& browser,
+                                  CefRefPtr<CefDragData>& drag_data,
                                   CefRenderHandler::DragOperationsMask allowed_ops,
                                   int x,
                                   int y)
@@ -197,17 +197,17 @@ CCefClientDelegate::startDragging(CefRefPtr<CefBrowser> browser,
 }
 
 void
-CCefClientDelegate::updateDragCursor(CefRefPtr<CefBrowser> browser, CefRenderHandler::DragOperation operation)
+CCefClientDelegate::updateDragCursor(CefRefPtr<CefBrowser>& browser, CefRenderHandler::DragOperation operation)
 {
 }
 
 void
-CCefClientDelegate::onScrollOffsetChanged(CefRefPtr<CefBrowser> browser, double x, double y)
+CCefClientDelegate::onScrollOffsetChanged(CefRefPtr<CefBrowser>& browser, double x, double y)
 {
 }
 
 void
-CCefClientDelegate::onImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onImeCompositionRangeChanged(CefRefPtr<CefBrowser>& browser,
                                                  const CefRange& selected_range,
                                                  const CefRenderHandler::RectList& character_bounds)
 {
@@ -227,14 +227,14 @@ CCefClientDelegate::onImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser,
 }
 
 void
-CCefClientDelegate::onTextSelectionChanged(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onTextSelectionChanged(CefRefPtr<CefBrowser>& browser,
                                            const CefString& selected_text,
                                            const CefRange& selected_range)
 {
 }
 
 void
-CCefClientDelegate::onVirtualKeyboardRequested(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onVirtualKeyboardRequested(CefRefPtr<CefBrowser>& browser,
                                                CefRenderHandler::TextInputMode input_mode)
 {
 }

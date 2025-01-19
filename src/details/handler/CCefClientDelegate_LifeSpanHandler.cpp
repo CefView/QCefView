@@ -181,7 +181,7 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 }
 
 bool
-CCefClientDelegate::doClose(CefRefPtr<CefBrowser> browser)
+CCefClientDelegate::doClose(CefRefPtr<CefBrowser>& browser)
 {
   qDebug() << "destroy browser from native";
 
@@ -189,7 +189,7 @@ CCefClientDelegate::doClose(CefRefPtr<CefBrowser> browser)
 }
 
 bool
-CCefClientDelegate::requestClose(CefRefPtr<CefBrowser> browser)
+CCefClientDelegate::requestClose(CefRefPtr<CefBrowser>& browser)
 {
   qDebug() << "destroy browser request from web";
 
@@ -209,6 +209,6 @@ CCefClientDelegate::requestClose(CefRefPtr<CefBrowser> browser)
 }
 
 void
-CCefClientDelegate::onBeforeClose(CefRefPtr<CefBrowser> browser)
+CCefClientDelegate::onBeforeClose(CefRefPtr<CefBrowser>& browser)
 {
 }

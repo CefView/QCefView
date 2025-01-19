@@ -9,10 +9,10 @@
 #include "details/QCefViewPrivate.h"
 
 void
-CCefClientDelegate::onBeforeContextMenu(CefRefPtr<CefBrowser> browser,
-                                        CefRefPtr<CefFrame> frame,
-                                        CefRefPtr<CefContextMenuParams> params,
-                                        CefRefPtr<CefMenuModel> model)
+CCefClientDelegate::onBeforeContextMenu(CefRefPtr<CefBrowser>& browser,
+                                        CefRefPtr<CefFrame>& frame,
+                                        CefRefPtr<CefContextMenuParams>& params,
+                                        CefRefPtr<CefMenuModel>& model)
 {
   FLog();
 
@@ -40,11 +40,11 @@ CCefClientDelegate::onBeforeContextMenu(CefRefPtr<CefBrowser> browser,
 }
 
 bool
-CCefClientDelegate::onRunContextMenu(CefRefPtr<CefBrowser> browser,
-                                     CefRefPtr<CefFrame> frame,
-                                     CefRefPtr<CefContextMenuParams> params,
-                                     CefRefPtr<CefMenuModel> model,
-                                     CefRefPtr<CefRunContextMenuCallback> callback)
+CCefClientDelegate::onRunContextMenu(CefRefPtr<CefBrowser>& browser,
+                                     CefRefPtr<CefFrame>& frame,
+                                     CefRefPtr<CefContextMenuParams>& params,
+                                     CefRefPtr<CefMenuModel>& model,
+                                     CefRefPtr<CefRunContextMenuCallback>& callback)
 {
   FLog();
 
@@ -65,9 +65,9 @@ CCefClientDelegate::onRunContextMenu(CefRefPtr<CefBrowser> browser,
 }
 
 bool
-CCefClientDelegate::onContextMenuCommand(CefRefPtr<CefBrowser> browser,
-                                         CefRefPtr<CefFrame> frame,
-                                         CefRefPtr<CefContextMenuParams> params,
+CCefClientDelegate::onContextMenuCommand(CefRefPtr<CefBrowser>& browser,
+                                         CefRefPtr<CefFrame>& frame,
+                                         CefRefPtr<CefContextMenuParams>& params,
                                          int command_id,
                                          CefContextMenuHandler::EventFlags event_flags)
 {
@@ -77,7 +77,7 @@ CCefClientDelegate::onContextMenuCommand(CefRefPtr<CefBrowser> browser,
 }
 
 void
-CCefClientDelegate::onContextMenuDismissed(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame)
+CCefClientDelegate::onContextMenuDismissed(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>& frame)
 {
   FLog();
 

@@ -7,8 +7,8 @@
 #include "details/QCefViewPrivate.h"
 
 bool
-CCefClientDelegate::onDragEnter(CefRefPtr<CefBrowser> browser,
-                                CefRefPtr<CefDragData> dragData,
+CCefClientDelegate::onDragEnter(CefRefPtr<CefBrowser>& browser,
+                                CefRefPtr<CefDragData>& dragData,
                                 CefDragHandler::DragOperationsMask mask)
 {
   // Return false for default drag handling behavior or true to cancel the drag event.

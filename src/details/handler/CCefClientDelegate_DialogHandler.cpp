@@ -9,7 +9,7 @@
 #include "details/utils/ValueConvertor.h"
 
 bool
-CCefClientDelegate::onFileDialog(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onFileDialog(CefRefPtr<CefBrowser>& browser,
                                  CefBrowserHost::FileDialogMode mode,
                                  const CefString& title,
                                  const CefString& default_file_path,
@@ -17,7 +17,7 @@ CCefClientDelegate::onFileDialog(CefRefPtr<CefBrowser> browser,
 #if CEF_VERSION_MAJOR < 102
                                  int selected_accept_filter,
 #endif
-                                 CefRefPtr<CefFileDialogCallback> callback)
+                                 CefRefPtr<CefFileDialogCallback>& callback)
 {
   QMetaObject::invokeMethod(pCefViewPrivate_, [=]() {
     QStringList filters;

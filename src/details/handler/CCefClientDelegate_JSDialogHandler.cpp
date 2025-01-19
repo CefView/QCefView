@@ -12,12 +12,12 @@
 #include "details/utils/ValueConvertor.h"
 
 bool
-CCefClientDelegate::onJSDialog(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onJSDialog(CefRefPtr<CefBrowser>& browser,
                                const CefString& origin_url,
                                CefJSDialogHandler::JSDialogType dialog_type,
                                const CefString& message_text,
                                const CefString& default_prompt_text,
-                               CefRefPtr<CefJSDialogCallback> callback,
+                               CefRefPtr<CefJSDialogCallback>& callback,
                                bool& suppress_message)
 {
   /// Called to run a JavaScript dialog.
@@ -109,10 +109,10 @@ CCefClientDelegate::onJSDialog(CefRefPtr<CefBrowser> browser,
 }
 
 bool
-CCefClientDelegate::onBeforeUnloadDialog(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onBeforeUnloadDialog(CefRefPtr<CefBrowser>& browser,
                                          const CefString& message_text,
                                          bool is_reload,
-                                         CefRefPtr<CefJSDialogCallback> callback)
+                                         CefRefPtr<CefJSDialogCallback>& callback)
 {
   /// Called to run a dialog asking the user if they want to leave a page.
   /// Return false to use the default dialog implementation. Return true if the
@@ -139,7 +139,7 @@ CCefClientDelegate::onBeforeUnloadDialog(CefRefPtr<CefBrowser> browser,
 }
 
 void
-CCefClientDelegate::onResetDialogState(CefRefPtr<CefBrowser> browser)
+CCefClientDelegate::onResetDialogState(CefRefPtr<CefBrowser>& browser)
 {
   /// Called to cancel any pending dialogs and reset any saved dialog state.
   /// Will be called due to events like page navigation irregardless of whether
@@ -156,7 +156,7 @@ CCefClientDelegate::onResetDialogState(CefRefPtr<CefBrowser> browser)
 }
 
 void
-CCefClientDelegate::onDialogClosed(CefRefPtr<CefBrowser> browser)
+CCefClientDelegate::onDialogClosed(CefRefPtr<CefBrowser>& browser)
 {
   /// Called when the dialog is closed.
 }
