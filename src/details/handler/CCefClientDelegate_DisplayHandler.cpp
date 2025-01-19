@@ -66,13 +66,13 @@ mapCursorShape(cef_cursor_type_t& type)
 }
 
 void
-CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, const CefFrameId& frameId, const CefString& url)
+CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>& frame, const CefString& url)
 {
   if (!IsValidBrowser(browser))
     return;
 
   auto u = QString::fromStdString(url);
-  emit pCefViewPrivate_->q_ptr->addressChanged(ValueConvertor::FrameIdC2Q(frameId), u);
+  emit pCefViewPrivate_->q_ptr->addressChanged(ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), u);
 }
 
 void

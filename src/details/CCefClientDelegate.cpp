@@ -18,7 +18,7 @@ CCefClientDelegate::~CCefClientDelegate()
 }
 
 void
-CCefClientDelegate::processUrlRequest(CefRefPtr<CefBrowser>& browser, const CefFrameId& frameId, const CefString& url)
+CCefClientDelegate::processUrlRequest(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>& frame, const CefString& url)
 {
   if (!IsValidBrowser(browser))
     return;
@@ -27,12 +27,12 @@ CCefClientDelegate::processUrlRequest(CefRefPtr<CefBrowser>& browser, const CefF
   auto u = QString::fromStdString(url);
   auto source = pCefViewPrivate_->q_ptr;
 
-  emit source->cefUrlRequest(browserId, ValueConvertor::FrameIdC2Q(frameId), u);
+  emit source->cefUrlRequest(browserId, ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), u);
 }
 
 void
 CCefClientDelegate::processQueryRequest(CefRefPtr<CefBrowser>& browser,
-                                        const CefFrameId& frameId,
+                                        CefRefPtr<CefFrame>& frame,
                                         const CefString& request,
                                         const int64_t query_id)
 {
@@ -44,12 +44,12 @@ CCefClientDelegate::processQueryRequest(CefRefPtr<CefBrowser>& browser,
   auto source = pCefViewPrivate_->q_ptr;
   auto query = pCefViewPrivate_->createQuery(req, query_id);
 
-  emit source->cefQueryRequest(browserId, ValueConvertor::FrameIdC2Q(frameId), query);
+  emit source->cefQueryRequest(browserId, ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), query);
 }
 
 void
 CCefClientDelegate::focusedEditableNodeChanged(CefRefPtr<CefBrowser>& browser,
-                                               const CefFrameId& frameId,
+                                               CefRefPtr<CefFrame>& frame,
                                                bool focusOnEditableNode)
 {
   if (!IsValidBrowser(browser))
@@ -63,7 +63,7 @@ CCefClientDelegate::focusedEditableNodeChanged(CefRefPtr<CefBrowser>& browser,
 
 void
 CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
-                                       const CefFrameId& frameId,
+                                       CefRefPtr<CefFrame>& frame,
                                        const CefString& method,
                                        const CefRefPtr<CefListValue>& arguments)
 {
@@ -80,12 +80,12 @@ CCefClientDelegate::invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
   }
 
   auto browserId = browser->GetIdentifier();
-  emit pCefViewPrivate_->q_ptr->invokeMethod(browserId, ValueConvertor::FrameIdC2Q(frameId), m, args);
+  emit pCefViewPrivate_->q_ptr->invokeMethod(browserId, ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), m, args);
 }
 
 void
 CCefClientDelegate::reportJSResult(CefRefPtr<CefBrowser>& browser,
-                                   const CefFrameId& frameId,
+                                   CefRefPtr<CefFrame>& frame,
                                    const CefString& context,
                                    const CefRefPtr<CefValue>& result)
 {
@@ -96,5 +96,6 @@ CCefClientDelegate::reportJSResult(CefRefPtr<CefBrowser>& browser,
   QVariant qV;
   ValueConvertor::CefValueToQVariant(&qV, result.get());
   auto c = QString::fromStdString(context);
-  emit pCefViewPrivate_->q_ptr->reportJavascriptResult(browserId, ValueConvertor::FrameIdC2Q(frameId), c, qV);
+  emit pCefViewPrivate_->q_ptr->reportJavascriptResult(
+    browserId, ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), c, qV);
 }

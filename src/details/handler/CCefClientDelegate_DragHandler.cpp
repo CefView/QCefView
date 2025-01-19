@@ -17,6 +17,7 @@ CCefClientDelegate::onDragEnter(CefRefPtr<CefBrowser> browser,
 
 void
 CCefClientDelegate::draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
+                                           CefRefPtr<CefFrame>& frame,
                                            const std::vector<CefDraggableRegion>& regions)
 {
   if (!IsValidBrowser(browser))

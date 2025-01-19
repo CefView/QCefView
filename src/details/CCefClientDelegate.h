@@ -50,24 +50,24 @@ public:
   ~CCefClientDelegate();
 
   virtual void processUrlRequest(CefRefPtr<CefBrowser>& browser,
-                                 const CefFrameId& frameId,
+                                 CefRefPtr<CefFrame>& frame,
                                  const CefString& url) override;
 
   virtual void processQueryRequest(CefRefPtr<CefBrowser>& browser,
-                                   const CefFrameId& frameId,
+                                   CefRefPtr<CefFrame>& frame,
                                    const CefString& query,
                                    const int64_t query_id) override;
 
   virtual void focusedEditableNodeChanged(CefRefPtr<CefBrowser>& browser,
-                                          const CefFrameId& frameId,
+                                          CefRefPtr<CefFrame>& frame,
                                           bool focusOnEditableNode) override;
 
   virtual void invokeMethodNotify(CefRefPtr<CefBrowser>& browser,
-                                  const CefFrameId& frameId,
+                                  CefRefPtr<CefFrame>& frame,
                                   const CefString& method,
                                   const CefRefPtr<CefListValue>& arguments) override;
   virtual void reportJSResult(CefRefPtr<CefBrowser>& browser,
-                              const CefFrameId& frameId,
+                              CefRefPtr<CefFrame>& frame,
                               const CefString& context,
                               const CefRefPtr<CefValue>& result) override;
 
@@ -108,7 +108,9 @@ public:
 
   // DisplayHandler
 #pragma region DisplayHandler
-  virtual void addressChanged(CefRefPtr<CefBrowser>& browser, const CefFrameId& frameId, const CefString& url) override;
+  virtual void addressChanged(CefRefPtr<CefBrowser>& browser,
+                              CefRefPtr<CefFrame>& frame,
+                              const CefString& url) override;
   virtual void titleChanged(CefRefPtr<CefBrowser>& browser, const CefString& title) override;
   virtual void faviconURLChanged(CefRefPtr<CefBrowser> browser, const std::vector<CefString>& icon_urls) override;
   virtual void fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool fullscreen) override;
@@ -140,6 +142,7 @@ public:
                            CefRefPtr<CefDragData> dragData,
                            CefDragHandler::DragOperationsMask mask) override;
   virtual void draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
+                                      CefRefPtr<CefFrame>& frame,
                                       const std::vector<CefDraggableRegion>& regions) override;
 #pragma endregion
 
@@ -179,7 +182,7 @@ public:
   // LifeSpanHandler
 #pragma region LifeSpanHandler
   virtual bool onBeforePopup(CefRefPtr<CefBrowser>& browser,
-                             const CefFrameId& frameId,
+                             CefRefPtr<CefFrame>& frame,
                              const CefString& targetUrl,
                              const CefString& targetFrameName,
                              CefLifeSpanHandler::WindowOpenDisposition targetDisposition,

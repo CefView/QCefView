@@ -16,7 +16,7 @@
 
 bool
 CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
-                                  const CefFrameId& frameId,
+                                  CefRefPtr<CefFrame>& frame,
                                   const CefString& targetUrl,
                                   const CefString& targetFrameName,
                                   CefLifeSpanHandler::WindowOpenDisposition targetDisposition,
@@ -64,12 +64,12 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
     QMetaObject::invokeMethod(
       pCefViewPrivate_,
       [&]() {
-        cancel = pCefViewPrivate_->onBeforeNewPopupCreate(ValueConvertor::FrameIdC2Q(frameId), //
-                                                          url,                                 //
-                                                          name,                                //
-                                                          d,                                   //
-                                                          rc,                                  //
-                                                          s,                                   //
+        cancel = pCefViewPrivate_->onBeforeNewPopupCreate(ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), //
+                                                          url,                                                //
+                                                          name,                                               //
+                                                          d,                                                  //
+                                                          rc,                                                 //
+                                                          s,                                                  //
                                                           disableJavascriptAccess);
         if (!cancel) {
           QCefSettingPrivate::CopyToCefBrowserSettings(&s, &settings);
@@ -92,11 +92,11 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
     QMetaObject::invokeMethod(
       pCefViewPrivate_,
       [=]() {
-        pCefViewPrivate_->onBeforeNewBrowserCreate(ValueConvertor::FrameIdC2Q(frameId), //
-                                                   url,                                 //
-                                                   name,                                //
-                                                   d,                                   //
-                                                   rc,                                  //
+        pCefViewPrivate_->onBeforeNewBrowserCreate(ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), //
+                                                   url,                                                //
+                                                   name,                                               //
+                                                   d,                                                  //
+                                                   rc,                                                 //
                                                    s);
       },
       Qt::QueuedConnection);
@@ -173,12 +173,10 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 
   if (browser->IsPopup()) {
     // pop-up window
-    QMetaObject::invokeMethod(
-      pCefViewPrivate_, [=]() { pCefViewPrivate_->onAfterCefPopupCreated(browser); }, c);
+    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onAfterCefPopupCreated(browser); }, c);
   } else {
     // new normal browser
-    QMetaObject::invokeMethod(
-      pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefBrowserCreated(browser, w); }, c);
+    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefBrowserCreated(browser, w); }, c);
   }
 }
 
