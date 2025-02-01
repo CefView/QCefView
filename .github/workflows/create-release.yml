@@ -47,13 +47,13 @@ jobs:
         run: cmake --install ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
       - name: Create SDK artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: QCefView.windows.x86_64
           path: ${{github.workspace}}/out/install/QCefView
 
       - name: Create Demo artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: QCefViewTest.windows.x86_64
           path: ${{github.workspace}}/out/install/QCefViewTest
@@ -93,14 +93,14 @@ jobs:
         run: cmake --install ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
       - name: Create SDK artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         # Upload artifact
         with:
           name: QCefView.macos.x86_64
           path: ${{github.workspace}}/out/install/QCefView
 
       - name: Create Demo artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         # Upload artifact
         with:
           name: QCefViewTest.macos.x86_64
@@ -137,14 +137,14 @@ jobs:
         run: cmake --install ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
       - name: Create SDK artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         # Upload artifact
         with:
           name: QCefView.linux.x86_64
           path: ${{github.workspace}}/out/install/QCefView
 
       - name: Create Demo artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         # Upload artifact
         with:
           name: QCefViewTest.linux.x86_64
@@ -156,7 +156,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download all artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: ${{github.workspace}}/artifacts
 

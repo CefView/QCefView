@@ -63,7 +63,7 @@ jobs:
 
       - name: Create SDK artifact
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         # Upload artifact
         with:
           name: QCefView.windows.x86_64
@@ -71,7 +71,7 @@ jobs:
 
       - name: Create Demo artifact
         if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         # Upload artifact
         with:
           name: QCefViewTest.windows.x86_64
