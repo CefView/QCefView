@@ -148,7 +148,7 @@ CCefClientDelegate::onPaint(CefRefPtr<CefBrowser>& browser,
 
 #if CEF_VERSION_MAJOR < 124
 void
-CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser> browser,
+CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
                                        CefRenderHandler::PaintElementType type,
                                        const CefRenderHandler::RectList& dirtyRects,
                                        void* shared_handle)
