@@ -54,6 +54,6 @@ FetchContent_MakeAvailable(CefViewCore)
 
 configure_file(
     "${CefViewCore_SOURCE_DIR}/include/CefVersion.h"
-    "${CMAKE_SOURCE_DIR}/include/CefVersion.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../include/CefVersion.h"
     COPYONLY
 )
