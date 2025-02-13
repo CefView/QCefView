@@ -1,5 +1,9 @@
 ﻿#include "../../details/QCefContextPrivate.h"
 
+#include <QDir>
+
+#include <CefViewCoreProtocol.h>
+
 #include "../../details/QCefConfigPrivate.h"
 
 bool
@@ -8,6 +12,11 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   // Build CefSettings
   CefSettings cef_settings;
   QCefConfigPrivate::CopyToCefSettings(config, &cef_settings);
+
+  if (CefString(&cef_settings.browser_subprocess_path).empty()) {
+    QString strExePath = QDir(QCoreApplication::applicationDirPath()).filePath(kCefViewRenderProcessName);
+    CefString(&cef_settings.browser_subprocess_path) = QDir::toNativeSeparators(strExePath).toStdString();
+  }
 
 #if CEF_VERSION_MAJOR >= 125 && CEF_VERSION_MAJOR <= 127
   //  https://github.com/chromiumembedded/cef/issues/3685

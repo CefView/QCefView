@@ -4,7 +4,7 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QString>
-#pragma endregion 
+#pragma endregion
 
 #include <CefViewCoreProtocol.h>
 
@@ -12,13 +12,6 @@ QCefConfigPrivate::QCefConfigPrivate()
 {
   backgroundColor_ = QColor::fromRgba(qRgba(255, 255, 255, 255));
   userAgent_ = kCefViewDefaultUserAgent;
-
-#if !defined(Q_OS_MACOS)
-  QDir ExeDir = QCoreApplication::applicationDirPath();
-
-  QString strExePath = ExeDir.filePath(kCefViewRenderProcessName);
-  browserSubProcessPath_ = QDir::toNativeSeparators(strExePath).toStdString();
-#endif
 }
 
 void

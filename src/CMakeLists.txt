@@ -67,6 +67,10 @@ if(OS_WINDOWS)
     QCEFVIEW_LIB
   )
 
+  target_link_options(QCefView PRIVATE
+    "/DELAYLOAD:libcef.dll"
+  )
+
   add_custom_command(TARGET QCefView
     PRE_BUILD
 
@@ -74,7 +78,7 @@ if(OS_WINDOWS)
     COMMAND ${CMAKE_COMMAND}
     -E copy_directory
     "$<TARGET_FILE_DIR:${CEFVIEW_WING_NAME}>"
-    "$<TARGET_FILE_DIR:QCefView>"
+    "$<TARGET_FILE_DIR:QCefView>/CefView"
 
     # gnerate a file contains timestamp
     COMMAND ${CMAKE_COMMAND}

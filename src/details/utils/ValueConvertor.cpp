@@ -2,7 +2,7 @@
 
 #pragma region qt_headers
 #include <QDebug>
-#pragma endregion 
+#pragma endregion
 
 void
 ValueConvertor::CefValueToQVariant(QVariant* qVariant, CefValue* cValue)
@@ -180,7 +180,7 @@ ValueConvertor::FrameIdC2Q(const CefFrameId& id)
 #if CEF_VERSION_MAJOR < 122
   return id;
 #else
-  return QCefFrameId::fromUtf8(id.ToString().c_str(), id.ToString().length());
+  return QCefFrameId::fromUtf8(id.ToString().c_str(), static_cast<DWORD>(id.ToString().length()));
 #endif
 }
 

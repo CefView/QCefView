@@ -1,6 +1,9 @@
 ﻿#include "../../details/QCefContextPrivate.h"
 
+#include <Shlwapi.h>
+
 #include <QDebug>
+#include <QDir>
 
 #include <CefViewCoreProtocol.h>
 
@@ -9,6 +12,12 @@
 bool
 QCefContextPrivate::initializeCef(const QCefConfig* config)
 {
+  std::vector<wchar_t> modPath(MAX_PATH * 4);
+  ::GetModuleFileNameW(nullptr, modPath.data(), static_cast<DWORD>(modPath.size()));
+  ::PathRemoveFileSpecW(modPath.data());
+  ::PathCombineW(modPath.data(), modPath.data(), L"CefView");
+  ::SetDllDirectoryW(modPath.data());
+
 #if CEF_VERSION_MAJOR < 112
   // Enable High-DPI support on Windows 7 or newer.
   CefEnableHighDPISupport();
@@ -17,6 +26,11 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   // Build CefSettings
   CefSettings cef_settings;
   QCefConfigPrivate::CopyToCefSettings(config, &cef_settings);
+
+  if (CefString(&cef_settings.browser_subprocess_path).empty()) {
+    QString strExePath = QDir(QString::fromWCharArray(modPath.data())).filePath(kCefViewRenderProcessName);
+    CefString(&cef_settings.browser_subprocess_path) = QDir::toNativeSeparators(strExePath).toStdString();
+  }
 
 #if CEF_VERSION_MAJOR >= 125 && CEF_VERSION_MAJOR <= 127
   //  https://github.com/chromiumembedded/cef/issues/3685
