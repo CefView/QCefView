@@ -1,10 +1,16 @@
 include(FetchContent)
 
+if(NOT CEFVIEW_CORE_VERSION)
+    set(DEFAULT_CEFVIEW_CORE_VERSION "bb1cbae4bce755e88bb89fea3c5ab31e47b44b65")
+    set(CEFVIEW_CORE_VERSION ${DEFAULT_CEFVIEW_CORE_VERSION})
+    message(STATUS "CEFVIEW_CORE_VERSION not set, use default value:${CEFVIEW_CORE_VERSION}")
+endif()
+
 # fetch CefViewCore project
 FetchContent_Declare(
     CefViewCore
     GIT_REPOSITORY https://github.com/CefView/CefViewCore.git
-    GIT_TAG bb1cbae4bce755e88bb89fea3c5ab31e47b44b65
+    GIT_TAG ${CEFVIEW_CORE_VERSION}
 )
 
 # set CEF version to be used
