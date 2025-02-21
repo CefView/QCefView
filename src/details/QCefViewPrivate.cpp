@@ -75,13 +75,16 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
 
     // set hardware acceleration
     if (setting && setting->hardwareAcceleration_) {
+      // create hardware renderer
       osr.pRenderer_ = CefViewRendererFactory::createRenderer(true);
       // get window native handle
       void* wid = reinterpret_cast<void*>(view->winId());
       // enable hardware acceleration
       windowInfo.shared_texture_enabled = true;
     } else {
+      // create software renderer
       osr.pRenderer_ = CefViewRendererFactory::createRenderer(false);
+      // disable hardware acceleration
       windowInfo.shared_texture_enabled = false;
     }
   } else {
@@ -365,8 +368,8 @@ QCefViewPrivate::render(QPainter* painter)
 {
   Q_Q(QCefView);
 
-  if (isOSRModeEnabled_) {
-    // OSR mode
+  if (isOSRModeEnabled_ && osr.pRenderer_ && !(osr.pRenderer_->isHardware())) {
+    // OSR mode software rendering
     // 1. paint widget with its stylesheet
     QStyleOption opt;
     opt.initFrom(q);

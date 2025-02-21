@@ -7,6 +7,17 @@ CefViewSoftwareRenderer::CefViewSoftwareRenderer() {}
 
 CefViewSoftwareRenderer::~CefViewSoftwareRenderer() {}
 
+bool
+CefViewSoftwareRenderer::initialize(void* wid)
+{
+  return true;
+}
+
+void
+CefViewSoftwareRenderer::uninitialize()
+{
+}
+
 void
 CefViewSoftwareRenderer::setBackgroundColor(const CefColor& color)
 {
@@ -71,6 +82,15 @@ CefViewSoftwareRenderer::updateFrame(const CefRenderHandler::PaintElementType& t
 }
 
 void
+CefViewSoftwareRenderer::updateTexture(const CefRenderHandler::PaintElementType& type,
+                                       const CefRenderHandler::RectList& dirtyRects,
+                                       const void* handle,
+                                       int format)
+{
+  throw std::logic_error("The method or operation is not implemented.");
+}
+
+void
 CefViewSoftwareRenderer::render(void* painter, int width, int height)
 {
   if (!painter) {
@@ -92,13 +112,4 @@ CefViewSoftwareRenderer::render(void* painter, int width, int height)
       p->drawImage(QRect{ popupRect_.x, popupRect_.y, popupRect_.width, popupRect_.height }, qCefPopupFrame_);
     }
   }
-}
-
-void
-CefViewSoftwareRenderer::updateTexture(const CefRenderHandler::PaintElementType& type,
-                                       const CefRenderHandler::RectList& dirtyRects,
-                                       const void* handle,
-                                       int format)
-{
-  throw std::logic_error("The method or operation is not implemented.");
 }
