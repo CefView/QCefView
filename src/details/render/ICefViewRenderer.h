@@ -14,6 +14,10 @@ public:
 
   virtual bool isHardware() = 0;
 
+  virtual bool initialize(void* wid) = 0;
+
+  virtual void uninitialize() = 0;
+
   virtual void setBackgroundColor(const CefColor& color) = 0;
 
   virtual void updatePopupVisibility(bool visible) = 0;

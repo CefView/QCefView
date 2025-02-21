@@ -11,10 +11,9 @@
 class CefViewSoftwareRenderer : public ICefViewRenderer
 {
 private:
-  CefColor backgroundColor_;
-
   bool showPopup_ = false;
   CefRect popupRect_;
+  CefColor backgroundColor_ = 0;
 
   QMutex qViewPaintLock_;
   QImage qCefViewFrame_;
@@ -27,6 +26,10 @@ public:
 
   bool isHardware() override { return false; }
 
+  bool initialize(void* wid) override;
+
+  void uninitialize() override;
+
   void setBackgroundColor(const CefColor& color) override;
 
   void updatePopupVisibility(bool visible) override;
@@ -38,12 +41,12 @@ public:
                    const void* buffer,
                    const CefSize& size) override;
 
-  void render(void* painter, int width, int height) override;
-
   void updateTexture(const CefRenderHandler::PaintElementType& type,
                      const CefRenderHandler::RectList& dirtyRects,
                      const void* handle,
                      int format) override;
+
+  void render(void* painter, int width, int height) override;
 };
 
 #endif
