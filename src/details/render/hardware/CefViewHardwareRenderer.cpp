@@ -15,6 +15,7 @@ CefViewHardwareRenderer::CefViewHardwareRenderer()
 #elif defined(OS_LINUX)
   : pBackend_(nullptr)
 #else
+#error "Unsupported platform"
 #endif
 {
 }
@@ -24,10 +25,22 @@ CefViewHardwareRenderer::~CefViewHardwareRenderer()
   pBackend_.reset();
 }
 
-void
-CefViewHardwareRenderer::setBackgroundColor(const CefColor& color)
+bool
+CefViewHardwareRenderer::initialize(void* wid, int width, int height, float scale, const CefColor& background)
 {
-  pBackend_->setBackgroundColor(color);
+  return pBackend_->initialize(wid, width, height, scale, background);
+}
+
+void
+CefViewHardwareRenderer::uninitialize()
+{
+  pBackend_->uninitialize();
+}
+
+void
+CefViewHardwareRenderer::resize(int width, int height, float scale)
+{
+  pBackend_->resize(width, height, scale);
 }
 
 void
@@ -43,25 +56,16 @@ CefViewHardwareRenderer::updatePopupRect(const CefRect& rect)
 }
 
 void
-CefViewHardwareRenderer::updateFrame(const CefRenderHandler::PaintElementType& type,
-                                     const CefRenderHandler::RectList& dirtyRects,
-                                     const void* buffer,
-                                     const CefSize& size)
+CefViewHardwareRenderer::updateFrameData(const CefRenderHandler::PaintElementType& type,
+                                         const CefRenderHandler::RectList& dirtyRects,
+                                         const FrameDataType& dataType,
+                                         const FrameData& data)
 {
-  pBackend_->updateFrame(type, dirtyRects, buffer, size);
+  pBackend_->updateFrameData(type, dirtyRects, dataType, data);
 }
 
 void
-CefViewHardwareRenderer::updateTexture(const CefRenderHandler::PaintElementType& type,
-                                       const CefRenderHandler::RectList& dirtyRects,
-                                       const void* handle,
-                                       int format)
+CefViewHardwareRenderer::render(void* painter)
 {
-  throw std::logic_error("The method or operation is not implemented.");
-}
-
-void
-CefViewHardwareRenderer::render(void* painter, int width, int height)
-{
-  pBackend_->render(nullptr, width, height);
+  pBackend_->render(nullptr);
 }

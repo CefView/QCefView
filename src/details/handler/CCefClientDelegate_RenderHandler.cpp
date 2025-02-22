@@ -7,8 +7,6 @@
 
 #include "details/QCefViewPrivate.h"
 
-// OSR mode
-
 bool
 CCefClientDelegate::getRootScreenRect(CefRefPtr<CefBrowser>& browser, CefRect& rect)
 {
@@ -130,9 +128,20 @@ CCefClientDelegate::onPaint(CefRefPtr<CefBrowser>& browser,
   if (!IsValidBrowser(browser))
     return;
 
-  pCefViewPrivate_->osr.pRenderer_->updateFrame(type, dirtyRects, buffer, CefSize(width, height));
+  // update CEF image frame
+  ICefViewRenderer::FrameData data;
+  data.image.buffer = buffer;
+  data.image.width = width;
+  data.image.height = height;
+  ICefViewRenderer::FrameDataType dataType = ICefViewRenderer::FrameDataType::CpuImage;
+  pCefViewPrivate_->osr.pRenderer_->updateFrameData(type,       //
+                                                    dirtyRects, //
+                                                    dataType,   //
+                                                    data        //
+  );
 
-  emit pCefViewPrivate_->updateOsrFrame();
+  // trigger paint event
+  pCefViewPrivate_->q_ptr->update();
 }
 
 #if CEF_VERSION_MAJOR < 124
@@ -145,7 +154,18 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
   if (!IsValidBrowser(browser))
     return;
 
-  pCefViewPrivate_->osr.pRenderer_->updateTexture(type, dirtyRects, shared_handle, 0);
+  // update CEF image texture2d
+  ICefViewRenderer::FrameData data;
+  data.texture.handle = info.shared_texture_handle;
+  data.texture.format = info.format;
+  ICefViewRenderer::FrameDataType dataType = ICefViewRenderer::FrameDataType::GpuTexture;
+  pCefViewPrivate_->osr.pRenderer_->updateFrameData(type,       //
+                                                    dirtyRects, //
+                                                    dataType,   //
+                                                    data        //
+  );
+
+  pCefViewPrivate_->q_ptr->update();
 }
 #else
 void
@@ -157,7 +177,28 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
   if (!IsValidBrowser(browser))
     return;
 
-  pCefViewPrivate_->osr.pRenderer_->updateTexture(type, dirtyRects, info.shared_texture_handle, info.format);
+  // update CEF image texture2d
+  ICefViewRenderer::FrameData data;
+#if defined(OS_WINDOWS)
+  data.texture.handle = info.shared_texture_handle;
+#elif defined(OS_MACOS)
+  // TO-DO
+  data.texture.handle = info.shared_texture_io_surface;
+#elif defined(OS_LINUX)
+  // TO-DO
+  data.texture.handle = nullptr;
+#else
+#error "Unsupported platform"
+#endif
+  data.texture.format = info.format;
+  ICefViewRenderer::FrameDataType dataType = ICefViewRenderer::FrameDataType::GpuTexture;
+  pCefViewPrivate_->osr.pRenderer_->updateFrameData(type,       //
+                                                    dirtyRects, //
+                                                    dataType,   //
+                                                    data        //
+  );
+
+  pCefViewPrivate_->q_ptr->update();
 }
 #endif
 

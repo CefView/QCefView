@@ -29,7 +29,10 @@ QCefView::QCefView(const QString& url,
   : QWidget(parent, f)
   , d_ptr(new QCefViewPrivate(QCefContext::instance()->d_func(), this))
 {
+  // create browser
+  d_ptr->createCefBrowser(this, url, setting ? setting->d_func() : nullptr);
 
+  // set window attributes for OSR mode
   if (d_ptr->isOSRModeEnabled_) {
     // OSR mode
     setBackgroundRole(QPalette::Window);
@@ -40,11 +43,10 @@ QCefView::QCefView(const QString& url,
     setAttribute(Qt::WA_NoSystemBackground);
   }
 
+  // track mouse
   setMouseTracking(true);
+  // set focus policy
   setFocusPolicy(Qt::WheelFocus);
-
-  // create browser
-  d_ptr->createCefBrowser(this, url, setting ? setting->d_func() : nullptr);
 }
 
 QCefView::QCefView(QWidget* parent /*= 0*/, Qt::WindowFlags f /*= Qt::WindowFlags()*/)

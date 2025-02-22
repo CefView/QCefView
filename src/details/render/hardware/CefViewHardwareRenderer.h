@@ -16,25 +16,24 @@ public:
   CefViewHardwareRenderer();
   ~CefViewHardwareRenderer();
 
-  bool isHardware() override { return false; }
+  bool isHardware() override { return true; }
 
-  void setBackgroundColor(const CefColor& color) override;
+  bool initialize(void* wid, int width, int height, float scale, const CefColor& background) override;
+
+  void uninitialize() override;
+
+  void resize(int width, int height, float scale) override;
 
   void updatePopupVisibility(bool visible) override;
 
   void updatePopupRect(const CefRect& rect) override;
 
-  void updateFrame(const CefRenderHandler::PaintElementType& type,
-                   const CefRenderHandler::RectList& dirtyRects,
-                   const void* buffer,
-                   const CefSize& size) override;
+  void updateFrameData(const CefRenderHandler::PaintElementType& type,
+                       const CefRenderHandler::RectList& dirtyRects,
+                       const FrameDataType& dataType,
+                       const FrameData& data) override;
 
-  void updateTexture(const CefRenderHandler::PaintElementType& type,
-                     const CefRenderHandler::RectList& dirtyRects,
-                     const void* handle,
-                     int format) override;
-
-  void render(void* painter, int width, int height) override;
+  void render(void* painter) override;
 };
 
 #endif

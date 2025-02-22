@@ -7,34 +7,105 @@
 
 using CefColor = cef_color_t;
 
+/// <summary>
+///
+/// </summary>
 class ICefViewRenderer
 {
 public:
+  /// <summary>
+  ///
+  /// </summary>
   virtual ~ICefViewRenderer() {};
 
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
   virtual bool isHardware() = 0;
 
-  virtual bool initialize(void* wid) = 0;
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="wid"></param>
+  /// <param name="width"></param>
+  /// <param name="height"></param>
+  /// <param name="scale"></param>
+  /// <param name="background"></param>
+  /// <returns></returns>
+  virtual bool initialize(void* wid, int width, int height, float scale, const CefColor& background) = 0;
 
+  /// <summary>
+  ///
+  /// </summary>
   virtual void uninitialize() = 0;
 
-  virtual void setBackgroundColor(const CefColor& color) = 0;
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="width"></param>
+  /// <param name="height"></param>
+  /// <param name="scale"></param>
+  virtual void resize(int width, int height, float scale) = 0;
 
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="visible"></param>
   virtual void updatePopupVisibility(bool visible) = 0;
 
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="rect"></param>
   virtual void updatePopupRect(const CefRect& rect) = 0;
 
-  virtual void updateFrame(const CefRenderHandler::PaintElementType& type,
-                           const CefRenderHandler::RectList& dirtyRects,
-                           const void* buffer,
-                           const CefSize& size) = 0;
+  /// <summary>
+  ///
+  /// </summary>
+  enum class FrameDataType
+  {
+    CpuImage = 0,
+    GpuTexture = 1,
+  };
 
-  virtual void updateTexture(const CefRenderHandler::PaintElementType& type,
-                             const CefRenderHandler::RectList& dirtyRects,
-                             const void* handle,
-                             int format) = 0;
+  /// <summary>
+  ///
+  /// </summary>
+  union FrameData
+  {
+    struct
+    {
+      const void* buffer;
+      int width;
+      int height;
+    } image;
 
-  virtual void render(void* painter, int width, int height) = 0;
+    struct
+    {
+      void* handle;
+      int format;
+
+    } texture;
+  };
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="type"></param>
+  /// <param name="dirtyRects"></param>
+  /// <param name="dataType"></param>
+  /// <param name="data"></param>
+  virtual void updateFrameData(const CefRenderHandler::PaintElementType& type,
+                               const CefRenderHandler::RectList& dirtyRects,
+                               const FrameDataType& dataType,
+                               const FrameData& data) = 0;
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="painter"></param>
+  virtual void render(void* painter) = 0;
 };
 
 #endif
