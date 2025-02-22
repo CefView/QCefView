@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget* parent)
   // add a local folder to URL map (global)
   QCefContext::instance()->addLocalFolderResource(webResourceDir, URL_ROOT);
 
-  createLeftCefView();
+  // createLeftCefView();
   createRightCefView();
 }
 
@@ -63,7 +63,12 @@ MainWindow::createLeftCefView()
     m_pLeftCefViewWidget = nullptr;
   }
 
-  m_pLeftCefViewWidget = new CefViewWidget(LEFT_INDEX_URL, nullptr, this);
+  QCefSetting setting;
+  setting.setWindowlessFrameRate(240);
+  setting.setHardwareAcceleration(true);
+  // setting.setBackgroundColor(Qt::magenta);
+
+  m_pLeftCefViewWidget = new CefViewWidget(LEFT_INDEX_URL, &setting, this);
   // connect the invokeMethod to the slot
   connect(m_pLeftCefViewWidget, &QCefView::invokeMethod, this, &MainWindow::onInvokeMethod);
 
@@ -91,13 +96,14 @@ MainWindow::createRightCefView()
 #if CEF_VERSION_MAJOR < 100
   setting.setPlugins(false);
 #endif
-  setting.setWindowlessFrameRate(60);
-  setting.setHardwareAcceleration(false);
-  //setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
-  //setting.setBackgroundColor(Qt::blue);
+  setting.setWindowlessFrameRate(240);
+  setting.setHardwareAcceleration(true);
+  // setting.setBackgroundColor(Qt::cyan);
+  // setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
 
   // create the QCefView widget and add it to the layout container
-  m_pRightCefViewWidget = new QCefView(RIGHT_INDEX_URL, &setting, this);
+  // m_pRightCefViewWidget = new QCefView(RIGHT_INDEX_URL, &setting, this);
+  m_pRightCefViewWidget = new QCefView("https://www.testufo.com/", &setting, this);
 
   // all the following values will disable the context menu for both NCW and OSR mode
   // m_pRightCefViewWidget->setContextMenuPolicy(Qt::NoContextMenu);

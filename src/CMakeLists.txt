@@ -71,6 +71,12 @@ if(OS_WINDOWS)
     "/DELAYLOAD:libcef.dll"
   )
 
+  target_link_libraries(QCefView
+    PRIVATE
+    d3d11
+    d3dcompiler
+  )
+
   add_custom_command(TARGET QCefView
     PRE_BUILD
 

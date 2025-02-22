@@ -170,6 +170,8 @@ protected:
 
   void render(QPainter* painter);
 
+  qreal scaleFactor();
+
 public slots:
   void onAppFocusChanged(QWidget* old, QWidget* now);
 
@@ -188,9 +190,6 @@ public slots:
   void onContextMenuTriggered(QAction* action);
 
   void onContextMenuDestroyed(QObject* obj);
-
-signals:
-  void updateOsrFrame();
 
 protected:
   void onBeforeCefContextMenu(const MenuBuilder::MenuData& data);

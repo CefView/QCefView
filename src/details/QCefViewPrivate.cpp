@@ -67,25 +67,79 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
   // 2. create browser client handler
   auto pClient = new CefViewBrowserClient(pContextPrivate_->getCefApp(), pClientDelegate);
 
-  // 3. set window info
+  // 3. create the browser settings
+  CefBrowserSettings browserSettings;
+  QCefSettingPrivate::CopyToCefBrowserSettings(setting, &browserSettings);
+
+  // 4. set window info
   CefWindowInfo windowInfo;
   if (isOSRModeEnabled_) {
-    // OSR mode
-    windowInfo.SetAsWindowless(0);
+    auto winSize = q_ptr->size();
+    auto winBgColor = browserSettings.background_color;
+    std::shared_ptr<ICefViewRenderer> renderer;
 
-    // set hardware acceleration
+#if defined(OS_WINDOWS)
+    // if hardware is enabled
     if (setting && setting->hardwareAcceleration_) {
-      // create hardware renderer
-      osr.pRenderer_ = CefViewRendererFactory::createRenderer(true);
-      // get window native handle
-      void* wid = reinterpret_cast<void*>(view->winId());
-      // enable hardware acceleration
-      windowInfo.shared_texture_enabled = true;
+#if CEF_VERSION_MAJOR >= 125
+      // create hardware renderer if enabled
+      if (renderer = CefViewRendererFactory::createRenderer(true)) {
+        // get window native handle
+        auto wid = reinterpret_cast<void*>(view->winId());
+
+        // initialize renderer
+        if (renderer->initialize(wid,              //
+                                 winSize.width(),  //
+                                 winSize.height(), //
+                                 scaleFactor(),    //
+                                 winBgColor        //
+                                 )) {
+          // OSR with hardware renderer
+          osr.pRenderer_ = renderer;
+          windowInfo.SetAsWindowless(0);
+          windowInfo.shared_texture_enabled = true;
+        } else {
+          qWarning() << "Failed to initialize hardware renderer, will fallback to software renderer";
+        }
+      } else {
+        qWarning() << "Failed to create hardware renderer, will fallback to software renderer";
+      }
     } else {
+      qInfo() << "Hardware Acceleration is disabled";
+    }
+#else
+      qWarning() << "Hardware Acceleration is supported only on CEF version 125+";
+#endif
+#endif
+
+    // if hardware renderer is not enabled or failed to create it
+    // fallback to software renderer
+    if (!osr.pRenderer_) {
       // create software renderer
-      osr.pRenderer_ = CefViewRendererFactory::createRenderer(false);
-      // disable hardware acceleration
-      windowInfo.shared_texture_enabled = false;
+      if (renderer = CefViewRendererFactory::createRenderer(false)) {
+        // initialize renderer
+        auto ws = q_ptr->size();
+        if (renderer->initialize(nullptr,          //
+                                 winSize.width(),  //
+                                 winSize.height(), //
+                                 scaleFactor(),    //
+                                 winBgColor        //
+                                 )) {
+          // OSR with software renderer
+          osr.pRenderer_ = renderer;
+          windowInfo.SetAsWindowless(0);
+          windowInfo.shared_texture_enabled = false;
+        } else {
+          qWarning() << "Failed to initialize hardware renderer";
+        }
+      } else {
+        qWarning() << "Failed to create hardware renderer";
+      }
+    }
+
+    if (!osr.pRenderer_) {
+      // all renderer were failed to create or initialize
+      // I don't know what to do
     }
   } else {
 #if CEF_VERSION_MAJOR >= 125
@@ -103,26 +157,13 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
     ncw.qBrowserWindow_->resize(windowInitialSize);
     ncw.qBrowserWindow_->setFlags(Qt::Window | Qt::FramelessWindowHint);
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
-    qreal scaleFactor = q_ptr->devicePixelRatioF();
-#else
-    qreal scaleFactor = q_ptr->devicePixelRatio();
-#endif
-    auto width = windowInitialSize.width() * scaleFactor;
-    auto height = windowInitialSize.height() * scaleFactor;
+    auto width = windowInitialSize.width() * scaleFactor();
+    auto height = windowInitialSize.height() * scaleFactor();
 #if CEF_VERSION_MAJOR > 85
     windowInfo.SetAsChild((CefWindowHandle)ncw.qBrowserWindow_->winId(), { 0, 0, (int)width, (int)height });
 #else
     windowInfo.SetAsChild((CefWindowHandle)ncw.qBrowserWindow_->winId(), 0, 0, (int)width, (int)height);
 #endif
-  }
-
-  // 4. create the browser settings
-  CefBrowserSettings browserSettings;
-  QCefSettingPrivate::CopyToCefBrowserSettings(setting, &browserSettings);
-
-  if (isOSRModeEnabled_ && osr.pRenderer_) {
-    osr.pRenderer_->setBackgroundColor(browserSettings.background_color);
   }
 
   // 5. create browser object
@@ -134,7 +175,7 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
                                                CefRequestContext::GetGlobalContext());
   Q_ASSERT_X(success, "QCefViewPrivate::createBrowser", "Failed to create cef browser");
   if (!success) {
-    qWarning("Failed to create cef browser");
+    qWarning() << "Failed to create cef browser";
     return;
   }
 
@@ -228,7 +269,6 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
     // notify the visibility and size
     pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
     pCefBrowser_->GetHost()->WasResized();
-    connect(this, SIGNAL(updateOsrFrame()), q_ptr, SLOT(update()));
   } else {
     // emit signal
     emit q_ptr->nativeBrowserCreated(window);
@@ -368,16 +408,31 @@ QCefViewPrivate::render(QPainter* painter)
 {
   Q_Q(QCefView);
 
-  if (isOSRModeEnabled_ && osr.pRenderer_ && !(osr.pRenderer_->isHardware())) {
-    // OSR mode software rendering
-    // 1. paint widget with its stylesheet
-    QStyleOption opt;
-    opt.initFrom(q);
-    q->style()->drawPrimitive(QStyle::PE_Widget, &opt, painter, q);
+  if (isOSRModeEnabled_) {
+    if (osr.pRenderer_->isHardware()) {
+      // render cef view
+      osr.pRenderer_->render(nullptr);
+    } else {
+      // paint widget with its stylesheet
+      QStyleOption opt;
+      opt.initFrom(q);
+      q->style()->drawPrimitive(QStyle::PE_Widget, &opt, painter, q);
 
-    // 2. render cef view
-    osr.pRenderer_->render(painter, q->width(), q->height());
+      // render cef view
+      osr.pRenderer_->render(painter);
+    }
   }
+}
+
+qreal
+QCefViewPrivate::scaleFactor()
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
+  qreal scaleFactor = q_ptr->devicePixelRatioF();
+#else
+  qreal scaleFactor = q_ptr->devicePixelRatio();
+#endif
+  return scaleFactor;
 }
 
 void
@@ -765,21 +820,21 @@ QCefViewPrivate::onPaintEvent(QPaintEvent* event)
 {
   Q_Q(QCefView);
 
-  // if hardware acceleration is available then disable Qt paint
-  if (isOSRModeEnabled_ && osr.pRenderer_ && osr.pRenderer_->isHardware()) {
-    return;
+  if (osr.pRenderer_ && osr.pRenderer_->isHardware()) {
+    // hardware renderer, there's no painter
+    render(nullptr);
+  } else {
+    // 1. construct painter for current widget
+    QPainter painter(q);
+
+    // 2. paint background with background role
+    // for OSR mode, this makes sure the surface will be cleared before a new drawing
+    // for NCW mode, this makes sure QCefView will not be treated as transparent background
+    painter.fillRect(q->rect(), q->palette().color(q->backgroundRole()));
+
+    // 3. render self
+    render(&painter);
   }
-
-  // 1. construct painter for current widget
-  QPainter painter(q);
-
-  // 2. paint background with background role
-  // for OSR mode, this makes sure the surface will be cleared before a new drawing
-  // for NCW mode, this makes sure QCefView will not be treated as transparent background
-  painter.fillRect(q->rect(), q->palette().color(q->backgroundRole()));
-
-  // 3. render self
-  render(&painter);
 }
 
 void
@@ -880,12 +935,20 @@ QCefViewPrivate::onViewSizeChanged(const QSize& size, const QSize& oldSize)
 {
   if (isOSRModeEnabled_) {
     // OSR mode
-    if (pCefBrowser_)
+    if (osr.pRenderer_) {
+      // reset render
+      osr.pRenderer_->resize(size.width(), size.height(), scaleFactor());
+    }
+
+    if (pCefBrowser_) {
+      // notify CEF of the size changing
       pCefBrowser_->GetHost()->WasResized();
+    }
   } else {
     Q_Q(QCefView);
-    if (ncw.qBrowserWindow_)
+    if (ncw.qBrowserWindow_) {
       ncw.qBrowserWindow_->applyMask(q->mask());
+    }
   }
 }
 
@@ -1018,7 +1081,7 @@ QCefViewPrivate::onViewWheelEvent(QWheelEvent* event)
       d.setX(0);
     }
 
-    pCefBrowser_->GetHost()->SendMouseWheelEvent(e, d.x(), d.y());
+    pCefBrowser_->GetHost()->SendMouseWheelEvent(e, d.x() * 0.1, d.y() * 0.1);
   }
 }
 
