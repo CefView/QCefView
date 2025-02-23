@@ -221,7 +221,7 @@ if(OS_MACOS)
     XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "@executable_path/../Frameworks"
     XCODE_LINK_BUILD_PHASE_MODE "KNOWN_LOCATION"
     XCODE_EMBED_FRAMEWORKS_CODE_SIGN_ON_COPY "YES"
-    XCODE_EMBED_FRAMEWORKS "${CMAKE_BINARY_DIR}/output/${CMAKE_BUILD_TYPE}/bin/QCefView.framework"
+    XCODE_EMBED_FRAMEWORKS "${CMAKE_BINARY_DIR}/output/$(CONFIGURATION)/bin/QCefView.framework"
   )
 
   add_custom_command(TARGET ${PROJECT_NAME}
@@ -257,7 +257,7 @@ if(OS_MACOS)
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Widgets
-    QCefView
+    $<TARGET_BUNDLE_DIR:QCefView>
   )
 endif()
 
