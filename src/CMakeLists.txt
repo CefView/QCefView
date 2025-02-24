@@ -75,6 +75,7 @@ if(OS_WINDOWS)
     PRIVATE
     d3d11
     d3dcompiler
+    dcomp
   )
 
   add_custom_command(TARGET QCefView

@@ -105,6 +105,12 @@ MainWindow::createRightCefView()
   // m_pRightCefViewWidget = new QCefView(RIGHT_INDEX_URL, &setting, this);
   m_pRightCefViewWidget = new QCefView("https://www.testufo.com/", &setting, this);
 
+  auto vl = new QVBoxLayout(m_pRightCefViewWidget);
+  auto btn = new QPushButton("TEST BUTTON OVERLAY", m_pRightCefViewWidget);
+  vl->setAlignment(Qt::AlignTop);
+  vl->addWidget(btn);
+  m_pRightCefViewWidget->setLayout(vl);
+
   // all the following values will disable the context menu for both NCW and OSR mode
   // m_pRightCefViewWidget->setContextMenuPolicy(Qt::NoContextMenu);
   // m_pRightCefViewWidget->setContextMenuPolicy(Qt::ActionsContextMenu);

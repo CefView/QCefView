@@ -6,6 +6,9 @@
 #include <d3d11.h>
 #include <d3d11_1.h>
 #include <d3d11_2.h>
+#include <dcomp.h>
+#include <dxgi.h>
+#include <dxgi1_2.h>
 #include <wrl.h>
 
 #include <mutex>
@@ -27,11 +30,15 @@ private:
   int m_width = 800;
   int m_height = 600;
 
+  // lock
+  std::mutex m_d3dContextLock;
+
   // device/context/swapchain
   Microsoft::WRL::ComPtr<ID3D11Device> m_d3dDevice;
   Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_d3dContext;
-  Microsoft::WRL::ComPtr<IDXGISwapChain> m_swapChain;
-  std::mutex m_d3dContextLock;
+  Microsoft::WRL::ComPtr<IDCompositionDevice> m_dcompositionDevice;
+  Microsoft::WRL::ComPtr<IDCompositionTarget> m_dcompositionTarget;
+  Microsoft::WRL::ComPtr<IDXGISwapChain1> m_swapChain;
 
   // IA stage
   Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
@@ -82,6 +89,7 @@ protected:
                              Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& pTargetSRV,
                              D3D11_TEXTURE2D_DESC& targetTextureDesc);
 
+  void SetTargetView();
   void ClearTargetView();
   void DrawCefView();
   void DrawCefPopup();

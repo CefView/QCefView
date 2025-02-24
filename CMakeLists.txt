@@ -122,7 +122,11 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
   # Disable the sandbox on Windows, because the sandbox.lib is MT which is conflict with Qt
   set(USE_SANDBOX OFF CACHE BOOL "Disable sandbox on Windows" FORCE)
   add_definitions(-DOS_WINDOWS=1)
-  add_compile_options("/M$<IF:$<BOOL:${STATIC_CRT}>,T,D>$<$<CONFIG:Debug>:d>")
+  add_compile_options(
+    /W3
+    /WX
+    /M$<IF:$<BOOL:${STATIC_CRT}>,T,D>$<$<CONFIG:Debug>:d>
+  )
   add_link_options(/DEBUG)
 endif()
 
