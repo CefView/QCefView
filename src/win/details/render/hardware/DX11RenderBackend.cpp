@@ -392,6 +392,8 @@ DX11RenderBackend::HandleDeviceLost()
   initialize(m_hWnd, m_width, m_height, m_scale, m_backgroundColor);
 }
 
+#define ScreenToNDC(xx, yy) XMFLOAT3(2.0f * (xx) / m_width - 1.0f, 1.0f - 2.0f * (yy) / m_height, 1.0f)
+
 bool
 DX11RenderBackend::CreateQuadVertexBuffer(float x,                //
                                           float y,                //
@@ -400,17 +402,11 @@ DX11RenderBackend::CreateQuadVertexBuffer(float x,                //
                                           ID3D11Buffer** ppBuffer //
 )
 {
-  auto ScreenToNDC = [this](float px, float py) -> XMFLOAT3 {
-    return XMFLOAT3(2.0f * px / m_width - 1.0f,  // X: [0, width] → [-1, 1]
-                    1.0f - 2.0f * py / m_height, // Y: [0, height] → [1, -1]
-                    1.0f);
-  };
-
   // vertex
   Vertex vertices[] = //
     {
-      { ScreenToNDC(x + 0, y - 0), XMFLOAT2(0.0f, 0.0f) }, // LEFT TOP
-      { ScreenToNDC(x + w, y - 0), XMFLOAT2(1.0f, 0.0f) }, // RIGHT TOP
+      { ScreenToNDC(x + 0, y + 0), XMFLOAT2(0.0f, 0.0f) }, // LEFT TOP
+      { ScreenToNDC(x + w, y + 0), XMFLOAT2(1.0f, 0.0f) }, // RIGHT TOP
       { ScreenToNDC(x + 0, y + h), XMFLOAT2(0.0f, 1.0f) }, // LEFT BOT
       { ScreenToNDC(x + w, y + h), XMFLOAT2(1.0f, 1.0f) }  // RIGHT BOT
     };
@@ -581,26 +577,31 @@ DX11RenderBackend::initialize(void* wid, int width, int height, float scale, con
 
   // create device/context/swapchain
   if (!CreateDeviceAndSwapchain()) {
+    uninitialize();
     return false;
   }
 
   // create shader resources
   if (!CreateShaderResource()) {
+    uninitialize();
     return false;
   }
 
   // create sampler
   if (!CreateSampler()) {
+    uninitialize();
     return false;
   }
 
   // create blender
   if (!CreateBlender()) {
+    uninitialize();
     return false;
   }
 
   // create render target
   if (!CreateRenderTarget()) {
+    uninitialize();
     return false;
   }
 

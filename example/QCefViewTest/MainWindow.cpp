@@ -1,4 +1,4 @@
-﻿#include "MainWindow.h"
+#include "MainWindow.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget* parent)
   // add a local folder to URL map (global)
   QCefContext::instance()->addLocalFolderResource(webResourceDir, URL_ROOT);
 
-  // createLeftCefView();
+  createLeftCefView();
   createRightCefView();
 }
 
@@ -64,11 +64,11 @@ MainWindow::createLeftCefView()
   }
 
   QCefSetting setting;
-  setting.setWindowlessFrameRate(240);
-  setting.setHardwareAcceleration(true);
+  setting.setWindowlessFrameRate(1000);
+  setting.setHardwareAcceleration(false);
   // setting.setBackgroundColor(Qt::magenta);
 
-  m_pLeftCefViewWidget = new CefViewWidget(LEFT_INDEX_URL, &setting, this);
+  m_pLeftCefViewWidget = new CefViewWidget("https://www.testufo.com/", &setting, this);
   // connect the invokeMethod to the slot
   connect(m_pLeftCefViewWidget, &QCefView::invokeMethod, this, &MainWindow::onInvokeMethod);
 
@@ -96,9 +96,9 @@ MainWindow::createRightCefView()
 #if CEF_VERSION_MAJOR < 100
   setting.setPlugins(false);
 #endif
-  setting.setWindowlessFrameRate(240);
+  setting.setWindowlessFrameRate(1000);
   setting.setHardwareAcceleration(true);
-  QColor background(18, 18, 20, 255);
+  QColor background(0, 255, 0, 255);
   setting.setBackgroundColor(background);
 
   // create the QCefView widget and add it to the layout container

@@ -2,6 +2,7 @@
 #define ICEFVIEWRENDERER_H
 
 #pragma once
+#include <memory>
 
 #include <include/cef_app.h>
 
@@ -16,7 +17,7 @@ public:
   /// <summary>
   ///
   /// </summary>
-  virtual ~ICefViewRenderer() {};
+  virtual ~ICefViewRenderer(){};
 
   /// <summary>
   ///
@@ -107,5 +108,7 @@ public:
   /// <param name="painter"></param>
   virtual void render(void* painter) = 0;
 };
+
+using CefViewRendererPtr = std::shared_ptr<ICefViewRenderer>;
 
 #endif

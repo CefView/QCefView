@@ -37,10 +37,11 @@ QCefView::QCefView(const QString& url,
     // OSR mode
     setBackgroundRole(QPalette::Window);
     setAttribute(Qt::WA_OpaquePaintEvent);
-#if defined(Q_OS_WINDOWS)
-    setAttribute(Qt::WA_PaintOnScreen);
-#endif
     setAttribute(Qt::WA_NoSystemBackground);
+    // import for hardware rendering
+    if (d_ptr->osr.pRenderer_ && d_ptr->osr.pRenderer_->isHardware()) {
+      setAttribute(Qt::WA_PaintOnScreen);
+    }
   }
 
   // track mouse

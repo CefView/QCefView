@@ -165,6 +165,14 @@ if(OS_MACOS)
     ${QCefView_INFO_PLIST_FILE}
   )
 
+  find_library(METAL_FRAMEWORK Metal)
+  find_library(QUARTZCORE_FRAMEWORK QuartzCore)
+  target_link_libraries(QCefView
+    PRIVATE
+    ${METAL_FRAMEWORK}
+    ${QUARTZCORE_FRAMEWORK}
+  )
+
   set_target_properties(QCefView
     PROPERTIES
     FRAMEWORK TRUE
@@ -211,7 +219,7 @@ endif() # OS_MACOS
 
 target_compile_definitions(QCefView PRIVATE NOMINMAX)
 
-target_include_directories(QCefView 
+target_include_directories(QCefView
   PUBLIC
   "${CMAKE_CURRENT_SOURCE_DIR}/../include"
   PRIVATE
