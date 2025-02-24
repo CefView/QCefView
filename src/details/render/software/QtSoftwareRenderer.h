@@ -1,5 +1,5 @@
-﻿#ifndef CEFVIEWSOFTWARERENDERER_H
-#define CEFVIEWSOFTWARERENDERER_H
+﻿#ifndef QTSOFTWARERENDERER_H
+#define QTSOFTWARERENDERER_H
 
 #pragma once
 
@@ -8,7 +8,7 @@
 
 #include "../ICefViewRenderer.h"
 
-class CefViewSoftwareRenderer : public ICefViewRenderer
+class QtSoftwareRenderer : public ICefViewRenderer
 {
 private:
   bool m_showPopup = false;
@@ -25,8 +25,8 @@ private:
   QImage m_qCefPopupFrame;
 
 public:
-  CefViewSoftwareRenderer();
-  ~CefViewSoftwareRenderer();
+  QtSoftwareRenderer();
+  ~QtSoftwareRenderer();
 
   bool isHardware() override { return false; }
 

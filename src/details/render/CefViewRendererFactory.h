@@ -1,16 +1,12 @@
-﻿#ifndef CEFVIEWRENDERERFACTORY_H
+#ifndef CEFVIEWRENDERERFACTORY_H
 #define CEFVIEWRENDERERFACTORY_H
 
 #pragma once
-
-#include <memory>
-
 #include "ICefViewRenderer.h"
 
-class CefViewRendererFactory
-{
-public:
-  static std::shared_ptr<ICefViewRenderer> createRenderer(bool hardware);
-};
+namespace CefViewRendererFactory {
 
+CefViewRendererPtr
+createRenderer(bool hardware);
+}
 #endif

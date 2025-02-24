@@ -1,14 +1,14 @@
-﻿#include "CefViewSoftwareRenderer.h"
+﻿#include "QtSoftwareRenderer.h"
 
 #include <QMutexLocker>
 #include <QPainter>
 
-CefViewSoftwareRenderer::CefViewSoftwareRenderer() {}
+QtSoftwareRenderer::QtSoftwareRenderer() {}
 
-CefViewSoftwareRenderer::~CefViewSoftwareRenderer() {}
+QtSoftwareRenderer::~QtSoftwareRenderer() {}
 
 bool
-CefViewSoftwareRenderer::initialize(void* wid, int width, int height, float scale, const CefColor& background)
+QtSoftwareRenderer::initialize(void* wid, int width, int height, float scale, const CefColor& background)
 {
   m_width = width;
   m_height = height;
@@ -18,12 +18,12 @@ CefViewSoftwareRenderer::initialize(void* wid, int width, int height, float scal
 }
 
 void
-CefViewSoftwareRenderer::uninitialize()
+QtSoftwareRenderer::uninitialize()
 {
 }
 
 void
-CefViewSoftwareRenderer::resize(int width, int height, float scale)
+QtSoftwareRenderer::resize(int width, int height, float scale)
 {
   QMutexLocker lock(&(m_qViewPaintLock));
   m_width = width;
@@ -31,7 +31,7 @@ CefViewSoftwareRenderer::resize(int width, int height, float scale)
 }
 
 void
-CefViewSoftwareRenderer::updatePopupVisibility(bool visible)
+QtSoftwareRenderer::updatePopupVisibility(bool visible)
 {
   m_showPopup = visible;
 
@@ -41,16 +41,16 @@ CefViewSoftwareRenderer::updatePopupVisibility(bool visible)
 }
 
 void
-CefViewSoftwareRenderer::updatePopupRect(const CefRect& rect)
+QtSoftwareRenderer::updatePopupRect(const CefRect& rect)
 {
   m_popupRect = rect;
 }
 
 void
-CefViewSoftwareRenderer::updateFrameData(const CefRenderHandler::PaintElementType& type,
-                                         const CefRenderHandler::RectList& dirtyRects,
-                                         const FrameDataType& dataType,
-                                         const FrameData& data)
+QtSoftwareRenderer::updateFrameData(const CefRenderHandler::PaintElementType& type,
+                                    const CefRenderHandler::RectList& dirtyRects,
+                                    const FrameDataType& dataType,
+                                    const FrameData& data)
 {
   // we only process Image data
   if (dataType != FrameDataType::CpuImage) {
@@ -95,7 +95,7 @@ CefViewSoftwareRenderer::updateFrameData(const CefRenderHandler::PaintElementTyp
 }
 
 void
-CefViewSoftwareRenderer::render(void* painter)
+QtSoftwareRenderer::render(void* painter)
 {
   if (!painter) {
     return;

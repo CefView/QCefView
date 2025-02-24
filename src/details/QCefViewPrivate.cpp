@@ -1,4 +1,4 @@
-﻿#include "QCefViewPrivate.h"
+#include "QCefViewPrivate.h"
 
 #pragma region stl_headers
 #include <stdexcept>
@@ -88,12 +88,12 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
     q_ptr->setPalette(palette);
 
     std::shared_ptr<ICefViewRenderer> renderer;
-#if defined(OS_WINDOWS)
+#if defined(OS_WINDOWS) || defined(OS_MACOS)
     // if hardware is enabled
     if (setting && setting->hardwareAcceleration_) {
 #if CEF_VERSION_MAJOR >= 125
       // create hardware renderer if enabled
-      if (renderer = CefViewRendererFactory::createRenderer(true)) {
+      if ((renderer = CefViewRendererFactory::createRenderer(true))) {
         // get window native handle
         auto wid = reinterpret_cast<void*>(view->winId());
 
@@ -126,7 +126,7 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
     // fallback to software renderer
     if (!osr.pRenderer_) {
       // create software renderer
-      if (renderer = CefViewRendererFactory::createRenderer(false)) {
+      if ((renderer = CefViewRendererFactory::createRenderer(false))) {
         // initialize renderer
         auto ws = q_ptr->size();
         if (renderer->initialize(nullptr,          //
