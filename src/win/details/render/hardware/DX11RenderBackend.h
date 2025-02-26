@@ -6,10 +6,13 @@
 #include <d3d11.h>
 #include <d3d11_1.h>
 #include <d3d11_2.h>
-#include <dcomp.h>
 #include <dxgi.h>
 #include <dxgi1_2.h>
 #include <wrl.h>
+
+#if _WIN32_WINNT >= 0x602
+#include <dcomp.h>
+#endif
 
 #include <mutex>
 
@@ -33,12 +36,18 @@ private:
   // lock
   std::mutex m_d3dContextLock;
 
-  // device/context/swapchain
+  // device/context
   Microsoft::WRL::ComPtr<ID3D11Device> m_d3dDevice;
   Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_d3dContext;
+
+  // only works for windows 8
+#if _WIN32_WINNT >= 0x602
+  Microsoft::WRL::ComPtr<IDXGISwapChain> m_swapChain;
   Microsoft::WRL::ComPtr<IDCompositionDevice> m_dcompositionDevice;
   Microsoft::WRL::ComPtr<IDCompositionTarget> m_dcompositionTarget;
-  Microsoft::WRL::ComPtr<IDXGISwapChain1> m_swapChain;
+#else
+  Microsoft::WRL::ComPtr<IDXGISwapChain> m_swapChain;
+#endif
 
   // IA stage
   Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;

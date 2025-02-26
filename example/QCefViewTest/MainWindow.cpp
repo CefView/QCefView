@@ -98,18 +98,24 @@ MainWindow::createRightCefView()
 #endif
   setting.setWindowlessFrameRate(240);
   setting.setHardwareAcceleration(true);
-  // setting.setBackgroundColor(Qt::cyan);
-  // setting.setBackgroundColor(QColor::fromRgba(qRgba(255, 255, 220, 255)));
+  QColor background(18, 18, 20, 255);
+  setting.setBackgroundColor(background);
 
   // create the QCefView widget and add it to the layout container
   // m_pRightCefViewWidget = new QCefView(RIGHT_INDEX_URL, &setting, this);
   m_pRightCefViewWidget = new QCefView("https://www.testufo.com/", &setting, this);
 
-  auto vl = new QVBoxLayout(m_pRightCefViewWidget);
-  auto btn = new QPushButton("TEST BUTTON OVERLAY", m_pRightCefViewWidget);
-  vl->setAlignment(Qt::AlignTop);
-  vl->addWidget(btn);
-  m_pRightCefViewWidget->setLayout(vl);
+  // auto vl = new QVBoxLayout(m_pRightCefViewWidget);
+  // auto btn = new QPushButton("TEST BUTTON OVERLAY", m_pRightCefViewWidget);
+  //// btn->setFixedSize(320, 240);
+  // btn->setStyleSheet("background-color: rgba(1, 1, 1, 0);");
+  // btn->setAttribute(Qt::WA_TranslucentBackground);
+  // btn->setWindowFlags(Qt::FramelessWindowHint);
+  // btn->setAttribute(Qt::WA_NoSystemBackground);
+  // vl->setAlignment(Qt::AlignVCenter);
+
+  // vl->addWidget(btn);
+  // m_pRightCefViewWidget->setLayout(vl);
 
   // all the following values will disable the context menu for both NCW and OSR mode
   // m_pRightCefViewWidget->setContextMenuPolicy(Qt::NoContextMenu);

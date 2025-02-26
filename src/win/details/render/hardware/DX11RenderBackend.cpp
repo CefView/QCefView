@@ -61,12 +61,11 @@ float4 main(VS_OUTPUT input) : SV_Target
 bool
 DX11RenderBackend::CreateDeviceAndSwapchain()
 {
-  // we don't render directly to the window, but we
   // use the DirectComposition to render the CefView
-
   // Create D3D11 device and context
   ComPtr<ID3D11Device> pD3dDevice;
   ComPtr<ID3D11DeviceContext> pD3dContext;
+#if _WIN32_WINNT >= 0x602
   HR_CHECK(S_OK == ::D3D11CreateDevice(nullptr,
                                        D3D_DRIVER_TYPE_HARDWARE,
                                        nullptr,
@@ -135,6 +134,40 @@ DX11RenderBackend::CreateDeviceAndSwapchain()
   // Save
   m_dcompositionTarget = pDCompositionTarget;
   m_dcompositionDevice = pDecompositionDevice;
+#else
+  // create device and swapchain
+  DXGI_SWAP_CHAIN_DESC sd = {};
+  sd.BufferCount = 1;
+  sd.BufferDesc.Width = m_width;
+  sd.BufferDesc.Height = m_height;
+  sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+  sd.BufferDesc.RefreshRate.Numerator = 60;
+  sd.BufferDesc.RefreshRate.Denominator = 1;
+
+  sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+  sd.OutputWindow = m_hWnd;
+  sd.SampleDesc.Count = 1;
+  sd.SampleDesc.Quality = 0;
+  sd.Windowed = TRUE;
+
+  ComPtr<IDXGISwapChain> pSwapChain;
+  HRESULT hr = ::D3D11CreateDeviceAndSwapChain(nullptr,
+                                               D3D_DRIVER_TYPE_HARDWARE,
+                                               nullptr,
+                                               0,
+                                               nullptr,
+                                               0,
+                                               D3D11_SDK_VERSION,
+                                               &sd,
+                                               pSwapChain.ReleaseAndGetAddressOf(),
+                                               pD3dDevice.ReleaseAndGetAddressOf(),
+                                               nullptr,
+                                               pD3dContext.ReleaseAndGetAddressOf());
+  if (FAILED(hr)) {
+    return false;
+  }
+#endif
+
   m_swapChain = pSwapChain;
   m_d3dContext = pD3dContext;
   m_d3dDevice = pD3dDevice;
@@ -413,7 +446,7 @@ DX11RenderBackend::UpdateTextureResource(Microsoft::WRL::ComPtr<ID3D11Texture2D>
 
   // need to recreate?
   bool needRecreate = false;
-  if (needRecreate                                            //
+  if (!pTargetTexture                                         //
       || sharedTextureDesc.Width != targetTextureDesc.Width   //
       || sharedTextureDesc.Height != targetTextureDesc.Height //
       || sharedTextureDesc.Format != targetTextureDesc.Format //
@@ -469,10 +502,10 @@ DX11RenderBackend::ClearTargetView()
 {
   // clear the back buffer (RGBA)
   float clearColor[4] = {
-    static_cast<float>(CefColorGetR(m_backgroundColor)),
-    static_cast<float>(CefColorGetG(m_backgroundColor)),
-    static_cast<float>(CefColorGetB(m_backgroundColor)),
-    static_cast<float>(CefColorGetA(m_backgroundColor)),
+    static_cast<float>(CefColorGetR(m_backgroundColor) / 255.f),
+    static_cast<float>(CefColorGetG(m_backgroundColor) / 255.f),
+    static_cast<float>(CefColorGetB(m_backgroundColor) / 255.f),
+    static_cast<float>(CefColorGetA(m_backgroundColor) / 255.f),
   };
   m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), clearColor);
 }
@@ -495,7 +528,7 @@ DX11RenderBackend::DrawCefView()
 void
 DX11RenderBackend::DrawCefPopup()
 {
-  if (!m_showPopup) {
+  if (!m_showPopup || !m_popupSRV) {
     return;
   }
 
@@ -580,6 +613,11 @@ DX11RenderBackend::initialize(void* wid, int width, int height, float scale, con
 void
 DX11RenderBackend::uninitialize()
 {
+#if _WIN32_WINNT >= 0x602
+  m_dcompositionDevice.Reset();
+  m_dcompositionTarget.Reset();
+#endif
+
   // Release resources
   m_inputLayout.Reset();
   m_vertexShader.Reset();
@@ -654,6 +692,11 @@ void
 DX11RenderBackend::updatePopupVisibility(bool visible)
 {
   m_showPopup = visible;
+
+  if (!m_showPopup) {
+    m_popupTexture.Reset();
+    m_popupSRV.Reset();
+  }
 }
 
 void

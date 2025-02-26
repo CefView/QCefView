@@ -76,8 +76,18 @@ QCefViewPrivate::createCefBrowser(QCefView* view, const QString& url, const QCef
   if (isOSRModeEnabled_) {
     auto winSize = q_ptr->size();
     auto winBgColor = browserSettings.background_color;
-    std::shared_ptr<ICefViewRenderer> renderer;
 
+    // set QWidget background
+    QPalette palette = q_ptr->palette();
+    palette.setColor(q_ptr->backgroundRole(),         //
+                     QColor(CefColorGetR(winBgColor), //
+                            CefColorGetG(winBgColor), //
+                            CefColorGetB(winBgColor), //
+                            CefColorGetA(winBgColor)) //
+    );
+    q_ptr->setPalette(palette);
+
+    std::shared_ptr<ICefViewRenderer> renderer;
 #if defined(OS_WINDOWS)
     // if hardware is enabled
     if (setting && setting->hardwareAcceleration_) {
