@@ -10,7 +10,17 @@
 #include <dxgi1_2.h>
 #include <wrl.h>
 
+#define WINDOWS_DIRECT_COMPOSITION 0
+
+#if defined(ENABLE_WINDOWS_DIRECT_COMPOSITION)
 #if _WIN32_WINNT >= 0x602
+#define WINDOWS_DIRECT_COMPOSITION 1
+#else
+#error Windows Direct Composition needs _WIN32_WINNT >= 0x602 (Windows 8)
+#endif
+#endif
+
+#if WINDOWS_DIRECT_COMPOSITION
 #include <dcomp.h>
 #endif
 
@@ -40,8 +50,7 @@ private:
   Microsoft::WRL::ComPtr<ID3D11Device> m_d3dDevice;
   Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_d3dContext;
 
-  // only works for windows 8
-#if _WIN32_WINNT >= 0x602
+#if WINDOWS_DIRECT_COMPOSITION
   Microsoft::WRL::ComPtr<IDXGISwapChain> m_swapChain;
   Microsoft::WRL::ComPtr<IDCompositionDevice> m_dcompositionDevice;
   Microsoft::WRL::ComPtr<IDCompositionTarget> m_dcompositionTarget;

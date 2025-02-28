@@ -33,6 +33,10 @@ option(USE_SANDBOX
   "Enable CEF Sandbox"
   OFF
 )
+option(USE_WIN_DCOMPOSITION
+  "Enabled Windows direct composition for hardware rendering, _WIN32_WINNT >= 0x602 (Windows 8) is required"
+  OFF
+)
 
 # Only works for Windows & Linux, always enabled on macOS
 # If enable then:
@@ -81,7 +85,10 @@ endif()
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
   set(OS_MACOS 1)
   set(OS_POSIX 1)
-  add_definitions(-DOS_MACOS=1 -DOS_POSIX=1)
+  add_definitions(
+    -DOS_MACOS=1
+    -DOS_POSIX=1
+  )
   add_compile_options(
     "-g"
     "$<$<CONFIG:DEBUG>:-O0>"
@@ -106,7 +113,6 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
     "$<$<CONFIG:RELEASE>:-O3>"
   )
 
-  # Target architecture.
   if(PROJECT_ARCH STREQUAL "x86_64")
     # x86 64-bit architecture.
     add_compile_options(-m64 -march=x86-64)
@@ -121,7 +127,17 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 
   # Disable the sandbox on Windows, because the sandbox.lib is MT which is conflict with Qt
   set(USE_SANDBOX OFF CACHE BOOL "Disable sandbox on Windows" FORCE)
-  add_definitions(-DOS_WINDOWS=1)
+  add_definitions(
+    -DOS_WINDOWS=1
+    -D_WIN32_WINNT=0x601
+  )
+
+  if(USE_WIN_DCOMPOSITION)
+    add_definitions(
+      -DENABLE_WINDOWS_DIRECT_COMPOSITION=1
+    )
+  endif()
+
   add_compile_options(
     /W3
     /WX

@@ -65,7 +65,7 @@ DX11RenderBackend::CreateDeviceAndSwapchain()
   // Create D3D11 device and context
   ComPtr<ID3D11Device> pD3dDevice;
   ComPtr<ID3D11DeviceContext> pD3dContext;
-#if _WIN32_WINNT >= 0x602
+#if WINDOWS_DIRECT_COMPOSITION
   HR_CHECK(S_OK == ::D3D11CreateDevice(nullptr,
                                        D3D_DRIVER_TYPE_HARDWARE,
                                        nullptr,
