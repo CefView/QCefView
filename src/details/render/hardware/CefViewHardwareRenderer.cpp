@@ -16,7 +16,7 @@ createHardwareRenderer()
 #elif defined(OS_MACOS)
   return std::make_shared<MetalRenderBackend>();
 #elif defined(OS_LINUX)
-  return null;
+  return nullptr;
 #else
 #error "Unsupported platform"
 #endif
