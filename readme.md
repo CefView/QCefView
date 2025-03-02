@@ -18,7 +18,7 @@ QCefView is a Qt-based QWidget that encapsulates CEF (Chromium Embedded Framewor
 | Platform  | NCW<br> CEF All Versions | OSR - Software Rendering<br> CEF All Versions | OSR - Hardware Rendering<br> CEF 125+ |
 |---|:---:|:---:|:---:|
 |Windows | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: (DirectX 11) |
-|MacOS   | :heavy_check_mark: | :heavy_check_mark: | :x: WIP (Metal)  |
+|MacOS   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: (Metal)  |
 |Linux   | :heavy_check_mark: | :heavy_check_mark: | :x: WIP (OpenGL) |
 
 **WIP (Work In Progress)**: Features under development, no guaranteed release date.
