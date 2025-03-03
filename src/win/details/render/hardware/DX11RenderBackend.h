@@ -51,7 +51,7 @@ private:
   Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_d3dContext;
 
 #if WINDOWS_DIRECT_COMPOSITION
-  Microsoft::WRL::ComPtr<IDXGISwapChain> m_swapChain;
+  Microsoft::WRL::ComPtr<IDXGISwapChain1> m_swapChain;
   Microsoft::WRL::ComPtr<IDCompositionDevice> m_dcompositionDevice;
   Microsoft::WRL::ComPtr<IDCompositionTarget> m_dcompositionTarget;
 #else
