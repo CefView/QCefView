@@ -11,7 +11,6 @@
 QCefConfigPrivate::QCefConfigPrivate()
 {
   backgroundColor_ = QColor::fromRgba(qRgba(255, 255, 255, 255));
-  userAgent_ = kCefViewDefaultUserAgent;
 }
 
 void
