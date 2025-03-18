@@ -67,17 +67,33 @@ if(OS_WINDOWS)
     QCEFVIEW_LIB
   )
 
-  target_link_options(QCefView PRIVATE
-    "/DELAYLOAD:libcef.dll"
-  )
+  if(BUILD_STATIC)
+    target_link_options(QCefView 
+      PUBLIC
+      "/DELAYLOAD:libcef.dll"
+    )
 
-  target_link_libraries(QCefView
-    PRIVATE
-    d3d11
-    d3dcompiler
-    dcomp
-    delayimp
-  )
+    target_link_libraries(QCefView
+      PUBLIC
+      d3d11
+      d3dcompiler
+      dcomp
+      delayimp
+    )
+  else()
+    target_link_options(QCefView 
+      PRIVATE
+      "/DELAYLOAD:libcef.dll"
+    )
+
+    target_link_libraries(QCefView
+      PRIVATE
+      d3d11
+      d3dcompiler
+      dcomp
+      delayimp
+    )
+  endif()
 
   add_custom_command(TARGET QCefView
     PRE_BUILD
@@ -168,11 +184,20 @@ if(OS_MACOS)
 
   find_library(METAL_FRAMEWORK Metal)
   find_library(QUARTZCORE_FRAMEWORK QuartzCore)
-  target_link_libraries(QCefView
-    PRIVATE
-    ${METAL_FRAMEWORK}
-    ${QUARTZCORE_FRAMEWORK}
-  )
+  if(BUILD_STATIC)
+    target_link_libraries(QCefView
+      PUBLIC
+      ${METAL_FRAMEWORK}
+      ${QUARTZCORE_FRAMEWORK}
+    )
+  else()
+    target_link_libraries(QCefView
+      PRIVATE
+      ${METAL_FRAMEWORK}
+      ${QUARTZCORE_FRAMEWORK}
+    )
+  endif()
+
 
   set_target_properties(QCefView
     PROPERTIES
@@ -231,13 +256,23 @@ add_dependencies(QCefView
   CefViewCore::CefViewCore
 )
 
+if(BUILD_STATIC)
+  target_link_libraries(QCefView
+    PUBLIC
+    CefViewCore::CefViewCore
+  )
+else()
+  target_link_libraries(QCefView
+    PRIVATE
+    CefViewCore::CefViewCore
+  )
+endif()
+
 target_link_libraries(QCefView
   PUBLIC
   Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
-  PRIVATE
-  CefViewCore::CefViewCore
 )
 
 # install QCefView files
