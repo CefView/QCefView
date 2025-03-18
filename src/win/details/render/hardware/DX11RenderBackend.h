@@ -10,18 +10,17 @@
 #include <dxgi1_2.h>
 #include <wrl.h>
 
-#define WINDOWS_DIRECT_COMPOSITION 0
+#if defined(ENABLE_WINDOWS_DIRECT_COMPOSITION) 
+#if _WIN32_WINNT >= 0x602 
+#define WINDOWS_DIRECT_COMPOSITION 1 
+#include <dcomp.h> 
+#else 
+#error Windows Direct Composition needs _WIN32_WINNT >= 0x602 (Windows 8) 
+#endif 
+#endif  
 
-#if defined(ENABLE_WINDOWS_DIRECT_COMPOSITION)
-#if _WIN32_WINNT >= 0x602
-#define WINDOWS_DIRECT_COMPOSITION 1
-#else
-#error Windows Direct Composition needs _WIN32_WINNT >= 0x602 (Windows 8)
-#endif
-#endif
-
-#if WINDOWS_DIRECT_COMPOSITION
-#include <dcomp.h>
+#ifndef WINDOWS_DIRECT_COMPOSITION 
+#define WINDOWS_DIRECT_COMPOSITION 0 
 #endif
 
 #include <mutex>
