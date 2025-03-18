@@ -76,6 +76,7 @@ if(OS_WINDOWS)
     d3d11
     d3dcompiler
     dcomp
+    delayimp
   )
 
   add_custom_command(TARGET QCefView
