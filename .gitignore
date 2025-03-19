@@ -9,3 +9,5 @@ docs/doxygen/xml
 out
 scripts/doxygen/xml
 include/QCefView_global.h
+.idea/
+cmake-build-*/
