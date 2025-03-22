@@ -1118,7 +1118,7 @@ QCefViewPrivate::onViewWheelEvent(QWheelEvent* event)
       d.setX(0);
     }
 
-    pCefBrowser_->GetHost()->SendMouseWheelEvent(e, d.x() * 0.1, d.y() * 0.1);
+    pCefBrowser_->GetHost()->SendMouseWheelEvent(e, d.x(), d.y());
   }
 }
 
