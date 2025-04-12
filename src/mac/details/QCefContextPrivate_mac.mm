@@ -17,7 +17,7 @@
 #define CEF_FRAMEWORK_NAME "Chromium Embedded Framework.framework"
 #define HELPER_BINARY_NAME kCefViewRenderProcessName
 #define HELPER_BUNDLE_NAME HELPER_BINARY_NAME ".app"
-#define PLUGINS_NAME "PlugIns"
+#define CEFVIEW_FOLDER_NAME "CefView"
 
 @interface PathFactory : NSObject
 + (NSString*) AppMainBundlePath;
@@ -32,14 +32,14 @@
 
 + (NSString*) CefFrameworkPath {
   NSString* path =  [[NSBundle bundleForClass:[PathFactory class]] resourcePath];
-  path = [path stringByAppendingPathComponent:@PLUGINS_NAME];
+  path = [path stringByAppendingPathComponent:@CEFVIEW_FOLDER_NAME];
   path = [path stringByAppendingPathComponent:@CEF_FRAMEWORK_NAME];
   return path;
 }
 
 + (NSString*) CefSubprocessPath {
   NSString* path =  [[NSBundle bundleForClass:[PathFactory class]] resourcePath];
-  path = [path stringByAppendingPathComponent:@PLUGINS_NAME];
+  path = [path stringByAppendingPathComponent:@CEFVIEW_FOLDER_NAME];
   path = [path stringByAppendingPathComponent:@HELPER_BUNDLE_NAME];
   path = [path stringByAppendingPathComponent:@"Contents"];
   path = [path stringByAppendingPathComponent:@"MacOS"];

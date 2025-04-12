@@ -1,4 +1,4 @@
-﻿#include <QCefSetting.h>
+#include <QCefSetting.h>
 
 #pragma region cef_headers
 #include <include/cef_version.h>
@@ -439,4 +439,4 @@ QCefSetting::hardwareAcceleration() const
   Q_D(const QCefSetting);
   return d->hardwareAcceleration_;
 }
-#endif]
+#endif

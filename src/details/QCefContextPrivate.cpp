@@ -1,4 +1,4 @@
-﻿#include "QCefContextPrivate.h"
+#include "QCefContextPrivate.h"
 
 #pragma region qt_headers
 #include <QThread>
@@ -134,7 +134,7 @@ QCefContextPrivate::scheduleCefLoopWork(int64_t delayMs)
 {
   // calculate the effective delay number
   auto delay = qMax((int64_t)0, qMin(delayMs, kCefWorkerIntervalMs));
-  QTimer::singleShot(delay, this, SLOT(performCefLoopWork()));
+  QTimer::singleShot(static_cast<int>(delay), this, SLOT(performCefLoopWork()));
 }
 
 void
