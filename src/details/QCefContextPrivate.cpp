@@ -24,10 +24,9 @@ QCefContextPrivate::QCefContextPrivate(QCoreApplication* app, int argc, char** a
 {
 #if defined(Q_OS_MACOS) || defined(CEF_USE_QT_EVENT_LOOP)
   cefWorkerTimer_.setTimerType(Qt::PreciseTimer);
-  cefWorkerTimer_.start(kCefWorkerIntervalMs);
   connect(&cefWorkerTimer_, SIGNAL(timeout()), this, SLOT(performCefLoopWork()));
 #endif
-
+  
   connect(app, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
 }
 
@@ -48,6 +47,10 @@ QCefContextPrivate::initialize(const QCefConfig* config)
   if (!initializeCef(config)) {
     return false;
   }
+  
+#if defined(Q_OS_MACOS) || defined(CEF_USE_QT_EVENT_LOOP)
+  cefWorkerTimer_.start(kCefWorkerIntervalMs);
+#endif
 
   return true;
 }
@@ -140,6 +143,10 @@ QCefContextPrivate::scheduleCefLoopWork(int64_t delayMs)
 void
 QCefContextPrivate::onAboutToQuit()
 {
+  if (!pApp_) {
+    return;
+  }
+  
   // close all live browsers
   QCefViewPrivate::destroyAllInstance();
 
