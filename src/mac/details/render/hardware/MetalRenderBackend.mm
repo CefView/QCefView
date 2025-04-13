@@ -145,7 +145,6 @@ fragment float4 fragmentShader(VertexOut in [[stage_in]],
              destinationOrigin:(MTLOrigin){ 0, 0, 0 }];
   [blitEncoder endEncoding];
   [commandBuffer commit];
-  [commandBuffer waitUntilCompleted];
 }
 
 - (bool)initialize:(NSView*)view
