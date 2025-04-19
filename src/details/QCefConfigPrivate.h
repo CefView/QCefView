@@ -4,15 +4,15 @@
 #include <list>
 #include <string>
 #include <unordered_map>
-#pragma endregion 
+#pragma endregion
 
 #pragma region cef_headers
 #include <include/cef_app.h>
-#pragma endregion 
+#pragma endregion
 
 #pragma region qt_headers
 #include <QVariant>
-#pragma endregion 
+#pragma endregion
 
 #include <QCefConfig.h>
 
@@ -52,6 +52,9 @@ public:
 
   // Enable OSR mode by default
   /* bool   */ QVariant windowlessRenderingEnabled_ = true;
+
+  // Enable command line pass through by default
+  /* bool   */ QVariant commandLinePassthroughDisabled_ = false;
 
   /* bool   */ QVariant persistSessionCookies_;
 #if CEF_VERSION_MAJOR < 128

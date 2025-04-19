@@ -41,6 +41,9 @@ QCefConfigPrivate::CopyToCefSettings(const QCefConfig* config, CefSettings* sett
   if (config->d_ptr->windowlessRenderingEnabled_.canConvert<int>())
     settings->windowless_rendering_enabled = config->d_ptr->windowlessRenderingEnabled_.toInt();
 
+  if (config->d_ptr->commandLinePassthroughDisabled_.canConvert<int>())
+    settings->command_line_args_disabled = config->d_ptr->commandLinePassthroughDisabled_.toInt();
+
 #if !defined(Q_OS_MACOS)
   if (!config->d_ptr->browserSubProcessPath_.empty())
     CefString(&settings->browser_subprocess_path) = config->d_ptr->browserSubProcessPath_;

@@ -1,4 +1,4 @@
-#include "CefViewHardwareRenderer.h"
+﻿#include "CefViewHardwareRenderer.h"
 
 #if defined(OS_WINDOWS)
 #include "win/details/render/hardware/DX11RenderBackend.h"

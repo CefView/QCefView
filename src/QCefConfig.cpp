@@ -59,6 +59,20 @@ QCefConfig::WindowlessRenderingEnabled() const
   return d->windowlessRenderingEnabled_;
 }
 
+void
+QCefConfig::setCommandLinePassthroughDisabled(const bool disabled)
+{
+  Q_D(QCefConfig);
+  d->commandLinePassthroughDisabled_ = disabled;
+}
+
+const QVariant
+QCefConfig::commandLinePassthroughDisabled() const
+{
+  Q_D(const QCefConfig);
+  return d->commandLinePassthroughDisabled_;
+}
+
 #if !defined(Q_OS_MACOS)
 void
 QCefConfig::setBrowserSubProcessPath(const QString& path)

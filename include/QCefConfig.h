@@ -16,7 +16,7 @@
 #include <QScopedPointer>
 #include <QString>
 #include <QVariant>
-#pragma endregion 
+#pragma endregion
 
 class QCefConfigPrivate;
 
@@ -105,6 +105,18 @@ public:
   /// </summary>
   /// <returns>The flag indicates the enable/disable of OSR mode</returns>
   const QVariant WindowlessRenderingEnabled() const;
+
+  /// <summary>
+  /// Sets the flag to disable the command line pass through
+  /// </summary>
+  /// <param name="disabled">True to disable the command line pass through, false to enable</param>
+  void setCommandLinePassthroughDisabled(const bool disabled);
+
+  /// <summary>
+  /// Gets the flag of disable command line pass through
+  /// </summary>
+  /// <returns>The flag indicates the enable/disable of OSR mode</returns>
+  const QVariant commandLinePassthroughDisabled() const;
 
 #if !defined(Q_OS_MACOS)
   /// <summary>
