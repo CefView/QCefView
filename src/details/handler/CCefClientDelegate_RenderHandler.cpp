@@ -144,7 +144,7 @@ CCefClientDelegate::onPaint(CefRefPtr<CefBrowser>& browser,
   pCefViewPrivate_->q_ptr->update();
 }
 
-#if CEF_VERSION_MAJOR < 124
+#if CEF_VERSION_MAJOR < 125
 void
 CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
                                        CefRenderHandler::PaintElementType type,
@@ -156,8 +156,7 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
 
   // update CEF image texture2d
   ICefViewRenderer::FrameData data;
-  data.texture.handle = info.shared_texture_handle;
-  data.texture.format = info.format;
+  data.texture.handle = shared_handle;
   ICefViewRenderer::FrameDataType dataType = ICefViewRenderer::FrameDataType::GpuTexture;
   pCefViewPrivate_->osr.pRenderer_->updateFrameData(type,       //
                                                     dirtyRects, //
