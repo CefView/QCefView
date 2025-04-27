@@ -50,10 +50,6 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   cef_settings.external_message_pump = false;
 #endif
 
-#if !defined(CEF_USE_SANDBOX)
-  cef_settings.no_sandbox = true;
-#endif
-
   // create job object
   DWORD dwProcessId = ::GetProcessId(::GetCurrentProcess());
   windowsJobName_ = QString("CefView-Job-{f0a3c1e3-ff89-4581-8a45-f0bfd74c4bb0}-%1").arg(dwProcessId);

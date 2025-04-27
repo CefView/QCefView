@@ -257,7 +257,7 @@ if(OS_MACOS)
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Widgets
-    $<TARGET_BUNDLE_DIR:QCefView>
+    QCefView
   )
 endif()
 

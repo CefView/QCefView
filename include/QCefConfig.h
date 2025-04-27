@@ -1,4 +1,4 @@
-﻿/*
+/*
  * File: QCefConfig.h
  * Project: QCefView
  * Created: 21nd January 2021
@@ -104,7 +104,19 @@ public:
   /// Gets the OSR mode flag
   /// </summary>
   /// <returns>The flag indicates the enable/disable of OSR mode</returns>
-  const QVariant WindowlessRenderingEnabled() const;
+  const QVariant windowlessRenderingEnabled() const;
+  
+  /// <summary>
+  /// Sets the flag to enable/disable sandbox
+  /// </summary>
+  /// <param name="disabled">True to enable sandbox, false to disable</param>
+  void setSandboxDisabled(const bool disabled);
+  
+  /// <summary>
+  /// Gets the flag of sandbox status.
+  /// </summary>
+  /// <returns>The flag indicates the enable/disable of sandbox</returns>
+  const QVariant sandboxDisabled() const;
 
   /// <summary>
   /// Sets the flag to disable the command line pass through

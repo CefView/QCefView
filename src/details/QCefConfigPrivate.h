@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #pragma region stl_headers
 #include <list>
@@ -52,8 +52,11 @@ public:
 
   // Enable OSR mode by default
   /* bool   */ QVariant windowlessRenderingEnabled_ = true;
+  
+  // Disable sandbox (enabled by default)
+  /* bool   */ QVariant sandboxDisabled_ = false;
 
-  // Enable command line pass through by default
+  // Disable command line pass through (enabled by default)
   /* bool   */ QVariant commandLinePassthroughDisabled_ = false;
 
   /* bool   */ QVariant persistSessionCookies_;

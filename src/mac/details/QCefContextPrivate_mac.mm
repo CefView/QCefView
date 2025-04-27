@@ -186,13 +186,10 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   // fixed values
   CefString(&cef_settings.framework_dir_path) = cefFrameworkPath();
   CefString(&cef_settings.browser_subprocess_path) = cefSubprocessPath();
+  CefString(&cef_settings.main_bundle_path) = appMainBundlePath();
   cef_settings.pack_loading_disabled = false;
   cef_settings.external_message_pump = true;
   cef_settings.multi_threaded_message_loop = false;
-
-#if !defined(CEF_USE_SANDBOX)
-  cef_settings.no_sandbox = true;
-#endif
 
   // Initialize CEF.
   auto cmdArgs = QCefConfigPrivate::GetCommandLineArgs(config);

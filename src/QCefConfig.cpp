@@ -1,4 +1,4 @@
-﻿#include <QCefConfig.h>
+#include <QCefConfig.h>
 
 #include "details/QCefConfigPrivate.h"
 #include "details/utils/CommonUtils.h"
@@ -53,10 +53,24 @@ QCefConfig::setWindowlessRenderingEnabled(const bool enabled)
 }
 
 const QVariant
-QCefConfig::WindowlessRenderingEnabled() const
+QCefConfig::windowlessRenderingEnabled() const
 {
   Q_D(const QCefConfig);
   return d->windowlessRenderingEnabled_;
+}
+
+void
+QCefConfig::setSandboxDisabled(const bool disabled)
+{
+  Q_D(QCefConfig);
+  d->sandboxDisabled_ = disabled;
+}
+
+const QVariant
+QCefConfig::sandboxDisabled() const
+{
+  Q_D(const QCefConfig);
+  return d->sandboxDisabled_;
 }
 
 void

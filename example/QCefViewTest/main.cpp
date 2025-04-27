@@ -1,4 +1,4 @@
-﻿#include <QApplication>
+#include <QApplication>
 #include <QDir>
 #include <QStandardPaths>
 
@@ -39,9 +39,14 @@ main(int argc, char* argv[])
   // (QCefSetting.setBackgroundColor will overwrite this value for specified browser instance)
   // config.setBackgroundColor(Qt::lightGray);
 
-  // WindowlessRenderingEnabled is set to true by default,
+  // windowlessRenderingEnabled is set to true by default,
   // set to false to disable the OSR mode
   config.setWindowlessRenderingEnabled(true);
+  
+  // disable sandbox
+  // this is a bit complicated, please refer to:
+  // https://developer.apple.com/documentation/xcode/configuring-the-macos-app-sandbox
+  config.setSandboxDisabled(true);
 
   // add command line args, you can any cef supported switches or parameters
   config.addCommandLineSwitch("use-mock-keychain");

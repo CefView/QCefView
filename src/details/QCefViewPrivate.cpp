@@ -1,4 +1,4 @@
-﻿#include "QCefViewPrivate.h"
+#include "QCefViewPrivate.h"
 
 #pragma region stl_headers
 #include <stdexcept>
@@ -50,7 +50,7 @@ QCefViewPrivate::QCefViewPrivate(QCefContextPrivate* ctx, QCefView* view)
 {
   sLiveInstances.insert(this);
 
-  isOSRModeEnabled_ = pContextPrivate_->cefConfig()->WindowlessRenderingEnabled().toBool();
+  isOSRModeEnabled_ = pContextPrivate_->cefConfig()->windowlessRenderingEnabled().toBool();
 }
 
 QCefViewPrivate::~QCefViewPrivate()

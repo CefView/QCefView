@@ -1,4 +1,4 @@
-﻿#include "QCefConfigPrivate.h"
+#include "QCefConfigPrivate.h"
 
 #pragma region qt_headers
 #include <QCoreApplication>
@@ -30,6 +30,12 @@ QCefConfigPrivate::CopyToCefSettings(const QCefConfig* config, CefSettings* sett
     settings->background_color = cfg.backgroundColor_.value<QColor>().rgba();
     CefString(&settings->user_agent) = cfg.userAgent_;
 
+#if defined(CEF_USE_SANDBOX)
+    settings->no_sandbox = 0;
+#else
+    settings->no_sandbox = 1;
+#endif
+    
 #if !defined(Q_OS_MACOS)
     CefString(&settings->browser_subprocess_path) = cfg.browserSubProcessPath_;
     CefString(&settings->resources_dir_path) = cfg.resourceDirectoryPath_;
@@ -37,6 +43,13 @@ QCefConfigPrivate::CopyToCefSettings(const QCefConfig* config, CefSettings* sett
 #endif
     return;
   }
+  
+#if defined(CEF_USE_SANDBOX)
+  if (config->d_ptr->sandboxDisabled_.canConvert<int>())
+    settings->no_sandbox = config->d_ptr->sandboxDisabled_.toInt();
+#else
+  settings->no_sandbox = 1;
+#endif
 
   if (config->d_ptr->windowlessRenderingEnabled_.canConvert<int>())
     settings->windowless_rendering_enabled = config->d_ptr->windowlessRenderingEnabled_.toInt();

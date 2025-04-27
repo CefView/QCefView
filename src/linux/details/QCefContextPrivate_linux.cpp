@@ -34,10 +34,6 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   cef_settings.external_message_pump = false;
 #endif
 
-#if !defined(CEF_USE_SANDBOX)
-  cef_settings.no_sandbox = true;
-#endif
-
   // Initialize CEF.
   auto cmdArgs = QCefConfigPrivate::GetCommandLineArgs(config);
   auto appDelegate = std::make_shared<CCefAppDelegate>(this, cmdArgs);
