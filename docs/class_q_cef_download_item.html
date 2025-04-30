@@ -1,0 +1,700 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="generator" content="Doxygen 1.13.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QCefView: QCefDownloadItem</title>
+    <link href="tabs.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/svg+xml" href="logo.drawio.svg" />
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="dynsections.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+    <script type="text/javascript" src="toggle-alternative-theme.js"></script>
+    <script type="text/javascript">
+        DoxygenAwesomeFragmentCopyButton.init()
+        DoxygenAwesomeDarkModeToggle.init()
+        DoxygenAwesomeParagraphLink.init()
+        DoxygenAwesomeInteractiveToc.init()
+        DoxygenAwesomeTabs.init()
+    </script>
+    <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+    <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <link href="doxygen.css" rel="stylesheet" type="text/css" />
+    <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <!-- https://tholman.com/github-corners/ -->
+    <a href="https://github.com/CefView/QCefView" class="github-corner" title="View source on GitHub" target="_blank"
+        rel="noopener noreferrer">
+        <svg viewBox="0 0 250 250" width="40" height="40"
+            style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+            <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+            <path
+                d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+                fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+            <path
+                d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+                fill="currentColor" class="octo-body"></path>
+        </svg></a>
+    <style>
+        .github-corner:hover .octo-arm {
+            animation: octocat-wave 560ms ease-in-out
+        }
+        @keyframes octocat-wave {
+            0%,
+            100% {
+                transform: rotate(0)
+            }
+            20%,
+            60% {
+                transform: rotate(-25deg)
+            }
+            40%,
+            80% {
+                transform: rotate(10deg)
+            }
+        }
+        @media (max-width:500px) {
+            .github-corner:hover .octo-arm {
+                animation: none
+            }
+            .github-corner .octo-arm {
+                animation: octocat-wave 560ms ease-in-out
+            }
+        }
+    </style>
+    <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+        <div id="titlearea">
+            <table cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr style="height: 56px;">
+                        <td id="projectalign" style="padding-left: 0.5em;">
+                            <div id="projectname">QCefView
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- end header part -->
+<!-- Generated by Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_q_cef_download_item.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="class_q_cef_download_item-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">QCefDownloadItem</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Represents the download item.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;QCefDownloadItem.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a913a2654dcd05ef8facefc515d831124" id="r_a913a2654dcd05ef8facefc515d831124"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a913a2654dcd05ef8facefc515d831124">~QCefDownloadItem</a> ()</td></tr>
+<tr class="memdesc:a913a2654dcd05ef8facefc515d831124"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructs the download item instance.  <br /></td></tr>
+<tr class="separator:a913a2654dcd05ef8facefc515d831124"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a315592aa53a2bf7bc8aea717195f5b43" id="r_a315592aa53a2bf7bc8aea717195f5b43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a315592aa53a2bf7bc8aea717195f5b43">start</a> (const QString &amp;path, bool useDefaultDialog=true) const</td></tr>
+<tr class="memdesc:a315592aa53a2bf7bc8aea717195f5b43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts to download the item.  <br /></td></tr>
+<tr class="separator:a315592aa53a2bf7bc8aea717195f5b43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa31f59599e9311f0aee99a0a13e2568" id="r_aaa31f59599e9311f0aee99a0a13e2568"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa31f59599e9311f0aee99a0a13e2568">pause</a> () const</td></tr>
+<tr class="memdesc:aaa31f59599e9311f0aee99a0a13e2568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pauses the download.  <br /></td></tr>
+<tr class="separator:aaa31f59599e9311f0aee99a0a13e2568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2afc687e69c7c78f6c49e9a41a34823" id="r_aa2afc687e69c7c78f6c49e9a41a34823"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2afc687e69c7c78f6c49e9a41a34823">resume</a> () const</td></tr>
+<tr class="memdesc:aa2afc687e69c7c78f6c49e9a41a34823"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resume the download.  <br /></td></tr>
+<tr class="separator:aa2afc687e69c7c78f6c49e9a41a34823"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a723b2081749a447049efd04e768d9e57" id="r_a723b2081749a447049efd04e768d9e57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a723b2081749a447049efd04e768d9e57">cancel</a> () const</td></tr>
+<tr class="memdesc:a723b2081749a447049efd04e768d9e57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels the download.  <br /></td></tr>
+<tr class="separator:a723b2081749a447049efd04e768d9e57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6febee1fe8a5f7d15e888a4352d50526" id="r_a6febee1fe8a5f7d15e888a4352d50526"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6febee1fe8a5f7d15e888a4352d50526">isStarted</a> () const</td></tr>
+<tr class="memdesc:a6febee1fe8a5f7d15e888a4352d50526"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the download is started.  <br /></td></tr>
+<tr class="separator:a6febee1fe8a5f7d15e888a4352d50526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22455702c989d4dcc08fb1d13659739d" id="r_a22455702c989d4dcc08fb1d13659739d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22455702c989d4dcc08fb1d13659739d">isInProgress</a> () const</td></tr>
+<tr class="memdesc:a22455702c989d4dcc08fb1d13659739d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the download is in progress.  <br /></td></tr>
+<tr class="separator:a22455702c989d4dcc08fb1d13659739d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67c86edf9e9cb742050e2521b55c86df" id="r_a67c86edf9e9cb742050e2521b55c86df"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67c86edf9e9cb742050e2521b55c86df">isComplete</a> () const</td></tr>
+<tr class="memdesc:a67c86edf9e9cb742050e2521b55c86df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the download is complete.  <br /></td></tr>
+<tr class="separator:a67c86edf9e9cb742050e2521b55c86df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada41b0480a3e97d788086ea8c420a22c" id="r_ada41b0480a3e97d788086ea8c420a22c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada41b0480a3e97d788086ea8c420a22c">isCanceled</a> () const</td></tr>
+<tr class="memdesc:ada41b0480a3e97d788086ea8c420a22c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the download has been canceled or interrupted.  <br /></td></tr>
+<tr class="separator:ada41b0480a3e97d788086ea8c420a22c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c9648906b02ce59aa6d82f03e468c1d" id="r_a5c9648906b02ce59aa6d82f03e468c1d"><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c9648906b02ce59aa6d82f03e468c1d">currentSpeed</a> () const</td></tr>
+<tr class="memdesc:a5c9648906b02ce59aa6d82f03e468c1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets current download speed.  <br /></td></tr>
+<tr class="separator:a5c9648906b02ce59aa6d82f03e468c1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18fafe4f375aa60e43ec7c5d855ab91e" id="r_a18fafe4f375aa60e43ec7c5d855ab91e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18fafe4f375aa60e43ec7c5d855ab91e">percentComplete</a> () const</td></tr>
+<tr class="memdesc:a18fafe4f375aa60e43ec7c5d855ab91e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the completion percentage.  <br /></td></tr>
+<tr class="separator:a18fafe4f375aa60e43ec7c5d855ab91e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1ff7414475451351e4d4ab50f723bee" id="r_ab1ff7414475451351e4d4ab50f723bee"><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1ff7414475451351e4d4ab50f723bee">totalBytes</a> () const</td></tr>
+<tr class="memdesc:ab1ff7414475451351e4d4ab50f723bee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets total number of bytes.  <br /></td></tr>
+<tr class="separator:ab1ff7414475451351e4d4ab50f723bee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d76f04bb41c5e4edad6d680b01fe63f" id="r_a5d76f04bb41c5e4edad6d680b01fe63f"><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d76f04bb41c5e4edad6d680b01fe63f">receivedBytes</a> () const</td></tr>
+<tr class="memdesc:a5d76f04bb41c5e4edad6d680b01fe63f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets number of received bytes.  <br /></td></tr>
+<tr class="separator:a5d76f04bb41c5e4edad6d680b01fe63f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe0d048a282cb605da910de1c5d82242" id="r_afe0d048a282cb605da910de1c5d82242"><td class="memItemLeft" align="right" valign="top">QDateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe0d048a282cb605da910de1c5d82242">startTime</a> () const</td></tr>
+<tr class="memdesc:afe0d048a282cb605da910de1c5d82242"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the time that the download started.  <br /></td></tr>
+<tr class="separator:afe0d048a282cb605da910de1c5d82242"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61b2bd3cdc2f35d2424ded4e8b3801fd" id="r_a61b2bd3cdc2f35d2424ded4e8b3801fd"><td class="memItemLeft" align="right" valign="top">QDateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61b2bd3cdc2f35d2424ded4e8b3801fd">endTime</a> () const</td></tr>
+<tr class="memdesc:a61b2bd3cdc2f35d2424ded4e8b3801fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the time that the download ended.  <br /></td></tr>
+<tr class="separator:a61b2bd3cdc2f35d2424ded4e8b3801fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40227300f52cd34a67281eacf95bcc28" id="r_a40227300f52cd34a67281eacf95bcc28"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40227300f52cd34a67281eacf95bcc28">fullPath</a> () const</td></tr>
+<tr class="memdesc:a40227300f52cd34a67281eacf95bcc28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the full path to the downloaded or downloading file.  <br /></td></tr>
+<tr class="separator:a40227300f52cd34a67281eacf95bcc28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff911ad0aa21867cdfe56457293f4914" id="r_aff911ad0aa21867cdfe56457293f4914"><td class="memItemLeft" align="right" valign="top">quint32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff911ad0aa21867cdfe56457293f4914">id</a> () const</td></tr>
+<tr class="memdesc:aff911ad0aa21867cdfe56457293f4914"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the unique identifier for this download.  <br /></td></tr>
+<tr class="separator:aff911ad0aa21867cdfe56457293f4914"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a253cf33b582e3994b65d5611ef277bbe" id="r_a253cf33b582e3994b65d5611ef277bbe"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a253cf33b582e3994b65d5611ef277bbe">url</a> () const</td></tr>
+<tr class="memdesc:a253cf33b582e3994b65d5611ef277bbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the URL.  <br /></td></tr>
+<tr class="separator:a253cf33b582e3994b65d5611ef277bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f9bcb65952b50b4f24c4d55eff9b64e" id="r_a9f9bcb65952b50b4f24c4d55eff9b64e"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f9bcb65952b50b4f24c4d55eff9b64e">originalUrl</a> () const</td></tr>
+<tr class="memdesc:a9f9bcb65952b50b4f24c4d55eff9b64e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the original URL before any redirections.  <br /></td></tr>
+<tr class="separator:a9f9bcb65952b50b4f24c4d55eff9b64e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0dd9f8bea7ca594f04935d81cfb72a4" id="r_ac0dd9f8bea7ca594f04935d81cfb72a4"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0dd9f8bea7ca594f04935d81cfb72a4">suggestedFileName</a> () const</td></tr>
+<tr class="memdesc:ac0dd9f8bea7ca594f04935d81cfb72a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the suggested file name.  <br /></td></tr>
+<tr class="separator:ac0dd9f8bea7ca594f04935d81cfb72a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af97dad25e439c8b997d6689fe1c91bf8" id="r_af97dad25e439c8b997d6689fe1c91bf8"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af97dad25e439c8b997d6689fe1c91bf8">contentDisposition</a> () const</td></tr>
+<tr class="memdesc:af97dad25e439c8b997d6689fe1c91bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the content disposition.  <br /></td></tr>
+<tr class="separator:af97dad25e439c8b997d6689fe1c91bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb8ec36477b64a222b0610c8518f8e31" id="r_afb8ec36477b64a222b0610c8518f8e31"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb8ec36477b64a222b0610c8518f8e31">mimeType</a> () const</td></tr>
+<tr class="memdesc:afb8ec36477b64a222b0610c8518f8e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mime type.  <br /></td></tr>
+<tr class="separator:afb8ec36477b64a222b0610c8518f8e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Represents the download item. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a913a2654dcd05ef8facefc515d831124" name="a913a2654dcd05ef8facefc515d831124"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a913a2654dcd05ef8facefc515d831124">&#9670;&#160;</a></span>~QCefDownloadItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QCefDownloadItem::~QCefDownloadItem </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destructs the download item instance. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a723b2081749a447049efd04e768d9e57" name="a723b2081749a447049efd04e768d9e57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a723b2081749a447049efd04e768d9e57">&#9670;&#160;</a></span>cancel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefDownloadItem::cancel </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cancels the download. </p>
+
+</div>
+</div>
+<a id="af97dad25e439c8b997d6689fe1c91bf8" name="af97dad25e439c8b997d6689fe1c91bf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af97dad25e439c8b997d6689fe1c91bf8">&#9670;&#160;</a></span>contentDisposition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString QCefDownloadItem::contentDisposition </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the content disposition. </p>
+<dl class="section return"><dt>Returns</dt><dd>The the content disposition</dd></dl>
+
+</div>
+</div>
+<a id="a5c9648906b02ce59aa6d82f03e468c1d" name="a5c9648906b02ce59aa6d82f03e468c1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c9648906b02ce59aa6d82f03e468c1d">&#9670;&#160;</a></span>currentSpeed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qint64 QCefDownloadItem::currentSpeed </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets current download speed. </p>
+<dl class="section return"><dt>Returns</dt><dd>A simple speed estimate in bytes/s</dd></dl>
+
+</div>
+</div>
+<a id="a61b2bd3cdc2f35d2424ded4e8b3801fd" name="a61b2bd3cdc2f35d2424ded4e8b3801fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61b2bd3cdc2f35d2424ded4e8b3801fd">&#9670;&#160;</a></span>endTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QDateTime QCefDownloadItem::endTime </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the time that the download ended. </p>
+<dl class="section return"><dt>Returns</dt><dd>The time that the download ended</dd></dl>
+
+</div>
+</div>
+<a id="a40227300f52cd34a67281eacf95bcc28" name="a40227300f52cd34a67281eacf95bcc28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40227300f52cd34a67281eacf95bcc28">&#9670;&#160;</a></span>fullPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString QCefDownloadItem::fullPath </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the full path to the downloaded or downloading file. </p>
+<dl class="section return"><dt>Returns</dt><dd>The full path to the downloaded or downloading file</dd></dl>
+
+</div>
+</div>
+<a id="aff911ad0aa21867cdfe56457293f4914" name="aff911ad0aa21867cdfe56457293f4914"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff911ad0aa21867cdfe56457293f4914">&#9670;&#160;</a></span>id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">quint32 QCefDownloadItem::id </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the unique identifier for this download. </p>
+<dl class="section return"><dt>Returns</dt><dd>The unique identifier for this download</dd></dl>
+
+</div>
+</div>
+<a id="ada41b0480a3e97d788086ea8c420a22c" name="ada41b0480a3e97d788086ea8c420a22c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada41b0480a3e97d788086ea8c420a22c">&#9670;&#160;</a></span>isCanceled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefDownloadItem::isCanceled </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether the download has been canceled or interrupted. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the download has been canceled or interrupted; otherwise false</dd></dl>
+
+</div>
+</div>
+<a id="a67c86edf9e9cb742050e2521b55c86df" name="a67c86edf9e9cb742050e2521b55c86df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67c86edf9e9cb742050e2521b55c86df">&#9670;&#160;</a></span>isComplete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefDownloadItem::isComplete </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether the download is complete. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the download is complete; otherwise false</dd></dl>
+
+</div>
+</div>
+<a id="a22455702c989d4dcc08fb1d13659739d" name="a22455702c989d4dcc08fb1d13659739d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22455702c989d4dcc08fb1d13659739d">&#9670;&#160;</a></span>isInProgress()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefDownloadItem::isInProgress </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether the download is in progress. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the download is in progress; otherwise false</dd></dl>
+
+</div>
+</div>
+<a id="a6febee1fe8a5f7d15e888a4352d50526" name="a6febee1fe8a5f7d15e888a4352d50526"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6febee1fe8a5f7d15e888a4352d50526">&#9670;&#160;</a></span>isStarted()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefDownloadItem::isStarted </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether the download is started. </p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="afb8ec36477b64a222b0610c8518f8e31" name="afb8ec36477b64a222b0610c8518f8e31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb8ec36477b64a222b0610c8518f8e31">&#9670;&#160;</a></span>mimeType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString QCefDownloadItem::mimeType </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the mime type. </p>
+<dl class="section return"><dt>Returns</dt><dd>The mime type</dd></dl>
+
+</div>
+</div>
+<a id="a9f9bcb65952b50b4f24c4d55eff9b64e" name="a9f9bcb65952b50b4f24c4d55eff9b64e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f9bcb65952b50b4f24c4d55eff9b64e">&#9670;&#160;</a></span>originalUrl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString QCefDownloadItem::originalUrl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the original URL before any redirections. </p>
+<dl class="section return"><dt>Returns</dt><dd>The original URL before any redirections</dd></dl>
+
+</div>
+</div>
+<a id="aaa31f59599e9311f0aee99a0a13e2568" name="aaa31f59599e9311f0aee99a0a13e2568"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa31f59599e9311f0aee99a0a13e2568">&#9670;&#160;</a></span>pause()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefDownloadItem::pause </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pauses the download. </p>
+
+</div>
+</div>
+<a id="a18fafe4f375aa60e43ec7c5d855ab91e" name="a18fafe4f375aa60e43ec7c5d855ab91e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18fafe4f375aa60e43ec7c5d855ab91e">&#9670;&#160;</a></span>percentComplete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int QCefDownloadItem::percentComplete </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the completion percentage. </p>
+<dl class="section return"><dt>Returns</dt><dd>The rough percent complete or -1 if the receive total size is unknown</dd></dl>
+
+</div>
+</div>
+<a id="a5d76f04bb41c5e4edad6d680b01fe63f" name="a5d76f04bb41c5e4edad6d680b01fe63f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d76f04bb41c5e4edad6d680b01fe63f">&#9670;&#160;</a></span>receivedBytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qint64 QCefDownloadItem::receivedBytes </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets number of received bytes. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of received bytes</dd></dl>
+
+</div>
+</div>
+<a id="aa2afc687e69c7c78f6c49e9a41a34823" name="aa2afc687e69c7c78f6c49e9a41a34823"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2afc687e69c7c78f6c49e9a41a34823">&#9670;&#160;</a></span>resume()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefDownloadItem::resume </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resume the download. </p>
+
+</div>
+</div>
+<a id="a315592aa53a2bf7bc8aea717195f5b43" name="a315592aa53a2bf7bc8aea717195f5b43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a315592aa53a2bf7bc8aea717195f5b43">&#9670;&#160;</a></span>start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefDownloadItem::start </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>useDefaultDialog</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Starts to download the item. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The full path name (must include file name) to save the downloaded item</td></tr>
+    <tr><td class="paramname">useDefaultDialog</td><td>Whether to use the default 'Save As...' dialog or not</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The 'path' parameter only works when 'useDefaultDialog' is set to false. If you set 'useDefaultDialog' to true then you cannot control the initial location of the opened 'Save As...' dialog, it is determined by CEF internal implementation. </p>
+
+</div>
+</div>
+<a id="afe0d048a282cb605da910de1c5d82242" name="afe0d048a282cb605da910de1c5d82242"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe0d048a282cb605da910de1c5d82242">&#9670;&#160;</a></span>startTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QDateTime QCefDownloadItem::startTime </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the time that the download started. </p>
+<dl class="section return"><dt>Returns</dt><dd>The time that the download started</dd></dl>
+
+</div>
+</div>
+<a id="ac0dd9f8bea7ca594f04935d81cfb72a4" name="ac0dd9f8bea7ca594f04935d81cfb72a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0dd9f8bea7ca594f04935d81cfb72a4">&#9670;&#160;</a></span>suggestedFileName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString QCefDownloadItem::suggestedFileName </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the suggested file name. </p>
+<dl class="section return"><dt>Returns</dt><dd>The suggested file name</dd></dl>
+
+</div>
+</div>
+<a id="ab1ff7414475451351e4d4ab50f723bee" name="ab1ff7414475451351e4d4ab50f723bee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1ff7414475451351e4d4ab50f723bee">&#9670;&#160;</a></span>totalBytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qint64 QCefDownloadItem::totalBytes </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets total number of bytes. </p>
+<dl class="section return"><dt>Returns</dt><dd>The total number of bytes</dd></dl>
+
+</div>
+</div>
+<a id="a253cf33b582e3994b65d5611ef277bbe" name="a253cf33b582e3994b65d5611ef277bbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a253cf33b582e3994b65d5611ef277bbe">&#9670;&#160;</a></span>url()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString QCefDownloadItem::url </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the URL. </p>
+<dl class="section return"><dt>Returns</dt><dd>The the URL</dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_q_cef_download_item.html">QCefDownloadItem</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="generator" content="Doxygen 1.13.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QCefView: QCefQuery</title>
+    <link href="tabs.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/svg+xml" href="logo.drawio.svg" />
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="dynsections.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+    <script type="text/javascript" src="toggle-alternative-theme.js"></script>
+    <script type="text/javascript">
+        DoxygenAwesomeFragmentCopyButton.init()
+        DoxygenAwesomeDarkModeToggle.init()
+        DoxygenAwesomeParagraphLink.init()
+        DoxygenAwesomeInteractiveToc.init()
+        DoxygenAwesomeTabs.init()
+    </script>
+    <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+    <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <link href="doxygen.css" rel="stylesheet" type="text/css" />
+    <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <!-- https://tholman.com/github-corners/ -->
+    <a href="https://github.com/CefView/QCefView" class="github-corner" title="View source on GitHub" target="_blank"
+        rel="noopener noreferrer">
+        <svg viewBox="0 0 250 250" width="40" height="40"
+            style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+            <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+            <path
+                d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+                fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+            <path
+                d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+                fill="currentColor" class="octo-body"></path>
+        </svg></a>
+    <style>
+        .github-corner:hover .octo-arm {
+            animation: octocat-wave 560ms ease-in-out
+        }
+        @keyframes octocat-wave {
+            0%,
+            100% {
+                transform: rotate(0)
+            }
+            20%,
+            60% {
+                transform: rotate(-25deg)
+            }
+            40%,
+            80% {
+                transform: rotate(10deg)
+            }
+        }
+        @media (max-width:500px) {
+            .github-corner:hover .octo-arm {
+                animation: none
+            }
+            .github-corner .octo-arm {
+                animation: octocat-wave 560ms ease-in-out
+            }
+        }
+    </style>
+    <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+        <div id="titlearea">
+            <table cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr style="height: 56px;">
+                        <td id="projectalign" style="padding-left: 0.5em;">
+                            <div id="projectname">QCefView
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- end header part -->
+<!-- Generated by Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_q_cef_query.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="class_q_cef_query-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">QCefQuery</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Represents the query request sent from the web content(Javascript)  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;QCefQuery.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a22d9fddcadce7a6e0259c691634c4d7a" id="r_a22d9fddcadce7a6e0259c691634c4d7a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22d9fddcadce7a6e0259c691634c4d7a">QCefQuery</a> ()</td></tr>
+<tr class="memdesc:a22d9fddcadce7a6e0259c691634c4d7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a query instance.  <br /></td></tr>
+<tr class="separator:a22d9fddcadce7a6e0259c691634c4d7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a402d117cbd2d37681394f86d31ed11a3" id="r_a402d117cbd2d37681394f86d31ed11a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a402d117cbd2d37681394f86d31ed11a3">~QCefQuery</a> ()</td></tr>
+<tr class="memdesc:a402d117cbd2d37681394f86d31ed11a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructs a query instance.  <br /></td></tr>
+<tr class="separator:a402d117cbd2d37681394f86d31ed11a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16d137bcc1bf2ef9bc8969ff1bd091e7" id="r_a16d137bcc1bf2ef9bc8969ff1bd091e7"><td class="memItemLeft" align="right" valign="top">const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16d137bcc1bf2ef9bc8969ff1bd091e7">request</a> () const</td></tr>
+<tr class="memdesc:a16d137bcc1bf2ef9bc8969ff1bd091e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the query content.  <br /></td></tr>
+<tr class="separator:a16d137bcc1bf2ef9bc8969ff1bd091e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b701d7f9c92ff814cfe28b110142a4c" id="r_a5b701d7f9c92ff814cfe28b110142a4c"><td class="memItemLeft" align="right" valign="top">const qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b701d7f9c92ff814cfe28b110142a4c">id</a> () const</td></tr>
+<tr class="memdesc:a5b701d7f9c92ff814cfe28b110142a4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the query id.  <br /></td></tr>
+<tr class="separator:a5b701d7f9c92ff814cfe28b110142a4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a663d5945146bebe69a0a3c5448bb9280" id="r_a663d5945146bebe69a0a3c5448bb9280"><td class="memItemLeft" align="right" valign="top">const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a663d5945146bebe69a0a3c5448bb9280">response</a> () const</td></tr>
+<tr class="memdesc:a663d5945146bebe69a0a3c5448bb9280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the response content string.  <br /></td></tr>
+<tr class="separator:a663d5945146bebe69a0a3c5448bb9280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c2d78e19628d8066570338d659bc9b2" id="r_a8c2d78e19628d8066570338d659bc9b2"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c2d78e19628d8066570338d659bc9b2">result</a> () const</td></tr>
+<tr class="memdesc:a8c2d78e19628d8066570338d659bc9b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the response result.  <br /></td></tr>
+<tr class="separator:a8c2d78e19628d8066570338d659bc9b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab35201ac89d89f1445538f82a12f8fa8" id="r_ab35201ac89d89f1445538f82a12f8fa8"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab35201ac89d89f1445538f82a12f8fa8">error</a> () const</td></tr>
+<tr class="memdesc:ab35201ac89d89f1445538f82a12f8fa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the response error.  <br /></td></tr>
+<tr class="separator:ab35201ac89d89f1445538f82a12f8fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa86db4e257e3dc4e29c7906d80e06f28" id="r_aa86db4e257e3dc4e29c7906d80e06f28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa86db4e257e3dc4e29c7906d80e06f28">setResponseResult</a> (bool success, const QString &amp;<a class="el" href="#a663d5945146bebe69a0a3c5448bb9280">response</a>, int <a class="el" href="#ab35201ac89d89f1445538f82a12f8fa8">error</a>=0) const</td></tr>
+<tr class="memdesc:aa86db4e257e3dc4e29c7906d80e06f28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the response.  <br /></td></tr>
+<tr class="separator:aa86db4e257e3dc4e29c7906d80e06f28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b7df2f2ffaf42431392fcb0a89042be" id="r_a9b7df2f2ffaf42431392fcb0a89042be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b7df2f2ffaf42431392fcb0a89042be">reply</a> (bool success, const QString &amp;<a class="el" href="#a663d5945146bebe69a0a3c5448bb9280">response</a>, int <a class="el" href="#ab35201ac89d89f1445538f82a12f8fa8">error</a>=0) const</td></tr>
+<tr class="memdesc:a9b7df2f2ffaf42431392fcb0a89042be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replies the query.  <br /></td></tr>
+<tr class="separator:a9b7df2f2ffaf42431392fcb0a89042be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a2d63bf6b4584e80edbfe4e00fdc8790e" id="r_a2d63bf6b4584e80edbfe4e00fdc8790e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d63bf6b4584e80edbfe4e00fdc8790e">QCefQuery</a> (<a class="el" href="#a96f89510561545834ce356603ebee9be">QCefViewPrivate</a> *source, const QString &amp;req, const int64_t query)</td></tr>
+<tr class="memdesc:a2d63bf6b4584e80edbfe4e00fdc8790e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a query instance with request context and query id.  <br /></td></tr>
+<tr class="separator:a2d63bf6b4584e80edbfe4e00fdc8790e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1e8c950b361ad9ca4d4e260626c5d14" id="r_af1e8c950b361ad9ca4d4e260626c5d14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1e8c950b361ad9ca4d4e260626c5d14">markAsReplied</a> () const</td></tr>
+<tr class="memdesc:af1e8c950b361ad9ca4d4e260626c5d14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks the query as replied (for internal use only)  <br /></td></tr>
+<tr class="separator:af1e8c950b361ad9ca4d4e260626c5d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Represents the query request sent from the web content(Javascript) </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a2d63bf6b4584e80edbfe4e00fdc8790e" name="a2d63bf6b4584e80edbfe4e00fdc8790e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d63bf6b4584e80edbfe4e00fdc8790e">&#9670;&#160;</a></span>QCefQuery() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QCefQuery::QCefQuery </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a96f89510561545834ce356603ebee9be">QCefViewPrivate</a> *</td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>req</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int64_t</td>          <td class="paramname"><span class="paramname"><em>query</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a query instance with request context and query id. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>The source CefView</td></tr>
+    <tr><td class="paramname">req</td><td>The request context</td></tr>
+    <tr><td class="paramname">query</td><td>The query id</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a22d9fddcadce7a6e0259c691634c4d7a" name="a22d9fddcadce7a6e0259c691634c4d7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22d9fddcadce7a6e0259c691634c4d7a">&#9670;&#160;</a></span>QCefQuery() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QCefQuery::QCefQuery </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a query instance. </p>
+
+</div>
+</div>
+<a id="a402d117cbd2d37681394f86d31ed11a3" name="a402d117cbd2d37681394f86d31ed11a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a402d117cbd2d37681394f86d31ed11a3">&#9670;&#160;</a></span>~QCefQuery()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QCefQuery::~QCefQuery </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destructs a query instance. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab35201ac89d89f1445538f82a12f8fa8" name="ab35201ac89d89f1445538f82a12f8fa8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab35201ac89d89f1445538f82a12f8fa8">&#9670;&#160;</a></span>error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int QCefQuery::error </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the response error. </p>
+<dl class="section return"><dt>Returns</dt><dd>The response error</dd></dl>
+
+</div>
+</div>
+<a id="a5b701d7f9c92ff814cfe28b110142a4c" name="a5b701d7f9c92ff814cfe28b110142a4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b701d7f9c92ff814cfe28b110142a4c">&#9670;&#160;</a></span>id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const qint64 QCefQuery::id </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the query id. </p>
+<dl class="section return"><dt>Returns</dt><dd>The query id</dd></dl>
+
+</div>
+</div>
+<a id="af1e8c950b361ad9ca4d4e260626c5d14" name="af1e8c950b361ad9ca4d4e260626c5d14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1e8c950b361ad9ca4d4e260626c5d14">&#9670;&#160;</a></span>markAsReplied()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefQuery::markAsReplied </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Marks the query as replied (for internal use only) </p>
+
+</div>
+</div>
+<a id="a9b7df2f2ffaf42431392fcb0a89042be" name="a9b7df2f2ffaf42431392fcb0a89042be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b7df2f2ffaf42431392fcb0a89042be">&#9670;&#160;</a></span>reply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefQuery::reply </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>success</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>response</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>error</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Replies the query. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">success</td><td>The result</td></tr>
+    <tr><td class="paramname">response</td><td>The response data</td></tr>
+    <tr><td class="paramname">error</td><td>The error code</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a16d137bcc1bf2ef9bc8969ff1bd091e7" name="a16d137bcc1bf2ef9bc8969ff1bd091e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16d137bcc1bf2ef9bc8969ff1bd091e7">&#9670;&#160;</a></span>request()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QString QCefQuery::request </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the query content. </p>
+<dl class="section return"><dt>Returns</dt><dd>The content string</dd></dl>
+
+</div>
+</div>
+<a id="a663d5945146bebe69a0a3c5448bb9280" name="a663d5945146bebe69a0a3c5448bb9280"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a663d5945146bebe69a0a3c5448bb9280">&#9670;&#160;</a></span>response()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QString QCefQuery::response </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the response content string. </p>
+<dl class="section return"><dt>Returns</dt><dd>The response content string</dd></dl>
+
+</div>
+</div>
+<a id="a8c2d78e19628d8066570338d659bc9b2" name="a8c2d78e19628d8066570338d659bc9b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c2d78e19628d8066570338d659bc9b2">&#9670;&#160;</a></span>result()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const bool QCefQuery::result </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the response result. </p>
+<dl class="section return"><dt>Returns</dt><dd>The respone result</dd></dl>
+
+</div>
+</div>
+<a id="aa86db4e257e3dc4e29c7906d80e06f28" name="aa86db4e257e3dc4e29c7906d80e06f28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa86db4e257e3dc4e29c7906d80e06f28">&#9670;&#160;</a></span>setResponseResult()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefQuery::setResponseResult </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>success</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>response</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>error</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the response. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">success</td><td>True if the query is successful; otherwise false</td></tr>
+    <tr><td class="paramname">response</td><td>The response content string</td></tr>
+    <tr><td class="paramname">error</td><td>The response error</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_q_cef_query.html">QCefQuery</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

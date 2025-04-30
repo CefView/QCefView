@@ -1,0 +1,266 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="generator" content="Doxygen 1.13.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QCefView: First Project</title>
+    <link href="tabs.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/svg+xml" href="logo.drawio.svg" />
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="dynsections.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+    <script type="text/javascript" src="toggle-alternative-theme.js"></script>
+    <script type="text/javascript">
+        DoxygenAwesomeFragmentCopyButton.init()
+        DoxygenAwesomeDarkModeToggle.init()
+        DoxygenAwesomeParagraphLink.init()
+        DoxygenAwesomeInteractiveToc.init()
+        DoxygenAwesomeTabs.init()
+    </script>
+    <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+    <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <link href="doxygen.css" rel="stylesheet" type="text/css" />
+    <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <!-- https://tholman.com/github-corners/ -->
+    <a href="https://github.com/CefView/QCefView" class="github-corner" title="View source on GitHub" target="_blank"
+        rel="noopener noreferrer">
+        <svg viewBox="0 0 250 250" width="40" height="40"
+            style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+            <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+            <path
+                d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+                fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+            <path
+                d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+                fill="currentColor" class="octo-body"></path>
+        </svg></a>
+    <style>
+        .github-corner:hover .octo-arm {
+            animation: octocat-wave 560ms ease-in-out
+        }
+        @keyframes octocat-wave {
+            0%,
+            100% {
+                transform: rotate(0)
+            }
+            20%,
+            60% {
+                transform: rotate(-25deg)
+            }
+            40%,
+            80% {
+                transform: rotate(10deg)
+            }
+        }
+        @media (max-width:500px) {
+            .github-corner:hover .octo-arm {
+                animation: none
+            }
+            .github-corner .octo-arm {
+                animation: octocat-wave 560ms ease-in-out
+            }
+        }
+    </style>
+    <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+        <div id="titlearea">
+            <table cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr style="height: 56px;">
+                        <td id="projectalign" style="padding-left: 0.5em;">
+                            <div id="projectname">QCefView
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- end header part -->
+<!-- Generated by Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('md_docs_202-_first_project.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">First Project</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md24"></a></p>
+<p>This guide walks you through creating a basic Qt GUI application that integrates <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a>. The complete source code for this example is available in the <a href="https://github.com/CefView/QCefView/tree/main/example/QCefViewTest">QCefViewTest</a> directory.</p>
+<h1><a class="anchor" id="autotoc_md25"></a>
+Initializing the <a href="/docs/reference/QCefContext"><code>QCefContext</code></a> Instance</h1>
+<p>The first step in using <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> is to initialize a <a href="/docs/reference/QCefContext"><code>QCefContext</code></a> instance. Think of this as the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> equivalent of <code>QApplication</code>: you should have only one instance of <a href="/docs/reference/QCefContext"><code>QCefContext</code></a> throughout your application's lifecycle.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;QApplication&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_q_cef_context_8h.html">QCefContext.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;MainWindow.h&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[])</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// 1. Create a QApplication instance</span></div>
+<div class="line">  QApplication a(argc, argv);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// 2. Build a QCefConfig object</span></div>
+<div class="line">  <a class="code hl_class" href="class_q_cef_config.html">QCefConfig</a> config;</div>
+<div class="line">  <span class="comment">// Set user agent</span></div>
+<div class="line">  config.<a class="code hl_function" href="class_q_cef_config.html#a60009aad390599eb5857182a32de7f23">setUserAgent</a>(<span class="stringliteral">&quot;QCefViewTest&quot;</span>);</div>
+<div class="line">  <span class="comment">// Set log level</span></div>
+<div class="line">  config.<a class="code hl_function" href="class_q_cef_config.html#a230ee52b4d64e0ea6f7ba5a4e9ac5f5e">setLogLevel</a>(<a class="code hl_enumvalue" href="class_q_cef_config.html#ae437cd58b60d3902bba07e75a48d9a7ca01b281485ae3ba1c2c608e92b81f8d60">QCefConfig::LOGSEVERITY_DEFAULT</a>);</div>
+<div class="line">  <span class="comment">// Set JSBridge object name (default value is QCefViewClient)</span></div>
+<div class="line">  config.<a class="code hl_function" href="class_q_cef_config.html#a03687393e227bc8747bdc9ffa7400d60">setBridgeObjectName</a>(<span class="stringliteral">&quot;CallBridge&quot;</span>);</div>
+<div class="line">  <span class="comment">// Port for remote debugging (default is 0, disabling remote debugging)</span></div>
+<div class="line">  config.<a class="code hl_function" href="class_q_cef_config.html#ac502d5e4b911c4e57d6fe4167be6d801">setRemoteDebuggingPort</a>(9000);</div>
+<div class="line">  <span class="comment">// Set background color for all browsers</span></div>
+<div class="line">  <span class="comment">// (QCefSetting.setBackgroundColor will overwrite this value for a specific browser instance)</span></div>
+<div class="line">  config.<a class="code hl_function" href="class_q_cef_config.html#a2ef252883876dd17193212c52bd02fc0">setBackgroundColor</a>(Qt::lightGray);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// WindowlessRenderingEnabled is true by default, disable OSR mode by setting it to false</span></div>
+<div class="line">  config.<a class="code hl_function" href="class_q_cef_config.html#af6041bcae9fcf72ea47ffc47d62e5a96">setWindowlessRenderingEnabled</a>(<span class="keyword">true</span>);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Add command line arguments (any CEF-supported switches or parameters)</span></div>
+<div class="line">  config.<a class="code hl_function" href="class_q_cef_config.html#a2873f9e8e8997db4060348418df16632">addCommandLineSwitch</a>(<span class="stringliteral">&quot;use-mock-keychain&quot;</span>);</div>
+<div class="line">  <span class="comment">// config.addCommandLineSwitch(&quot;disable-spell-checking&quot;);</span></div>
+<div class="line">  <span class="comment">// config.addCommandLineSwitch(&quot;disable-site-isolation-trials&quot;);</span></div>
+<div class="line">  <span class="comment">// config.addCommandLineSwitch(&quot;enable-aggressive-domstorage-flushing&quot;);</span></div>
+<div class="line">  config.<a class="code hl_function" href="class_q_cef_config.html#a141daa8b02526d190e462cbcb38dbab5">addCommandLineSwitchWithValue</a>(<span class="stringliteral">&quot;renderer-process-limit&quot;</span>, <span class="stringliteral">&quot;1&quot;</span>);</div>
+<div class="line">  <span class="comment">// config.addCommandLineSwitchWithValue(&quot;disable-features&quot;, &quot;BlinkGenPropertyTrees,TranslateUI,site-per-process&quot;);</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// 3. Create the QCefContext instance, passing the QApplication instance and config</span></div>
+<div class="line">  <span class="comment">// The lifecycle of cefContext must match the QApplication instance&#39;s lifecycle</span></div>
+<div class="line">  <a class="code hl_class" href="class_q_cef_context.html">QCefContext</a> cefContext(&amp;a, argc, argv, &amp;config);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// 4. Create and show your application window</span></div>
+<div class="line">  MainWindow w;</div>
+<div class="line">  w.show();</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// 5. Run the application</span></div>
+<div class="line">  <span class="keywordflow">return</span> a.exec();</div>
+<div class="line">}</div>
+<div class="ttc" id="a_q_cef_context_8h_html"><div class="ttname"><a href="_q_cef_context_8h.html">QCefContext.h</a></div></div>
+<div class="ttc" id="aclass_q_cef_config_html"><div class="ttname"><a href="class_q_cef_config.html">QCefConfig</a></div><div class="ttdoc">Represents the CEF setting. For more details please refer to: https://bitbucket.org/chromiumembedded/...</div><div class="ttdef"><b>Definition</b> QCefConfig.h:28</div></div>
+<div class="ttc" id="aclass_q_cef_config_html_a03687393e227bc8747bdc9ffa7400d60"><div class="ttname"><a href="class_q_cef_config.html#a03687393e227bc8747bdc9ffa7400d60">QCefConfig::setBridgeObjectName</a></div><div class="ttdeci">void setBridgeObjectName(const QString &amp;name)</div><div class="ttdoc">Sets the bridge object name.</div></div>
+<div class="ttc" id="aclass_q_cef_config_html_a141daa8b02526d190e462cbcb38dbab5"><div class="ttname"><a href="class_q_cef_config.html#a141daa8b02526d190e462cbcb38dbab5">QCefConfig::addCommandLineSwitchWithValue</a></div><div class="ttdeci">void addCommandLineSwitchWithValue(const QString &amp;smitch, const QString &amp;v)</div><div class="ttdoc">Adds a switch with value to the commandline args used to initialize the CEF.</div></div>
+<div class="ttc" id="aclass_q_cef_config_html_a230ee52b4d64e0ea6f7ba5a4e9ac5f5e"><div class="ttname"><a href="class_q_cef_config.html#a230ee52b4d64e0ea6f7ba5a4e9ac5f5e">QCefConfig::setLogLevel</a></div><div class="ttdeci">void setLogLevel(const LogLevel lvl)</div><div class="ttdoc">Sets the log level.</div></div>
+<div class="ttc" id="aclass_q_cef_config_html_a2873f9e8e8997db4060348418df16632"><div class="ttname"><a href="class_q_cef_config.html#a2873f9e8e8997db4060348418df16632">QCefConfig::addCommandLineSwitch</a></div><div class="ttdeci">void addCommandLineSwitch(const QString &amp;smitch)</div><div class="ttdoc">Adds a switch to the commandline args used to initialize the CEF.</div></div>
+<div class="ttc" id="aclass_q_cef_config_html_a2ef252883876dd17193212c52bd02fc0"><div class="ttname"><a href="class_q_cef_config.html#a2ef252883876dd17193212c52bd02fc0">QCefConfig::setBackgroundColor</a></div><div class="ttdeci">void setBackgroundColor(const QColor &amp;color)</div><div class="ttdoc">Sets the background color of the web page.</div></div>
+<div class="ttc" id="aclass_q_cef_config_html_a60009aad390599eb5857182a32de7f23"><div class="ttname"><a href="class_q_cef_config.html#a60009aad390599eb5857182a32de7f23">QCefConfig::setUserAgent</a></div><div class="ttdeci">void setUserAgent(const QString &amp;agent)</div><div class="ttdoc">Sets the user agent.</div></div>
+<div class="ttc" id="aclass_q_cef_config_html_ac502d5e4b911c4e57d6fe4167be6d801"><div class="ttname"><a href="class_q_cef_config.html#ac502d5e4b911c4e57d6fe4167be6d801">QCefConfig::setRemoteDebuggingPort</a></div><div class="ttdeci">void setRemoteDebuggingPort(short port)</div><div class="ttdoc">Sets the remote debugging port.</div></div>
+<div class="ttc" id="aclass_q_cef_config_html_ae437cd58b60d3902bba07e75a48d9a7ca01b281485ae3ba1c2c608e92b81f8d60"><div class="ttname"><a href="class_q_cef_config.html#ae437cd58b60d3902bba07e75a48d9a7ca01b281485ae3ba1c2c608e92b81f8d60">QCefConfig::LOGSEVERITY_DEFAULT</a></div><div class="ttdeci">@ LOGSEVERITY_DEFAULT</div><div class="ttdoc">Default logging (currently INFO logging)</div><div class="ttdef"><b>Definition</b> QCefConfig.h:39</div></div>
+<div class="ttc" id="aclass_q_cef_config_html_af6041bcae9fcf72ea47ffc47d62e5a96"><div class="ttname"><a href="class_q_cef_config.html#af6041bcae9fcf72ea47ffc47d62e5a96">QCefConfig::setWindowlessRenderingEnabled</a></div><div class="ttdeci">void setWindowlessRenderingEnabled(const bool enabled)</div><div class="ttdoc">Sets the flag to enable/disable OSR mode.</div></div>
+<div class="ttc" id="aclass_q_cef_context_html"><div class="ttname"><a href="class_q_cef_context.html">QCefContext</a></div><div class="ttdoc">Represents the CEF context.</div><div class="ttdef"><b>Definition</b> QCefContext.h:27</div></div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md26"></a>
+Create QCefView Instance</h1>
+<p>Once you have initialized <a href="/docs/reference/QCefContext"><code>QCefContext</code></a>, you can create a <a href="/docs/reference/QCefView"><code>QCefView</code></a> instance.</p>
+<div class="fragment"><div class="line"><span class="comment">// Build settings for per QCefView</span></div>
+<div class="line"><a class="code hl_class" href="class_q_cef_setting.html">QCefSetting</a> setting;</div>
+<div class="line"><span class="comment">// Here we just set the default background to blue</span></div>
+<div class="line">setting.<a class="code hl_function" href="class_q_cef_setting.html#a6dbd7b1da3a151294e8bf020a16687be">setBackgroundColor</a>(QColor::fromRgb(0, 0, 255));</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Create the QCefView widget and add it to the layout container</span></div>
+<div class="line">cefViewWidget = <span class="keyword">new</span> <a class="code hl_class" href="class_q_cef_view.html">QCefView</a>(uri, &amp;setting, <span class="keyword">this</span>);</div>
+<div class="line">ui.cefContainer-&gt;layout()-&gt;addWidget(cefViewWidget);</div>
+<div class="line">layout-&gt;addWidget(ui.cefContainer);</div>
+<div class="ttc" id="aclass_q_cef_setting_html"><div class="ttname"><a href="class_q_cef_setting.html">QCefSetting</a></div><div class="ttdoc">Represents the settings for individual browser.</div><div class="ttdef"><b>Definition</b> QCefSetting.h:27</div></div>
+<div class="ttc" id="aclass_q_cef_setting_html_a6dbd7b1da3a151294e8bf020a16687be"><div class="ttname"><a href="class_q_cef_setting.html#a6dbd7b1da3a151294e8bf020a16687be">QCefSetting::setBackgroundColor</a></div><div class="ttdeci">void setBackgroundColor(const QColor &amp;value)</div><div class="ttdoc">Sets the background color.</div></div>
+<div class="ttc" id="aclass_q_cef_view_html"><div class="ttname"><a href="class_q_cef_view.html">QCefView</a></div><div class="ttdoc">Represents the CEF browser view.</div><div class="ttdef"><b>Definition</b> QCefView.h:49</div></div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md27"></a>
+Create a Simple Web Page</h1>
+<p>Create a simple web page with the following content:</p>
+<div class="fragment"><div class="line">&lt;html&gt;</div>
+<div class="line">  &lt;head&gt;</div>
+<div class="line">  &lt;/head&gt;</div>
+<div class="line">  &lt;body id=&quot;main&quot; class=&quot;noselect&quot;&gt;</div>
+<div class="line">    &lt;h1 align=&quot;center&quot; style=&quot;font-size: 12pt&quot;&gt;Web Area&lt;/h1&gt;</div>
+<div class="line">  &lt;/body&gt;</div>
+<div class="line">&lt;/html&gt;</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md28"></a>
+Run the Application</h1>
+<p>Now let's run the application.</p>
+<div class="image">
+<img src="first-project.png" alt=""/>
+<div class="caption">
+First Project</div></div>
+     </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

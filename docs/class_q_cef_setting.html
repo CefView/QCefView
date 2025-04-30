@@ -1,0 +1,1659 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="generator" content="Doxygen 1.13.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QCefView: QCefSetting</title>
+    <link href="tabs.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/svg+xml" href="logo.drawio.svg" />
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="dynsections.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+    <script type="text/javascript" src="toggle-alternative-theme.js"></script>
+    <script type="text/javascript">
+        DoxygenAwesomeFragmentCopyButton.init()
+        DoxygenAwesomeDarkModeToggle.init()
+        DoxygenAwesomeParagraphLink.init()
+        DoxygenAwesomeInteractiveToc.init()
+        DoxygenAwesomeTabs.init()
+    </script>
+    <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+    <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <link href="doxygen.css" rel="stylesheet" type="text/css" />
+    <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <!-- https://tholman.com/github-corners/ -->
+    <a href="https://github.com/CefView/QCefView" class="github-corner" title="View source on GitHub" target="_blank"
+        rel="noopener noreferrer">
+        <svg viewBox="0 0 250 250" width="40" height="40"
+            style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+            <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+            <path
+                d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+                fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+            <path
+                d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+                fill="currentColor" class="octo-body"></path>
+        </svg></a>
+    <style>
+        .github-corner:hover .octo-arm {
+            animation: octocat-wave 560ms ease-in-out
+        }
+        @keyframes octocat-wave {
+            0%,
+            100% {
+                transform: rotate(0)
+            }
+            20%,
+            60% {
+                transform: rotate(-25deg)
+            }
+            40%,
+            80% {
+                transform: rotate(10deg)
+            }
+        }
+        @media (max-width:500px) {
+            .github-corner:hover .octo-arm {
+                animation: none
+            }
+            .github-corner .octo-arm {
+                animation: octocat-wave 560ms ease-in-out
+            }
+        }
+    </style>
+    <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+        <div id="titlearea">
+            <table cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr style="height: 56px;">
+                        <td id="projectalign" style="padding-left: 0.5em;">
+                            <div id="projectname">QCefView
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- end header part -->
+<!-- Generated by Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('class_q_cef_setting.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="class_q_cef_setting-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">QCefSetting</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Represents the settings for individual browser.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;QCefSetting.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:afb8450a162ed9ce3f59a37491147db8d" id="r_afb8450a162ed9ce3f59a37491147db8d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb8450a162ed9ce3f59a37491147db8d">QCefSetting</a> ()</td></tr>
+<tr class="memdesc:afb8450a162ed9ce3f59a37491147db8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="class_q_cef_setting.html" title="Represents the settings for individual browser.">QCefSetting</a> instance.  <br /></td></tr>
+<tr class="separator:afb8450a162ed9ce3f59a37491147db8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af650fcab674f8c33a996a2d8cd34eaef" id="r_af650fcab674f8c33a996a2d8cd34eaef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af650fcab674f8c33a996a2d8cd34eaef">QCefSetting</a> (const <a class="el" href="class_q_cef_setting.html">QCefSetting</a> &amp;other)</td></tr>
+<tr class="memdesc:af650fcab674f8c33a996a2d8cd34eaef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="class_q_cef_setting.html" title="Represents the settings for individual browser.">QCefSetting</a> instance from existing one.  <br /></td></tr>
+<tr class="separator:af650fcab674f8c33a996a2d8cd34eaef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a486f0c9edda93fb30c75608ac9b98ba2" id="r_a486f0c9edda93fb30c75608ac9b98ba2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_q_cef_setting.html">QCefSetting</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a486f0c9edda93fb30c75608ac9b98ba2">operator=</a> (const <a class="el" href="class_q_cef_setting.html">QCefSetting</a> &amp;other)</td></tr>
+<tr class="memdesc:a486f0c9edda93fb30c75608ac9b98ba2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns the existing <a class="el" href="class_q_cef_setting.html" title="Represents the settings for individual browser.">QCefSetting</a> instance to current.  <br /></td></tr>
+<tr class="separator:a486f0c9edda93fb30c75608ac9b98ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a589b16fe883213d0e330503c0ccab218" id="r_a589b16fe883213d0e330503c0ccab218"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a589b16fe883213d0e330503c0ccab218">~QCefSetting</a> ()</td></tr>
+<tr class="memdesc:a589b16fe883213d0e330503c0ccab218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructs the instance.  <br /></td></tr>
+<tr class="separator:a589b16fe883213d0e330503c0ccab218"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a629a1139dff88c3bb85a4c9a620d0682" id="r_a629a1139dff88c3bb85a4c9a620d0682"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a629a1139dff88c3bb85a4c9a620d0682">setWindowInitialSize</a> (const QSize &amp;size)</td></tr>
+<tr class="memdesc:a629a1139dff88c3bb85a4c9a620d0682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the initial size of the browser.  <br /></td></tr>
+<tr class="separator:a629a1139dff88c3bb85a4c9a620d0682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3aabefb7879e392952a94464c983978" id="r_ad3aabefb7879e392952a94464c983978"><td class="memItemLeft" align="right" valign="top">const QSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3aabefb7879e392952a94464c983978">windowInitialSize</a> () const</td></tr>
+<tr class="memdesc:ad3aabefb7879e392952a94464c983978"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the initial size of the browser.  <br /></td></tr>
+<tr class="separator:ad3aabefb7879e392952a94464c983978"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad021537af966fb8f17d8a07066a5408e" id="r_ad021537af966fb8f17d8a07066a5408e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad021537af966fb8f17d8a07066a5408e">setStandardFontFamily</a> (const QString &amp;value)</td></tr>
+<tr class="memdesc:ad021537af966fb8f17d8a07066a5408e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the standard font family.  <br /></td></tr>
+<tr class="separator:ad021537af966fb8f17d8a07066a5408e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7a0cfa4086251bdfc95c4ae72e52896" id="r_aa7a0cfa4086251bdfc95c4ae72e52896"><td class="memItemLeft" align="right" valign="top">const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7a0cfa4086251bdfc95c4ae72e52896">standardFontFamily</a> () const</td></tr>
+<tr class="memdesc:aa7a0cfa4086251bdfc95c4ae72e52896"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the standard font family.  <br /></td></tr>
+<tr class="separator:aa7a0cfa4086251bdfc95c4ae72e52896"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af11ccd0529a79efee12a3e728d24e641" id="r_af11ccd0529a79efee12a3e728d24e641"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af11ccd0529a79efee12a3e728d24e641">setFixedFontFamily</a> (const QString &amp;value)</td></tr>
+<tr class="memdesc:af11ccd0529a79efee12a3e728d24e641"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the fixed font family.  <br /></td></tr>
+<tr class="separator:af11ccd0529a79efee12a3e728d24e641"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a239e1982f4ab4198a62f9c00ae17bcbb" id="r_a239e1982f4ab4198a62f9c00ae17bcbb"><td class="memItemLeft" align="right" valign="top">const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a239e1982f4ab4198a62f9c00ae17bcbb">fixedFontFamily</a> () const</td></tr>
+<tr class="memdesc:a239e1982f4ab4198a62f9c00ae17bcbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the fixed font family.  <br /></td></tr>
+<tr class="separator:a239e1982f4ab4198a62f9c00ae17bcbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9eadb4d8d6567c78d80f09e1ace1dd30" id="r_a9eadb4d8d6567c78d80f09e1ace1dd30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9eadb4d8d6567c78d80f09e1ace1dd30">setSerifFontFamily</a> (const QString &amp;value)</td></tr>
+<tr class="memdesc:a9eadb4d8d6567c78d80f09e1ace1dd30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the serif font family.  <br /></td></tr>
+<tr class="separator:a9eadb4d8d6567c78d80f09e1ace1dd30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43ab6247cbbaa59652846eb84760c1fb" id="r_a43ab6247cbbaa59652846eb84760c1fb"><td class="memItemLeft" align="right" valign="top">const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43ab6247cbbaa59652846eb84760c1fb">serifFontFamily</a> () const</td></tr>
+<tr class="memdesc:a43ab6247cbbaa59652846eb84760c1fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the serif font family.  <br /></td></tr>
+<tr class="separator:a43ab6247cbbaa59652846eb84760c1fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa07d27c4a22dc2ec0d041c9deda1d71b" id="r_aa07d27c4a22dc2ec0d041c9deda1d71b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa07d27c4a22dc2ec0d041c9deda1d71b">setSansSerifFontFamily</a> (const QString &amp;value)</td></tr>
+<tr class="memdesc:aa07d27c4a22dc2ec0d041c9deda1d71b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the sans serif font family.  <br /></td></tr>
+<tr class="separator:aa07d27c4a22dc2ec0d041c9deda1d71b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a861fccc511473f01f74a5199d2660126" id="r_a861fccc511473f01f74a5199d2660126"><td class="memItemLeft" align="right" valign="top">const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a861fccc511473f01f74a5199d2660126">sansSerifFontFamily</a> () const</td></tr>
+<tr class="memdesc:a861fccc511473f01f74a5199d2660126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the sans serif font family.  <br /></td></tr>
+<tr class="separator:a861fccc511473f01f74a5199d2660126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef4eb96f03003eb774924fe418a7edf1" id="r_aef4eb96f03003eb774924fe418a7edf1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef4eb96f03003eb774924fe418a7edf1">setCursiveFontFamily</a> (const QString &amp;value)</td></tr>
+<tr class="memdesc:aef4eb96f03003eb774924fe418a7edf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the cursive font family.  <br /></td></tr>
+<tr class="separator:aef4eb96f03003eb774924fe418a7edf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86526505941342ffbc96b6e5226ffcbe" id="r_a86526505941342ffbc96b6e5226ffcbe"><td class="memItemLeft" align="right" valign="top">const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a86526505941342ffbc96b6e5226ffcbe">cursiveFontFamily</a> () const</td></tr>
+<tr class="memdesc:a86526505941342ffbc96b6e5226ffcbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the cursive font family.  <br /></td></tr>
+<tr class="separator:a86526505941342ffbc96b6e5226ffcbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a831bed0440aed06894a85ee8dde74a05" id="r_a831bed0440aed06894a85ee8dde74a05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a831bed0440aed06894a85ee8dde74a05">setFantasyFontFamily</a> (const QString &amp;value)</td></tr>
+<tr class="memdesc:a831bed0440aed06894a85ee8dde74a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the fantasy font family.  <br /></td></tr>
+<tr class="separator:a831bed0440aed06894a85ee8dde74a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0acd7303ff77ae1eff9fa579fc96e97a" id="r_a0acd7303ff77ae1eff9fa579fc96e97a"><td class="memItemLeft" align="right" valign="top">const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0acd7303ff77ae1eff9fa579fc96e97a">fantasyFontFamily</a> () const</td></tr>
+<tr class="memdesc:a0acd7303ff77ae1eff9fa579fc96e97a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the fantasy font family.  <br /></td></tr>
+<tr class="separator:a0acd7303ff77ae1eff9fa579fc96e97a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a599a011dff8d11c8201036238016a77f" id="r_a599a011dff8d11c8201036238016a77f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a599a011dff8d11c8201036238016a77f">setDefaultEncoding</a> (const QString &amp;value)</td></tr>
+<tr class="memdesc:a599a011dff8d11c8201036238016a77f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the default encoding.  <br /></td></tr>
+<tr class="separator:a599a011dff8d11c8201036238016a77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2de89967072377f279b36e821bde18e1" id="r_a2de89967072377f279b36e821bde18e1"><td class="memItemLeft" align="right" valign="top">const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2de89967072377f279b36e821bde18e1">defaultEncoding</a> () const</td></tr>
+<tr class="memdesc:a2de89967072377f279b36e821bde18e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default encoding.  <br /></td></tr>
+<tr class="separator:a2de89967072377f279b36e821bde18e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a5810da8e070288ff80c069f5b52f23" id="r_a4a5810da8e070288ff80c069f5b52f23"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a5810da8e070288ff80c069f5b52f23">setWindowlessFrameRate</a> (const int value)</td></tr>
+<tr class="memdesc:a4a5810da8e070288ff80c069f5b52f23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the frame rate in window less mode.  <br /></td></tr>
+<tr class="separator:a4a5810da8e070288ff80c069f5b52f23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfc424688213e0e695b6b84681581135" id="r_adfc424688213e0e695b6b84681581135"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adfc424688213e0e695b6b84681581135">windowlessFrameRate</a> () const</td></tr>
+<tr class="memdesc:adfc424688213e0e695b6b84681581135"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the frame rate in window less mode.  <br /></td></tr>
+<tr class="separator:adfc424688213e0e695b6b84681581135"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85b9cadc6df83a3addbaf567df791339" id="r_a85b9cadc6df83a3addbaf567df791339"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85b9cadc6df83a3addbaf567df791339">setDefaultFontSize</a> (const int value)</td></tr>
+<tr class="memdesc:a85b9cadc6df83a3addbaf567df791339"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the default font size.  <br /></td></tr>
+<tr class="separator:a85b9cadc6df83a3addbaf567df791339"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a38db62a20b2e8e7a26029f0b928689" id="r_a4a38db62a20b2e8e7a26029f0b928689"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a38db62a20b2e8e7a26029f0b928689">defaultFontSize</a> () const</td></tr>
+<tr class="memdesc:a4a38db62a20b2e8e7a26029f0b928689"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default font size.  <br /></td></tr>
+<tr class="separator:a4a38db62a20b2e8e7a26029f0b928689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dddf809104f676469fc03b266d7a2ff" id="r_a4dddf809104f676469fc03b266d7a2ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4dddf809104f676469fc03b266d7a2ff">setDefaultFixedFontSize</a> (const int value)</td></tr>
+<tr class="memdesc:a4dddf809104f676469fc03b266d7a2ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the default fixed font size.  <br /></td></tr>
+<tr class="separator:a4dddf809104f676469fc03b266d7a2ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab25a8bd4b9d5acb865c840b8c4320f5d" id="r_ab25a8bd4b9d5acb865c840b8c4320f5d"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab25a8bd4b9d5acb865c840b8c4320f5d">defaultFixedFontSize</a> () const</td></tr>
+<tr class="memdesc:ab25a8bd4b9d5acb865c840b8c4320f5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default fixed font size.  <br /></td></tr>
+<tr class="separator:ab25a8bd4b9d5acb865c840b8c4320f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c1733e2e173cb462f0ec21a613b628e" id="r_a0c1733e2e173cb462f0ec21a613b628e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c1733e2e173cb462f0ec21a613b628e">setMinimumFontSize</a> (const int value)</td></tr>
+<tr class="memdesc:a0c1733e2e173cb462f0ec21a613b628e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the minimum font size.  <br /></td></tr>
+<tr class="separator:a0c1733e2e173cb462f0ec21a613b628e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b263c84f28ef76fc1dc4cd4dfad8e5d" id="r_a3b263c84f28ef76fc1dc4cd4dfad8e5d"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b263c84f28ef76fc1dc4cd4dfad8e5d">minimumFontSize</a> () const</td></tr>
+<tr class="memdesc:a3b263c84f28ef76fc1dc4cd4dfad8e5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the minimum font size.  <br /></td></tr>
+<tr class="separator:a3b263c84f28ef76fc1dc4cd4dfad8e5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6e22cc3cfa68ad13809b6766e9cafab" id="r_aa6e22cc3cfa68ad13809b6766e9cafab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6e22cc3cfa68ad13809b6766e9cafab">setMinimumLogicalFontSize</a> (const int value)</td></tr>
+<tr class="memdesc:aa6e22cc3cfa68ad13809b6766e9cafab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the minimum logical font size.  <br /></td></tr>
+<tr class="separator:aa6e22cc3cfa68ad13809b6766e9cafab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f0801d8ecbc7fe86df805dc6db3aad9" id="r_a3f0801d8ecbc7fe86df805dc6db3aad9"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f0801d8ecbc7fe86df805dc6db3aad9">minimumLogicalFontSize</a> () const</td></tr>
+<tr class="memdesc:a3f0801d8ecbc7fe86df805dc6db3aad9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the minimum logical font size.  <br /></td></tr>
+<tr class="separator:a3f0801d8ecbc7fe86df805dc6db3aad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba88a474960049cda01c7295e514eb8a" id="r_aba88a474960049cda01c7295e514eb8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba88a474960049cda01c7295e514eb8a">setRemoteFonts</a> (const bool value)</td></tr>
+<tr class="memdesc:aba88a474960049cda01c7295e514eb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to enable or disable remote fonts.  <br /></td></tr>
+<tr class="separator:aba88a474960049cda01c7295e514eb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b503e82defe4c57a88936fb2cec2509" id="r_a6b503e82defe4c57a88936fb2cec2509"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b503e82defe4c57a88936fb2cec2509">remoteFonts</a> () const</td></tr>
+<tr class="memdesc:a6b503e82defe4c57a88936fb2cec2509"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether to enable or disable the remote fonts.  <br /></td></tr>
+<tr class="separator:a6b503e82defe4c57a88936fb2cec2509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a884abf03a17dc3fa4343b578445219c0" id="r_a884abf03a17dc3fa4343b578445219c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a884abf03a17dc3fa4343b578445219c0">setJavascript</a> (const bool value)</td></tr>
+<tr class="memdesc:a884abf03a17dc3fa4343b578445219c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to enable or disable Javascript.  <br /></td></tr>
+<tr class="separator:a884abf03a17dc3fa4343b578445219c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfa7cceca149b6311e7a28e6ae4e2853" id="r_abfa7cceca149b6311e7a28e6ae4e2853"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abfa7cceca149b6311e7a28e6ae4e2853">javascript</a> () const</td></tr>
+<tr class="memdesc:abfa7cceca149b6311e7a28e6ae4e2853"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether to enable or disable Javascript.  <br /></td></tr>
+<tr class="separator:abfa7cceca149b6311e7a28e6ae4e2853"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c3755e100310ab63a98cbd6b7c89a6b" id="r_a7c3755e100310ab63a98cbd6b7c89a6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c3755e100310ab63a98cbd6b7c89a6b">setJavascriptCloseWindows</a> (const bool value)</td></tr>
+<tr class="memdesc:a7c3755e100310ab63a98cbd6b7c89a6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to enable or disable the permission of closing window from Javascript.  <br /></td></tr>
+<tr class="separator:a7c3755e100310ab63a98cbd6b7c89a6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cab27275ce36cb0b1477a85b6694f3b" id="r_a8cab27275ce36cb0b1477a85b6694f3b"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8cab27275ce36cb0b1477a85b6694f3b">javascriptCloseWindows</a> () const</td></tr>
+<tr class="memdesc:a8cab27275ce36cb0b1477a85b6694f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether to enable or disable the permission of closing window from Javascript.  <br /></td></tr>
+<tr class="separator:a8cab27275ce36cb0b1477a85b6694f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff0a7e72f55a002f5731f4e202e45d63" id="r_aff0a7e72f55a002f5731f4e202e45d63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff0a7e72f55a002f5731f4e202e45d63">setJavascriptAccessClipboard</a> (const bool value)</td></tr>
+<tr class="memdesc:aff0a7e72f55a002f5731f4e202e45d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to enable or disable the permission of accessing clipboard from Javascript.  <br /></td></tr>
+<tr class="separator:aff0a7e72f55a002f5731f4e202e45d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff511401ea2d0453583db4b642526dbd" id="r_aff511401ea2d0453583db4b642526dbd"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff511401ea2d0453583db4b642526dbd">javascriptAccessClipboard</a> () const</td></tr>
+<tr class="memdesc:aff511401ea2d0453583db4b642526dbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether to enable or disable the permission of accessing clipboard from Javascript.  <br /></td></tr>
+<tr class="separator:aff511401ea2d0453583db4b642526dbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61c6207fc6fb05b71248fee8766d21a2" id="r_a61c6207fc6fb05b71248fee8766d21a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61c6207fc6fb05b71248fee8766d21a2">setJavascriptDomPaste</a> (const bool value)</td></tr>
+<tr class="memdesc:a61c6207fc6fb05b71248fee8766d21a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to enable or disable the permission of pasting DOM in Javascript.  <br /></td></tr>
+<tr class="separator:a61c6207fc6fb05b71248fee8766d21a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6696cc8fa0b4ea1ef14d71259cd4350d" id="r_a6696cc8fa0b4ea1ef14d71259cd4350d"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6696cc8fa0b4ea1ef14d71259cd4350d">javascriptDomPaste</a> () const</td></tr>
+<tr class="memdesc:a6696cc8fa0b4ea1ef14d71259cd4350d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether to enable or disable the permission of pasting DOM in Javascript.  <br /></td></tr>
+<tr class="separator:a6696cc8fa0b4ea1ef14d71259cd4350d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15457b991b298a722cbc9f9507d109fb" id="r_a15457b991b298a722cbc9f9507d109fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a15457b991b298a722cbc9f9507d109fb">setImageLoading</a> (const bool value)</td></tr>
+<tr class="memdesc:a15457b991b298a722cbc9f9507d109fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to enable or disable the permission of loading images.  <br /></td></tr>
+<tr class="separator:a15457b991b298a722cbc9f9507d109fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa06779c82a28a01bd862ac605356be40" id="r_aa06779c82a28a01bd862ac605356be40"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa06779c82a28a01bd862ac605356be40">imageLoading</a> () const</td></tr>
+<tr class="memdesc:aa06779c82a28a01bd862ac605356be40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether to enable or disable the permission of loading images.  <br /></td></tr>
+<tr class="separator:aa06779c82a28a01bd862ac605356be40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a562e4477613234a906b2d167473b0627" id="r_a562e4477613234a906b2d167473b0627"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a562e4477613234a906b2d167473b0627">setImageShrinkStandaloneToFit</a> (const bool value)</td></tr>
+<tr class="memdesc:a562e4477613234a906b2d167473b0627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to enable or disable the shrinking image standalone to fit.  <br /></td></tr>
+<tr class="separator:a562e4477613234a906b2d167473b0627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7374edce9be761b5d40edef80f42f7b9" id="r_a7374edce9be761b5d40edef80f42f7b9"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7374edce9be761b5d40edef80f42f7b9">imageShrinkStandaloneToFit</a> () const</td></tr>
+<tr class="memdesc:a7374edce9be761b5d40edef80f42f7b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether to enable or disable the shrinking image standalone to fit.  <br /></td></tr>
+<tr class="separator:a7374edce9be761b5d40edef80f42f7b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a159239d8d7d5b4f944db0c9f37b10509" id="r_a159239d8d7d5b4f944db0c9f37b10509"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a159239d8d7d5b4f944db0c9f37b10509">setTextAreaResize</a> (const bool value)</td></tr>
+<tr class="memdesc:a159239d8d7d5b4f944db0c9f37b10509"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to enable or disable the resizing of text area.  <br /></td></tr>
+<tr class="separator:a159239d8d7d5b4f944db0c9f37b10509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d88588797f311f71c55073f95dafafe" id="r_a8d88588797f311f71c55073f95dafafe"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d88588797f311f71c55073f95dafafe">textAreaResize</a> () const</td></tr>
+<tr class="memdesc:a8d88588797f311f71c55073f95dafafe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether to enable or disable the resizing of text area.  <br /></td></tr>
+<tr class="separator:a8d88588797f311f71c55073f95dafafe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ccb815304eeadba9d679186472d4e40" id="r_a8ccb815304eeadba9d679186472d4e40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ccb815304eeadba9d679186472d4e40">setTabToLinks</a> (const bool value)</td></tr>
+<tr class="memdesc:a8ccb815304eeadba9d679186472d4e40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to enable or disable tab to links.  <br /></td></tr>
+<tr class="separator:a8ccb815304eeadba9d679186472d4e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b81d1bcf47146dfc5eeeabeb583e627" id="r_a9b81d1bcf47146dfc5eeeabeb583e627"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b81d1bcf47146dfc5eeeabeb583e627">tabToLinks</a> () const</td></tr>
+<tr class="memdesc:a9b81d1bcf47146dfc5eeeabeb583e627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether to enable or disable tab to links.  <br /></td></tr>
+<tr class="separator:a9b81d1bcf47146dfc5eeeabeb583e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afca6695cdffbb1734588c33ffff3aa3c" id="r_afca6695cdffbb1734588c33ffff3aa3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afca6695cdffbb1734588c33ffff3aa3c">setLocalStorage</a> (const bool value)</td></tr>
+<tr class="memdesc:afca6695cdffbb1734588c33ffff3aa3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to enable or disable local storage.  <br /></td></tr>
+<tr class="separator:afca6695cdffbb1734588c33ffff3aa3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fffdf46c7617f7b116e2e836dbb48d0" id="r_a4fffdf46c7617f7b116e2e836dbb48d0"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4fffdf46c7617f7b116e2e836dbb48d0">localStorage</a> () const</td></tr>
+<tr class="memdesc:a4fffdf46c7617f7b116e2e836dbb48d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether to enable or disable local storage.  <br /></td></tr>
+<tr class="separator:a4fffdf46c7617f7b116e2e836dbb48d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0680b646641dd568b7de8ae072670db" id="r_ad0680b646641dd568b7de8ae072670db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0680b646641dd568b7de8ae072670db">setDatabases</a> (const bool value)</td></tr>
+<tr class="memdesc:ad0680b646641dd568b7de8ae072670db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to enable or disable database.  <br /></td></tr>
+<tr class="separator:ad0680b646641dd568b7de8ae072670db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94b2a957c8754619df7a37258a41c31d" id="r_a94b2a957c8754619df7a37258a41c31d"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a94b2a957c8754619df7a37258a41c31d">databases</a> () const</td></tr>
+<tr class="memdesc:a94b2a957c8754619df7a37258a41c31d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether to enable or disable database.  <br /></td></tr>
+<tr class="separator:a94b2a957c8754619df7a37258a41c31d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a984a074332bd07b78da2079d1d333209" id="r_a984a074332bd07b78da2079d1d333209"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a984a074332bd07b78da2079d1d333209">setWebGL</a> (const bool value)</td></tr>
+<tr class="memdesc:a984a074332bd07b78da2079d1d333209"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets to enable or disable webGL.  <br /></td></tr>
+<tr class="separator:a984a074332bd07b78da2079d1d333209"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca84c981db4fcc2cf6aa3ece7c44973c" id="r_aca84c981db4fcc2cf6aa3ece7c44973c"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca84c981db4fcc2cf6aa3ece7c44973c">webGL</a> () const</td></tr>
+<tr class="memdesc:aca84c981db4fcc2cf6aa3ece7c44973c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether to enable or disable webGL.  <br /></td></tr>
+<tr class="separator:aca84c981db4fcc2cf6aa3ece7c44973c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dbd7b1da3a151294e8bf020a16687be" id="r_a6dbd7b1da3a151294e8bf020a16687be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6dbd7b1da3a151294e8bf020a16687be">setBackgroundColor</a> (const QColor &amp;value)</td></tr>
+<tr class="memdesc:a6dbd7b1da3a151294e8bf020a16687be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the background color.  <br /></td></tr>
+<tr class="separator:a6dbd7b1da3a151294e8bf020a16687be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9db276640c98e1d5d38290e06ae17d1a" id="r_a9db276640c98e1d5d38290e06ae17d1a"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9db276640c98e1d5d38290e06ae17d1a">backgroundColor</a> () const</td></tr>
+<tr class="memdesc:a9db276640c98e1d5d38290e06ae17d1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the background color.  <br /></td></tr>
+<tr class="separator:a9db276640c98e1d5d38290e06ae17d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdb320899b859e7781458a281a9dafbe" id="r_afdb320899b859e7781458a281a9dafbe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afdb320899b859e7781458a281a9dafbe">setHardwareAcceleration</a> (const bool value)</td></tr>
+<tr class="separator:afdb320899b859e7781458a281a9dafbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7509581e3295f2585394329a1adec734" id="r_a7509581e3295f2585394329a1adec734"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7509581e3295f2585394329a1adec734">hardwareAcceleration</a> () const</td></tr>
+<tr class="separator:a7509581e3295f2585394329a1adec734"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Represents the settings for individual browser. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="afb8450a162ed9ce3f59a37491147db8d" name="afb8450a162ed9ce3f59a37491147db8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb8450a162ed9ce3f59a37491147db8d">&#9670;&#160;</a></span>QCefSetting() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QCefSetting::QCefSetting </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs the <a class="el" href="class_q_cef_setting.html" title="Represents the settings for individual browser.">QCefSetting</a> instance. </p>
+
+</div>
+</div>
+<a id="af650fcab674f8c33a996a2d8cd34eaef" name="af650fcab674f8c33a996a2d8cd34eaef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af650fcab674f8c33a996a2d8cd34eaef">&#9670;&#160;</a></span>QCefSetting() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QCefSetting::QCefSetting </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_q_cef_setting.html">QCefSetting</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs the <a class="el" href="class_q_cef_setting.html" title="Represents the settings for individual browser.">QCefSetting</a> instance from existing one. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>The existing <a class="el" href="class_q_cef_setting.html" title="Represents the settings for individual browser.">QCefSetting</a> instance</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a589b16fe883213d0e330503c0ccab218" name="a589b16fe883213d0e330503c0ccab218"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a589b16fe883213d0e330503c0ccab218">&#9670;&#160;</a></span>~QCefSetting()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QCefSetting::~QCefSetting </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destructs the instance. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9db276640c98e1d5d38290e06ae17d1a" name="a9db276640c98e1d5d38290e06ae17d1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9db276640c98e1d5d38290e06ae17d1a">&#9670;&#160;</a></span>backgroundColor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::backgroundColor </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the background color. </p>
+<dl class="section return"><dt>Returns</dt><dd>The color</dd></dl>
+
+</div>
+</div>
+<a id="a86526505941342ffbc96b6e5226ffcbe" name="a86526505941342ffbc96b6e5226ffcbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86526505941342ffbc96b6e5226ffcbe">&#9670;&#160;</a></span>cursiveFontFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QString QCefSetting::cursiveFontFamily </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the cursive font family. </p>
+<dl class="section return"><dt>Returns</dt><dd>The font family</dd></dl>
+
+</div>
+</div>
+<a id="a94b2a957c8754619df7a37258a41c31d" name="a94b2a957c8754619df7a37258a41c31d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94b2a957c8754619df7a37258a41c31d">&#9670;&#160;</a></span>databases()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::databases </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable or disable database. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; false to disable</dd></dl>
+
+</div>
+</div>
+<a id="a2de89967072377f279b36e821bde18e1" name="a2de89967072377f279b36e821bde18e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2de89967072377f279b36e821bde18e1">&#9670;&#160;</a></span>defaultEncoding()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QString QCefSetting::defaultEncoding </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the default encoding. </p>
+<dl class="section return"><dt>Returns</dt><dd>The encoding name</dd></dl>
+
+</div>
+</div>
+<a id="ab25a8bd4b9d5acb865c840b8c4320f5d" name="ab25a8bd4b9d5acb865c840b8c4320f5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab25a8bd4b9d5acb865c840b8c4320f5d">&#9670;&#160;</a></span>defaultFixedFontSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::defaultFixedFontSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the default fixed font size. </p>
+<dl class="section return"><dt>Returns</dt><dd>The font size</dd></dl>
+
+</div>
+</div>
+<a id="a4a38db62a20b2e8e7a26029f0b928689" name="a4a38db62a20b2e8e7a26029f0b928689"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a38db62a20b2e8e7a26029f0b928689">&#9670;&#160;</a></span>defaultFontSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::defaultFontSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the default font size. </p>
+<dl class="section return"><dt>Returns</dt><dd>The font size</dd></dl>
+
+</div>
+</div>
+<a id="a0acd7303ff77ae1eff9fa579fc96e97a" name="a0acd7303ff77ae1eff9fa579fc96e97a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0acd7303ff77ae1eff9fa579fc96e97a">&#9670;&#160;</a></span>fantasyFontFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QString QCefSetting::fantasyFontFamily </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the fantasy font family. </p>
+<dl class="section return"><dt>Returns</dt><dd>The font family</dd></dl>
+
+</div>
+</div>
+<a id="a239e1982f4ab4198a62f9c00ae17bcbb" name="a239e1982f4ab4198a62f9c00ae17bcbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a239e1982f4ab4198a62f9c00ae17bcbb">&#9670;&#160;</a></span>fixedFontFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QString QCefSetting::fixedFontFamily </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the fixed font family. </p>
+<dl class="section return"><dt>Returns</dt><dd>The font family</dd></dl>
+
+</div>
+</div>
+<a id="a7509581e3295f2585394329a1adec734" name="a7509581e3295f2585394329a1adec734"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7509581e3295f2585394329a1adec734">&#9670;&#160;</a></span>hardwareAcceleration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const bool QCefSetting::hardwareAcceleration </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="aa06779c82a28a01bd862ac605356be40" name="aa06779c82a28a01bd862ac605356be40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa06779c82a28a01bd862ac605356be40">&#9670;&#160;</a></span>imageLoading()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::imageLoading </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable or disable the permission of loading images. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; false to disable</dd></dl>
+
+</div>
+</div>
+<a id="a7374edce9be761b5d40edef80f42f7b9" name="a7374edce9be761b5d40edef80f42f7b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7374edce9be761b5d40edef80f42f7b9">&#9670;&#160;</a></span>imageShrinkStandaloneToFit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::imageShrinkStandaloneToFit </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable or disable the shrinking image standalone to fit. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; false to disable</dd></dl>
+
+</div>
+</div>
+<a id="abfa7cceca149b6311e7a28e6ae4e2853" name="abfa7cceca149b6311e7a28e6ae4e2853"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfa7cceca149b6311e7a28e6ae4e2853">&#9670;&#160;</a></span>javascript()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::javascript </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable or disable Javascript. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; false to disable</dd></dl>
+
+</div>
+</div>
+<a id="aff511401ea2d0453583db4b642526dbd" name="aff511401ea2d0453583db4b642526dbd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff511401ea2d0453583db4b642526dbd">&#9670;&#160;</a></span>javascriptAccessClipboard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::javascriptAccessClipboard </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable or disable the permission of accessing clipboard from Javascript. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; false to disable</dd></dl>
+
+</div>
+</div>
+<a id="a8cab27275ce36cb0b1477a85b6694f3b" name="a8cab27275ce36cb0b1477a85b6694f3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cab27275ce36cb0b1477a85b6694f3b">&#9670;&#160;</a></span>javascriptCloseWindows()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::javascriptCloseWindows </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable or disable the permission of closing window from Javascript. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; false to disable</dd></dl>
+
+</div>
+</div>
+<a id="a6696cc8fa0b4ea1ef14d71259cd4350d" name="a6696cc8fa0b4ea1ef14d71259cd4350d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6696cc8fa0b4ea1ef14d71259cd4350d">&#9670;&#160;</a></span>javascriptDomPaste()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::javascriptDomPaste </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable or disable the permission of pasting DOM in Javascript. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; false to disable</dd></dl>
+
+</div>
+</div>
+<a id="a4fffdf46c7617f7b116e2e836dbb48d0" name="a4fffdf46c7617f7b116e2e836dbb48d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fffdf46c7617f7b116e2e836dbb48d0">&#9670;&#160;</a></span>localStorage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::localStorage </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable or disable local storage. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; false to disable</dd></dl>
+
+</div>
+</div>
+<a id="a3b263c84f28ef76fc1dc4cd4dfad8e5d" name="a3b263c84f28ef76fc1dc4cd4dfad8e5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b263c84f28ef76fc1dc4cd4dfad8e5d">&#9670;&#160;</a></span>minimumFontSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::minimumFontSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the minimum font size. </p>
+<dl class="section return"><dt>Returns</dt><dd>The font size</dd></dl>
+
+</div>
+</div>
+<a id="a3f0801d8ecbc7fe86df805dc6db3aad9" name="a3f0801d8ecbc7fe86df805dc6db3aad9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f0801d8ecbc7fe86df805dc6db3aad9">&#9670;&#160;</a></span>minimumLogicalFontSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::minimumLogicalFontSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the minimum logical font size. </p>
+<dl class="section return"><dt>Returns</dt><dd>The font size</dd></dl>
+
+</div>
+</div>
+<a id="a486f0c9edda93fb30c75608ac9b98ba2" name="a486f0c9edda93fb30c75608ac9b98ba2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a486f0c9edda93fb30c75608ac9b98ba2">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_q_cef_setting.html">QCefSetting</a> &amp; QCefSetting::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_q_cef_setting.html">QCefSetting</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Assigns the existing <a class="el" href="class_q_cef_setting.html" title="Represents the settings for individual browser.">QCefSetting</a> instance to current. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6b503e82defe4c57a88936fb2cec2509" name="a6b503e82defe4c57a88936fb2cec2509"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b503e82defe4c57a88936fb2cec2509">&#9670;&#160;</a></span>remoteFonts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::remoteFonts </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable or disable the remote fonts. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; false to disable</dd></dl>
+
+</div>
+</div>
+<a id="a861fccc511473f01f74a5199d2660126" name="a861fccc511473f01f74a5199d2660126"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a861fccc511473f01f74a5199d2660126">&#9670;&#160;</a></span>sansSerifFontFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QString QCefSetting::sansSerifFontFamily </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the sans serif font family. </p>
+<dl class="section return"><dt>Returns</dt><dd>The font family</dd></dl>
+
+</div>
+</div>
+<a id="a43ab6247cbbaa59652846eb84760c1fb" name="a43ab6247cbbaa59652846eb84760c1fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43ab6247cbbaa59652846eb84760c1fb">&#9670;&#160;</a></span>serifFontFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QString QCefSetting::serifFontFamily </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the serif font family. </p>
+<dl class="section return"><dt>Returns</dt><dd>The font family</dd></dl>
+
+</div>
+</div>
+<a id="a6dbd7b1da3a151294e8bf020a16687be" name="a6dbd7b1da3a151294e8bf020a16687be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dbd7b1da3a151294e8bf020a16687be">&#9670;&#160;</a></span>setBackgroundColor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setBackgroundColor </td>
+          <td>(</td>
+          <td class="paramtype">const QColor &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the background color. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The color</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This only works if the web page has no background color set. The alpha component value will be adjusted to 0 or 255, it means if you pass a value with alpha value in the range of [1, 255], it will be accepted as 255. The default value is inherited from <a class="el" href="class_q_cef_config.html#aa04db9637f47424834bbcdf05a8b640b" title="Gets the background color.">QCefConfig::backgroundColor()</a> </p>
+
+</div>
+</div>
+<a id="aef4eb96f03003eb774924fe418a7edf1" name="aef4eb96f03003eb774924fe418a7edf1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef4eb96f03003eb774924fe418a7edf1">&#9670;&#160;</a></span>setCursiveFontFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setCursiveFontFamily </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the cursive font family. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The font family</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad0680b646641dd568b7de8ae072670db" name="ad0680b646641dd568b7de8ae072670db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0680b646641dd568b7de8ae072670db">&#9670;&#160;</a></span>setDatabases()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setDatabases </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets to enable or disable database. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a599a011dff8d11c8201036238016a77f" name="a599a011dff8d11c8201036238016a77f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a599a011dff8d11c8201036238016a77f">&#9670;&#160;</a></span>setDefaultEncoding()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setDefaultEncoding </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the default encoding. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The encoding name</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4dddf809104f676469fc03b266d7a2ff" name="a4dddf809104f676469fc03b266d7a2ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dddf809104f676469fc03b266d7a2ff">&#9670;&#160;</a></span>setDefaultFixedFontSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setDefaultFixedFontSize </td>
+          <td>(</td>
+          <td class="paramtype">const int</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the default fixed font size. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The font size</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a85b9cadc6df83a3addbaf567df791339" name="a85b9cadc6df83a3addbaf567df791339"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85b9cadc6df83a3addbaf567df791339">&#9670;&#160;</a></span>setDefaultFontSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setDefaultFontSize </td>
+          <td>(</td>
+          <td class="paramtype">const int</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the default font size. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The font size</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a831bed0440aed06894a85ee8dde74a05" name="a831bed0440aed06894a85ee8dde74a05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a831bed0440aed06894a85ee8dde74a05">&#9670;&#160;</a></span>setFantasyFontFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setFantasyFontFamily </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the fantasy font family. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The font family</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af11ccd0529a79efee12a3e728d24e641" name="af11ccd0529a79efee12a3e728d24e641"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af11ccd0529a79efee12a3e728d24e641">&#9670;&#160;</a></span>setFixedFontFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setFixedFontFamily </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the fixed font family. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The font family</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afdb320899b859e7781458a281a9dafbe" name="afdb320899b859e7781458a281a9dafbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdb320899b859e7781458a281a9dafbe">&#9670;&#160;</a></span>setHardwareAcceleration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setHardwareAcceleration </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a15457b991b298a722cbc9f9507d109fb" name="a15457b991b298a722cbc9f9507d109fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15457b991b298a722cbc9f9507d109fb">&#9670;&#160;</a></span>setImageLoading()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setImageLoading </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets to enable or disable the permission of loading images. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a562e4477613234a906b2d167473b0627" name="a562e4477613234a906b2d167473b0627"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a562e4477613234a906b2d167473b0627">&#9670;&#160;</a></span>setImageShrinkStandaloneToFit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setImageShrinkStandaloneToFit </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets to enable or disable the shrinking image standalone to fit. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a884abf03a17dc3fa4343b578445219c0" name="a884abf03a17dc3fa4343b578445219c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a884abf03a17dc3fa4343b578445219c0">&#9670;&#160;</a></span>setJavascript()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setJavascript </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets to enable or disable Javascript. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aff0a7e72f55a002f5731f4e202e45d63" name="aff0a7e72f55a002f5731f4e202e45d63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff0a7e72f55a002f5731f4e202e45d63">&#9670;&#160;</a></span>setJavascriptAccessClipboard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setJavascriptAccessClipboard </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets to enable or disable the permission of accessing clipboard from Javascript. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7c3755e100310ab63a98cbd6b7c89a6b" name="a7c3755e100310ab63a98cbd6b7c89a6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c3755e100310ab63a98cbd6b7c89a6b">&#9670;&#160;</a></span>setJavascriptCloseWindows()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setJavascriptCloseWindows </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets to enable or disable the permission of closing window from Javascript. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a61c6207fc6fb05b71248fee8766d21a2" name="a61c6207fc6fb05b71248fee8766d21a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61c6207fc6fb05b71248fee8766d21a2">&#9670;&#160;</a></span>setJavascriptDomPaste()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setJavascriptDomPaste </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets to enable or disable the permission of pasting DOM in Javascript. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afca6695cdffbb1734588c33ffff3aa3c" name="afca6695cdffbb1734588c33ffff3aa3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afca6695cdffbb1734588c33ffff3aa3c">&#9670;&#160;</a></span>setLocalStorage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setLocalStorage </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets to enable or disable local storage. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0c1733e2e173cb462f0ec21a613b628e" name="a0c1733e2e173cb462f0ec21a613b628e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c1733e2e173cb462f0ec21a613b628e">&#9670;&#160;</a></span>setMinimumFontSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setMinimumFontSize </td>
+          <td>(</td>
+          <td class="paramtype">const int</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the minimum font size. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The font size</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa6e22cc3cfa68ad13809b6766e9cafab" name="aa6e22cc3cfa68ad13809b6766e9cafab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6e22cc3cfa68ad13809b6766e9cafab">&#9670;&#160;</a></span>setMinimumLogicalFontSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setMinimumLogicalFontSize </td>
+          <td>(</td>
+          <td class="paramtype">const int</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the minimum logical font size. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The font size</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aba88a474960049cda01c7295e514eb8a" name="aba88a474960049cda01c7295e514eb8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba88a474960049cda01c7295e514eb8a">&#9670;&#160;</a></span>setRemoteFonts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setRemoteFonts </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets to enable or disable remote fonts. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa07d27c4a22dc2ec0d041c9deda1d71b" name="aa07d27c4a22dc2ec0d041c9deda1d71b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa07d27c4a22dc2ec0d041c9deda1d71b">&#9670;&#160;</a></span>setSansSerifFontFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setSansSerifFontFamily </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the sans serif font family. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The font family</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9eadb4d8d6567c78d80f09e1ace1dd30" name="a9eadb4d8d6567c78d80f09e1ace1dd30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9eadb4d8d6567c78d80f09e1ace1dd30">&#9670;&#160;</a></span>setSerifFontFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setSerifFontFamily </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the serif font family. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The font family</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad021537af966fb8f17d8a07066a5408e" name="ad021537af966fb8f17d8a07066a5408e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad021537af966fb8f17d8a07066a5408e">&#9670;&#160;</a></span>setStandardFontFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setStandardFontFamily </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the standard font family. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The font family</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8ccb815304eeadba9d679186472d4e40" name="a8ccb815304eeadba9d679186472d4e40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ccb815304eeadba9d679186472d4e40">&#9670;&#160;</a></span>setTabToLinks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setTabToLinks </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets to enable or disable tab to links. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a159239d8d7d5b4f944db0c9f37b10509" name="a159239d8d7d5b4f944db0c9f37b10509"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a159239d8d7d5b4f944db0c9f37b10509">&#9670;&#160;</a></span>setTextAreaResize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setTextAreaResize </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets to enable or disable the resizing of text area. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a984a074332bd07b78da2079d1d333209" name="a984a074332bd07b78da2079d1d333209"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a984a074332bd07b78da2079d1d333209">&#9670;&#160;</a></span>setWebGL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setWebGL </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets to enable or disable webGL. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a629a1139dff88c3bb85a4c9a620d0682" name="a629a1139dff88c3bb85a4c9a620d0682"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a629a1139dff88c3bb85a4c9a620d0682">&#9670;&#160;</a></span>setWindowInitialSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setWindowInitialSize </td>
+          <td>(</td>
+          <td class="paramtype">const QSize &amp;</td>          <td class="paramname"><span class="paramname"><em>size</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the initial size of the browser. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>The initial size</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4a5810da8e070288ff80c069f5b52f23" name="a4a5810da8e070288ff80c069f5b52f23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a5810da8e070288ff80c069f5b52f23">&#9670;&#160;</a></span>setWindowlessFrameRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setWindowlessFrameRate </td>
+          <td>(</td>
+          <td class="paramtype">const int</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the frame rate in window less mode. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The frame rate</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa7a0cfa4086251bdfc95c4ae72e52896" name="aa7a0cfa4086251bdfc95c4ae72e52896"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7a0cfa4086251bdfc95c4ae72e52896">&#9670;&#160;</a></span>standardFontFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QString QCefSetting::standardFontFamily </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the standard font family. </p>
+<dl class="section return"><dt>Returns</dt><dd>The font family</dd></dl>
+
+</div>
+</div>
+<a id="a9b81d1bcf47146dfc5eeeabeb583e627" name="a9b81d1bcf47146dfc5eeeabeb583e627"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b81d1bcf47146dfc5eeeabeb583e627">&#9670;&#160;</a></span>tabToLinks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::tabToLinks </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable or disable tab to links. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; false to disable</dd></dl>
+
+</div>
+</div>
+<a id="a8d88588797f311f71c55073f95dafafe" name="a8d88588797f311f71c55073f95dafafe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d88588797f311f71c55073f95dafafe">&#9670;&#160;</a></span>textAreaResize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::textAreaResize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable or disable the resizing of text area. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; false to disable</dd></dl>
+
+</div>
+</div>
+<a id="aca84c981db4fcc2cf6aa3ece7c44973c" name="aca84c981db4fcc2cf6aa3ece7c44973c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca84c981db4fcc2cf6aa3ece7c44973c">&#9670;&#160;</a></span>webGL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::webGL </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable or disable webGL. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; false to disable</dd></dl>
+
+</div>
+</div>
+<a id="ad3aabefb7879e392952a94464c983978" name="ad3aabefb7879e392952a94464c983978"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3aabefb7879e392952a94464c983978">&#9670;&#160;</a></span>windowInitialSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QSize QCefSetting::windowInitialSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the initial size of the browser. </p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="adfc424688213e0e695b6b84681581135" name="adfc424688213e0e695b6b84681581135"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfc424688213e0e695b6b84681581135">&#9670;&#160;</a></span>windowlessFrameRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefSetting::windowlessFrameRate </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the frame rate in window less mode. </p>
+<dl class="section return"><dt>Returns</dt><dd>The frame rate</dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_q_cef_setting.html">QCefSetting</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

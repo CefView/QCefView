@@ -82,7 +82,7 @@ auto qCefViewWidget = new QCefView("https://www.testufo.com/", &setting);
 - Average FPS: 200 
 - Average CPU: 10%
 
-![QCefViewTest-Windows-Software-Rendering-FPS1000-Limit](docs/images/QCefViewTest-Windows-Software-Rendering-FPS1000-Limit.png "QCefViewTest-Windows-Software-Rendering-FPS1000-Limit")
+![QCefViewTest-Windows-Software-Rendering-FPS1000-Limit](scripts/doxygen/docs/img/QCefViewTest-Windows-Software-Rendering-FPS1000-Limit.png "QCefViewTest-Windows-Software-Rendering-FPS1000-Limit")
 
 
 
@@ -91,7 +91,7 @@ auto qCefViewWidget = new QCefView("https://www.testufo.com/", &setting);
 - Average FPS: 900
 - Average CPU: 1%
 
-![QCefViewTest-Windows-Hardware-Rendering-FPS1000-Limit](docs/images/QCefViewTest-Windows-Hardware-Rendering-FPS1000-Limit.png "QCefViewTest-Windows-Hardware-Rendering-FPS1000-Limit")
+![QCefViewTest-Windows-Hardware-Rendering-FPS1000-Limit](scripts/doxygen/docs/img/QCefViewTest-Windows-Hardware-Rendering-FPS1000-Limit.png "QCefViewTest-Windows-Hardware-Rendering-FPS1000-Limit")
 
 
 
@@ -102,14 +102,14 @@ auto qCefViewWidget = new QCefView("https://www.testufo.com/", &setting);
 - Average FPS: 750
 - Average CPU: 100% (Total 1000%)
 
-![QCefViewTest-macOS-Software-Rendering-FPS1000-Limit](docs/images/QCefViewTest-macOS-Software-Rendering-FPS1000-Limit.png "QCefViewTest-macOS-Software-Rendering-FPS1000-Limit")
+![QCefViewTest-macOS-Software-Rendering-FPS1000-Limit](scripts/doxygen/docs/img/QCefViewTest-macOS-Software-Rendering-FPS1000-Limit.png "QCefViewTest-macOS-Software-Rendering-FPS1000-Limit")
 
 #### QCefViewTest-macOS-Hardware-Rendering-FPS1000-Limit
 
 - Average FPS: 930
 - Average CPU: 60% (Total 1000%)
 
-![QCefViewTest-macOS-Hardware-Rendering-FPS1000-Limit](docs/images/QCefViewTest-macOS-Hardware-Rendering-FPS1000-Limit.png "QCefViewTest-macOS-Hardware-Rendering-FPS1000-Limit")
+![QCefViewTest-macOS-Hardware-Rendering-FPS1000-Limit](scripts/doxygen/docs/img/QCefViewTest-macOS-Hardware-Rendering-FPS1000-Limit.png "QCefViewTest-macOS-Hardware-Rendering-FPS1000-Limit")
 
 ---
 

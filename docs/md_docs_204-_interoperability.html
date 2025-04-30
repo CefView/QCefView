@@ -1,0 +1,407 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="generator" content="Doxygen 1.13.2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QCefView: Interoperability</title>
+    <link href="tabs.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/svg+xml" href="logo.drawio.svg" />
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="dynsections.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+    <script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+    <script type="text/javascript" src="toggle-alternative-theme.js"></script>
+    <script type="text/javascript">
+        DoxygenAwesomeFragmentCopyButton.init()
+        DoxygenAwesomeDarkModeToggle.init()
+        DoxygenAwesomeParagraphLink.init()
+        DoxygenAwesomeInteractiveToc.init()
+        DoxygenAwesomeTabs.init()
+    </script>
+    <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+    <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <link href="doxygen.css" rel="stylesheet" type="text/css" />
+    <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <!-- https://tholman.com/github-corners/ -->
+    <a href="https://github.com/CefView/QCefView" class="github-corner" title="View source on GitHub" target="_blank"
+        rel="noopener noreferrer">
+        <svg viewBox="0 0 250 250" width="40" height="40"
+            style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+            <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+            <path
+                d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+                fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+            <path
+                d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+                fill="currentColor" class="octo-body"></path>
+        </svg></a>
+    <style>
+        .github-corner:hover .octo-arm {
+            animation: octocat-wave 560ms ease-in-out
+        }
+        @keyframes octocat-wave {
+            0%,
+            100% {
+                transform: rotate(0)
+            }
+            20%,
+            60% {
+                transform: rotate(-25deg)
+            }
+            40%,
+            80% {
+                transform: rotate(10deg)
+            }
+        }
+        @media (max-width:500px) {
+            .github-corner:hover .octo-arm {
+                animation: none
+            }
+            .github-corner .octo-arm {
+                animation: octocat-wave 560ms ease-in-out
+            }
+        }
+    </style>
+    <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+        <div id="titlearea">
+            <table cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr style="height: 56px;">
+                        <td id="projectalign" style="padding-left: 0.5em;">
+                            <div id="projectname">QCefView
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- end header part -->
+<!-- Generated by Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('md_docs_204-_interoperability.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Interoperability</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md36"></a></p>
+<p><a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> provides the capabilities of interoperability between native context and web context, thus the developer can call Javascript from C++ code easily, vice versa. This allows you to create hybrid applications that combine the power of web technologies with the capabilities of native C++ code.</p>
+<p>The approach of the interoperability was implemented by inserting a bridge object into the web context displayed in all the frames and browsers managed by <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a>. The bridge object provides methods for communicating with native code. For more details please refer to the API reference <a href="/docs/reference/WebAPIs">WebAPIs</a></p>
+<blockquote class="doxtable">
+<p><b>The bridge object is mounted at window object, and the object name could be configured through the <a href="/docs/reference/QCefConfig#class_q_cef_config_1a03687393e227bc8747bdc9ffa7400d60"><code>QCefConfig::setBridgeObjectName</code></a>. The default name is <code>CefViewClient</code></b> </p>
+</blockquote>
+<h1><a class="anchor" id="autotoc_md37"></a>
+Call C++ from Javascript</h1>
+<p>This section describes how to call C++ code from Javascript running within the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a>. The bridge object provides methods to invoke C++ slots, allowing you to execute native code in response to events or actions in your web application.</p>
+<p>The bridge object provides the following method to invoke C++ code from Javascript</p>
+<p><b>⚠[DEPRECATED]</b><br  />
+<strike><a href="/docs/reference/WebAPIs#web_apis_invokeMethod"><code>invokeMethod</code></a><code>(name, ...args)</code></strike></p>
+<p><a href="/docs/reference/WebAPIs#web_apis_invoke"><code>invoke</code></a><code>(name, ...args)</code></p>
+<p>When this method gets called from Javascript, the following Qt signal will be emitted</p>
+<p><code>void</code><a href="/docs/reference/QCefView#class_q_cef_view_1aa407f7491139a2d5331566c8346a58c8"><code>invokeMethod</code></a><code>(int browserId,int frameId,const QString &amp; method,const QVariantList &amp; arguments)</code></p>
+<dl class="section note"><dt>Note</dt><dd><b>The Javascript method <a href="/docs/reference/WebAPIs#web_apis_invoke"><code>invoke</code></a><code>(name, ...args)</code> is <code>ASYNCHRONOUS</code> operation, that means the calling from Javascript returns immediately regardless the execution of C++ Qt slot</b></dd>
+<dd>
+<b>The C++ code invoked by Javascript will be executed in the QT_UI thread.</b></dd></dl>
+<p>Now let's write a small piece of code to demonstrate the invocation from Javascript to C++.</p>
+<h2><a class="anchor" id="autotoc_md38"></a>
+Add Javascript Code</h2>
+<p>First add Javascript code as follows into the &lt;script&gt; block </p><div class="fragment"><div class="line">function onInvokeMethodClicked(name, ...arg) {</div>
+<div class="line">  // invoke C++ code</div>
+<div class="line">  window.CallBridge.invokeMethod(name, ...arg);</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>and add the html code </p><div class="fragment"><div class="line">&lt;label&gt; Test Case for InvokeMethod &lt;/label&gt;</div>
+<div class="line">&lt;br /&gt;</div>
+<div class="line">&lt;input</div>
+<div class="line">  type=&quot;button&quot;</div>
+<div class="line">  value=&quot;Invoke Method&quot;</div>
+<div class="line">  onclick=&quot;onInvokeMethodClicked(&#39;TestMethod&#39;, 1, false, &#39;arg3&#39;)&quot;</div>
+<div class="line">/&gt;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md39"></a>
+Add C++ Code</h2>
+<p>Then add code in C++ to handle the invocation </p><div class="fragment"><div class="line">MainWindow::MainWindow(QWidget* parent)</div>
+<div class="line">  : QMainWindow(parent)</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// ...</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// connect the invokeMethod to the slot</span></div>
+<div class="line">  connect(cefViewWidget,</div>
+<div class="line">          SIGNAL(invokeMethod(<span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <span class="keyword">const</span> QString&amp;, <span class="keyword">const</span> QVariantList&amp;)),</div>
+<div class="line">          <span class="keyword">this</span>,</div>
+<div class="line">          SLOT(onInvokeMethod(<span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <span class="keyword">const</span> QString&amp;, <span class="keyword">const</span> QVariantList&amp;)));</div>
+<div class="line">  <span class="comment">// ...</span></div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span></div>
+<div class="line">MainWindow::onInvokeMethod(<span class="keywordtype">int</span> browserId, <span class="keywordtype">int</span> frameId, <span class="keyword">const</span> QString&amp; method, <span class="keyword">const</span> QVariantList&amp; arguments)</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// extract the arguments and dispatch the invocation to corresponding handler</span></div>
+<div class="line">  <span class="keywordflow">if</span> (0 == method.compare(<span class="stringliteral">&quot;TestMethod&quot;</span>)) {</div>
+<div class="line">    QMetaObject::invokeMethod(</div>
+<div class="line">      <span class="keyword">this</span>,</div>
+<div class="line">      [=]() {</div>
+<div class="line">        QString title(<span class="stringliteral">&quot;QCef InvokeMethod Notify&quot;</span>);</div>
+<div class="line">        QString text = QString(<span class="stringliteral">&quot;Current Thread: QT_UI\r\n&quot;</span></div>
+<div class="line">                               <span class="stringliteral">&quot;Method: %1\r\n&quot;</span></div>
+<div class="line">                               <span class="stringliteral">&quot;Arguments:\r\n&quot;</span>)</div>
+<div class="line">                         .arg(method);</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; arguments.size(); i++) {</div>
+<div class="line">          <span class="comment">// clang-format off</span></div>
+<div class="line">          text.append(QString(<span class="stringliteral">&quot;%1 Type:%2, Value:%3\r\n&quot;</span>)</div>
+<div class="line">              .arg(i)</div>
+<div class="line">              .arg(arguments[i].typeName())</div>
+<div class="line">              .arg(arguments[i].toString()));</div>
+<div class="line">          <span class="comment">// clang-format on</span></div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        QMessageBox::information(this-&gt;window(), title, text);</div>
+<div class="line">      },</div>
+<div class="line">      Qt::QueuedConnection);</div>
+<div class="line">  } <span class="keywordflow">else</span> {</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md40"></a>
+Run the Application</h2>
+<p>Now let's run the application.</p>
+<div class="image">
+<img src="invoke-method-01.png" alt=""/>
+<div class="caption">
+First Project</div></div>
+    <p>Click the button in web area to invoke the C++ code</p>
+<div class="image">
+<img src="invoke-method-02.png" alt=""/>
+<div class="caption">
+First Project</div></div>
+    <h1><a class="anchor" id="autotoc_md41"></a>
+Call Javascript from C++</h1>
+<p>This section explains how to call Javascript functions from C++ code. <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> provides mechanisms to trigger events in the Javascript context, allowing you to update the UI or execute Javascript logic from your native application.</p>
+<p>The bridge object provides the following methods to support calling from C++ code to Javascript</p>
+<ul>
+<li><a href="/docs/reference/WebAPIs#web_apis_addEventListener"><code>addEventListener</code></a><code>(name, listener)</code></li>
+<li><a href="/docs/reference/WebAPIs#web_apis_removeEventListener"><code>removeEventListener</code></a><code>(name, listener)</code></li>
+</ul>
+<p>The developers can add as many event listeners as they want in the Javascript context and trigger the events from C++ code with the following methods</p>
+<ul>
+<li><code>public bool</code><a href="/docs/reference/QCefView#class_q_cef_view_1ac47c23ffcd94bdffe2b6a81eaae077a2"><code>triggerEvent</code></a><code>(const</code><a href="/docs/reference/QCefEvent#class_q_cef_event"><code>QCefEvent</code></a><code>&amp; event)</code></li>
+<li><code>public bool</code><a href="/docs/reference/QCefView#class_q_cef_view_1aaccdc475dc89f9ca4885c94e8f50421d"><code>triggerEvent</code></a><code>(const</code><a href="/docs/reference/QCefEvent#class_q_cef_event"><code>QCefEvent</code></a><code>&amp; event,int frameId)</code></li>
+<li><code>public bool</code><a href="/docs/reference/QCefView#class_q_cef_view_1ad5455e3a8cb0ffa1f9d7cb98307a6bb4"><code>broadcastEvent</code></a><code>(const</code><a href="/docs/reference/QCefEvent#class_q_cef_event"><code>QCefEvent</code></a><code>&amp; event)</code></li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd><b>⚠ NOTE: All the 3 methods above are <code>ASYNCHRONOUS</code> operations</b></dd></dl>
+<p>Now let's code it</p>
+<h2><a class="anchor" id="autotoc_md42"></a>
+Add Javascript Code</h2>
+<p>Add code to the javascript</p>
+<div class="fragment"><div class="line">function onLoad() {</div>
+<div class="line">  // Add a event listener to handle the event named &#39;colorChange&#39;</div>
+<div class="line">  Window.CallBridge.addEventListener(</div>
+<div class="line">    // event name</div>
+<div class="line">    &quot;colorChange&quot;   </div>
+<div class="line">    // event handler</div>
+<div class="line">    function (color) {</div>
+<div class="line">      // change the background color</div>
+<div class="line">      document.getElementById(&quot;main&quot;).style.backgroundColor = color;</div>
+<div class="line">    }</div>
+<div class="line">  );</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Add code to the html </p><div class="fragment"><div class="line">&lt;body onload=&quot;onLoad()&quot; id=&quot;main&quot; class=&quot;noselect&quot;&gt;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md43"></a>
+Add C++ Code</h2>
+<p>Add code to trigger the event be handled in Javascript, here we need to add a button in perform the triggering, we just show the button click action handler slot.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span></div>
+<div class="line">MainWindow::onBtnChangeColorClicked()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">if</span> (cefViewWidget) {</div>
+<div class="line">    <span class="comment">// create a random color</span></div>
+<div class="line">    QColor color(QRandomGenerator::global()-&gt;generate());</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// create the cef event and set the arguments</span></div>
+<div class="line">    <a class="code hl_class" href="class_q_cef_event.html">QCefEvent</a> event(<span class="stringliteral">&quot;colorChange&quot;</span>);</div>
+<div class="line">    <span class="keyword">event</span>.arguments().append(QVariant::fromValue(color.name(QColor::HexArgb)));</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// broadcast the event to all frames in all browsers created by this QCefView widget</span></div>
+<div class="line">    cefViewWidget-&gt;broadcastEvent(event);</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="ttc" id="aclass_q_cef_event_html"><div class="ttname"><a href="class_q_cef_event.html">QCefEvent</a></div><div class="ttdoc">Represents the event sent from native context(C/C++ code) to the web context(javascript)</div><div class="ttdef"><b>Definition</b> QCefEvent.h:26</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md44"></a>
+Run the Application</h2>
+<p>Now let's run the application.</p>
+<div class="image">
+<img src="add-event-listener-01.png" alt=""/>
+<div class="caption">
+First Project</div></div>
+    <p>Click the button in native area to invoke the Javascript code</p>
+<div class="image">
+<img src="add-event-listener-02.png" alt=""/>
+<div class="caption">
+First Project</div></div>
+    <h1><a class="anchor" id="autotoc_md45"></a>
+CefViewQuery</h1>
+<p>In this section, we'll explore how to use <code>CefViewQuery</code> to communicate asynchronously between JavaScript and C++ code in your CefView application. This method allows you to send requests from your web page to the native application and receive responses without blocking the user interface.</p>
+<p><b>⚠[DEPRECATED]</b><br  />
+<strike><a href="/docs/reference/WebAPIs#web_apis_CefViewQuery"><code>window.CefViewQuery</code></a><code>(query)</code> is yet another approach to communicate from Javascript to C++ code, but in this way the communication is <code>ASYNCHRONOUS</code> operation. For more details please refer to the API reference.</strike></p>
+<p><a href="/docs/reference/WebAPIs#web_apis_cefViewQuery"><code>window.cefViewQuery</code></a><code>(query)</code> is yet another approach to communicate from Javascript to C++ code, but in this way the communication is <code>ASYNCHRONOUS</code> operation. For more details please refer to the API reference.</p>
+<dl class="section note"><dt>Note</dt><dd><b><code>window.cefViewQuery</code> operates asynchronously. This means that when you send a query, your JavaScript code doesn't wait for the response. Instead, you provide callback functions (<code>onSuccess</code> and <code>onFailure</code>) that will be executed when the response arrives.</b></dd></dl>
+<p>When this method gets called from Javascript, the following Qt signal will be emitted:</p>
+<p><code>public void</code><a href="/docs/reference/QCefView#class_q_cef_view_1acbf62eea36993163c4b70b4df96738d8"><code>cefQueryRequest</code></a><code>(int browserId,int frameId,const</code><a href="/docs/reference/QCefQuery#class_q_cef_query"><code>QCefQuery</code></a><code>&amp; query)</code></p>
+<p>In this section let's demonstrate the usage of CefViewQuery with some simple code.</p>
+<h2><a class="anchor" id="autotoc_md46"></a>
+Add Javascript Code</h2>
+<p>Add Javascript code as follows:</p>
+<div class="fragment"><div class="line">function onCallBridgeQueryClicked() {</div>
+<div class="line">  var query = {</div>
+<div class="line">    request: document.getElementById(&quot;message&quot;).value,</div>
+<div class="line">    onSuccess: function (response) {</div>
+<div class="line">      alert(&quot;Success: &quot; + response);</div>
+<div class="line">    },</div>
+<div class="line">    onFailure: function (error_code, error_message) {</div>
+<div class="line">      alert(&quot;Failure: &quot; + error_message + &quot; (Error Code: &quot; + error_code + &quot;)&quot;);</div>
+<div class="line">    },</div>
+<div class="line">  };</div>
+<div class="line">  // ⚠[DEPRECATED]window.CefViewQuery(query);</div>
+<div class="line">  window.cefViewQuery(query);</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Add HTML code as follows:</p>
+<div class="fragment"><div class="line">&lt;label&gt; Test Case for QCefQuery &lt;/label&gt;</div>
+<div class="line">&lt;br /&gt;</div>
+<div class="line">&lt;textarea id=&quot;message&quot; style=&quot;width: 320px; height: 120px&quot;&gt;</div>
+<div class="line">  this message will be processed by native code.</div>
+<div class="line">&lt;/textarea&gt;</div>
+<div class="line">&lt;br /&gt;</div>
+<div class="line">&lt;input type=&quot;button&quot; value=&quot;Query&quot; onclick=&quot;onCallBridgeQueryClicked()&quot; /&gt;</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md47"></a>
+Add C++ Code</h2>
+<p>Add C++ code as follows:</p>
+<div class="fragment"><div class="line">MainWindow::MainWindow(QWidget* parent)</div>
+<div class="line">  : QMainWindow(parent)</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// ...</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// connect the cefQueryRequest to the slot</span></div>
+<div class="line">  connect(cefViewWidget,</div>
+<div class="line">          SIGNAL(cefQueryRequest(<span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <span class="keyword">const</span> <a class="code hl_class" href="class_q_cef_query.html">QCefQuery</a>&amp;)),</div>
+<div class="line">          <span class="keyword">this</span>,</div>
+<div class="line">          SLOT(onQCefQueryRequest(<span class="keywordtype">int</span>, <span class="keywordtype">int</span>, <span class="keyword">const</span> <a class="code hl_class" href="class_q_cef_query.html">QCefQuery</a>&amp;)));</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// ...</span></div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span></div>
+<div class="line">MainWindow::onQCefQueryRequest(<span class="keywordtype">int</span> browserId, <span class="keywordtype">int</span> frameId, <span class="keyword">const</span> <a class="code hl_class" href="class_q_cef_query.html">QCefQuery</a>&amp; query)</div>
+<div class="line">{</div>
+<div class="line">  QMetaObject::invokeMethod(</div>
+<div class="line">    <span class="keyword">this</span>,</div>
+<div class="line">    [=]() {</div>
+<div class="line">      QString title(<span class="stringliteral">&quot;QCef Query Request&quot;</span>);</div>
+<div class="line">      QString text = QString(<span class="stringliteral">&quot;Current Thread: QT_UI\r\n&quot;</span></div>
+<div class="line">                             <span class="stringliteral">&quot;Query: %1&quot;</span>)</div>
+<div class="line">                       .arg(query.<a class="code hl_function" href="class_q_cef_query.html#a16d137bcc1bf2ef9bc8969ff1bd091e7">request</a>());</div>
+<div class="line"> </div>
+<div class="line">      QMessageBox::information(this-&gt;window(), title, text);</div>
+<div class="line"> </div>
+<div class="line">      QString response = query.<a class="code hl_function" href="class_q_cef_query.html#a16d137bcc1bf2ef9bc8969ff1bd091e7">request</a>().toUpper();</div>
+<div class="line">      query.<a class="code hl_function" href="class_q_cef_query.html#aa86db4e257e3dc4e29c7906d80e06f28">setResponseResult</a>(<span class="keyword">true</span>, response);</div>
+<div class="line">      cefViewWidget-&gt;responseQCefQuery(query);</div>
+<div class="line">    },</div>
+<div class="line">    Qt::QueuedConnection);</div>
+<div class="line">}</div>
+<div class="ttc" id="aclass_q_cef_query_html"><div class="ttname"><a href="class_q_cef_query.html">QCefQuery</a></div><div class="ttdoc">Represents the query request sent from the web content(Javascript)</div><div class="ttdef"><b>Definition</b> QCefQuery.h:30</div></div>
+<div class="ttc" id="aclass_q_cef_query_html_a16d137bcc1bf2ef9bc8969ff1bd091e7"><div class="ttname"><a href="class_q_cef_query.html#a16d137bcc1bf2ef9bc8969ff1bd091e7">QCefQuery::request</a></div><div class="ttdeci">const QString request() const</div><div class="ttdoc">Gets the query content.</div></div>
+<div class="ttc" id="aclass_q_cef_query_html_aa86db4e257e3dc4e29c7906d80e06f28"><div class="ttname"><a href="class_q_cef_query.html#aa86db4e257e3dc4e29c7906d80e06f28">QCefQuery::setResponseResult</a></div><div class="ttdeci">void setResponseResult(bool success, const QString &amp;response, int error=0) const</div><div class="ttdoc">Sets the response.</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md48"></a>
+Run the Application</h2>
+<p>Now let's run the application.</p>
+<div class="image">
+<img src="cefview-query-01.png" alt=""/>
+<div class="caption">
+First Project</div></div>
+    <p>Click the button in web area to invoke the C++ code</p>
+<div class="image">
+<img src="cefview-query-02.png" alt=""/>
+<div class="caption">
+First Project</div></div>
+     </div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

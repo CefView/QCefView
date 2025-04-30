@@ -1,0 +1,26 @@
+var class_q_cef_download_item =
+[
+    [ "~QCefDownloadItem", "class_q_cef_download_item.html#a913a2654dcd05ef8facefc515d831124", null ],
+    [ "cancel", "class_q_cef_download_item.html#a723b2081749a447049efd04e768d9e57", null ],
+    [ "contentDisposition", "class_q_cef_download_item.html#af97dad25e439c8b997d6689fe1c91bf8", null ],
+    [ "currentSpeed", "class_q_cef_download_item.html#a5c9648906b02ce59aa6d82f03e468c1d", null ],
+    [ "endTime", "class_q_cef_download_item.html#a61b2bd3cdc2f35d2424ded4e8b3801fd", null ],
+    [ "fullPath", "class_q_cef_download_item.html#a40227300f52cd34a67281eacf95bcc28", null ],
+    [ "id", "class_q_cef_download_item.html#aff911ad0aa21867cdfe56457293f4914", null ],
+    [ "isCanceled", "class_q_cef_download_item.html#ada41b0480a3e97d788086ea8c420a22c", null ],
+    [ "isComplete", "class_q_cef_download_item.html#a67c86edf9e9cb742050e2521b55c86df", null ],
+    [ "isInProgress", "class_q_cef_download_item.html#a22455702c989d4dcc08fb1d13659739d", null ],
+    [ "isStarted", "class_q_cef_download_item.html#a6febee1fe8a5f7d15e888a4352d50526", null ],
+    [ "mimeType", "class_q_cef_download_item.html#afb8ec36477b64a222b0610c8518f8e31", null ],
+    [ "originalUrl", "class_q_cef_download_item.html#a9f9bcb65952b50b4f24c4d55eff9b64e", null ],
+    [ "pause", "class_q_cef_download_item.html#aaa31f59599e9311f0aee99a0a13e2568", null ],
+    [ "percentComplete", "class_q_cef_download_item.html#a18fafe4f375aa60e43ec7c5d855ab91e", null ],
+    [ "receivedBytes", "class_q_cef_download_item.html#a5d76f04bb41c5e4edad6d680b01fe63f", null ],
+    [ "resume", "class_q_cef_download_item.html#aa2afc687e69c7c78f6c49e9a41a34823", null ],
+    [ "start", "class_q_cef_download_item.html#a315592aa53a2bf7bc8aea717195f5b43", null ],
+    [ "startTime", "class_q_cef_download_item.html#afe0d048a282cb605da910de1c5d82242", null ],
+    [ "suggestedFileName", "class_q_cef_download_item.html#ac0dd9f8bea7ca594f04935d81cfb72a4", null ],
+    [ "totalBytes", "class_q_cef_download_item.html#ab1ff7414475451351e4d4ab50f723bee", null ],
+    [ "url", "class_q_cef_download_item.html#a253cf33b582e3994b65d5611ef277bbe", null ],
+    [ "QCefView", "class_q_cef_download_item.html#a5a3b8eafc568f47fa0dc1f5232277a29", null ]
+];
