@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=9" />
     <meta name="generator" content="Doxygen 1.13.2" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>QCefView: Introduction</title>
+    <title>QCefView: Web APIs</title>
     <link href="tabs.css" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/svg+xml" href="logo.drawio.svg" />
     <script type="text/javascript" src="jquery.js"></script>
@@ -129,7 +129,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('index.html',''); initResizable(true); });
+$(function(){initNavTree('md_docs_206-_web_a_p_is.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -155,99 +155,122 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Introduction </div></div>
+  <div class="headertitle"><div class="title">Web APIs</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
 <ul>
   <li class="level1">
-    <a href="#autotoc_md1">What is QCefView?</a>
-  </li>
-  <li class="level1">
-    <a href="#autotoc_md2">Why Choose QCefView over Electron?</a>
-  </li>
-  <li class="level1">
-    <a href="#autotoc_md3">Ideal Use Cases for QCefView</a>
-  </li>
-  <li class="level1">
-    <a href="#autotoc_md4">Alternatives to Qt</a>
+    <a href="#CefViewClient">window.CefViewClient</a>
     <ul>
       <li class="level2">
-        <a href="#autotoc_md5">Unreal Game Development</a>
+        <a href="#CefViewClient_addEventListener">addEventListener(name, listener)</a>
+        <ul>
+          <li class="level3">
+            <a href="#autotoc_md55">Parameters</a>
+          </li>
+        </ul>
       </li>
       <li class="level2">
-        <a href="#autotoc_md6">macOS App Development</a>
+        <a href="#CefViewClient_removeEventListener">removeEventListener(name, listener)</a>
+        <ul>
+          <li class="level3">
+            <a href="#autotoc_md56">Parameters</a>
+          </li>
+        </ul>
+      </li>
+      <li class="level2">
+        <a href="#CefViewClient_invoke">invoke(name, ...args)</a>
+        <ul>
+          <li class="level3">
+            <a href="#autotoc_md57">Parameters</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li class="level1">
+    <a href="#cefViewQuery">window.cefViewQuery</a>
+    <ul>
+      <li class="level2">
+        <a href="#autotoc_md58">Parameters</a>
+        <ul>
+          <li class="level3">
+            <a href="#autotoc_md59">Returns</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li class="level1">
+    <a href="#cefViewQueryCancel">window.cefViewQueryCancel</a>
+    <ul>
+      <li class="level2 empty">
+        <ul>
+          <li class="level3">
+            <a href="#autotoc_md60">Parameters</a>
+          </li>
+        </ul>
       </li>
     </ul>
   </li>
 </ul>
 </div>
-<div class="textblock"><p><a class="anchor" id="md_docs_200-_introduction"></a></p>
-<h1><a class="anchor" id="autotoc_md1"></a>
-What is QCefView?</h1>
-<p><a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> is a powerful Qt Widget that seamlessly integrates the <a href="https://github.com/chromiumembedded/cef">Chromium Embedded Framework</a>. It empowers you to build applications leveraging CEF's robust capabilities within the familiar Qt ecosystem.</p>
-<p>With <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a>, you can:</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md54"></a></p>
+<p><a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> inserts JavaScript bridge object and methods to <code>window</code> object for all browsers frames, with these bridge object you can perform communication between native and web context at anytime</p>
+<h1><a class="anchor" id="CefViewClient"></a>
+window.CefViewClient</h1>
+<p>This is main bridge object injected to all browser and frames by <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a>. And the object name can be specified by <code><a class="el" href="class_q_cef_config.html#a03687393e227bc8747bdc9ffa7400d60" title="Sets the bridge object name.">QCefConfig::setBridgeObjectName</a></code>.</p>
+<h2><a class="anchor" id="CefViewClient_addEventListener"></a>
+addEventListener(name, listener)</h2>
+<p>Adds a listener for the event with specified name</p>
+<h3><a class="anchor" id="autotoc_md55"></a>
+Parameters</h3>
 <ul>
-<li>Develop applications using familiar Qt forms, signals, and slots.</li>
-<li>Achieve straightforward interoperability between Web (JavaScript) and Native (C++) components.</li>
+<li><code>name</code> The event name</li>
+<li><code>listener</code> The listener callback function</li>
 </ul>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadCenter">Windows   </th><th class="markdownTableHeadCenter">macOS   </th><th class="markdownTableHeadLeft">Linux    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyCenter"><p class="starttd"><img src="windows-demo.png" alt="" class="inline" title="Windows"/>    </p>
-<p class="endtd"></p>
-</td><td class="markdownTableBodyCenter"><p class="starttd"><img src="macOS-demo.png" alt="" class="inline" title="macOS"/>    </p>
-<p class="endtd"></p>
-</td><td class="markdownTableBodyLeft"><p class="starttd"><img src="linux-demo.png" alt="" class="inline" title="Linux"/>    </p>
-<p class="endtd"></p>
-</td></tr>
-</table>
-<h1><a class="anchor" id="autotoc_md2"></a>
-Why Choose QCefView over Electron?</h1>
-<p><a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> and Electron serve different purposes and cater to distinct development styles. Here's a comparison:</p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Feature   </th><th class="markdownTableHeadNone"><a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a>   </th><th class="markdownTableHeadNone">Electron    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Scope   </td><td class="markdownTableBodyNone">Qt UI Component   </td><td class="markdownTableBodyNone">Comprehensive Application Framework    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Target Audience   </td><td class="markdownTableBodyNone">Native (C++) developers   </td><td class="markdownTableBodyNone">Frontend developers    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Primary Language   </td><td class="markdownTableBodyNone">C++   </td><td class="markdownTableBodyNone">JavaScript    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Interoperability   </td><td class="markdownTableBodyNone">Direct, straightforward Web/Native communication   </td><td class="markdownTableBodyNone">Requires plugins for Native integration    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Use Case   </td><td class="markdownTableBodyNone">Embedding web UI within a native application   </td><td class="markdownTableBodyNone">Building cross-platform desktop applications primarily with web technologies   </td></tr>
-</table>
-<p>In essence:</p>
+<h2><a class="anchor" id="CefViewClient_removeEventListener"></a>
+removeEventListener(name, listener)</h2>
+<p>Removes the listener for the event with specified name</p>
+<h3><a class="anchor" id="autotoc_md56"></a>
+Parameters</h3>
 <ul>
-<li><b><a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a></b> is a component within the Qt framework, ideal for enhancing native applications with web-based UI elements.</li>
-<li><b>Electron</b> is a complete framework for building cross-platform desktop applications using web technologies.</li>
+<li><code>name</code> The event name</li>
+<li><code>listener</code> The listener callback function</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md3"></a>
-Ideal Use Cases for QCefView</h1>
-<p><a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> excels in scenarios where you want to combine the power of web frontend technologies for the UI with the performance and control of native languages for core functionality.</p>
-<p>Consider <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> for applications like:</p>
+<h2><a class="anchor" id="CefViewClient_invoke"></a>
+invoke(name, ...args)</h2>
+<p>Invokes a native method with the specified name and arguments </p><dl class="section attention"><dt>Attention</dt><dd>The legacy <code>invokeMethod(name, ...args)</code> was deprecated by new method: <code>invoke(name, ...args)</code>.（renamed)</dd></dl>
+<h3><a class="anchor" id="autotoc_md57"></a>
+Parameters</h3>
 <ul>
-<li><b>Multimedia Players:</b> Leverage web technologies for rich, dynamic user interfaces.</li>
-<li><b>Game Platforms/Launchers:</b> Create visually appealing and interactive frontends for native game engines.</li>
-<li><b>Utility Applications:</b> Build feature-rich tools with complex UIs that benefit from web-based rendering.</li>
-<li><b>Custom Embedded Browsers (with limitations):</b> Embed web content with a high degree of control over the rendering process.</li>
+<li><code>name</code> The method name</li>
+<li><code>..args</code> The arguments for the method</li>
 </ul>
-<p>In these context-driven applications, web frontend technologies are excellent for displaying lists, tables, and complex pages with engaging effects. <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> acts as a WebApp container, allowing you to host your web UI while retaining your hard-core business logic as native components. The interoperability provided by <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> seamlessly bridges the gap between the web and native worlds.</p>
-<dl class="section note"><dt>Note</dt><dd>If your primary goal is to develop a full-fledged web browser application, <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> might not be the optimal choice. <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> is designed as a UI component and intentionally disables certain browser-specific features. For building a complete browser, consider using the original CEF library directly.</dd></dl>
-<h1><a class="anchor" id="autotoc_md4"></a>
-Alternatives to Qt</h1>
-<h2><a class="anchor" id="autotoc_md5"></a>
-Unreal Game Development</h2>
-<p>For Unreal Engine based game developers, you may want to try <a href="https://cefview.github.io/UCefView">UCefView</a> plugin. This is a powerful stable and flexible WebView component designed for Unreal Engine.</p>
-<h2><a class="anchor" id="autotoc_md6"></a>
-macOS App Development</h2>
-<p>If you prefer not to use Qt, you can still leverage CEF by integrating it with other frameworks. For example, you can integrate CEF with the Cocoa framework, as demonstrated in the <a href="https://github.com/CefView/CocoaCefView">CocoaCefView</a> project. This allows you to create custom CEF views tailored to your specific needs. </p>
-</div></div><!-- PageDoc -->
-<a href="doxygen_crawl.html"></a>
-</div><!-- contents -->
+<h1><a class="anchor" id="cefViewQuery"></a>
+window.cefViewQuery</h1>
+<p>Sends a cef query request to the native context </p><dl class="section attention"><dt>Attention</dt><dd>The legacy <code>window.CefViewQuery</code> was deprecated by new method: <code>window.cefViewQuery</code>. (uncapitalized)</dd></dl>
+<h2><a class="anchor" id="autotoc_md58"></a>
+Parameters</h2>
+<ul>
+<li><code>query</code> The query object</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md59"></a>
+Returns</h3>
+<ul>
+<li>The query id</li>
+</ul>
+<h1><a class="anchor" id="cefViewQueryCancel"></a>
+window.cefViewQueryCancel</h1>
+<p>Cancels the query request with the specified id </p><dl class="section attention"><dt>Attention</dt><dd>The legacy <code>window.CefViewQueryCancel</code> was deprecated by new method: <code>window.cefViewQueryCancel</code>. (uncapitalized)</dd></dl>
+<h3><a class="anchor" id="autotoc_md60"></a>
+Parameters</h3>
+<ul>
+<li><code>id</code> The query id </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

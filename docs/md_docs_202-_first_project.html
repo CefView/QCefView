@@ -158,11 +158,27 @@ $(function(){initNavTree('md_docs_202-_first_project.html',''); initResizable(tr
   <div class="headertitle"><div class="title">First Project</div></div>
 </div><!--header-->
 <div class="contents">
+<div class="toc"><h3>Table of Contents</h3>
+<ul>
+  <li class="level1">
+    <a href="#autotoc_md25">Initializing the QCefContext Instance</a>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md26">Create QCefView Instance</a>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md27">Create a Simple Web Page</a>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md28">Run the Application</a>
+  </li>
+</ul>
+</div>
 <div class="textblock"><p><a class="anchor" id="autotoc_md24"></a></p>
 <p>This guide walks you through creating a basic Qt GUI application that integrates <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a>. The complete source code for this example is available in the <a href="https://github.com/CefView/QCefView/tree/main/example/QCefViewTest">QCefViewTest</a> directory.</p>
 <h1><a class="anchor" id="autotoc_md25"></a>
-Initializing the <a href="/docs/reference/QCefContext"><code>QCefContext</code></a> Instance</h1>
-<p>The first step in using <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> is to initialize a <a href="/docs/reference/QCefContext"><code>QCefContext</code></a> instance. Think of this as the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> equivalent of <code>QApplication</code>: you should have only one instance of <a href="/docs/reference/QCefContext"><code>QCefContext</code></a> throughout your application's lifecycle.</p>
+Initializing the QCefContext Instance</h1>
+<p>The first step in using <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> is to initialize a <code><a class="el" href="class_q_cef_context.html" title="Represents the CEF context.">QCefContext</a></code> instance. Think of this as the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> equivalent of <code>QApplication</code>: you should have only one instance of <code><a class="el" href="class_q_cef_context.html" title="Represents the CEF context.">QCefContext</a></code> throughout your application's lifecycle.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;QApplication&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_q_cef_context_8h.html">QCefContext.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;MainWindow.h&quot;</span></div>
@@ -223,7 +239,7 @@ Initializing the <a href="/docs/reference/QCefContext"><code>QCefContext</code><
 <div class="ttc" id="aclass_q_cef_context_html"><div class="ttname"><a href="class_q_cef_context.html">QCefContext</a></div><div class="ttdoc">Represents the CEF context.</div><div class="ttdef"><b>Definition</b> QCefContext.h:27</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md26"></a>
 Create QCefView Instance</h1>
-<p>Once you have initialized <a href="/docs/reference/QCefContext"><code>QCefContext</code></a>, you can create a <a href="/docs/reference/QCefView"><code>QCefView</code></a> instance.</p>
+<p>Once you have initialized <code><a class="el" href="class_q_cef_context.html" title="Represents the CEF context.">QCefContext</a></code>, you can create a <code><a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a></code> instance.</p>
 <div class="fragment"><div class="line"><span class="comment">// Build settings for per QCefView</span></div>
 <div class="line"><a class="code hl_class" href="class_q_cef_setting.html">QCefSetting</a> setting;</div>
 <div class="line"><span class="comment">// Here we just set the default background to blue</span></div>

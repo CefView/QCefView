@@ -1,10 +1,25 @@
 var searchData=
 [
-  ['javascript_0',['Call C++ from Javascript',['../md_docs_204-_interoperability.html#autotoc_md37',1,'']]],
-  ['javascript_1',['javascript',['../class_q_cef_setting.html#abfa7cceca149b6311e7a28e6ae4e2853',1,'QCefSetting']]],
-  ['javascript_20code_2',['Javascript Code',['../md_docs_204-_interoperability.html#autotoc_md38',1,'Add Javascript Code'],['../md_docs_204-_interoperability.html#autotoc_md42',1,'Add Javascript Code'],['../md_docs_204-_interoperability.html#autotoc_md46',1,'Add Javascript Code']]],
-  ['javascript_20from_20c_3',['Call Javascript from C++',['../md_docs_204-_interoperability.html#autotoc_md41',1,'']]],
-  ['javascriptaccessclipboard_4',['javascriptAccessClipboard',['../class_q_cef_setting.html#aff511401ea2d0453583db4b642526dbd',1,'QCefSetting']]],
-  ['javascriptclosewindows_5',['javascriptCloseWindows',['../class_q_cef_setting.html#a8cab27275ce36cb0b1477a85b6694f3b',1,'QCefSetting']]],
-  ['javascriptdompaste_6',['javascriptDomPaste',['../class_q_cef_setting.html#a6696cc8fa0b4ea1ef14d71259cd4350d',1,'QCefSetting']]]
+  ['id_0',['id',['../class_q_cef_download_item.html#aff911ad0aa21867cdfe56457293f4914',1,'QCefDownloadItem::id()'],['../class_q_cef_query.html#a5b701d7f9c92ff814cfe28b110142a4c',1,'QCefQuery::id()']]],
+  ['ideal_20use_20cases_20for_20qcefview_1',['Ideal Use Cases for QCefView',['../index.html#autotoc_md3',1,'']]],
+  ['imageloading_2',['imageLoading',['../class_q_cef_setting.html#aa06779c82a28a01bd862ac605356be40',1,'QCefSetting']]],
+  ['imageshrinkstandalonetofit_3',['imageShrinkStandaloneToFit',['../class_q_cef_setting.html#a7374edce9be761b5d40edef80f42f7b9',1,'QCefSetting']]],
+  ['in_20qcefview_4',['Setting OSR Mode in QCefView',['../md_docs_205-_rendering.html#autotoc_md52',1,'']]],
+  ['init_5',['init',['../class_q_cef_context.html#a78836c8d4d2bdf4970a256d8d29c80c6',1,'QCefContext']]],
+  ['initializing_20the_20qcefcontext_20instance_6',['Initializing the QCefContext Instance',['../md_docs_202-_first_project.html#autotoc_md25',1,'']]],
+  ['inputmethodevent_7',['inputMethodEvent',['../class_q_cef_view.html#a02d713f4a0545e85832b70ddced7e831',1,'QCefView']]],
+  ['inputmethodquery_8',['inputMethodQuery',['../class_q_cef_view.html#af25a011c126a9bb5dc3df99756a75368',1,'QCefView']]],
+  ['instance_9',['Instance',['../md_docs_202-_first_project.html#autotoc_md26',1,'Create QCefView Instance'],['../md_docs_202-_first_project.html#autotoc_md25',1,'Initializing the QCefContext Instance']]],
+  ['instance_10',['instance',['../class_q_cef_context.html#a3e6491f837fdd72c7b4fefed5569853b',1,'QCefContext']]],
+  ['interoperability_11',['Interoperability',['../md_docs_204-_interoperability.html',1,'']]],
+  ['introduction_12',['Introduction',['../index.html',1,'']]],
+  ['invoke_20name_20args_13',['invoke(name, ...args)',['../md_docs_206-_web_a_p_is.html#CefViewClient_invoke',1,'']]],
+  ['invokemethod_14',['invokeMethod',['../class_q_cef_view.html#a00435b9ab61d04517427dbe4805e970d',1,'QCefView']]],
+  ['is_20qcefview_15',['What is QCefView?',['../index.html#autotoc_md1',1,'']]],
+  ['iscanceled_16',['isCanceled',['../class_q_cef_download_item.html#ada41b0480a3e97d788086ea8c420a22c',1,'QCefDownloadItem']]],
+  ['iscomplete_17',['isComplete',['../class_q_cef_download_item.html#a67c86edf9e9cb742050e2521b55c86df',1,'QCefDownloadItem']]],
+  ['isdraganddropenabled_18',['isDragAndDropEnabled',['../class_q_cef_view.html#a2a8a2ebaedb88ccd80536c66d878ff8a',1,'QCefView']]],
+  ['isinprogress_19',['isInProgress',['../class_q_cef_download_item.html#a22455702c989d4dcc08fb1d13659739d',1,'QCefDownloadItem']]],
+  ['ispopupcontextmenudisabled_20',['isPopupContextMenuDisabled',['../class_q_cef_view.html#abb79735affb74166c0bed7f361ce1388',1,'QCefView']]],
+  ['isstarted_21',['isStarted',['../class_q_cef_download_item.html#a6febee1fe8a5f7d15e888a4352d50526',1,'QCefDownloadItem']]]
 ];

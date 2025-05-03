@@ -1,10 +1,12 @@
 # Interoperability
+[TOC]
 
 QCefView provides the capabilities of interoperability between native context and web context, thus the developer can call Javascript from C++ code easily, vice versa. This allows you to create hybrid applications that combine the power of web technologies with the capabilities of native C++ code.
 
-The approach of the interoperability was implemented by inserting a bridge object into the web context displayed in all the frames and browsers managed by QCefView. The bridge object provides methods for communicating with native code. For more details please refer to the API reference [WebAPIs](/docs/reference/WebAPIs)
+The approach of the interoperability was implemented by inserting a bridge object into the web context displayed in all the frames and browsers managed by QCefView. The bridge object provides methods for communicating with native code. For more details please refer to the API reference [WebAPIs](docs/06-WebAPIs.md)
 
-> **The bridge object is mounted at window object, and the object name could be configured through the [`QCefConfig::setBridgeObjectName`](/docs/reference/QCefConfig#class_q_cef_config_1a03687393e227bc8747bdc9ffa7400d60). The default name is `CefViewClient`**
+> [!tip]
+> The bridge object is mounted at window object, and the object name could be configured through the `QCefConfig::setBridgeObjectName`. The default name is [CefViewClient](@ref CefViewClient).
 
 ## Call C++ from Javascript
 
@@ -12,19 +14,17 @@ This section describes how to call C++ code from Javascript running within the Q
 
 The bridge object provides the following method to invoke C++ code from Javascript
 
-**⚠[DEPRECATED]**<br></br>~~[`invokeMethod`](/docs/reference/WebAPIs#web_apis_invokeMethod)`(name, ...args)`~~
-
-[`invoke`](/docs/reference/WebAPIs#web_apis_invoke)`(name, ...args)`
+[CefViewClient.invoke](@ref CefViewClient_invoke)`(name, ...args)`
 
 When this method gets called from Javascript, the following Qt signal will be emitted
 
-`void `[`invokeMethod`](/docs/reference/QCefView#class_q_cef_view_1aa407f7491139a2d5331566c8346a58c8)`(int browserId,int frameId,const QString & method,const QVariantList & arguments)`
+`void QCefView::invokeMethod(int browserId,int frameId,const QString & method,const QVariantList & arguments)`
 
 > [!note]
-> **The Javascript method [`invoke`](/docs/reference/WebAPIs#web_apis_invoke)`(name, ...args)` is `ASYNCHRONOUS` operation, that means the calling from Javascript returns immediately regardless the execution of C++ Qt slot**
+> The Javascript method [CefViewClient.invoke](@ref CefViewClient_invoke)`(name, ...args)` is `ASYNCHRONOUS` operation, that means the calling from Javascript returns immediately regardless the execution of C++ Qt slot
 
 > [!note]
-> **The C++ code invoked by Javascript will be executed in the QT_UI thread.**
+> The C++ code invoked by Javascript will be executed in the QT_UI thread.
 
 Now let's write a small piece of code to demonstrate the invocation from Javascript to C++.
 
@@ -113,20 +113,20 @@ This section explains how to call Javascript functions from C++ code. QCefView p
 
 The bridge object provides the following methods to support calling from C++ code to Javascript
 
-- [`addEventListener`](/docs/reference/WebAPIs#web_apis_addEventListener)`(name, listener)` 
+- [CefViewClient.addEventListener](@ref CefViewClient_addEventListener)`(name, listener)` 
 
-- [`removeEventListener`](/docs/reference/WebAPIs#web_apis_removeEventListener)`(name, listener)`
+- [CefViewClient.removeEventListener](@ref CefViewClient_removeEventListener)`(name, listener)`
 
 The developers can add as many event listeners as they want in the Javascript context and trigger the events from C++ code with the following methods
 
-- `public bool `[`triggerEvent`](/docs/reference/QCefView#class_q_cef_view_1ac47c23ffcd94bdffe2b6a81eaae077a2)`(const `[`QCefEvent`](/docs/reference/QCefEvent#class_q_cef_event)` & event)`
+- `public bool QCefView::triggerEvent(const QCefEvent & event)`
 
-- `public bool `[`triggerEvent`](/docs/reference/QCefView#class_q_cef_view_1aaccdc475dc89f9ca4885c94e8f50421d)`(const `[`QCefEvent`](/docs/reference/QCefEvent#class_q_cef_event)` & event,int frameId)`
+- `public bool QCefView::triggerEvent(const QCefEvent & event,int frameId)`
 
-- `public bool `[`broadcastEvent`](/docs/reference/QCefView#class_q_cef_view_1ad5455e3a8cb0ffa1f9d7cb98307a6bb4)`(const `[`QCefEvent`](/docs/reference/QCefEvent#class_q_cef_event)` & event)` 
+- `public bool QCefView::broadcastEvent(const QCefEvent & event)`
 
 > [!note]
-> **⚠ NOTE: All the 3 methods above are `ASYNCHRONOUS` operations**
+> All the methods above are `ASYNCHRONOUS` operations
 
 Now let's code it
 
@@ -190,16 +190,14 @@ Click the button in native area to invoke the Javascript code
 
 In this section, we'll explore how to use `CefViewQuery` to communicate asynchronously between JavaScript and C++ code in your CefView application. This method allows you to send requests from your web page to the native application and receive responses without blocking the user interface.
 
-**⚠[DEPRECATED]**<br></br>~~[`window.CefViewQuery`](/docs/reference/WebAPIs#web_apis_CefViewQuery)`(query)` is yet another approach to communicate from Javascript to C++ code, but in this way the communication is `ASYNCHRONOUS` operation. For more details please refer to the API reference.~~
-
-[`window.cefViewQuery`](/docs/reference/WebAPIs#web_apis_cefViewQuery)`(query)` is yet another approach to communicate from Javascript to C++ code, but in this way the communication is `ASYNCHRONOUS` operation. For more details please refer to the API reference.
+[window.cefViewQuery](@ref cefViewQuery)`(query)` is yet another approach to communicate from Javascript to C++ code, but in this way the communication is `ASYNCHRONOUS` operation. For more details please refer to the API reference.
 
 > [!note]
-> **`window.cefViewQuery` operates asynchronously. This means that when you send a query, your JavaScript code doesn't wait for the response. Instead, you provide callback functions (`onSuccess` and `onFailure`) that will be executed when the response arrives.**
+> `window.cefViewQuery` operates asynchronously. This means that when you send a query, your JavaScript code doesn't wait for the response. Instead, you provide callback functions (`onSuccess` and `onFailure`) that will be executed when the response arrives.
 
 When this method gets called from Javascript, the following Qt signal will be emitted:
 
-`public void `[`cefQueryRequest`](/docs/reference/QCefView#class_q_cef_view_1acbf62eea36993163c4b70b4df96738d8)`(int browserId,int frameId,const `[`QCefQuery`](/docs/reference/QCefQuery#class_q_cef_query)` & query)`
+`public void QCefView::cefQueryRequest(int browserId,int frameId,const QCefQuery & query)`
 
 In this section let's demonstrate the usage of CefViewQuery with some simple code.
 

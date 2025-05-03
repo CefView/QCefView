@@ -158,6 +158,22 @@ $(function(){initNavTree('md_docs_205-_rendering.html',''); initResizable(true);
   <div class="headertitle"><div class="title">Rendering</div></div>
 </div><!--header-->
 <div class="contents">
+<div class="toc"><h3>Table of Contents</h3>
+<ul>
+  <li class="level1">
+    <a href="#autotoc_md50">NCW mode</a>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md51">OSR mode</a>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md52">Setting OSR Mode in QCefView</a>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md53">Hardware Acceleration</a>
+  </li>
+</ul>
+</div>
 <div class="textblock"><p><a class="anchor" id="autotoc_md49"></a></p>
 <p>CEF supports native child window mode and OSR mode, in <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> both modes are implemented.</p>
 <h1><a class="anchor" id="autotoc_md50"></a>
@@ -204,7 +220,7 @@ Setting OSR Mode in QCefView</h1>
 <div class="ttc" id="aclass_q_cef_config_html"><div class="ttname"><a href="class_q_cef_config.html">QCefConfig</a></div><div class="ttdoc">Represents the CEF setting. For more details please refer to: https://bitbucket.org/chromiumembedded/...</div><div class="ttdef"><b>Definition</b> QCefConfig.h:28</div></div>
 <div class="ttc" id="aclass_q_cef_config_html_af6041bcae9fcf72ea47ffc47d62e5a96"><div class="ttname"><a href="class_q_cef_config.html#af6041bcae9fcf72ea47ffc47d62e5a96">QCefConfig::setWindowlessRenderingEnabled</a></div><div class="ttdeci">void setWindowlessRenderingEnabled(const bool enabled)</div><div class="ttdoc">Sets the flag to enable/disable OSR mode.</div></div>
 </div><!-- fragment --><p>By setting <code>config.setWindowlessRenderingEnabled(true)</code>, you instruct <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> to use OSR (Off-Screen Rendering) mode. This configuration must be set before the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> instance is created.</p>
-<p>:::note <b><a class="el" href="class_q_cef_config.html" title="Represents the CEF setting. For more details please refer to: https://bitbucket.org/chromiumembedded/...">QCefConfig</a> works in the application scope, so you can only choose to use NCW or OSR exclusively for all <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> instances.</b> This means that once you set <code><a class="el" href="class_q_cef_config.html#af6041bcae9fcf72ea47ffc47d62e5a96" title="Sets the flag to enable/disable OSR mode.">QCefConfig::setWindowlessRenderingEnabled</a></code> to <code>true</code> or <code>false</code>, all <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> instances in your application will use the same rendering mode. :::</p>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="class_q_cef_config.html" title="Represents the CEF setting. For more details please refer to: https://bitbucket.org/chromiumembedded/...">QCefConfig</a> works in the application scope, so you can only choose to use NCW or OSR exclusively for all <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> instances. This means that once you set <code><a class="el" href="class_q_cef_config.html#af6041bcae9fcf72ea47ffc47d62e5a96" title="Sets the flag to enable/disable OSR mode.">QCefConfig::setWindowlessRenderingEnabled</a></code> to <code>true</code> or <code>false</code>, all <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> instances in your application will use the same rendering mode.</dd></dl>
 <h1><a class="anchor" id="autotoc_md53"></a>
 Hardware Acceleration</h1>
 <p>With OSR mode enabled, you can choose to use hardware acceleration.</p>
@@ -222,7 +238,7 @@ Hardware Acceleration</h1>
 <div class="ttc" id="aclass_q_cef_setting_html_a6dbd7b1da3a151294e8bf020a16687be"><div class="ttname"><a href="class_q_cef_setting.html#a6dbd7b1da3a151294e8bf020a16687be">QCefSetting::setBackgroundColor</a></div><div class="ttdeci">void setBackgroundColor(const QColor &amp;value)</div><div class="ttdoc">Sets the background color.</div></div>
 <div class="ttc" id="aclass_q_cef_setting_html_afdb320899b859e7781458a281a9dafbe"><div class="ttname"><a href="class_q_cef_setting.html#afdb320899b859e7781458a281a9dafbe">QCefSetting::setHardwareAcceleration</a></div><div class="ttdeci">void setHardwareAcceleration(const bool value)</div></div>
 </div><!-- fragment --><p>By default, CEF attempts to use hardware acceleration if it is available. However, explicitly setting the <code>setHardwareAcceleration</code> provides more control.</p>
-<p>:::tip Enabling hardware acceleration is generally recommended for the best performance. However, if you encounter rendering issues or compatibility problems, disabling it can provide a fallback option. And this feature only works in OSR mode. ::: </p>
+<dl class="section remark"><dt>Remarks</dt><dd>Enabling hardware acceleration is generally recommended for the best performance. However, if you encounter rendering issues or compatibility problems, disabling it can provide a fallback option. And this feature only works in OSR mode. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

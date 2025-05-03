@@ -158,24 +158,66 @@ $(function(){initNavTree('md_docs_204-_interoperability.html',''); initResizable
   <div class="headertitle"><div class="title">Interoperability</div></div>
 </div><!--header-->
 <div class="contents">
+<div class="toc"><h3>Table of Contents</h3>
+<ul>
+  <li class="level1">
+    <a href="#autotoc_md37">Call C++ from Javascript</a>
+    <ul>
+      <li class="level2">
+        <a href="#autotoc_md38">Add Javascript Code</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md39">Add C++ Code</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md40">Run the Application</a>
+      </li>
+    </ul>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md41">Call Javascript from C++</a>
+    <ul>
+      <li class="level2">
+        <a href="#autotoc_md42">Add Javascript Code</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md43">Add C++ Code</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md44">Run the Application</a>
+      </li>
+    </ul>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md45">CefViewQuery</a>
+    <ul>
+      <li class="level2">
+        <a href="#autotoc_md46">Add Javascript Code</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md47">Add C++ Code</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md48">Run the Application</a>
+      </li>
+    </ul>
+  </li>
+</ul>
+</div>
 <div class="textblock"><p><a class="anchor" id="autotoc_md36"></a></p>
 <p><a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> provides the capabilities of interoperability between native context and web context, thus the developer can call Javascript from C++ code easily, vice versa. This allows you to create hybrid applications that combine the power of web technologies with the capabilities of native C++ code.</p>
-<p>The approach of the interoperability was implemented by inserting a bridge object into the web context displayed in all the frames and browsers managed by <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a>. The bridge object provides methods for communicating with native code. For more details please refer to the API reference <a href="/docs/reference/WebAPIs">WebAPIs</a></p>
-<blockquote class="doxtable">
-<p><b>The bridge object is mounted at window object, and the object name could be configured through the <a href="/docs/reference/QCefConfig#class_q_cef_config_1a03687393e227bc8747bdc9ffa7400d60"><code>QCefConfig::setBridgeObjectName</code></a>. The default name is <code>CefViewClient</code></b> </p>
-</blockquote>
+<p>The approach of the interoperability was implemented by inserting a bridge object into the web context displayed in all the frames and browsers managed by <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a>. The bridge object provides methods for communicating with native code. For more details please refer to the API reference <a class="el" href="md_docs_206-_web_a_p_is.html">WebAPIs</a></p>
+<dl class="section remark"><dt>Remarks</dt><dd>The bridge object is mounted at window object, and the object name could be configured through the <code><a class="el" href="class_q_cef_config.html#a03687393e227bc8747bdc9ffa7400d60" title="Sets the bridge object name.">QCefConfig::setBridgeObjectName</a></code>. The default name is <a class="el" href="md_docs_206-_web_a_p_is.html#CefViewClient">CefViewClient</a>.</dd></dl>
 <h1><a class="anchor" id="autotoc_md37"></a>
 Call C++ from Javascript</h1>
 <p>This section describes how to call C++ code from Javascript running within the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a>. The bridge object provides methods to invoke C++ slots, allowing you to execute native code in response to events or actions in your web application.</p>
 <p>The bridge object provides the following method to invoke C++ code from Javascript</p>
-<p><b>⚠[DEPRECATED]</b><br  />
-<strike><a href="/docs/reference/WebAPIs#web_apis_invokeMethod"><code>invokeMethod</code></a><code>(name, ...args)</code></strike></p>
-<p><a href="/docs/reference/WebAPIs#web_apis_invoke"><code>invoke</code></a><code>(name, ...args)</code></p>
+<p><a class="el" href="md_docs_206-_web_a_p_is.html#CefViewClient_invoke">CefViewClient.invoke</a><code>(name, ...args)</code></p>
 <p>When this method gets called from Javascript, the following Qt signal will be emitted</p>
-<p><code>void</code><a href="/docs/reference/QCefView#class_q_cef_view_1aa407f7491139a2d5331566c8346a58c8"><code>invokeMethod</code></a><code>(int browserId,int frameId,const QString &amp; method,const QVariantList &amp; arguments)</code></p>
-<dl class="section note"><dt>Note</dt><dd><b>The Javascript method <a href="/docs/reference/WebAPIs#web_apis_invoke"><code>invoke</code></a><code>(name, ...args)</code> is <code>ASYNCHRONOUS</code> operation, that means the calling from Javascript returns immediately regardless the execution of C++ Qt slot</b></dd>
+<p><code>void <a class="el" href="class_q_cef_view.html#a00435b9ab61d04517427dbe4805e970d" title="Gets called on invoking method request from web content(Javascript)">QCefView::invokeMethod</a>(int browserId,int frameId,const QString &amp; method,const QVariantList &amp; arguments)</code></p>
+<dl class="section note"><dt>Note</dt><dd>The Javascript method <a class="el" href="md_docs_206-_web_a_p_is.html#CefViewClient_invoke">CefViewClient.invoke</a><code>(name, ...args)</code> is <code>ASYNCHRONOUS</code> operation, that means the calling from Javascript returns immediately regardless the execution of C++ Qt slot</dd>
 <dd>
-<b>The C++ code invoked by Javascript will be executed in the QT_UI thread.</b></dd></dl>
+The C++ code invoked by Javascript will be executed in the QT_UI thread.</dd></dl>
 <p>Now let's write a small piece of code to demonstrate the invocation from Javascript to C++.</p>
 <h2><a class="anchor" id="autotoc_md38"></a>
 Add Javascript Code</h2>
@@ -251,16 +293,16 @@ Call Javascript from C++</h1>
 <p>This section explains how to call Javascript functions from C++ code. <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> provides mechanisms to trigger events in the Javascript context, allowing you to update the UI or execute Javascript logic from your native application.</p>
 <p>The bridge object provides the following methods to support calling from C++ code to Javascript</p>
 <ul>
-<li><a href="/docs/reference/WebAPIs#web_apis_addEventListener"><code>addEventListener</code></a><code>(name, listener)</code></li>
-<li><a href="/docs/reference/WebAPIs#web_apis_removeEventListener"><code>removeEventListener</code></a><code>(name, listener)</code></li>
+<li><a class="el" href="md_docs_206-_web_a_p_is.html#CefViewClient_addEventListener">CefViewClient.addEventListener</a><code>(name, listener)</code></li>
+<li><a class="el" href="md_docs_206-_web_a_p_is.html#CefViewClient_removeEventListener">CefViewClient.removeEventListener</a><code>(name, listener)</code></li>
 </ul>
 <p>The developers can add as many event listeners as they want in the Javascript context and trigger the events from C++ code with the following methods</p>
 <ul>
-<li><code>public bool</code><a href="/docs/reference/QCefView#class_q_cef_view_1ac47c23ffcd94bdffe2b6a81eaae077a2"><code>triggerEvent</code></a><code>(const</code><a href="/docs/reference/QCefEvent#class_q_cef_event"><code>QCefEvent</code></a><code>&amp; event)</code></li>
-<li><code>public bool</code><a href="/docs/reference/QCefView#class_q_cef_view_1aaccdc475dc89f9ca4885c94e8f50421d"><code>triggerEvent</code></a><code>(const</code><a href="/docs/reference/QCefEvent#class_q_cef_event"><code>QCefEvent</code></a><code>&amp; event,int frameId)</code></li>
-<li><code>public bool</code><a href="/docs/reference/QCefView#class_q_cef_view_1ad5455e3a8cb0ffa1f9d7cb98307a6bb4"><code>broadcastEvent</code></a><code>(const</code><a href="/docs/reference/QCefEvent#class_q_cef_event"><code>QCefEvent</code></a><code>&amp; event)</code></li>
+<li><code>public bool <a class="el" href="class_q_cef_view.html#ac47c23ffcd94bdffe2b6a81eaae077a2" title="Triggers the event for main frame.">QCefView::triggerEvent</a>(const <a class="el" href="class_q_cef_event.html" title="Represents the event sent from native context(C/C++ code) to the web context(javascript)">QCefEvent</a> &amp; event)</code></li>
+<li><code>public bool <a class="el" href="class_q_cef_view.html#ac47c23ffcd94bdffe2b6a81eaae077a2" title="Triggers the event for main frame.">QCefView::triggerEvent</a>(const <a class="el" href="class_q_cef_event.html" title="Represents the event sent from native context(C/C++ code) to the web context(javascript)">QCefEvent</a> &amp; event,int frameId)</code></li>
+<li><code>public bool <a class="el" href="class_q_cef_view.html#ad5455e3a8cb0ffa1f9d7cb98307a6bb4" title="Broad cast the event for all frames.">QCefView::broadcastEvent</a>(const <a class="el" href="class_q_cef_event.html" title="Represents the event sent from native context(C/C++ code) to the web context(javascript)">QCefEvent</a> &amp; event)</code></li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd><b>⚠ NOTE: All the 3 methods above are <code>ASYNCHRONOUS</code> operations</b></dd></dl>
+<dl class="section note"><dt>Note</dt><dd>All the methods above are <code>ASYNCHRONOUS</code> operations</dd></dl>
 <p>Now let's code it</p>
 <h2><a class="anchor" id="autotoc_md42"></a>
 Add Javascript Code</h2>
@@ -312,12 +354,10 @@ First Project</div></div>
     <h1><a class="anchor" id="autotoc_md45"></a>
 CefViewQuery</h1>
 <p>In this section, we'll explore how to use <code>CefViewQuery</code> to communicate asynchronously between JavaScript and C++ code in your CefView application. This method allows you to send requests from your web page to the native application and receive responses without blocking the user interface.</p>
-<p><b>⚠[DEPRECATED]</b><br  />
-<strike><a href="/docs/reference/WebAPIs#web_apis_CefViewQuery"><code>window.CefViewQuery</code></a><code>(query)</code> is yet another approach to communicate from Javascript to C++ code, but in this way the communication is <code>ASYNCHRONOUS</code> operation. For more details please refer to the API reference.</strike></p>
-<p><a href="/docs/reference/WebAPIs#web_apis_cefViewQuery"><code>window.cefViewQuery</code></a><code>(query)</code> is yet another approach to communicate from Javascript to C++ code, but in this way the communication is <code>ASYNCHRONOUS</code> operation. For more details please refer to the API reference.</p>
-<dl class="section note"><dt>Note</dt><dd><b><code>window.cefViewQuery</code> operates asynchronously. This means that when you send a query, your JavaScript code doesn't wait for the response. Instead, you provide callback functions (<code>onSuccess</code> and <code>onFailure</code>) that will be executed when the response arrives.</b></dd></dl>
+<p><a class="el" href="md_docs_206-_web_a_p_is.html#cefViewQuery">window.cefViewQuery</a><code>(query)</code> is yet another approach to communicate from Javascript to C++ code, but in this way the communication is <code>ASYNCHRONOUS</code> operation. For more details please refer to the API reference.</p>
+<dl class="section note"><dt>Note</dt><dd><code>window.cefViewQuery</code> operates asynchronously. This means that when you send a query, your JavaScript code doesn't wait for the response. Instead, you provide callback functions (<code>onSuccess</code> and <code>onFailure</code>) that will be executed when the response arrives.</dd></dl>
 <p>When this method gets called from Javascript, the following Qt signal will be emitted:</p>
-<p><code>public void</code><a href="/docs/reference/QCefView#class_q_cef_view_1acbf62eea36993163c4b70b4df96738d8"><code>cefQueryRequest</code></a><code>(int browserId,int frameId,const</code><a href="/docs/reference/QCefQuery#class_q_cef_query"><code>QCefQuery</code></a><code>&amp; query)</code></p>
+<p><code>public void <a class="el" href="class_q_cef_view.html#aef058b415485dba45c8dfffdcf956a5f" title="Gets called on new QCefQuery request.">QCefView::cefQueryRequest</a>(int browserId,int frameId,const <a class="el" href="class_q_cef_query.html" title="Represents the query request sent from the web content(Javascript)">QCefQuery</a> &amp; query)</code></p>
 <p>In this section let's demonstrate the usage of CefViewQuery with some simple code.</p>
 <h2><a class="anchor" id="autotoc_md46"></a>
 Add Javascript Code</h2>

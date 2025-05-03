@@ -27,27 +27,24 @@ var NAVTREE =
   [ "QCefView", "index.html", [
     [ "Introduction", "index.html", "index" ],
     [ "Build and Config", "md_docs_201-_build_and_config.html", [
-      [ "Build", "md_docs_201-_build_and_config.html#autotoc_md6", [
-        [ "Prerequisites", "md_docs_201-_build_and_config.html#autotoc_md7", [
-          [ "CMake", "md_docs_201-_build_and_config.html#autotoc_md8", null ],
-          [ "Qt Framework", "md_docs_201-_build_and_config.html#autotoc_md9", null ]
+      [ "Build", "md_docs_201-_build_and_config.html#autotoc_md8", [
+        [ "Prerequisites", "md_docs_201-_build_and_config.html#autotoc_md9", [
+          [ "CMake", "md_docs_201-_build_and_config.html#autotoc_md10", null ],
+          [ "Qt Framework", "md_docs_201-_build_and_config.html#autotoc_md11", null ]
         ] ],
-        [ "Build QCefView", "md_docs_201-_build_and_config.html#autotoc_md10", null ],
-        [ "Additional Notes", "md_docs_201-_build_and_config.html#autotoc_md11", null ]
+        [ "Build QCefView", "md_docs_201-_build_and_config.html#autotoc_md12", null ],
+        [ "Additional Notes", "md_docs_201-_build_and_config.html#autotoc_md13", null ]
       ] ],
-      [ "Config", "md_docs_201-_build_and_config.html#autotoc_md12", [
-        [ "CMake Configuration Options", "md_docs_201-_build_and_config.html#autotoc_md13", [
-          [ "QT_SDK_DIR", "md_docs_201-_build_and_config.html#autotoc_md14", null ],
-          [ "CEF_SDK_VERSION", "md_docs_201-_build_and_config.html#autotoc_md15", null ],
-          [ "CUSTOM_CEF_SDK_DIR", "md_docs_201-_build_and_config.html#autotoc_md16", null ],
-          [ "BUILD_DEMO", "md_docs_201-_build_and_config.html#autotoc_md17", null ],
-          [ "BUILD_STATIC", "md_docs_201-_build_and_config.html#autotoc_md18", null ],
-          [ "STATIC_CRT", "md_docs_201-_build_and_config.html#autotoc_md19", null ],
-          [ "USE_SANDBOX", "md_docs_201-_build_and_config.html#autotoc_md20", null ],
-          [ "USE_WIN_DCOMPOSITION", "md_docs_201-_build_and_config.html#autotoc_md21", null ],
-          [ "USE_QT_EVENT_LOOP", "md_docs_201-_build_and_config.html#autotoc_md22", null ]
-        ] ],
-        [ "Setting CMake Options", "md_docs_201-_build_and_config.html#autotoc_md23", null ]
+      [ "Config", "md_docs_201-_build_and_config.html#autotoc_md14", [
+        [ "QT_SDK_DIR", "md_docs_201-_build_and_config.html#autotoc_md15", null ],
+        [ "CEF_SDK_VERSION", "md_docs_201-_build_and_config.html#autotoc_md16", null ],
+        [ "CUSTOM_CEF_SDK_DIR", "md_docs_201-_build_and_config.html#autotoc_md17", null ],
+        [ "BUILD_DEMO", "md_docs_201-_build_and_config.html#autotoc_md18", null ],
+        [ "BUILD_STATIC", "md_docs_201-_build_and_config.html#autotoc_md19", null ],
+        [ "STATIC_CRT", "md_docs_201-_build_and_config.html#autotoc_md20", null ],
+        [ "USE_SANDBOX", "md_docs_201-_build_and_config.html#autotoc_md21", null ],
+        [ "USE_WIN_DCOMPOSITION", "md_docs_201-_build_and_config.html#autotoc_md22", null ],
+        [ "USE_QT_EVENT_LOOP", "md_docs_201-_build_and_config.html#autotoc_md23", null ]
       ] ]
     ] ],
     [ "First Project", "md_docs_202-_first_project.html", [
@@ -86,6 +83,25 @@ var NAVTREE =
       [ "OSR mode", "md_docs_205-_rendering.html#autotoc_md51", null ],
       [ "Setting OSR Mode in QCefView", "md_docs_205-_rendering.html#autotoc_md52", null ],
       [ "Hardware Acceleration", "md_docs_205-_rendering.html#autotoc_md53", null ]
+    ] ],
+    [ "Web APIs", "md_docs_206-_web_a_p_is.html", [
+      [ "window.CefViewClient", "md_docs_206-_web_a_p_is.html#CefViewClient", [
+        [ "addEventListener(name, listener)", "md_docs_206-_web_a_p_is.html#CefViewClient_addEventListener", [
+          [ "Parameters", "md_docs_206-_web_a_p_is.html#autotoc_md55", null ]
+        ] ],
+        [ "removeEventListener(name, listener)", "md_docs_206-_web_a_p_is.html#CefViewClient_removeEventListener", [
+          [ "Parameters", "md_docs_206-_web_a_p_is.html#autotoc_md56", null ]
+        ] ],
+        [ "invoke(name, ...args)", "md_docs_206-_web_a_p_is.html#CefViewClient_invoke", [
+          [ "Parameters", "md_docs_206-_web_a_p_is.html#autotoc_md57", null ]
+        ] ]
+      ] ],
+      [ "window.cefViewQuery", "md_docs_206-_web_a_p_is.html#cefViewQuery", [
+        [ "Parameters", "md_docs_206-_web_a_p_is.html#autotoc_md58", [
+          [ "Returns", "md_docs_206-_web_a_p_is.html#autotoc_md59", null ]
+        ] ]
+      ] ],
+      [ "window.cefViewQueryCancel", "md_docs_206-_web_a_p_is.html#cefViewQueryCancel", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],

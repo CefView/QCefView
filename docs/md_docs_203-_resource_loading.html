@@ -158,6 +158,28 @@ $(function(){initNavTree('md_docs_203-_resource_loading.html',''); initResizable
   <div class="headertitle"><div class="title">Resource Loading</div></div>
 </div><!--header-->
 <div class="contents">
+<div class="toc"><h3>Table of Contents</h3>
+<ul>
+  <li class="level1">
+    <a href="#autotoc_md30">1. Load Online Web Resource</a>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md31">2. Load Local File With File Path</a>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md32">3. Add Local Folder Mapping</a>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md33">4. Add Local Archive Mapping</a>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md34">Use Cases</a>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md35">Summary</a>
+  </li>
+</ul>
+</div>
 <div class="textblock"><p><a class="anchor" id="autotoc_md29"></a></p>
 <p>To load the web resource, <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> provide 4 methods to achieve it.</p>
 <h1><a class="anchor" id="autotoc_md30"></a>
@@ -185,7 +207,10 @@ $(function(){initNavTree('md_docs_203-_resource_loading.html',''); initResizable
 </div><!-- fragment --> <h1><a class="anchor" id="autotoc_md32"></a>
 3. Add Local Folder Mapping</h1>
 <p>This method is designed for loading entire web application folders. It maps a local directory to a URL, allowing you to access files within that directory as if they were hosted on a web server. This is particularly useful for Single Page Applications (SPAs) and web applications with complex directory structures.</p>
-<p><code>public void</code><a href="/docs/reference/QCefContext#class_q_cef_context_1aecc6f7ee9d296bcf8d2ba470e0c0e454"><code>addLocalFolderResource</code></a><code>(const QString &amp; path,const QString &amp; url,int priority)</code></p>
+<ul>
+<li><code>public void <a class="el" href="class_q_cef_context.html#aecc6f7ee9d296bcf8d2ba470e0c0e454" title="Adds a url mapping item with local web resource directory. This works for all  instances created subs...">QCefContext::addLocalFolderResource</a>(const QString &amp; path,const QString &amp; url,int priority)</code></li>
+<li><code>public void <a class="el" href="class_q_cef_view.html#a8c6286b279094a691832fc89b93c75f1" title="Adds a url mapping item with local web resource directory.">QCefView::addLocalFolderResource</a>(const QString &amp; path,const QString &amp; url,int priority)</code></li>
+</ul>
 <p>For example, you build the WebApp project and get the output folder <code>webres</code>, the folder structure is as follows: </p><div class="fragment"><div class="line">full\path\to\webres</div>
 <div class="line">                │   index.html</div>
 <div class="line">                ├───assets</div>
@@ -212,7 +237,10 @@ $(function(){initNavTree('md_docs_203-_resource_loading.html',''); initResizable
 <h1><a class="anchor" id="autotoc_md33"></a>
 4. Add Local Archive Mapping</h1>
 <p>This method allows you to load web resources from a ZIP archive. It maps a URL to a ZIP file, enabling you to serve the contents of the archive as if they were a web server directory. This is useful for distributing web applications as a single file or for loading resources from compressed archives.</p>
-<p><code>public void</code><a href="/docs/reference/QCefContext#class_q_cef_context_1a007272d5df4016143f6b9e221a3b0eb1"><code>addArchiveResource</code></a><code>(const QString &amp; path,const QString &amp; url,const QString &amp; password)</code></p>
+<ul>
+<li><code>public void <a class="el" href="class_q_cef_context.html#aba9c70a84379190d151bdc4b634367e6" title="Adds a url mapping item with local archive (.zip) file which contains the web resource....">QCefContext::addArchiveResource</a>(const QString &amp; path,const QString &amp; url,const QString &amp; password)</code></li>
+<li><code>public void <a class="el" href="class_q_cef_view.html#a503148f8ff5ca5b28d3f0e123bf5bf76" title="Adds a url mapping item with local archive (.zip) file which contains the web resource.">QCefView::addArchiveResource</a>(const QString &amp; path,const QString &amp; url,const QString &amp; password)</code></li>
+</ul>
 <p>You need to keep the folder structure in the archive file, for example: </p><div class="fragment"><div class="line">full\path\to\webres.zip</div>
 <div class="line">                │   index.html</div>
 <div class="line">                ├───assets</div>

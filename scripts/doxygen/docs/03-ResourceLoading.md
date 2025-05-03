@@ -1,4 +1,5 @@
 # Resource Loading
+[TOC]
 
 To load the web resource, QCefView provide 4 methods to achieve it.
 
@@ -35,7 +36,9 @@ Pass the absolute file path of the web resource file to the constructor of QCefV
 
 This method is designed for loading entire web application folders. It maps a local directory to a URL, allowing you to access files within that directory as if they were hosted on a web server. This is particularly useful for Single Page Applications (SPAs) and web applications with complex directory structures.
 
-`public void `[`addLocalFolderResource`](/docs/reference/QCefContext#class_q_cef_context_1aecc6f7ee9d296bcf8d2ba470e0c0e454)`(const QString & path,const QString & url,int priority)`
+- `public void QCefContext::addLocalFolderResource(const QString & path,const QString & url,int priority)`
+
+- `public void QCefView::addLocalFolderResource(const QString & path,const QString & url,int priority)`
 
 For example, you build the WebApp project and get the output folder `webres`, the folder structure is as follows:
 ```bash
@@ -71,7 +74,9 @@ After added the mapping item, you can access all the resource with the URL root 
 
 This method allows you to load web resources from a ZIP archive. It maps a URL to a ZIP file, enabling you to serve the contents of the archive as if they were a web server directory. This is useful for distributing web applications as a single file or for loading resources from compressed archives.
 
-`public void `[`addArchiveResource`](/docs/reference/QCefContext#class_q_cef_context_1a007272d5df4016143f6b9e221a3b0eb1)`(const QString & path,const QString & url,const QString & password)`
+- `public void QCefContext::addArchiveResource(const QString & path,const QString & url,const QString & password)`
+
+- `public void QCefView::addArchiveResource(const QString & path,const QString & url,const QString & password)`
 
 You need to keep the folder structure in the archive file, for example:
 ```bash

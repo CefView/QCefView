@@ -1,4 +1,5 @@
 # Rendering
+[TOC]
 
 CEF supports native child window mode and OSR mode, in QCefView both modes are implemented.
 
@@ -45,9 +46,9 @@ config.setWindowlessRenderingEnabled(true); // Enable OSR mode
 
 By setting `config.setWindowlessRenderingEnabled(true)`, you instruct QCefView to use OSR (Off-Screen Rendering) mode. This configuration must be set before the QCefView instance is created.
 
-:::note
-**QCefConfig works in the application scope, so you can only choose to use NCW or OSR exclusively for all QCefView instances.** This means that once you set `QCefConfig::setWindowlessRenderingEnabled` to `true` or `false`, all QCefView instances in your application will use the same rendering mode.
-:::
+> [!note]
+> QCefConfig works in the application scope, so you can only choose to use NCW or OSR exclusively for all QCefView instances. This means that once you set `QCefConfig::setWindowlessRenderingEnabled` to `true` or `false`, all QCefView instances in your application will use the same rendering mode.
+
 
 ## Hardware Acceleration
 
@@ -70,6 +71,5 @@ To control hardware acceleration, you can use the following settings in `QCefSet
 
 By default, CEF attempts to use hardware acceleration if it is available. However, explicitly setting the `setHardwareAcceleration` provides more control.
 
-:::tip
-Enabling hardware acceleration is generally recommended for the best performance. However, if you encounter rendering issues or compatibility problems, disabling it can provide a fallback option. And this feature only works in OSR mode.
-:::
+> [!tip]
+> Enabling hardware acceleration is generally recommended for the best performance. However, if you encounter rendering issues or compatibility problems, disabling it can provide a fallback option. And this feature only works in OSR mode.

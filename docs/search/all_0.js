@@ -5,5 +5,6 @@ var searchData=
   ['02_2dfirstproject_2emd_2',['02-FirstProject.md',['../02-_first_project_8md.html',1,'']]],
   ['03_2dresourceloading_2emd_3',['03-ResourceLoading.md',['../03-_resource_loading_8md.html',1,'']]],
   ['04_2dinteroperability_2emd_4',['04-Interoperability.md',['../04-_interoperability_8md.html',1,'']]],
-  ['05_2drendering_2emd_5',['05-Rendering.md',['../05-_rendering_8md.html',1,'']]]
+  ['05_2drendering_2emd_5',['05-Rendering.md',['../05-_rendering_8md.html',1,'']]],
+  ['06_2dwebapis_2emd_6',['06-WebAPIs.md',['../06-_web_a_p_is_8md.html',1,'']]]
 ];

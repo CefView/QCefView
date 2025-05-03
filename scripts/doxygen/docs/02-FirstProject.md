@@ -1,10 +1,11 @@
 # First Project
+[TOC]
 
 This guide walks you through creating a basic Qt GUI application that integrates QCefView. The complete source code for this example is available in the [QCefViewTest](https://github.com/CefView/QCefView/tree/main/example/QCefViewTest) directory.
 
-## Initializing the [`QCefContext`](/docs/reference/QCefContext) Instance
+## Initializing the QCefContext Instance
 
-The first step in using QCefView is to initialize a [`QCefContext`](/docs/reference/QCefContext) instance. Think of this as the QCefView equivalent of `QApplication`: you should have only one instance of [`QCefContext`](/docs/reference/QCefContext) throughout your application's lifecycle.
+The first step in using QCefView is to initialize a `QCefContext` instance. Think of this as the QCefView equivalent of `QApplication`: you should have only one instance of `QCefContext` throughout your application's lifecycle.
 
 ```cpp
 #include <QApplication>
@@ -57,7 +58,7 @@ main(int argc, char* argv[])
 
 ## Create QCefView Instance
 
-Once you have initialized [`QCefContext`](/docs/reference/QCefContext), you can create a [`QCefView`](/docs/reference/QCefView) instance.
+Once you have initialized `QCefContext`, you can create a `QCefView` instance.
 
 ```cpp
   // Build settings for per QCefView

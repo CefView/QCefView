@@ -2955,6 +2955,7 @@ INPUT                  = "docs/00-Introduction.md" \
                         "docs/03-ResourceLoading.md" \
                         "docs/04-Interoperability.md" \
                         "docs/05-Rendering.md" \
+                        "docs/06-WebAPIs.md" \
                          "../../include"
 
 HTML_OUTPUT            = "../../docs"

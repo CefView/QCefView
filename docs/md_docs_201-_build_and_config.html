@@ -158,20 +158,78 @@ $(function(){initNavTree('md_docs_201-_build_and_config.html',''); initResizable
   <div class="headertitle"><div class="title">Build and Config</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md5"></a></p>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<div class="toc"><h3>Table of Contents</h3>
+<ul>
+  <li class="level1">
+    <a href="#autotoc_md8">Build</a>
+    <ul>
+      <li class="level2">
+        <a href="#autotoc_md9">Prerequisites</a>
+        <ul>
+          <li class="level3">
+            <a href="#autotoc_md10">1. CMake</a>
+          </li>
+          <li class="level3">
+            <a href="#autotoc_md11">2. Qt Framework</a>
+          </li>
+        </ul>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md12">Build QCefView</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md13">Additional Notes</a>
+      </li>
+    </ul>
+  </li>
+  <li class="level1">
+    <a href="#autotoc_md14">Config</a>
+    <ul>
+      <li class="level2">
+        <a href="#autotoc_md15">QT_SDK_DIR</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md16">CEF_SDK_VERSION</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md17">CUSTOM_CEF_SDK_DIR</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md18">BUILD_DEMO</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md19">BUILD_STATIC</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md20">STATIC_CRT</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md21">USE_SANDBOX</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md22">USE_WIN_DCOMPOSITION</a>
+      </li>
+      <li class="level2">
+        <a href="#autotoc_md23">USE_QT_EVENT_LOOP</a>
+      </li>
+    </ul>
+  </li>
+</ul>
+</div>
+<div class="textblock"><p><a class="anchor" id="autotoc_md7"></a></p>
+<h1><a class="anchor" id="autotoc_md8"></a>
 Build</h1>
 <p>This guide provides detailed instructions on how to build the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> project from source.</p>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md9"></a>
 Prerequisites</h2>
 <p>Before you begin, ensure you have the following software installed and configured:</p>
-<h3><a class="anchor" id="autotoc_md8"></a>
+<h3><a class="anchor" id="autotoc_md10"></a>
 1. CMake</h3>
 <p><a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> uses <a href="https://cmake.org/">CMake</a> to manage the build process. CMake is a cross-platform, open-source build system generator.</p>
 <ul>
 <li><b>Installation:</b> Download and install CMake from the <a href="https://cmake.org/download/">official CMake website</a>. The minimum supported version is 3.19.1, but we recommend using the latest version for optimal compatibility and features.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md9"></a>
+<h3><a class="anchor" id="autotoc_md11"></a>
 2. Qt Framework</h3>
 <p><a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> is built upon the Qt framework, offering support for both Qt 5.x and 6.x.</p>
 <ul>
@@ -188,10 +246,10 @@ Prerequisites</h2>
 <p class="startli"><code>bash export QTDIR=/opt/Qt/6.2.2/gcc_64 # Example path, adjust accordingly </code></p>
 </li>
 </ul>
-<p class="startli"><b>Note:</b> Adjust the paths in the examples above to match your actual Qt installation location.</p>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<dl class="section note"><dt>Note</dt><dd>Adjust the paths in the examples above to match your actual Qt installation location.</dd></dl>
+<h2><a class="anchor" id="autotoc_md12"></a>
 Build QCefView</h2>
 <ol type="1">
 <li><p class="startli"><b>Clone the Repository:</b></p>
@@ -234,96 +292,16 @@ Build QCefView</h2>
 </ul>
 </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md11"></a>
+<h2><a class="anchor" id="autotoc_md13"></a>
 Additional Notes</h2>
 <ul>
 <li><b>Build Configurations:</b> The CMake build command includes a <code>--config</code> option. You can specify <code>Release</code> for an optimized build or <code>Debug</code> for a build with debugging symbols.</li>
 <li><b>Qt Creator (Linux):</b> When using Qt Creator on Linux, select "Import Existing Project" and choose the top-level <code>CMakeLists.txt</code> file.</li>
 </ul>
 <p>By following these instructions, you should be able to successfully build the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> project on your platform. If you encounter any issues, please consult the project's documentation or community forums for assistance.</p>
-<h1><a class="anchor" id="autotoc_md12"></a>
+<h1><a class="anchor" id="autotoc_md14"></a>
 Config</h1>
 <p><a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> offers several CMake options to customize your build. These options allow you to tailor the build process to your specific needs and environment.</p>
-<h2><a class="anchor" id="autotoc_md13"></a>
-CMake Configuration Options</h2>
-<p>Here's a detailed overview of the available CMake configuration options:</p>
-<h3><a class="anchor" id="autotoc_md14"></a>
-<code>QT_SDK_DIR</code></h3>
-<ul>
-<li><b>Description:</b> Specifies the directory containing the Qt SDK.</li>
-<li><b>Values:</b> The absolute path to your Qt installation directory (e.g., <code>C:/Qt/6.2.4/msvc2019_64</code> on Windows, <code>/opt/Qt/6.2.4/gcc_64</code> on Linux).</li>
-<li><b>Default:</b> CMake attempts to automatically detect the Qt SDK.</li>
-<li><b>Usage:</b> Set this option if CMake fails to locate your Qt installation, or if you want to use a specific Qt version.</li>
-</ul>
-<h3><a class="anchor" id="autotoc_md15"></a>
-<code>CEF_SDK_VERSION</code></h3>
-<ul>
-<li><b>Description:</b> Specifies the version of the Chromium Embedded Framework (CEF) SDK to use.</li>
-<li><b>Values:</b> A string representing the CEF SDK version (e.g., <code>"112.3.0+gb09c4ca+chromium-112.0.5615.165"</code>).</li>
-<li><b>Default:</b> The version defined in the root <code>CMakeLists.txt</code> file.</li>
-<li><b>Usage:</b> Set this option if you need to use a specific CEF SDK version that differs from the default. <blockquote class="doxtable">
-<p><b>⚠ Find the pre-compiled CEF SDK from <a href="https://cef-builds.spotifycdn.com/index.html">https://cef-builds.spotifycdn.com/index.html</a> (Powered by Spotify)</b> </p>
-</blockquote>
-</li>
-</ul>
-<h3><a class="anchor" id="autotoc_md16"></a>
-<code>CUSTOM_CEF_SDK_DIR</code></h3>
-<ul>
-<li><b>Description:</b> Specifies the directory containing a custom-built CEF SDK.</li>
-<li><b>Values:</b> The absolute path to your custom CEF SDK directory.</li>
-<li><b>Default:</b> Empty. If not set, the build process will attempt to download a pre-built CEF SDK based on <code>CEF_SDK_VERSION</code>.</li>
-<li><b>Usage:</b> Set this option if you have built your own CEF SDK and want to use it instead of the pre-built version. This is useful for advanced users who need to customize CEF.</li>
-</ul>
-<h3><a class="anchor" id="autotoc_md17"></a>
-<code>BUILD_DEMO</code></h3>
-<ul>
-<li><b>Description:</b> Enables or disables the building of the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> demo application.</li>
-<li><b>Values:</b> <code>ON</code> (enable) or <code>OFF</code> (disable).</li>
-<li><b>Default:</b> <code>ON</code></li>
-<li><b>Usage:</b> Disable this option if you only need the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> library and not the demo application.</li>
-</ul>
-<h3><a class="anchor" id="autotoc_md18"></a>
-<code>BUILD_STATIC</code></h3>
-<ul>
-<li><b>Description:</b> Configures <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> to be built as a static library.</li>
-<li><b>Values:</b> <code>ON</code> (enable) or <code>OFF</code> (disable).</li>
-<li><b>Default:</b> <code>OFF</code></li>
-<li><b>Usage:</b> Enable this option if you want to link <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> statically into your application. Note that this might require additional configuration depending on your project setup.</li>
-</ul>
-<h3><a class="anchor" id="autotoc_md19"></a>
-<code>STATIC_CRT</code></h3>
-<ul>
-<li><b>Description:</b> Links the C runtime library statically.</li>
-<li><b>Values:</b> <code>ON</code> (enable) or <code>OFF</code> (disable).</li>
-<li><b>Default:</b> <code>OFF</code></li>
-<li><b>Usage:</b> Enable this option to avoid dependencies on the Visual C++ runtime DLLs. This is primarily relevant on Windows. Using this option can increase the size of your executable.</li>
-</ul>
-<h3><a class="anchor" id="autotoc_md20"></a>
-<code>USE_SANDBOX</code></h3>
-<ul>
-<li><b>Description:</b> Enables or disables the CEF sandbox.</li>
-<li><b>Values:</b> <code>ON</code> (enable) or <code>OFF</code> (disable).</li>
-<li><b>Default:</b> <code>ON</code></li>
-<li><b>Usage:</b> Disabling the sandbox increases performance but reduces security. Only disable this option if you fully understand the security implications.</li>
-</ul>
-<h3><a class="anchor" id="autotoc_md21"></a>
-<code>USE_WIN_DCOMPOSITION</code></h3>
-<ul>
-<li><b>Description:</b> Enables or disables the use of Windows DirectComposition for rendering.</li>
-<li><b>Values:</b> <code>ON</code> (enable) or <code>OFF</code> (disable).</li>
-<li><b>Default:</b> <code>ON</code> on Windows, <code>OFF</code> on other platforms.</li>
-<li><b>Usage:</b> DirectComposition can improve rendering performance on Windows. Disable this option if you encounter compatibility issues.</li>
-</ul>
-<h3><a class="anchor" id="autotoc_md22"></a>
-<code>USE_QT_EVENT_LOOP</code></h3>
-<ul>
-<li><b>Description:</b> Enables the use of Qt's event loop integration for CEF.</li>
-<li><b>Values:</b> <code>ON</code> (enable) or <code>OFF</code> (disable).</li>
-<li><b>Default:</b> <code>ON</code></li>
-<li><b>Usage:</b> This option integrates CEF's message loop with Qt's event loop, providing better responsiveness and compatibility. In rare cases, disabling this option might resolve specific event loop conflicts.</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md23"></a>
-Setting CMake Options</h2>
 <p>You can set these CMake options when you generate the build files. The method depends on your build environment:</p>
 <ul>
 <li><b>CMake GUI:</b> Use the CMake GUI to configure the options before generating the project files.</li>
@@ -332,7 +310,81 @@ Setting CMake Options</h2>
 </li>
 <li><b>CMakePresets.json:</b> If you are using CMakePresets.json, you can set the options in the <code>cacheVariables</code> section.</li>
 </ul>
-<p>By understanding and utilizing these configuration options, you can optimize the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> build process for your specific application and platform. </p>
+<p>By understanding and utilizing these configuration options, you can optimize the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> build process for your specific application and platform.</p>
+<p>Here's a detailed overview of the available CMake configuration options:</p>
+<h2><a class="anchor" id="autotoc_md15"></a>
+QT_SDK_DIR</h2>
+<ul>
+<li><b>Description:</b> Specifies the directory containing the Qt SDK.</li>
+<li><b>Values:</b> The absolute path to your Qt installation directory (e.g., <code>C:/Qt/6.2.4/msvc2019_64</code> on Windows, <code>/opt/Qt/6.2.4/gcc_64</code> on Linux).</li>
+<li><b>Default:</b> CMake attempts to automatically detect the Qt SDK.</li>
+<li><b>Usage:</b> Set this option if CMake fails to locate your Qt installation, or if you want to use a specific Qt version.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md16"></a>
+CEF_SDK_VERSION</h2>
+<ul>
+<li><b>Description:</b> Specifies the version of the Chromium Embedded Framework (CEF) SDK to use.</li>
+<li><b>Values:</b> A string representing the CEF SDK version (e.g., <code>"112.3.0+gb09c4ca+chromium-112.0.5615.165"</code>).</li>
+<li><b>Default:</b> The version defined in the root <code>CMakeLists.txt</code> file.</li>
+<li><b>Usage:</b> Set this option if you need to use a specific CEF SDK version that differs from the default.</li>
+</ul>
+<dl class="section remark"><dt>Remarks</dt><dd>Find the pre-compiled CEF SDK from <a href="https://cef-builds.spotifycdn.com/index.html">https://cef-builds.spotifycdn.com/index.html</a> (Powered by Spotify). They serve the pre-compiled CEF binaries with official code. These binaries are compiled with some features disabled (like video decoders). If you need these features, you need to compile CEF binaries.</dd></dl>
+<h2><a class="anchor" id="autotoc_md17"></a>
+CUSTOM_CEF_SDK_DIR</h2>
+<ul>
+<li><b>Description:</b> Specifies the directory containing a custom-built CEF SDK.</li>
+<li><b>Values:</b> The absolute path to your custom CEF SDK directory.</li>
+<li><b>Default:</b> Empty. If not set, the build process will attempt to download a pre-built CEF SDK based on <code>CEF_SDK_VERSION</code>.</li>
+<li><b>Usage:</b> Set this option if you have built your own CEF SDK and want to use it instead of the pre-built version. This is useful for advanced users who need to customize CEF.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md18"></a>
+BUILD_DEMO</h2>
+<ul>
+<li><b>Description:</b> Enables or disables the building of the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> demo application.</li>
+<li><b>Values:</b> <code>ON</code> (enable) or <code>OFF</code> (disable).</li>
+<li><b>Default:</b> <code>OFF</code></li>
+<li><b>Usage:</b> Disable this option if you only need the <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> library and not the demo application.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md19"></a>
+BUILD_STATIC</h2>
+<ul>
+<li><b>Description:</b> Configures <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> to be built as a static library.</li>
+<li><b>Values:</b> <code>ON</code> (enable) or <code>OFF</code> (disable).</li>
+<li><b>Default:</b> <code>OFF</code></li>
+<li><b>Usage:</b> Enable this option if you want to link <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> statically into your application. Note that this might require additional configuration depending on your project setup.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md20"></a>
+STATIC_CRT</h2>
+<ul>
+<li><b>Description:</b> Links the C runtime library statically.</li>
+<li><b>Values:</b> <code>ON</code> (enable) or <code>OFF</code> (disable).</li>
+<li><b>Default:</b> <code>OFF</code></li>
+<li><b>Usage:</b> Enable this option to avoid dependencies on the Visual C++ runtime DLLs. This is primarily relevant on Windows. Using this option can increase the size of your executable.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md21"></a>
+USE_SANDBOX</h2>
+<ul>
+<li><b>Description:</b> Enables or disables the CEF sandbox.</li>
+<li><b>Values:</b> <code>ON</code> (enable) or <code>OFF</code> (disable).</li>
+<li><b>Default:</b> <code>OFF</code></li>
+<li><b>Usage:</b> Disabling the sandbox increases performance but reduces security. Only disable this option if you fully understand the security implications.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md22"></a>
+USE_WIN_DCOMPOSITION</h2>
+<ul>
+<li><b>Description:</b> Enables or disables the use of Windows DirectComposition for rendering.</li>
+<li><b>Values:</b> <code>ON</code> (enable) or <code>OFF</code> (disable).</li>
+<li><b>Default:</b> <code>OFF</code></li>
+<li><b>Usage:</b> DirectComposition can improve rendering performance on Windows. Disable this option if you encounter compatibility issues.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md23"></a>
+USE_QT_EVENT_LOOP</h2>
+<ul>
+<li><b>Description:</b> Enables the use of Qt's event loop integration for CEF.</li>
+<li><b>Values:</b> <code>ON</code> (enable) or <code>OFF</code> (disable).</li>
+<li><b>Default:</b> <code>OFF</code></li>
+<li><b>Usage:</b> This option integrates CEF's message loop with Qt's event loop, providing better responsiveness and compatibility. In rare cases, disabling this option might resolve specific event loop conflicts. </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
