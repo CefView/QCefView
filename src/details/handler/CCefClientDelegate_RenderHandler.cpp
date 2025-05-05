@@ -69,7 +69,7 @@ CCefClientDelegate::getScreenInfo(CefRefPtr<CefBrowser>& browser, CefScreenInfo&
   if (!IsValidBrowser(browser))
     return false;
 
-    // get the screen which the view is currently residing in
+  // get the screen which the view is currently residing in
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
   QScreen* currentScreen = pCefViewPrivate_->q_ptr->screen();
 #else
@@ -145,6 +145,13 @@ CCefClientDelegate::onPaint(CefRefPtr<CefBrowser>& browser,
 }
 
 #if CEF_VERSION_MAJOR < 125
+//
+// For CEF version below 125, hardware acceleration is not supported officially.
+// You need to compile your own CEF with a patch applied. Please refer to:
+// https://www.magpcss.org/ceforum/viewtopic.php?f=6&t=17551
+// You need to build CEF/Chromium locally and apply this PR:
+// https://bitbucket.org/chromiumembedded/cef/pull-requests/285
+//
 void
 CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
                                        CefRenderHandler::PaintElementType type,
@@ -181,11 +188,14 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
 #if defined(OS_WINDOWS)
   data.texture.handle = info.shared_texture_handle;
 #elif defined(OS_MACOS)
-  // TO-DO
   data.texture.handle = info.shared_texture_io_surface;
 #elif defined(OS_LINUX)
-  // TO-DO
-  data.texture.handle = nullptr;
+  if (info.plane_count) {
+    data.texture.handle = reinterpret_cast<void*>(info.planes[0].fd);
+    data.texture.size = info.planes[0].size;
+  } else {
+    data.texture.handle = nullptr;
+  }
 #else
 #error "Unsupported platform"
 #endif

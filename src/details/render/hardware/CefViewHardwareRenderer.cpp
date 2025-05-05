@@ -5,7 +5,9 @@
 #elif defined(OS_MACOS)
 #include "mac/details/render/hardware/MetalRenderBackend.h"
 #elif defined(OS_LINUX)
+#include "linux/details/render/hardware/OpenGLRenderBackend.h"
 #else
+#error "Unsupported platform"
 #endif
 
 CefViewRendererPtr
@@ -16,7 +18,7 @@ createHardwareRenderer()
 #elif defined(OS_MACOS)
   return std::make_shared<MetalRenderBackend>();
 #elif defined(OS_LINUX)
-  return nullptr;
+  return std::make_shared<OpenGLRenderBackend>();
 #else
 #error "Unsupported platform"
 #endif

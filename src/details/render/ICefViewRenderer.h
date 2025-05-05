@@ -17,7 +17,7 @@ public:
   /// <summary>
   ///
   /// </summary>
-  virtual ~ICefViewRenderer(){};
+  virtual ~ICefViewRenderer() {};
 
   /// <summary>
   ///
@@ -71,22 +71,67 @@ public:
   };
 
   /// <summary>
-  ///
+  /// CEF web content frame data
   /// </summary>
   union FrameData
   {
+    FrameData() {}
+
+    /// <summary>
+    /// CPU image data. (Hardware acceleration disabled)
+    /// </summary>
     struct
     {
-      const void* buffer;
-      int width;
-      int height;
+      /// <summary>
+      ///
+      /// </summary>
+      const void* buffer = nullptr;
+
+      /// <summary>
+      ///
+      /// </summary>
+      int width = 0;
+
+      /// <summary>
+      ///
+      /// </summary>
+      int height = 0;
     } image;
 
+    /// <summary>
+    /// GPU texture data.(Hardware acceleration enabled)
+    /// </summary>
     struct
     {
-      void* handle;
-      int format;
+      /// <summary>
+      ///
+      /// </summary>
+      int format = 0;
 
+      /// <summary>
+      ///
+      /// </summary>
+      void* handle = nullptr;
+
+      /// <summary>
+      ///
+      /// </summary>
+      uint32_t width = 0;
+
+      /// <summary>
+      ///
+      /// </summary>
+      uint32_t height = 0;
+
+      /// <summary>
+      ///
+      /// </summary>
+      uint64_t size = 0;
+
+      /// <summary>
+      ///
+      /// </summary>
+      uint64_t modifier = 0;
     } texture;
   };
 

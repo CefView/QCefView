@@ -3,7 +3,6 @@
 #include <QDebug>
 #include <QScreen>
 
-#include "QCefSettingPrivate.h"
 #include "QCefViewPrivate.h"
 #include "utils/ValueConvertor.h"
 
