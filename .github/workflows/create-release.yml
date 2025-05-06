@@ -32,7 +32,7 @@ jobs:
           submodules: "true"
 
       - name: Cache CEF folders
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{github.workspace}}/CefViewCore/dep
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
@@ -66,7 +66,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          setup-python: "false"
+          setup-python: "true"
 
       - name: Checkout Source
         uses: actions/checkout@v2
@@ -74,7 +74,7 @@ jobs:
           submodules: "true"
 
       - name: Cache CEF folders
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{github.workspace}}/CefViewCore/dep
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
@@ -120,7 +120,7 @@ jobs:
           submodules: "true"
 
       - name: Cache CEF folders
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{github.workspace}}/CefViewCore/dep
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
