@@ -229,8 +229,6 @@ protected:
 
   QVariant onViewInputMethodQuery(Qt::InputMethodQuery query) const;
 
-  void onPaintEngine(QPaintEngine*& engine) const;
-
   void onPaintEvent(QPaintEvent* event);
 
   void onViewInputMethodEvent(QInputMethodEvent* event);

@@ -73,13 +73,11 @@ private:
 
   // view texture and SRV
   D3D11_TEXTURE2D_DESC m_lastViewTextureDesc = {};
-  Microsoft::WRL::ComPtr<ID3D11Texture2D> m_viewTexture;
   Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_viewSRV;
   Microsoft::WRL::ComPtr<ID3D11Buffer> m_viewVertexBuffer;
 
   // popup texture and SRV
   D3D11_TEXTURE2D_DESC m_lastPopupTextureDesc = {};
-  Microsoft::WRL::ComPtr<ID3D11Texture2D> m_popupTexture;
   Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_popupSRV;
   Microsoft::WRL::ComPtr<ID3D11Buffer> m_popupVertexBuffer;
 
@@ -102,7 +100,6 @@ protected:
   );
 
   void UpdateTextureResource(Microsoft::WRL::ComPtr<ID3D11Texture2D>& pSharedTexture,
-                             Microsoft::WRL::ComPtr<ID3D11Texture2D>& pTargetTexture,
                              Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& pTargetSRV,
                              D3D11_TEXTURE2D_DESC& targetTextureDesc);
 

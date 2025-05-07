@@ -430,7 +430,6 @@ DX11RenderBackend::CreateQuadVertexBuffer(float x,                //
 
 void
 DX11RenderBackend::UpdateTextureResource(Microsoft::WRL::ComPtr<ID3D11Texture2D>& pSharedTexture,
-                                         Microsoft::WRL::ComPtr<ID3D11Texture2D>& pTargetTexture,
                                          Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& pTargetSRV,
                                          D3D11_TEXTURE2D_DESC& targetTextureDesc)
 {
@@ -440,50 +439,24 @@ DX11RenderBackend::UpdateTextureResource(Microsoft::WRL::ComPtr<ID3D11Texture2D>
   D3D11_TEXTURE2D_DESC sharedTextureDesc = {};
   pSharedTexture->GetDesc(&sharedTextureDesc);
 
-  // need to recreate?
-  bool needRecreate = false;
-  if (!pTargetTexture                                         //
-      || sharedTextureDesc.Width != targetTextureDesc.Width   //
-      || sharedTextureDesc.Height != targetTextureDesc.Height //
-      || sharedTextureDesc.Format != targetTextureDesc.Format //
-  ) {
-    // flip flag
-    needRecreate = true;
-
-    // recreate texture and copy full texture data
-    hr = m_d3dDevice->CreateTexture2D(&sharedTextureDesc, nullptr, pTargetTexture.ReleaseAndGetAddressOf());
-    if (FAILED(hr)) {
-      return;
-    }
-  }
-
-  if (!pTargetTexture) {
-    return;
-  }
-
-  {
-    // copy full texture with lock
-    std::lock_guard<std::mutex> l(m_d3dContextLock);
-    m_d3dContext->CopyResource(pTargetTexture.Get(), pSharedTexture.Get());
-  }
-
-  if (needRecreate) {
-    // create SRV description
-    D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
-    srvDesc.Format = sharedTextureDesc.Format;
-    srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-    srvDesc.Texture2D.MostDetailedMip = 0;
-    srvDesc.Texture2D.MipLevels = 1;
-
-    // update shader resource view
-    hr = m_d3dDevice->CreateShaderResourceView(pTargetTexture.Get(), &srvDesc, pTargetSRV.ReleaseAndGetAddressOf());
-    if (FAILED(hr)) {
-      return;
-    }
-  }
-
   // update texture desc
   targetTextureDesc = sharedTextureDesc;
+
+  // create SRV description
+  D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+  srvDesc.Format = targetTextureDesc.Format;
+  srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+  srvDesc.Texture2D.MostDetailedMip = 0;
+  srvDesc.Texture2D.MipLevels = 1;
+
+  // update shader resource view
+  {
+    std::lock_guard<std::mutex> l(m_d3dContextLock);
+    hr = m_d3dDevice->CreateShaderResourceView(pSharedTexture.Get(), &srvDesc, pTargetSRV.ReleaseAndGetAddressOf());
+    if (FAILED(hr)) {
+      return;
+    }
+  }
 }
 
 void
@@ -544,7 +517,7 @@ void
 DX11RenderBackend::RenderPresent()
 {
   // Present the back buffer to the screen
-  HRESULT hr = m_swapChain->Present(1, 0);
+  HRESULT hr = m_swapChain->Present(0, 0);
   if (FAILED(hr)) {
     // If the device was removed either by a disconnection or a driver upgrade, we
     // must recreate all device resources.
@@ -568,11 +541,9 @@ DX11RenderBackend::initialize(void* wid, int width, int height, float scale, con
   m_backgroundColor = background;
 
   m_lastViewTextureDesc = {};
-  m_viewTexture.Reset();
   m_viewSRV.Reset();
 
   m_lastPopupTextureDesc = {};
-  m_popupTexture.Reset();
   m_popupSRV.Reset();
 
   // create device/context/swapchain
@@ -631,11 +602,9 @@ DX11RenderBackend::uninitialize()
 
   m_lastPopupTextureDesc = {};
   m_popupSRV.Reset();
-  m_popupTexture.Reset();
 
   m_lastViewTextureDesc = {};
   m_viewSRV.Reset();
-  m_viewTexture.Reset();
 
   m_swapChain.Reset();
   m_d3dContext.Reset();
@@ -695,7 +664,7 @@ DX11RenderBackend::updatePopupVisibility(bool visible)
   m_showPopup = visible;
 
   if (!m_showPopup) {
-    m_popupTexture.Reset();
+    std::lock_guard<std::mutex> l(m_d3dContextLock);
     m_popupSRV.Reset();
   }
 }
@@ -753,9 +722,9 @@ DX11RenderBackend::updateFrameData(const CefRenderHandler::PaintElementType& typ
 
   // update
   if (PET_VIEW == type) {
-    UpdateTextureResource(pSharedTexture, m_viewTexture, m_viewSRV, m_lastViewTextureDesc);
+    UpdateTextureResource(pSharedTexture, m_viewSRV, m_lastViewTextureDesc);
   } else if (PET_POPUP == type) {
-    UpdateTextureResource(pSharedTexture, m_popupTexture, m_popupSRV, m_lastPopupTextureDesc);
+    UpdateTextureResource(pSharedTexture, m_popupSRV, m_lastPopupTextureDesc);
   } else {
     return;
   }
@@ -765,8 +734,6 @@ void
 DX11RenderBackend::render(void* painter)
 {
   std::lock_guard<std::mutex> l(m_d3dContextLock);
-
-  SetTargetView();
 
   ClearTargetView();
 

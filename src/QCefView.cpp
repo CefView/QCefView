@@ -1,4 +1,4 @@
-#include <QCefView.h>
+﻿#include <QCefView.h>
 
 #pragma region qt_headers
 #include <QPainter>
@@ -38,7 +38,7 @@ QCefView::QCefView(const QString& url,
     setBackgroundRole(QPalette::Window);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_NoSystemBackground);
-    // import for hardware rendering
+    // important for hardware rendering
     if (d_ptr->osr.pRenderer_ && d_ptr->osr.pRenderer_->isHardware()) {
       setAttribute(Qt::WA_PaintOnScreen);
     }

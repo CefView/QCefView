@@ -824,15 +824,6 @@ QCefViewPrivate::onViewInputMethodQuery(Qt::InputMethodQuery query) const
 }
 
 void
-QCefViewPrivate::onPaintEngine(QPaintEngine*& engine) const
-{
-  // if hardware acceleration is available then disable Qt paint
-  if (isOSRModeEnabled_ && osr.pRenderer_ && osr.pRenderer_->isHardware()) {
-    engine = nullptr;
-  }
-}
-
-void
 QCefViewPrivate::onPaintEvent(QPaintEvent* event)
 {
   Q_Q(QCefView);
