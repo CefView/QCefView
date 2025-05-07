@@ -116,37 +116,6 @@ fragment float4 fragmentShader(VertexOut in [[stage_in]],
   return [m_device newBufferWithBytes:vertices length:sizeof(vertices) options:MTLResourceStorageModeShared];
 }
 
-- (void)copyTextureResourceTo:(__strong id<MTLTexture>&)dstTexture
-          withDestTextureDesc:(__strong MTLTextureDescriptor*&)dstTextureDesc
-               fromSrcTexture:(id<MTLTexture>)srcTexture
-              withTextureDesc:(MTLTextureDescriptor*)srcTextureDesc;
-{
-  if (!dstTexture                                         //
-      || dstTexture.pixelFormat != srcTexture.pixelFormat //
-      || dstTexture.width != srcTexture.width             //
-      || dstTexture.height != srcTexture.height           //
-  ) {
-    dstTextureDesc = srcTextureDesc;
-    dstTexture = [m_device newTextureWithDescriptor:srcTextureDesc];
-  }
-
-  // copy the texture
-  // id<MTLCommandQueue> commandQueue = [m_device newCommandQueue];
-  id<MTLCommandBuffer> commandBuffer = [m_updateQueue commandBuffer];
-  id<MTLBlitCommandEncoder> blitEncoder = [commandBuffer blitCommandEncoder];
-  [blitEncoder copyFromTexture:srcTexture
-                   sourceSlice:0
-                   sourceLevel:0
-                  sourceOrigin:(MTLOrigin){ 0, 0, 0 }
-                    sourceSize:(MTLSize){ srcTexture.width, srcTexture.height, 1 }
-                     toTexture:dstTexture
-              destinationSlice:0
-              destinationLevel:0
-             destinationOrigin:(MTLOrigin){ 0, 0, 0 }];
-  [blitEncoder endEncoding];
-  [commandBuffer commit];
-}
-
 - (bool)initialize:(NSView*)view
           andWidth:(int)width
          andHeight:(int)height
@@ -300,15 +269,11 @@ fragment float4 fragmentShader(VertexOut in [[stage_in]],
 
   // update
   if ((int)CefRenderHandler::PaintElementType::PET_VIEW == type) {
-    [self copyTextureResourceTo:m_cefViewTexture
-            withDestTextureDesc:m_lastViewTextureDesc
-                 fromSrcTexture:sharedTexture
-                withTextureDesc:sharedTextureDesc];
+    m_cefViewTexture = sharedTexture;
+    m_lastViewTextureDesc = sharedTextureDesc;
   } else if ((int)CefRenderHandler::PaintElementType::PET_POPUP == type) {
-    [self copyTextureResourceTo:m_cefPopupTexture
-            withDestTextureDesc:m_lastPopupTextureDesc
-                 fromSrcTexture:sharedTexture
-                withTextureDesc:sharedTextureDesc];
+    m_cefPopupTexture = sharedTexture;
+    m_lastPopupTextureDesc = sharedTextureDesc;
   } else {
     return;
   }
