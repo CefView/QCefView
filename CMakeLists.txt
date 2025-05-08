@@ -33,6 +33,10 @@ option(USE_SANDBOX
   "Enable CEF Sandbox"
   OFF
 )
+option(USE_GPU_OPTIMUS
+  "Enable GPU Optimus (Only for Windows and usually not needed)"
+  OFF
+)
 option(USE_WIN_DCOMPOSITION
   "Enabled Windows direct composition for hardware rendering, _WIN32_WINNT >= 0x602 (Windows 8) is required"
   OFF

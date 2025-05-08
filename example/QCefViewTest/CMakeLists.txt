@@ -54,6 +54,10 @@ source_group("Webres Files"
 )
 
 if(OS_WINDOWS)
+  if(USE_GPU_OPTIMUS)
+    add_definitions(-DENABLE_GPU_OPTIMUS=1)
+  endif()
+
   file(GLOB_RECURSE _PLATFORM_SRC_FILES
     "win/*.h"
     "win/*.cpp"

@@ -1,10 +1,24 @@
-#include <QApplication>
+﻿#include <QApplication>
 #include <QDir>
 #include <QStandardPaths>
 
 #include <QCefContext.h>
 
 #include "MainWindow.h"
+
+#ifdef Q_OS_WINDOWS
+#if defined(ENABLE_GPU_OPTIMUS) && ENABLE_GPU_OPTIMUS
+#include <windows.h>
+extern "C"
+{
+  // http://developer.download.nvidia.com/devzone/devcenter/gamegraphics/files/OptimusRenderingPolicies.pdf
+  __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+
+  // https://gpuopen.com/learn/amdpowerxpressrequesthighperformance
+  _declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;
+}
+#endif
+#endif
 
 int
 main(int argc, char* argv[])
@@ -42,7 +56,7 @@ main(int argc, char* argv[])
   // windowlessRenderingEnabled is set to true by default,
   // set to false to disable the OSR mode
   config.setWindowlessRenderingEnabled(true);
-  
+
   // disable sandbox
   // this is a bit complicated, please refer to:
   // https://developer.apple.com/documentation/xcode/configuring-the-macos-app-sandbox

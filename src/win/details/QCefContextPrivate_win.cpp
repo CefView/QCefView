@@ -9,18 +9,6 @@
 
 #include "../../details/QCefConfigPrivate.h"
 
-// This may not work in dll, if this doesn't work
-// just copy this to your exe source
-// Use discrete GPU by default.
-extern "C"
-{
-  // http://developer.download.nvidia.com/devzone/devcenter/gamegraphics/files/OptimusRenderingPolicies.pdf
-  __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
-
-  // https://gpuopen.com/learn/amdpowerxpressrequesthighperformance
-  _declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;
-}
-
 bool
 QCefContextPrivate::initializeCef(const QCefConfig* config)
 {
