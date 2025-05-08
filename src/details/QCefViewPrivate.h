@@ -183,6 +183,9 @@ protected:
 
   qreal scaleFactor();
 
+signals:
+  void requestUpdate();
+
 public slots:
   void onAppFocusChanged(QWidget* old, QWidget* now);
 

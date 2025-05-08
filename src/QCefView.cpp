@@ -29,6 +29,8 @@ QCefView::QCefView(const QString& url,
   : QWidget(parent, f)
   , d_ptr(new QCefViewPrivate(QCefContext::instance()->d_func(), this))
 {
+  setAttribute(Qt::WA_DontCreateNativeAncestors);
+
   // create browser
   d_ptr->createCefBrowser(this, url, setting ? setting->d_func() : nullptr);
 

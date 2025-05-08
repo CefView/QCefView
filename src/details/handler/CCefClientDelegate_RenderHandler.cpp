@@ -141,7 +141,7 @@ CCefClientDelegate::onPaint(CefRefPtr<CefBrowser>& browser,
   );
 
   // trigger paint event
-  pCefViewPrivate_->q_ptr->update();
+  emit pCefViewPrivate_->requestUpdate();
 }
 
 #if CEF_VERSION_MAJOR < 125
@@ -171,7 +171,7 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
                                                     data        //
   );
 
-  pCefViewPrivate_->q_ptr->update();
+  emit pCefViewPrivate_->requestUpdate();
 }
 #else
 void
@@ -207,7 +207,7 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
                                                     data        //
   );
 
-  pCefViewPrivate_->q_ptr->update();
+  emit pCefViewPrivate_->requestUpdate();
 }
 #endif
 

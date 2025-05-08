@@ -51,6 +51,8 @@ QCefViewPrivate::QCefViewPrivate(QCefContextPrivate* ctx, QCefView* view)
   sLiveInstances.insert(this);
 
   isOSRModeEnabled_ = pContextPrivate_->cefConfig()->windowlessRenderingEnabled().toBool();
+
+  connect(this, SIGNAL(requestUpdate()), view, SLOT(update()));
 }
 
 QCefViewPrivate::~QCefViewPrivate()
