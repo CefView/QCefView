@@ -10,30 +10,7 @@
 bool
 CCefClientDelegate::getRootScreenRect(CefRefPtr<CefBrowser>& browser, CefRect& rect)
 {
-  if (!IsValidBrowser(browser)) {
-    return false;
-  }
-
-  // get the screen which the view is currently residing in
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
-  QScreen* currentScreen = pCefViewPrivate_->q_ptr->screen();
-#else
-  QWidget* ancestorWidget = pCefViewPrivate_->q_ptr->window();
-  QWindow* ancestorWindow = ancestorWidget ? ancestorWidget->windowHandle() : nullptr;
-  QScreen* currentScreen = ancestorWindow ? ancestorWindow->screen() : nullptr;
-#endif
-
-  if (!currentScreen) {
-    // the view is not visible, so we retrieve the main screen info
-    currentScreen = QApplication::screens().at(0);
-  }
-
-  QRect rcScreen = currentScreen->geometry();
-
-  // qDebug() << "CCefClientDelegate::GetRootScreenRect:" << rcScreen;
-
-  rect.Set(rcScreen.x(), rcScreen.y(), rcScreen.width(), rcScreen.height());
-  return true;
+  return false;
 }
 
 void
@@ -44,11 +21,8 @@ CCefClientDelegate::getViewRect(CefRefPtr<CefBrowser>& browser, CefRect& rect)
     return;
   }
 
-  QSize rcSize = pCefViewPrivate_->q_ptr->size();
-
-  // qDebug() << "CCefClientDelegate::GetViewRect:" << QRect(ptWindow, rcSize);
-
-  rect.Set(0, 0, rcSize.width() ? rcSize.width() : 1, rcSize.height() ? rcSize.height() : 1);
+  auto size = pCefViewPrivate_->q_ptr->size();
+  rect.Set(0, 0, size.width() ? size.width() : 1, size.height() ? size.height() : 1);
 }
 
 bool
@@ -57,7 +31,7 @@ CCefClientDelegate::getScreenPoint(CefRefPtr<CefBrowser>& browser, int viewX, in
   if (!IsValidBrowser(browser))
     return false;
 
-  QPoint ptScreen = pCefViewPrivate_->q_ptr->mapToGlobal(QPoint(viewX, viewY));
+  auto ptScreen = pCefViewPrivate_->q_ptr->mapToGlobal(QPoint(viewX, viewY));
   screenX = ptScreen.x();
   screenY = ptScreen.y();
   return true;
@@ -69,33 +43,10 @@ CCefClientDelegate::getScreenInfo(CefRefPtr<CefBrowser>& browser, CefScreenInfo&
   if (!IsValidBrowser(browser))
     return false;
 
-  // get the screen which the view is currently residing in
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
-  QScreen* currentScreen = pCefViewPrivate_->q_ptr->screen();
-#else
-  QWidget* ancestorWidget = pCefViewPrivate_->q_ptr->window();
-  QWindow* ancestorWindow = ancestorWidget ? ancestorWidget->windowHandle() : nullptr;
-  QScreen* currentScreen = ancestorWindow ? ancestorWindow->screen() : nullptr;
-#endif
-
-  if (!currentScreen) {
-    // the view is not visible, so we retrieve the main screen info
-    currentScreen = QApplication::screens().at(0);
-  }
-
-  QRect rect = currentScreen->geometry();
-  QRect availableRect = currentScreen->availableGeometry();
-  screen_info.Set(currentScreen->devicePixelRatio(),                                                      //
-                  currentScreen->depth(),                                                                 //
-                  0,                                                                                      //
-                  false,                                                                                  //
-                  { rect.x(), rect.y(), rect.width(), rect.height() },                                    //
-                  { availableRect.x(), availableRect.y(), availableRect.width(), availableRect.height() } //
-  );
-
-  // qDebug() << "CCefClientDelegate::GetScreenInfo: pixel ratio:" << screen_info.device_scale_factor << "rect:" << rect
-  //           << "availableRect:" << availableRect;
-
+  auto size = pCefViewPrivate_->q_ptr->size();
+  screen_info.rect = { 0, 0, size.width(), size.height() };
+  screen_info.available_rect = { 0, 0, size.width(), size.height() };
+  screen_info.device_scale_factor = pCefViewPrivate_->q_ptr->devicePixelRatio();
   return true;
 }
 
@@ -139,9 +90,6 @@ CCefClientDelegate::onPaint(CefRefPtr<CefBrowser>& browser,
                                                     dataType,   //
                                                     data        //
   );
-
-  // trigger paint event
-  emit pCefViewPrivate_->requestUpdate();
 }
 
 #if CEF_VERSION_MAJOR < 125
@@ -170,8 +118,6 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
                                                     dataType,   //
                                                     data        //
   );
-
-  emit pCefViewPrivate_->requestUpdate();
 }
 #else
 void
@@ -206,8 +152,6 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
                                                     dataType,   //
                                                     data        //
   );
-
-  emit pCefViewPrivate_->requestUpdate();
 }
 #endif
 

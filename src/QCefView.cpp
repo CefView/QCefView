@@ -29,22 +29,16 @@ QCefView::QCefView(const QString& url,
   : QWidget(parent, f)
   , d_ptr(new QCefViewPrivate(QCefContext::instance()->d_func(), this))
 {
-  setAttribute(Qt::WA_DontCreateNativeAncestors);
-
-  // create browser
-  d_ptr->createCefBrowser(this, url, setting ? setting->d_func() : nullptr);
-
-  // set window attributes for OSR mode
   if (d_ptr->isOSRModeEnabled_) {
-    // OSR mode
-    setBackgroundRole(QPalette::Window);
+    setAttribute(Qt::WA_NativeWindow);
+    setAttribute(Qt::WA_DontCreateNativeAncestors);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_NoSystemBackground);
-    // important for hardware rendering
-    if (d_ptr->osr.pRenderer_ && d_ptr->osr.pRenderer_->isHardware()) {
-      setAttribute(Qt::WA_PaintOnScreen);
-    }
+    setAttribute(Qt::WA_PaintOnScreen);
   }
+
+  // create browser
+  d_ptr->createCefBrowser(url, setting ? setting->d_func() : nullptr);
 
   // track mouse
   setMouseTracking(true);
@@ -373,20 +367,12 @@ QCefView::inputMethodQuery(Qt::InputMethodQuery query) const
   return QWidget::inputMethodQuery(query);
 }
 
-void
-QCefView::render(QPainter* painter)
-{
-  Q_D(QCefView);
-
-  d->render(painter);
-}
-
 QPaintEngine*
 QCefView::paintEngine() const
 {
   Q_D(const QCefView);
 
-  if (d->isOSRModeEnabled_ && d->osr.pRenderer_ && d->osr.pRenderer_->isHardware()) {
+  if (d->isOSRModeEnabled_) {
     return nullptr;
   }
 
@@ -397,7 +383,6 @@ void
 QCefView::paintEvent(QPaintEvent* event)
 {
   Q_D(QCefView);
-
   d->onPaintEvent(event);
 }
 

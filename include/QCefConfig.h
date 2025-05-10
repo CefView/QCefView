@@ -1,4 +1,4 @@
-/*
+﻿/*
  * File: QCefConfig.h
  * Project: QCefView
  * Created: 21nd January 2021
@@ -88,7 +88,7 @@ public:
   void addCommandLineSwitch(const QString& smitch);
 
   /// <summary>
-  /// Adds a switch with value to the commandline args used to initialize the CEF
+  /// Adds a switch with value to the command line args used to initialize the CEF
   /// </summary>
   /// <param name="smitch">The swtich name</param>
   /// <param name="v">The switch value</param>
@@ -105,13 +105,25 @@ public:
   /// </summary>
   /// <returns>The flag indicates the enable/disable of OSR mode</returns>
   const QVariant windowlessRenderingEnabled() const;
-  
+
+  /// <summary>
+  /// Sets the flag to enable/disable standalone message loop thread for CEF main thread
+  /// </summary>
+  /// <param name="enabled">True to use standalone thread, false to disable</param>
+  void setStandaloneMessageLoopEnabled(const bool enabled);
+
+  /// <summary>
+  /// Gets the standalone message loop flag
+  /// </summary>
+  /// <returns>The flag indicates the enable/disable status of standalone message loop thread</returns>
+  const QVariant standaloneMessageLoopEnabled() const;
+
   /// <summary>
   /// Sets the flag to enable/disable sandbox
   /// </summary>
   /// <param name="disabled">True to enable sandbox, false to disable</param>
   void setSandboxDisabled(const bool disabled);
-  
+
   /// <summary>
   /// Gets the flag of sandbox status.
   /// </summary>
@@ -130,7 +142,7 @@ public:
   /// <returns>The flag indicates the enable/disable of OSR mode</returns>
   const QVariant commandLinePassthroughDisabled() const;
 
-#if !defined(Q_OS_MACOS)
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
   /// <summary>
   /// Sets the browser subprocess path
   /// </summary>

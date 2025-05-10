@@ -1,4 +1,4 @@
-/*
+﻿/*
  * File: QCefView.h
  * Project: QCefView
  * Created: 29th March 2016
@@ -57,7 +57,7 @@ public:
   /// The main frame identity
   /// </summary>
   static const QCefFrameId MainFrameID;
-  
+
   /// <summary>
   /// The identifier for all frames
   /// </summary>
@@ -511,12 +511,6 @@ public:
   /// Please refer to QWidget::inputMethodQuery
   /// </summary>
   QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
-
-  /// <summary>
-  /// Renders the view content to target painter
-  /// </summary>
-  /// <param name="painter">The target painter</param>
-  void render(QPainter* painter);
 
 protected:
   /// <summary>

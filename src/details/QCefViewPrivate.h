@@ -102,7 +102,7 @@ public:
     CefRefPtr<CefRunContextMenuCallback> contextMenuCallback_;
 
     // OSR renderer
-    std::shared_ptr<ICefViewRenderer> pRenderer_;
+    CefViewRendererPtr pRenderer_;
   } osr;
 
   /// <summary>
@@ -135,7 +135,7 @@ public:
 
   ~QCefViewPrivate();
 
-  void createCefBrowser(QCefView* view, const QString& url, const QCefSettingPrivate* setting);
+  void createCefBrowser(const QString& url, const QCefSettingPrivate* setting);
 
   void destroyCefBrowser();
 
@@ -179,12 +179,7 @@ protected:
 
   bool requestCloseFromWeb(CefRefPtr<CefBrowser>& browser);
 
-  void render(QPainter* painter);
-
   qreal scaleFactor();
-
-signals:
-  void requestUpdate();
 
 public slots:
   void onAppFocusChanged(QWidget* old, QWidget* now);
@@ -232,13 +227,13 @@ protected:
 
   QVariant onViewInputMethodQuery(Qt::InputMethodQuery query) const;
 
-  void onPaintEvent(QPaintEvent* event);
-
   void onViewInputMethodEvent(QInputMethodEvent* event);
 
   void onViewVisibilityChanged(bool visible);
 
   void onViewFocusChanged(bool focused);
+
+  void onPaintEvent(QPaintEvent* event);
 
   void onViewSizeChanged(const QSize& size, const QSize& oldSize);
 

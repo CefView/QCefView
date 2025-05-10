@@ -1,4 +1,4 @@
-#include "CefViewRendererFactory.h"
+﻿#include "CefViewRendererFactory.h"
 
 #include "hardware/CefViewHardwareRenderer.h"
 #include "software/QtSoftwareRenderer.h"
@@ -10,7 +10,7 @@ createRenderer(bool hardware)
   if (hardware) {
     return createHardwareRenderer();
   } else {
-    return std::make_shared<QtSoftwareRenderer>();
+    return CefViewRendererPtr(new QtSoftwareRenderer);
   }
 }
 } // namespace CefViewRendererFactory

@@ -1,4 +1,4 @@
-#include <QCefConfig.h>
+﻿#include <QCefConfig.h>
 
 #include "details/QCefConfigPrivate.h"
 #include "details/utils/CommonUtils.h"
@@ -60,10 +60,34 @@ QCefConfig::windowlessRenderingEnabled() const
 }
 
 void
+QCefConfig::setStandaloneMessageLoopEnabled(const bool enabled)
+{
+  Q_D(QCefConfig);
+
+#if defined(Q_OS_MACOS)
+  qWarning() << "StandaloneMessgeLoop is not supported on macOS";
+#else
+  d->standaloneMessgeLoopEnabled_ = enabled;
+#endif
+}
+
+const QVariant
+QCefConfig::standaloneMessageLoopEnabled() const
+{
+  Q_D(const QCefConfig);
+  return d->standaloneMessgeLoopEnabled_;
+}
+
+void
 QCefConfig::setSandboxDisabled(const bool disabled)
 {
   Q_D(QCefConfig);
+
+#if defined(CEF_USE_SANDBOX)
   d->sandboxDisabled_ = disabled;
+#else
+  qWarning() << "Sandbox status is not configurable when compile switch CEF_USE_SANDBOX is OFF";
+#endif
 }
 
 const QVariant
@@ -87,7 +111,7 @@ QCefConfig::commandLinePassthroughDisabled() const
   return d->commandLinePassthroughDisabled_;
 }
 
-#if !defined(Q_OS_MACOS)
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
 void
 QCefConfig::setBrowserSubProcessPath(const QString& path)
 {

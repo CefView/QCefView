@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+﻿#include "MainWindow.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -64,11 +64,18 @@ MainWindow::createLeftCefView()
   }
 
   QCefSetting setting;
-  setting.setWindowlessFrameRate(1000);
   setting.setHardwareAcceleration(false);
-  // setting.setBackgroundColor(Qt::magenta);
+  setting.setWindowlessFrameRate(120);
+  setting.setBackgroundColor(Qt::cyan);
 
-  m_pLeftCefViewWidget = new CefViewWidget("https://www.testufo.com/", &setting, this);
+  // m_pLeftCefViewWidget = new QCefView(LEFT_INDEX_URL, &setting, this);
+  m_pLeftCefViewWidget = new QCefView("https://www.testufo.com/", &setting, this);
+
+  // set widget background
+  // QPalette pal = m_pLeftCefViewWidget->palette();
+  // pal.setColor(QPalette::Window, Qt::white);
+  // m_pLeftCefViewWidget->setPalette(pal);
+
   // connect the invokeMethod to the slot
   connect(m_pLeftCefViewWidget, &QCefView::invokeMethod, this, &MainWindow::onInvokeMethod);
 
@@ -93,17 +100,17 @@ MainWindow::createRightCefView()
 
   // build settings for per QCefView
   QCefSetting setting;
-#if CEF_VERSION_MAJOR < 100
-  setting.setPlugins(false);
-#endif
-  setting.setWindowlessFrameRate(1000);
   setting.setHardwareAcceleration(true);
-  QColor background(0, 255, 0, 255);
-  setting.setBackgroundColor(background);
+  setting.setWindowlessFrameRate(120);
+  // QColor background(0, 255, 0, 255);
+  // setting.setBackgroundColor(background);
 
   // create the QCefView widget and add it to the layout container
   // m_pRightCefViewWidget = new QCefView(RIGHT_INDEX_URL, &setting, this);
-  m_pRightCefViewWidget = new QCefView("https://www.testufo.com/", &setting, this);
+  m_pRightCefViewWidget = new QCefView("https://www.google.com/", &setting, this);
+  QPalette pal = m_pRightCefViewWidget->palette();
+  pal.setColor(QPalette::Window, Qt::green);
+  m_pRightCefViewWidget->setPalette(pal);
 
   // auto vl = new QVBoxLayout(m_pRightCefViewWidget);
   // auto btn = new QPushButton("TEST BUTTON OVERLAY", m_pRightCefViewWidget);

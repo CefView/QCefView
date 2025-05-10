@@ -19,8 +19,6 @@
 CefViewWidget::CefViewWidget(const QString url, const QCefSetting* setting, QWidget* parent /* = 0*/)
   : QCefView(url, setting, parent)
 {
-  // setStyleSheet("background: blue;");
-
   connect(this, &CefViewWidget::draggableRegionChanged, this, &CefViewWidget::onDraggableRegionChanged);
   connect(this, &CefViewWidget::nativeBrowserCreated, this, &CefViewWidget::onNativeBrowserWindowCreated);
 }

@@ -3,15 +3,15 @@
 #pragma region stl_headers
 #include <list>
 #include <string>
-#pragma endregion 
+#pragma endregion
 
 #pragma region cef_headers
 #include <include/cef_app.h>
-#pragma endregion 
+#pragma endregion
 
 #pragma region qt_headers
 #include <QVariant>
-#pragma endregion 
+#pragma endregion
 
 #include <QCefSetting.h>
 
@@ -37,7 +37,7 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // Non CEF browser setting values
   QSize windowInitialSize_;
-  bool hardwareAcceleration_ = false;
+  bool hardwareAcceleration_ = true;
 
   //////////////////////////////////////////////////////////////////////////
   // CEF browser setting values

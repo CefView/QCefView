@@ -3,34 +3,34 @@
 
 #pragma once
 
+#include <QBackingStore>
 #include <QImage>
-#include <QMutex>
 
-#include "../ICefViewRenderer.h"
+#include "details/render/ICefViewRenderer.h"
 
 class QtSoftwareRenderer : public ICefViewRenderer
 {
+  Q_OBJECT
+
 private:
+  QScopedPointer<QBackingStore> m_backingStore;
+
+  // popup status
   bool m_showPopup = false;
   CefRect m_popupRect;
-  CefColor m_backgroundColor = 0;
 
-  float m_scale = 1.0f;
-  int m_width = 1;
-  int m_height = 1;
-
-  QMutex m_qViewPaintLock;
-  QImage m_qCefViewFrame;
-  QMutex m_qPopupPaintLock;
-  QImage m_qCefPopupFrame;
+  // images for internal processing
+  QImage m_cefViewImage;
+  QImage m_cefPopupImage;
 
 public:
   QtSoftwareRenderer();
+
   ~QtSoftwareRenderer();
 
   bool isHardware() override { return false; }
 
-  bool initialize(void* wid, int width, int height, float scale, const CefColor& background) override;
+  bool initialize(QWidget* widget, int width, int height, float scale, const QColor& clear) override;
 
   void uninitialize() override;
 
@@ -45,7 +45,7 @@ public:
                        const FrameDataType& dataType,
                        const FrameData& data) override;
 
-  void render(void* painter) override;
+  void render() override;
 };
 
 #endif

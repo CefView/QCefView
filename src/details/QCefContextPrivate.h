@@ -43,12 +43,10 @@ private:
   /// </summary>
   const QCefConfig* config_;
 
-#if defined(Q_OS_MACOS) || defined(CEF_USE_QT_EVENT_LOOP)
   /// <summary>
   ///
   /// </summary>
   QTimer cefWorkerTimer_;
-#endif
 
 #if defined(Q_OS_WINDOWS)
   /// <summary>

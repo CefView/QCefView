@@ -2,17 +2,45 @@
 #define ICEFVIEWRENDERER_H
 
 #pragma once
-#include <memory>
-
 #include <include/cef_app.h>
+#include <include/cef_task.h>
 
-using CefColor = cef_color_t;
+#include <QColor>
+#include <QPointer>
+#include <QSharedPointer>
+#include <QSize>
+#include <QWidget>
 
 /// <summary>
 ///
 /// </summary>
-class ICefViewRenderer
+class ICefViewRenderer : public QObject
 {
+  Q_OBJECT
+
+protected:
+  QPointer<QWidget> m_widget;
+
+  class RenderTask : public CefTask
+  {
+    IMPLEMENT_REFCOUNTING(RenderTask);
+
+    std::function<void()> work;
+
+  public:
+    RenderTask(std::function<void()> t)
+      : work(t)
+    {
+    }
+
+    void Execute() override
+    {
+      if (work) {
+        work();
+      }
+    }
+  };
+
 public:
   /// <summary>
   ///
@@ -28,13 +56,13 @@ public:
   /// <summary>
   ///
   /// </summary>
-  /// <param name="wid"></param>
+  /// <param name="widget"></param>
   /// <param name="width"></param>
   /// <param name="height"></param>
   /// <param name="scale"></param>
-  /// <param name="background"></param>
+  /// <param name="clear"></param>
   /// <returns></returns>
-  virtual bool initialize(void* wid, int width, int height, float scale, const CefColor& background) = 0;
+  virtual bool initialize(QWidget* widget, int width, int height, float scale, const QColor& clear) = 0;
 
   /// <summary>
   ///
@@ -60,6 +88,49 @@ public:
   /// </summary>
   /// <param name="rect"></param>
   virtual void updatePopupRect(const CefRect& rect) = 0;
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
+  qreal widgetScale()
+  {
+    qreal scale = 1.0f;
+    if (m_widget) {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
+      scale = m_widget->devicePixelRatioF();
+#else
+      scale = m_widget->devicePixelRatio();
+#endif
+    }
+    return scale;
+  }
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
+  QSize widgetSize()
+  {
+    QSize size;
+    if (m_widget) {
+      size = m_widget->size();
+    }
+    return size;
+  }
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <returns></returns>
+  QColor widgetBackground()
+  {
+    QColor background;
+    if (m_widget) {
+      background = m_widget->palette().color(m_widget->backgroundRole());
+    }
+    return background;
+  }
 
   /// <summary>
   ///
@@ -150,10 +221,12 @@ public:
   /// <summary>
   ///
   /// </summary>
-  /// <param name="painter"></param>
-  virtual void render(void* painter) = 0;
+  virtual void render() = 0;
 };
 
-using CefViewRendererPtr = std::shared_ptr<ICefViewRenderer>;
+/// <summary>
+///
+/// </summary>
+using CefViewRendererPtr = QSharedPointer<ICefViewRenderer>;
 
 #endif

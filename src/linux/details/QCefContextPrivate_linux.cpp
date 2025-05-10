@@ -13,26 +13,28 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
   CefSettings cef_settings;
   QCefConfigPrivate::CopyToCefSettings(config, &cef_settings);
 
-  if (CefString(&cef_settings.browser_subprocess_path).empty()) {
-    QString strExePath = QDir(QCoreApplication::applicationDirPath()).filePath(kCefViewRenderProcessName);
-    CefString(&cef_settings.browser_subprocess_path) = QDir::toNativeSeparators(strExePath).toStdString();
-  }
-
 #if CEF_VERSION_MAJOR >= 125 && CEF_VERSION_MAJOR <= 127
   //  https://github.com/chromiumembedded/cef/issues/3685
   cef_settings.chrome_runtime = true;
 #endif
 
   // fixed values
+#if CEF_VERSION_MAJOR < 128
   cef_settings.pack_loading_disabled = false;
-
-#if defined(CEF_USE_QT_EVENT_LOOP)
-  cef_settings.multi_threaded_message_loop = false;
-  cef_settings.external_message_pump = true;
-#else
-  cef_settings.multi_threaded_message_loop = true;
-  cef_settings.external_message_pump = false;
 #endif
+
+  // external message pump
+  if (cef_settings.multi_threaded_message_loop) {
+    cef_settings.external_message_pump = false;
+  } else {
+    cef_settings.external_message_pump = true;
+  }
+
+  // path values
+  if (CefString(&cef_settings.browser_subprocess_path).empty()) {
+    QString strExePath = QDir(QCoreApplication::applicationDirPath()).filePath(kCefViewRenderProcessName);
+    CefString(&cef_settings.browser_subprocess_path) = QDir::toNativeSeparators(strExePath).toStdString();
+  }
 
   // Initialize CEF.
   auto cmdArgs = QCefConfigPrivate::GetCommandLineArgs(config);

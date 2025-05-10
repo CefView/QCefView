@@ -39,10 +39,6 @@ if(USE_SANDBOX AND(OS_WINDOWS OR OS_MACOS))
   add_definitions(-DCEF_USE_SANDBOX)
 endif()
 
-if(USE_QT_EVENT_LOOP)
-  add_definitions(-DCEF_USE_QT_EVENT_LOOP)
-endif()
-
 if(OS_WINDOWS)
   file(GLOB_RECURSE QCefView_Windows_SRC_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/win/*.h"
@@ -68,7 +64,7 @@ if(OS_WINDOWS)
   )
 
   if(BUILD_STATIC)
-    target_link_options(QCefView 
+    target_link_options(QCefView
       PUBLIC
       "/DELAYLOAD:libcef.dll"
     )
@@ -81,7 +77,7 @@ if(OS_WINDOWS)
       delayimp
     )
   else()
-    target_link_options(QCefView 
+    target_link_options(QCefView
       PRIVATE
       "/DELAYLOAD:libcef.dll"
     )
@@ -184,6 +180,7 @@ if(OS_MACOS)
 
   find_library(METAL_FRAMEWORK Metal)
   find_library(QUARTZCORE_FRAMEWORK QuartzCore)
+
   if(BUILD_STATIC)
     target_link_libraries(QCefView
       PUBLIC
@@ -197,7 +194,6 @@ if(OS_MACOS)
       ${QUARTZCORE_FRAMEWORK}
     )
   endif()
-
 
   set_target_properties(QCefView
     PROPERTIES
