@@ -2,10 +2,13 @@
 #define OPENGLRENDERBACKEND_H
 
 #pragma once
+
 #include "details/render/ICefViewRenderer.h"
 
 class OpenGLRenderBackend : public ICefViewRenderer
 {
+  Q_OBJECT
+
 public:
   OpenGLRenderBackend();
 
@@ -13,7 +16,7 @@ public:
 
   bool isHardware() override { return true; }
 
-  bool initialize(void* wid, int width, int height, float scale, const CefColor& background) override;
+  bool initialize(QWidget* widget, int width, int height, float scale, const QColor& clear) override;
 
   void uninitialize() override;
 
@@ -28,6 +31,6 @@ public:
                        const FrameDataType& dataType,
                        const FrameData& data) override;
 
-  void render(void* painter) override;
+  void render() override;
 };
 #endif

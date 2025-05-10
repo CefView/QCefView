@@ -7,7 +7,7 @@
 #include <include/cef_application_mac.h>
 #include <include/cef_sandbox_mac.h>
 #include <include/wrapper/cef_library_loader.h>
-#pragma endregion 
+#pragma endregion
 
 #include <CefViewCoreProtocol.h>
 
@@ -20,25 +20,28 @@
 #define CEFVIEW_FOLDER_NAME "CefView"
 
 @interface PathFactory : NSObject
-+ (NSString*) AppMainBundlePath;
-+ (NSString*) CefFrameworkPath;
-+ (NSString*) CefSubprocessPath;
++ (NSString*)AppMainBundlePath;
++ (NSString*)CefFrameworkPath;
++ (NSString*)CefSubprocessPath;
 @end
 
 @implementation PathFactory
-+ (NSString*) AppMainBundlePath {
++ (NSString*)AppMainBundlePath
+{
   return [[NSBundle mainBundle] bundlePath];
 }
 
-+ (NSString*) CefFrameworkPath {
-  NSString* path =  [[NSBundle bundleForClass:[PathFactory class]] resourcePath];
++ (NSString*)CefFrameworkPath
+{
+  NSString* path = [[NSBundle bundleForClass:[PathFactory class]] resourcePath];
   path = [path stringByAppendingPathComponent:@CEFVIEW_FOLDER_NAME];
   path = [path stringByAppendingPathComponent:@CEF_FRAMEWORK_NAME];
   return path;
 }
 
-+ (NSString*) CefSubprocessPath {
-  NSString* path =  [[NSBundle bundleForClass:[PathFactory class]] resourcePath];
++ (NSString*)CefSubprocessPath
+{
+  NSString* path = [[NSBundle bundleForClass:[PathFactory class]] resourcePath];
   path = [path stringByAppendingPathComponent:@CEFVIEW_FOLDER_NAME];
   path = [path stringByAppendingPathComponent:@HELPER_BUNDLE_NAME];
   path = [path stringByAppendingPathComponent:@"Contents"];
@@ -50,15 +53,18 @@
 
 bool g_handling_send_event = false;
 
-@interface NSApplication (CocoaCefApp) <CefAppProtocol>
-- (void)_swizzled_sendEvent:(NSEvent *)event;
+@interface
+NSApplication (CocoaCefApp)<CefAppProtocol>
+- (void)_swizzled_sendEvent:(NSEvent*)event;
 - (void)_swizzled_terminate:(id)sender;
 - (void)_swizzled_run;
 @end
 
-@implementation NSApplication (CocoaCefApp)
+@implementation
+NSApplication (CocoaCefApp)
 // wraps sendEvent, terminate and run
-+ (void)load {
++ (void)load
+{
   // swizzle the sendEvent method
   Method original_sendEvent = class_getInstanceMethod(self, @selector(sendEvent:));
   Method swizzled_sendEvent = class_getInstanceMethod(self, @selector(_swizzled_sendEvent:));
@@ -75,26 +81,31 @@ bool g_handling_send_event = false;
   // method_exchangeImplementations(original_run, swizzled_run);
 }
 
-- (BOOL)isHandlingSendEvent {
+- (BOOL)isHandlingSendEvent
+{
   return g_handling_send_event;
 }
 
-- (void)setHandlingSendEvent:(BOOL)handlingSendEvent {
+- (void)setHandlingSendEvent:(BOOL)handlingSendEvent
+{
   g_handling_send_event = handlingSendEvent;
 }
 
-- (void)_swizzled_sendEvent:(NSEvent *)event {
+- (void)_swizzled_sendEvent:(NSEvent*)event
+{
   CefScopedSendingEvent sendingEventScoper;
-  
+
   [self _swizzled_sendEvent:event];
 }
 
-- (void)_swizzled_terminate:(id)sender {
+- (void)_swizzled_terminate:(id)sender
+{
 
   [self _swizzled_terminate:sender];
 }
 
-- (void)_swizzled_run {
+- (void)_swizzled_run
+{
   Method original_run = class_getInstanceMethod(self.class, @selector(run));
   Method swizzled_run = class_getInstanceMethod(self.class, @selector(_swizzled_run));
   method_exchangeImplementations(original_run, swizzled_run);
@@ -184,12 +195,18 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
 #endif
 
   // fixed values
+#if CEF_VERSION_MAJOR < 128
+  cef_settings.pack_loading_disabled = false;
+#endif
+
+  // external_message_pump not supported on macOS
+  cef_settings.multi_threaded_message_loop = false;
+  cef_settings.external_message_pump = true;
+
+  // path values
   CefString(&cef_settings.framework_dir_path) = cefFrameworkPath();
   CefString(&cef_settings.browser_subprocess_path) = cefSubprocessPath();
   CefString(&cef_settings.main_bundle_path) = appMainBundlePath();
-  cef_settings.pack_loading_disabled = false;
-  cef_settings.external_message_pump = true;
-  cef_settings.multi_threaded_message_loop = false;
 
   // Initialize CEF.
   auto cmdArgs = QCefConfigPrivate::GetCommandLineArgs(config);
@@ -224,4 +241,3 @@ QCefContextPrivate::uninitializeCef()
 
   freeCefLibrary();
 }
-

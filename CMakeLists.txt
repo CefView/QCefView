@@ -42,16 +42,6 @@ option(USE_WIN_DCOMPOSITION
   OFF
 )
 
-# Only works for Windows & Linux, always enabled on macOS
-# If enable then:
-# CefSettings.multi_threaded_message_loop = false && CefSettings.external_message_pump = true
-# else:
-# CefSettings.multi_threaded_message_loop = true && CefSettings.external_message_pump = false
-option(USE_QT_EVENT_LOOP
-  "Enable the integration of CEF message loop thread into Qt event loop"
-  OFF
-)
-
 # append cmake config module path
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 

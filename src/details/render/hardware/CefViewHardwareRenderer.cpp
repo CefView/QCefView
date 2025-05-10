@@ -14,11 +14,11 @@ CefViewRendererPtr
 createHardwareRenderer()
 {
 #if defined(OS_WINDOWS)
-  return std::make_shared<DX11RenderBackend>();
+  return CefViewRendererPtr(new DX11RenderBackend);
 #elif defined(OS_MACOS)
-  return std::make_shared<MetalRenderBackend>();
+  return CefViewRendererPtr(new MetalRenderBackend);
 #elif defined(OS_LINUX)
-  return std::make_shared<OpenGLRenderBackend>();
+  return CefViewRendererPtr(new OpenGLRenderBackend);
 #else
 #error "Unsupported platform"
 #endif

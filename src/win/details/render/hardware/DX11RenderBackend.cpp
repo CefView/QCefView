@@ -59,7 +59,7 @@ float4 main(VS_OUTPUT input) : SV_Target
 )";
 
 bool
-DX11RenderBackend::CreateDeviceAndSwapchain()
+DX11RenderBackend::CreateDeviceAndSwapchain(HWND hWnd, int width, int height)
 {
   // use the DirectComposition to render the CefView
   // Create D3D11 device and context
@@ -93,8 +93,8 @@ DX11RenderBackend::CreateDeviceAndSwapchain()
   DXGI_SWAP_CHAIN_DESC1 sd;
   ZeroMemory(&sd, sizeof(sd));
   sd.BufferCount = 2;
-  sd.Width = (UINT)m_width;
-  sd.Height = (UINT)m_height;
+  sd.Width = width;
+  sd.Height = height;
   sd.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
   sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
   sd.SampleDesc.Count = 1;
@@ -123,7 +123,7 @@ DX11RenderBackend::CreateDeviceAndSwapchain()
   // Create DComposition target
   ComPtr<IDCompositionTarget> pDCompositionTarget;
   HR_CHECK(S_OK ==
-           pDecompositionDevice->CreateTargetForHwnd(m_hWnd, FALSE, pDCompositionTarget.ReleaseAndGetAddressOf()));
+           pDecompositionDevice->CreateTargetForHwnd(hWnd, FALSE, pDCompositionTarget.ReleaseAndGetAddressOf()));
 
   // Set root to target
   HR_CHECK(S_OK == pDCompositionTarget->SetRoot(pDCompositionVisual.Get()));
@@ -137,15 +137,13 @@ DX11RenderBackend::CreateDeviceAndSwapchain()
 #else
   // create device and swapchain
   DXGI_SWAP_CHAIN_DESC sd = {};
-  sd.BufferCount = 1;
-  sd.BufferDesc.Width = m_width;
-  sd.BufferDesc.Height = m_height;
+  sd.BufferCount = 2;
+  sd.BufferDesc.Width = width;
+  sd.BufferDesc.Height = height;
   sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-  sd.BufferDesc.RefreshRate.Numerator = 60;
-  sd.BufferDesc.RefreshRate.Denominator = 1;
 
   sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-  sd.OutputWindow = m_hWnd;
+  sd.OutputWindow = hWnd;
   sd.SampleDesc.Count = 1;
   sd.SampleDesc.Quality = 0;
   sd.Windowed = TRUE;
@@ -168,8 +166,13 @@ DX11RenderBackend::CreateDeviceAndSwapchain()
   }
 #endif
 
+  // convert to ID3D11Device1
+  Microsoft::WRL::ComPtr<ID3D11Device1> pD3dDevice1;
+  HR_CHECK(S_OK == pD3dDevice.As(&pD3dDevice1));
+
   m_swapChain = pSwapChain;
   m_d3dContext = pD3dContext;
+  m_d3dDevice1 = pD3dDevice1;
   m_d3dDevice = pD3dDevice;
   return true;
 }
@@ -248,13 +251,13 @@ bool
 DX11RenderBackend::CreateSampler()
 {
   D3D11_SAMPLER_DESC desc = {};
-  desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+  desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
   desc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
   desc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
   desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
   desc.ComparisonFunc = D3D11_COMPARISON_NEVER;
   desc.MinLOD = 0.0f;
-  desc.MaxLOD = D3D11_FLOAT32_MAX;
+  desc.MaxLOD = 0.0f;
   HRESULT hr = m_d3dDevice->CreateSamplerState(&desc, m_samplerState.ReleaseAndGetAddressOf());
   if (FAILED(hr)) {
     return false;
@@ -288,56 +291,38 @@ DX11RenderBackend::CreateBlender()
 }
 
 bool
-DX11RenderBackend::CreateRenderTarget()
+DX11RenderBackend::CreateRenderTargetView()
 {
-  // resize the swap chain
-  HRESULT hr = m_swapChain->ResizeBuffers(0, m_width, m_height, DXGI_FORMAT_UNKNOWN, 0);
-  if (FAILED(hr)) {
-    if (hr == DXGI_ERROR_DEVICE_REMOVED || hr == DXGI_ERROR_DEVICE_RESET) {
-      HandleDeviceLost();
-    }
+  if (!m_swapChain) {
     return false;
   }
 
   // get back buffer
   ComPtr<ID3D11Texture2D> pBackBuffer;
-  hr = m_swapChain->GetBuffer(0, IID_PPV_ARGS(pBackBuffer.ReleaseAndGetAddressOf()));
+  HRESULT hr = m_swapChain->GetBuffer(0, IID_PPV_ARGS(pBackBuffer.ReleaseAndGetAddressOf()));
   if (FAILED(hr)) {
     return false;
   }
-
-  DXGI_SWAP_CHAIN_DESC desc;
-  m_swapChain->GetDesc(&desc);
+  DXGI_SWAP_CHAIN_DESC swapchainDesc = { 0 };
+  m_swapChain->GetDesc(&swapchainDesc);
 
   // create render target view
   D3D11_RENDER_TARGET_VIEW_DESC vdesc = {};
   vdesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
   vdesc.Texture2D.MipSlice = 0;
-  vdesc.Format = desc.BufferDesc.Format;
+  vdesc.Format = swapchainDesc.BufferDesc.Format;
   ComPtr<ID3D11RenderTargetView> pRenderTargetView;
-  hr = m_d3dDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, pRenderTargetView.ReleaseAndGetAddressOf());
+  hr = m_d3dDevice->CreateRenderTargetView(pBackBuffer.Get(), &vdesc, pRenderTargetView.ReleaseAndGetAddressOf());
   if (FAILED(hr)) {
     return false;
   }
 
-  // create vertex buffer
-  ComPtr<ID3D11Buffer> pViewVertexBuffer;
-  if (!CreateQuadVertexBuffer(0.0f,                                      //
-                              0.0f,                                      //
-                              static_cast<float>(m_width),               //
-                              static_cast<float>(m_height),              //
-                              pViewVertexBuffer.ReleaseAndGetAddressOf() //
-                              )) {
-    return false;
-  }
-
   m_renderTargetView = pRenderTargetView;
-  m_viewVertexBuffer = pViewVertexBuffer;
   return true;
 }
 
 void
-DX11RenderBackend::SetupPipeline()
+DX11RenderBackend::SetupPipeline(int width, int height)
 {
   ////////////////////////////////////////////////////////////////////////
   // IA
@@ -349,21 +334,6 @@ DX11RenderBackend::SetupPipeline()
   // VS
   // vertex shader
   m_d3dContext->VSSetShader(m_vertexShader.Get(), nullptr, 0);
-
-  ////////////////////////////////////////////////////////////////////////
-  // Rasterizer
-  // viewport
-  D3D11_VIEWPORT vpList[] = {
-    {
-      0.f,             // FLOAT TopLeftX;
-      0.f,             // FLOAT TopLeftY;
-      (FLOAT)m_width,  // FLOAT Width;
-      (FLOAT)m_height, // FLOAT Height;
-      D3D11_MIN_DEPTH, // FLOAT MinDepth;
-      D3D11_MAX_DEPTH, // FLOAT MaxDepth;
-    } //
-  };
-  m_d3dContext->RSSetViewports(ARRAYSIZE(vpList), vpList);
 
   ////////////////////////////////////////////////////////////////////////
   // PS
@@ -383,24 +353,81 @@ DX11RenderBackend::SetupPipeline()
   // render target
   ID3D11RenderTargetView* rtvList[] = { m_renderTargetView.Get() };
   m_d3dContext->OMSetRenderTargets(ARRAYSIZE(rtvList), rtvList, nullptr);
+
+  ////////////////////////////////////////////////////////////////////////
+  // RS
+  // sync viewport
+  D3D11_VIEWPORT vpList[] = {
+    {
+      0.f,             // FLOAT TopLeftX;
+      0.f,             // FLOAT TopLeftY;
+      (FLOAT)(width),  // FLOAT Width;
+      (FLOAT)(height), // FLOAT Height;
+      D3D11_MIN_DEPTH, // FLOAT MinDepth;
+      D3D11_MAX_DEPTH, // FLOAT MaxDepth;
+    } //
+  };
+  m_d3dContext->RSSetViewports(ARRAYSIZE(vpList), vpList);
+}
+
+void
+DX11RenderBackend::ResizeResource(int width, int height)
+{
+  // remove and release current render target
+  m_d3dContext->OMSetRenderTargets(0, nullptr, nullptr);
+  m_renderTargetView.Reset();
+
+  // resize the swap chain
+  HRESULT hr = m_swapChain->ResizeBuffers(0, width, height, DXGI_FORMAT_UNKNOWN, 0);
+  if (FAILED(hr)) {
+    if (hr == DXGI_ERROR_DEVICE_REMOVED || hr == DXGI_ERROR_DEVICE_RESET) {
+      return;
+    }
+  }
+
+  // create new render target
+  if (!CreateRenderTargetView()) {
+    return;
+  }
+
+  // re-bind render target
+  ID3D11RenderTargetView* rtvList[] = { m_renderTargetView.Get() };
+  m_d3dContext->OMSetRenderTargets(ARRAYSIZE(rtvList), rtvList, nullptr);
+
+  // sync viewport
+  D3D11_VIEWPORT vpList[] = {
+    {
+      0.f,             // FLOAT TopLeftX;
+      0.f,             // FLOAT TopLeftY;
+      (FLOAT)(width),  // FLOAT Width;
+      (FLOAT)(height), // FLOAT Height;
+      D3D11_MIN_DEPTH, // FLOAT MinDepth;
+      D3D11_MAX_DEPTH, // FLOAT MaxDepth;
+    } //
+  };
+  m_d3dContext->RSSetViewports(ARRAYSIZE(vpList), vpList);
 }
 
 void
 DX11RenderBackend::HandleDeviceLost()
 {
   // recreate everything
-  initialize(m_hWnd, m_width, m_height, m_scale, m_backgroundColor);
+  auto size = widgetSize();
+  auto scale = widgetScale();
+  auto color = widgetBackground();
+  initialize(m_widget, size.width(), size.height(), scale, color);
 }
 
-#define ScreenToNDC(xx, yy) XMFLOAT3(2.0f * (xx) / m_width - 1.0f, 1.0f - 2.0f * (yy) / m_height, 1.0f)
+#define ScreenToNDC(x, y) XMFLOAT3(2.0f * (x) / viewWidth - 1.0f, 1.0f - 2.0f * (y) / viewHeight, 1.0f)
 
 bool
-DX11RenderBackend::CreateQuadVertexBuffer(float x,                //
-                                          float y,                //
-                                          float w,                //
-                                          float h,                //
-                                          ID3D11Buffer** ppBuffer //
-)
+DX11RenderBackend::CreateQuadVertexBuffer(float x,        //
+                                          float y,        //
+                                          float w,        //
+                                          float h,        //
+                                          int viewWidth,  //
+                                          int viewHeight, //
+                                          ID3D11Buffer** ppBuffer)
 {
   // vertex
   Vertex vertices[] = //
@@ -428,126 +455,31 @@ DX11RenderBackend::CreateQuadVertexBuffer(float x,                //
   return true;
 }
 
-void
-DX11RenderBackend::UpdateTextureResource(Microsoft::WRL::ComPtr<ID3D11Texture2D>& pSharedTexture,
-                                         Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& pTargetSRV,
-                                         D3D11_TEXTURE2D_DESC& targetTextureDesc)
-{
-  HRESULT hr = E_FAIL;
-
-  // get texture description
-  D3D11_TEXTURE2D_DESC sharedTextureDesc = {};
-  pSharedTexture->GetDesc(&sharedTextureDesc);
-
-  // update texture desc
-  targetTextureDesc = sharedTextureDesc;
-
-  // create SRV description
-  D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
-  srvDesc.Format = targetTextureDesc.Format;
-  srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-  srvDesc.Texture2D.MostDetailedMip = 0;
-  srvDesc.Texture2D.MipLevels = 1;
-
-  // update shader resource view
-  {
-    std::lock_guard<std::mutex> l(m_d3dContextLock);
-    hr = m_d3dDevice->CreateShaderResourceView(pSharedTexture.Get(), &srvDesc, pTargetSRV.ReleaseAndGetAddressOf());
-    if (FAILED(hr)) {
-      return;
-    }
-  }
-}
-
-void
-DX11RenderBackend::SetTargetView()
-{
-  ID3D11RenderTargetView* rtvList[] = { m_renderTargetView.Get() };
-  m_d3dContext->OMSetRenderTargets(ARRAYSIZE(rtvList), rtvList, nullptr);
-}
-
-void
-DX11RenderBackend::ClearTargetView()
-{
-  // clear the back buffer (RGBA)
-  float clearColor[4] = {
-    static_cast<float>(CefColorGetR(m_backgroundColor) / 255.f),
-    static_cast<float>(CefColorGetG(m_backgroundColor) / 255.f),
-    static_cast<float>(CefColorGetB(m_backgroundColor) / 255.f),
-    static_cast<float>(CefColorGetA(m_backgroundColor) / 255.f),
-  };
-  m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), clearColor);
-}
-
-void
-DX11RenderBackend::DrawCefView()
-{
-  // assembly
-  UINT stride = sizeof(Vertex);
-  UINT offset = 0;
-  ID3D11Buffer* vertexBufferList[] = { m_viewVertexBuffer.Get() };
-  m_d3dContext->IASetVertexBuffers(0, ARRAYSIZE(vertexBufferList), vertexBufferList, &stride, &offset);
-
-  // pixel shader
-  ID3D11ShaderResourceView* viewSRVList[] = { m_viewSRV.Get() };
-  m_d3dContext->PSSetShaderResources(0, ARRAYSIZE(viewSRVList), viewSRVList);
-  m_d3dContext->Draw(4, 0);
-}
-
-void
-DX11RenderBackend::DrawCefPopup()
-{
-  if (!m_showPopup || !m_popupSRV) {
-    return;
-  }
-
-  // assembly
-  UINT stride = sizeof(Vertex);
-  UINT offset = 0;
-  ID3D11Buffer* vertexBufferList[] = { m_popupVertexBuffer.Get() };
-  m_d3dContext->IASetVertexBuffers(0, ARRAYSIZE(vertexBufferList), vertexBufferList, &stride, &offset);
-
-  // pixel shader
-  ID3D11ShaderResourceView* popupSRVList[] = { m_popupSRV.Get() };
-  m_d3dContext->PSSetShaderResources(0, ARRAYSIZE(popupSRVList), popupSRVList);
-  m_d3dContext->Draw(4, 0);
-}
-
-void
-DX11RenderBackend::RenderPresent()
-{
-  // Present the back buffer to the screen
-  HRESULT hr = m_swapChain->Present(0, 0);
-  if (FAILED(hr)) {
-    // If the device was removed either by a disconnection or a driver upgrade, we
-    // must recreate all device resources.
-    if (hr == DXGI_ERROR_DEVICE_REMOVED || hr == DXGI_ERROR_DEVICE_RESET) {
-      HandleDeviceLost();
-    }
-  }
-}
-
 DX11RenderBackend::DX11RenderBackend() {}
 
 DX11RenderBackend::~DX11RenderBackend() {}
 
 bool
-DX11RenderBackend::initialize(void* wid, int width, int height, float scale, const CefColor& background)
+DX11RenderBackend::initialize(QWidget* widget, int width, int height, float scale, const QColor& clear)
 {
-  m_hWnd = (HWND)wid;
-  m_width = width;
-  m_height = height;
-  m_scale = scale;
-  m_backgroundColor = background;
+  if (!widget || !widget->winId()) {
+    return false;
+  }
+  m_widget = widget;
+  HWND hWnd = reinterpret_cast<HWND>(widget->winId());
 
-  m_lastViewTextureDesc = {};
-  m_viewSRV.Reset();
+  m_cefViewTextureDesc = {};
+  m_cefViewTexture.Reset();
+  m_cefViewVertexBuffer.Reset();
+  m_cefViewShaderResourceView.Reset();
 
-  m_lastPopupTextureDesc = {};
-  m_popupSRV.Reset();
+  m_cefPopupTextureDesc = {};
+  m_cefPopupTexture.Reset();
+  m_cefPopupVertexBuffer.Reset();
+  m_cefPopupShaderResourceView.Reset();
 
   // create device/context/swapchain
-  if (!CreateDeviceAndSwapchain()) {
+  if (!CreateDeviceAndSwapchain(hWnd, width * scale, height * scale)) {
     uninitialize();
     return false;
   }
@@ -571,13 +503,13 @@ DX11RenderBackend::initialize(void* wid, int width, int height, float scale, con
   }
 
   // create render target
-  if (!CreateRenderTarget()) {
+  if (!CreateRenderTargetView()) {
     uninitialize();
     return false;
   }
 
   // setup pipeline
-  SetupPipeline();
+  SetupPipeline(width * scale, height * scale);
 
   return true;
 }
@@ -598,63 +530,41 @@ DX11RenderBackend::uninitialize()
   m_blenderState.Reset();
   m_renderTargetView.Reset();
 
-  m_renderTargetView.Reset();
+  m_cefViewTextureDesc = {};
+  m_cefViewTexture.Reset();
+  m_cefViewVertexBuffer.Reset();
+  m_cefViewShaderResourceView.Reset();
 
-  m_lastPopupTextureDesc = {};
-  m_popupSRV.Reset();
-
-  m_lastViewTextureDesc = {};
-  m_viewSRV.Reset();
+  m_cefPopupTextureDesc = {};
+  m_cefPopupTexture.Reset();
+  m_cefPopupVertexBuffer.Reset();
+  m_cefPopupShaderResourceView.Reset();
 
   m_swapChain.Reset();
   m_d3dContext.Reset();
+  m_d3dDevice1.Reset();
   m_d3dDevice.Reset();
-
-  m_hWnd = nullptr;
-  m_width = 0;
-  m_height = 0;
-  m_scale = 1.0f;
-  m_backgroundColor = 0;
 }
 
 void
 DX11RenderBackend::resize(int width, int height, float scale)
 {
-  std::lock_guard<std::mutex> l(m_d3dContextLock);
-
-  // update size
-  m_scale = scale;
-  m_width = static_cast<int>(width * scale);
-  m_height = static_cast<int>(height * scale);
-
-  // remove current render target
-  m_d3dContext->OMSetRenderTargets(0, nullptr, nullptr);
-
-  // release current render target
-  m_renderTargetView.Reset();
-
-  // flush context
-  m_d3dContext->Flush();
-
-  // create new render target
-  if (CreateRenderTarget()) {
-    // update pipeline: reset viewport and render target
-    // reset viewport
-    D3D11_VIEWPORT vpList[] = {
-      {
-        0.f,             // FLOAT TopLeftX;
-        0.f,             // FLOAT TopLeftY;
-        (FLOAT)m_width,  // FLOAT Width;
-        (FLOAT)m_height, // FLOAT Height;
-        D3D11_MIN_DEPTH, // FLOAT MinDepth;
-        D3D11_MAX_DEPTH, // FLOAT MaxDepth;
-      } //
-    };
-    m_d3dContext->RSSetViewports(ARRAYSIZE(vpList), vpList);
-
-    // reset render target
-    ID3D11RenderTargetView* rtvList[] = { m_renderTargetView.Get() };
-    m_d3dContext->OMSetRenderTargets(ARRAYSIZE(rtvList), rtvList, nullptr);
+  if (CefCurrentlyOn(TID_UI)) {
+    // resize resource
+    ResizeResource(width * scale, height * scale);
+    // render immediately
+    render();
+  } else {
+    // perform the resize in render thread
+    QPointer<DX11RenderBackend> self = this;
+    CefPostTask(TID_UI, new RenderTask([=]() {
+                  if (self) {
+                    // resize resource
+                    self->ResizeResource(width * scale, height * scale);
+                    // render immediately
+                    self->render();
+                  }
+                }));
   }
 }
 
@@ -664,34 +574,15 @@ DX11RenderBackend::updatePopupVisibility(bool visible)
   m_showPopup = visible;
 
   if (!m_showPopup) {
-    std::lock_guard<std::mutex> l(m_d3dContextLock);
-    m_popupSRV.Reset();
+    m_popupRect = CefRect();
+    m_cefPopupShaderResourceView.Reset();
   }
 }
 
 void
 DX11RenderBackend::updatePopupRect(const CefRect& rect)
 {
-  CefRect newRect = rect;
-  newRect.x = static_cast<int>(newRect.x * m_scale);
-  newRect.y = static_cast<int>(newRect.y * m_scale);
-  newRect.width = static_cast<int>(newRect.width * m_scale);
-  newRect.height = static_cast<int>(newRect.height * m_scale);
-
-  if (newRect == m_popupRect) {
-    return;
-  }
-
-  // update popup rect
-  m_popupRect = newRect;
-
-  // create vertex buffer
-  CreateQuadVertexBuffer(static_cast<float>(m_popupRect.x),           //
-                         static_cast<float>(m_popupRect.y),           //
-                         static_cast<float>(m_popupRect.width),       //
-                         static_cast<float>(m_popupRect.height),      //
-                         m_popupVertexBuffer.ReleaseAndGetAddressOf() //
-  );
+  m_popupRect = rect;
 }
 
 void
@@ -700,46 +591,130 @@ DX11RenderBackend::updateFrameData(const CefRenderHandler::PaintElementType& typ
                                    const FrameDataType& dataType,
                                    const FrameData& data)
 {
+  if (!m_d3dDevice1) {
+    return;
+  }
+
   // we only process Texture data
   if (dataType != FrameDataType::GpuTexture) {
     return;
   }
 
-  // convert to ID3D11Device1
-  Microsoft::WRL::ComPtr<ID3D11Device1> pD3DDevice1;
-  HRESULT hr = m_d3dDevice.As(&pD3DDevice1);
-  if (FAILED(hr) || !pD3DDevice1) {
+  // open shared texture
+  ComPtr<ID3D11Texture2D> pSharedTexture;
+  HRESULT hr = m_d3dDevice1->OpenSharedResource1((HANDLE)data.texture.handle,
+                                                 IID_PPV_ARGS(pSharedTexture.ReleaseAndGetAddressOf()));
+  if (FAILED(hr) || !pSharedTexture) {
     return;
   }
 
-  // Open shared texture handle
-  ComPtr<ID3D11Texture2D> pSharedTexture;
-  hr = pD3DDevice1->OpenSharedResource1((HANDLE)data.texture.handle,
-                                        IID_PPV_ARGS(pSharedTexture.ReleaseAndGetAddressOf()));
-  if (FAILED(hr) || !pSharedTexture) {
+  // get texture description
+  D3D11_TEXTURE2D_DESC sharedTextureDesc = {};
+  pSharedTexture->GetDesc(&sharedTextureDesc);
+
+  // create shader resource view description
+  D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+  srvDesc.Format = sharedTextureDesc.Format;
+  srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+  srvDesc.Texture2D.MostDetailedMip = 0;
+  srvDesc.Texture2D.MipLevels = 1;
+
+  // create shader resource view
+  Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> pSharedTextureShaderResourceView;
+  hr = m_d3dDevice1->CreateShaderResourceView(
+    pSharedTexture.Get(), &srvDesc, pSharedTextureShaderResourceView.ReleaseAndGetAddressOf());
+  if (FAILED(hr)) {
     return;
   }
 
   // update
   if (PET_VIEW == type) {
-    UpdateTextureResource(pSharedTexture, m_viewSRV, m_lastViewTextureDesc);
+    m_cefViewTexture = pSharedTexture;
+    m_cefViewTextureDesc = sharedTextureDesc;
+    m_cefViewShaderResourceView = pSharedTextureShaderResourceView;
   } else if (PET_POPUP == type) {
-    UpdateTextureResource(pSharedTexture, m_popupSRV, m_lastPopupTextureDesc);
+    m_cefPopupTexture = pSharedTexture;
+    m_cefPopupTextureDesc = sharedTextureDesc;
+    m_cefPopupShaderResourceView = pSharedTextureShaderResourceView;
   } else {
     return;
   }
+
+  // render directly in current thread (CEF UI thread)
+  render();
 }
 
 void
-DX11RenderBackend::render(void* painter)
+DX11RenderBackend::render()
 {
-  std::lock_guard<std::mutex> l(m_d3dContextLock);
+  auto size = widgetSize();
+  auto scale = widgetScale();
+  auto color = widgetBackground();
 
-  ClearTargetView();
+  // clear the back buffer (RGBA)
+  float clearColor[4] = {
+    static_cast<float>(color.red() / 255.f),
+    static_cast<float>(color.green() / 255.f),
+    static_cast<float>(color.blue() / 255.f),
+    static_cast<float>(color.alpha() / 255.f),
+  };
+  m_d3dContext->ClearRenderTargetView(m_renderTargetView.Get(), clearColor);
 
-  DrawCefView();
+  // draw cef view
+  if (m_cefViewShaderResourceView) {
+    // create vertex buffer
+    CreateQuadVertexBuffer(0.0f,                                            //
+                           0.0f,                                            //
+                           static_cast<float>(m_cefViewTextureDesc.Width),  //
+                           static_cast<float>(m_cefViewTextureDesc.Height), //
+                           size.width() * scale,                            //
+                           size.height() * scale,                           //
+                           m_cefViewVertexBuffer.ReleaseAndGetAddressOf()   //
+    );
 
-  DrawCefPopup();
+    // assembly
+    UINT stride = sizeof(Vertex);
+    UINT offset = 0;
+    ID3D11Buffer* vertexBufferList[] = { m_cefViewVertexBuffer.Get() };
+    m_d3dContext->IASetVertexBuffers(0, ARRAYSIZE(vertexBufferList), vertexBufferList, &stride, &offset);
 
-  RenderPresent();
+    // pixel shader
+    ID3D11ShaderResourceView* viewSRVList[] = { m_cefViewShaderResourceView.Get() };
+    m_d3dContext->PSSetShaderResources(0, ARRAYSIZE(viewSRVList), viewSRVList);
+    m_d3dContext->Draw(4, 0);
+  }
+
+  // draw cef popup
+  if (m_cefPopupShaderResourceView && m_showPopup) {
+    // create vertex buffer
+    CreateQuadVertexBuffer(m_popupRect.x * scale,                            //
+                           m_popupRect.y * scale,                            //
+                           static_cast<float>(m_cefPopupTextureDesc.Width),  //
+                           static_cast<float>(m_cefPopupTextureDesc.Height), //
+                           size.width() * scale,                             //
+                           size.height() * scale,                            //
+                           m_cefPopupVertexBuffer.ReleaseAndGetAddressOf()   //
+    );
+
+    // assembly
+    UINT stride = sizeof(Vertex);
+    UINT offset = 0;
+    ID3D11Buffer* vertexBufferList[] = { m_cefPopupVertexBuffer.Get() };
+    m_d3dContext->IASetVertexBuffers(0, ARRAYSIZE(vertexBufferList), vertexBufferList, &stride, &offset);
+
+    // pixel shader
+    ID3D11ShaderResourceView* popupSRVList[] = { m_cefPopupShaderResourceView.Get() };
+    m_d3dContext->PSSetShaderResources(0, ARRAYSIZE(popupSRVList), popupSRVList);
+    m_d3dContext->Draw(4, 0);
+  }
+
+  // present the back buffer to the screen
+  HRESULT hr = m_swapChain->Present(0, 0);
+  if (FAILED(hr)) {
+    // if the device was removed either by a disconnection or a driver upgrade, we
+    // must recreate all device resources.
+    if (hr == DXGI_ERROR_DEVICE_REMOVED || hr == DXGI_ERROR_DEVICE_RESET) {
+      HandleDeviceLost();
+    }
+  }
 }

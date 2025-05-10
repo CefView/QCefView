@@ -2,7 +2,6 @@
 #define METALRENDERBACKEND_H
 
 #pragma once
-#include <objc/objc.h>
 
 #include <memory>
 
@@ -10,6 +9,8 @@
 
 class MetalRenderBackend : public ICefViewRenderer
 {
+  Q_OBJECT
+
 private:
   class Implementation;
   std::unique_ptr<Implementation> m_pImpl;
@@ -21,7 +22,7 @@ public:
 
   bool isHardware() override { return true; }
 
-  bool initialize(void* wid, int width, int height, float scale, const CefColor& background) override;
+  bool initialize(QWidget* widget, int width, int height, float scale, const QColor& clear) override;
 
   void uninitialize() override;
 
@@ -36,7 +37,7 @@ public:
                        const FrameDataType& dataType,
                        const FrameData& data) override;
 
-  void render(void* painter) override;
+  void render() override;
 };
 
 #endif

@@ -1,4 +1,4 @@
-#include "QCefContextPrivate.h"
+﻿#include "QCefContextPrivate.h"
 
 #pragma region qt_headers
 #include <QThread>
@@ -15,22 +15,23 @@
 #include "QCefConfigPrivate.h"
 #include "QCefViewPrivate.h"
 
-const int64_t kCefWorkerIntervalMs = (1000 / 60); // 60 fps
+const int64_t kCefWorkerIntervalMs = 0; //(1000 / 60); // 60 fps
 
 QCefContextPrivate::QCefContextPrivate(QCoreApplication* app, int argc, char** argv)
   : argc_(argc)
   , argv_(argv)
   , config_(nullptr)
 {
-#if defined(Q_OS_MACOS) || defined(CEF_USE_QT_EVENT_LOOP)
   cefWorkerTimer_.setTimerType(Qt::PreciseTimer);
   connect(&cefWorkerTimer_, SIGNAL(timeout()), this, SLOT(performCefLoopWork()));
-#endif
-  
   connect(app, SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
 }
 
-QCefContextPrivate::~QCefContextPrivate() {}
+QCefContextPrivate::~QCefContextPrivate()
+{
+  disconnect(&cefWorkerTimer_, SIGNAL(timeout()), this, SLOT(performCefLoopWork()));
+  disconnect(SIGNAL(aboutToQuit()), this, SLOT(onAboutToQuit()));
+}
 
 CefRefPtr<CefViewBrowserApp>
 QCefContextPrivate::getCefApp()
@@ -47,10 +48,11 @@ QCefContextPrivate::initialize(const QCefConfig* config)
   if (!initializeCef(config)) {
     return false;
   }
-  
-#if defined(Q_OS_MACOS) || defined(CEF_USE_QT_EVENT_LOOP)
-  cefWorkerTimer_.start(kCefWorkerIntervalMs);
-#endif
+
+  // start message pump timer
+  if (!config_->standaloneMessageLoopEnabled().toBool()) {
+    cefWorkerTimer_.start(kCefWorkerIntervalMs);
+  }
 
   return true;
 }
@@ -146,7 +148,7 @@ QCefContextPrivate::onAboutToQuit()
   if (!pApp_) {
     return;
   }
-  
+
   // close all live browsers
   QCefViewPrivate::destroyAllInstance();
 

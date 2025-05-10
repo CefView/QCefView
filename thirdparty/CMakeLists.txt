@@ -50,8 +50,8 @@ FetchContent_Declare(
 set(CEF_SDK_VERSION "126.2.18+g3647d39+chromium-126.0.6478.183") # NOT TEST
 
 # set(CEF_SDK_VERSION "127.3.5+g114ea2a+chromium-127.0.6533.120") # GOOD
-
 # set(CEF_SDK_VERSION "128.4.9+g9840ad9+chromium-128.0.6613.120")   # BAD   # debugbreak - debug mode
+# set(CEF_SDK_VERSION "136.1.6+g1ac1b14+chromium-136.0.7103.114")
 
 # set folder
 set(CMAKE_FOLDER "QCefView/Core")

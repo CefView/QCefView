@@ -40,7 +40,7 @@ main(int argc, char* argv[])
   // build QCefConfig
   QCefConfig config;
   // set user agent
-  config.setUserAgent("QCefViewTest");
+  // config.setUserAgent("QCefViewTest");
   // set log level
   config.setLogLevel(QCefConfig::LOGSEVERITY_DEFAULT);
   // set JSBridge object name (default value is CefViewClient)
@@ -56,6 +56,7 @@ main(int argc, char* argv[])
   // windowlessRenderingEnabled is set to true by default,
   // set to false to disable the OSR mode
   config.setWindowlessRenderingEnabled(true);
+  config.setStandaloneMessageLoopEnabled(true);
 
   // disable sandbox
   // this is a bit complicated, please refer to:

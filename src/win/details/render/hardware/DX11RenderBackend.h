@@ -19,34 +19,26 @@
 #endif
 #endif
 
+#include "details/render/ICefViewRenderer.h"
+
 #ifndef WINDOWS_DIRECT_COMPOSITION
 #define WINDOWS_DIRECT_COMPOSITION 0
 #endif
-
-#include <mutex>
-
-#include "details/render/ICefViewRenderer.h"
 
 /// <summary>
 ///
 /// </summary>
 class DX11RenderBackend : public ICefViewRenderer
 {
+  Q_OBJECT
+
 private:
-  HWND m_hWnd = nullptr;
   bool m_showPopup = false;
   CefRect m_popupRect;
-  CefColor m_backgroundColor = 0;
-
-  float m_scale = 1.0f;
-  int m_width = 800;
-  int m_height = 600;
-
-  // lock
-  std::mutex m_d3dContextLock;
 
   // device/context
   Microsoft::WRL::ComPtr<ID3D11Device> m_d3dDevice;
+  Microsoft::WRL::ComPtr<ID3D11Device1> m_d3dDevice1;
   Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_d3dContext;
 
 #if WINDOWS_DIRECT_COMPOSITION
@@ -72,42 +64,36 @@ private:
   Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView;
 
   // view texture and SRV
-  D3D11_TEXTURE2D_DESC m_lastViewTextureDesc = {};
-  Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_viewSRV;
-  Microsoft::WRL::ComPtr<ID3D11Buffer> m_viewVertexBuffer;
+  D3D11_TEXTURE2D_DESC m_cefViewTextureDesc = {};
+  Microsoft::WRL::ComPtr<ID3D11Buffer> m_cefViewVertexBuffer;
+  Microsoft::WRL::ComPtr<ID3D11Texture2D> m_cefViewTexture;
+  Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_cefViewShaderResourceView;
 
   // popup texture and SRV
-  D3D11_TEXTURE2D_DESC m_lastPopupTextureDesc = {};
-  Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_popupSRV;
-  Microsoft::WRL::ComPtr<ID3D11Buffer> m_popupVertexBuffer;
+  D3D11_TEXTURE2D_DESC m_cefPopupTextureDesc = {};
+  Microsoft::WRL::ComPtr<ID3D11Buffer> m_cefPopupVertexBuffer;
+  Microsoft::WRL::ComPtr<ID3D11Texture2D> m_cefPopupTexture;
+  Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_cefPopupShaderResourceView;
 
 protected:
-  bool CreateDeviceAndSwapchain();
-
+  bool CreateDeviceAndSwapchain(HWND hWnd, int width, int height);
   bool CreateShaderResource();
   bool CreateSampler();
   bool CreateBlender();
-  bool CreateRenderTarget();
+  bool CreateRenderTargetView();
+  void SetupPipeline(int width, int height);
+  void ResizeResource(int width, int height);
 
-  void SetupPipeline();
   void HandleDeviceLost();
 
   bool CreateQuadVertexBuffer(float x,                //
                               float y,                //
                               float w,                //
                               float h,                //
+                              int viewWidth,          //
+                              int viewHeight,         //
                               ID3D11Buffer** ppBuffer //
   );
-
-  void UpdateTextureResource(Microsoft::WRL::ComPtr<ID3D11Texture2D>& pSharedTexture,
-                             Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& pTargetSRV,
-                             D3D11_TEXTURE2D_DESC& targetTextureDesc);
-
-  void SetTargetView();
-  void ClearTargetView();
-  void DrawCefView();
-  void DrawCefPopup();
-  void RenderPresent();
 
 public:
   DX11RenderBackend();
@@ -116,7 +102,7 @@ public:
 
   bool isHardware() override { return true; }
 
-  bool initialize(void* wid, int width, int height, float scale, const CefColor& background) override;
+  bool initialize(QWidget* widget, int width, int height, float scale, const QColor& clear) override;
 
   void uninitialize() override;
 
@@ -131,7 +117,7 @@ public:
                        const FrameDataType& dataType,
                        const FrameData& data) override;
 
-  void render(void* painter) override;
+  void render() override;
 };
 
 #endif // DX11RENDERBACKEND_H

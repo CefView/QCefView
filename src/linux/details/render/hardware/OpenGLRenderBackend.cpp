@@ -5,9 +5,9 @@ OpenGLRenderBackend::OpenGLRenderBackend() {}
 OpenGLRenderBackend::~OpenGLRenderBackend() {}
 
 bool
-OpenGLRenderBackend::initialize(void* wid, int width, int height, float scale, const CefColor& background)
+OpenGLRenderBackend::initialize(QWindow* window, int width, int height, float scale, const QColor& clear)
 {
-  // TODO: it seemds hardware acceleration is not supported by CEF currently.
+  // TODO: it seems hardware acceleration is not supported by CEF currently.
   return false;
 }
 
@@ -40,6 +40,6 @@ OpenGLRenderBackend::updateFrameData(const CefRenderHandler::PaintElementType& t
 }
 
 void
-OpenGLRenderBackend::render(void* painter)
+OpenGLRenderBackend::render()
 {
 }
