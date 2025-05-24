@@ -15,7 +15,7 @@
 #include <QScopedPointer>
 #include <QString>
 #include <QVariantList>
-#pragma endregion 
+#pragma endregion
 
 class QCefEventPrivate;
 

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['web_20apis_0',['Web APIs',['../md_docs_206-_web_a_p_is.html',1,'']]]
+  ['rendering_0',['Rendering',['../md_docs_205-_rendering.html',1,'']]],
+  ['resource_20loading_1',['Resource Loading',['../md_docs_203-_resource_loading.html',1,'']]]
 ];

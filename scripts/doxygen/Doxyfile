@@ -687,7 +687,7 @@ INLINE_INFO            = YES
 # name. If set to NO, the members will appear in declaration order.
 # The default value is: YES.
 
-SORT_MEMBER_DOCS       = YES
+SORT_MEMBER_DOCS       = NO
 
 # If the SORT_BRIEF_DOCS tag is set to YES then Doxygen will sort the brief
 # descriptions of file, namespace and class members alphabetically by member
@@ -2948,6 +2948,7 @@ HTML_COLORSTYLE        = AUTO_DARK
 
 PROJECT_NAME           = QCefView
 IMAGE_PATH             = "docs/img"
+
 
 INPUT                  = "docs/00-Introduction.md" \
                         "docs/01-BuildAndConfig.md" \

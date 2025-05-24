@@ -532,6 +532,42 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8c6286b279094a691832fc89b93c75f1" name="a8c6286b279094a691832fc89b93c75f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c6286b279094a691832fc89b93c75f1">&#9670;&#160;</a></span>addLocalFolderResource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::addLocalFolderResource </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>priority</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a url mapping item with local web resource directory. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The path to the local resource directory</td></tr>
+    <tr><td class="paramname">url</td><td>The url to be mapped to</td></tr>
+    <tr><td class="paramname">priority</td><td>The priority</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a503148f8ff5ca5b28d3f0e123bf5bf76" name="a503148f8ff5ca5b28d3f0e123bf5bf76"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a503148f8ff5ca5b28d3f0e123bf5bf76">&#9670;&#160;</a></span>addArchiveResource()</h2>
 
@@ -574,103 +610,73 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8c6286b279094a691832fc89b93c75f1" name="a8c6286b279094a691832fc89b93c75f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c6286b279094a691832fc89b93c75f1">&#9670;&#160;</a></span>addLocalFolderResource()</h2>
+<a id="ae4aa1652bf9852ed744dd38487bbb748" name="ae4aa1652bf9852ed744dd38487bbb748"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4aa1652bf9852ed744dd38487bbb748">&#9670;&#160;</a></span>browserId()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void QCefView::addLocalFolderResource </td>
+          <td class="memname">int QCefView::browserId </td>
           <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>priority</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adds a url mapping item with local web resource directory. </p>
+<p>Gets the browser id. </p>
+<dl class="section return"><dt>Returns</dt><dd>The browser id</dd></dl>
+
+</div>
+</div>
+<a id="ac3b8ec3b088422a67f93fc580047a1a0" name="ac3b8ec3b088422a67f93fc580047a1a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3b8ec3b088422a67f93fc580047a1a0">&#9670;&#160;</a></span>navigateToString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::navigateToString </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>content</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Navigates to the content. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">path</td><td>The path to the local resource directory</td></tr>
-    <tr><td class="paramname">url</td><td>The url to be mapped to</td></tr>
-    <tr><td class="paramname">priority</td><td>The priority</td></tr>
+    <tr><td class="paramname">content</td><td>The content</td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a93bf80d520a6d1da560bb1729d4b5152" name="a93bf80d520a6d1da560bb1729d4b5152"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93bf80d520a6d1da560bb1729d4b5152">&#9670;&#160;</a></span>addressChanged</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::addressChanged </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called on the address changed. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">frameId</td><td>The frame id</td></tr>
-    <tr><td class="paramname">url</td><td>The address</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ad5455e3a8cb0ffa1f9d7cb98307a6bb4" name="ad5455e3a8cb0ffa1f9d7cb98307a6bb4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5455e3a8cb0ffa1f9d7cb98307a6bb4">&#9670;&#160;</a></span>broadcastEvent()</h2>
+<a id="a4bf036d5a7d128d4c1487afaa0393d5b" name="a4bf036d5a7d128d4c1487afaa0393d5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bf036d5a7d128d4c1487afaa0393d5b">&#9670;&#160;</a></span>navigateToUrl()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool QCefView::broadcastEvent </td>
+          <td class="memname">void QCefView::navigateToUrl </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_q_cef_event.html">QCefEvent</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Broad cast the event for all frames. </p>
+<p>Navigates to the URL. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">event</td><td>The <a class="el" href="class_q_cef_event.html" title="Represents the event sent from native context(C/C++ code) to the web context(javascript)">QCefEvent</a> instance</td></tr>
+    <tr><td class="paramname">url</td><td>The url</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True on successful; otherwise false</dd></dl>
 
 </div>
 </div>
@@ -752,26 +758,6 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae4aa1652bf9852ed744dd38487bbb748" name="ae4aa1652bf9852ed744dd38487bbb748"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae4aa1652bf9852ed744dd38487bbb748">&#9670;&#160;</a></span>browserId()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int QCefView::browserId </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the browser id. </p>
-<dl class="section return"><dt>Returns</dt><dd>The browser id</dd></dl>
-
-</div>
-</div>
 <a id="a12ca0bc0f4fc55dfc838769990d6a6d7" name="a12ca0bc0f4fc55dfc838769990d6a6d7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a12ca0bc0f4fc55dfc838769990d6a6d7">&#9670;&#160;</a></span>browserIsLoading()</h2>
 
@@ -830,213 +816,112 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aef058b415485dba45c8dfffdcf956a5f" name="aef058b415485dba45c8dfffdcf956a5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef058b415485dba45c8dfffdcf956a5f">&#9670;&#160;</a></span>cefQueryRequest</h2>
+<a id="ac47c23ffcd94bdffe2b6a81eaae077a2" name="ac47c23ffcd94bdffe2b6a81eaae077a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac47c23ffcd94bdffe2b6a81eaae077a2">&#9670;&#160;</a></span>triggerEvent() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void QCefView::cefQueryRequest </td>
+          <td class="memname">bool QCefView::triggerEvent </td>
           <td>(</td>
-          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>browserId</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">const <a class="el" href="class_q_cef_event.html">QCefEvent</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
           <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="class_q_cef_query.html">QCefQuery</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>query</em></span>&#160;)</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Gets called on new <a class="el" href="class_q_cef_query.html" title="Represents the query request sent from the web content(Javascript)">QCefQuery</a> request. </p>
+<p>Triggers the event for main frame. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">browserId</td><td>The browser id</td></tr>
+    <tr><td class="paramname">event</td><td>The <a class="el" href="class_q_cef_event.html" title="Represents the event sent from native context(C/C++ code) to the web context(javascript)">QCefEvent</a> instance</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on successful; otherwise false</dd></dl>
+
+</div>
+</div>
+<a id="ab70a707afda924d6f035b20a1aecc695" name="ab70a707afda924d6f035b20a1aecc695"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab70a707afda924d6f035b20a1aecc695">&#9670;&#160;</a></span>triggerEvent() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefView::triggerEvent </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_q_cef_event.html">QCefEvent</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>event</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Triggers the event for specified frame. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>The <a class="el" href="class_q_cef_event.html" title="Represents the event sent from native context(C/C++ code) to the web context(javascript)">QCefEvent</a> instance</td></tr>
     <tr><td class="paramname">frameId</td><td>The frame id</td></tr>
-    <tr><td class="paramname">query</td><td>The query request</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>True on successful; otherwise false</dd></dl>
 
 </div>
 </div>
-<a id="add5abd934b15c1b8b3e91703701a8cf4" name="add5abd934b15c1b8b3e91703701a8cf4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add5abd934b15c1b8b3e91703701a8cf4">&#9670;&#160;</a></span>cefUrlRequest</h2>
+<a id="ad5455e3a8cb0ffa1f9d7cb98307a6bb4" name="ad5455e3a8cb0ffa1f9d7cb98307a6bb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5455e3a8cb0ffa1f9d7cb98307a6bb4">&#9670;&#160;</a></span>broadcastEvent()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void QCefView::cefUrlRequest </td>
+          <td class="memname">bool QCefView::broadcastEvent </td>
           <td>(</td>
-          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>browserId</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">const <a class="el" href="class_q_cef_event.html">QCefEvent</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
           <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>&#160;)</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Gets called on built-in scheme URL access. </p>
+<p>Broad cast the event for all frames. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">browserId</td><td>The browser id</td></tr>
-    <tr><td class="paramname">frameId</td><td>The frame id</td></tr>
-    <tr><td class="paramname">query</td><td>The full url</td></tr>
+    <tr><td class="paramname">event</td><td>The <a class="el" href="class_q_cef_event.html" title="Represents the event sent from native context(C/C++ code) to the web context(javascript)">QCefEvent</a> instance</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>True on successful; otherwise false</dd></dl>
 
 </div>
 </div>
-<a id="abdf0a68139fe9163ecd9b5a0cdeed6d7" name="abdf0a68139fe9163ecd9b5a0cdeed6d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abdf0a68139fe9163ecd9b5a0cdeed6d7">&#9670;&#160;</a></span>closeDevTools()</h2>
+<a id="afc838dab54d2b083b05f0d98349b50cc" name="afc838dab54d2b083b05f0d98349b50cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc838dab54d2b083b05f0d98349b50cc">&#9670;&#160;</a></span>responseQCefQuery()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void QCefView::closeDevTools </td>
+          <td class="memname">bool QCefView::responseQCefQuery </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="class_q_cef_query.html">QCefQuery</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>query</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Closes the devtools dialog. </p>
-
-</div>
-</div>
-<a id="a2dae6946082712815273c2967d37762a" name="a2dae6946082712815273c2967d37762a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2dae6946082712815273c2967d37762a">&#9670;&#160;</a></span>consoleMessage</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::consoleMessage </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>level</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called on console message from the web content. </p>
+<p>Response the <a class="el" href="class_q_cef_query.html" title="Represents the query request sent from the web content(Javascript)">QCefQuery</a> request. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">message</td><td>The message</td></tr>
-    <tr><td class="paramname">level</td><td>The level</td></tr>
+    <tr><td class="paramname">query</td><td>The query instance</td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="ac8a83d1f2fb0e771fb48007838b40d1f" name="ac8a83d1f2fb0e771fb48007838b40d1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac8a83d1f2fb0e771fb48007838b40d1f">&#9670;&#160;</a></span>contextMenuEvent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::contextMenuEvent </td>
-          <td>(</td>
-          <td class="paramtype">QContextMenuEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::contextMenuEvent. </p>
-
-</div>
-</div>
-<a id="ae11274817f627abf9d407e12dcd5c050" name="ae11274817f627abf9d407e12dcd5c050"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae11274817f627abf9d407e12dcd5c050">&#9670;&#160;</a></span>draggableRegionChanged</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::draggableRegionChanged </td>
-          <td>(</td>
-          <td class="paramtype">const QRegion &amp;</td>          <td class="paramname"><span class="paramname"><em>draggableRegion</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QRegion &amp;</td>          <td class="paramname"><span class="paramname"><em>nonDraggableRegion</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called on draggable region changed. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">draggableRegion</td><td>The new draggable region</td></tr>
-    <tr><td class="paramname">nonDraggableRegion</td><td>The new non-draggable region</td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on successful; otherwise false</dd></dl>
 
 </div>
 </div>
@@ -1120,294 +1005,65 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7b9e104469c1a4a203c2e1d7e9cfd2a7" name="a7b9e104469c1a4a203c2e1d7e9cfd2a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b9e104469c1a4a203c2e1d7e9cfd2a7">&#9670;&#160;</a></span>faviconURLChanged</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::faviconURLChanged </td>
-          <td>(</td>
-          <td class="paramtype">const QStringList &amp;</td>          <td class="paramname"><span class="paramname"><em>urls</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called on favicon url changed. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">urls</td><td>The urls</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a05bf10e1e318cf9cc4ad742ad61c9706" name="a05bf10e1e318cf9cc4ad742ad61c9706"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05bf10e1e318cf9cc4ad742ad61c9706">&#9670;&#160;</a></span>focusInEvent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::focusInEvent </td>
-          <td>(</td>
-          <td class="paramtype">QFocusEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::focusInEvent. </p>
-
-</div>
-</div>
-<a id="a414b4c9efe5edd10c324c1e35e12d07c" name="a414b4c9efe5edd10c324c1e35e12d07c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a414b4c9efe5edd10c324c1e35e12d07c">&#9670;&#160;</a></span>focusOutEvent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::focusOutEvent </td>
-          <td>(</td>
-          <td class="paramtype">QFocusEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::focusOutEvent. </p>
-
-</div>
-</div>
-<a id="afa0fbb5b4c2c6c3592085e9b94dffc4a" name="afa0fbb5b4c2c6c3592085e9b94dffc4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa0fbb5b4c2c6c3592085e9b94dffc4a">&#9670;&#160;</a></span>fullscreenModeChanged</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::fullscreenModeChanged </td>
-          <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>fullscreen</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called on fullscreen mode changed. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">fullscreen</td><td>The current fullscreen mode</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a85fd904cbd3b91a72ce090cffb0119c8" name="a85fd904cbd3b91a72ce090cffb0119c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85fd904cbd3b91a72ce090cffb0119c8">&#9670;&#160;</a></span>hasDevTools()</h2>
+<a id="a2b4b3da8874855bbe2d558081233d948" name="a2b4b3da8874855bbe2d558081233d948"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b4b3da8874855bbe2d558081233d948">&#9670;&#160;</a></span>setPreference()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool QCefView::hasDevTools </td>
+          <td class="memname">bool QCefView::setPreference </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Detects whether this browser has a devtools opened. </p>
-<dl class="section return"><dt>Returns</dt><dd>True if opend already; otherwise false</dd></dl>
-
-</div>
-</div>
-<a id="af2432e14ac8d9156594c3941ff6b4d14" name="af2432e14ac8d9156594c3941ff6b4d14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2432e14ac8d9156594c3941ff6b4d14">&#9670;&#160;</a></span>hideEvent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::hideEvent </td>
-          <td>(</td>
-          <td class="paramtype">QHideEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::hideEvent. </p>
-
-</div>
-</div>
-<a id="a02d713f4a0545e85832b70ddced7e831" name="a02d713f4a0545e85832b70ddced7e831"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02d713f4a0545e85832b70ddced7e831">&#9670;&#160;</a></span>inputMethodEvent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::inputMethodEvent </td>
-          <td>(</td>
-          <td class="paramtype">QInputMethodEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::inputMethodEvent. </p>
-
-</div>
-</div>
-<a id="af25a011c126a9bb5dc3df99756a75368" name="af25a011c126a9bb5dc3df99756a75368"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af25a011c126a9bb5dc3df99756a75368">&#9670;&#160;</a></span>inputMethodQuery()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">QVariant QCefView::inputMethodQuery </td>
-          <td>(</td>
-          <td class="paramtype">Qt::InputMethodQuery</td>          <td class="paramname"><span class="paramname"><em>query</em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::inputMethodQuery. </p>
-
-</div>
-</div>
-<a id="a00435b9ab61d04517427dbe4805e970d" name="a00435b9ab61d04517427dbe4805e970d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00435b9ab61d04517427dbe4805e970d">&#9670;&#160;</a></span>invokeMethod</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::invokeMethod </td>
-          <td>(</td>
-          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>browserId</em></span>, </td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>, </td>
+          <td class="paramtype">const QVariant &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>method</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QVariantList &amp;</td>          <td class="paramname"><span class="paramname"><em>arguments</em></span>&#160;)</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>error</em></span>&#160;)</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Gets called on invoking method request from web content(Javascript) </p>
+<p>Sets the preference for this browser. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">browserId</td><td>The browser id</td></tr>
-    <tr><td class="paramname">frameId</td><td>The frame id</td></tr>
-    <tr><td class="paramname">method</td><td>The method name</td></tr>
-    <tr><td class="paramname">arguments</td><td>The arguments list</td></tr>
+    <tr><td class="paramname">name</td><td>The preference name</td></tr>
+    <tr><td class="paramname">value</td><td>The preference value, if this value is QVariant::UnknownType or QVariant::Invalid, the preference will be restored to default value </td></tr>
+    <tr><td class="paramname">error</td><td>The error message populated on failure</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>True on successful; otherwise false</dd></dl>
 
 </div>
 </div>
-<a id="a2a8a2ebaedb88ccd80536c66d878ff8a" name="a2a8a2ebaedb88ccd80536c66d878ff8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a8a2ebaedb88ccd80536c66d878ff8a">&#9670;&#160;</a></span>isDragAndDropEnabled()</h2>
+<a id="acca71443b26dce09e81e3f937cedaa6b" name="acca71443b26dce09e81e3f937cedaa6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acca71443b26dce09e81e3f937cedaa6b">&#9670;&#160;</a></span>setDisablePopupContextMenu()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool QCefView::isDragAndDropEnabled </td>
+          <td class="memname">void QCefView::setDisablePopupContextMenu </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>disable</em></span></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets whether to enable drag and drop. </p>
-<dl class="section return"><dt>Returns</dt><dd>True to enable; otherwise false</dd></dl>
+<p>Sets whether to disable the context menu for popup browser. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">disable</td><td>True to disable; otherwise false</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1431,8 +1087,112 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6aa89a0ce04dac5aa2c01545253ffc56" name="a6aa89a0ce04dac5aa2c01545253ffc56"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6aa89a0ce04dac5aa2c01545253ffc56">&#9670;&#160;</a></span>keyPressEvent()</h2>
+<a id="a85fd904cbd3b91a72ce090cffb0119c8" name="a85fd904cbd3b91a72ce090cffb0119c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85fd904cbd3b91a72ce090cffb0119c8">&#9670;&#160;</a></span>hasDevTools()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefView::hasDevTools </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Detects whether this browser has a devtools opened. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if opend already; otherwise false</dd></dl>
+
+</div>
+</div>
+<a id="a61845e6e370a57be5f3662ba37cd7b29" name="a61845e6e370a57be5f3662ba37cd7b29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61845e6e370a57be5f3662ba37cd7b29">&#9670;&#160;</a></span>showDevTools()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::showDevTools </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens the devtools dialog. </p>
+
+</div>
+</div>
+<a id="abdf0a68139fe9163ecd9b5a0cdeed6d7" name="abdf0a68139fe9163ecd9b5a0cdeed6d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdf0a68139fe9163ecd9b5a0cdeed6d7">&#9670;&#160;</a></span>closeDevTools()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::closeDevTools </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Closes the devtools dialog. </p>
+
+</div>
+</div>
+<a id="af73ef1d6f77a31b528c729cf7379abfb" name="af73ef1d6f77a31b528c729cf7379abfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af73ef1d6f77a31b528c729cf7379abfb">&#9670;&#160;</a></span>setEnableDragAndDrop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::setEnableDragAndDrop </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>enable</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets whether to enable drag and drop. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enable</td><td>True to enable; otherwise false</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function does not work for OSR mode. There is a problem, when dragging a file to a non dragging area, the content of the file will be displayed. You need to solve the problem yourself. </p>
+
+</div>
+</div>
+<a id="a2a8a2ebaedb88ccd80536c66d878ff8a" name="a2a8a2ebaedb88ccd80536c66d878ff8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a8a2ebaedb88ccd80536c66d878ff8a">&#9670;&#160;</a></span>isDragAndDropEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefView::isDragAndDropEnabled </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether to enable drag and drop. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to enable; otherwise false</dd></dl>
+
+</div>
+</div>
+<a id="a076678fb5d8deec1600f369d4f1fc95a" name="a076678fb5d8deec1600f369d4f1fc95a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a076678fb5d8deec1600f369d4f1fc95a">&#9670;&#160;</a></span>loadingStateChanged</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1441,25 +1201,48 @@ Protected Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void QCefView::keyPressEvent </td>
+          <td class="memname">void QCefView::loadingStateChanged </td>
           <td>(</td>
-          <td class="paramtype">QKeyEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>browserId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isLoading</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>canGoBack</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>canGoForward</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Please refer to QWidget::keyPressEvent. </p>
+<p>Gets called on loading state changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">browserId</td><td>Indicates the browser id</td></tr>
+    <tr><td class="paramname">isLoading</td><td>Indicates the browser is loading</td></tr>
+    <tr><td class="paramname">canGoBack</td><td>Indicates the browser can go back</td></tr>
+    <tr><td class="paramname">canGoForward</td><td>Indicates the browser can go forward</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="ab2d8e99188937bba13893ce6c54f9a3f" name="ab2d8e99188937bba13893ce6c54f9a3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2d8e99188937bba13893ce6c54f9a3f">&#9670;&#160;</a></span>keyReleaseEvent()</h2>
+<a id="a6b04776ad4d7b62c102e9c38ac022b40" name="a6b04776ad4d7b62c102e9c38ac022b40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b04776ad4d7b62c102e9c38ac022b40">&#9670;&#160;</a></span>loadStart</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1468,47 +1251,43 @@ Protected Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void QCefView::keyReleaseEvent </td>
+          <td class="memname">void QCefView::loadStart </td>
           <td>(</td>
-          <td class="paramtype">QKeyEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
-          <td></td>
+          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>browserId</em></span>, </td>
         </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::keyReleaseEvent. </p>
-
-</div>
-</div>
-<a id="a346fde9e6ed939e82aad237fbb39cb6f" name="a346fde9e6ed939e82aad237fbb39cb6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a346fde9e6ed939e82aad237fbb39cb6f">&#9670;&#160;</a></span>leaveEvent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
         <tr>
-          <td class="memname">void QCefView::leaveEvent </td>
-          <td>(</td>
-          <td class="paramtype">QEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isMainFrame</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>transitionType</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Please refer to QWidget::leaveEvent. </p>
+<p>Gets called on loading starts. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">browserId</td><td>Indicates the browser id</td></tr>
+    <tr><td class="paramname">frameId</td><td>Indicates the frame id</td></tr>
+    <tr><td class="paramname">isMainFrame</td><td>Indicates the whether this is the main frame</td></tr>
+    <tr><td class="paramname">transitionType</td><td>transition type</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1624,6 +1403,252 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ae11274817f627abf9d407e12dcd5c050" name="ae11274817f627abf9d407e12dcd5c050"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae11274817f627abf9d407e12dcd5c050">&#9670;&#160;</a></span>draggableRegionChanged</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::draggableRegionChanged </td>
+          <td>(</td>
+          <td class="paramtype">const QRegion &amp;</td>          <td class="paramname"><span class="paramname"><em>draggableRegion</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QRegion &amp;</td>          <td class="paramname"><span class="paramname"><em>nonDraggableRegion</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on draggable region changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">draggableRegion</td><td>The new draggable region</td></tr>
+    <tr><td class="paramname">nonDraggableRegion</td><td>The new non-draggable region</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a93bf80d520a6d1da560bb1729d4b5152" name="a93bf80d520a6d1da560bb1729d4b5152"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93bf80d520a6d1da560bb1729d4b5152">&#9670;&#160;</a></span>addressChanged</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::addressChanged </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on the address changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frameId</td><td>The frame id</td></tr>
+    <tr><td class="paramname">url</td><td>The address</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a48c82c208cab769a1baa7177bc58b030" name="a48c82c208cab769a1baa7177bc58b030"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48c82c208cab769a1baa7177bc58b030">&#9670;&#160;</a></span>titleChanged</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::titleChanged </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>title</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on title changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td>The title</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7b9e104469c1a4a203c2e1d7e9cfd2a7" name="a7b9e104469c1a4a203c2e1d7e9cfd2a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b9e104469c1a4a203c2e1d7e9cfd2a7">&#9670;&#160;</a></span>faviconURLChanged</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::faviconURLChanged </td>
+          <td>(</td>
+          <td class="paramtype">const QStringList &amp;</td>          <td class="paramname"><span class="paramname"><em>urls</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on favicon url changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">urls</td><td>The urls</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afa0fbb5b4c2c6c3592085e9b94dffc4a" name="afa0fbb5b4c2c6c3592085e9b94dffc4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa0fbb5b4c2c6c3592085e9b94dffc4a">&#9670;&#160;</a></span>fullscreenModeChanged</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::fullscreenModeChanged </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>fullscreen</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on fullscreen mode changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fullscreen</td><td>The current fullscreen mode</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a86d10c28b8821a36723e3504fa0cc7e7" name="a86d10c28b8821a36723e3504fa0cc7e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86d10c28b8821a36723e3504fa0cc7e7">&#9670;&#160;</a></span>statusMessage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::statusMessage </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on status message changed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The status message</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2dae6946082712815273c2967d37762a" name="a2dae6946082712815273c2967d37762a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dae6946082712815273c2967d37762a">&#9670;&#160;</a></span>consoleMessage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::consoleMessage </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>level</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on console message from the web content. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The message</td></tr>
+    <tr><td class="paramname">level</td><td>The level</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ac7377eeed6811bafca1e6887b64d62a5" name="ac7377eeed6811bafca1e6887b64d62a5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac7377eeed6811bafca1e6887b64d62a5">&#9670;&#160;</a></span>loadingProgressChanged</h2>
 
@@ -1657,8 +1682,8 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a076678fb5d8deec1600f369d4f1fc95a" name="a076678fb5d8deec1600f369d4f1fc95a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a076678fb5d8deec1600f369d4f1fc95a">&#9670;&#160;</a></span>loadingStateChanged</h2>
+<a id="add5abd934b15c1b8b3e91703701a8cf4" name="add5abd934b15c1b8b3e91703701a8cf4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add5abd934b15c1b8b3e91703701a8cf4">&#9670;&#160;</a></span>cefUrlRequest</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1667,57 +1692,7 @@ Protected Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void QCefView::loadingStateChanged </td>
-          <td>(</td>
-          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>browserId</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isLoading</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>canGoBack</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>canGoForward</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called on loading state changed. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">browserId</td><td>Indicates the browser id</td></tr>
-    <tr><td class="paramname">isLoading</td><td>Indicates the browser is loading</td></tr>
-    <tr><td class="paramname">canGoBack</td><td>Indicates the browser can go back</td></tr>
-    <tr><td class="paramname">canGoForward</td><td>Indicates the browser can go forward</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a6b04776ad4d7b62c102e9c38ac022b40" name="a6b04776ad4d7b62c102e9c38ac022b40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b04776ad4d7b62c102e9c38ac022b40">&#9670;&#160;</a></span>loadStart</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::loadStart </td>
+          <td class="memname">void QCefView::cefUrlRequest </td>
           <td>(</td>
           <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>browserId</em></span>, </td>
         </tr>
@@ -1729,12 +1704,7 @@ Protected Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>isMainFrame</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>transitionType</em></span>&#160;)</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -1744,16 +1714,766 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets called on loading starts. </p>
+<p>Gets called on built-in scheme URL access. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">browserId</td><td>Indicates the browser id</td></tr>
-    <tr><td class="paramname">frameId</td><td>Indicates the frame id</td></tr>
-    <tr><td class="paramname">isMainFrame</td><td>Indicates the whether this is the main frame</td></tr>
-    <tr><td class="paramname">transitionType</td><td>transition type</td></tr>
+    <tr><td class="paramname">browserId</td><td>The browser id</td></tr>
+    <tr><td class="paramname">frameId</td><td>The frame id</td></tr>
+    <tr><td class="paramname">url</td><td>The full url</td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aef058b415485dba45c8dfffdcf956a5f" name="aef058b415485dba45c8dfffdcf956a5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef058b415485dba45c8dfffdcf956a5f">&#9670;&#160;</a></span>cefQueryRequest</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::cefQueryRequest </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>browserId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_q_cef_query.html">QCefQuery</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>query</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on new <a class="el" href="class_q_cef_query.html" title="Represents the query request sent from the web content(Javascript)">QCefQuery</a> request. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">browserId</td><td>The browser id</td></tr>
+    <tr><td class="paramname">frameId</td><td>The frame id</td></tr>
+    <tr><td class="paramname">query</td><td>The query request</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a00435b9ab61d04517427dbe4805e970d" name="a00435b9ab61d04517427dbe4805e970d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00435b9ab61d04517427dbe4805e970d">&#9670;&#160;</a></span>invokeMethod</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::invokeMethod </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>browserId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>method</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariantList &amp;</td>          <td class="paramname"><span class="paramname"><em>arguments</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on invoking method request from web content(Javascript) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">browserId</td><td>The browser id</td></tr>
+    <tr><td class="paramname">frameId</td><td>The frame id</td></tr>
+    <tr><td class="paramname">method</td><td>The method name</td></tr>
+    <tr><td class="paramname">arguments</td><td>The arguments list</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9b69938aa6f8352799bee6084bab03e4" name="a9b69938aa6f8352799bee6084bab03e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b69938aa6f8352799bee6084bab03e4">&#9670;&#160;</a></span>reportJavascriptResult</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::reportJavascriptResult </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>browserId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QVariant &amp;</td>          <td class="paramname"><span class="paramname"><em>result</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on the result of the javascript executed with <a class="el" href="#ac13fdea19da380026a742a60c51a2356" title="Executes javascript code in specified frame and the result will be reported through reportJavascriptR...">executeJavascriptWithResult</a> returned. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">browserId</td><td>The browser id</td></tr>
+    <tr><td class="paramname">frameId</td><td>The frame id</td></tr>
+    <tr><td class="paramname">context</td><td>The context</td></tr>
+    <tr><td class="paramname">result</td><td>The result</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a543b0eca797c5161d6325665d5ddd576" name="a543b0eca797c5161d6325665d5ddd576"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a543b0eca797c5161d6325665d5ddd576">&#9670;&#160;</a></span>nativeBrowserCreated</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::nativeBrowserCreated </td>
+          <td>(</td>
+          <td class="paramtype">QWindow *</td>          <td class="paramname"><span class="paramname"><em>window</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called after the native browser window created. This slot does not work for OSR mode. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">window</td><td>The native browser windows</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a49c99555c9c604dc2e310c3df02bf385" name="a49c99555c9c604dc2e310c3df02bf385"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49c99555c9c604dc2e310c3df02bf385">&#9670;&#160;</a></span>onNewBrowser()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_q_cef_view.html">QCefView</a> * QCefView::onNewBrowser </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>sourceFrameId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a9963d810f8aa71b45b1b10f0abbe8787">QCefView::CefWindowOpenDisposition</a></td>          <td class="paramname"><span class="paramname"><em>targetDisposition</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QRect &amp;</td>          <td class="paramname"><span class="paramname"><em>rect</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_q_cef_setting.html">QCefSetting</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>settings</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called before a new browser created (only for browser created by non-JavaScript) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sourceFrameId</td><td>The source frame id</td></tr>
+    <tr><td class="paramname">url</td><td>The target URL</td></tr>
+    <tr><td class="paramname">name</td><td>The target name</td></tr>
+    <tr><td class="paramname">targetDisposition</td><td>Target window open method</td></tr>
+    <tr><td class="paramname">rect</td><td>Rect to be used for the popup</td></tr>
+    <tr><td class="paramname">settings</td><td>Settings to be used for the popup</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><p class="startdd">True to cancel the popup; false to allow</p>
+<p class="enddd"></p>
+</dd></dl>
+
+</div>
+</div>
+<a id="aadb6d47674e2ad414eb20a066b7e0738" name="aadb6d47674e2ad414eb20a066b7e0738"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadb6d47674e2ad414eb20a066b7e0738">&#9670;&#160;</a></span>onNewPopup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool QCefView::onNewPopup </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>targetUrl</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString &amp;</td>          <td class="paramname"><span class="paramname"><em>targetFrameName</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a9963d810f8aa71b45b1b10f0abbe8787">QCefView::CefWindowOpenDisposition</a></td>          <td class="paramname"><span class="paramname"><em>targetDisposition</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QRect &amp;</td>          <td class="paramname"><span class="paramname"><em>rect</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_q_cef_setting.html">QCefSetting</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>settings</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;</td>          <td class="paramname"><span class="paramname"><em>disableJavascriptAccess</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called before the popup browser created (only for browser created by JavaScript) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frameId</td><td>The source frame id</td></tr>
+    <tr><td class="paramname">targetUrl</td><td>The target URL</td></tr>
+    <tr><td class="paramname">targetFrameName</td><td>The target name</td></tr>
+    <tr><td class="paramname">targetDisposition</td><td>Target window open method</td></tr>
+    <tr><td class="paramname">rect</td><td>Rect to be used for the popup</td></tr>
+    <tr><td class="paramname">settings</td><td>Settings to be used for the popup</td></tr>
+    <tr><td class="paramname">disableJavascriptAccess</td><td>The output value to receive the Javascript access switch</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True to cancel the popup; false to allow</dd></dl>
+
+</div>
+</div>
+<a id="a666e93d6e9f9be7444f9b898f77c8292" name="a666e93d6e9f9be7444f9b898f77c8292"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a666e93d6e9f9be7444f9b898f77c8292">&#9670;&#160;</a></span>onNewDownloadItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void QCefView::onNewDownloadItem </td>
+          <td>(</td>
+          <td class="paramtype">const QSharedPointer&lt; <a class="el" href="class_q_cef_download_item.html">QCefDownloadItem</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>item</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>suggestedName</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on new download item was required. Keep reference to the download item and call <a class="el" href="class_q_cef_download_item.html#a315592aa53a2bf7bc8aea717195f5b43" title="Starts to download the item.">QCefDownloadItem::start</a> method to allow and start the download, Ignore the download item to disallow the download. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">item</td><td>The new download item</td></tr>
+    <tr><td class="paramname">suggestedName</td><td>The new suggested name</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9833a1db8ef5864489f9462ef397cbb8" name="a9833a1db8ef5864489f9462ef397cbb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9833a1db8ef5864489f9462ef397cbb8">&#9670;&#160;</a></span>onUpdateDownloadItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void QCefView::onUpdateDownloadItem </td>
+          <td>(</td>
+          <td class="paramtype">const QSharedPointer&lt; <a class="el" href="class_q_cef_download_item.html">QCefDownloadItem</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>item</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on download item updated. To get this method called <a class="el" href="class_q_cef_download_item.html#a315592aa53a2bf7bc8aea717195f5b43" title="Starts to download the item.">QCefDownloadItem::start</a> method must be called in newDownloadItem method. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">item</td><td>The download item</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad23057b6187876c84f883b1e7120456d" name="ad23057b6187876c84f883b1e7120456d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad23057b6187876c84f883b1e7120456d">&#9670;&#160;</a></span>onRequestCloseFromWeb()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool QCefView::onRequestCloseFromWeb </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets called on close request from web. </p>
+<dl class="section return"><dt>Returns</dt><dd>True to allow the close, false to cancel the close</dd></dl>
+
+</div>
+</div>
+<a id="a9b1b42857e38a9f5c6c810fd51593788" name="a9b1b42857e38a9f5c6c810fd51593788"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b1b42857e38a9f5c6c810fd51593788">&#9670;&#160;</a></span>setFocus <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::setFocus </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel slot">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a61ad737cd2354021f8310f323f4f8ada" name="a61ad737cd2354021f8310f323f4f8ada"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61ad737cd2354021f8310f323f4f8ada">&#9670;&#160;</a></span>setFocus() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::setFocus </td>
+          <td>(</td>
+          <td class="paramtype">Qt::FocusReason</td>          <td class="paramname"><span class="paramname"><em>reason</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::setFocus. </p>
+
+</div>
+</div>
+<a id="af25a011c126a9bb5dc3df99756a75368" name="af25a011c126a9bb5dc3df99756a75368"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af25a011c126a9bb5dc3df99756a75368">&#9670;&#160;</a></span>inputMethodQuery()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QVariant QCefView::inputMethodQuery </td>
+          <td>(</td>
+          <td class="paramtype">Qt::InputMethodQuery</td>          <td class="paramname"><span class="paramname"><em>query</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::inputMethodQuery. </p>
+
+</div>
+</div>
+<a id="ad88e5a99ad808b7a911b58ba9ed9b838" name="ad88e5a99ad808b7a911b58ba9ed9b838"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad88e5a99ad808b7a911b58ba9ed9b838">&#9670;&#160;</a></span>paintEngine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QPaintEngine * QCefView::paintEngine </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::paintEngine. </p>
+
+</div>
+</div>
+<a id="aa205502bb5238e6e2ce727046ed8a9b8" name="aa205502bb5238e6e2ce727046ed8a9b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa205502bb5238e6e2ce727046ed8a9b8">&#9670;&#160;</a></span>paintEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::paintEvent </td>
+          <td>(</td>
+          <td class="paramtype">QPaintEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::paintEvent. </p>
+
+</div>
+</div>
+<a id="a02d713f4a0545e85832b70ddced7e831" name="a02d713f4a0545e85832b70ddced7e831"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02d713f4a0545e85832b70ddced7e831">&#9670;&#160;</a></span>inputMethodEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::inputMethodEvent </td>
+          <td>(</td>
+          <td class="paramtype">QInputMethodEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::inputMethodEvent. </p>
+
+</div>
+</div>
+<a id="a08dcba31e0d2860270ab3cd8055a5c4e" name="a08dcba31e0d2860270ab3cd8055a5c4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08dcba31e0d2860270ab3cd8055a5c4e">&#9670;&#160;</a></span>showEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::showEvent </td>
+          <td>(</td>
+          <td class="paramtype">QShowEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::showEvent. </p>
+
+</div>
+</div>
+<a id="af2432e14ac8d9156594c3941ff6b4d14" name="af2432e14ac8d9156594c3941ff6b4d14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2432e14ac8d9156594c3941ff6b4d14">&#9670;&#160;</a></span>hideEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::hideEvent </td>
+          <td>(</td>
+          <td class="paramtype">QHideEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::hideEvent. </p>
+
+</div>
+</div>
+<a id="a05bf10e1e318cf9cc4ad742ad61c9706" name="a05bf10e1e318cf9cc4ad742ad61c9706"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05bf10e1e318cf9cc4ad742ad61c9706">&#9670;&#160;</a></span>focusInEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::focusInEvent </td>
+          <td>(</td>
+          <td class="paramtype">QFocusEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::focusInEvent. </p>
+
+</div>
+</div>
+<a id="a414b4c9efe5edd10c324c1e35e12d07c" name="a414b4c9efe5edd10c324c1e35e12d07c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a414b4c9efe5edd10c324c1e35e12d07c">&#9670;&#160;</a></span>focusOutEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::focusOutEvent </td>
+          <td>(</td>
+          <td class="paramtype">QFocusEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::focusOutEvent. </p>
+
+</div>
+</div>
+<a id="a237797e9f77342d72c35a8017865988e" name="a237797e9f77342d72c35a8017865988e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a237797e9f77342d72c35a8017865988e">&#9670;&#160;</a></span>resizeEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::resizeEvent </td>
+          <td>(</td>
+          <td class="paramtype">QResizeEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::resizeEvent. </p>
+
+</div>
+</div>
+<a id="a6aa89a0ce04dac5aa2c01545253ffc56" name="a6aa89a0ce04dac5aa2c01545253ffc56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6aa89a0ce04dac5aa2c01545253ffc56">&#9670;&#160;</a></span>keyPressEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::keyPressEvent </td>
+          <td>(</td>
+          <td class="paramtype">QKeyEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::keyPressEvent. </p>
+
+</div>
+</div>
+<a id="ab2d8e99188937bba13893ce6c54f9a3f" name="ab2d8e99188937bba13893ce6c54f9a3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2d8e99188937bba13893ce6c54f9a3f">&#9670;&#160;</a></span>keyReleaseEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::keyReleaseEvent </td>
+          <td>(</td>
+          <td class="paramtype">QKeyEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::keyReleaseEvent. </p>
 
 </div>
 </div>
@@ -1838,779 +2558,6 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a543b0eca797c5161d6325665d5ddd576" name="a543b0eca797c5161d6325665d5ddd576"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a543b0eca797c5161d6325665d5ddd576">&#9670;&#160;</a></span>nativeBrowserCreated</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::nativeBrowserCreated </td>
-          <td>(</td>
-          <td class="paramtype">QWindow *</td>          <td class="paramname"><span class="paramname"><em>window</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called after the native browser window created. This slot does not work for OSR mode. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">window</td><td>The native browser windows</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ac3b8ec3b088422a67f93fc580047a1a0" name="ac3b8ec3b088422a67f93fc580047a1a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3b8ec3b088422a67f93fc580047a1a0">&#9670;&#160;</a></span>navigateToString()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::navigateToString </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>content</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Navigates to the content. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">content</td><td>The content</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a4bf036d5a7d128d4c1487afaa0393d5b" name="a4bf036d5a7d128d4c1487afaa0393d5b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4bf036d5a7d128d4c1487afaa0393d5b">&#9670;&#160;</a></span>navigateToUrl()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::navigateToUrl </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Navigates to the URL. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">url</td><td>The url</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a49c99555c9c604dc2e310c3df02bf385" name="a49c99555c9c604dc2e310c3df02bf385"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49c99555c9c604dc2e310c3df02bf385">&#9670;&#160;</a></span>onNewBrowser()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual <a class="el" href="class_q_cef_view.html">QCefView</a> * QCefView::onNewBrowser </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>sourceFrameId</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="#a9963d810f8aa71b45b1b10f0abbe8787">QCefView::CefWindowOpenDisposition</a></td>          <td class="paramname"><span class="paramname"><em>targetDisposition</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QRect &amp;</td>          <td class="paramname"><span class="paramname"><em>rect</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_q_cef_setting.html">QCefSetting</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>settings</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called before a new browser created (only for browser created by non-JavaScript) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">frameId</td><td>The source frame id</td></tr>
-    <tr><td class="paramname">url</td><td>The target URL</td></tr>
-    <tr><td class="paramname">name</td><td>The target name</td></tr>
-    <tr><td class="paramname">targetDisposition</td><td>Target window open method</td></tr>
-    <tr><td class="paramname">rect</td><td>Rect to be used for the popup</td></tr>
-    <tr><td class="paramname">settings</td><td>Settings to be used for the popup</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><p class="startdd">True to cancel the popup; false to allow</p>
-<p class="enddd"></p>
-</dd></dl>
-
-</div>
-</div>
-<a id="a666e93d6e9f9be7444f9b898f77c8292" name="a666e93d6e9f9be7444f9b898f77c8292"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a666e93d6e9f9be7444f9b898f77c8292">&#9670;&#160;</a></span>onNewDownloadItem()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void QCefView::onNewDownloadItem </td>
-          <td>(</td>
-          <td class="paramtype">const QSharedPointer&lt; <a class="el" href="class_q_cef_download_item.html">QCefDownloadItem</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>item</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>suggestedName</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called on new download item was required. Keep reference to the download item and call <a class="el" href="class_q_cef_download_item.html#a315592aa53a2bf7bc8aea717195f5b43" title="Starts to download the item.">QCefDownloadItem::start</a> method to allow and start the download, Ignore the download item to disallow the download. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">item</td><td>The new download item</td></tr>
-    <tr><td class="paramname">suggestedName</td><td>The new suggested name</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aadb6d47674e2ad414eb20a066b7e0738" name="aadb6d47674e2ad414eb20a066b7e0738"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aadb6d47674e2ad414eb20a066b7e0738">&#9670;&#160;</a></span>onNewPopup()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool QCefView::onNewPopup </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>targetUrl</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QString &amp;</td>          <td class="paramname"><span class="paramname"><em>targetFrameName</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="#a9963d810f8aa71b45b1b10f0abbe8787">QCefView::CefWindowOpenDisposition</a></td>          <td class="paramname"><span class="paramname"><em>targetDisposition</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QRect &amp;</td>          <td class="paramname"><span class="paramname"><em>rect</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_q_cef_setting.html">QCefSetting</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>settings</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool &amp;</td>          <td class="paramname"><span class="paramname"><em>disableJavascriptAccess</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called before the popup browser created (only for browser created by JavaScript) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">frameId</td><td>The source frame id</td></tr>
-    <tr><td class="paramname">targetUrl</td><td>The target URL</td></tr>
-    <tr><td class="paramname">targetFrameName</td><td>The target name</td></tr>
-    <tr><td class="paramname">targetDisposition</td><td>Target window open method</td></tr>
-    <tr><td class="paramname">rect</td><td>Rect to be used for the popup</td></tr>
-    <tr><td class="paramname">settings</td><td>Settings to be used for the popup</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True to cancel the popup; false to allow</dd></dl>
-
-</div>
-</div>
-<a id="ad23057b6187876c84f883b1e7120456d" name="ad23057b6187876c84f883b1e7120456d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad23057b6187876c84f883b1e7120456d">&#9670;&#160;</a></span>onRequestCloseFromWeb()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool QCefView::onRequestCloseFromWeb </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called on close request from web. </p>
-<dl class="section return"><dt>Returns</dt><dd>True to allow the close, false to cancel the close</dd></dl>
-
-</div>
-</div>
-<a id="a9833a1db8ef5864489f9462ef397cbb8" name="a9833a1db8ef5864489f9462ef397cbb8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9833a1db8ef5864489f9462ef397cbb8">&#9670;&#160;</a></span>onUpdateDownloadItem()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void QCefView::onUpdateDownloadItem </td>
-          <td>(</td>
-          <td class="paramtype">const QSharedPointer&lt; <a class="el" href="class_q_cef_download_item.html">QCefDownloadItem</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>item</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span><span class="mlabel virtual">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called on download item updated. To get this method called <a class="el" href="class_q_cef_download_item.html#a315592aa53a2bf7bc8aea717195f5b43" title="Starts to download the item.">QCefDownloadItem::start</a> method must be called in newDownloadItem method. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">item</td><td>The download item</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ad88e5a99ad808b7a911b58ba9ed9b838" name="ad88e5a99ad808b7a911b58ba9ed9b838"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad88e5a99ad808b7a911b58ba9ed9b838">&#9670;&#160;</a></span>paintEngine()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">QPaintEngine * QCefView::paintEngine </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::paintEngine. </p>
-
-</div>
-</div>
-<a id="aa205502bb5238e6e2ce727046ed8a9b8" name="aa205502bb5238e6e2ce727046ed8a9b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa205502bb5238e6e2ce727046ed8a9b8">&#9670;&#160;</a></span>paintEvent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::paintEvent </td>
-          <td>(</td>
-          <td class="paramtype">QPaintEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::paintEvent. </p>
-
-</div>
-</div>
-<a id="a9b69938aa6f8352799bee6084bab03e4" name="a9b69938aa6f8352799bee6084bab03e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b69938aa6f8352799bee6084bab03e4">&#9670;&#160;</a></span>reportJavascriptResult</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::reportJavascriptResult </td>
-          <td>(</td>
-          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>browserId</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QVariant &amp;</td>          <td class="paramname"><span class="paramname"><em>result</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called on the result of the javascript executed with <a class="el" href="#ac13fdea19da380026a742a60c51a2356" title="Executes javascript code in specified frame and the result will be reported through reportJavascriptR...">executeJavascriptWithResult</a> returned. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">browserId</td><td>The browser id</td></tr>
-    <tr><td class="paramname">frameId</td><td>The frame id</td></tr>
-    <tr><td class="paramname">context</td><td>The context</td></tr>
-    <tr><td class="paramname">result</td><td>The result</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a237797e9f77342d72c35a8017865988e" name="a237797e9f77342d72c35a8017865988e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a237797e9f77342d72c35a8017865988e">&#9670;&#160;</a></span>resizeEvent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::resizeEvent </td>
-          <td>(</td>
-          <td class="paramtype">QResizeEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::resizeEvent. </p>
-
-</div>
-</div>
-<a id="afc838dab54d2b083b05f0d98349b50cc" name="afc838dab54d2b083b05f0d98349b50cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc838dab54d2b083b05f0d98349b50cc">&#9670;&#160;</a></span>responseQCefQuery()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool QCefView::responseQCefQuery </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_q_cef_query.html">QCefQuery</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>query</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Response the <a class="el" href="class_q_cef_query.html" title="Represents the query request sent from the web content(Javascript)">QCefQuery</a> request. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">query</td><td>The query instance</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True on successful; otherwise false</dd></dl>
-
-</div>
-</div>
-<a id="acca71443b26dce09e81e3f937cedaa6b" name="acca71443b26dce09e81e3f937cedaa6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acca71443b26dce09e81e3f937cedaa6b">&#9670;&#160;</a></span>setDisablePopupContextMenu()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::setDisablePopupContextMenu </td>
-          <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>disable</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets whether to disable the context menu for popup browser. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">disable</td><td>True to disable; otherwise false</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="af73ef1d6f77a31b528c729cf7379abfb" name="af73ef1d6f77a31b528c729cf7379abfb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af73ef1d6f77a31b528c729cf7379abfb">&#9670;&#160;</a></span>setEnableDragAndDrop()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::setEnableDragAndDrop </td>
-          <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>enable</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets whether to enable drag and drop. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">enable</td><td>True to enable; otherwise false</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function does not work for OSR mode. There is a problem, when dragging a file to a non dragging area, the content of the file will be displayed. You need to solve the problem yourself. </p>
-
-</div>
-</div>
-<a id="a9b1b42857e38a9f5c6c810fd51593788" name="a9b1b42857e38a9f5c6c810fd51593788"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b1b42857e38a9f5c6c810fd51593788">&#9670;&#160;</a></span>setFocus <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::setFocus </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel slot">slot</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a61ad737cd2354021f8310f323f4f8ada" name="a61ad737cd2354021f8310f323f4f8ada"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61ad737cd2354021f8310f323f4f8ada">&#9670;&#160;</a></span>setFocus() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::setFocus </td>
-          <td>(</td>
-          <td class="paramtype">Qt::FocusReason</td>          <td class="paramname"><span class="paramname"><em>reason</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::setFocus. </p>
-
-</div>
-</div>
-<a id="a2b4b3da8874855bbe2d558081233d948" name="a2b4b3da8874855bbe2d558081233d948"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b4b3da8874855bbe2d558081233d948">&#9670;&#160;</a></span>setPreference()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool QCefView::setPreference </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QVariant &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>error</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets the preference for this browser. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The preference name</td></tr>
-    <tr><td class="paramname">value</td><td>The preference value, if this value is QVariant::UnknownType or QVariant::Invalid, the preference will be restored to default value </td></tr>
-    <tr><td class="paramname">error</td><td>The error message populated on failure</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True on successful; otherwise false</dd></dl>
-
-</div>
-</div>
-<a id="a61845e6e370a57be5f3662ba37cd7b29" name="a61845e6e370a57be5f3662ba37cd7b29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61845e6e370a57be5f3662ba37cd7b29">&#9670;&#160;</a></span>showDevTools()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::showDevTools </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Opens the devtools dialog. </p>
-
-</div>
-</div>
-<a id="a08dcba31e0d2860270ab3cd8055a5c4e" name="a08dcba31e0d2860270ab3cd8055a5c4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08dcba31e0d2860270ab3cd8055a5c4e">&#9670;&#160;</a></span>showEvent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::showEvent </td>
-          <td>(</td>
-          <td class="paramtype">QShowEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::showEvent. </p>
-
-</div>
-</div>
-<a id="a86d10c28b8821a36723e3504fa0cc7e7" name="a86d10c28b8821a36723e3504fa0cc7e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86d10c28b8821a36723e3504fa0cc7e7">&#9670;&#160;</a></span>statusMessage</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::statusMessage </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called on status message changed. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">message</td><td>The status message</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a48c82c208cab769a1baa7177bc58b030" name="a48c82c208cab769a1baa7177bc58b030"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48c82c208cab769a1baa7177bc58b030">&#9670;&#160;</a></span>titleChanged</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::titleChanged </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>title</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets called on title changed. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">title</td><td>The title</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ac47c23ffcd94bdffe2b6a81eaae077a2" name="ac47c23ffcd94bdffe2b6a81eaae077a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac47c23ffcd94bdffe2b6a81eaae077a2">&#9670;&#160;</a></span>triggerEvent() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool QCefView::triggerEvent </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_q_cef_event.html">QCefEvent</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Triggers the event for main frame. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">event</td><td>The <a class="el" href="class_q_cef_event.html" title="Represents the event sent from native context(C/C++ code) to the web context(javascript)">QCefEvent</a> instance</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True on successful; otherwise false</dd></dl>
-
-</div>
-</div>
-<a id="ab70a707afda924d6f035b20a1aecc695" name="ab70a707afda924d6f035b20a1aecc695"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab70a707afda924d6f035b20a1aecc695">&#9670;&#160;</a></span>triggerEvent() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool QCefView::triggerEvent </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_q_cef_event.html">QCefEvent</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>event</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>frameId</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Triggers the event for specified frame. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">event</td><td>The <a class="el" href="class_q_cef_event.html" title="Represents the event sent from native context(C/C++ code) to the web context(javascript)">QCefEvent</a> instance</td></tr>
-    <tr><td class="paramname">frameId</td><td>The frame id</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True on successful; otherwise false</dd></dl>
-
-</div>
-</div>
 <a id="a3395f62959288420a834c736933e7228" name="a3395f62959288420a834c736933e7228"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3395f62959288420a834c736933e7228">&#9670;&#160;</a></span>wheelEvent()</h2>
 
@@ -2638,9 +2585,8 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="aa0b341726ea511a8a4c0bf6b603da5f7" name="aa0b341726ea511a8a4c0bf6b603da5f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0b341726ea511a8a4c0bf6b603da5f7">&#9670;&#160;</a></span>AllFrameID</h2>
+<a id="a346fde9e6ed939e82aad237fbb39cb6f" name="a346fde9e6ed939e82aad237fbb39cb6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a346fde9e6ed939e82aad237fbb39cb6f">&#9670;&#160;</a></span>leaveEvent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2649,20 +2595,51 @@ Protected Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const QString QCefView::AllFrameID</td>
+          <td class="memname">void QCefView::leaveEvent </td>
+          <td>(</td>
+          <td class="paramtype">QEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>The identifier for all frames. </p>
+<p>Please refer to QWidget::leaveEvent. </p>
 
 </div>
 </div>
+<a id="ac8a83d1f2fb0e771fb48007838b40d1f" name="ac8a83d1f2fb0e771fb48007838b40d1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8a83d1f2fb0e771fb48007838b40d1f">&#9670;&#160;</a></span>contextMenuEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefView::contextMenuEvent </td>
+          <td>(</td>
+          <td class="paramtype">QContextMenuEvent *</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Please refer to QWidget::contextMenuEvent. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
 <a id="aecdaec6088be4f77a505e0fae0765625" name="aecdaec6088be4f77a505e0fae0765625"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aecdaec6088be4f77a505e0fae0765625">&#9670;&#160;</a></span>MainFrameID</h2>
 
@@ -2684,6 +2661,30 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The main frame identity. </p>
+
+</div>
+</div>
+<a id="aa0b341726ea511a8a4c0bf6b603da5f7" name="aa0b341726ea511a8a4c0bf6b603da5f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0b341726ea511a8a4c0bf6b603da5f7">&#9670;&#160;</a></span>AllFrameID</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QString QCefView::AllFrameID</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The identifier for all frames. </p>
 
 </div>
 </div>

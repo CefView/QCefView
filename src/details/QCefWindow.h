@@ -6,7 +6,7 @@
 #include <QShowEvent>
 #include <QWidget>
 #include <QWindow>
-#pragma endregion 
+#pragma endregion
 
 class QCefWindow : public QWindow
 {

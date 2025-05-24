@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['first_20project_0',['First Project',['../md_docs_202-_first_project.html',1,'']]]
+  ['deprecated_20list_0',['Deprecated List',['../deprecated.html',1,'']]]
 ];

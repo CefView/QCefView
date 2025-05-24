@@ -165,6 +165,14 @@ $(function(){initNavTree('_q_cef_view__global_8h.html',''); initResizable(true);
 Macros</h2></td></tr>
 <tr class="memitem:a4489f56825bd83a3b95b3d18fdca331f" id="r_a4489f56825bd83a3b95b3d18fdca331f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4489f56825bd83a3b95b3d18fdca331f">QCEFVIEW_EXPORT</a>&#160;&#160;&#160;Q_DECL_IMPORT</td></tr>
 <tr class="separator:a4489f56825bd83a3b95b3d18fdca331f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a761b5c2677e327ac6c1c3e8a8b67f067" id="r_a761b5c2677e327ac6c1c3e8a8b67f067"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a761b5c2677e327ac6c1c3e8a8b67f067">DEPRECATED_SINCE_CEF_VERSION</a>(major,  minor,  patch)</td></tr>
+<tr class="separator:a761b5c2677e327ac6c1c3e8a8b67f067"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a342783eb60e0e77913cc501712966dab" id="r_a342783eb60e0e77913cc501712966dab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a342783eb60e0e77913cc501712966dab">DEPRECATED_CEF_API_WARNING</a>(major,  minor,  patch)</td></tr>
+<tr class="separator:a342783eb60e0e77913cc501712966dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dcdd1222917bd78bc60c08d2c041d2b" id="r_a3dcdd1222917bd78bc60c08d2c041d2b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3dcdd1222917bd78bc60c08d2c041d2b">INTRODUCED_SINCE_CEF_VERSION</a>(major,  minor,  patch)</td></tr>
+<tr class="separator:a3dcdd1222917bd78bc60c08d2c041d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3bf408a6987e48e4ebe84ca2669d6a4" id="r_af3bf408a6987e48e4ebe84ca2669d6a4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af3bf408a6987e48e4ebe84ca2669d6a4">INTRODUCED_CEF_API_WARNING</a>(major,  minor,  patch)</td></tr>
+<tr class="separator:af3bf408a6987e48e4ebe84ca2669d6a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a4489f56825bd83a3b95b3d18fdca331f" name="a4489f56825bd83a3b95b3d18fdca331f"></a>
@@ -179,6 +187,122 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+</div>
+</div>
+<a id="a761b5c2677e327ac6c1c3e8a8b67f067" name="a761b5c2677e327ac6c1c3e8a8b67f067"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a761b5c2677e327ac6c1c3e8a8b67f067">&#9670;&#160;</a></span>DEPRECATED_SINCE_CEF_VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEPRECATED_SINCE_CEF_VERSION</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>major</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>minor</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>patch</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="comment">/* @deprecated Since CEF major . minor . patch */</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a342783eb60e0e77913cc501712966dab" name="a342783eb60e0e77913cc501712966dab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a342783eb60e0e77913cc501712966dab">&#9670;&#160;</a></span>DEPRECATED_CEF_API_WARNING</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEPRECATED_CEF_API_WARNING</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>major</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>minor</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>patch</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">  qWarning() &lt;&lt; __FUNCTION__ &lt;&lt; <span class="stringliteral">&quot; was deprecated since CEF version:&quot;</span>                                                    \</div>
+<div class="line">            &lt;&lt; major &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; minor &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; patch &lt;&lt; <span class="stringliteral">&quot;. &quot;</span>                                                            \</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;Current CEF version: &quot;</span>                                                                                  \</div>
+<div class="line">            &lt;&lt; <a class="code hl_define" href="_cef_version_8h.html#a7a9be029daf6e2078b974348dcea2985">CEF_VERSION_MAJOR</a> &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; <a class="code hl_define" href="_cef_version_8h.html#a67ccdb367f59d0948c8c607b3fa8c1fd">CEF_VERSION_MINOR</a> &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; <a class="code hl_define" href="_cef_version_8h.html#a43e12afa87b9af993b0aa6aba4d4cc80">CEF_VERSION_PATCH</a> &lt;&lt; <span class="stringliteral">&quot;.&quot;</span>;</div>
+<div class="ttc" id="a_cef_version_8h_html_a43e12afa87b9af993b0aa6aba4d4cc80"><div class="ttname"><a href="_cef_version_8h.html#a43e12afa87b9af993b0aa6aba4d4cc80">CEF_VERSION_PATCH</a></div><div class="ttdeci">#define CEF_VERSION_PATCH</div><div class="ttdef"><b>Definition</b> CefVersion.h:19</div></div>
+<div class="ttc" id="a_cef_version_8h_html_a67ccdb367f59d0948c8c607b3fa8c1fd"><div class="ttname"><a href="_cef_version_8h.html#a67ccdb367f59d0948c8c607b3fa8c1fd">CEF_VERSION_MINOR</a></div><div class="ttdeci">#define CEF_VERSION_MINOR</div><div class="ttdef"><b>Definition</b> CefVersion.h:18</div></div>
+<div class="ttc" id="a_cef_version_8h_html_a7a9be029daf6e2078b974348dcea2985"><div class="ttname"><a href="_cef_version_8h.html#a7a9be029daf6e2078b974348dcea2985">CEF_VERSION_MAJOR</a></div><div class="ttdeci">#define CEF_VERSION_MAJOR</div><div class="ttdef"><b>Definition</b> CefVersion.h:17</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3dcdd1222917bd78bc60c08d2c041d2b" name="a3dcdd1222917bd78bc60c08d2c041d2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3dcdd1222917bd78bc60c08d2c041d2b">&#9670;&#160;</a></span>INTRODUCED_SINCE_CEF_VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INTRODUCED_SINCE_CEF_VERSION</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>major</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>minor</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>patch</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af3bf408a6987e48e4ebe84ca2669d6a4" name="af3bf408a6987e48e4ebe84ca2669d6a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3bf408a6987e48e4ebe84ca2669d6a4">&#9670;&#160;</a></span>INTRODUCED_CEF_API_WARNING</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INTRODUCED_CEF_API_WARNING</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>major</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>minor</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>patch</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"> qWarning() &lt;&lt; __FUNCTION__ &lt;&lt; <span class="stringliteral">&quot; was introduced since CEF version:&quot;</span>                                                     \</div>
+<div class="line">            &lt;&lt; major &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; minor &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; patch &lt;&lt; <span class="stringliteral">&quot;. &quot;</span>                                                            \</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;Current CEF version: &quot;</span>                                                                                  \</div>
+<div class="line">            &lt;&lt; <a class="code hl_define" href="_cef_version_8h.html#a7a9be029daf6e2078b974348dcea2985">CEF_VERSION_MAJOR</a> &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; <a class="code hl_define" href="_cef_version_8h.html#a67ccdb367f59d0948c8c607b3fa8c1fd">CEF_VERSION_MINOR</a> &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; <a class="code hl_define" href="_cef_version_8h.html#a43e12afa87b9af993b0aa6aba4d4cc80">CEF_VERSION_PATCH</a> &lt;&lt; <span class="stringliteral">&quot;.&quot;</span>;</div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

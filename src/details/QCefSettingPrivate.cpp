@@ -2,11 +2,11 @@
 
 #pragma region qt_headers
 #include <QColor>
-#pragma endregion 
+#pragma endregion
 
 #pragma region cef_headers
 #include <include/cef_version.h>
-#pragma endregion 
+#pragma endregion
 
 #include <QCefContext.h>
 
@@ -25,7 +25,6 @@ QCefSettingPrivate::CopyFromCefBrowserSettings(QCefSetting* qs, const CefBrowser
 
   qs->d_func()->copyFromCefBrowserSettings(cs);
 }
-
 
 void
 QCefSettingPrivate::CopyFromCefBrowserSettings(QCefSettingPrivate* qsp, const CefBrowserSettings* cs)
@@ -52,7 +51,6 @@ QCefSettingPrivate::CopyToCefBrowserSettings(const QCefSetting* qs, CefBrowserSe
   }
 }
 
-
 void
 QCefSettingPrivate::CopyToCefBrowserSettings(const QCefSettingPrivate* qsp, CefBrowserSettings* cs)
 {
@@ -67,7 +65,6 @@ QCefSettingPrivate::CopyToCefBrowserSettings(const QCefSettingPrivate* qsp, CefB
     cs->background_color = defaultSettings.backgroundColor_.value<QColor>().rgba();
   }
 }
-
 
 void
 QCefSettingPrivate::copyFromCefBrowserSettings(const CefBrowserSettings* cs)

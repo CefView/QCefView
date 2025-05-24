@@ -1,4 +1,4 @@
-#include "QCefWindow.h"
+﻿#include "QCefWindow.h"
 
 #if defined(Q_OS_WINDOWS)
 #include <windows.h>

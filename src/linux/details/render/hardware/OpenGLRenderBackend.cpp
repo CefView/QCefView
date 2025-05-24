@@ -5,7 +5,7 @@ OpenGLRenderBackend::OpenGLRenderBackend() {}
 OpenGLRenderBackend::~OpenGLRenderBackend() {}
 
 bool
-OpenGLRenderBackend::initialize(QWindow* window, int width, int height, float scale, const QColor& clear)
+OpenGLRenderBackend::initialize(QWidget* widget, int width, int height, float scale, const QColor& clear)
 {
   // TODO: it seems hardware acceleration is not supported by CEF currently.
   return false;

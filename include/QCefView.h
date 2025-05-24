@@ -394,7 +394,7 @@ signals:
   /// </summary>
   /// <param name="browserId">The browser id</param>
   /// <param name="frameId">The frame id</param>
-  /// <param name="query">The full url</param>
+  /// <param name="url">The full url</param>
   void cefUrlRequest(const QCefBrowserId& browserId, const QCefFrameId& frameId, const QString& url);
 
   /// <summary>
@@ -439,7 +439,7 @@ protected:
   /// <summary>
   /// Gets called before a new browser created (only for browser created by non-JavaScript)
   /// </summary>
-  /// <param name="frameId">The source frame id</param>
+  /// <param name="sourceFrameId">The source frame id</param>
   /// <param name="url">The target URL</param>
   /// <param name="name">The target name</param>
   /// <param name="targetDisposition">Target window open method</param>
@@ -463,6 +463,7 @@ protected:
   /// <param name="targetDisposition">Target window open method</param>
   /// <param name="rect">Rect to be used for the popup</param>
   /// <param name="settings">Settings to be used for the popup</param>
+  /// <param name="disableJavascriptAccess">The output value to receive the Javascript access switch</param>
   /// <returns>True to cancel the popup; false to allow</returns>
   virtual bool onNewPopup(const QCefFrameId& frameId,
                           const QString& targetUrl,

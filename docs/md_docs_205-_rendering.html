@@ -232,11 +232,10 @@ Hardware Acceleration</h1>
 <div class="line">setting.<a class="code hl_function" href="class_q_cef_setting.html#a4a5810da8e070288ff80c069f5b52f23">setWindowlessFrameRate</a>(1000);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// enable hardware acceleration</span></div>
-<div class="line">setting.<a class="code hl_function" href="class_q_cef_setting.html#afdb320899b859e7781458a281a9dafbe">setHardwareAcceleration</a>(<span class="keyword">true</span>);</div>
+<div class="line">setting.setHardwareAcceleration(<span class="keyword">true</span>);</div>
 <div class="ttc" id="aclass_q_cef_setting_html"><div class="ttname"><a href="class_q_cef_setting.html">QCefSetting</a></div><div class="ttdoc">Represents the settings for individual browser.</div><div class="ttdef"><b>Definition</b> QCefSetting.h:27</div></div>
 <div class="ttc" id="aclass_q_cef_setting_html_a4a5810da8e070288ff80c069f5b52f23"><div class="ttname"><a href="class_q_cef_setting.html#a4a5810da8e070288ff80c069f5b52f23">QCefSetting::setWindowlessFrameRate</a></div><div class="ttdeci">void setWindowlessFrameRate(const int value)</div><div class="ttdoc">Sets the frame rate in window less mode.</div></div>
 <div class="ttc" id="aclass_q_cef_setting_html_a6dbd7b1da3a151294e8bf020a16687be"><div class="ttname"><a href="class_q_cef_setting.html#a6dbd7b1da3a151294e8bf020a16687be">QCefSetting::setBackgroundColor</a></div><div class="ttdeci">void setBackgroundColor(const QColor &amp;value)</div><div class="ttdoc">Sets the background color.</div></div>
-<div class="ttc" id="aclass_q_cef_setting_html_afdb320899b859e7781458a281a9dafbe"><div class="ttname"><a href="class_q_cef_setting.html#afdb320899b859e7781458a281a9dafbe">QCefSetting::setHardwareAcceleration</a></div><div class="ttdeci">void setHardwareAcceleration(const bool value)</div></div>
 </div><!-- fragment --><p>By default, CEF attempts to use hardware acceleration if it is available. However, explicitly setting the <code>setHardwareAcceleration</code> provides more control.</p>
 <dl class="section remark"><dt>Remarks</dt><dd>Enabling hardware acceleration is generally recommended for the best performance. However, if you encounter rendering issues or compatibility problems, disabling it can provide a fallback option. And this feature only works in OSR mode. </dd></dl>
 </div></div><!-- contents -->

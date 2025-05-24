@@ -13,12 +13,12 @@
 
 #pragma region stl_headers
 #include <cstdint>
-#pragma endregion 
+#pragma endregion
 
 #pragma region qt_headers
 #include <QSharedPointer>
 #include <QString>
-#pragma endregion 
+#pragma endregion
 
 class QCefQueryPrivate;
 class QCefViewPrivate;

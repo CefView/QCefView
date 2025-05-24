@@ -1,8 +1,8 @@
-#include <QCefSetting.h>
+﻿#include <QCefSetting.h>
 
 #pragma region cef_headers
 #include <include/cef_version.h>
-#pragma endregion 
+#pragma endregion
 
 #include "details/QCefSettingPrivate.h"
 #include "details/utils/CommonUtils.h"
@@ -141,21 +141,28 @@ QCefSetting::defaultEncoding() const
   return QString::fromStdString(d->defaultEncoding_);
 }
 
-#if CEF_VERSION_MAJOR < 118
 void
 QCefSetting::setAcceptLanguageList(const QString& value)
 {
   Q_D(QCefSetting);
+#if CEF_VERSION_MAJOR < 118
   d->acceptLanguageList_ = value.toStdString();
+#else
+  DEPRECATED_CEF_API_WARNING(118, 0, 0);
+#endif
 }
 
 const QString
 QCefSetting::acceptLanguageList() const
 {
   Q_D(const QCefSetting);
+#if CEF_VERSION_MAJOR < 118
   return QString::fromStdString(d->acceptLanguageList_);
-}
+#else
+  DEPRECATED_CEF_API_WARNING(118, 0, 0);
+  return QString();
 #endif
+}
 
 void
 QCefSetting::setWindowlessFrameRate(const int value)
@@ -169,6 +176,29 @@ QCefSetting::windowlessFrameRate() const
 {
   Q_D(const QCefSetting);
   return d->windowlessFrameRate_;
+}
+
+void
+QCefSetting::setHardwareAccelerationEnabled(const bool value)
+{
+  Q_D(QCefSetting);
+#if CEF_VERSION_MAJOR >= 125
+  d->hardwareAcceleration_ = value;
+#else
+  INTRODUCED_CEF_API_WARNING(125, 0, 0);
+#endif
+}
+
+const bool
+QCefSetting::hardwareAccelerationEnabled() const
+{
+  Q_D(const QCefSetting);
+#if CEF_VERSION_MAJOR >= 125
+  return d->hardwareAcceleration_;
+#else
+  INTRODUCED_CEF_API_WARNING(125, 0, 0);
+  return false;
+#endif
 }
 
 void
@@ -297,21 +327,28 @@ QCefSetting::javascriptDomPaste() const
   return d->javascriptDomPaste_;
 }
 
-#if CEF_VERSION_MAJOR < 100
 void
 QCefSetting::setPlugins(const bool value)
 {
   Q_D(QCefSetting);
+#if CEF_VERSION_MAJOR < 100
   d->plugins_ = value;
+#else
+  DEPRECATED_CEF_API_WARNING(100, 0, 0);
+#endif
 }
 
 const QVariant
 QCefSetting::plugins() const
 {
   Q_D(const QCefSetting);
+#if CEF_VERSION_MAJOR < 100
   return d->plugins_;
-}
+#else
+  DEPRECATED_CEF_API_WARNING(100, 0, 0);
+  return QVariant();
 #endif
+}
 
 void
 QCefSetting::setImageLoading(const bool value)
@@ -424,19 +461,3 @@ QCefSetting::backgroundColor() const
   Q_D(const QCefSetting);
   return d->backgroundColor_;
 }
-
-#if CEF_VERSION_MAJOR >= 125
-void
-QCefSetting::setHardwareAcceleration(const bool value)
-{
-  Q_D(QCefSetting);
-  d->hardwareAcceleration_ = value;
-}
-
-const bool
-QCefSetting::hardwareAcceleration() const
-{
-  Q_D(const QCefSetting);
-  return d->hardwareAcceleration_;
-}
-#endif
