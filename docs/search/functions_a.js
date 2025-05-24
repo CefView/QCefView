@@ -7,7 +7,6 @@ var searchData=
   ['loadingstatechanged_4',['loadingStateChanged',['../class_q_cef_view.html#a076678fb5d8deec1600f369d4f1fc95a',1,'QCefView']]],
   ['loadstart_5',['loadStart',['../class_q_cef_view.html#a6b04776ad4d7b62c102e9c38ac022b40',1,'QCefView']]],
   ['locale_6',['locale',['../class_q_cef_config.html#ac1d5ca26f596c9f3e7697da04e549414',1,'QCefConfig']]],
-  ['localesdirectorypath_7',['localesDirectoryPath',['../class_q_cef_config.html#a3d43450cd3768ff1783596e48fcfe707',1,'QCefConfig']]],
-  ['localstorage_8',['localStorage',['../class_q_cef_setting.html#a4fffdf46c7617f7b116e2e836dbb48d0',1,'QCefSetting']]],
-  ['loglevel_9',['logLevel',['../class_q_cef_config.html#a8728d026571a97449e13e8502c34e5e5',1,'QCefConfig']]]
+  ['localstorage_7',['localStorage',['../class_q_cef_setting.html#a4fffdf46c7617f7b116e2e836dbb48d0',1,'QCefSetting']]],
+  ['loglevel_8',['logLevel',['../class_q_cef_config.html#a8728d026571a97449e13e8502c34e5e5',1,'QCefConfig']]]
 ];

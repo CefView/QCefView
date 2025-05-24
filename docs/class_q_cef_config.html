@@ -192,7 +192,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2873f9e8e8997db4060348418df16632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a switch to the commandline args used to initialize the CEF.  <br /></td></tr>
 <tr class="separator:a2873f9e8e8997db4060348418df16632"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a141daa8b02526d190e462cbcb38dbab5" id="r_a141daa8b02526d190e462cbcb38dbab5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a141daa8b02526d190e462cbcb38dbab5">addCommandLineSwitchWithValue</a> (const QString &amp;smitch, const QString &amp;v)</td></tr>
-<tr class="memdesc:a141daa8b02526d190e462cbcb38dbab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a switch with value to the commandline args used to initialize the CEF.  <br /></td></tr>
+<tr class="memdesc:a141daa8b02526d190e462cbcb38dbab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a switch with value to the command line args used to initialize the CEF.  <br /></td></tr>
 <tr class="separator:a141daa8b02526d190e462cbcb38dbab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6041bcae9fcf72ea47ffc47d62e5a96" id="r_af6041bcae9fcf72ea47ffc47d62e5a96"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af6041bcae9fcf72ea47ffc47d62e5a96">setWindowlessRenderingEnabled</a> (const bool enabled)</td></tr>
 <tr class="memdesc:af6041bcae9fcf72ea47ffc47d62e5a96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the flag to enable/disable OSR mode.  <br /></td></tr>
@@ -200,6 +200,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a17b6765b357b7a2d69a1f02b27a4eb92" id="r_a17b6765b357b7a2d69a1f02b27a4eb92"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17b6765b357b7a2d69a1f02b27a4eb92">windowlessRenderingEnabled</a> () const</td></tr>
 <tr class="memdesc:a17b6765b357b7a2d69a1f02b27a4eb92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the OSR mode flag.  <br /></td></tr>
 <tr class="separator:a17b6765b357b7a2d69a1f02b27a4eb92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13cb151d59ff635c71bcda69bd970f50" id="r_a13cb151d59ff635c71bcda69bd970f50"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13cb151d59ff635c71bcda69bd970f50">setStandaloneMessageLoopEnabled</a> (const bool enabled)</td></tr>
+<tr class="memdesc:a13cb151d59ff635c71bcda69bd970f50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the flag to enable/disable standalone message loop thread for CEF main thread.  <br /></td></tr>
+<tr class="separator:a13cb151d59ff635c71bcda69bd970f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeff1eb7f8eceb357bd047ffaeae8c072" id="r_aeff1eb7f8eceb357bd047ffaeae8c072"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeff1eb7f8eceb357bd047ffaeae8c072">standaloneMessageLoopEnabled</a> () const</td></tr>
+<tr class="memdesc:aeff1eb7f8eceb357bd047ffaeae8c072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the standalone message loop flag.  <br /></td></tr>
+<tr class="separator:aeff1eb7f8eceb357bd047ffaeae8c072"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09f3800b8911bad084b9e4673f1839b0" id="r_a09f3800b8911bad084b9e4673f1839b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a09f3800b8911bad084b9e4673f1839b0">setSandboxDisabled</a> (const bool disabled)</td></tr>
 <tr class="memdesc:a09f3800b8911bad084b9e4673f1839b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the flag to enable/disable sandbox.  <br /></td></tr>
 <tr class="separator:a09f3800b8911bad084b9e4673f1839b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,24 +218,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a892715bebd8dc71e5acb0be17bfff43d" id="r_a892715bebd8dc71e5acb0be17bfff43d"><td class="memItemLeft" align="right" valign="top">const QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a892715bebd8dc71e5acb0be17bfff43d">commandLinePassthroughDisabled</a> () const</td></tr>
 <tr class="memdesc:a892715bebd8dc71e5acb0be17bfff43d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the flag of disable command line pass through.  <br /></td></tr>
 <tr class="separator:a892715bebd8dc71e5acb0be17bfff43d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fca1b7b72f37f800278c743b74f1b82" id="r_a3fca1b7b72f37f800278c743b74f1b82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3fca1b7b72f37f800278c743b74f1b82">setBrowserSubProcessPath</a> (const QString &amp;path)</td></tr>
-<tr class="memdesc:a3fca1b7b72f37f800278c743b74f1b82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the browser subprocess path.  <br /></td></tr>
-<tr class="separator:a3fca1b7b72f37f800278c743b74f1b82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b15417d6066479256fc514721cd0474" id="r_a2b15417d6066479256fc514721cd0474"><td class="memItemLeft" align="right" valign="top">const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b15417d6066479256fc514721cd0474">browserSubProcessPath</a> () const</td></tr>
-<tr class="memdesc:a2b15417d6066479256fc514721cd0474"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the browser subprocess path.  <br /></td></tr>
-<tr class="separator:a2b15417d6066479256fc514721cd0474"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0690fb1cb1a3cd87c44be340b6308f42" id="r_a0690fb1cb1a3cd87c44be340b6308f42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0690fb1cb1a3cd87c44be340b6308f42">setResourceDirectoryPath</a> (const QString &amp;path)</td></tr>
-<tr class="memdesc:a0690fb1cb1a3cd87c44be340b6308f42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the resource directory path.  <br /></td></tr>
-<tr class="separator:a0690fb1cb1a3cd87c44be340b6308f42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45c8bed47089201d40124041b7499164" id="r_a45c8bed47089201d40124041b7499164"><td class="memItemLeft" align="right" valign="top">const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a45c8bed47089201d40124041b7499164">resourceDirectoryPath</a> () const</td></tr>
-<tr class="memdesc:a45c8bed47089201d40124041b7499164"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the resource directory path.  <br /></td></tr>
-<tr class="separator:a45c8bed47089201d40124041b7499164"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4af04a575ecd6b632a794c42144d03d8" id="r_a4af04a575ecd6b632a794c42144d03d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4af04a575ecd6b632a794c42144d03d8">setLocalesDirectoryPath</a> (const QString &amp;path)</td></tr>
-<tr class="memdesc:a4af04a575ecd6b632a794c42144d03d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the locales directory path.  <br /></td></tr>
-<tr class="separator:a4af04a575ecd6b632a794c42144d03d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d43450cd3768ff1783596e48fcfe707" id="r_a3d43450cd3768ff1783596e48fcfe707"><td class="memItemLeft" align="right" valign="top">const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d43450cd3768ff1783596e48fcfe707">localesDirectoryPath</a> () const</td></tr>
-<tr class="memdesc:a3d43450cd3768ff1783596e48fcfe707"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the locales directory path.  <br /></td></tr>
-<tr class="separator:a3d43450cd3768ff1783596e48fcfe707"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a230ee52b4d64e0ea6f7ba5a4e9ac5f5e" id="r_a230ee52b4d64e0ea6f7ba5a4e9ac5f5e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a230ee52b4d64e0ea6f7ba5a4e9ac5f5e">setLogLevel</a> (const <a class="el" href="#ae437cd58b60d3902bba07e75a48d9a7c">LogLevel</a> lvl)</td></tr>
 <tr class="memdesc:a230ee52b4d64e0ea6f7ba5a4e9ac5f5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the log level.  <br /></td></tr>
 <tr class="separator:a230ee52b4d64e0ea6f7ba5a4e9ac5f5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -462,7 +450,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adds a switch with value to the commandline args used to initialize the CEF. </p>
+<p>Adds a switch with value to the command line args used to initialize the CEF. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">smitch</td><td>The swtich name</td></tr>
@@ -508,25 +496,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the bridge object name. </p>
-
-</div>
-</div>
-<a id="a2b15417d6066479256fc514721cd0474" name="a2b15417d6066479256fc514721cd0474"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b15417d6066479256fc514721cd0474">&#9670;&#160;</a></span>browserSubProcessPath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const QString QCefConfig::browserSubProcessPath </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the browser subprocess path. </p>
 
 </div>
 </div>
@@ -604,25 +573,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the locale. </p>
-
-</div>
-</div>
-<a id="a3d43450cd3768ff1783596e48fcfe707" name="a3d43450cd3768ff1783596e48fcfe707"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d43450cd3768ff1783596e48fcfe707">&#9670;&#160;</a></span>localesDirectoryPath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const QString QCefConfig::localesDirectoryPath </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the locales directory path. </p>
 
 </div>
 </div>
@@ -719,25 +669,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the remote debugging port. </p>
-
-</div>
-</div>
-<a id="a45c8bed47089201d40124041b7499164" name="a45c8bed47089201d40124041b7499164"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45c8bed47089201d40124041b7499164">&#9670;&#160;</a></span>resourceDirectoryPath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const QString QCefConfig::resourceDirectoryPath </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the resource directory path. </p>
 
 </div>
 </div>
@@ -857,31 +788,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3fca1b7b72f37f800278c743b74f1b82" name="a3fca1b7b72f37f800278c743b74f1b82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fca1b7b72f37f800278c743b74f1b82">&#9670;&#160;</a></span>setBrowserSubProcessPath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefConfig::setBrowserSubProcessPath </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets the browser subprocess path. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>The path to the sub process executable</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a7e84d09e2bcacfc5fdfb8eeca49aca98" name="a7e84d09e2bcacfc5fdfb8eeca49aca98"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7e84d09e2bcacfc5fdfb8eeca49aca98">&#9670;&#160;</a></span>setBuiltinSchemeName()</h2>
 
@@ -977,31 +883,6 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">locale</td><td>The locale to use. If empty the default locale of "en-US" will be used. This value is ignored on Linux where locale is determined using environment variable parsing with the precedence order: LANGUAGE, LC_ALL, LC_MESSAGES and LANG. Also configurable using the "lang" command-line switch.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a4af04a575ecd6b632a794c42144d03d8" name="a4af04a575ecd6b632a794c42144d03d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4af04a575ecd6b632a794c42144d03d8">&#9670;&#160;</a></span>setLocalesDirectoryPath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefConfig::setLocalesDirectoryPath </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets the locales directory path. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>The locales directory path</td></tr>
   </table>
   </dd>
 </dl>
@@ -1109,31 +990,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0690fb1cb1a3cd87c44be340b6308f42" name="a0690fb1cb1a3cd87c44be340b6308f42"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0690fb1cb1a3cd87c44be340b6308f42">&#9670;&#160;</a></span>setResourceDirectoryPath()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefConfig::setResourceDirectoryPath </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets the resource directory path. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>The resource directory path</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a768b9bc0368ac7a82f6e74aec536aa8f" name="a768b9bc0368ac7a82f6e74aec536aa8f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a768b9bc0368ac7a82f6e74aec536aa8f">&#9670;&#160;</a></span>setRootCachePath()</h2>
 
@@ -1178,6 +1034,31 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">disabled</td><td>True to enable sandbox, false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a13cb151d59ff635c71bcda69bd970f50" name="a13cb151d59ff635c71bcda69bd970f50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13cb151d59ff635c71bcda69bd970f50">&#9670;&#160;</a></span>setStandaloneMessageLoopEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefConfig::setStandaloneMessageLoopEnabled </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>enabled</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the flag to enable/disable standalone message loop thread for CEF main thread. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enabled</td><td>True to use standalone thread, false to disable</td></tr>
   </table>
   </dd>
 </dl>
@@ -1231,6 +1112,26 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aeff1eb7f8eceb357bd047ffaeae8c072" name="aeff1eb7f8eceb357bd047ffaeae8c072"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeff1eb7f8eceb357bd047ffaeae8c072">&#9670;&#160;</a></span>standaloneMessageLoopEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QVariant QCefConfig::standaloneMessageLoopEnabled </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the standalone message loop flag. </p>
+<dl class="section return"><dt>Returns</dt><dd>The flag indicates the enable/disable status of standalone message loop thread</dd></dl>
 
 </div>
 </div>

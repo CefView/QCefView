@@ -67,7 +67,6 @@ var class_q_cef_view =
     [ "onUpdateDownloadItem", "class_q_cef_view.html#a9833a1db8ef5864489f9462ef397cbb8", null ],
     [ "paintEngine", "class_q_cef_view.html#ad88e5a99ad808b7a911b58ba9ed9b838", null ],
     [ "paintEvent", "class_q_cef_view.html#aa205502bb5238e6e2ce727046ed8a9b8", null ],
-    [ "render", "class_q_cef_view.html#ad098ad3ed18da915880f21df52817fa9", null ],
     [ "reportJavascriptResult", "class_q_cef_view.html#a9b69938aa6f8352799bee6084bab03e4", null ],
     [ "resizeEvent", "class_q_cef_view.html#a237797e9f77342d72c35a8017865988e", null ],
     [ "responseQCefQuery", "class_q_cef_view.html#afc838dab54d2b083b05f0d98349b50cc", null ],
