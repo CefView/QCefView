@@ -2,7 +2,7 @@
 
 #pragma region qt_headers
 #include <QString>
-#pragma endregion 
+#pragma endregion
 
 #include <QPointer>
 

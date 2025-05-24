@@ -178,10 +178,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a91de7d9c36aafdaca390a355d6da5c6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructs the CEF context.  <br /></td></tr>
 <tr class="separator:a91de7d9c36aafdaca390a355d6da5c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecc6f7ee9d296bcf8d2ba470e0c0e454" id="r_aecc6f7ee9d296bcf8d2ba470e0c0e454"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecc6f7ee9d296bcf8d2ba470e0c0e454">addLocalFolderResource</a> (const QString &amp;path, const QString &amp;url, int priority=0)</td></tr>
-<tr class="memdesc:aecc6f7ee9d296bcf8d2ba470e0c0e454"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a url mapping item with local web resource directory. This works for all  instances created subsequently.  <br /></td></tr>
+<tr class="memdesc:aecc6f7ee9d296bcf8d2ba470e0c0e454"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a url mapping item with local web resource directory. This works for all <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> instances created subsequently.  <br /></td></tr>
 <tr class="separator:aecc6f7ee9d296bcf8d2ba470e0c0e454"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba9c70a84379190d151bdc4b634367e6" id="r_aba9c70a84379190d151bdc4b634367e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba9c70a84379190d151bdc4b634367e6">addArchiveResource</a> (const QString &amp;path, const QString &amp;url, const QString &amp;password=&quot;&quot;, int priority=0)</td></tr>
-<tr class="memdesc:aba9c70a84379190d151bdc4b634367e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a url mapping item with local archive (.zip) file which contains the web resource. This works for all  instances created subsequently.  <br /></td></tr>
+<tr class="memdesc:aba9c70a84379190d151bdc4b634367e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a url mapping item with local archive (.zip) file which contains the web resource. This works for all <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> instances created subsequently.  <br /></td></tr>
 <tr class="separator:aba9c70a84379190d151bdc4b634367e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d2e90de7fb5fcf2b7e7a6581d26e62c" id="r_a6d2e90de7fb5fcf2b7e7a6581d26e62c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d2e90de7fb5fcf2b7e7a6581d26e62c">addCookie</a> (const QString &amp;name, const QString &amp;value, const QString &amp;domain, const QString &amp;url)</td></tr>
 <tr class="memdesc:a6d2e90de7fb5fcf2b7e7a6581d26e62c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a cookie to the CEF context, this cookie is accessible from all browsers created with this context.  <br /></td></tr>
@@ -282,6 +282,70 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3e6491f837fdd72c7b4fefed5569853b" name="a3e6491f837fdd72c7b4fefed5569853b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e6491f837fdd72c7b4fefed5569853b">&#9670;&#160;</a></span>instance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_q_cef_context.html">QCefContext</a> * QCefContext::instance </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the unique default instance. </p>
+<dl class="section return"><dt>Returns</dt><dd>The default instance</dd></dl>
+
+</div>
+</div>
+<a id="aecc6f7ee9d296bcf8d2ba470e0c0e454" name="aecc6f7ee9d296bcf8d2ba470e0c0e454"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecc6f7ee9d296bcf8d2ba470e0c0e454">&#9670;&#160;</a></span>addLocalFolderResource()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefContext::addLocalFolderResource </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>priority</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a url mapping item with local web resource directory. This works for all <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> instances created subsequently. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The path to the local resource directory</td></tr>
+    <tr><td class="paramname">url</td><td>The url to be mapped to</td></tr>
+    <tr><td class="paramname">priority</td><td>The priority</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aba9c70a84379190d151bdc4b634367e6" name="aba9c70a84379190d151bdc4b634367e6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aba9c70a84379190d151bdc4b634367e6">&#9670;&#160;</a></span>addArchiveResource()</h2>
 
@@ -311,7 +375,7 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adds a url mapping item with local archive (.zip) file which contains the web resource. This works for all  instances created subsequently. </p>
+<p>Adds a url mapping item with local archive (.zip) file which contains the web resource. This works for all <a class="el" href="class_q_cef_view.html" title="Represents the CEF browser view.">QCefView</a> instances created subsequently. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>The path to the local archive file</td></tr>
@@ -367,6 +431,26 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a794e41a74ddabc503bed5e8c47fe3dd0" name="a794e41a74ddabc503bed5e8c47fe3dd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a794e41a74ddabc503bed5e8c47fe3dd0">&#9670;&#160;</a></span>deleteAllCookies()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefContext::deleteAllCookies </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deletes all cookies from the CEF context. </p>
+<dl class="section return"><dt>Returns</dt><dd>True on success; otherwise false</dd></dl>
+
+</div>
+</div>
 <a id="aaba077228a77f5e7d7491eda3ce10267" name="aaba077228a77f5e7d7491eda3ce10267"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaba077228a77f5e7d7491eda3ce10267">&#9670;&#160;</a></span>addCrossOriginWhitelistEntry()</h2>
 
@@ -410,163 +494,6 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aecc6f7ee9d296bcf8d2ba470e0c0e454" name="aecc6f7ee9d296bcf8d2ba470e0c0e454"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aecc6f7ee9d296bcf8d2ba470e0c0e454">&#9670;&#160;</a></span>addLocalFolderResource()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefContext::addLocalFolderResource </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>priority</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Adds a url mapping item with local web resource directory. This works for all  instances created subsequently. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>The path to the local resource directory</td></tr>
-    <tr><td class="paramname">url</td><td>The url to be mapped to</td></tr>
-    <tr><td class="paramname">priority</td><td>The priority</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="acfd6416ebc0a8df5cf8961dadeff960e" name="acfd6416ebc0a8df5cf8961dadeff960e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acfd6416ebc0a8df5cf8961dadeff960e">&#9670;&#160;</a></span>cefConfig()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="class_q_cef_config.html">QCefConfig</a> * QCefContext::cefConfig </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the <a class="el" href="class_q_cef_config.html" title="Represents the CEF setting. For more details please refer to: https://bitbucket.org/chromiumembedded/...">QCefConfig</a>. </p>
-<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="class_q_cef_config.html" title="Represents the CEF setting. For more details please refer to: https://bitbucket.org/chromiumembedded/...">QCefConfig</a> instance</dd></dl>
-
-</div>
-</div>
-<a id="a95d71c83fef34e8218a8ce559f173ab4" name="a95d71c83fef34e8218a8ce559f173ab4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a95d71c83fef34e8218a8ce559f173ab4">&#9670;&#160;</a></span>clearCrossOriginWhitelistEntry()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool QCefContext::clearCrossOriginWhitelistEntry </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Removes all entries from the cross-origin access whitelist. </p>
-
-</div>
-</div>
-<a id="a794e41a74ddabc503bed5e8c47fe3dd0" name="a794e41a74ddabc503bed5e8c47fe3dd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a794e41a74ddabc503bed5e8c47fe3dd0">&#9670;&#160;</a></span>deleteAllCookies()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool QCefContext::deleteAllCookies </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Deletes all cookies from the CEF context. </p>
-<dl class="section return"><dt>Returns</dt><dd>True on success; otherwise false</dd></dl>
-
-</div>
-</div>
-<a id="a78836c8d4d2bdf4970a256d8d29c80c6" name="a78836c8d4d2bdf4970a256d8d29c80c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78836c8d4d2bdf4970a256d8d29c80c6">&#9670;&#160;</a></span>init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool QCefContext::init </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_q_cef_config.html">QCefConfig</a> *</td>          <td class="paramname"><span class="paramname"><em>config</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Initialize the CEF context. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>The <a class="el" href="class_q_cef_config.html" title="Represents the CEF setting. For more details please refer to: https://bitbucket.org/chromiumembedded/...">QCefConfig</a> instance</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True on success; otherwise false</dd></dl>
-
-</div>
-</div>
-<a id="a3e6491f837fdd72c7b4fefed5569853b" name="a3e6491f837fdd72c7b4fefed5569853b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e6491f837fdd72c7b4fefed5569853b">&#9670;&#160;</a></span>instance()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="class_q_cef_context.html">QCefContext</a> * QCefContext::instance </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the unique default instance. </p>
-<dl class="section return"><dt>Returns</dt><dd>The default instance</dd></dl>
-
-</div>
-</div>
 <a id="af04aefeea503031f5a8fbdabf05bc5e8" name="af04aefeea503031f5a8fbdabf05bc5e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af04aefeea503031f5a8fbdabf05bc5e8">&#9670;&#160;</a></span>removeCrossOriginWhitelistEntry()</h2>
 
@@ -603,6 +530,79 @@ Protected Member Functions</h2></td></tr>
     <tr><td class="paramname">targetSchema</td><td>The target schema</td></tr>
     <tr><td class="paramname">targetDomain</td><td>The target domain</td></tr>
     <tr><td class="paramname">allowTargetSubdomains</td><td>Whether to allow subdomain or not</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on success; otherwise false</dd></dl>
+
+</div>
+</div>
+<a id="a95d71c83fef34e8218a8ce559f173ab4" name="a95d71c83fef34e8218a8ce559f173ab4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95d71c83fef34e8218a8ce559f173ab4">&#9670;&#160;</a></span>clearCrossOriginWhitelistEntry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefContext::clearCrossOriginWhitelistEntry </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes all entries from the cross-origin access whitelist. </p>
+
+</div>
+</div>
+<a id="acfd6416ebc0a8df5cf8961dadeff960e" name="acfd6416ebc0a8df5cf8961dadeff960e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfd6416ebc0a8df5cf8961dadeff960e">&#9670;&#160;</a></span>cefConfig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_q_cef_config.html">QCefConfig</a> * QCefContext::cefConfig </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the <a class="el" href="class_q_cef_config.html" title="Represents the CEF setting. For more details please refer to: https://bitbucket.org/chromiumembedded/...">QCefConfig</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="class_q_cef_config.html" title="Represents the CEF setting. For more details please refer to: https://bitbucket.org/chromiumembedded/...">QCefConfig</a> instance</dd></dl>
+
+</div>
+</div>
+<a id="a78836c8d4d2bdf4970a256d8d29c80c6" name="a78836c8d4d2bdf4970a256d8d29c80c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78836c8d4d2bdf4970a256d8d29c80c6">&#9670;&#160;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefContext::init </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_q_cef_config.html">QCefConfig</a> *</td>          <td class="paramname"><span class="paramname"><em>config</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initialize the CEF context. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>The <a class="el" href="class_q_cef_config.html" title="Represents the CEF setting. For more details please refer to: https://bitbucket.org/chromiumembedded/...">QCefConfig</a> instance</td></tr>
   </table>
   </dd>
 </dl>

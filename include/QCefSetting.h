@@ -16,7 +16,7 @@
 #include <QScopedPointer>
 #include <QSize>
 #include <QString>
-#pragma endregion 
+#pragma endregion
 
 class QCefSettingPrivate;
 
@@ -149,19 +149,21 @@ public:
   /// <returns>The encoding name</returns>
   const QString defaultEncoding() const;
 
-#if CEF_VERSION_MAJOR < 118
   /// <summary>
   /// Sets the acceptable language list
   /// </summary>
   /// <param name="value">The acceptable languate list</param>
+  /// @deprecated Deprecated since CEF 118.0.0
+  DEPRECATED_SINCE_CEF_VERSION(118, 0, 0)
   void setAcceptLanguageList(const QString& value);
 
   /// <summary>
   /// Gets the acceptable language list
   /// </summary>
   /// <returns>The acceptable languate list</returns>
+  /// @deprecated Deprecated since CEF 118.0.0
+  DEPRECATED_SINCE_CEF_VERSION(118, 0, 0)
   const QString acceptLanguageList() const;
-#endif
 
   /// <summary>
   /// Sets the frame rate in window less mode
@@ -174,6 +176,22 @@ public:
   /// </summary>
   /// <returns>The frame rate</returns>
   const QVariant windowlessFrameRate() const;
+
+  /// <summary>
+  /// Sets the switch to enable or disable the use of hardware acceleration for rendering
+  /// </summary>
+  /// <param name="value">The switch value</param>
+  /// @since Introduced since CEF 125.0.0
+  INTRODUCED_SINCE_CEF_VERSION(125, 0, 0)
+  void setHardwareAccelerationEnabled(const bool value);
+
+  /// <summary>
+  /// Gets the switch to enable or disable the use of hardware acceleration for rendering
+  /// </summary>
+  /// <returns>The switch value</returns>
+  /// @since Introduced since CEF 125.0.0
+  INTRODUCED_SINCE_CEF_VERSION(125, 0, 0)
+  const bool hardwareAccelerationEnabled() const;
 
   /// <summary>
   /// Sets the default font size
@@ -283,19 +301,21 @@ public:
   /// <returns>True to enable; false to disable</returns>
   const QVariant javascriptDomPaste() const;
 
-#if CEF_VERSION_MAJOR < 100
   /// <summary>
   /// Sets to enable or disable plugins
   /// </summary>
   /// <param name="value">True to enable; false to disable</param>
+  /// @deprecated Deprecated since CEF 100.0.0
+  DEPRECATED_SINCE_CEF_VERSION(100, 0, 0)
   void setPlugins(const bool value);
 
   /// <summary>
   /// Gets whether to enable or disable plugins
   /// </summary>
   /// <returns>True to enable; false to disable</returns>
+  /// @deprecated Deprecated since CEF 100.0.0
+  DEPRECATED_SINCE_CEF_VERSION(100, 0, 0)
   const QVariant plugins() const;
-#endif
 
   /// <summary>
   /// Sets to enable or disable the permission of loading images
@@ -398,20 +418,6 @@ public:
   /// </summary>
   /// <returns>The color</returns>
   const QVariant backgroundColor() const;
-
-  #if CEF_VERSION_MAJOR >= 125
-  /// <summary>
-  /// 
-  /// </summary>
-  /// <param name="value"></param>
-  void setHardwareAcceleration(const bool value);
-
-  /// <summary>
-  /// 
-  /// </summary>
-  /// <returns></returns>
-  const bool hardwareAcceleration() const;
-  #endif
 };
 
 Q_DECLARE_METATYPE(QCefSetting);

@@ -259,6 +259,75 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a315592aa53a2bf7bc8aea717195f5b43" name="a315592aa53a2bf7bc8aea717195f5b43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a315592aa53a2bf7bc8aea717195f5b43">&#9670;&#160;</a></span>start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefDownloadItem::start </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>useDefaultDialog</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Starts to download the item. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The full path name (must include file name) to save the downloaded item</td></tr>
+    <tr><td class="paramname">useDefaultDialog</td><td>Whether to use the default 'Save As...' dialog or not</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The 'path' parameter only works when 'useDefaultDialog' is set to false. If you set 'useDefaultDialog' to true then you cannot control the initial location of the opened 'Save As...' dialog, it is determined by CEF internal implementation. </p>
+
+</div>
+</div>
+<a id="aaa31f59599e9311f0aee99a0a13e2568" name="aaa31f59599e9311f0aee99a0a13e2568"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa31f59599e9311f0aee99a0a13e2568">&#9670;&#160;</a></span>pause()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefDownloadItem::pause </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pauses the download. </p>
+
+</div>
+</div>
+<a id="aa2afc687e69c7c78f6c49e9a41a34823" name="aa2afc687e69c7c78f6c49e9a41a34823"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2afc687e69c7c78f6c49e9a41a34823">&#9670;&#160;</a></span>resume()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefDownloadItem::resume </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resume the download. </p>
+
+</div>
+</div>
 <a id="a723b2081749a447049efd04e768d9e57" name="a723b2081749a447049efd04e768d9e57"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a723b2081749a447049efd04e768d9e57">&#9670;&#160;</a></span>cancel()</h2>
 
@@ -278,14 +347,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af97dad25e439c8b997d6689fe1c91bf8" name="af97dad25e439c8b997d6689fe1c91bf8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af97dad25e439c8b997d6689fe1c91bf8">&#9670;&#160;</a></span>contentDisposition()</h2>
+<a id="a6febee1fe8a5f7d15e888a4352d50526" name="a6febee1fe8a5f7d15e888a4352d50526"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6febee1fe8a5f7d15e888a4352d50526">&#9670;&#160;</a></span>isStarted()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QString QCefDownloadItem::contentDisposition </td>
+          <td class="memname">bool QCefDownloadItem::isStarted </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -293,8 +362,68 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the content disposition. </p>
-<dl class="section return"><dt>Returns</dt><dd>The the content disposition</dd></dl>
+<p>Gets whether the download is started. </p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a22455702c989d4dcc08fb1d13659739d" name="a22455702c989d4dcc08fb1d13659739d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22455702c989d4dcc08fb1d13659739d">&#9670;&#160;</a></span>isInProgress()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefDownloadItem::isInProgress </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether the download is in progress. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the download is in progress; otherwise false</dd></dl>
+
+</div>
+</div>
+<a id="a67c86edf9e9cb742050e2521b55c86df" name="a67c86edf9e9cb742050e2521b55c86df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67c86edf9e9cb742050e2521b55c86df">&#9670;&#160;</a></span>isComplete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefDownloadItem::isComplete </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether the download is complete. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the download is complete; otherwise false</dd></dl>
+
+</div>
+</div>
+<a id="ada41b0480a3e97d788086ea8c420a22c" name="ada41b0480a3e97d788086ea8c420a22c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada41b0480a3e97d788086ea8c420a22c">&#9670;&#160;</a></span>isCanceled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool QCefDownloadItem::isCanceled </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets whether the download has been canceled or interrupted. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the download has been canceled or interrupted; otherwise false</dd></dl>
 
 </div>
 </div>
@@ -315,6 +444,86 @@ Public Member Functions</h2></td></tr>
 
 <p>Gets current download speed. </p>
 <dl class="section return"><dt>Returns</dt><dd>A simple speed estimate in bytes/s</dd></dl>
+
+</div>
+</div>
+<a id="a18fafe4f375aa60e43ec7c5d855ab91e" name="a18fafe4f375aa60e43ec7c5d855ab91e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18fafe4f375aa60e43ec7c5d855ab91e">&#9670;&#160;</a></span>percentComplete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int QCefDownloadItem::percentComplete </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the completion percentage. </p>
+<dl class="section return"><dt>Returns</dt><dd>The rough percent complete or -1 if the receive total size is unknown</dd></dl>
+
+</div>
+</div>
+<a id="ab1ff7414475451351e4d4ab50f723bee" name="ab1ff7414475451351e4d4ab50f723bee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1ff7414475451351e4d4ab50f723bee">&#9670;&#160;</a></span>totalBytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qint64 QCefDownloadItem::totalBytes </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets total number of bytes. </p>
+<dl class="section return"><dt>Returns</dt><dd>The total number of bytes</dd></dl>
+
+</div>
+</div>
+<a id="a5d76f04bb41c5e4edad6d680b01fe63f" name="a5d76f04bb41c5e4edad6d680b01fe63f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d76f04bb41c5e4edad6d680b01fe63f">&#9670;&#160;</a></span>receivedBytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qint64 QCefDownloadItem::receivedBytes </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets number of received bytes. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of received bytes</dd></dl>
+
+</div>
+</div>
+<a id="afe0d048a282cb605da910de1c5d82242" name="afe0d048a282cb605da910de1c5d82242"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe0d048a282cb605da910de1c5d82242">&#9670;&#160;</a></span>startTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QDateTime QCefDownloadItem::startTime </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the time that the download started. </p>
+<dl class="section return"><dt>Returns</dt><dd>The time that the download started</dd></dl>
 
 </div>
 </div>
@@ -378,14 +587,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ada41b0480a3e97d788086ea8c420a22c" name="ada41b0480a3e97d788086ea8c420a22c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada41b0480a3e97d788086ea8c420a22c">&#9670;&#160;</a></span>isCanceled()</h2>
+<a id="a253cf33b582e3994b65d5611ef277bbe" name="a253cf33b582e3994b65d5611ef277bbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a253cf33b582e3994b65d5611ef277bbe">&#9670;&#160;</a></span>url()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool QCefDownloadItem::isCanceled </td>
+          <td class="memname">QString QCefDownloadItem::url </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -393,88 +602,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets whether the download has been canceled or interrupted. </p>
-<dl class="section return"><dt>Returns</dt><dd>True if the download has been canceled or interrupted; otherwise false</dd></dl>
-
-</div>
-</div>
-<a id="a67c86edf9e9cb742050e2521b55c86df" name="a67c86edf9e9cb742050e2521b55c86df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67c86edf9e9cb742050e2521b55c86df">&#9670;&#160;</a></span>isComplete()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool QCefDownloadItem::isComplete </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets whether the download is complete. </p>
-<dl class="section return"><dt>Returns</dt><dd>True if the download is complete; otherwise false</dd></dl>
-
-</div>
-</div>
-<a id="a22455702c989d4dcc08fb1d13659739d" name="a22455702c989d4dcc08fb1d13659739d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22455702c989d4dcc08fb1d13659739d">&#9670;&#160;</a></span>isInProgress()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool QCefDownloadItem::isInProgress </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets whether the download is in progress. </p>
-<dl class="section return"><dt>Returns</dt><dd>True if the download is in progress; otherwise false</dd></dl>
-
-</div>
-</div>
-<a id="a6febee1fe8a5f7d15e888a4352d50526" name="a6febee1fe8a5f7d15e888a4352d50526"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6febee1fe8a5f7d15e888a4352d50526">&#9670;&#160;</a></span>isStarted()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool QCefDownloadItem::isStarted </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets whether the download is started. </p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="afb8ec36477b64a222b0610c8518f8e31" name="afb8ec36477b64a222b0610c8518f8e31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb8ec36477b64a222b0610c8518f8e31">&#9670;&#160;</a></span>mimeType()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">QString QCefDownloadItem::mimeType </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the mime type. </p>
-<dl class="section return"><dt>Returns</dt><dd>The mime type</dd></dl>
+<p>Gets the URL. </p>
+<dl class="section return"><dt>Returns</dt><dd>The the URL</dd></dl>
 
 </div>
 </div>
@@ -498,135 +627,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aaa31f59599e9311f0aee99a0a13e2568" name="aaa31f59599e9311f0aee99a0a13e2568"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa31f59599e9311f0aee99a0a13e2568">&#9670;&#160;</a></span>pause()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefDownloadItem::pause </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Pauses the download. </p>
-
-</div>
-</div>
-<a id="a18fafe4f375aa60e43ec7c5d855ab91e" name="a18fafe4f375aa60e43ec7c5d855ab91e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18fafe4f375aa60e43ec7c5d855ab91e">&#9670;&#160;</a></span>percentComplete()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int QCefDownloadItem::percentComplete </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the completion percentage. </p>
-<dl class="section return"><dt>Returns</dt><dd>The rough percent complete or -1 if the receive total size is unknown</dd></dl>
-
-</div>
-</div>
-<a id="a5d76f04bb41c5e4edad6d680b01fe63f" name="a5d76f04bb41c5e4edad6d680b01fe63f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d76f04bb41c5e4edad6d680b01fe63f">&#9670;&#160;</a></span>receivedBytes()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">qint64 QCefDownloadItem::receivedBytes </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets number of received bytes. </p>
-<dl class="section return"><dt>Returns</dt><dd>The number of received bytes</dd></dl>
-
-</div>
-</div>
-<a id="aa2afc687e69c7c78f6c49e9a41a34823" name="aa2afc687e69c7c78f6c49e9a41a34823"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2afc687e69c7c78f6c49e9a41a34823">&#9670;&#160;</a></span>resume()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefDownloadItem::resume </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Resume the download. </p>
-
-</div>
-</div>
-<a id="a315592aa53a2bf7bc8aea717195f5b43" name="a315592aa53a2bf7bc8aea717195f5b43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a315592aa53a2bf7bc8aea717195f5b43">&#9670;&#160;</a></span>start()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefDownloadItem::start </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>useDefaultDialog</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;) const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Starts to download the item. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>The full path name (must include file name) to save the downloaded item</td></tr>
-    <tr><td class="paramname">useDefaultDialog</td><td>Whether to use the default 'Save As...' dialog or not</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>The 'path' parameter only works when 'useDefaultDialog' is set to false. If you set 'useDefaultDialog' to true then you cannot control the initial location of the opened 'Save As...' dialog, it is determined by CEF internal implementation. </p>
-
-</div>
-</div>
-<a id="afe0d048a282cb605da910de1c5d82242" name="afe0d048a282cb605da910de1c5d82242"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe0d048a282cb605da910de1c5d82242">&#9670;&#160;</a></span>startTime()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">QDateTime QCefDownloadItem::startTime </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the time that the download started. </p>
-<dl class="section return"><dt>Returns</dt><dd>The time that the download started</dd></dl>
-
-</div>
-</div>
 <a id="ac0dd9f8bea7ca594f04935d81cfb72a4" name="ac0dd9f8bea7ca594f04935d81cfb72a4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac0dd9f8bea7ca594f04935d81cfb72a4">&#9670;&#160;</a></span>suggestedFileName()</h2>
 
@@ -647,14 +647,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab1ff7414475451351e4d4ab50f723bee" name="ab1ff7414475451351e4d4ab50f723bee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1ff7414475451351e4d4ab50f723bee">&#9670;&#160;</a></span>totalBytes()</h2>
+<a id="af97dad25e439c8b997d6689fe1c91bf8" name="af97dad25e439c8b997d6689fe1c91bf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af97dad25e439c8b997d6689fe1c91bf8">&#9670;&#160;</a></span>contentDisposition()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">qint64 QCefDownloadItem::totalBytes </td>
+          <td class="memname">QString QCefDownloadItem::contentDisposition </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -662,19 +662,19 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets total number of bytes. </p>
-<dl class="section return"><dt>Returns</dt><dd>The total number of bytes</dd></dl>
+<p>Gets the content disposition. </p>
+<dl class="section return"><dt>Returns</dt><dd>The the content disposition</dd></dl>
 
 </div>
 </div>
-<a id="a253cf33b582e3994b65d5611ef277bbe" name="a253cf33b582e3994b65d5611ef277bbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a253cf33b582e3994b65d5611ef277bbe">&#9670;&#160;</a></span>url()</h2>
+<a id="afb8ec36477b64a222b0610c8518f8e31" name="afb8ec36477b64a222b0610c8518f8e31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb8ec36477b64a222b0610c8518f8e31">&#9670;&#160;</a></span>mimeType()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QString QCefDownloadItem::url </td>
+          <td class="memname">QString QCefDownloadItem::mimeType </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -682,8 +682,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the URL. </p>
-<dl class="section return"><dt>Returns</dt><dd>The the URL</dd></dl>
+<p>Gets the mime type. </p>
+<dl class="section return"><dt>Returns</dt><dd>The mime type</dd></dl>
 
 </div>
 </div>

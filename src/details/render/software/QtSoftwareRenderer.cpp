@@ -1,4 +1,4 @@
-#include "QtSoftwareRenderer.h"
+﻿#include "QtSoftwareRenderer.h"
 
 #include <QDebug>
 #include <QMutexLocker>

@@ -32,9 +32,27 @@
         #endif
     #endif
 #endif
-// clang-format on
 
 // CEF version numbers
 #include <CefVersion.h>
+
+#define DEPRECATED_SINCE_CEF_VERSION(major, minor, patch) /* @deprecated Since CEF major . minor . patch */
+
+#define DEPRECATED_CEF_API_WARNING(major, minor, patch)                                                                 \
+  qWarning() << __FUNCTION__ << " was deprecated since CEF version:"                                                    \
+            << major << "." << minor << "." << patch << ". "                                                            \
+            << "Current CEF version: "                                                                                  \
+            << CEF_VERSION_MAJOR << "." << CEF_VERSION_MINOR << "." << CEF_VERSION_PATCH << ".";
+
+
+#define INTRODUCED_SINCE_CEF_VERSION(major, minor, patch)
+
+#define INTRODUCED_CEF_API_WARNING(major, minor, patch)                                                                 \
+ qWarning() << __FUNCTION__ << " was introduced since CEF version:"                                                     \
+            << major << "." << minor << "." << patch << ". "                                                            \
+            << "Current CEF version: "                                                                                  \
+            << CEF_VERSION_MAJOR << "." << CEF_VERSION_MINOR << "." << CEF_VERSION_PATCH << ".";
+
+// clang-format on
 
 #endif // QCEFEVIEW_GLOBAL_H

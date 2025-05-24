@@ -7,8 +7,8 @@ var indexSectionsWithContent =
   4: "am",
   5: "cl",
   6: "cl",
-  7: "cq",
-  8: "abcfilprw"
+  7: "cdiq",
+  8: "abcdfilprw"
 };
 
 var indexSectionNames =

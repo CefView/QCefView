@@ -208,7 +208,7 @@ $(function(){initNavTree('md_docs_203-_resource_loading.html',''); initResizable
 3. Add Local Folder Mapping</h1>
 <p>This method is designed for loading entire web application folders. It maps a local directory to a URL, allowing you to access files within that directory as if they were hosted on a web server. This is particularly useful for Single Page Applications (SPAs) and web applications with complex directory structures.</p>
 <ul>
-<li><code>public void <a class="el" href="class_q_cef_context.html#aecc6f7ee9d296bcf8d2ba470e0c0e454" title="Adds a url mapping item with local web resource directory. This works for all  instances created subs...">QCefContext::addLocalFolderResource</a>(const QString &amp; path,const QString &amp; url,int priority)</code></li>
+<li><code>public void <a class="el" href="class_q_cef_context.html#aecc6f7ee9d296bcf8d2ba470e0c0e454" title="Adds a url mapping item with local web resource directory. This works for all QCefView instances crea...">QCefContext::addLocalFolderResource</a>(const QString &amp; path,const QString &amp; url,int priority)</code></li>
 <li><code>public void <a class="el" href="class_q_cef_view.html#a8c6286b279094a691832fc89b93c75f1" title="Adds a url mapping item with local web resource directory.">QCefView::addLocalFolderResource</a>(const QString &amp; path,const QString &amp; url,int priority)</code></li>
 </ul>
 <p>For example, you build the WebApp project and get the output folder <code>webres</code>, the folder structure is as follows: </p><div class="fragment"><div class="line">full\path\to\webres</div>
@@ -232,7 +232,7 @@ $(function(){initNavTree('md_docs_203-_resource_loading.html',''); initResizable
 <div class="line">     <span class="keyword">this</span></div>
 <div class="line">     );</div>
 <div class="ttc" id="aclass_q_cef_context_html_a3e6491f837fdd72c7b4fefed5569853b"><div class="ttname"><a href="class_q_cef_context.html#a3e6491f837fdd72c7b4fefed5569853b">QCefContext::instance</a></div><div class="ttdeci">static QCefContext * instance()</div><div class="ttdoc">Gets the unique default instance.</div></div>
-<div class="ttc" id="aclass_q_cef_context_html_aecc6f7ee9d296bcf8d2ba470e0c0e454"><div class="ttname"><a href="class_q_cef_context.html#aecc6f7ee9d296bcf8d2ba470e0c0e454">QCefContext::addLocalFolderResource</a></div><div class="ttdeci">void addLocalFolderResource(const QString &amp;path, const QString &amp;url, int priority=0)</div><div class="ttdoc">Adds a url mapping item with local web resource directory. This works for all  instances created subs...</div></div>
+<div class="ttc" id="aclass_q_cef_context_html_aecc6f7ee9d296bcf8d2ba470e0c0e454"><div class="ttname"><a href="class_q_cef_context.html#aecc6f7ee9d296bcf8d2ba470e0c0e454">QCefContext::addLocalFolderResource</a></div><div class="ttdeci">void addLocalFolderResource(const QString &amp;path, const QString &amp;url, int priority=0)</div><div class="ttdoc">Adds a url mapping item with local web resource directory. This works for all QCefView instances crea...</div></div>
 </div><!-- fragment --><p>After added the mapping item, you can access all the resource with the URL root appended by the resource relative path.</p>
 <h1><a class="anchor" id="autotoc_md33"></a>
 4. Add Local Archive Mapping</h1>

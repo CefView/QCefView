@@ -14,7 +14,7 @@
 #pragma region qt_headers
 #include <QCoreApplication>
 #include <QScopedPointer>
-#pragma endregion 
+#pragma endregion
 
 #include <QCefConfig.h>
 
@@ -53,7 +53,7 @@ public:
   ~QCefContext();
 
   /// <summary>
-  /// Adds a url mapping item with local web resource directory. This works for all <see ref="QCefView" /> instances
+  /// Adds a url mapping item with local web resource directory. This works for all QCefView instances
   /// created subsequently
   /// </summary>
   /// <param name="path">The path to the local resource directory</param>
@@ -62,8 +62,8 @@ public:
   void addLocalFolderResource(const QString& path, const QString& url, int priority = 0);
 
   /// <summary>
-  /// Adds a url mapping item with local archive (.zip) file which contains the web resource. This works for all <see
-  /// ref="QCefView" /> instances created subsequently
+  /// Adds a url mapping item with local archive (.zip) file which contains the web resource. 
+  /// This works for all QCefView instances created subsequently
   /// </summary>
   /// <param name="path">The path to the local archive file</param>
   /// <param name="url">The url to be mapped to</param>

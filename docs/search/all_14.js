@@ -9,6 +9,7 @@ var searchData=
   ['percentcomplete_6',['percentComplete',['../class_q_cef_download_item.html#a18fafe4f375aa60e43ec7c5d855ab91e',1,'QCefDownloadItem']]],
   ['persistsessioncookies_7',['persistSessionCookies',['../class_q_cef_config.html#aa8b22bc6b4d9ef5c8aeccfc363ee1f9c',1,'QCefConfig']]],
   ['persistuserpreferences_8',['persistUserPreferences',['../class_q_cef_config.html#a4749b6aa16660a15d753f5248985e25f',1,'QCefConfig']]],
-  ['prerequisites_9',['Prerequisites',['../md_docs_201-_build_and_config.html#autotoc_md9',1,'']]],
-  ['project_10',['First Project',['../md_docs_202-_first_project.html',1,'']]]
+  ['plugins_9',['plugins',['../class_q_cef_setting.html#a99c3a6c649171d42402af815f6628f03',1,'QCefSetting']]],
+  ['prerequisites_10',['Prerequisites',['../md_docs_201-_build_and_config.html#autotoc_md9',1,'']]],
+  ['project_11',['First Project',['../md_docs_202-_first_project.html',1,'']]]
 ];

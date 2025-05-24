@@ -103,6 +103,7 @@ var NAVTREE =
       ] ],
       [ "window.cefViewQueryCancel", "md_docs_206-_web_a_p_is.html#cefViewQueryCancel", null ]
     ] ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -129,7 +130,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_cef_version_8h.html",
-"class_q_cef_view.html#ab2d8e99188937bba13893ce6c54f9a3f"
+"class_q_cef_view.html#a9963d810f8aa71b45b1b10f0abbe8787a8bd674f0da6b33d87117c7b8bf5153c2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

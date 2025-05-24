@@ -8,5 +8,6 @@ var searchData=
   ['use_5fqt_5fevent_5floop_5',['USE_QT_EVENT_LOOP',['../md_docs_201-_build_and_config.html#autotoc_md23',1,'']]],
   ['use_5fsandbox_6',['USE_SANDBOX',['../md_docs_201-_build_and_config.html#autotoc_md21',1,'']]],
   ['use_5fwin_5fdcomposition_7',['USE_WIN_DCOMPOSITION',['../md_docs_201-_build_and_config.html#autotoc_md22',1,'']]],
-  ['useragent_8',['userAgent',['../class_q_cef_config.html#ad95b55d57719d9fc1a3dc5abb5695016',1,'QCefConfig']]]
+  ['useragent_8',['userAgent',['../class_q_cef_config.html#ad95b55d57719d9fc1a3dc5abb5695016',1,'QCefConfig']]],
+  ['userdatapath_9',['userDataPath',['../class_q_cef_config.html#a317ff9d74e89dac404e20005c33b08e9',1,'QCefConfig']]]
 ];

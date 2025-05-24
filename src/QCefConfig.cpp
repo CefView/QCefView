@@ -211,37 +211,51 @@ QCefConfig::cachePath() const
   return QString::fromStdString(d->cachePath_);
 }
 
-#if CEF_VERSION_MAJOR < 115
 void
 QCefConfig::setUserDataPath(const QString& path)
 {
   Q_D(QCefConfig);
+#if CEF_VERSION_MAJOR < 115
   d->userDataPath_ = path.toStdString();
+#else
+  DEPRECATED_CEF_API_WARNING(115, 0, 0);
+#endif
 }
 
 const QString
 QCefConfig::userDataPath() const
 {
   Q_D(const QCefConfig);
+#if CEF_VERSION_MAJOR < 115
   return QString::fromStdString(d->userDataPath_);
-}
-
 #else
-
-const QString
-QCefConfig::rootCachePath() const
-{
-  Q_D(const QCefConfig);
-  return QString::fromStdString(d->rootCachePath_);
+  DEPRECATED_CEF_API_WARNING(115, 0, 0);
+  return QString();
+#endif
 }
 
 void
 QCefConfig::setRootCachePath(const QString& path)
 {
   Q_D(QCefConfig);
+#if CEF_VERSION_MAJOR >= 115
   d->rootCachePath_ = path.toStdString();
-}
+#else
+  INTRODUCED_CEF_API_WARNING(115, 0, 0);
 #endif
+}
+
+const QString
+QCefConfig::rootCachePath() const
+{
+  Q_D(const QCefConfig);
+#if CEF_VERSION_MAJOR >= 115
+  return QString::fromStdString(d->rootCachePath_);
+#else
+  INTRODUCED_CEF_API_WARNING(115, 0, 0);
+  return QString();
+#endif
+}
 
 void
 QCefConfig::setBridgeObjectName(const QString& name)
@@ -313,21 +327,28 @@ QCefConfig::persistSessionCookies() const
   return d->persistSessionCookies_;
 }
 
-#if CEF_VERSION_MAJOR < 128
 void
 QCefConfig::setPersistUserPreferences(bool enabled)
 {
   Q_D(QCefConfig);
+#if CEF_VERSION_MAJOR < 128
   d->persistUserPreferences_ = enabled;
+#else
+  DEPRECATED_CEF_API_WARNING(128, 0, 0);
+#endif
 }
 
 const QVariant
 QCefConfig::persistUserPreferences() const
 {
   Q_D(const QCefConfig);
+#if CEF_VERSION_MAJOR < 128
   return d->persistUserPreferences_;
-}
+#else
+  DEPRECATED_CEF_API_WARNING(128, 0, 0);
+  return QVariant();
 #endif
+}
 
 void
 QCefConfig::setRemoteDebuggingPort(short port)

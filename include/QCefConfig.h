@@ -224,31 +224,35 @@ public:
   /// </summary>
   const QString cachePath() const;
 
-#if CEF_VERSION_MAJOR < 115
   /// <summary>
   /// Sets the user data directory path
   /// </summary>
   /// <param name="path">The user data directory path</param>
+  /// @deprecated Deprecated since CEF 115.0.0
+  DEPRECATED_SINCE_CEF_VERSION(115, 0, 0)
   void setUserDataPath(const QString& path);
 
   /// <summary>
   /// Gets the user data directory path
   /// </summary>
+  /// @deprecated Deprecated since CEF 115.0.0
+  DEPRECATED_SINCE_CEF_VERSION(115, 0, 0)
   const QString userDataPath() const;
-
-#else
-
-  /// <summary>
-  /// Gets the root cache directory path
-  /// </summary>
-  const QString rootCachePath() const;
 
   /// <summary>
   /// Sets the root cache directory path
   /// </summary>
   /// <param name="path">The root cache directory path</param>
+  /// @since Introduced since CEF 115.0.0
+  INTRODUCED_SINCE_CEF_VERSION(115, 0, 0)
   void setRootCachePath(const QString& path);
-#endif
+
+  /// <summary>
+  /// Gets the root cache directory path
+  /// </summary>
+  /// @since Introduced since CEF 115.0.0
+  INTRODUCED_SINCE_CEF_VERSION(115, 0, 0)
+  const QString rootCachePath() const;
 
   /// <summary>
   /// Sets the bridge object name
@@ -321,18 +325,20 @@ public:
   /// </summary>
   const QVariant persistSessionCookies() const;
 
-#if CEF_VERSION_MAJOR < 128
   /// <summary>
   /// Sets whether to persist user preferences
   /// </summary>
   /// <param name="enabled">True if to persist user preferences</param>
+  /// @deprecated Deprecated since CEF 128.0.0
+  DEPRECATED_SINCE_CEF_VERSION(128, 0, 0)
   void setPersistUserPreferences(bool enabled);
 
   /// <summary>
   /// Gets whether to persist user preferences
   /// </summary>
+  /// @deprecated Deprecated since CEF 128.0.0
+  DEPRECATED_SINCE_CEF_VERSION(128, 0, 0)
   const QVariant persistUserPreferences() const;
-#endif
 
   /// <summary>
   /// Sets the remote debugging port
