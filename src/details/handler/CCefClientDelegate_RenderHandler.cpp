@@ -46,7 +46,7 @@ CCefClientDelegate::getScreenInfo(CefRefPtr<CefBrowser>& browser, CefScreenInfo&
   auto size = pCefViewPrivate_->q_ptr->size();
   screen_info.rect = { 0, 0, size.width(), size.height() };
   screen_info.available_rect = { 0, 0, size.width(), size.height() };
-  screen_info.device_scale_factor = pCefViewPrivate_->q_ptr->devicePixelRatio();
+  screen_info.device_scale_factor = pCefViewPrivate_->scaleFactor();
   return true;
 }
 
