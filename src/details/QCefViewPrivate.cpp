@@ -926,6 +926,12 @@ QCefViewPrivate::onPaintEvent(QPaintEvent* event)
 }
 
 void
+QCefViewPrivate::onViewMoved()
+{
+  notifyMoveOrResizeStarted();
+}
+
+void
 QCefViewPrivate::onViewSizeChanged(const QSize& size, const QSize& oldSize)
 {
   Q_Q(QCefView);

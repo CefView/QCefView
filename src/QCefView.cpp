@@ -340,18 +340,6 @@ QCefView::onRequestCloseFromWeb()
   return true;
 }
 
-void
-QCefView::leaveEvent(QEvent* event)
-{
-  Q_D(QCefView);
-
-  QPoint mousePos = QCursor::pos();
-  QMouseEvent moveEvent(QEvent::MouseMove, mousePos, mousePos, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
-  d->onViewMouseEvent(&moveEvent);
-
-  QWidget::leaveEvent(event);
-}
-
 QVariant
 QCefView::inputMethodQuery(Qt::InputMethodQuery query) const
 {
@@ -379,112 +367,69 @@ QCefView::paintEngine() const
   return QWidget::paintEngine();
 }
 
-void
-QCefView::paintEvent(QPaintEvent* event)
+bool
+QCefView::event(QEvent* event)
 {
   Q_D(QCefView);
-  d->onPaintEvent(event);
-}
 
-void
-QCefView::inputMethodEvent(QInputMethodEvent* event)
-{
-  Q_D(QCefView);
-  d->onViewInputMethodEvent(event);
-}
+  switch (event->type()) {
+    case QEvent::Paint: {
+      QPaintEvent* e = static_cast<QPaintEvent*>(event);
+      d->onPaintEvent(e);
+    } break;
+    case QEvent::InputMethod: {
+      QInputMethodEvent* e = static_cast<QInputMethodEvent*>(event);
+      d->onViewInputMethodEvent(e);
+    } break;
+    case QEvent::Show: {
+      d->onViewVisibilityChanged(true);
+    } break;
+    case QEvent::Hide: {
+      d->onViewVisibilityChanged(false);
+    } break;
+    case QEvent::FocusIn: {
+      d->onViewFocusChanged(true);
+    } break;
+    case QEvent::FocusOut: {
+      d->onViewFocusChanged(false);
+    } break;
+    case QEvent::Move: {
+      d->onViewMoved();
+    } break;
+    case QEvent::Resize: {
+      QResizeEvent* e = static_cast<QResizeEvent*>(event);
+      d->onViewSizeChanged(e->size(), e->oldSize());
+    } break;
+    case QEvent::KeyPress:
+    case QEvent::KeyRelease: {
+      QKeyEvent* e = static_cast<QKeyEvent*>(event);
+      d->onViewKeyEvent(e);
+      if (d->isOSRModeEnabled_ && (e->key() == Qt::Key_Tab || e->key() == Qt::Key_Backtab)) {
+        return true;
+      }
+    } break;
+    case QEvent::MouseMove:
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonRelease: {
+      QMouseEvent* e = static_cast<QMouseEvent*>(event);
+      d->onViewMouseEvent(e);
+    } break;
+    case QEvent::Wheel: {
+      QWheelEvent* e = static_cast<QWheelEvent*>(event);
+      d->onViewWheelEvent(e);
+    } break;
+    case QEvent::Leave: {
+      QPoint mousePos = QCursor::pos();
+      QMouseEvent moveEvent(QEvent::MouseMove, mousePos, mousePos, Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+      d->onViewMouseEvent(&moveEvent);
+    } break;
+    case QEvent::ContextMenu: {
+      QContextMenuEvent* e = static_cast<QContextMenuEvent*>(event);
+      d->onContextMenuEvent(mapToGlobal(e->pos()));
+    } break;
+    default:
+      break;
+  }
 
-void
-QCefView::showEvent(QShowEvent* event)
-{
-  Q_D(QCefView);
-  d->onViewVisibilityChanged(true);
-  QWidget::showEvent(event);
-}
-
-void
-QCefView::hideEvent(QHideEvent* event)
-{
-  Q_D(QCefView);
-  d->onViewVisibilityChanged(false);
-  QWidget::hideEvent(event);
-}
-
-void
-QCefView::focusInEvent(QFocusEvent* event)
-{
-  Q_D(QCefView);
-  d->onViewFocusChanged(true);
-  QWidget::focusInEvent(event);
-}
-
-void
-QCefView::focusOutEvent(QFocusEvent* event)
-{
-  Q_D(QCefView);
-  d->onViewFocusChanged(false);
-  QWidget::focusOutEvent(event);
-}
-
-void
-QCefView::resizeEvent(QResizeEvent* event)
-{
-  Q_D(QCefView);
-  d->onViewSizeChanged(event->size(), event->oldSize());
-  QWidget::resizeEvent(event);
-}
-
-void
-QCefView::keyPressEvent(QKeyEvent* event)
-{
-  Q_D(QCefView);
-  d->onViewKeyEvent(event);
-  QWidget::keyPressEvent(event);
-}
-
-void
-QCefView::keyReleaseEvent(QKeyEvent* event)
-{
-  Q_D(QCefView);
-  d->onViewKeyEvent(event);
-  QWidget::keyReleaseEvent(event);
-}
-
-void
-QCefView::mouseMoveEvent(QMouseEvent* event)
-{
-  Q_D(QCefView);
-  d->onViewMouseEvent(event);
-  QWidget::mouseMoveEvent(event);
-}
-
-void
-QCefView::mousePressEvent(QMouseEvent* event)
-{
-  Q_D(QCefView);
-  d->onViewMouseEvent(event);
-  QWidget::mousePressEvent(event);
-}
-
-void
-QCefView::mouseReleaseEvent(QMouseEvent* event)
-{
-  Q_D(QCefView);
-  d->onViewMouseEvent(event);
-  QWidget::mouseReleaseEvent(event);
-}
-
-void
-QCefView::wheelEvent(QWheelEvent* event)
-{
-  Q_D(QCefView);
-  d->onViewWheelEvent(event);
-  QWidget::wheelEvent(event);
-}
-
-void
-QCefView::contextMenuEvent(QContextMenuEvent* event)
-{
-  Q_D(QCefView);
-  d->onContextMenuEvent(mapToGlobal(event->pos()));
-  QWidget::contextMenuEvent(event);
+  return QWidget::event(event);
 }
