@@ -425,6 +425,11 @@ signals:
   /// <param name="window">The native browser windows</param>
   void nativeBrowserCreated(QWindow* window);
 
+  /// <summary>
+  /// Gets called when the internal CefWindow gets focus.
+  /// </summary>
+  void cefWindowGotFocus();
+
 protected:
   /// <summary>
   /// Gets called before a new browser created (only for browser created by non-JavaScript)

@@ -511,6 +511,8 @@ QCefViewPrivate::onCefWindowGotFocus()
   if (isOSRModeEnabled_) {
     osr.hasCefGotFocus_ = true;
   }
+
+  emit q->cefWindowGotFocus();
 }
 
 void
