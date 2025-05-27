@@ -496,12 +496,6 @@ protected:
   virtual bool onRequestCloseFromWeb();
 
 #pragma region QWidget
-public slots:
-  /// <summary>
-  ///
-  /// </summary>
-  inline void setFocus() { setFocus(Qt::OtherFocusReason); }
-
 public:
   /// <summary>
   /// Please refer to QWidget::setFocus
@@ -513,6 +507,12 @@ public:
   /// </summary>
   QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
 
+public slots:
+  /// <summary>
+  ///
+  /// </summary>
+  inline void setFocus() { setFocus(Qt::OtherFocusReason); }
+
 protected:
   /// <summary>
   /// Please refer to QWidget::paintEngine
@@ -520,79 +520,11 @@ protected:
   QPaintEngine* paintEngine() const override;
 
   /// <summary>
-  /// Please refer to QWidget::paintEvent
+  ///
   /// </summary>
-  void paintEvent(QPaintEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::inputMethodEvent
-  /// </summary>
-  void inputMethodEvent(QInputMethodEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::showEvent
-  /// </summary>
-  void showEvent(QShowEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::hideEvent
-  /// </summary>
-  void hideEvent(QHideEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::focusInEvent
-  /// </summary>
-  void focusInEvent(QFocusEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::focusOutEvent
-  /// </summary>
-  void focusOutEvent(QFocusEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::resizeEvent
-  /// </summary>
-  void resizeEvent(QResizeEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::keyPressEvent
-  /// </summary>
-  void keyPressEvent(QKeyEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::keyReleaseEvent
-  /// </summary>
-  void keyReleaseEvent(QKeyEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::mouseMoveEvent
-  /// </summary>
-  void mouseMoveEvent(QMouseEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::mousePressEvent
-  /// </summary>
-  void mousePressEvent(QMouseEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::mouseReleaseEvent
-  /// </summary>
-  void mouseReleaseEvent(QMouseEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::wheelEvent
-  /// </summary>
-  void wheelEvent(QWheelEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::leaveEvent
-  /// </summary>
-  void leaveEvent(QEvent* event) override;
-
-  /// <summary>
-  /// Please refer to QWidget::contextMenuEvent
-  /// </summary>
-  void contextMenuEvent(QContextMenuEvent* event) override;
+  /// <param name="event"></param>
+  /// <returns></returns>
+  bool event(QEvent* event) override;
 #pragma endregion
 };
 

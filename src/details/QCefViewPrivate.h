@@ -235,6 +235,8 @@ protected:
 
   void onPaintEvent(QPaintEvent* event);
 
+  void onViewMoved();
+
   void onViewSizeChanged(const QSize& size, const QSize& oldSize);
 
   void onViewKeyEvent(QKeyEvent* event);
