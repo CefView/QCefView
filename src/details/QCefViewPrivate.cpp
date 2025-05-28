@@ -1377,3 +1377,14 @@ QCefViewPrivate::setPreference(const QString& name, const QVariant& value, const
 
   return false;
 }
+
+void
+QCefViewPrivate::setOSRFrameRate(int fps)
+{
+  if (pCefBrowser_) {
+    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+    if (host) {
+      host->SetWindowlessFrameRate(fps);
+    }
+  }
+}
