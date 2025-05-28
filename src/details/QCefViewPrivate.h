@@ -286,4 +286,6 @@ public:
   bool sendEventNotifyMessage(const QCefFrameId& frameId, const QString& name, const QVariantList& args);
 
   bool setPreference(const QString& name, const QVariant& value, const QString& error);
+
+  void setOSRFrameRate(int fps);
 };
