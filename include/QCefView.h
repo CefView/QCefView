@@ -251,16 +251,10 @@ public:
   bool setPreference(const QString& name, const QVariant& value, const QString& error);
 
   /// <summary>
-  /// Sets whether to disable the context menu for popup browser
+  /// Sets the frame rate for OSR (Off-Screen Rendering).
   /// </summary>
-  /// <param name="disable">True to disable; otherwise false</param>
-  void setDisablePopupContextMenu(bool disable);
-
-  /// <summary>
-  /// Gets whether to disable the context menu for popup browser
-  /// </summary>
-  /// <returns>True to disable; otherwise false</returns>
-  bool isPopupContextMenuDisabled();
+  /// <param name="fps">The desired frame rate in frames per second.</param>
+  void setOSRFrameRate(int fps);
 
   /// <summary>
   /// Detects whether this browser has a devtools opened

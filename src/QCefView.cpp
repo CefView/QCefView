@@ -221,19 +221,11 @@ QCefView::setPreference(const QString& name, const QVariant& value, const QStrin
 }
 
 void
-QCefView::setDisablePopupContextMenu(bool disable)
+QCefView::setOSRFrameRate(int fps)
 {
   Q_D(QCefView);
 
-  d->disablePopupContextMenu_ = disable;
-}
-
-bool
-QCefView::isPopupContextMenuDisabled()
-{
-  Q_D(QCefView);
-
-  return d->disablePopupContextMenu_;
+  return d->setOSRFrameRate(fps);
 }
 
 bool
