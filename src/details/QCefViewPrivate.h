@@ -45,12 +45,7 @@ public:
   /// <summary>
   ///
   /// </summary>
-  bool disablePopupContextMenu_ = false;
-
-  /// <summary>
-  ///
-  /// </summary>
-  bool enableDragAndDrop_ = false;
+  bool allowDrag_ = false;
 
   /// <summary>
   ///
@@ -93,8 +88,11 @@ public:
     /// </summary>
     bool hasCefGotFocus_ = false;
 
+    // allowed drag operations
+    int32_t allowedDragOperations_;
+
     // IME parameters
-    QRect qImeCursorRect_;
+    QRect imeCursorRect_;
 
     // context menu status and parameters
     bool isShowingContextMenu_ = false;
@@ -200,6 +198,8 @@ public slots:
 
   void onContextMenuDestroyed(QObject* obj);
 
+  void onStartDragging(CefRefPtr<CefDragData>& dragData, CefRenderHandler::DragOperationsMask allowedOps);
+
 protected:
   void onBeforeCefContextMenu(const MenuBuilder::MenuData& data);
 
@@ -221,6 +221,12 @@ protected:
   void showDevTools();
 
   void closeDevTools();
+
+  bool shouldAllowDrop(CefRefPtr<CefDragData>& dragData, CefDragHandler::DragOperationsMask mask);
+
+  bool shouldAllowDrag(CefRefPtr<CefDragData>& dragData, CefRenderHandler::DragOperationsMask allowedOps, int x, int y);
+
+  void updateDragOperation(CefRenderHandler::DragOperationsMask allowedOps);
 
 protected:
   bool eventFilter(QObject* watched, QEvent* event) override;
@@ -246,6 +252,14 @@ protected:
   void onViewWheelEvent(QWheelEvent* event);
 
   void onContextMenuEvent(const QPoint& pos);
+
+  void onDragEnter(QDragEnterEvent* event);
+
+  void onDragMove(QDragMoveEvent* event);
+
+  void onDragLeave(QDragLeaveEvent* event);
+
+  void onDrop(QDropEvent* event);
 
 public:
   int browserId();

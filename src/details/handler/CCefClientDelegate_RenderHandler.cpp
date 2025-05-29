@@ -157,17 +157,24 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
 
 bool
 CCefClientDelegate::startDragging(CefRefPtr<CefBrowser>& browser,
-                                  CefRefPtr<CefDragData>& drag_data,
-                                  CefRenderHandler::DragOperationsMask allowed_ops,
+                                  CefRefPtr<CefDragData>& dragData,
+                                  CefRenderHandler::DragOperationsMask allowedOps,
                                   int x,
                                   int y)
 {
-  return false;
+  if (!IsValidBrowser(browser))
+    return false;
+
+  return pCefViewPrivate_->shouldAllowDrag(dragData, allowedOps, x, y);
 }
 
 void
 CCefClientDelegate::updateDragCursor(CefRefPtr<CefBrowser>& browser, CefRenderHandler::DragOperation operation)
 {
+  if (!IsValidBrowser(browser))
+    return;
+
+  return pCefViewPrivate_->updateDragOperation(operation);
 }
 
 void

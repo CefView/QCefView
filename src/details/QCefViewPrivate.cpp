@@ -8,6 +8,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QDir>
+#include <QDrag>
 #include <QFileDialog>
 #include <QGridLayout>
 #include <QInputMethodQueryEvent>
@@ -29,6 +30,7 @@
 #include "QCefContext.h"
 #include "QCefSettingPrivate.h"
 #include "utils/CommonUtils.h"
+#include "utils/DragAndDropUtils.h"
 #include "utils/KeyboardUtils.h"
 #include "utils/MenuBuilder.h"
 #include "utils/ValueConvertor.h"
@@ -531,7 +533,7 @@ QCefViewPrivate::onCefInputStateChanged(bool editable)
 void
 QCefViewPrivate::onOsrImeCursorRectChanged(const QRect& rc)
 {
-  osr.qImeCursorRect_ = rc;
+  osr.imeCursorRect_ = rc;
   auto inputMethod = QGuiApplication::inputMethod();
   if (inputMethod) {
     inputMethod->update(Qt::ImCursorRectangle);
@@ -567,6 +569,49 @@ QCefViewPrivate::onContextMenuDestroyed(QObject* obj)
   }
 
   osr.isShowingContextMenu_ = false;
+}
+
+void
+QCefViewPrivate::onStartDragging(CefRefPtr<CefDragData>& dragData, CefRenderHandler::DragOperationsMask allowedOps)
+{
+  Q_Q(QCefView);
+
+  Qt::DropAction dropAction = Qt::IgnoreAction;
+
+  // create drag
+  if (QMimeData* mimeData = CreateQMimeDataFromCefDragData(*dragData)) {
+    QDrag drag(q);
+    drag.setMimeData(mimeData);
+
+    CefRefPtr<CefImage> image = dragData->GetImage();
+    if (image) {
+      int w = 0;
+      int h = 0;
+      if (auto pngData = image->GetAsPNG(1.0, true, w, h)) {
+        QPixmap pixmap;
+        pixmap.loadFromData((const uchar*)(pngData->GetRawData()), (int)(pngData->GetSize()));
+        pixmap.setDevicePixelRatio(scaleFactor());
+        drag.setPixmap(pixmap);
+      }
+
+      CefPoint hotspot = dragData->GetImageHotspot();
+      drag.setHotSpot(QPoint(hotspot.x, hotspot.y));
+    }
+
+    // execute dragging
+    dropAction = drag.exec(MapCefDragOperationToQDropAction(allowedOps));
+  }
+
+  // notify cef that the drag ends
+  if (pCefBrowser_) {
+    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+    if (host) {
+      auto result = MapQDropActionToCefDragOperation(dropAction);
+      auto cursor = q->mapFromGlobal(QCursor::pos());
+      host->DragSourceEndedAt(cursor.x(), cursor.y(), result);
+      host->DragSourceSystemDragEnded();
+    }
+  }
 }
 
 void
@@ -720,57 +765,93 @@ QCefViewPrivate::closeDevTools()
 }
 
 bool
+QCefViewPrivate::shouldAllowDrop(CefRefPtr<CefDragData>& dragData, CefDragHandler::DragOperationsMask mask)
+{
+  Q_Q(QCefView);
+
+  return q->acceptDrops();
+}
+
+bool
+QCefViewPrivate::shouldAllowDrag(CefRefPtr<CefDragData>& dragData,
+                                 CefRenderHandler::DragOperationsMask allowedOps,
+                                 int x,
+                                 int y)
+{
+  // This method only works for OSR mode
+  if (!allowDrag_) {
+    // return false to cancel the drag operation
+    return false;
+  }
+
+  // start dragging
+  QMetaObject::invokeMethod(
+    this, //
+    [this, dragData, allowedOps]() mutable {
+      //
+      this->onStartDragging(dragData, allowedOps);
+    },                   //
+    Qt::QueuedConnection //
+  );
+  return true;
+}
+
+void
+QCefViewPrivate::updateDragOperation(CefRenderHandler::DragOperationsMask allowedOps)
+{
+  if (isOSRModeEnabled_) {
+    osr.allowedDragOperations_ = MapCefDragOperationToQDropAction(allowedOps);
+  }
+}
+
+bool
 QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 {
   Q_Q(QCefView);
 
-  auto et = event->type();
-
-  // if the parent chain changed, we need to re-connect the screenChanged signal
-  if (et == QEvent::ParentChange) {
-    QWidget* w = qobject_cast<QWidget*>(watched);
-    if (w && (w == q || w->isAncestorOf(q))) {
-      // reconnect the screenChanged
-      if (q->window()->windowHandle()) {
-        connect(q->window()->windowHandle(),         //
-                SIGNAL(screenChanged(QScreen*)),     //
-                this,                                //
-                SLOT(onViewScreenChanged(QScreen*)), //
-                Qt::UniqueConnection                 //
+  switch (event->type()) {
+    case QEvent::Move: {
+      // if any ancestor was moved we need to notify CEF
+      QWidget* w = qobject_cast<QWidget*>(watched);
+      if (w && w->isAncestorOf(q)) {
+        notifyMoveOrResizeStarted();
+      }
+    } break;
+    case QEvent::ParentChange: {
+      // if any ancestor's parent was changed,
+      // we need to reconnect the screenChanged signal/slots
+      QWidget* w = qobject_cast<QWidget*>(watched);
+      if (w && w->isAncestorOf(q)) {
+        // disconnect old
+        disconnect(SIGNAL(screenChanged(QScreen*)),    //
+                   this,                               //
+                   SLOT(onViewScreenChanged(QScreen*)) //
         );
-      }
-    }
-  }
 
-#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
-  // monitor the move event of the top-level window and the widget
-  if (et == QEvent::Move && (watched == q || watched == q->window())) {
-    notifyMoveOrResizeStarted();
-  }
-#endif
-
-  if (isOSRModeEnabled_) {
-    if (watched == q) {
-      if (et == QEvent::Type::KeyPress || et == QEvent::Type::KeyRelease) {
-        // redirect tab/backtab key event to CEF
-        QKeyEvent* keyEvent = (QKeyEvent*)event;
-        if (keyEvent->key() == Qt::Key_Tab || keyEvent->key() == Qt::Key_Backtab) {
-          onViewKeyEvent(keyEvent);
-          return true;
+        // connect new
+        if (q->window()->windowHandle()) {
+          connect(q->window()->windowHandle(),        //
+                  SIGNAL(screenChanged(QScreen*)),    //
+                  this,                               //
+                  SLOT(onViewScreenChanged(QScreen*)) //
+          );
         }
       }
-    }
-  } else {
-    // the surface is about to be destroyed (top-level window is being closed)
-    if (et == QEvent::PlatformSurface) {
-      auto t = ((QPlatformSurfaceEvent*)event)->surfaceEventType();
-      if (QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed == t) {
-        if (watched == ncw.qBrowserWindow_->cefWindow()) {
-          // detach the cef window
-          ncw.qBrowserWindow_->detachCefWindow();
+    } break;
+    case QEvent::PlatformSurface: {
+      if (!isOSRModeEnabled_) {
+        // the surface is about to be destroyed (top-level window is being closed)
+        auto t = static_cast<QPlatformSurfaceEvent*>(event)->surfaceEventType();
+        if (QPlatformSurfaceEvent::SurfaceAboutToBeDestroyed == t) {
+          if (watched == ncw.qBrowserWindow_->cefWindow()) {
+            // detach the cef window
+            ncw.qBrowserWindow_->detachCefWindow();
+          }
         }
       }
-    }
+    } break;
+    default:
+      break;
   }
 
   return QObject::eventFilter(watched, event);
@@ -783,7 +864,7 @@ QCefViewPrivate::onViewInputMethodQuery(Qt::InputMethodQuery query) const
     // OSR mode
     switch (query) {
       case Qt::ImCursorRectangle:
-        return QVariant(osr.qImeCursorRect_);
+        return QVariant(osr.imeCursorRect_);
       case Qt::ImAnchorRectangle:
         break;
       case Qt::ImFont:
@@ -935,6 +1016,8 @@ void
 QCefViewPrivate::onViewSizeChanged(const QSize& size, const QSize& oldSize)
 {
   Q_Q(QCefView);
+
+  notifyMoveOrResizeStarted();
 
   if (isOSRModeEnabled_) {
     // OSR mode
@@ -1101,6 +1184,95 @@ QCefViewPrivate::onContextMenuEvent(const QPoint& pos)
     if (osr.isShowingContextMenu_) {
       osr.contextMenu_->popup(pos);
     }
+  }
+}
+
+void
+QCefViewPrivate::onDragEnter(QDragEnterEvent* event)
+{
+  if (isOSRModeEnabled_ && pCefBrowser_ && pCefBrowser_->GetHost()) {
+    osr.allowedDragOperations_ = 0;
+
+    CefRefPtr<CefDragData> dragData = CreateCefDragDataFromQMimeData(*(event->mimeData()));
+
+    CefMouseEvent e;
+    auto b = event->buttons();
+    auto m = event->modifiers();
+    e.x = event->position().x();
+    e.y = event->position().y();
+    e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
+    e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
+    e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
+    e.modifiers |= b & Qt::LeftButton ? EVENTFLAG_LEFT_MOUSE_BUTTON : 0;
+    e.modifiers |= b & Qt::RightButton ? EVENTFLAG_RIGHT_MOUSE_BUTTON : 0;
+    e.modifiers |= b & Qt::MiddleButton ? EVENTFLAG_MIDDLE_MOUSE_BUTTON : 0;
+
+    auto proposedAction = event->proposedAction();
+    CefBrowserHost::DragOperationsMask allowedOps = MapQDropActionToCefDragOperation(proposedAction);
+    pCefBrowser_->GetHost()->DragTargetDragEnter(dragData, e, allowedOps);
+    pCefBrowser_->GetHost()->DragTargetDragOver(e, allowedOps);
+
+    event->setDropAction(static_cast<Qt::DropAction>(osr.allowedDragOperations_));
+    event->accept();
+  }
+}
+
+void
+QCefViewPrivate::onDragMove(QDragMoveEvent* event)
+{
+  if (isOSRModeEnabled_ && pCefBrowser_ && pCefBrowser_->GetHost()) {
+    CefMouseEvent e;
+    auto b = event->buttons();
+    auto m = event->modifiers();
+    e.x = event->position().x();
+    e.y = event->position().y();
+    e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
+    e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
+    e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
+    e.modifiers |= b & Qt::LeftButton ? EVENTFLAG_LEFT_MOUSE_BUTTON : 0;
+    e.modifiers |= b & Qt::RightButton ? EVENTFLAG_RIGHT_MOUSE_BUTTON : 0;
+    e.modifiers |= b & Qt::MiddleButton ? EVENTFLAG_MIDDLE_MOUSE_BUTTON : 0;
+
+    auto proposedAction = event->proposedAction();
+    CefBrowserHost::DragOperationsMask allowedOps = MapQDropActionToCefDragOperation(proposedAction);
+    pCefBrowser_->GetHost()->DragTargetDragOver(e, allowedOps);
+
+    event->setDropAction(static_cast<Qt::DropAction>(osr.allowedDragOperations_));
+    event->accept();
+  }
+}
+
+void
+QCefViewPrivate::onDragLeave(QDragLeaveEvent* event)
+{
+  if (isOSRModeEnabled_ && pCefBrowser_ && pCefBrowser_->GetHost()) {
+    osr.allowedDragOperations_ = 0;
+
+    pCefBrowser_->GetHost()->DragTargetDragLeave();
+  }
+}
+
+void
+QCefViewPrivate::onDrop(QDropEvent* event)
+{
+  if (isOSRModeEnabled_ && pCefBrowser_ && pCefBrowser_->GetHost()) {
+
+    auto b = event->buttons();
+    auto m = event->modifiers();
+
+    CefMouseEvent e;
+    e.x = event->position().x();
+    e.y = event->position().y();
+    e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
+    e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
+    e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
+    e.modifiers |= b & Qt::LeftButton ? EVENTFLAG_LEFT_MOUSE_BUTTON : 0;
+    e.modifiers |= b & Qt::RightButton ? EVENTFLAG_RIGHT_MOUSE_BUTTON : 0;
+    e.modifiers |= b & Qt::MiddleButton ? EVENTFLAG_MIDDLE_MOUSE_BUTTON : 0;
+
+    pCefBrowser_->GetHost()->DragTargetDrop(e);
+
+    event->acceptProposedAction();
   }
 }
 
@@ -1314,12 +1486,14 @@ QCefViewPrivate::executeJavascriptWithResult(const QCefFrameId& frameId,
 void
 QCefViewPrivate::notifyMoveOrResizeStarted()
 {
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
   if (pCefBrowser_) {
     CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
     if (host) {
       host->NotifyMoveOrResizeStarted();
     }
   }
+#endif
 }
 
 bool

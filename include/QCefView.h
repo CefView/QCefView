@@ -273,20 +273,16 @@ public:
   void closeDevTools();
 
   /// <summary>
-  /// Sets whether to enable drag and drop
+  /// Sets whether dragging is allowed.
   /// </summary>
-  /// <param name="enable">True to enable; otherwise false</param>
-  /// <remarks>
-  /// This function does not work for OSR mode. There is a problem, when dragging a file to a non dragging area,
-  /// the content of the file will be displayed. You need to solve the problem yourself.
-  /// </remarks>
-  void setEnableDragAndDrop(bool enable);
+  /// <param name="allow">True to allow dragging; false to disable it.</param>
+  void setAllowDrag(bool allow);
 
   /// <summary>
-  /// Gets whether to enable drag and drop
+  /// Indicates whether drag operations are allowed.
   /// </summary>
-  /// <returns>True to enable; otherwise false</returns>
-  bool isDragAndDropEnabled() const;
+  /// <returns>true if drag operations are permitted; otherwise, false.</returns>
+  bool allowDrag() const;
 
 signals:
   /// <summary>
