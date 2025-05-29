@@ -11,8 +11,11 @@ CCefClientDelegate::onDragEnter(CefRefPtr<CefBrowser>& browser,
                                 CefRefPtr<CefDragData>& dragData,
                                 CefDragHandler::DragOperationsMask mask)
 {
-  // Return false for default drag handling behavior or true to cancel the drag event.
-  return !pCefViewPrivate_->q_ptr->isDragAndDropEnabled();
+  if (!IsValidBrowser(browser))
+    return true;
+
+  // return true to cancel, false to allow
+  return !pCefViewPrivate_->shouldAllowDrop(dragData, mask);
 }
 
 void

@@ -253,19 +253,19 @@ QCefView::closeDevTools()
 }
 
 void
-QCefView::setEnableDragAndDrop(bool enable)
+QCefView::setAllowDrag(bool allow)
 {
   Q_D(QCefView);
 
-  d->enableDragAndDrop_ = enable;
+  d->allowDrag_ = allow;
 }
 
 bool
-QCefView::isDragAndDropEnabled() const
+QCefView::allowDrag() const
 {
   Q_D(const QCefView);
 
-  return d->enableDragAndDrop_;
+  return d->allowDrag_;
 }
 
 void
@@ -418,6 +418,24 @@ QCefView::event(QEvent* event)
     case QEvent::ContextMenu: {
       QContextMenuEvent* e = static_cast<QContextMenuEvent*>(event);
       d->onContextMenuEvent(mapToGlobal(e->pos()));
+    } break;
+    case QEvent::DragEnter: {
+      if (d->isOSRModeEnabled_) {
+        QDragEnterEvent* e = static_cast<QDragEnterEvent*>(event);
+        d->onDragEnter(e);
+      }
+    } break;
+    case QEvent::DragMove: {
+      QDragMoveEvent* e = static_cast<QDragMoveEvent*>(event);
+      d->onDragMove(e);
+    } break;
+    case QEvent::DragLeave: {
+      QDragLeaveEvent* e = static_cast<QDragLeaveEvent*>(event);
+      d->onDragLeave(e);
+    } break;
+    case QEvent::Drop: {
+      QDropEvent* e = static_cast<QDropEvent*>(event);
+      d->onDrop(e);
     } break;
     default:
       break;
