@@ -1196,10 +1196,17 @@ QCefViewPrivate::onDragEnter(QDragEnterEvent* event)
     CefRefPtr<CefDragData> dragData = CreateCefDragDataFromQMimeData(*(event->mimeData()));
 
     CefMouseEvent e;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    auto b = event->mouseButtons();
+    auto m = event->keyboardModifiers();
+    e.x = event->pos().x();
+    e.y = event->pos().y();
+#else
     auto b = event->buttons();
     auto m = event->modifiers();
     e.x = event->position().x();
     e.y = event->position().y();
+#endif
     e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
     e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
     e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
@@ -1222,10 +1229,17 @@ QCefViewPrivate::onDragMove(QDragMoveEvent* event)
 {
   if (isOSRModeEnabled_ && pCefBrowser_ && pCefBrowser_->GetHost()) {
     CefMouseEvent e;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    auto b = event->mouseButtons();
+    auto m = event->keyboardModifiers();
+    e.x = event->pos().x();
+    e.y = event->pos().y();
+#else
     auto b = event->buttons();
     auto m = event->modifiers();
     e.x = event->position().x();
     e.y = event->position().y();
+#endif
     e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
     e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
     e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;
@@ -1257,12 +1271,18 @@ QCefViewPrivate::onDrop(QDropEvent* event)
 {
   if (isOSRModeEnabled_ && pCefBrowser_ && pCefBrowser_->GetHost()) {
 
+    CefMouseEvent e;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    auto b = event->mouseButtons();
+    auto m = event->keyboardModifiers();
+    e.x = event->pos().x();
+    e.y = event->pos().y();
+#else
     auto b = event->buttons();
     auto m = event->modifiers();
-
-    CefMouseEvent e;
     e.x = event->position().x();
     e.y = event->position().y();
+#endif
     e.modifiers |= m & Qt::ControlModifier ? EVENTFLAG_CONTROL_DOWN : 0;
     e.modifiers |= m & Qt::ShiftModifier ? EVENTFLAG_SHIFT_DOWN : 0;
     e.modifiers |= m & Qt::AltModifier ? EVENTFLAG_ALT_DOWN : 0;

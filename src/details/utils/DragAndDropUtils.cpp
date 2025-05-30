@@ -144,12 +144,12 @@ CreateQMimeDataFromCefDragData(CefDragData& dragData)
 
   CefString fragmentText = dragData.GetFragmentText();
   if (!fragmentText.empty()) {
-    mimeData->setText(QString::fromUtf8(fragmentText.ToString()));
+    mimeData->setText(QString::fromStdString(fragmentText.ToString()));
   }
 
   CefString fragmentHtml = dragData.GetFragmentHtml();
   if (!fragmentHtml.empty()) {
-    mimeData->setHtml(QString::fromUtf8(fragmentHtml.ToString()));
+    mimeData->setHtml(QString::fromStdString(fragmentHtml.ToString()));
   }
 
   // CefString fragmentBaseUrl = dragData.GetFragmentBaseURL();
@@ -159,7 +159,7 @@ CreateQMimeDataFromCefDragData(CefDragData& dragData)
 
   CefString link = dragData.GetLinkURL();
   if (!link.empty()) {
-    urls.append(QString::fromUtf8(link.ToString()));
+    urls.append(QString::fromStdString(link.ToString()));
   }
 
   size_t bufferSize = dragData.GetFileContents(nullptr);
