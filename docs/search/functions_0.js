@@ -8,5 +8,6 @@ var searchData=
   ['addcrossoriginwhitelistentry_5',['addCrossOriginWhitelistEntry',['../class_q_cef_context.html#aaba077228a77f5e7d7491eda3ce10267',1,'QCefContext']]],
   ['addlocalfolderresource_6',['addLocalFolderResource',['../class_q_cef_context.html#aecc6f7ee9d296bcf8d2ba470e0c0e454',1,'QCefContext::addLocalFolderResource()'],['../class_q_cef_view.html#a8c6286b279094a691832fc89b93c75f1',1,'QCefView::addLocalFolderResource(const QString &amp;path, const QString &amp;url, int priority=0)']]],
   ['addresschanged_7',['addressChanged',['../class_q_cef_view.html#a93bf80d520a6d1da560bb1729d4b5152',1,'QCefView']]],
-  ['arguments_8',['arguments',['../class_q_cef_event.html#a4cf70fa60235d723b9e578cded919327',1,'QCefEvent']]]
+  ['allowdrag_8',['allowDrag',['../class_q_cef_view.html#adf944b4ec19dc62e6703b35f62c8cdd5',1,'QCefView']]],
+  ['arguments_9',['arguments',['../class_q_cef_event.html#a4cf70fa60235d723b9e578cded919327',1,'QCefEvent']]]
 ];

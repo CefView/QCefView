@@ -17,12 +17,13 @@ var searchData=
   ['addlocalfolderresource_14',['addLocalFolderResource',['../class_q_cef_context.html#aecc6f7ee9d296bcf8d2ba470e0c0e454',1,'QCefContext::addLocalFolderResource()'],['../class_q_cef_view.html#a8c6286b279094a691832fc89b93c75f1',1,'QCefView::addLocalFolderResource(const QString &amp;path, const QString &amp;url, int priority=0)']]],
   ['addresschanged_15',['addressChanged',['../class_q_cef_view.html#a93bf80d520a6d1da560bb1729d4b5152',1,'QCefView']]],
   ['allframeid_16',['AllFrameID',['../class_q_cef_view.html#aa0b341726ea511a8a4c0bf6b603da5f7',1,'QCefView']]],
-  ['alternatives_20to_20qt_17',['Alternatives to Qt',['../index.html#autotoc_md4',1,'']]],
-  ['and_20config_18',['Build and Config',['../md_docs_201-_build_and_config.html',1,'']]],
-  ['apis_19',['Web APIs',['../md_docs_206-_web_a_p_is.html',1,'']]],
-  ['app_20development_20',['macOS App Development',['../index.html#autotoc_md6',1,'']]],
-  ['application_21',['Application',['../md_docs_202-_first_project.html#autotoc_md28',1,'Run the Application'],['../md_docs_204-_interoperability.html#autotoc_md40',1,'Run the Application'],['../md_docs_204-_interoperability.html#autotoc_md44',1,'Run the Application'],['../md_docs_204-_interoperability.html#autotoc_md48',1,'Run the Application']]],
-  ['archive_20mapping_22',['4. Add Local Archive Mapping',['../md_docs_203-_resource_loading.html#autotoc_md33',1,'']]],
-  ['args_23',['invoke(name, ...args)',['../md_docs_206-_web_a_p_is.html#CefViewClient_invoke',1,'']]],
-  ['arguments_24',['arguments',['../class_q_cef_event.html#a4cf70fa60235d723b9e578cded919327',1,'QCefEvent']]]
+  ['allowdrag_17',['allowDrag',['../class_q_cef_view.html#adf944b4ec19dc62e6703b35f62c8cdd5',1,'QCefView']]],
+  ['alternatives_20to_20qt_18',['Alternatives to Qt',['../index.html#autotoc_md4',1,'']]],
+  ['and_20config_19',['Build and Config',['../md_docs_201-_build_and_config.html',1,'']]],
+  ['apis_20',['Web APIs',['../md_docs_206-_web_a_p_is.html',1,'']]],
+  ['app_20development_21',['macOS App Development',['../index.html#autotoc_md6',1,'']]],
+  ['application_22',['Application',['../md_docs_202-_first_project.html#autotoc_md28',1,'Run the Application'],['../md_docs_204-_interoperability.html#autotoc_md40',1,'Run the Application'],['../md_docs_204-_interoperability.html#autotoc_md44',1,'Run the Application'],['../md_docs_204-_interoperability.html#autotoc_md48',1,'Run the Application']]],
+  ['archive_20mapping_23',['4. Add Local Archive Mapping',['../md_docs_203-_resource_loading.html#autotoc_md33',1,'']]],
+  ['args_24',['invoke(name, ...args)',['../md_docs_206-_web_a_p_is.html#CefViewClient_invoke',1,'']]],
+  ['arguments_25',['arguments',['../class_q_cef_event.html#a4cf70fa60235d723b9e578cded919327',1,'QCefEvent']]]
 ];

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['uninit_0',['uninit',['../class_q_cef_context.html#aee74a7460786ddc17f8f9c0f68eaab6b',1,'QCefContext']]],
-  ['url_1',['url',['../class_q_cef_download_item.html#a253cf33b582e3994b65d5611ef277bbe',1,'QCefDownloadItem']]],
-  ['useragent_2',['userAgent',['../class_q_cef_config.html#ad95b55d57719d9fc1a3dc5abb5695016',1,'QCefConfig']]],
-  ['userdatapath_3',['userDataPath',['../class_q_cef_config.html#a317ff9d74e89dac404e20005c33b08e9',1,'QCefConfig']]]
+  ['webgl_0',['webGL',['../class_q_cef_setting.html#aca84c981db4fcc2cf6aa3ece7c44973c',1,'QCefSetting']]],
+  ['windowinitialsize_1',['windowInitialSize',['../class_q_cef_setting.html#ad3aabefb7879e392952a94464c983978',1,'QCefSetting']]],
+  ['windowlessframerate_2',['windowlessFrameRate',['../class_q_cef_setting.html#adfc424688213e0e695b6b84681581135',1,'QCefSetting']]],
+  ['windowlessrenderingenabled_3',['windowlessRenderingEnabled',['../class_q_cef_config.html#a17b6765b357b7a2d69a1f02b27a4eb92',1,'QCefConfig']]]
 ];

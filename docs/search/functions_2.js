@@ -10,7 +10,6 @@ var searchData=
   ['commandlinepassthroughdisabled_7',['commandLinePassthroughDisabled',['../class_q_cef_config.html#a892715bebd8dc71e5acb0be17bfff43d',1,'QCefConfig']]],
   ['consolemessage_8',['consoleMessage',['../class_q_cef_view.html#a2dae6946082712815273c2967d37762a',1,'QCefView']]],
   ['contentdisposition_9',['contentDisposition',['../class_q_cef_download_item.html#af97dad25e439c8b997d6689fe1c91bf8',1,'QCefDownloadItem']]],
-  ['contextmenuevent_10',['contextMenuEvent',['../class_q_cef_view.html#ac8a83d1f2fb0e771fb48007838b40d1f',1,'QCefView']]],
-  ['currentspeed_11',['currentSpeed',['../class_q_cef_download_item.html#a5c9648906b02ce59aa6d82f03e468c1d',1,'QCefDownloadItem']]],
-  ['cursivefontfamily_12',['cursiveFontFamily',['../class_q_cef_setting.html#a86526505941342ffbc96b6e5226ffcbe',1,'QCefSetting']]]
+  ['currentspeed_10',['currentSpeed',['../class_q_cef_download_item.html#a5c9648906b02ce59aa6d82f03e468c1d',1,'QCefDownloadItem']]],
+  ['cursivefontfamily_11',['cursiveFontFamily',['../class_q_cef_setting.html#a86526505941342ffbc96b6e5226ffcbe',1,'QCefSetting']]]
 ];
