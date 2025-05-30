@@ -1,10 +1,15 @@
 var searchData=
 [
-  ['q_5fdeclare_5fmetatype_0',['Q_DECLARE_METATYPE',['../_q_cef_config_8h.html#a9c4f9b520ed6a74eb2f7c521c08471c6',1,'Q_DECLARE_METATYPE(QCefConfig):&#160;QCefConfig.h'],['../_q_cef_event_8h.html#ad2abcec84743c92df60fa3b333b3d2b5',1,'Q_DECLARE_METATYPE(QCefEvent):&#160;QCefEvent.h'],['../_q_cef_query_8h.html#a83540a9479efcf57275cd6d2e99cb415',1,'Q_DECLARE_METATYPE(QCefQuery):&#160;QCefQuery.h'],['../_q_cef_setting_8h.html#a08f5f6912484f50f55dae4c9dedbd2a4',1,'Q_DECLARE_METATYPE(QCefSetting):&#160;QCefSetting.h']]],
-  ['qcefconfig_1',['QCefConfig',['../class_q_cef_config.html#a2a937276cdbf76f77d2bf70a766c6412',1,'QCefConfig::QCefConfig()'],['../class_q_cef_config.html#af90f0b9e087d39a6bd059701ee450516',1,'QCefConfig::QCefConfig(const QCefConfig &amp;other)']]],
-  ['qcefcontext_2',['QCefContext',['../class_q_cef_context.html#aa2b8af8d2d806ba8b5110e868d314c8c',1,'QCefContext']]],
-  ['qcefevent_3',['QCefEvent',['../class_q_cef_event.html#ab444dcc856db38dcc679db326ef22bf5',1,'QCefEvent::QCefEvent()'],['../class_q_cef_event.html#a2b2b8bacbfebefe302cd1fab91cd5e8c',1,'QCefEvent::QCefEvent(const QString &amp;name)'],['../class_q_cef_event.html#a357d5cb242977682523e69d501c673d4',1,'QCefEvent::QCefEvent(const QCefEvent &amp;other)']]],
-  ['qcefquery_4',['QCefQuery',['../class_q_cef_query.html#a2d63bf6b4584e80edbfe4e00fdc8790e',1,'QCefQuery::QCefQuery(QCefViewPrivate *source, const QString &amp;req, const int64_t query)'],['../class_q_cef_query.html#a22d9fddcadce7a6e0259c691634c4d7a',1,'QCefQuery::QCefQuery()']]],
-  ['qcefsetting_5',['QCefSetting',['../class_q_cef_setting.html#afb8450a162ed9ce3f59a37491147db8d',1,'QCefSetting::QCefSetting()'],['../class_q_cef_setting.html#af650fcab674f8c33a996a2d8cd34eaef',1,'QCefSetting::QCefSetting(const QCefSetting &amp;other)']]],
-  ['qcefview_6',['QCefView',['../class_q_cef_view.html#a203cdf24f64a5582f7c79e2401e9d8ca',1,'QCefView::QCefView(const QString &amp;url, const QCefSetting *setting, QWidget *parent=nullptr, Qt::WindowFlags f=Qt::WindowFlags())'],['../class_q_cef_view.html#a84f33f3697e39588e9b76d2cd4847892',1,'QCefView::QCefView(QWidget *parent=nullptr, Qt::WindowFlags f=Qt::WindowFlags())']]]
+  ['receivedbytes_0',['receivedBytes',['../class_q_cef_download_item.html#a5d76f04bb41c5e4edad6d680b01fe63f',1,'QCefDownloadItem']]],
+  ['remotedebuggingport_1',['remoteDebuggingPort',['../class_q_cef_config.html#aeaa7b37b83ee32a5ec50a1dec11d0c2e',1,'QCefConfig']]],
+  ['remotefonts_2',['remoteFonts',['../class_q_cef_setting.html#a6b503e82defe4c57a88936fb2cec2509',1,'QCefSetting']]],
+  ['removecrossoriginwhitelistentry_3',['removeCrossOriginWhitelistEntry',['../class_q_cef_context.html#af04aefeea503031f5a8fbdabf05bc5e8',1,'QCefContext']]],
+  ['reply_4',['reply',['../class_q_cef_query.html#a9b7df2f2ffaf42431392fcb0a89042be',1,'QCefQuery']]],
+  ['reportjavascriptresult_5',['reportJavascriptResult',['../class_q_cef_view.html#a9b69938aa6f8352799bee6084bab03e4',1,'QCefView']]],
+  ['request_6',['request',['../class_q_cef_query.html#a16d137bcc1bf2ef9bc8969ff1bd091e7',1,'QCefQuery']]],
+  ['response_7',['response',['../class_q_cef_query.html#a663d5945146bebe69a0a3c5448bb9280',1,'QCefQuery']]],
+  ['responseqcefquery_8',['responseQCefQuery',['../class_q_cef_view.html#afc838dab54d2b083b05f0d98349b50cc',1,'QCefView']]],
+  ['result_9',['result',['../class_q_cef_query.html#a8c2d78e19628d8066570338d659bc9b2',1,'QCefQuery']]],
+  ['resume_10',['resume',['../class_q_cef_download_item.html#aa2afc687e69c7c78f6c49e9a41a34823',1,'QCefDownloadItem']]],
+  ['rootcachepath_11',['rootCachePath',['../class_q_cef_config.html#a5bc459471e82e88326c17220a0e05310',1,'QCefConfig']]]
 ];
