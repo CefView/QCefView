@@ -81,29 +81,16 @@ QCefWindow::syncCefWindowPosOnExpose()
 {
 #if defined(Q_OS_WINDOWS)
   if (cefWidget_ && cefWindow_ && cefWindow_->winId()) {
-    // #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
-    //     qreal widgetScaleFactor = cefWidget_->devicePixelRatioF();
-    // #else
-    //     qreal widgetScaleFactor = cefWidget_->devicePixelRatio();
-    // #endif
-    //     int widgetWidth = cefWidget_->width();
-    //     int widgetHeigth = cefWidget_->height();
-    //     qDebug() << "------------- container widget:"
-    //              << "(" << widgetWidth << " x " << widgetHeigth << ") @ " << widgetScaleFactor;
-    //     qreal width = widgetWidth * widgetScaleFactor;
-    //     qreal height = widgetHeigth * widgetScaleFactor;
-    //     qDebug() << "------------- width:" << widgetWidth << " x " << widgetScaleFactor << " = " << width;
-    //     qDebug() << "------------- height:" << widgetHeigth << " x " << widgetScaleFactor << " = " << height;
-
     qreal windowScaleFactor = this->devicePixelRatio();
     int windowWidth = this->width();
     int windowHeight = this->height();
-    qDebug() << "------------- container window:"
-             << "(" << windowWidth << " x " << windowHeight << ") @ " << windowScaleFactor;
+    // qDebug() << "----- container window:"
+    //          << "(" << windowWidth << " x " << windowHeight << ") @ " << windowScaleFactor;
+
     qreal width = windowWidth * windowScaleFactor;
     qreal height = windowHeight * windowScaleFactor;
-    qDebug() << "------------- width:" << windowWidth << " x " << windowScaleFactor << " = " << width;
-    qDebug() << "------------- height:" << windowHeight << " x " << windowScaleFactor << " = " << height;
+    // qDebug() << "----- width:" << windowWidth << " x " << windowScaleFactor << " = " << width;
+    // qDebug() << "----- height:" << windowHeight << " x " << windowScaleFactor << " = " << height;
 
     ::SetWindowPos((HWND)(cefWindow_->winId()),
                    NULL,
@@ -128,22 +115,13 @@ QCefWindow::syncCefWindowPosOnResize()
 #endif
     int widgetWidth = cefWidget_->width();
     int widgetHeigth = cefWidget_->height();
-    qDebug() << "------------- container widget:"
-             << "(" << widgetWidth << " x " << widgetHeigth << ") @ " << widgetScaleFactor;
+    // qDebug() << "----- container widget:"
+    //          << "(" << widgetWidth << " x " << widgetHeigth << ") @ " << widgetScaleFactor;
+
     qreal width = widgetWidth * widgetScaleFactor;
     qreal height = widgetHeigth * widgetScaleFactor;
-    qDebug() << "------------- width:" << widgetWidth << " x " << widgetScaleFactor << " = " << width;
-    qDebug() << "------------- height:" << widgetHeigth << " x " << widgetScaleFactor << " = " << height;
-
-    // qreal windowScaleFactor = this->devicePixelRatio();
-    // int windowWidth = this->width();
-    // int windowHeight = this->height();
-    // qDebug() << "------------- container window:"
-    //          << "(" << windowWidth << " x " << windowHeight << ") @ " << windowScaleFactor;
-    // width = windowWidth * windowScaleFactor;
-    // height = windowHeight * windowScaleFactor;
-    // qDebug() << "------------- width:" << windowWidth << " x " << windowScaleFactor << " = " << width;
-    // qDebug() << "------------- height:" << windowHeight << " x " << windowScaleFactor << " = " << height;
+    // qDebug() << "----- width:" << widgetWidth << " x " << widgetScaleFactor << " = " << width;
+    // qDebug() << "----- height:" << widgetHeigth << " x " << widgetScaleFactor << " = " << height;
 
     ::SetWindowPos((HWND)(cefWindow_->winId()),
                    NULL,
@@ -159,8 +137,8 @@ QCefWindow::syncCefWindowPosOnResize()
 void
 QCefWindow::exposeEvent(QExposeEvent* e)
 {
+  qDebug() << "----- QCefWindow::exposeEvent:" << e;
 #if defined(Q_OS_WINDOWS)
-  qDebug() << "------------- QCefWindow::exposeEvent -------------";
   syncCefWindowPosOnExpose();
 #endif
   QWindow::exposeEvent(e);
@@ -169,8 +147,8 @@ QCefWindow::exposeEvent(QExposeEvent* e)
 void
 QCefWindow::resizeEvent(QResizeEvent* e)
 {
+  qDebug() << "----- QCefWindow::resizeEvent:" << e;
 #if defined(Q_OS_WINDOWS)
-  qDebug() << "------------- QCefWindow::resizeEvent -------------";
   syncCefWindowPosOnResize();
 #elif defined(Q_OS_LINUX)
   if (cefWindow_) {
@@ -180,4 +158,31 @@ QCefWindow::resizeEvent(QResizeEvent* e)
   // do nothing
 #endif
   QWindow::resizeEvent(e);
+}
+
+void
+QCefWindow::focusInEvent(QFocusEvent* e)
+{
+  qDebug() << "----- QCefWindow::focusInEvent:" << e;
+  QWindow::focusInEvent(e);
+}
+
+void
+QCefWindow::focusOutEvent(QFocusEvent* e)
+{
+  qDebug() << "----- QCefWindow::focusOutEvent:" << e;
+  QWindow::focusOutEvent(e);
+}
+
+QObject*
+QCefWindow::focusObject() const
+{
+  QObject* focusObject = nullptr;
+  if (cefWindow_) {
+    focusObject = cefWindow_;
+  } else {
+    focusObject = QWindow::focusObject();
+  }
+  qDebug() << "----- QCefWindow::focusObject:" << focusObject;
+  return focusObject;
 }

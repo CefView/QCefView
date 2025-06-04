@@ -169,8 +169,6 @@ protected:
   qreal scaleFactor();
 
 public slots:
-  void onAppFocusChanged(QWidget* old, QWidget* now);
-
   void onViewScreenChanged(QScreen* screen);
 
   void onCefWindowLostTabFocus(bool next);
