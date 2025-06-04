@@ -36,10 +36,10 @@ CCefClientDelegate::loadEnd(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>&
   // without any callback notification (AKA, released the
   // focus silently), so we need to update the CEF browser
   // focus status according to the one we have kept
-  if (true                                     //
-      && pCefViewPrivate_->isOSRModeEnabled_   //
-      && pCefViewPrivate_->osr.hasCefGotFocus_ //
-      && browser->GetHost()                    //
+  if (true                                   //
+      && pCefViewPrivate_->isOSRModeEnabled_ //
+      && pCefViewPrivate_->q_ptr->hasFocus() //
+      && browser->GetHost()                  //
   ) {
     browser->GetHost()->SetFocus(true);
   }

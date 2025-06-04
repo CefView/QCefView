@@ -77,17 +77,6 @@ public:
   /// </summary>
   struct OsrPrivateData
   {
-    /// <summary>
-    /// workaround for:
-    /// https://github.com/chromiumembedded/cef/issues/3870
-    /// after navigation CEF resets the browser focus status
-    /// without any callback notification (AKA, released the
-    /// focus silently), so we need to keep the CEF browser
-    /// focus status by ourself, and at every loadEnd callback
-    /// we need to sync the status to CEF browser.
-    /// </summary>
-    bool hasCefGotFocus_ = false;
-
     // allowed drag operations
     int32_t allowedDragOperations_;
 
