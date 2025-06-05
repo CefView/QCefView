@@ -302,4 +302,8 @@ public:
   bool setPreference(const QString& name, const QVariant& value, const QString& error);
 
   void setOSRFrameRate(int fps);
+
+  void setZoomLevel(double level);
+
+  int zoomLevel();
 };

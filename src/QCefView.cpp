@@ -269,6 +269,22 @@ QCefView::allowDrag() const
 }
 
 void
+QCefView::setZoomLevel(double level)
+{
+  Q_D(QCefView);
+
+  d->setZoomLevel(level);
+}
+
+int
+QCefView::zoomLevel()
+{
+  Q_D(QCefView);
+
+  return d->zoomLevel();
+}
+
+void
 QCefView::setFocus(Qt::FocusReason reason)
 {
   Q_D(QCefView);
