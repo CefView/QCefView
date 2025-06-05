@@ -1557,3 +1557,27 @@ QCefViewPrivate::setOSRFrameRate(int fps)
     }
   }
 }
+
+void
+QCefViewPrivate::setZoomLevel(double level)
+{
+  if (pCefBrowser_) {
+    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+    if (host) {
+      host->SetZoomLevel(level);
+    }
+  }
+}
+
+double
+QCefViewPrivate::zoomLevel()
+{
+  if (pCefBrowser_) {
+    CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
+    if (host) {
+      return host->GetZoomLevel();
+    }
+  }
+
+  return 0;
+}

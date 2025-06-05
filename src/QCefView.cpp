@@ -268,6 +268,22 @@ QCefView::allowDrag() const
   return d->allowDrag_;
 }
 
+void
+QCefView::setZoomLevel(double level)
+{
+  Q_D(QCefView);
+
+  d->setZoomLevel(level);
+}
+
+double
+QCefView::zoomLevel()
+{
+  Q_D(QCefView);
+
+  return d->zoomLevel();
+}
+
 QCefView*
 QCefView::onNewBrowser(const QCefFrameId& sourceFrameId,
                        const QString& url,

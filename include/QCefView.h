@@ -284,6 +284,18 @@ public:
   /// <returns>true if drag operations are permitted; otherwise, false.</returns>
   bool allowDrag() const;
 
+  /// <summary>
+  /// Sets zoom level.
+  /// </summary>
+  /// <param name="level">The zoom level value.</param>
+  void setZoomLevel(double level);
+
+  /// <summary>
+  /// Get the zoom level value.
+  /// </summary>
+  /// <returns>the zoom level value.</returns>
+  double zoomLevel();
+
 signals:
   /// <summary>
   /// Gets called on loading state changed
