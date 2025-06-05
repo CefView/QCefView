@@ -143,6 +143,58 @@
         </widget>
        </item>
        <item>
+        <widget class="QComboBox" name="cbb_zoomLevel">
+         <property name="currentText">
+          <string>0.0</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>-2.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>-2.0</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>-1.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>-1.0</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>-0.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>0.0</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>0.5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1.0</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1.5</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="btn_quitApp">
          <property name="text">
           <string>Exit App</string>

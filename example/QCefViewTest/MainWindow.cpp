@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget* parent)
   connect(m_ui.btn_setFocus, &QPushButton::clicked, this, &MainWindow::onBtnSetFocusClicked);
   connect(m_ui.btn_callJSCode, &QPushButton::clicked, this, &MainWindow::onBtnCallJSCodeClicked);
   connect(m_ui.btn_newBrowser, &QPushButton::clicked, this, &MainWindow::onBtnNewBrowserClicked);
+  connect(m_ui.cbb_zoomLevel, &QComboBox::currentTextChanged, this, &MainWindow::onCbbZoomLeveChanged);
   connect(m_ui.btn_quitApp, &QPushButton::clicked, qApp, &QCoreApplication::quit);
 
   // build the path to the web resource
@@ -316,6 +317,15 @@ MainWindow::onBtnNewBrowserClicked()
   w->setCentralWidget(view);
   w->resize(1024, 768);
   w->show();
+}
+
+void
+MainWindow::onCbbZoomLeveChanged(const QString& text)
+{
+  if (m_pLeftCefViewWidget) {
+    double level = text.toDouble();
+    m_pLeftCefViewWidget->setZoomLevel(level);
+  }
 }
 
 #ifndef Q_OS_MACOS

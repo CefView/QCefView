@@ -67,6 +67,8 @@ protected slots:
 
   void onBtnNewBrowserClicked();
 
+  void onCbbZoomLeveChanged(const QString& text);
+
 private:
   Ui::MainWindow m_ui;
 
