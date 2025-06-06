@@ -30,9 +30,11 @@ protected:
   void syncCefWindowPosOnExpose();
 
 protected:
-  virtual void exposeEvent(QExposeEvent* e) override;
-
-  virtual void resizeEvent(QResizeEvent* e) override;
+  void exposeEvent(QExposeEvent* e) override;
+  void resizeEvent(QResizeEvent* e) override;
+  void focusInEvent(QFocusEvent* e) override;
+  void focusOutEvent(QFocusEvent* e) override;
+  QObject* focusObject() const override;
 
 private:
   QWidget* cefWidget_ = nullptr;

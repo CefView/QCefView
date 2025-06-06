@@ -37,13 +37,13 @@ QCefView::QCefView(const QString& url,
     setAttribute(Qt::WA_PaintOnScreen);
   }
 
-  // create browser
-  d_ptr->createCefBrowser(url, setting ? setting->d_func() : nullptr);
-
   // track mouse
   setMouseTracking(true);
   // set focus policy
   setFocusPolicy(Qt::WheelFocus);
+
+  // create browser
+  d_ptr->createCefBrowser(url, setting ? setting->d_func() : nullptr);
 }
 
 QCefView::QCefView(QWidget* parent /*= 0*/, Qt::WindowFlags f /*= Qt::WindowFlags()*/)
@@ -397,9 +397,15 @@ QCefView::event(QEvent* event)
     } break;
     case QEvent::FocusIn: {
       d->onViewFocusChanged(true);
+      if (!d->isOSRModeEnabled_) {
+        return true;
+      }
     } break;
     case QEvent::FocusOut: {
       d->onViewFocusChanged(false);
+      if (!d->isOSRModeEnabled_) {
+        return true;
+      }
     } break;
     case QEvent::Move: {
       d->onViewMoved();

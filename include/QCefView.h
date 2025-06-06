@@ -500,20 +500,9 @@ protected:
 #pragma region QWidget
 public:
   /// <summary>
-  /// Please refer to QWidget::setFocus
-  /// </summary>
-  void setFocus(Qt::FocusReason reason);
-
-  /// <summary>
   /// Please refer to QWidget::inputMethodQuery
   /// </summary>
   QVariant inputMethodQuery(Qt::InputMethodQuery query) const override;
-
-public slots:
-  /// <summary>
-  ///
-  /// </summary>
-  inline void setFocus() { setFocus(Qt::OtherFocusReason); }
 
 protected:
   /// <summary>

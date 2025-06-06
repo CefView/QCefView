@@ -304,15 +304,19 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
     QGridLayout* layout = new QGridLayout(q_ptr);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(ncw.qBrowserWidget_);
-
-    // monitor the focus changed event globally
-    connect(qApp,                                        //
-            SIGNAL(focusChanged(QWidget*, QWidget*)),    //
-            this,                                        //
-            SLOT(onAppFocusChanged(QWidget*, QWidget*)), //
-            Qt::UniqueConnection                         //
-    );
   }
+
+#if defined(QT_DEBUG)
+  //  monitor the focus changed event globally
+  connect(qApp,                        //
+          &QApplication::focusChanged, //
+          [](QWidget* old, QWidget* now) {
+            qDebug() << "Focus changed from:"                                            //
+                     << old << "[" << (old ? old->window()->windowHandle() : 0x0) << "]" //
+                     << "->"                                                             //
+                     << now << "[" << (now ? now->window()->windowHandle() : 0x00) << "]";
+          });
+#endif
 }
 
 bool
@@ -422,32 +426,6 @@ QCefViewPrivate::scaleFactor()
 }
 
 void
-QCefViewPrivate::onAppFocusChanged(QWidget* old, QWidget* now)
-{
-  Q_Q(QCefView);
-
-  qDebug() << q << q->window()->isActiveWindow() << ":focus changed from:" << old << " -> " << now;
-  qDebug() << q->windowHandle() << "focusWindow:" << QGuiApplication::focusWindow();
-
-  if (!now || now->window() != q->window())
-    return;
-
-  if (now == q) {
-    // QCefView got focus, need to move the focus to the CEF browser window
-    // This only works when changing focus by TAB key
-    if (old && old->window() == q->window())
-      setCefWindowFocus(true);
-  } else {
-    // Because setCefWindowFocus will not release CEF browser window focus,
-    // here we need to activate the new focused widget forcefully.
-    // This code should be executed only when click any focus except
-    // the QCefView while QCefView is holding the focus
-    if (!old && !QGuiApplication::focusWindow())
-      now->activateWindow();
-  }
-}
-
-void
 QCefViewPrivate::onViewScreenChanged(QScreen* screen)
 {
   Q_Q(QCefView);
@@ -490,26 +468,25 @@ QCefViewPrivate::onCefWindowLostTabFocus(bool next)
     widget->setFocus(reason);
     widget->activateWindow();
   }
-
-  // update cef focus status
-  if (isOSRModeEnabled_) {
-    osr.hasCefGotFocus_ = false;
-  }
 }
 
 void
 QCefViewPrivate::onCefWindowGotFocus()
 {
-  // qDebug() << "cefwindow got focus";
+  qDebug() << "----- QCefViewPrivate::onCefWindowGotFocus()";
   Q_Q(QCefView);
-  QWidget* focusedWidget = qApp->focusWidget();
-  if (focusedWidget && focusedWidget != q) {
-    focusedWidget->clearFocus();
-  }
 
-  // update cef focus status
   if (isOSRModeEnabled_) {
-    osr.hasCefGotFocus_ = true;
+    // OSR mode, sync focus status
+    if (!q->hasFocus()) {
+      q->setFocus();
+    }
+  } else {
+    // NCW mode, clear previous focus
+    QWidget* focusWidget = qApp->focusWidget();
+    if (focusWidget && focusWidget != q) {
+      focusWidget->clearFocus();
+    }
   }
 }
 
@@ -687,7 +664,6 @@ QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
   } else if (mode == FILE_DIALOG_SAVE) {
     dialog.setAcceptMode(QFileDialog::AcceptSave);
   } else {
-    NOTREACHED();
     callback->Cancel();
     return;
   }
@@ -850,6 +826,18 @@ QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
         }
       }
     } break;
+    case QEvent::FocusIn: {
+      if (!isOSRModeEnabled_ && watched == ncw.qBrowserWindow_) {
+        qDebug() << "----- event to ncw.qBrowserWindow_:" << event;
+        q->focusInEvent(static_cast<QFocusEvent*>(event));
+      }
+    } break;
+    case QEvent::FocusOut: {
+      if (!isOSRModeEnabled_ && watched == ncw.qBrowserWindow_) {
+        qDebug() << "----- event to ncw.qBrowserWindow_:" << event;
+        q->focusOutEvent(static_cast<QFocusEvent*>(event));
+      }
+    } break;
     default:
       break;
   }
@@ -966,32 +954,19 @@ QCefViewPrivate::onViewVisibilityChanged(bool visible)
 void
 QCefViewPrivate::onViewFocusChanged(bool focused)
 {
+  if (!pCefBrowser_)
+    return;
+
   if (isOSRModeEnabled_) {
-    // OSR mode
-    if (!pCefBrowser_)
+    // if context menu is showing we need to skip the focus out event
+    if (osr.isShowingContextMenu_ && !focused)
       return;
 
-    if (focused) {
-      // QCefView gained the focus
-
-      // sync the focus status to CEF browser
-      pCefBrowser_->GetHost()->SetFocus(focused);
-
-      // update cef focus status
-      osr.hasCefGotFocus_ = true;
-    } else {
-      // QCefView released the focus
-
-      // if the context menu is showing we do not clear CEF browser focus
-      if (osr.isShowingContextMenu_)
-        return;
-
-      // clear CEF browser focus for any other reasons
-      pCefBrowser_->GetHost()->SetFocus(focused);
-
-      // update cef focus status
-      osr.hasCefGotFocus_ = false;
-    }
+    // sync focus status to CEF
+    pCefBrowser_->GetHost()->SetFocus(focused);
+  } else {
+    // sync focus status to CEF
+    pCefBrowser_->GetHost()->SetFocus(focused);
   }
 }
 
