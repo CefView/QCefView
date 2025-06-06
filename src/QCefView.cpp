@@ -284,14 +284,6 @@ QCefView::zoomLevel()
   return d->zoomLevel();
 }
 
-void
-QCefView::setFocus(Qt::FocusReason reason)
-{
-  Q_D(QCefView);
-
-  d->setCefWindowFocus(true);
-}
-
 QCefView*
 QCefView::onNewBrowser(const QCefFrameId& sourceFrameId,
                        const QString& url,
