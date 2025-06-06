@@ -276,7 +276,7 @@ QCefView::setZoomLevel(double level)
   d->setZoomLevel(level);
 }
 
-int
+double
 QCefView::zoomLevel()
 {
   Q_D(QCefView);

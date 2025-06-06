@@ -294,7 +294,7 @@ public:
   /// Get the zoom level value.
   /// </summary>
   /// <returns>the zoom level value.</returns>
-  int zoomLevel();
+  double zoomLevel();
 
 signals:
   /// <summary>

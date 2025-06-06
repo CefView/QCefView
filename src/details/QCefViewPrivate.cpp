@@ -1594,13 +1594,13 @@ QCefViewPrivate::setZoomLevel(double level)
   }
 }
 
-int
+double
 QCefViewPrivate::zoomLevel()
 {
   if (pCefBrowser_) {
     CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
     if (host) {
-      
+
       return host->GetZoomLevel();
     }
   }

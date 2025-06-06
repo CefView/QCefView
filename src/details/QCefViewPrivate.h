@@ -305,5 +305,5 @@ public:
 
   void setZoomLevel(double level);
 
-  int zoomLevel();
+  double zoomLevel();
 };
