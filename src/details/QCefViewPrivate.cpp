@@ -488,6 +488,8 @@ QCefViewPrivate::onCefWindowGotFocus()
       focusWidget->clearFocus();
     }
   }
+
+  emit q->cefWindowGotFocus();
 }
 
 void
