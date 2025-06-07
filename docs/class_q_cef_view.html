@@ -157,7 +157,6 @@ $(function(){initNavTree('class_q_cef_view.html',''); initResizable(true); });
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
-<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
@@ -177,11 +176,6 @@ Public Types</h2></td></tr>
 <tr class="memitem:a9963d810f8aa71b45b1b10f0abbe8787" id="r_a9963d810f8aa71b45b1b10f0abbe8787"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9963d810f8aa71b45b1b10f0abbe8787">CefWindowOpenDisposition</a> </td></tr>
 <tr class="memdesc:a9963d810f8aa71b45b1b10f0abbe8787"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the CEF pop-up windows open disposition.  <a href="#a9963d810f8aa71b45b1b10f0abbe8787">More...</a><br /></td></tr>
 <tr class="separator:a9963d810f8aa71b45b1b10f0abbe8787"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-slots" name="pub-slots"></a>
-Public Slots</h2></td></tr>
-<tr class="memitem:a9b1b42857e38a9f5c6c810fd51593788" id="r_a9b1b42857e38a9f5c6c810fd51593788"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b1b42857e38a9f5c6c810fd51593788">setFocus</a> ()</td></tr>
-<tr class="separator:a9b1b42857e38a9f5c6c810fd51593788"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="signals" name="signals"></a>
 Signals</h2></td></tr>
@@ -323,9 +317,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adf944b4ec19dc62e6703b35f62c8cdd5" id="r_adf944b4ec19dc62e6703b35f62c8cdd5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adf944b4ec19dc62e6703b35f62c8cdd5">allowDrag</a> () const</td></tr>
 <tr class="memdesc:adf944b4ec19dc62e6703b35f62c8cdd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether drag operations are allowed.  <br /></td></tr>
 <tr class="separator:adf944b4ec19dc62e6703b35f62c8cdd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61ad737cd2354021f8310f323f4f8ada" id="r_a61ad737cd2354021f8310f323f4f8ada"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61ad737cd2354021f8310f323f4f8ada">setFocus</a> (Qt::FocusReason reason)</td></tr>
-<tr class="memdesc:a61ad737cd2354021f8310f323f4f8ada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Please refer to QWidget::setFocus.  <br /></td></tr>
-<tr class="separator:a61ad737cd2354021f8310f323f4f8ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af25a011c126a9bb5dc3df99756a75368" id="r_af25a011c126a9bb5dc3df99756a75368"><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af25a011c126a9bb5dc3df99756a75368">inputMethodQuery</a> (Qt::InputMethodQuery query) const override</td></tr>
 <tr class="memdesc:af25a011c126a9bb5dc3df99756a75368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Please refer to QWidget::inputMethodQuery.  <br /></td></tr>
 <tr class="separator:af25a011c126a9bb5dc3df99756a75368"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2069,25 +2060,6 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a61ad737cd2354021f8310f323f4f8ada" name="a61ad737cd2354021f8310f323f4f8ada"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61ad737cd2354021f8310f323f4f8ada">&#9670;&#160;</a></span>setFocus() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::setFocus </td>
-          <td>(</td>
-          <td class="paramtype">Qt::FocusReason</td>          <td class="paramname"><span class="paramname"><em>reason</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Please refer to QWidget::setFocus. </p>
-
-</div>
-</div>
 <a id="af25a011c126a9bb5dc3df99756a75368" name="af25a011c126a9bb5dc3df99756a75368"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af25a011c126a9bb5dc3df99756a75368">&#9670;&#160;</a></span>inputMethodQuery()</h2>
 
@@ -2112,31 +2084,6 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Please refer to QWidget::inputMethodQuery. </p>
-
-</div>
-</div>
-<a id="a9b1b42857e38a9f5c6c810fd51593788" name="a9b1b42857e38a9f5c6c810fd51593788"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b1b42857e38a9f5c6c810fd51593788">&#9670;&#160;</a></span>setFocus <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void QCefView::setFocus </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel slot">slot</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 
 </div>
 </div>

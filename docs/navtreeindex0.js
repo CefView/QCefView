@@ -210,7 +210,7 @@ var NAVTREEINDEX0 =
 "class_q_cef_view.html#a12ca0bc0f4fc55dfc838769990d6a6d7":[8,0,6,13],
 "class_q_cef_view.html#a203cdf24f64a5582f7c79e2401e9d8ca":[8,0,6,1],
 "class_q_cef_view.html#a2b4b3da8874855bbe2d558081233d948":[8,0,6,22],
-"class_q_cef_view.html#a2c33acd395e7f4adecbef1bf67b7680c":[8,0,6,55],
+"class_q_cef_view.html#a2c33acd395e7f4adecbef1bf67b7680c":[8,0,6,53],
 "class_q_cef_view.html#a2c8a8ecacf4bdddcb6ca70f4be8c8dd0":[8,0,6,23],
 "class_q_cef_view.html#a2dae6946082712815273c2967d37762a":[8,0,6,39],
 "class_q_cef_view.html#a45bc8cd7340ce410cf873d7296ffacf6":[8,0,6,14],
@@ -222,7 +222,6 @@ var NAVTREEINDEX0 =
 "class_q_cef_view.html#a543b0eca797c5161d6325665d5ddd576":[8,0,6,45],
 "class_q_cef_view.html#a567e20fd09518ca9c0d2e82f936ff5d6":[8,0,6,31],
 "class_q_cef_view.html#a61845e6e370a57be5f3662ba37cd7b29":[8,0,6,25],
-"class_q_cef_view.html#a61ad737cd2354021f8310f323f4f8ada":[8,0,6,51],
 "class_q_cef_view.html#a666e93d6e9f9be7444f9b898f77c8292":[8,0,6,48],
 "class_q_cef_view.html#a6b04776ad4d7b62c102e9c38ac022b40":[8,0,6,30],
 "class_q_cef_view.html#a70903dca8ccd3e2776d68742531177fd":[8,0,6,3],
@@ -244,10 +243,11 @@ var NAVTREEINDEX0 =
 "class_q_cef_view.html#a9963d810f8aa71b45b1b10f0abbe8787a8bd674f0da6b33d87117c7b8bf5153c2":[8,0,6,0,3],
 "class_q_cef_view.html#a9963d810f8aa71b45b1b10f0abbe8787ab43a4c561c1e83ac6419cc711220e62c":[8,0,6,0,4],
 "class_q_cef_view.html#a9963d810f8aa71b45b1b10f0abbe8787af5284fd406b0fe65ef1071961543d3a9":[8,0,6,0,0],
-"class_q_cef_view.html#a9b1b42857e38a9f5c6c810fd51593788":[8,0,6,53],
 "class_q_cef_view.html#a9b69938aa6f8352799bee6084bab03e4":[8,0,6,44],
 "class_q_cef_view.html#a9ce96fbf25701594b8d65381661141db":[8,0,6,12],
 "class_q_cef_view.html#aa82e1ceaa7f543f8d99d7d9cbf714382":[8,0,6,11],
 "class_q_cef_view.html#aadb6d47674e2ad414eb20a066b7e0738":[8,0,6,47],
-"class_q_cef_view.html#ab70a707afda924d6f035b20a1aecc695":[8,0,6,17]
+"class_q_cef_view.html#ab70a707afda924d6f035b20a1aecc695":[8,0,6,17],
+"class_q_cef_view.html#abdf0a68139fe9163ecd9b5a0cdeed6d7":[8,0,6,26],
+"class_q_cef_view.html#ac13fdea19da380026a742a60c51a2356":[8,0,6,21]
 };

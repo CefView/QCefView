@@ -62,9 +62,7 @@ var class_q_cef_view =
     [ "onNewDownloadItem", "class_q_cef_view.html#a666e93d6e9f9be7444f9b898f77c8292", null ],
     [ "onUpdateDownloadItem", "class_q_cef_view.html#a9833a1db8ef5864489f9462ef397cbb8", null ],
     [ "onRequestCloseFromWeb", "class_q_cef_view.html#ad23057b6187876c84f883b1e7120456d", null ],
-    [ "setFocus", "class_q_cef_view.html#a61ad737cd2354021f8310f323f4f8ada", null ],
     [ "inputMethodQuery", "class_q_cef_view.html#af25a011c126a9bb5dc3df99756a75368", null ],
-    [ "setFocus", "class_q_cef_view.html#a9b1b42857e38a9f5c6c810fd51593788", null ],
     [ "paintEngine", "class_q_cef_view.html#ad88e5a99ad808b7a911b58ba9ed9b838", null ],
     [ "event", "class_q_cef_view.html#a2c33acd395e7f4adecbef1bf67b7680c", null ]
 ];
