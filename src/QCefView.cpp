@@ -416,7 +416,8 @@ QCefView::event(QEvent* event)
     } break;
     case QEvent::MouseMove:
     case QEvent::MouseButtonPress:
-    case QEvent::MouseButtonRelease: {
+    case QEvent::MouseButtonRelease:
+    case QEvent::MouseButtonDblClick: {
       QMouseEvent* e = static_cast<QMouseEvent*>(event);
       d->onViewMouseEvent(e);
     } break;
