@@ -174,6 +174,8 @@ CCefClientDelegate::updateDragCursor(CefRefPtr<CefBrowser>& browser, CefRenderHa
   if (!IsValidBrowser(browser))
     return;
 
+  qDebug() << "CCefClientDelegate::updateDragCursor:" << operation;
+
   return pCefViewPrivate_->updateDragOperation(operation);
 }
 

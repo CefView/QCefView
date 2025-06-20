@@ -576,7 +576,8 @@ QCefViewPrivate::onStartDragging(CefRefPtr<CefDragData>& dragData, CefRenderHand
     }
 
     // execute dragging
-    dropAction = drag.exec(MapCefDragOperationToQDropAction(allowedOps));
+    osr.allowedDragOperations_ = MapCefDragOperationToQDropAction(allowedOps);
+    dropAction = drag.exec(static_cast<Qt::DropActions>(osr.allowedDragOperations_), Qt::CopyAction);
   }
 
   // notify cef that the drag ends

@@ -15,6 +15,20 @@ CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, CefRefPtr<Cef
   if (!IsValidBrowser(browser))
     return;
 
+  // workaround for:
+  // https://github.com/chromiumembedded/cef/issues/3870
+  // after navigation CEF resets the browser focus status
+  // without any callback notification (AKA, released the
+  // focus silently), so we need to update the CEF browser
+  // focus status according to the one we have kept
+  if (true                                   //
+      && pCefViewPrivate_->isOSRModeEnabled_ //
+      && pCefViewPrivate_->q_ptr->hasFocus() //
+      && browser->GetHost()                  //
+  ) {
+    browser->GetHost()->SetFocus(true);
+  }
+
   auto u = QString::fromStdString(url);
   emit pCefViewPrivate_->q_ptr->addressChanged(ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), u);
 }
