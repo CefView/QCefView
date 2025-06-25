@@ -4,6 +4,8 @@
 
 QCefView is a Qt-based QWidget that encapsulates CEF (Chromium Embedded Framework). With QCefView, you can build your application UI using modern frontend development techniques, boosting project efficiency while keeping UI and business logic decoupled. Most importantly, QCefView enables seamless CEF integration within Qt applications.
 
+Discord Server: [QCefView](https://discord.gg/Na7Zn2XVnM)
+
 ### Build Status
 | Platform |  Lastest Build Status  | OSR Production Ready  | NCW Production Ready  |
 |---|---|---|---|
