@@ -19,6 +19,8 @@ CCefClientDelegate::onFileDialog(CefRefPtr<CefBrowser>& browser,
 #endif
                                  CefRefPtr<CefFileDialogCallback>& callback)
 {
+#if defined(Q_OS_LINUX)
+  // only on Linux we need to implement dialog handler
   QMetaObject::invokeMethod(pCefViewPrivate_, [=]() {
     QStringList filters;
     if (!accept_filters.empty()) {
@@ -36,4 +38,8 @@ CCefClientDelegate::onFileDialog(CefRefPtr<CefBrowser>& browser,
                                    callback);
   });
   return true;
+#else
+  // for macOS and Windows we use CEF built-in dialogs
+  return false;
+#endif
 }
