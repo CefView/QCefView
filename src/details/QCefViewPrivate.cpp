@@ -468,15 +468,23 @@ QCefViewPrivate::onCefWindowLostTabFocus(bool next)
     widget->setFocus(reason);
     widget->activateWindow();
   }
+
+  // update cef focus status
+  if (isOSRModeEnabled_) {
+    osr.hasCefGotFocus_ = false;
+  }
 }
 
 void
 QCefViewPrivate::onCefWindowGotFocus()
 {
-  qDebug() << "----- QCefViewPrivate::onCefWindowGotFocus()";
+  qDebug() << "----- " << this << "::onCefWindowGotFocus()";
   Q_Q(QCefView);
 
   if (isOSRModeEnabled_) {
+    // update CEF focus status
+    osr.hasCefGotFocus_ = true;
+
     // OSR mode, sync focus status
     if (!q->hasFocus()) {
       q->setFocus();
@@ -960,11 +968,15 @@ QCefViewPrivate::onViewFocusChanged(bool focused)
 
   if (isOSRModeEnabled_) {
     // if context menu is showing we need to skip the focus out event
-    if (osr.isShowingContextMenu_ && !focused)
+    if (!focused && osr.isShowingContextMenu_) {
       return;
+    }
 
-    // sync focus status to CEF
-    pCefBrowser_->GetHost()->SetFocus(focused);
+    // if focused in and CEF does not have focus, we need to set focus to CEF
+    if (focused && !osr.hasCefGotFocus_) {
+      pCefBrowser_->GetHost()->SetFocus(true);
+      return;
+    }
   } else {
     // sync focus status to CEF
     pCefBrowser_->GetHost()->SetFocus(focused);

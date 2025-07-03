@@ -83,6 +83,17 @@ public:
     // IME parameters
     QRect imeCursorRect_;
 
+    /// <summary>
+    /// workaround for:
+    /// https://github.com/chromiumembedded/cef/issues/3870
+    /// after navigation CEF resets the browser focus status
+    /// without any callback notification (AKA, released the
+    /// focus silently), so we need to keep the CEF browser
+    /// focus status by ourself, and at every loadEnd callback
+    /// we need to sync the status to CEF browser.
+    /// </summary>
+    bool hasCefGotFocus_ = false;
+
     // context menu status and parameters
     bool isShowingContextMenu_ = false;
     QMenu* contextMenu_ = nullptr;

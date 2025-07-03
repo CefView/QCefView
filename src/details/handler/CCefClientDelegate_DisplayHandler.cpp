@@ -21,10 +21,10 @@ CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, CefRefPtr<Cef
   // without any callback notification (AKA, released the
   // focus silently), so we need to update the CEF browser
   // focus status according to the one we have kept
-  if (true                                   //
-      && pCefViewPrivate_->isOSRModeEnabled_ //
-      && pCefViewPrivate_->q_ptr->hasFocus() //
-      && browser->GetHost()                  //
+  if (true                                     //
+      && pCefViewPrivate_->isOSRModeEnabled_   //
+      && pCefViewPrivate_->osr.hasCefGotFocus_ //
+      && browser->GetHost()                    //
   ) {
     browser->GetHost()->SetFocus(true);
   }
