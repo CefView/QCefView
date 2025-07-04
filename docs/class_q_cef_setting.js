@@ -4,6 +4,8 @@ var class_q_cef_setting =
     [ "QCefSetting", "class_q_cef_setting.html#af650fcab674f8c33a996a2d8cd34eaef", null ],
     [ "~QCefSetting", "class_q_cef_setting.html#a589b16fe883213d0e330503c0ccab218", null ],
     [ "operator=", "class_q_cef_setting.html#a486f0c9edda93fb30c75608ac9b98ba2", null ],
+    [ "setOffScreenRenderingEnabled", "class_q_cef_setting.html#a8a16c8a7d259e3ff4e336b05be19ac4b", null ],
+    [ "OffScreenRenderingEnabled", "class_q_cef_setting.html#aa94d40b2e24a2089306f4884f1c0b400", null ],
     [ "setWindowInitialSize", "class_q_cef_setting.html#a629a1139dff88c3bb85a4c9a620d0682", null ],
     [ "windowInitialSize", "class_q_cef_setting.html#ad3aabefb7879e392952a94464c983978", null ],
     [ "setStandardFontFamily", "class_q_cef_setting.html#ad021537af966fb8f17d8a07066a5408e", null ],

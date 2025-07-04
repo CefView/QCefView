@@ -181,6 +181,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a589b16fe883213d0e330503c0ccab218" id="r_a589b16fe883213d0e330503c0ccab218"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a589b16fe883213d0e330503c0ccab218">~QCefSetting</a> ()</td></tr>
 <tr class="memdesc:a589b16fe883213d0e330503c0ccab218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructs the instance.  <br /></td></tr>
 <tr class="separator:a589b16fe883213d0e330503c0ccab218"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a16c8a7d259e3ff4e336b05be19ac4b" id="r_a8a16c8a7d259e3ff4e336b05be19ac4b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a16c8a7d259e3ff4e336b05be19ac4b">setOffScreenRenderingEnabled</a> (const bool value)</td></tr>
+<tr class="memdesc:a8a16c8a7d259e3ff4e336b05be19ac4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the switch to enable or disable off-screen rendering.  <br /></td></tr>
+<tr class="separator:a8a16c8a7d259e3ff4e336b05be19ac4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa94d40b2e24a2089306f4884f1c0b400" id="r_aa94d40b2e24a2089306f4884f1c0b400"><td class="memItemLeft" align="right" valign="top">const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa94d40b2e24a2089306f4884f1c0b400">OffScreenRenderingEnabled</a> () const</td></tr>
+<tr class="memdesc:aa94d40b2e24a2089306f4884f1c0b400"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the switch to enable or disable off-screen rendering.  <br /></td></tr>
+<tr class="separator:aa94d40b2e24a2089306f4884f1c0b400"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a629a1139dff88c3bb85a4c9a620d0682" id="r_a629a1139dff88c3bb85a4c9a620d0682"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a629a1139dff88c3bb85a4c9a620d0682">setWindowInitialSize</a> (const QSize &amp;size)</td></tr>
 <tr class="memdesc:a629a1139dff88c3bb85a4c9a620d0682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the initial size of the browser.  <br /></td></tr>
 <tr class="separator:a629a1139dff88c3bb85a4c9a620d0682"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -445,6 +451,52 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a8a16c8a7d259e3ff4e336b05be19ac4b" name="a8a16c8a7d259e3ff4e336b05be19ac4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a16c8a7d259e3ff4e336b05be19ac4b">&#9670;&#160;</a></span>setOffScreenRenderingEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QCefSetting::setOffScreenRenderingEnabled </td>
+          <td>(</td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the switch to enable or disable off-screen rendering. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>True to enable; false to disable</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This value is only used when <a class="el" href="class_q_cef_config.html#a17b6765b357b7a2d69a1f02b27a4eb92" title="Gets the OSR mode flag.">QCefConfig::windowlessRenderingEnabled()</a> is set to true. </p>
+
+</div>
+</div>
+<a id="aa94d40b2e24a2089306f4884f1c0b400" name="aa94d40b2e24a2089306f4884f1c0b400"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa94d40b2e24a2089306f4884f1c0b400">&#9670;&#160;</a></span>OffScreenRenderingEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const bool QCefSetting::OffScreenRenderingEnabled </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the switch to enable or disable off-screen rendering. </p>
+<dl class="section return"><dt>Returns</dt><dd>True enabled; otherwise false</dd></dl>
 
 </div>
 </div>

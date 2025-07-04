@@ -40,6 +40,8 @@ var class_q_cef_view =
     [ "closeDevTools", "class_q_cef_view.html#abdf0a68139fe9163ecd9b5a0cdeed6d7", null ],
     [ "setAllowDrag", "class_q_cef_view.html#adde0e6deab46ce9dfef06c07af25f677", null ],
     [ "allowDrag", "class_q_cef_view.html#adf944b4ec19dc62e6703b35f62c8cdd5", null ],
+    [ "setZoomLevel", "class_q_cef_view.html#a497e1bc42d6283557f6a180b058ab3cf", null ],
+    [ "zoomLevel", "class_q_cef_view.html#aaf898d01d9a81f8bdae1897e7898ee48", null ],
     [ "loadingStateChanged", "class_q_cef_view.html#a076678fb5d8deec1600f369d4f1fc95a", null ],
     [ "loadStart", "class_q_cef_view.html#a6b04776ad4d7b62c102e9c38ac022b40", null ],
     [ "loadEnd", "class_q_cef_view.html#a567e20fd09518ca9c0d2e82f936ff5d6", null ],
