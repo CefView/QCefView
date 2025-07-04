@@ -66,6 +66,7 @@ MainWindow::createLeftCefView()
 
   // Build settings for per QCefView
   QCefSetting setting;
+  setting.setOffScreenRenderingEnabled(true);
   setting.setHardwareAccelerationEnabled(false);
   setting.setWindowlessFrameRate(120);
   setting.setBackgroundColor(Qt::cyan);
@@ -110,6 +111,7 @@ MainWindow::createRightCefView()
 
   // Build settings for per QCefView
   QCefSetting setting;
+  setting.setOffScreenRenderingEnabled(false);
   setting.setHardwareAccelerationEnabled(true);
   setting.setWindowlessFrameRate(120);
   QColor background(0, 255, 0, 255);

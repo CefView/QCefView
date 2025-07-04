@@ -129,7 +129,7 @@ public:
 #endif
 
 public:
-  explicit QCefViewPrivate(QCefContextPrivate* ctx, QCefView* view);
+  explicit QCefViewPrivate(QCefView* view, QCefContextPrivate* ctx, const QCefSettingPrivate* setting);
 
   ~QCefViewPrivate();
 

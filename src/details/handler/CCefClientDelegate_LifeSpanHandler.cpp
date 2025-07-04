@@ -156,14 +156,7 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 
   Qt::ConnectionType c = Qt::DirectConnection;
   if (pCefViewPrivate_->q_ptr->thread() != QThread::currentThread()) {
-    // change connection type
-    if (!pCefViewPrivate_->isOSRModeEnabled_) {
-      // NCW mode
-      c = Qt::QueuedConnection;
-    } else {
-      // OSR mode
-      c = Qt::BlockingQueuedConnection;
-    }
+    c = Qt::QueuedConnection;
 
     // move window to main thread
     if (w != nullptr) {

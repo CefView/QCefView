@@ -30,6 +30,20 @@ QCefSetting::operator=(const QCefSetting& other)
 QCefSetting::~QCefSetting() {}
 
 void
+QCefSetting::setOffScreenRenderingEnabled(const bool value)
+{
+  Q_D(QCefSetting);
+  d->offScreenRendering_ = value;
+}
+
+const bool
+QCefSetting::OffScreenRenderingEnabled() const
+{
+  Q_D(const QCefSetting);
+  return d->offScreenRendering_;
+}
+
+void
 QCefSetting::setWindowInitialSize(const QSize& size)
 {
   Q_D(QCefSetting);

@@ -37,7 +37,8 @@ public:
   //////////////////////////////////////////////////////////////////////////
   // Non CEF browser setting values
   QSize windowInitialSize_;
-  bool hardwareAcceleration_ = true;
+  bool offScreenRendering_ = false;
+  bool hardwareAcceleration_ = false;
 
   //////////////////////////////////////////////////////////////////////////
   // CEF browser setting values

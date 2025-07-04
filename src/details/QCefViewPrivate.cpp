@@ -46,13 +46,20 @@ QCefViewPrivate::destroyAllInstance()
   }
 }
 
-QCefViewPrivate::QCefViewPrivate(QCefContextPrivate* ctx, QCefView* view)
+QCefViewPrivate::QCefViewPrivate(QCefView* view, QCefContextPrivate* ctx, const QCefSettingPrivate* setting)
   : q_ptr(view)
   , pContextPrivate_(ctx)
 {
   sLiveInstances.insert(this);
 
+  // get the global windowless rendering switch
   isOSRModeEnabled_ = pContextPrivate_->cefConfig()->windowlessRenderingEnabled().toBool();
+
+  // if windowless rendering is enabled globally, then
+  // get the windowless rendering switch from the per view setting
+  if (isOSRModeEnabled_ && setting) {
+    isOSRModeEnabled_ = setting->offScreenRendering_;
+  }
 }
 
 QCefViewPrivate::~QCefViewPrivate()
@@ -305,18 +312,6 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(ncw.qBrowserWidget_);
   }
-
-#if defined(QT_DEBUG)
-  //  monitor the focus changed event globally
-  connect(qApp,                        //
-          &QApplication::focusChanged, //
-          [](QWidget* old, QWidget* now) {
-            qDebug() << "Focus changed from:"                                            //
-                     << old << "[" << (old ? old->window()->windowHandle() : 0x0) << "]" //
-                     << "->"                                                             //
-                     << now << "[" << (now ? now->window()->windowHandle() : 0x00) << "]";
-          });
-#endif
 }
 
 bool

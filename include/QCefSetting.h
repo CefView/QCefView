@@ -54,6 +54,21 @@ public:
   ~QCefSetting();
 
   /// <summary>
+  /// Sets the switch to enable or disable off-screen rendering
+  /// </summary>
+  /// <param name="value">True to enable; false to disable</param>
+  /// <remarks>
+  /// This value is only used when QCefConfig::windowlessRenderingEnabled() is set to true.
+  /// </remarks>
+  void setOffScreenRenderingEnabled(const bool value);
+
+  /// <summary>
+  /// Gets the switch to enable or disable off-screen rendering
+  /// </summary>
+  /// <returns>True enabled; otherwise false</returns>
+  const bool OffScreenRenderingEnabled() const;
+
+  /// <summary>
   /// Sets the initial size of the browser
   /// </summary>
   /// <param name="size">The initial size</param>

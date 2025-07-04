@@ -22,12 +22,13 @@ const QCefFrameId QCefView::MainFrameID = "0";
 const QCefFrameId QCefView::AllFrameID = "-1";
 #endif
 
-QCefView::QCefView(const QString& url,
-                   const QCefSetting* setting,
-                   QWidget* parent /*= 0*/,
-                   Qt::WindowFlags f /*= Qt::WindowFlags()*/)
+QCefView::QCefView(const QString& url,         //
+                   const QCefSetting* setting, //
+                   QWidget* parent,            // /*= nullptr*/
+                   Qt::WindowFlags f           // /*= Qt::WindowFlags()*/
+                   )
   : QWidget(parent, f)
-  , d_ptr(new QCefViewPrivate(QCefContext::instance()->d_func(), this))
+  , d_ptr(new QCefViewPrivate(this, QCefContext::instance()->d_func(), setting ? setting->d_func() : nullptr))
 {
   if (d_ptr->isOSRModeEnabled_) {
     setAttribute(Qt::WA_NativeWindow);
