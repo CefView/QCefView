@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <QBackingStore>
 #include <QImage>
+#include <QMutex>
 
 #include "details/render/ICefViewRenderer.h"
 
@@ -13,14 +13,15 @@ class QtSoftwareRenderer : public ICefViewRenderer
   Q_OBJECT
 
 private:
-  QScopedPointer<QBackingStore> m_backingStore;
-
   // popup status
   bool m_showPopup = false;
   CefRect m_popupRect;
 
   // images for internal processing
+  QMutex m_cefViewLock;
   QImage m_cefViewImage;
+
+  QMutex m_cefPopupLock;
   QImage m_cefPopupImage;
 
 public:
@@ -36,6 +37,8 @@ public:
 
   void resize(int width, int height, float scale) override;
 
+  void render() override;
+
   void updatePopupVisibility(bool visible) override;
 
   void updatePopupRect(const CefRect& rect) override;
@@ -44,8 +47,6 @@ public:
                        const CefRenderHandler::RectList& dirtyRects,
                        const FrameDataType& dataType,
                        const FrameData& data) override;
-
-  void render() override;
 };
 
 #endif

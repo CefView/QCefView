@@ -16,7 +16,6 @@ QtSoftwareRenderer::initialize(QWidget* widget, int width, int height, float sca
     return false;
   }
   m_widget = widget;
-  m_backingStore.reset(new QBackingStore(widget->windowHandle()));
 
   return true;
 }
@@ -24,29 +23,60 @@ QtSoftwareRenderer::initialize(QWidget* widget, int width, int height, float sca
 void
 QtSoftwareRenderer::uninitialize()
 {
-  m_backingStore.reset();
+  m_widget.clear();
 }
 
 void
 QtSoftwareRenderer::resize(int width, int height, float scale)
 {
-  if (CefCurrentlyOn(TID_UI)) {
-    // resize backingstore
-    m_backingStore->resize(QSize(width, height));
-    // render immediately
-    render();
-  } else {
-    // perform the resize in render thread
-    QPointer<QtSoftwareRenderer> self = this;
-    CefPostTask(TID_UI, new RenderTask([=]() {
-                  if (self) {
-                    // resize backingstore
-                    m_backingStore->resize(QSize(width, height));
-                    // render immediately
-                    self->render();
-                  }
-                }));
+}
+
+void
+QtSoftwareRenderer::render()
+{
+  auto size = widgetSize();
+  if (size.isEmpty()) {
+    return;
   }
+
+  auto clear = widgetBackground();
+  auto scale = widgetScale();
+  {
+    QPainter painter(m_widget);
+    painter.fillRect(QRect(QPoint(), size), QColor(clear));
+
+    // paint cef view
+    {
+      QMutexLocker locker(&m_cefViewLock);
+      painter.drawImage(
+        QRect{
+          0,                                                //
+          0,                                                //
+          static_cast<int>(m_cefViewImage.width() / scale), //
+          static_cast<int>(m_cefViewImage.height() / scale) //
+        },
+        m_cefViewImage);
+    }
+
+    if (!m_showPopup) {
+      return;
+    }
+
+    // paint cef popup
+    {
+      QMutexLocker locker(&m_cefPopupLock);
+      painter.drawImage(
+        QRect{
+          m_popupRect.x,                                     //
+          m_popupRect.y,                                     //
+          static_cast<int>(m_cefPopupImage.width() / scale), //
+          static_cast<int>(m_cefPopupImage.height() / scale) //
+        },
+        m_cefPopupImage);
+    }
+  }
+
+  return;
 }
 
 void
@@ -83,104 +113,52 @@ QtSoftwareRenderer::updateFrameData(const CefRenderHandler::PaintElementType& ty
                         data.image.height,                            //
                         QImage::Format_ARGB32);
 
+  // ref target image
+  QImage targetImage;
   if (PET_VIEW == type) {
-    if (m_cefViewImage.size() != frame.size()        //
-        || (                                         //
-             dirtyRects.size() >= 1 &&               //
-             dirtyRects[0].x == 0 &&                 //
-             dirtyRects[0].y == 0 &&                 //
-             dirtyRects[0].width == frame.width() && //
-             dirtyRects[0].height == frame.height()  //
-             )                                       //
-    ) {
-      // update full image
-      m_cefViewImage = frame.copy();
-    } else {
-      //  update only dirty regions
-      QPainter painter(&m_cefViewImage);
-      for (auto& rc : dirtyRects) {
-        QRect rect(rc.x, rc.y, rc.width, rc.height);
-        painter.drawImage(rect, frame, rect);
-      }
-    }
+    targetImage = m_cefViewImage;
   } else if (PET_POPUP == type) {
-    if (m_cefPopupImage.size() != frame.size()       //
-        || (                                         //
-             dirtyRects.size() >= 1 &&               //
-             dirtyRects[0].x == 0 &&                 //
-             dirtyRects[0].y == 0 &&                 //
-             dirtyRects[0].width == frame.width() && //
-             dirtyRects[0].height == frame.height()  //
-             )                                       //
-    ) {
-      // update full image
-      m_cefPopupImage = frame.copy();
-    } else {
-      //  update only dirty regions
-      QPainter painter(&m_cefPopupImage);
-      for (auto& rc : dirtyRects) {
-        QRect rect(rc.x, rc.y, rc.width, rc.height);
-        painter.drawImage(rect, frame, rect);
-      }
-    }
+    targetImage = m_cefPopupImage;
   } else {
     return;
   }
 
-  render();
-}
+  if (targetImage.size() != frame.size()           //
+      || (                                         //
+           dirtyRects.size() >= 1 &&               //
+           dirtyRects[0].x == 0 &&                 //
+           dirtyRects[0].y == 0 &&                 //
+           dirtyRects[0].width == frame.width() && //
+           dirtyRects[0].height == frame.height()  //
+           )                                       //
+  ) {
+    // update full image
+    targetImage = frame.copy();
+  } else {
+    //  update only dirty regions
+    QPainter painter(&targetImage);
+    for (auto& rc : dirtyRects) {
+      QRect rect(rc.x, rc.y, rc.width, rc.height);
+      painter.drawImage(rect, frame, rect);
+    }
+  }
 
-void
-QtSoftwareRenderer::render()
-{
-  auto scale = widgetScale();
-  auto size = widgetSize();
-  auto clear = widgetBackground();
-
-  if (!m_backingStore || size.isEmpty()) {
+  // ref target image
+  if (PET_VIEW == type) {
+    QMutexLocker locker(&m_cefViewLock);
+    m_cefViewImage = targetImage;
+  } else if (PET_POPUP == type) {
+    QMutexLocker locker(&m_cefPopupLock);
+    m_cefPopupImage = targetImage;
+  } else {
     return;
   }
 
-  // resize if not match
-  if (m_backingStore->size() != size)
-    m_backingStore->resize(size);
-
-  // begin paint
-  QRect paintRegion(QPoint(), size);
-  m_backingStore->beginPaint(paintRegion);
-
-  // acquire paint device
-  if (QPaintDevice* device = m_backingStore->paintDevice()) {
-    QPainter painter(device);
-    // fill background
-    painter.fillRect(paintRegion, QColor(clear));
-
-    // paint cef view
-    {
-      painter.drawImage(
-        QRect{
-          0,                                                //
-          0,                                                //
-          static_cast<int>(m_cefViewImage.width() / scale), //
-          static_cast<int>(m_cefViewImage.height() / scale) //
-        },
-        m_cefViewImage);
-    }
-
-    // paint cef popup
-    if (m_showPopup) {
-      painter.drawImage(
-        QRect{
-          m_popupRect.x,                                     //
-          m_popupRect.y,                                     //
-          static_cast<int>(m_cefPopupImage.width() / scale), //
-          static_cast<int>(m_cefPopupImage.height() / scale) //
-        },
-        m_cefPopupImage);
-    }
-  }
-
-  m_backingStore->endPaint();
-  m_backingStore->flush(paintRegion);
-  return;
+  // trigger render
+  auto widget = m_widget;
+  QMetaObject::invokeMethod(m_widget, [widget]() {
+    // request update
+    if (widget)
+      widget->update();
+  });
 }

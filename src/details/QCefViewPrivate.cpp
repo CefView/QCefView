@@ -984,8 +984,7 @@ QCefViewPrivate::onPaintEvent(QPaintEvent* event)
   Q_Q(QCefView);
 
   if (osr.pRenderer_ && pCefBrowser_) {
-    // invalidate the CEF OSR buffer
-    pCefBrowser_->GetHost()->Invalidate(CefBrowserHost::PaintElementType::PET_VIEW);
+    osr.pRenderer_->render();
   }
 }
 

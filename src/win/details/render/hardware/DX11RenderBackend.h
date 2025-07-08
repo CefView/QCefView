@@ -95,6 +95,8 @@ protected:
                               ID3D11Buffer** ppBuffer //
   );
 
+  void DoRender();
+
 public:
   DX11RenderBackend();
 
@@ -108,6 +110,8 @@ public:
 
   void resize(int width, int height, float scale) override;
 
+  void render() override;
+
   void updatePopupVisibility(bool visible) override;
 
   void updatePopupRect(const CefRect& rect) override;
@@ -116,8 +120,6 @@ public:
                        const CefRenderHandler::RectList& dirtyRects,
                        const FrameDataType& dataType,
                        const FrameData& data) override;
-
-  void render() override;
 };
 
 #endif // DX11RENDERBACKEND_H

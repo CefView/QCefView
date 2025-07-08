@@ -22,6 +22,11 @@ OpenGLRenderBackend::resize(int width, int height, float scale)
 }
 
 void
+OpenGLRenderBackend::render()
+{
+}
+
+void
 OpenGLRenderBackend::updatePopupVisibility(bool visible)
 {
 }
@@ -36,10 +41,5 @@ OpenGLRenderBackend::updateFrameData(const CefRenderHandler::PaintElementType& t
                                      const CefRenderHandler::RectList& dirtyRects,
                                      const FrameDataType& dataType,
                                      const FrameData& data)
-{
-}
-
-void
-OpenGLRenderBackend::render()
 {
 }

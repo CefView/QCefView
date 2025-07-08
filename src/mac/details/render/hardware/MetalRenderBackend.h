@@ -15,6 +15,8 @@ private:
   class Implementation;
   std::unique_ptr<Implementation> m_pImpl;
 
+  void DoRender();
+
 public:
   MetalRenderBackend();
 
@@ -28,6 +30,8 @@ public:
 
   void resize(int width, int height, float scale) override;
 
+  void render() override;
+
   void updatePopupVisibility(bool visible) override;
 
   void updatePopupRect(const CefRect& rect) override;
@@ -36,8 +40,6 @@ public:
                        const CefRenderHandler::RectList& dirtyRects,
                        const FrameDataType& dataType,
                        const FrameData& data) override;
-
-  void render() override;
 };
 
 #endif

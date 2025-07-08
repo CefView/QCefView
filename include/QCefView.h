@@ -511,6 +511,12 @@ protected:
   QPaintEngine* paintEngine() const override;
 
   /// <summary>
+  /// Please refer to QWidget::paintEvent
+  /// </summary>
+  /// <param name="event"></param>
+  void paintEvent(QPaintEvent* event) override;
+
+  /// <summary>
   ///
   /// </summary>
   /// <param name="event"></param>

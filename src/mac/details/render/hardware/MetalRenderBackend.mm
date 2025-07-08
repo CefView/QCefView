@@ -99,6 +99,73 @@ public:
   }
 };
 
+void
+MetalRenderBackend::DoRender()
+{
+  @autoreleasepool {
+    auto size = widgetSize();
+    auto scale = widgetScale();
+    auto clear = widgetBackground();
+    auto clearColor = MTLClearColorMake( //
+      clear.red() / 255.f,               //
+      clear.green() / 255.f,             //
+      clear.blue() / 255.f,              //
+      clear.alpha() / 255.f              //
+    );
+
+    auto drawable = [m_pImpl->m_metalLayer nextDrawable];
+    if (!drawable) {
+      return;
+    }
+
+    auto passDescriptor = [[MTLRenderPassDescriptor alloc] init];
+    passDescriptor.colorAttachments[0].texture = drawable.texture;
+    passDescriptor.colorAttachments[0].loadAction = MTLLoadActionClear;
+    passDescriptor.colorAttachments[0].storeAction = MTLStoreActionStore;
+    passDescriptor.colorAttachments[0].clearColor = clearColor;
+
+    auto commandBuffer = [m_pImpl->m_renderQueue commandBuffer];
+    auto renderEncoder = [commandBuffer renderCommandEncoderWithDescriptor:passDescriptor];
+    auto width = size.width() * scale;
+    auto height = size.height() * scale;
+    [renderEncoder setViewport:(MTLViewport){ 0.0, 0.0, width, height, -1.0, 1.0 }];
+    [renderEncoder setRenderPipelineState:m_pImpl->m_pipelineState];
+
+    // draw view
+    m_pImpl->m_cefViewVertexBuffer = m_pImpl->createQuadVertexBuffer( //
+      0,                                                              //
+      0,                                                              //
+      m_pImpl->m_cefViewTextureDesc.width,                            //
+      m_pImpl->m_cefViewTextureDesc.height,                           //
+      width,                                                          //
+      height                                                          //
+    );
+    [renderEncoder setVertexBuffer:m_pImpl->m_cefViewVertexBuffer offset:0 atIndex:0];
+    [renderEncoder setFragmentTexture:m_pImpl->m_cefViewTexture atIndex:0];
+    [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangleStrip vertexStart:0 vertexCount:4];
+
+    // draw popup
+    if (m_pImpl->m_showPopup) {
+      m_pImpl->m_cefPopupVertexBuffer = m_pImpl->createQuadVertexBuffer( //
+        m_pImpl->m_popupRect.origin.x * scale,                           //
+        m_pImpl->m_popupRect.origin.y * scale,                           //
+        m_pImpl->m_cefPopupTextureDesc.width,                            //
+        m_pImpl->m_cefPopupTextureDesc.height,                           //
+        width,                                                           //
+        height                                                           //
+      );
+
+      [renderEncoder setVertexBuffer:m_pImpl->m_cefPopupVertexBuffer offset:0 atIndex:0];
+      [renderEncoder setFragmentTexture:m_pImpl->m_cefPopupTexture atIndex:0];
+      [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangleStrip vertexStart:0 vertexCount:4];
+    }
+
+    [renderEncoder endEncoding];
+    [commandBuffer presentDrawable:drawable];
+    [commandBuffer commit];
+  }
+}
+
 MetalRenderBackend::MetalRenderBackend()
   : m_pImpl(std::make_unique<Implementation>())
 {
@@ -243,7 +310,7 @@ MetalRenderBackend::resize(int width, int height, float scale)
     // resize resource
     m_pImpl->m_metalLayer.drawableSize = CGSizeMake(width * scale, height * scale);
     // render immediately
-    render();
+    DoRender();
   } else {
     // perform the resize in render thread
     QPointer<MetalRenderBackend> self = this;
@@ -252,10 +319,15 @@ MetalRenderBackend::resize(int width, int height, float scale)
                     // resize resource
                     m_pImpl->m_metalLayer.drawableSize = CGSizeMake(width * scale, height * scale);
                     // render immediately
-                    self->render();
+                    self->DoRender();
                   }
                 }));
   }
+}
+
+void
+MetalRenderBackend::render()
+{
 }
 
 void
@@ -304,72 +376,5 @@ MetalRenderBackend::updateFrameData(const CefRenderHandler::PaintElementType& ty
     return;
   }
 
-  render();
-}
-
-void
-MetalRenderBackend::render()
-{
-  @autoreleasepool {
-    auto size = widgetSize();
-    auto scale = widgetScale();
-    auto clear = widgetBackground();
-    auto clearColor = MTLClearColorMake( //
-      clear.red() / 255.f,               //
-      clear.green() / 255.f,             //
-      clear.blue() / 255.f,              //
-      clear.alpha() / 255.f              //
-    );
-
-    auto drawable = [m_pImpl->m_metalLayer nextDrawable];
-    if (!drawable) {
-      return;
-    }
-
-    auto passDescriptor = [[MTLRenderPassDescriptor alloc] init];
-    passDescriptor.colorAttachments[0].texture = drawable.texture;
-    passDescriptor.colorAttachments[0].loadAction = MTLLoadActionClear;
-    passDescriptor.colorAttachments[0].storeAction = MTLStoreActionStore;
-    passDescriptor.colorAttachments[0].clearColor = clearColor;
-
-    auto commandBuffer = [m_pImpl->m_renderQueue commandBuffer];
-    auto renderEncoder = [commandBuffer renderCommandEncoderWithDescriptor:passDescriptor];
-    auto width = size.width() * scale;
-    auto height = size.height() * scale;
-    [renderEncoder setViewport:(MTLViewport){ 0.0, 0.0, width, height, -1.0, 1.0 }];
-    [renderEncoder setRenderPipelineState:m_pImpl->m_pipelineState];
-
-    // draw view
-    m_pImpl->m_cefViewVertexBuffer = m_pImpl->createQuadVertexBuffer( //
-      0,                                                              //
-      0,                                                              //
-      m_pImpl->m_cefViewTextureDesc.width,                            //
-      m_pImpl->m_cefViewTextureDesc.height,                           //
-      width,                                                          //
-      height                                                          //
-    );
-    [renderEncoder setVertexBuffer:m_pImpl->m_cefViewVertexBuffer offset:0 atIndex:0];
-    [renderEncoder setFragmentTexture:m_pImpl->m_cefViewTexture atIndex:0];
-    [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangleStrip vertexStart:0 vertexCount:4];
-
-    // draw popup
-    if (m_pImpl->m_showPopup) {
-      m_pImpl->m_cefPopupVertexBuffer = m_pImpl->createQuadVertexBuffer( //
-        m_pImpl->m_popupRect.origin.x * scale,                           //
-        m_pImpl->m_popupRect.origin.y * scale,                           //
-        m_pImpl->m_cefPopupTextureDesc.width,                            //
-        m_pImpl->m_cefPopupTextureDesc.height,                           //
-        width,                                                           //
-        height                                                           //
-      );
-
-      [renderEncoder setVertexBuffer:m_pImpl->m_cefPopupVertexBuffer offset:0 atIndex:0];
-      [renderEncoder setFragmentTexture:m_pImpl->m_cefPopupTexture atIndex:0];
-      [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangleStrip vertexStart:0 vertexCount:4];
-    }
-
-    [renderEncoder endEncoding];
-    [commandBuffer presentDrawable:drawable];
-    [commandBuffer commit];
-  }
+  DoRender();
 }
