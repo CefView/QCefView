@@ -63,9 +63,6 @@ QCefContextPrivate::initializeCef(const QCefConfig* config)
     if (!::SetInformationJobObject(windowsJobHandle_, JobObjectExtendedLimitInformation, &info, sizeof(info))) {
       qWarning() << "Failed to set information for windows job object:" << GetLastError();
     }
-    if (!::AssignProcessToJobObject(windowsJobHandle_, ::GetCurrentProcess())) {
-      qWarning() << "Failed to assign current process to windows job object:" << ::GetLastError();
-    }
   }
 
   // Initialize CEF
