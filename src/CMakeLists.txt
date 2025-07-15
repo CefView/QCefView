@@ -264,6 +264,13 @@ else()
   )
 endif()
 
+if(OS_LINUX)
+  target_link_libraries(QCefView
+    PUBLIC
+    "-Wl,--no-as-needed $<TARGET_FILE:libcef_lib>"
+  )
+endif()
+
 target_link_libraries(QCefView
   PUBLIC
   Qt${QT_VERSION_MAJOR}::Gui

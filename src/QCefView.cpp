@@ -50,7 +50,10 @@ QCefView::QCefView(const QString& url,         //
     // for hardware renderer, set the paint on screen attribute to disable
     // the default Qt paint event this will trigger the invocation of
     // the QWidget::paintEngine
-    setAttribute(Qt::WA_PaintOnScreen);
+    // NOTE: for software rendering, this flag must not be set on Linxu platform
+    if (d_ptr->osr.pRenderer_->isHardware()) {
+      setAttribute(Qt::WA_PaintOnScreen);
+    }
   }
 }
 

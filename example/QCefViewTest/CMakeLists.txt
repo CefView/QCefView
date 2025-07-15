@@ -158,12 +158,6 @@ if(OS_LINUX)
   target_link_libraries(${PROJECT_NAME}
     PRIVATE
 
-    # On linux platform and debug mode, libcef.so MUST be loaded before libc.so.
-    # Generally we can achieve this by using LD_PRELOAD=libcef.so, but this is not
-    # convenience for debugging.
-    # Thus, here we do a trick to make sure the load order
-    "-Wl,--no-as-needed $<TARGET_FILE_DIR:QCefView>/$<TARGET_FILE_NAME:libcef_lib>"
-
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::Widgets
