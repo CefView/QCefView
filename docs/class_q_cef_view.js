@@ -66,5 +66,6 @@ var class_q_cef_view =
     [ "onRequestCloseFromWeb", "class_q_cef_view.html#ad23057b6187876c84f883b1e7120456d", null ],
     [ "inputMethodQuery", "class_q_cef_view.html#af25a011c126a9bb5dc3df99756a75368", null ],
     [ "paintEngine", "class_q_cef_view.html#ad88e5a99ad808b7a911b58ba9ed9b838", null ],
+    [ "paintEvent", "class_q_cef_view.html#aa205502bb5238e6e2ce727046ed8a9b8", null ],
     [ "event", "class_q_cef_view.html#a2c33acd395e7f4adecbef1bf67b7680c", null ]
 ];

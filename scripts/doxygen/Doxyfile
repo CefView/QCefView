@@ -2946,7 +2946,11 @@ DISABLE_INDEX          = NO
 FULL_SIDEBAR           = NO
 HTML_COLORSTYLE        = AUTO_DARK
 
-PROJECT_NAME           = QCefView
+PROJECT_NAME           = "QCefView"
+PROJECT_NUMBER         = "1.0.7"
+PROJECT_BRIEF          = "A QWidget-based WebView Component Integrated with CEF"
+PROJECT_LOGO           = "docs/img/logo.png"
+PROJECT_ICON           = "docs/img/logo.ico"
 IMAGE_PATH             = "docs/img"
 
 
