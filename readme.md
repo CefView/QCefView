@@ -1,5 +1,8 @@
 # QCefView
 
+> [!NOTE]  
+> QCefView is now licensed under **LGPL-3.0** to enhance openness while providing stronger safeguards against patent claims. This change ensures clearer protection for contributors and downstream users regarding patent rights and redistribution.
+
 ## Introduction
 
 QCefView is a Qt-based QWidget that encapsulates CEF (Chromium Embedded Framework). With QCefView, you can build your application UI using modern frontend development techniques, boosting project efficiency while keeping UI and business logic decoupled. Most importantly, QCefView enables seamless CEF integration within Qt applications.
