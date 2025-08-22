@@ -522,6 +522,13 @@ protected:
   /// <param name="event"></param>
   /// <returns></returns>
   bool event(QEvent* event) override;
+
+  /// <summary>
+  ///
+  /// </summary>
+  /// <param name="eventFilter"></param>
+  /// <returns></returns>
+  bool eventFilter(QObject* watched, QEvent* event) override;
 #pragma endregion
 };
 

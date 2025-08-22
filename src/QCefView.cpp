@@ -55,6 +55,9 @@ QCefView::QCefView(const QString& url,         //
       setAttribute(Qt::WA_PaintOnScreen);
     }
   }
+
+  if (window())
+    window()->installEventFilter(this);
 }
 
 QCefView::QCefView(QWidget* parent /*= 0*/, Qt::WindowFlags f /*= Qt::WindowFlags()*/)
@@ -65,12 +68,6 @@ QCefView::QCefView(QWidget* parent /*= 0*/, Qt::WindowFlags f /*= Qt::WindowFlag
 QCefView::~QCefView()
 {
   qDebug() << this << "is being destructed";
-
-  if (d_ptr) {
-    // destroy under layer cef browser
-    d_ptr->destroyCefBrowser();
-    d_ptr.reset();
-  }
 }
 
 void
@@ -472,4 +469,25 @@ QCefView::event(QEvent* event)
   }
 
   return QWidget::event(event);
+}
+
+bool
+QCefView::eventFilter(QObject* watched, QEvent* event)
+{
+  if (event->type() == QEvent::Close) {
+    if (d_ptr)
+      d_ptr->destroyCefBrowser();
+
+    setVisible(false);
+    auto p = parentWidget();
+    if (p) {
+      setParent(nullptr);
+    } else {
+      QCloseEvent* c = static_cast<QCloseEvent*>(event);
+      c->ignore();
+      return true;
+    }
+  }
+
+  return QWidget::eventFilter(watched, event);
 }
