@@ -16,15 +16,13 @@ CCefClientDelegate::onBeforeDownload(CefRefPtr<CefBrowser>& browser,
                                      CefRefPtr<CefBeforeDownloadCallback>& callback)
 {
   FLog();
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
   // qDebug() << "onBeforeDownload, percent: " << download_item->GetPercentComplete() << "% \n"
   //          << download_item->GetTotalBytes() << "/" << download_item->GetReceivedBytes() << "\n"
   //          << "  inProgress: " << download_item->IsInProgress() << "\n"
   //          << "  canceled: " << download_item->IsCanceled() << "\n"
   //          << "  complete: " << download_item->IsComplete();
-
-  if (!IsValidBrowser(browser))
-    return;
 
   // get id
   auto id = download_item->GetId();
@@ -60,11 +58,9 @@ CCefClientDelegate::onBeforeDownload(CefRefPtr<CefBrowser>& browser,
     weakRefItem = item;
 
     // marshal to main UI thread and need to block
-    Qt::ConnectionType c = pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection
-                                                                                         : Qt::BlockingQueuedConnection;
-    QMetaObject::invokeMethod(
-      pCefViewPrivate_, [=]() { pCefViewPrivate_->onNewDownloadItem(item, suggestedFileName); }, c);
+    runInMainThreadAndWait([&]() { pCefViewPrivate->onNewDownloadItem(item, suggestedFileName); });
 
+    // release the item
     item.reset();
   }
 
@@ -85,15 +81,13 @@ CCefClientDelegate::onDownloadUpdated(CefRefPtr<CefBrowser>& browser,
                                       CefRefPtr<CefDownloadItemCallback>& callback)
 {
   FLog();
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
   // qDebug() << "onDownloadUpdated, percent: " << download_item->GetPercentComplete() << "% \n"
   //          << download_item->GetTotalBytes() << "/" << download_item->GetReceivedBytes() << "\n"
   //          << "  inProgress: " << download_item->IsInProgress() << "\n"
   //          << "  canceled: " << download_item->IsCanceled() << "\n"
   //          << "  complete: " << download_item->IsComplete();
-
-  if (!IsValidBrowser(browser))
-    return;
 
   if (!download_item->IsValid())
     return;
@@ -124,7 +118,7 @@ CCefClientDelegate::onDownloadUpdated(CefRefPtr<CefBrowser>& browser,
       QCefDownloadItemPrivate::setDownloadItemCallback(item.data(), callback);
 
       // notify (marshal to main UI thread but no need to block)
-      QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onUpdateDownloadItem(item); });
+      runInMainThread([pCefViewPrivate, item]() { pCefViewPrivate->onUpdateDownloadItem(item); });
 
       // check status
       if (download_item->IsCanceled() || download_item->IsComplete()) {

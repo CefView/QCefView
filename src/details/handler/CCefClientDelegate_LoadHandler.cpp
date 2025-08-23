@@ -8,30 +8,39 @@ CCefClientDelegate::loadingStateChanged(CefRefPtr<CefBrowser>& browser,
                                         bool canGoBack,
                                         bool canGoForward)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
-  emit pCefViewPrivate_->q_ptr->loadingStateChanged(browser->GetIdentifier(), isLoading, canGoBack, canGoForward);
+  runInMainThread([=]() {
+    if (pCefViewPrivate->q_ptr) {
+      emit pCefViewPrivate->q_ptr->loadingStateChanged(browser->GetIdentifier(), isLoading, canGoBack, canGoForward);
+    }
+  });
 }
 
 void
 CCefClientDelegate::loadStart(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>& frame, int transitionType)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
-  emit pCefViewPrivate_->q_ptr->loadStart(
-    browser->GetIdentifier(), ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), frame->IsMain(), transitionType);
+  runInMainThread([=]() {
+    if (pCefViewPrivate->q_ptr) {
+      emit pCefViewPrivate->q_ptr->loadStart(
+        browser->GetIdentifier(), ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), frame->IsMain(), transitionType);
+    }
+  });
 }
 
 void
 CCefClientDelegate::loadEnd(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>& frame, int httpStatusCode)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
-  emit pCefViewPrivate_->q_ptr->loadEnd(
-    browser->GetIdentifier(), ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), frame->IsMain(), httpStatusCode);
+  runInMainThread([=]() {
+    if (pCefViewPrivate->q_ptr) {
+      emit pCefViewPrivate->q_ptr->loadEnd(
+        browser->GetIdentifier(), ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), frame->IsMain(), httpStatusCode);
+    }
+  });
 }
 
 void
@@ -42,8 +51,11 @@ CCefClientDelegate::loadError(CefRefPtr<CefBrowser>& browser,
                               const CefString& failedUrl,
                               bool& handled)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
-  handled = pCefViewPrivate_->handleLoadError(browser, frame, errorCode, errorMsg, failedUrl);
+  runInMainThreadAndWait([&]() {
+    if (pCefViewPrivate->q_ptr) {
+      handled = pCefViewPrivate->handleLoadError(browser, frame, errorCode, errorMsg, failedUrl);
+    }
+  });
 }

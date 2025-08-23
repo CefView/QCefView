@@ -5,10 +5,12 @@
 void
 CCefClientDelegate::takeFocus(CefRefPtr<CefBrowser>& browser, bool next)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
-  QMetaObject::invokeMethod(pCefViewPrivate_, "onCefWindowLostTabFocus", Q_ARG(bool, next));
+  runInMainThread(              //
+    [pCefViewPrivate, next]() { //
+      pCefViewPrivate->onCefWindowLostTabFocus(next);
+    });
 }
 
 bool
@@ -21,8 +23,10 @@ CCefClientDelegate::setFocus(CefRefPtr<CefBrowser>& browser)
 void
 CCefClientDelegate::gotFocus(CefRefPtr<CefBrowser>& browser)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
-  QMetaObject::invokeMethod(pCefViewPrivate_, "onCefWindowGotFocus");
+  runInMainThread(        //
+    [pCefViewPrivate]() { //
+      pCefViewPrivate->onCefWindowGotFocus();
+    });
 }

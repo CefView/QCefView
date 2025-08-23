@@ -28,7 +28,8 @@ QCefView::QCefView(const QString& url,         //
                    Qt::WindowFlags f           // /*= Qt::WindowFlags()*/
                    )
   : QWidget(parent, f)
-  , d_ptr(new QCefViewPrivate(this, QCefContext::instance()->d_func(), setting ? setting->d_func() : nullptr))
+  , d_ptr(new QCefViewPrivate(this, QCefContext::instance()->d_func(), setting ? setting->d_func() : nullptr),
+          &QObject::deleteLater)
 {
   // set attributes
   setAttribute(Qt::WA_DontCreateNativeAncestors);
@@ -50,7 +51,7 @@ QCefView::QCefView(const QString& url,         //
     // for hardware renderer, set the paint on screen attribute to disable
     // the default Qt paint event this will trigger the invocation of
     // the QWidget::paintEngine
-    // NOTE: for software rendering, this flag must not be set on Linxu platform
+    // NOTE: for software rendering, this flag must not be set on Linux platform
     if (d_ptr->osr.pRenderer_->isHardware()) {
       setAttribute(Qt::WA_PaintOnScreen);
     }

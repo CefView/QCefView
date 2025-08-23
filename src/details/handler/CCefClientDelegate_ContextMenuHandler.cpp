@@ -15,9 +15,7 @@ CCefClientDelegate::onBeforeContextMenu(CefRefPtr<CefBrowser>& browser,
                                         CefRefPtr<CefMenuModel>& model)
 {
   FLog();
-
-  if (!pCefViewPrivate_)
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
   // popup browser doesn't involve off-screen rendering
   if (browser->IsPopup()) {
@@ -25,17 +23,26 @@ CCefClientDelegate::onBeforeContextMenu(CefRefPtr<CefBrowser>& browser,
   }
 
   // main browser
-  auto policy = pCefViewPrivate_->q_ptr->contextMenuPolicy();
+  Qt::ContextMenuPolicy policy = Qt::DefaultContextMenu;
+  runInMainThreadAndWait([&]() {
+    policy = Qt::DefaultContextMenu;
+    if (pCefViewPrivate->q_ptr) {
+      policy = pCefViewPrivate->q_ptr->contextMenuPolicy();
+    }
+  });
   if (Qt::DefaultContextMenu != policy) {
     // for all non-default value, we clear the menu info to prevent the showing
     model->Clear();
     return;
   }
 
-  if (pCefViewPrivate_->isOSRModeEnabled_) {
+  if (pCefViewPrivate->isOSRModeEnabled_) {
     // OSR mode
     auto menuData = MenuBuilder::CreateMenuDataFromCefMenu(model.get());
-    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onBeforeCefContextMenu(menuData); });
+    runInMainThread(                  //
+      [pCefViewPrivate, menuData]() { //
+        pCefViewPrivate->onBeforeCefContextMenu(menuData);
+      });
   }
 }
 
@@ -47,21 +54,25 @@ CCefClientDelegate::onRunContextMenu(CefRefPtr<CefBrowser>& browser,
                                      CefRefPtr<CefRunContextMenuCallback>& callback)
 {
   FLog();
+  AcquireAndValidateCefViewPrivateWithReturn(pCefViewPrivate, false);
 
   // popup browser doesn't involve off-screen rendering
   if (browser->IsPopup()) {
     return false;
   }
 
-  if (pCefViewPrivate_->isOSRModeEnabled_) {
+  if (pCefViewPrivate->isOSRModeEnabled_) {
     // OSR mode, create context menu with CEF built-in menu mode and show as customized context menu
     QPoint pos(params->GetXCoord(), params->GetYCoord());
-    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onRunCefContextMenu(pos, callback); });
+    runInMainThread(                       //
+      [pCefViewPrivate, pos, callback]() { //
+        pCefViewPrivate->onRunCefContextMenu(pos, callback);
+      });
     return true;
-  } else {
-    // NCW mode, to allow CEF native context menu
-    return false;
   }
+
+  // NCW mode, to allow CEF native context menu
+  return false;
 }
 
 bool
@@ -80,9 +91,13 @@ void
 CCefClientDelegate::onContextMenuDismissed(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>& frame)
 {
   FLog();
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
-  if (pCefViewPrivate_->isOSRModeEnabled_) {
+  if (pCefViewPrivate->isOSRModeEnabled_) {
     // OSR mode
-    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefContextMenuDismissed(); });
+    runInMainThread(        //
+      [pCefViewPrivate]() { //
+        pCefViewPrivate->onCefContextMenuDismissed();
+      });
   }
 }

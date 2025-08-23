@@ -24,10 +24,12 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
                                   CefBrowserSettings& settings,
                                   bool& disableJavascriptAccess)
 {
-  bool cancel = true;
-  if (!pCefViewPrivate_) {
-    return cancel;
+  auto pCefViewPrivate = pCefViewPrivate_.lock();
+  if (!pCefViewPrivate) {
+    return true;
   }
+
+  bool cancel = true;
 
   auto url = QString::fromStdString(targetUrl);
   auto name = QString::fromStdString(targetFrameName);
@@ -56,50 +58,48 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
 #endif
 
   if (targetDisposition == CefNewPopupValue) {
-    // the new browser was created from javascript, we need to conform the CEF pop-up browser lifecycle
-    // because CEF need to return the new browser identity to javascript context
-    Qt::ConnectionType c = pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection
-                                                                                         : Qt::BlockingQueuedConnection;
+    // the new browser was created from javascript, we need to conform
+    // the CEF pop-up browser lifecycle because CEF need to return the
+    // new browser identity to javascript context
 
-    QMetaObject::invokeMethod(
-      pCefViewPrivate_,
-      [&]() {
-        cancel = pCefViewPrivate_->onBeforeNewPopupCreate(ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), //
-                                                          url,                                                //
-                                                          name,                                               //
-                                                          d,                                                  //
-                                                          rc,                                                 //
-                                                          s,                                                  //
-                                                          disableJavascriptAccess);
-        if (!cancel) {
-          QCefSettingPrivate::CopyToCefBrowserSettings(&s, &settings);
-          CefString(&windowInfo.window_name) = name.toStdString();
+    // we need to get the user customized settings, thus we should wait for the result
+    runInMainThreadAndWait([&]() {
+      cancel = pCefViewPrivate->onBeforeNewPopupCreate(ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), //
+                                                       url,                                                //
+                                                       name,                                               //
+                                                       d,                                                  //
+                                                       rc,                                                 //
+                                                       s,                                                  //
+                                                       disableJavascriptAccess);
+      if (!cancel) {
+        QCefSettingPrivate::CopyToCefBrowserSettings(&s, &settings);
+        CefString(&windowInfo.window_name) = name.toStdString();
 
 #if CEF_VERSION_MAJOR > 95
-          windowInfo.bounds = { rc.x(), rc.y(), rc.width(), rc.height() };
+        windowInfo.bounds = { rc.x(), rc.y(), rc.width(), rc.height() };
 #else
-          windowInfo.x = rc.x();
-          windowInfo.y = rc.y();
-          windowInfo.width = rc.width();
-          windowInfo.height = rc.height();
+        windowInfo.x = rc.x();
+        windowInfo.y = rc.y();
+        windowInfo.width = rc.width();
+        windowInfo.height = rc.height();
 #endif
-        }
-      },
-      c);
+      }
+    });
   } else {
-    // the new browser was created from non-javascript, we create a new browser instead
+    // the new browser was created from non-javascript,
+    // CEF doesn't need to get it's identity so we just
+    // create a new browser instead
+
     cancel = true;
-    QMetaObject::invokeMethod(
-      pCefViewPrivate_,
+    runInMainThread( //
       [=]() {
-        pCefViewPrivate_->onBeforeNewBrowserCreate(ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), //
-                                                   url,                                                //
-                                                   name,                                               //
-                                                   d,                                                  //
-                                                   rc,                                                 //
-                                                   s);
-      },
-      Qt::QueuedConnection);
+        pCefViewPrivate->onBeforeNewBrowserCreate(ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), //
+                                                  url,                                                //
+                                                  name,                                               //
+                                                  d,                                                  //
+                                                  rc,                                                 //
+                                                  s);
+      });
   }
 
   return cancel;
@@ -108,12 +108,14 @@ CCefClientDelegate::onBeforePopup(CefRefPtr<CefBrowser>& browser,
 void
 CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 {
-  if (!pCefViewPrivate_)
+  auto pCefViewPrivate = pCefViewPrivate_.lock();
+  if (!pCefViewPrivate) {
     return;
+  }
 
   QWindow* w = nullptr;
 
-  if (!pCefViewPrivate_->isOSRModeEnabled_ && !browser->IsPopup()) {
+  if (!pCefViewPrivate->isOSRModeEnabled_ && !browser->IsPopup()) {
     // NCW mode and not pop-up browser
     auto winHandle = browser->GetHost()->GetWindowHandle();
 
@@ -141,7 +143,6 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 #endif
 
     // fix the window size
-
     if (width > 0 && height > 0) {
       w->resize(width, height);
     }
@@ -154,22 +155,19 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
 #endif
   }
 
-  Qt::ConnectionType c = Qt::DirectConnection;
-  if (pCefViewPrivate_->q_ptr->thread() != QThread::currentThread()) {
-    c = Qt::QueuedConnection;
-
+  if (qApp->thread() != QThread::currentThread()) {
     // move window to main thread
     if (w != nullptr) {
-      w->moveToThread(pCefViewPrivate_->q_ptr->thread());
+      w->moveToThread(qApp->thread());
     }
   }
 
   if (browser->IsPopup()) {
     // pop-up window
-    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onAfterCefPopupCreated(browser); }, c);
+    runInMainThread([=]() { pCefViewPrivate->onAfterCefPopupCreated(browser); });
   } else {
     // new normal browser
-    QMetaObject::invokeMethod(pCefViewPrivate_, [=]() { pCefViewPrivate_->onCefBrowserCreated(browser, w); }, c);
+    runInMainThread([=]() { pCefViewPrivate->onCefBrowserCreated(browser, w); });
   }
 }
 
@@ -186,18 +184,13 @@ CCefClientDelegate::requestClose(CefRefPtr<CefBrowser>& browser)
 {
   qDebug() << "destroy browser request from web";
 
-  Qt::ConnectionType c =
-    pCefViewPrivate_->q_ptr->thread() == QThread::currentThread() ? Qt::DirectConnection : Qt::BlockingQueuedConnection;
+  auto pCefViewPrivate = pCefViewPrivate_.lock();
+  if (!pCefViewPrivate) {
+    return false;
+  }
 
   bool ignoreClose = false;
-  QMetaObject::invokeMethod(
-    pCefViewPrivate_,
-    [&]() {
-      //
-      ignoreClose = !(pCefViewPrivate_->requestCloseFromWeb(browser));
-    },
-    c);
-
+  runInMainThreadAndWait([&]() { ignoreClose = !(pCefViewPrivate->requestCloseFromWeb(browser)); });
   return ignoreClose;
 }
 
