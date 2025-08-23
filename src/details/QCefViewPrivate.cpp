@@ -64,14 +64,21 @@ QCefViewPrivate::QCefViewPrivate(QCefView* view, QCefContextPrivate* ctx, const 
 
 QCefViewPrivate::~QCefViewPrivate()
 {
+  qDebug() << this << "is being destructed";
+
   sLiveInstances.remove(this);
 }
 
 void
 QCefViewPrivate::createCefBrowser(const QString& url, const QCefSettingPrivate* setting)
 {
+  Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
+
   // 1. create browser client handler delegate
-  auto pClientDelegate = std::make_shared<CCefClientDelegate>(this);
+  auto pClientDelegate = std::make_shared<CCefClientDelegate>(sharedFromThis());
 
   // 2. create browser client handler
   auto pClient = new CefViewBrowserClient(pContextPrivate_->getCefApp(), pClientDelegate);
@@ -83,9 +90,9 @@ QCefViewPrivate::createCefBrowser(const QString& url, const QCefSettingPrivate* 
   // 4. set window info
   CefWindowInfo windowInfo;
   if (isOSRModeEnabled_) {
-    auto winSize = q_ptr->size();
+    auto winSize = q->size();
     // set QWidget background
-    QColor background = q_ptr->palette().color(q_ptr->backgroundRole());
+    QColor background = q->palette().color(q->backgroundRole());
     CefViewRendererPtr renderer;
     // if hardware is enabled
     if (setting && setting->hardwareAcceleration_) {
@@ -93,7 +100,7 @@ QCefViewPrivate::createCefBrowser(const QString& url, const QCefSettingPrivate* 
       // create hardware renderer if enabled
       if ((renderer = CefViewRendererFactory::createRenderer(true))) {
         // initialize renderer
-        if (renderer->initialize(q_ptr,            //
+        if (renderer->initialize(q,                //
                                  winSize.width(),  //
                                  winSize.height(), //
                                  scaleFactor(),    //
@@ -122,7 +129,7 @@ QCefViewPrivate::createCefBrowser(const QString& url, const QCefSettingPrivate* 
       // create software renderer
       if ((renderer = CefViewRendererFactory::createRenderer(false))) {
         // initialize renderer
-        if (renderer->initialize(q_ptr,            //
+        if (renderer->initialize(q,                //
                                  winSize.width(),  //
                                  winSize.height(), //
                                  scaleFactor(),    //
@@ -155,7 +162,7 @@ QCefViewPrivate::createCefBrowser(const QString& url, const QCefSettingPrivate* 
     windowInfo.runtime_style = CEF_RUNTIME_STYLE_ALLOY;
 #endif
     // create CEF browser parent window
-    auto windowInitialSize = q_ptr->size();
+    auto windowInitialSize = q->size();
     if (setting) {
       windowInitialSize = setting->windowInitialSize_;
     }
@@ -201,10 +208,10 @@ QCefViewPrivate::createCefBrowser(const QString& url, const QCefSettingPrivate* 
 void
 QCefViewPrivate::destroyCefBrowser()
 {
-  qDebug() << "destroy browser from native";
-
   if (!pClient_)
     return;
+
+  qDebug() << "destroy browser from native";
 
   if (!isOSRModeEnabled_) {
     // remove from parent, prevent from being destroyed
@@ -217,6 +224,8 @@ QCefViewPrivate::destroyCefBrowser()
   pClient_->CloseAllBrowsers();
   pClient_ = nullptr;
   pCefBrowser_ = nullptr;
+
+  qApp->removeEventFilter(this);
 }
 
 void
@@ -258,6 +267,11 @@ QCefViewPrivate::createQuery(const QString& req, const int64_t id)
 void
 QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* window)
 {
+  Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
+
   // capture the browser
   pCefBrowser_ = browser;
 
@@ -267,8 +281,8 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
   }
 
   // monitor the screenChanged signal from the top-level window
-  if (q_ptr->window()->windowHandle()) {
-    connect(q_ptr->window()->windowHandle(),     //
+  if (q->window()->windowHandle()) {
+    connect(q->window()->windowHandle(),         //
             SIGNAL(screenChanged(QScreen*)),     //
             this,                                //
             SLOT(onViewScreenChanged(QScreen*)), //
@@ -279,16 +293,16 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
   if (isOSRModeEnabled_) {
     // OSR mode
     // notify the visibility and size
-    pCefBrowser_->GetHost()->WasHidden(!q_ptr->isVisible());
+    pCefBrowser_->GetHost()->WasHidden(!q->isVisible());
     pCefBrowser_->GetHost()->WasResized();
   } else {
     // emit signal
-    emit q_ptr->nativeBrowserCreated(window);
+    emit q->nativeBrowserCreated(window);
 
     qDebug() << "CEF Window Native ID:" << window->winId();
 
     // create widget for cef window
-    ncw.qBrowserWidget_ = ncw.qBrowserWindow_->attachCefWindow(window, q_ptr);
+    ncw.qBrowserWidget_ = ncw.qBrowserWindow_->attachCefWindow(window, q);
     Q_ASSERT_X(                                                //
       ncw.qBrowserWidget_,                                     //
       "QCefViewPrivate::onCefBrowserCreated",                  //
@@ -301,20 +315,20 @@ QCefViewPrivate::onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* win
     }
 
     // adjust size/mask and attach to cef window
-    ncw.qBrowserWindow_->applyMask(q_ptr->mask());
+    ncw.qBrowserWindow_->applyMask(q->mask());
 
     // resize to eliminate flicker
-    qDebug() << "Host QCefView size:" << q_ptr->size();
-    ncw.qBrowserWidget_->resize(q_ptr->size());
+    qDebug() << "Host QCefView size:" << q->size();
+    ncw.qBrowserWidget_->resize(q->size());
 
     // initialize the layout and add browser widget to the layout
-    QGridLayout* layout = new QGridLayout(q_ptr);
+    QGridLayout* layout = new QGridLayout(q);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(ncw.qBrowserWidget_);
   }
 }
 
-bool
+void
 QCefViewPrivate::onBeforeNewBrowserCreate(const QCefFrameId& sourceFrameId,
                                           const QString& targetUrl,
                                           const QString& targetFrameName,
@@ -323,6 +337,9 @@ QCefViewPrivate::onBeforeNewBrowserCreate(const QCefFrameId& sourceFrameId,
                                           QCefSetting settings)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
 
   // this is a fake pop-up browser, we just cancel it and then
   // we create a new QCefView instance to replace the fake pop-up browser
@@ -332,7 +349,6 @@ QCefViewPrivate::onBeforeNewBrowserCreate(const QCefFrameId& sourceFrameId,
                   targetDisposition, //
                   rect,              //
                   settings);
-  return true;
 }
 
 bool
@@ -345,6 +361,9 @@ QCefViewPrivate::onBeforeNewPopupCreate(const QCefFrameId& sourceFrameId,
                                         bool& disableJavascriptAccess)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return true;
+  }
 
   return q->onNewPopup(sourceFrameId,     //
                        targetUrl,         //
@@ -364,6 +383,9 @@ void
 QCefViewPrivate::onNewDownloadItem(QSharedPointer<QCefDownloadItem> item, const QString& suggestedName)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
 
   q->onNewDownloadItem(item, suggestedName);
 }
@@ -372,6 +394,9 @@ void
 QCefViewPrivate::onUpdateDownloadItem(QSharedPointer<QCefDownloadItem> item)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
 
   q->onUpdateDownloadItem(item);
 }
@@ -384,6 +409,9 @@ QCefViewPrivate::handleLoadError(CefRefPtr<CefBrowser>& browser,
                                  const std::string& failedUrl)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return false;
+  }
 
   // If the signal was connected then emit the signal and set handled with true to skip the default handler
   if (q->receivers(SIGNAL(loadError(int, qint64, bool, int, const QString&, const QString&))) > 0) {
@@ -405,17 +433,31 @@ bool
 QCefViewPrivate::requestCloseFromWeb(CefRefPtr<CefBrowser>& browser)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return true;
+  }
 
-  return q->onRequestCloseFromWeb();
+  bool allowClose = q->onRequestCloseFromWeb();
+  if (allowClose) {
+    // need close
+    destroyCefBrowser();
+  }
+
+  return allowClose;
 }
 
 qreal
 QCefViewPrivate::scaleFactor()
 {
+  Q_Q(QCefView);
+  if (!q) {
+    return 0;
+  }
+
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
-  qreal scaleFactor = q_ptr->devicePixelRatioF();
+  qreal scaleFactor = q->devicePixelRatioF();
 #else
-  qreal scaleFactor = q_ptr->devicePixelRatio();
+  qreal scaleFactor = q->devicePixelRatio();
 #endif
   return scaleFactor;
 }
@@ -424,6 +466,9 @@ void
 QCefViewPrivate::onViewScreenChanged(QScreen* screen)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
 
   // no matter what reason, we need to update the geometry
   // because some system/Qt version will not notify the new
@@ -448,6 +493,9 @@ QCefViewPrivate::onCefWindowLostTabFocus(bool next)
   // The focus was returned from CEF window, QCefView needs to handle
   // this event and give the focus to the correct next or previous widget
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
 
   auto reason = next ? Qt::TabFocusReason : Qt::BacktabFocusReason;
   auto widget = next ? q->nextInFocusChain() : q->previousInFocusChain();
@@ -473,8 +521,12 @@ QCefViewPrivate::onCefWindowLostTabFocus(bool next)
 void
 QCefViewPrivate::onCefWindowGotFocus()
 {
-  qDebug() << "----- " << this << "::onCefWindowGotFocus()";
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
+
+  qDebug() << "----- " << this << "::onCefWindowGotFocus()";
 
   if (isOSRModeEnabled_) {
     // update CEF focus status
@@ -496,9 +548,13 @@ QCefViewPrivate::onCefWindowGotFocus()
 void
 QCefViewPrivate::onCefUpdateCursor(const QCursor& cursor)
 {
+  Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
+
   if (isOSRModeEnabled_) {
     // OSR mode
-    Q_Q(QCefView);
     q->setCursor(cursor);
   }
 }
@@ -507,6 +563,10 @@ void
 QCefViewPrivate::onCefInputStateChanged(bool editable)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
+
   q->setAttribute(Qt::WA_InputMethodEnabled, editable);
 }
 
@@ -555,6 +615,9 @@ void
 QCefViewPrivate::onStartDragging(CefRefPtr<CefDragData>& dragData, CefRenderHandler::DragOperationsMask allowedOps)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
 
   Qt::DropAction dropAction = Qt::IgnoreAction;
 
@@ -599,6 +662,9 @@ void
 QCefViewPrivate::onBeforeCefContextMenu(const MenuBuilder::MenuData& data)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
 
   // clear previous context menu
   if (osr.contextMenu_) {
@@ -623,6 +689,9 @@ void
 QCefViewPrivate::onRunCefContextMenu(QPoint pos, CefRefPtr<CefRunContextMenuCallback> callback)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
 
   // keep the context menu callback
   osr.contextMenuCallback_ = callback;
@@ -656,9 +725,12 @@ QCefViewPrivate::onFileDialog(CefBrowserHost::FileDialogMode mode,
                               CefRefPtr<CefFileDialogCallback> callback)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
 
   // create dialog and set mode
-  QFileDialog dialog(q_ptr);
+  QFileDialog dialog(q);
   if (mode == FILE_DIALOG_OPEN) {
     dialog.setFileMode(QFileDialog::ExistingFile);
   } else if (mode == FILE_DIALOG_OPEN_MULTIPLE) {
@@ -748,6 +820,9 @@ bool
 QCefViewPrivate::shouldAllowDrop(CefRefPtr<CefDragData>& dragData, CefDragHandler::DragOperationsMask mask)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return false;
+  }
 
   return q->acceptDrops();
 }
@@ -788,6 +863,9 @@ bool
 QCefViewPrivate::eventFilter(QObject* watched, QEvent* event)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return QObject::eventFilter(watched, event);
+  }
 
   switch (event->type()) {
     case QEvent::Move: {
@@ -923,8 +1001,13 @@ QCefViewPrivate::onViewInputMethodEvent(QInputMethodEvent* event)
 void
 QCefViewPrivate::onViewVisibilityChanged(bool visible)
 {
-  if (q_ptr->window()->windowHandle()) {
-    connect(q_ptr->window()->windowHandle(),     //
+  Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
+
+  if (q->window()->windowHandle()) {
+    connect(q->window()->windowHandle(),         //
             SIGNAL(screenChanged(QScreen*)),     //
             this,                                //
             SLOT(onViewScreenChanged(QScreen*)), //
@@ -982,6 +1065,9 @@ void
 QCefViewPrivate::onPaintEvent(QPaintEvent* event)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
 
   if (osr.pRenderer_ && pCefBrowser_) {
     osr.pRenderer_->render();
@@ -998,6 +1084,9 @@ void
 QCefViewPrivate::onViewSizeChanged(const QSize& size, const QSize& oldSize)
 {
   Q_Q(QCefView);
+  if (!q) {
+    return;
+  }
 
   notifyMoveOrResizeStarted();
 

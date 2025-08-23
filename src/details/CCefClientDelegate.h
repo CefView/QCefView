@@ -10,10 +10,13 @@
 #pragma endregion
 
 #pragma region qt_headers
+#include <QApplication>
 #include <QDialog>
 #include <QMap>
+#include <QObject>
 #include <QPointer>
 #include <QSharedPointer>
+#include <QThread>
 #include <QWeakPointer>
 #pragma endregion
 
@@ -24,8 +27,17 @@
 
 class QCefViewPrivate;
 
-#define IsValidBrowser(browser)                                                                                        \
-  (pCefViewPrivate_ && pCefViewPrivate_->pCefBrowser_ && browser->IsSame(pCefViewPrivate_->pCefBrowser_))
+#define AcquireAndValidateCefViewPrivate(p)                                                                            \
+  auto p = pCefViewPrivate_.lock();                                                                                    \
+  if (!p || !p->pCefBrowser_ || !browser->IsSame(p->pCefBrowser_)) {                                                   \
+    return;                                                                                                            \
+  }
+
+#define AcquireAndValidateCefViewPrivateWithReturn(p, r)                                                               \
+  auto p = pCefViewPrivate_.lock();                                                                                    \
+  if (!p || !p->pCefBrowser_ || !browser->IsSame(p->pCefBrowser_)) {                                                   \
+    return r;                                                                                                          \
+  }
 
 class CCefClientDelegate
   : public CefViewBrowserClientDelegateInterface
@@ -36,7 +48,7 @@ public:
   typedef std::weak_ptr<CCefClientDelegate> WeakPtr;
 
 private:
-  QCefViewPrivate* pCefViewPrivate_;
+  QWeakPointer<QCefViewPrivate> pCefViewPrivate_;
 
   QMap<qint32, QSharedPointer<QCefDownloadItem>> pendingDownloadItemMap_;
 
@@ -44,8 +56,46 @@ private:
 
   QMap<void*, QPointer<QDialog>> pendingJSDialogMap_;
 
+  /// <summary>
+  /// Runs the function(lambda) in QApplication main thread.
+  /// if current thread is main thread the function will be executed directly,
+  /// otherwise, the function will be dispatched to main thread event loop.
+  /// </summary>
+  /// <typeparam name="Functor"></typeparam>
+  /// <param name="function"></param>
+  template<typename Functor>
+  void runInMainThread(Functor&& function)
+  {
+    QMetaObject::invokeMethod(qApp, function, Qt::AutoConnection);
+  }
+
+  template<typename Functor>
+  void runInMainThreadAndWait(Functor&& function)
+  {
+    if (QThread::currentThread() == qApp->thread()) {
+      // current thread is main thread, execute directly
+      function();
+    } else {
+      // create a nested message loop to make CEF UI thread keep alive without being blocked
+      QEventLoop eventLoop;
+
+      // run in main thread by queued event
+      QMetaObject::invokeMethod(qApp, [&eventLoop, &function]() {
+        // run the function
+        function();
+        // quit event loop
+        QMetaObject::invokeMethod(&eventLoop, &QEventLoop::quit);
+      });
+
+      // do not block current thread's original event loop
+      eventLoop.exec();
+
+      return;
+    }
+  }
+
 public:
-  CCefClientDelegate(QCefViewPrivate* p);
+  CCefClientDelegate(QSharedPointer<QCefViewPrivate> p);
 
   ~CCefClientDelegate();
 

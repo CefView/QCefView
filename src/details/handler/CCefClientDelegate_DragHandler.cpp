@@ -11,11 +11,13 @@ CCefClientDelegate::onDragEnter(CefRefPtr<CefBrowser>& browser,
                                 CefRefPtr<CefDragData>& dragData,
                                 CefDragHandler::DragOperationsMask mask)
 {
-  if (!IsValidBrowser(browser))
-    return true;
+  AcquireAndValidateCefViewPrivateWithReturn(pCefViewPrivate, true);
+
+  bool allowDrop = false;
+  runInMainThreadAndWait([&]() { allowDrop = pCefViewPrivate->shouldAllowDrop(dragData, mask); });
 
   // return true to cancel, false to allow
-  return !pCefViewPrivate_->shouldAllowDrop(dragData, mask);
+  return !allowDrop;
 }
 
 void
@@ -23,8 +25,7 @@ CCefClientDelegate::draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
                                            CefRefPtr<CefFrame>& frame,
                                            const std::vector<CefDraggableRegion>& regions)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
   // Determine new draggable region.
   QRegion draggableRegion;
@@ -38,5 +39,9 @@ CCefClientDelegate::draggableRegionChanged(CefRefPtr<CefBrowser>& browser,
     }
   }
 
-  emit pCefViewPrivate_->q_ptr->draggableRegionChanged(draggableRegion, nonDraggableRegion);
+  runInMainThread([pCefViewPrivate, draggableRegion, nonDraggableRegion]() {
+    if (pCefViewPrivate->q_ptr) {
+      emit pCefViewPrivate->q_ptr->draggableRegionChanged(draggableRegion, nonDraggableRegion);
+    }
+  });
 }

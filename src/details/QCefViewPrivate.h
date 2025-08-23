@@ -3,7 +3,6 @@
 #include <QMenu>
 #include <QMutex>
 #include <QPointer>
-#include <QScopedPointer>
 #include <QString>
 #include <QStringList>
 
@@ -25,11 +24,13 @@
 #include <QCefQuery.h>
 #include <QCefView.h>
 
-class QCefViewPrivate : public QObject
+class QCefViewPrivate
+  : public QObject
+  , public QEnableSharedFromThis<QCefViewPrivate>
 {
   Q_OBJECT
   Q_DECLARE_PUBLIC(QCefView)
-  QCefView* q_ptr;
+  QPointer<QCefView> q_ptr;
 
   friend class CCefClientDelegate;
 
@@ -148,7 +149,7 @@ public:
 protected:
   void onCefBrowserCreated(CefRefPtr<CefBrowser> browser, QWindow* window);
 
-  bool onBeforeNewBrowserCreate(const QCefFrameId& sourceFrameId,
+  void onBeforeNewBrowserCreate(const QCefFrameId& sourceFrameId,
                                 const QString& targetUrl,
                                 const QString& targetFrameName,
                                 QCefView::CefWindowOpenDisposition targetDisposition,

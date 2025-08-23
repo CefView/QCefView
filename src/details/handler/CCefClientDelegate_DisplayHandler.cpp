@@ -12,8 +12,7 @@
 void
 CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, CefRefPtr<CefFrame>& frame, const CefString& url)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
   // workaround for:
   // https://github.com/chromiumembedded/cef/issues/3870
@@ -21,49 +20,65 @@ CCefClientDelegate::addressChanged(CefRefPtr<CefBrowser>& browser, CefRefPtr<Cef
   // without any callback notification (AKA, released the
   // focus silently), so we need to update the CEF browser
   // focus status according to the one we have kept
-  if (true                                     //
-      && pCefViewPrivate_->isOSRModeEnabled_   //
-      && pCefViewPrivate_->osr.hasCefGotFocus_ //
-      && browser->GetHost()                    //
+  if (true                                    //
+      && pCefViewPrivate->isOSRModeEnabled_   //
+      && pCefViewPrivate->osr.hasCefGotFocus_ //
+      && browser->GetHost()                   //
   ) {
     browser->GetHost()->SetFocus(true);
   }
 
+  auto f = ValueConvertor::FrameIdC2Q(frame->GetIdentifier());
   auto u = QString::fromStdString(url);
-  emit pCefViewPrivate_->q_ptr->addressChanged(ValueConvertor::FrameIdC2Q(frame->GetIdentifier()), u);
+
+  runInMainThread([pCefViewPrivate, f, u]() {
+    if (pCefViewPrivate->q_ptr) {
+      emit pCefViewPrivate->q_ptr->addressChanged(f, u);
+    }
+  });
 }
 
 void
 CCefClientDelegate::titleChanged(CefRefPtr<CefBrowser>& browser, const CefString& title)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
   auto t = QString::fromStdString(title);
-  emit pCefViewPrivate_->q_ptr->titleChanged(t);
+
+  runInMainThread([pCefViewPrivate, t]() {
+    if (pCefViewPrivate->q_ptr) {
+      emit pCefViewPrivate->q_ptr->titleChanged(t);
+    }
+  });
 }
 
 void
 CCefClientDelegate::faviconURLChanged(CefRefPtr<CefBrowser>& browser, const std::vector<CefString>& icon_urls)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
   QStringList urls;
   for (auto& iconUrl : icon_urls) {
     urls.append(QString::fromStdString(iconUrl.ToString()));
   }
 
-  emit pCefViewPrivate_->q_ptr->faviconURLChanged(urls);
+  runInMainThread([pCefViewPrivate, urls]() {
+    if (pCefViewPrivate->q_ptr) {
+      emit pCefViewPrivate->q_ptr->faviconURLChanged(urls);
+    }
+  });
 }
 
 void
 CCefClientDelegate::fullscreenModeChanged(CefRefPtr<CefBrowser>& browser, bool fullscreen)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
-  emit pCefViewPrivate_->q_ptr->fullscreenModeChanged(fullscreen);
+  runInMainThread([pCefViewPrivate, fullscreen]() {
+    if (pCefViewPrivate->q_ptr) {
+      emit pCefViewPrivate->q_ptr->fullscreenModeChanged(fullscreen);
+    }
+  });
 }
 
 bool
@@ -76,30 +91,41 @@ CCefClientDelegate::tooltipMessage(CefRefPtr<CefBrowser>& browser, const CefStri
 void
 CCefClientDelegate::statusMessage(CefRefPtr<CefBrowser>& browser, const CefString& value)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
   auto msg = QString::fromStdString(value);
-  emit pCefViewPrivate_->q_ptr->statusMessage(msg);
+
+  runInMainThread([pCefViewPrivate, msg]() {
+    if (pCefViewPrivate->q_ptr) {
+      emit pCefViewPrivate->q_ptr->statusMessage(msg);
+    }
+  });
 }
 
 void
 CCefClientDelegate::consoleMessage(CefRefPtr<CefBrowser>& browser, const CefString& message, int level)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
   auto msg = QString::fromStdString(message);
-  emit pCefViewPrivate_->q_ptr->consoleMessage(msg, level);
+
+  runInMainThread([pCefViewPrivate, msg, level]() {
+    if (pCefViewPrivate->q_ptr) {
+      emit pCefViewPrivate->q_ptr->consoleMessage(msg, level);
+    }
+  });
 }
 
 void
 CCefClientDelegate::loadingProgressChanged(CefRefPtr<CefBrowser>& browser, double progress)
 {
-  if (!IsValidBrowser(browser))
-    return;
+  AcquireAndValidateCefViewPrivate(pCefViewPrivate);
 
-  emit pCefViewPrivate_->q_ptr->loadingProgressChanged(progress);
+  runInMainThread([pCefViewPrivate, progress]() {
+    if (pCefViewPrivate->q_ptr) {
+      emit pCefViewPrivate->q_ptr->loadingProgressChanged(progress);
+    }
+  });
 }
 
 bool
@@ -108,10 +134,9 @@ CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser>& browser,
                                   cef_cursor_type_t type,
                                   const CefCursorInfo& custom_cursor_info)
 {
-  if (!IsValidBrowser(browser))
-    return false;
+  AcquireAndValidateCefViewPrivateWithReturn(pCefViewPrivate, false);
 
-  if (pCefViewPrivate_->isOSRModeEnabled_) {
+  if (pCefViewPrivate->isOSRModeEnabled_) {
     // OSR mode
     QCursor cur;
     if (type != CT_CUSTOM) {
@@ -125,10 +150,13 @@ CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser>& browser,
                                               QImage::Format_ARGB32_Premultiplied)));
     }
 
-    QMetaObject::invokeMethod(pCefViewPrivate_, "onCefUpdateCursor", Q_ARG(const QCursor&, cur));
+    runInMainThread(             //
+      [pCefViewPrivate, cur]() { //
+        pCefViewPrivate->onCefUpdateCursor(cur);
+      });
 
     return true;
-  } else {
-    return false;
   }
+
+  return false;
 }
