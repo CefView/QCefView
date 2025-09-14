@@ -162,12 +162,16 @@ CCefClientDelegate::onAfterCreate(CefRefPtr<CefBrowser>& browser)
     }
   }
 
+  // crucial!
+  // must call the onCefBrowserCreated/onAfterCefPopupCreated in main thread
+  // and wait for the return, because there will be a validation of
+  // pCefView->pCefBrowser_ in all other callbacks
   if (browser->IsPopup()) {
     // pop-up window
-    runInMainThread([=]() { pCefViewPrivate->onAfterCefPopupCreated(browser); });
+    runInMainThreadAndWait([=]() { pCefViewPrivate->onAfterCefPopupCreated(browser); });
   } else {
     // new normal browser
-    runInMainThread([=]() { pCefViewPrivate->onCefBrowserCreated(browser, w); });
+    runInMainThreadAndWait([=]() { pCefViewPrivate->onCefBrowserCreated(browser, w); });
   }
 }
 
