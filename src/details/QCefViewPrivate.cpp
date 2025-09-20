@@ -414,7 +414,8 @@ QCefViewPrivate::handleLoadError(CefRefPtr<CefBrowser>& browser,
   }
 
   // If the signal was connected then emit the signal and set handled with true to skip the default handler
-  if (q->receivers(SIGNAL(loadError(int, qint64, bool, int, const QString&, const QString&))) > 0) {
+  if (q->receivers(
+        SIGNAL(loadError(const QCefBrowserId&, const QCefFrameId&, bool, int, const QString&, const QString&))) > 0) {
     auto msg = QString::fromStdString(errorMsg);
     auto url = QString::fromStdString(failedUrl);
     emit q->loadError(browser->GetIdentifier(),
