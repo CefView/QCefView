@@ -201,4 +201,8 @@ CCefClientDelegate::requestClose(CefRefPtr<CefBrowser>& browser)
 void
 CCefClientDelegate::onBeforeClose(CefRefPtr<CefBrowser>& browser)
 {
+  if (!pCefViewPrivate_)
+    return;
+
+  pCefViewPrivate_->q_ptr->deleteLater();
 }
