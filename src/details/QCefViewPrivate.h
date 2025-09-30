@@ -305,4 +305,10 @@ public:
   void setZoomLevel(double level);
 
   double zoomLevel();
+  /// <summary>
+  /// Set up the pre-displayed on-screen content for the browser's input method
+  /// </summary>
+  /// <param name="attributes">A list of attributes that describe how parts of the composing text should be rendered or interpreted</param>
+  /// <param name="composingText">The actual text string that is being composed</param>
+  void setImeComposition(const QList<QInputMethodEvent::Attribute>& attributes, const QString& composingText);
 };
