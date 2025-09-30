@@ -1699,30 +1699,3 @@ QCefViewPrivate::zoomLevel()
 
   return 0;
 }
-
-void
-QCefViewPrivate::setImeComposition(const QList<QInputMethodEvent::Attribute>& attributes, const QString& composingText)
-{
-  CefCompositionUnderline underline;
-  underline.background_color = 0;
-  underline.range = { 0, static_cast<decltype(CefRange::to)>(composingText.length()) };
-
-  CefRange selectionRange;
-  for (auto& attr : attributes) {
-    switch (attr.type) {
-      case QInputMethodEvent::TextFormat:
-        break;
-      case QInputMethodEvent::Cursor:
-        selectionRange.Set(attr.start, attr.start);
-        break;
-      case QInputMethodEvent::Language:
-      case QInputMethodEvent::Ruby:
-      case QInputMethodEvent::Selection:
-        break;
-      default:
-        break;
-    }
-  }
-  pCefBrowser_->GetHost()->ImeSetComposition(
-    composingText.toStdString(), { underline }, CefRange(UINT32_MAX, UINT32_MAX), selectionRange);
-}
