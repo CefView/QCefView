@@ -967,16 +967,55 @@ QCefViewPrivate::onViewInputMethodEvent(QInputMethodEvent* event)
 
     auto composingText = event->preeditString();
     auto composedText = event->commitString();
+    if (composingText.isEmpty() && composedText.isEmpty()) {
+      // cancel composition
+      pCefBrowser_->GetHost()->ImeCancelComposition();
+      return;
+    }
+
+    // collect IME selection range from Qt IME event
+    CefRange selectionRange;
+    for (auto& attr : event->attributes()) {
+      switch (attr.type) {
+        case QInputMethodEvent::TextFormat:
+          break;
+        case QInputMethodEvent::Cursor:
+          selectionRange.Set(attr.start, attr.start);
+          break;
+        case QInputMethodEvent::Language:
+        case QInputMethodEvent::Ruby:
+        case QInputMethodEvent::Selection:
+          break;
+        default:
+          break;
+      }
+    }
+
+    CefCompositionUnderline underline;
+    underline.background_color = 0;
 
     if (!composedText.isEmpty()) {
-      //Because Chrome OSR needs the IME's pre-edit to get the cursor position for the candidate panel,
-      //and some IMEs (e.g., Sogou) lack this feature, we simulate it here using the current input.
-      this->setImeComposition(event->attributes(), composedText);
+      // Because Chrome OSR needs the IME's pre-edit to get the cursor position for the candidate panel,
+      // and some IMEs (e.g., Sogou) lack this feature, we simulate it here using the current input.
+      underline.range = { 0, static_cast<decltype(CefRange::to)>(composedText.length()) };
+      pCefBrowser_->GetHost()->ImeSetComposition( //
+        composedText.toStdString(),               //
+        { underline },                            //
+        CefRange(UINT32_MAX, UINT32_MAX),         //
+        selectionRange                            //
+      );
+
+      // commit composed text
       pCefBrowser_->GetHost()->ImeCommitText(composedText.toStdString(), CefRange(UINT32_MAX, UINT32_MAX), 0);
-    } else if (!composingText.isEmpty()) {
-      this->setImeComposition(event->attributes(), composingText);
     } else {
-      pCefBrowser_->GetHost()->ImeCancelComposition();
+      // update composition text
+      underline.range = { 0, static_cast<decltype(CefRange::to)>(composingText.length()) };
+      pCefBrowser_->GetHost()->ImeSetComposition( //
+        composingText.toStdString(),              //
+        { underline },                            //
+        CefRange(UINT32_MAX, UINT32_MAX),         //
+        selectionRange                            //
+      );
     }
   }
 }
