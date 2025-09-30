@@ -960,7 +960,7 @@ QCefViewPrivate::onViewInputMethodQuery(Qt::InputMethodQuery query) const
 void
 QCefViewPrivate::onViewInputMethodEvent(QInputMethodEvent* event)
 {
-    if (isOSRModeEnabled_) {
+  if (isOSRModeEnabled_) {
     // OSR mode
     if (!pCefBrowser_)
       return;
