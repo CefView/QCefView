@@ -15,7 +15,7 @@
 #include "QCefConfigPrivate.h"
 #include "QCefViewPrivate.h"
 
-const int64_t kCefWorkerIntervalMs = 0; //(1000 / 60); // 60 fps
+const int64_t kCefWorkerIntervalMs = (1000 / 60); // 60 fps
 
 QCefContextPrivate::QCefContextPrivate(QCoreApplication* app, int argc, char** argv)
   : argc_(argc)
