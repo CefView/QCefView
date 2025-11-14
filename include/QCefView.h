@@ -248,7 +248,7 @@ public:
   /// </param>
   /// <param name="error">The error message populated on failure</param>
   /// <returns>True on successful; otherwise false</returns>
-  bool setPreference(const QString& name, const QVariant& value, const QString& error);
+  bool setPreference(const QString& name, const QVariant& value, QString& error);
 
   /// <summary>
   /// Sets the frame rate for OSR (Off-Screen Rendering).

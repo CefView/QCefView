@@ -1644,7 +1644,7 @@ QCefViewPrivate::sendEventNotifyMessage(const QCefFrameId& frameId, const QStrin
 }
 
 bool
-QCefViewPrivate::setPreference(const QString& name, const QVariant& value, const QString& error)
+QCefViewPrivate::setPreference(const QString& name, const QVariant& value, QString& error)
 {
   if (pCefBrowser_) {
     CefRefPtr<CefBrowserHost> host = pCefBrowser_->GetHost();
@@ -1657,7 +1657,7 @@ QCefViewPrivate::setPreference(const QString& name, const QVariant& value, const
 
       CefString e;
       auto r = host->GetRequestContext()->SetPreference(n, v, e);
-      error.fromStdString(e.ToString());
+      error = QString::fromStdString(e.ToString());
       return r;
     }
   }

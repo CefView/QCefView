@@ -225,7 +225,7 @@ QCefView::executeJavascriptWithResult(const QCefFrameId& frameId,
 }
 
 bool
-QCefView::setPreference(const QString& name, const QVariant& value, const QString& error)
+QCefView::setPreference(const QString& name, const QVariant& value, QString& error)
 {
   Q_D(QCefView);
 
