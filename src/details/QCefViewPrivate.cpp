@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <QGridLayout>
 #include <QInputMethodQueryEvent>
+#include <QMetaMethod>
 #include <QPainter>
 #include <QStyleOption>
 #include <QWindow>
@@ -414,8 +415,7 @@ QCefViewPrivate::handleLoadError(CefRefPtr<CefBrowser>& browser,
   }
 
   // If the signal was connected then emit the signal and set handled with true to skip the default handler
-  if (q->receivers(
-        SIGNAL(loadError(const QCefBrowserId&, const QCefFrameId&, bool, int, const QString&, const QString&))) > 0) {
+  if (q->isSignalConnected(QMetaMethod::fromSignal(&QCefView::loadError))) {
     auto msg = QString::fromStdString(errorMsg);
     auto url = QString::fromStdString(failedUrl);
     emit q->loadError(browser->GetIdentifier(),
