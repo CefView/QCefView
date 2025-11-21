@@ -65,16 +65,9 @@ main(int argc, char* argv[])
 
   // add command line args, you can any cef supported switches or parameters
   config.addCommandLineSwitch("use-mock-keychain");
-  // config.addCommandLineSwitch("disable-gpu");
-  // config.addCommandLineSwitch("enable-media-stream");
-  // config.addCommandLineSwitch("allow-file-access-from-files");
-  // config.addCommandLineSwitch("disable-spell-checking");
-  // config.addCommandLineSwitch("disable-site-isolation-trials");
-  // config.addCommandLineSwitch("enable-aggressive-domstorage-flushing");
-  config.addCommandLineSwitchWithValue("renderer-process-limit", "1");
+  config.addCommandLineSwitch("enable-aggressive-domstorage-flushing");
   // allow remote debugging
   config.addCommandLineSwitchWithValue("remote-allow-origins", "*");
-  // config.addCommandLineSwitchWithValue("disable-features", "BlinkGenPropertyTrees,TranslateUI,site-per-process");
 
   // set cache folder
   config.setCachePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));

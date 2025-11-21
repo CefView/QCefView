@@ -1,7 +1,7 @@
 include(FetchContent)
 
 if(NOT CEFVIEW_CORE_VERSION)
-    set(DEFAULT_CEFVIEW_CORE_VERSION "ceda81266b6abe1cc48b4dc89aef096b7600b6ec")
+    set(DEFAULT_CEFVIEW_CORE_VERSION "07b1c11e09dfa6f44afa85c167c427d16b02a492")
     set(CEFVIEW_CORE_VERSION ${DEFAULT_CEFVIEW_CORE_VERSION})
     message(STATUS "CEFVIEW_CORE_VERSION not set, use default value:${CEFVIEW_CORE_VERSION}")
 endif()
@@ -47,11 +47,16 @@ FetchContent_Declare(
 # set(CEF_SDK_VERSION "123.0.13+gfc703fb+chromium-123.0.6312.124")  # NOT TEST
 # set(CEF_SDK_VERSION "124.3.9+g9bd638f+chromium-124.0.6367.207")   # NOT TEST
 # set(CEF_SDK_VERSION "125.0.22+gc410c95+chromium-125.0.6422.142")  # NOT TEST
-set(CEF_SDK_VERSION "126.2.18+g3647d39+chromium-126.0.6478.183") # NOT TEST
-
+# set(CEF_SDK_VERSION "126.2.18+g3647d39+chromium-126.0.6478.183") # NOT TEST
 # set(CEF_SDK_VERSION "127.3.5+g114ea2a+chromium-127.0.6533.120") # GOOD
 # set(CEF_SDK_VERSION "128.4.9+g9840ad9+chromium-128.0.6613.120")   # BAD   # debugbreak - debug mode
 # set(CEF_SDK_VERSION "136.1.6+g1ac1b14+chromium-136.0.7103.114")
+# set(CEF_SDK_VERSION "137.0.19+g8a1c4ce+chromium-137.0.7151.121")
+# set(CEF_SDK_VERSION "138.0.49+g5ae25f5+chromium-138.0.7204.261")
+# set(CEF_SDK_VERSION "139.0.40+g465474a+chromium-139.0.7258.139")
+# set(CEF_SDK_VERSION "140.1.20+g49f5d09+chromium-140.0.7339.214")
+# set(CEF_SDK_VERSION "141.0.11+g7e73ac4+chromium-141.0.7390.123")
+set(CEF_SDK_VERSION "142.0.15+g6dfdb28+chromium-142.0.7444.176")
 
 # set folder
 set(CMAKE_FOLDER "QCefView/Core")

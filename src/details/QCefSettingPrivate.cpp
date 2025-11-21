@@ -136,8 +136,10 @@ QCefSettingPrivate::copyFromCefBrowserSettings(const CefBrowserSettings* cs)
   if (cs->local_storage != STATE_DEFAULT)
     this->localStorage_ = cs->local_storage == STATE_ENABLED;
 
+#if CEF_VERSION_MAJOR < 138
   if (cs->databases != STATE_DEFAULT)
     this->databases_ = cs->databases == STATE_ENABLED;
+#endif
 
   if (cs->webgl != STATE_DEFAULT)
     this->webgl_ = cs->webgl == STATE_ENABLED;
@@ -228,8 +230,10 @@ QCefSettingPrivate::copyToCefBrowserSettings(CefBrowserSettings* cs) const
   if (this->localStorage_.canConvert<bool>())
     cs->local_storage = this->localStorage_.toBool() ? STATE_ENABLED : STATE_DISABLED;
 
+#if CEF_VERSION_MAJOR < 138
   if (this->databases_.canConvert<bool>())
     cs->databases = this->databases_.toBool() ? STATE_ENABLED : STATE_DISABLED;
+#endif
 
   if (this->webgl_.canConvert<bool>())
     cs->webgl = this->webgl_.toBool() ? STATE_ENABLED : STATE_DISABLED;

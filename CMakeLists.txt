@@ -123,7 +123,7 @@ elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
   set(USE_SANDBOX OFF CACHE BOOL "Disable sandbox on Windows" FORCE)
   add_definitions(
     -DOS_WINDOWS=1
-    -D_WIN32_WINNT=0x601
+    -D_WIN32_WINNT=0x602
   )
 
   if(USE_WIN_DCOMPOSITION)
@@ -185,7 +185,9 @@ if(OS_MACOS)
 
   # detect minimum deployment target by CEF
   # plese refer to: https://bitbucket.org/chromiumembedded/cef/wiki/BranchesAndBuilding.md
-  if(${CEF_VERSION_MAJOR} VERSION_GREATER_EQUAL 117)
+  if(${CEF_VERSION_MAJOR} VERSION_GREATER_EQUAL 138)
+    set(CEF_MIN_DEPLOYMENT_TARGET 12.0)
+  elseif(${CEF_VERSION_MAJOR} VERSION_GREATER_EQUAL 117)
     set(CEF_MIN_DEPLOYMENT_TARGET 10.15)
   elseif(${CEF_VERSION_MAJOR} VERSION_GREATER_EQUAL 104)
     set(CEF_MIN_DEPLOYMENT_TARGET 10.13)

@@ -10,7 +10,7 @@ QCefView is a Qt-based QWidget that encapsulates CEF (Chromium Embedded Framewor
 Discord Server: [QCefView](https://discord.gg/Na7Zn2XVnM)
 
 ### Build Status
-| Platform |  Lastest Build Status  | OSR Production Ready  | NCW Production Ready  |
+| Platform |  Latest Build Status  | OSR Production Ready  | NCW Production Ready  |
 |---|---|---|---|
 | Windows-x86_64 | [![Build on Windows](https://github.com/CefView/QCefView/actions/workflows/build-windows-x86_64.yml/badge.svg)](https://github.com/CefView/QCefView/actions/workflows/build-windows-x86_64.yml) | :heavy_check_mark: | :heavy_check_mark: |
 | macOS-x86_64 | [![Build on macOS](https://github.com/CefView/QCefView/actions/workflows/build-macos-x86_64.yml/badge.svg)](https://github.com/CefView/QCefView/actions/workflows/build-macos-x86_64.yml)          | :heavy_check_mark: | :heavy_check_mark: |

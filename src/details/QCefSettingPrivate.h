@@ -72,7 +72,9 @@ public:
   /* bool */ QVariant textAreaResize_;
   /* bool */ QVariant tabToLinks_;
   /* bool */ QVariant localStorage_;
+#if CEF_VERSION_MAJOR < 138
   /* bool */ QVariant databases_;
+#endif
   /* bool */ QVariant webgl_;
 
   /* QColor */ QVariant backgroundColor_;

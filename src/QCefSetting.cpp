@@ -438,14 +438,23 @@ void
 QCefSetting::setDatabases(const bool value)
 {
   Q_D(QCefSetting);
+#if CEF_VERSION_MAJOR < 138
   d->databases_ = value;
+#else
+  DEPRECATED_CEF_API_WARNING(138, 0, 0);
+#endif
 }
 
 const QVariant
 QCefSetting::databases() const
 {
   Q_D(const QCefSetting);
+#if CEF_VERSION_MAJOR < 138
   return d->databases_;
+#else
+  DEPRECATED_CEF_API_WARNING(138, 0, 0);
+  return QVariant();
+#endif
 }
 
 void
