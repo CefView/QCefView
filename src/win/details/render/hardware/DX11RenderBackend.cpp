@@ -592,7 +592,7 @@ DX11RenderBackend::initialize(QWidget* widget, int width, int height, float scal
 void
 DX11RenderBackend::uninitialize()
 {
-#if _WIN32_WINNT >= 0x602
+#if WINDOWS_DIRECT_COMPOSITION
   m_dcompositionDevice.Reset();
   m_dcompositionTarget.Reset();
 #endif
