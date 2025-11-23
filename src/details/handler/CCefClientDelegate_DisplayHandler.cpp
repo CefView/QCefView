@@ -144,10 +144,11 @@ CCefClientDelegate::cursorChanged(CefRefPtr<CefBrowser>& browser,
       cur = QCursor(MapCursorShape(type));
     } else {
       // create cursor from image data
-      cur = QCursor(QPixmap::fromImage(QImage(static_cast<const uchar*>(custom_cursor_info.buffer),
+      auto pixmap = QPixmap::fromImage(QImage(static_cast<const uchar*>(custom_cursor_info.buffer),
                                               custom_cursor_info.size.width,
                                               custom_cursor_info.size.height,
-                                              QImage::Format_ARGB32_Premultiplied)));
+                                              QImage::Format_ARGB32_Premultiplied));
+      cur = QCursor(pixmap, custom_cursor_info.hotspot.x, custom_cursor_info.hotspot.y);
     }
 
     runInMainThread(             //
