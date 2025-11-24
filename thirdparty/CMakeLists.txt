@@ -14,6 +14,7 @@ FetchContent_Declare(
     CefViewCore
     GIT_REPOSITORY https://github.com/CefView/CefViewCore.git
     GIT_TAG ${CEFVIEW_CORE_VERSION}
+    SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/cefviewcore-${CEFVIEW_CORE_VERSION}-src"
 )
 
 # set CEF version to be used
