@@ -9,12 +9,15 @@ if(NOT CEFVIEW_CORE_VERSION)
     message(STATUS "CEFVIEW_CORE_VERSION not set, use default value:${CEFVIEW_CORE_VERSION}")
 endif()
 
+# create src dir suffix with short tag value (on windows cl.exe cannot recognize path name longer than 256 chars)
+string(SUBSTRING "${CEFVIEW_CORE_VERSION}" 0 7 CEFVIEW_CORE_SRC_DIR_SUFFIX)
+
 # fetch CefViewCore project
 FetchContent_Declare(
     CefViewCore
     GIT_REPOSITORY https://github.com/CefView/CefViewCore.git
     GIT_TAG ${CEFVIEW_CORE_VERSION}
-    SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/cefviewcore-${CEFVIEW_CORE_VERSION}-src"
+    SOURCE_DIR "${CMAKE_BINARY_DIR}/_deps/cefviewcore-src-${CEFVIEW_CORE_SRC_DIR_SUFFIX}"
 )
 
 # set CEF version to be used
