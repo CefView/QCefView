@@ -2,14 +2,13 @@
 #define ICEFVIEWRENDERER_H
 
 #pragma once
-#include <include/cef_app.h>
-#include <include/cef_task.h>
-
 #include <QColor>
 #include <QPointer>
 #include <QSharedPointer>
 #include <QSize>
 #include <QWidget>
+
+#include <CefViewCoreGlobal.h>
 
 /// <summary>
 /// Interface for the CEF view renderer.
@@ -23,38 +22,6 @@ protected:
   /// Pointer to the widget that the renderer is associated with.
   /// </summary>
   QPointer<QWidget> m_widget;
-
-  /// <summary>
-  /// Task for rendering operations.
-  /// </summary>
-  class RenderTask : public CefTask
-  {
-    IMPLEMENT_REFCOUNTING(RenderTask);
-
-    /// <summary>
-    /// Function that contains the rendering work to be executed.
-    /// </summary>
-    std::function<void()> work;
-
-  public:
-    /// <summary>
-    /// Constructor for the rendering task.
-    /// </summary>
-    RenderTask(std::function<void()> t)
-      : work(t)
-    {
-    }
-
-    /// <summary>
-    /// Executes the rendering task.
-    /// </summary>
-    void Execute() override
-    {
-      if (work) {
-        work();
-      }
-    }
-  };
 
 public:
   /// <summary>
@@ -160,12 +127,12 @@ public:
   enum class FrameDataType
   {
     /// <summary>
-    /// CPU image data. (Hardware acceleration disabled)
+    /// Pixel data in CPU (Hardware acceleration disabled)
     /// </summary>
-    CpuImage = 0,
+    CpuPixel = 0,
 
     /// <summary>
-    /// GPU texture data. (Hardware acceleration enabled)
+    /// Texture data in GPU (Hardware acceleration enabled)
     /// </summary>
     GpuTexture = 1,
   };
@@ -176,14 +143,19 @@ public:
   union FrameData
   {
     /// <summary>
-    /// Default constructor for FrameData.
+    ///
     /// </summary>
-    FrameData() {}
+    FrameData() { textureInfo = {}; }
 
     /// <summary>
-    /// CPU image data. (Hardware acceleration disabled)
+    ///
     /// </summary>
-    struct
+    ~FrameData() { textureInfo = {}; }
+
+    /// <summary>
+    /// Pixel data in CPU (Hardware acceleration disabled)
+    /// </summary>
+    struct PixelInfo
     {
       /// <summary>
       /// Pointer to the image buffer.
@@ -199,12 +171,13 @@ public:
       /// Height of the image.
       /// </summary>
       int height = 0;
-    } image;
+    };
+    PixelInfo pixelInfo;
 
     /// <summary>
-    /// GPU texture data.(Hardware acceleration enabled)
+    /// Texture data in GPU (Hardware acceleration enabled)
     /// </summary>
-    struct
+    struct TextureInfo
     {
       /// <summary>
       /// Format of the texture.
@@ -240,7 +213,8 @@ public:
       /// Modifier of the texture.
       /// </summary>
       uint64_t modifier = 0;
-    } texture;
+    };
+    TextureInfo textureInfo;
   };
 
   /// <summary>

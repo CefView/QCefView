@@ -314,7 +314,7 @@ MetalRenderBackend::resize(int width, int height, float scale)
   } else {
     // perform the resize in render thread
     QPointer<MetalRenderBackend> self = this;
-    CefPostTask(TID_UI, new RenderTask([=]() {
+    CefPostTask(TID_UI, new CefLambdaTask([=]() {
                   if (self) {
                     // resize resource
                     m_pImpl->m_metalLayer.drawableSize = CGSizeMake(width * scale, height * scale);
@@ -356,7 +356,7 @@ MetalRenderBackend::updateFrameData(const CefRenderHandler::PaintElementType& ty
   id<MTLTexture> pSharedTexture;
   MTLTextureDescriptor* sharedTextureDesc;
   @autoreleasepool {
-    IOSurfaceRef ioSurface = (IOSurfaceRef)(data.texture.handle);
+    IOSurfaceRef ioSurface = (IOSurfaceRef)(data.textureInfo.handle);
     // create shared texture
     sharedTextureDesc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatBGRA8Unorm
                                                                            width:IOSurfaceGetWidth(ioSurface)

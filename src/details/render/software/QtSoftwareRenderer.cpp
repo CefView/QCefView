@@ -103,14 +103,14 @@ QtSoftwareRenderer::updateFrameData(const CefRenderHandler::PaintElementType& ty
                                     const FrameData& data)
 {
   // we only process Image data
-  if (dataType != FrameDataType::CpuImage) {
+  if (dataType != FrameDataType::CpuPixel) {
     return;
   }
 
   // create image wrapper
-  QImage frame = QImage(static_cast<const uchar*>(data.image.buffer), //
-                        data.image.width,                             //
-                        data.image.height,                            //
+  QImage frame = QImage(static_cast<const uchar*>(data.pixelInfo.buffer), //
+                        data.pixelInfo.width,                             //
+                        data.pixelInfo.height,                            //
                         QImage::Format_ARGB32);
 
   // ref target image

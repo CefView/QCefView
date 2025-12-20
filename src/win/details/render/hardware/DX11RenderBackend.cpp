@@ -632,7 +632,7 @@ DX11RenderBackend::resize(int width, int height, float scale)
   } else {
     // perform the resize in render thread
     QPointer<DX11RenderBackend> self = this;
-    CefPostTask(TID_UI, new RenderTask([=]() {
+    CefPostTask(TID_UI, new CefLambdaTask([=]() {
                   if (self) {
                     // resize resource
                     self->ResizeResource(width * scale, height * scale);
@@ -682,7 +682,7 @@ DX11RenderBackend::updateFrameData(const CefRenderHandler::PaintElementType& typ
 
   // open shared texture
   ComPtr<ID3D11Texture2D> pSharedTexture;
-  HRESULT hr = m_d3dDevice1->OpenSharedResource1((HANDLE)data.texture.handle,
+  HRESULT hr = m_d3dDevice1->OpenSharedResource1((HANDLE)data.textureInfo.handle,
                                                  IID_PPV_ARGS(pSharedTexture.ReleaseAndGetAddressOf()));
   if (FAILED(hr) || !pSharedTexture) {
     return;

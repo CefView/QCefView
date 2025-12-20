@@ -96,10 +96,10 @@ CCefClientDelegate::onPaint(CefRefPtr<CefBrowser>& browser,
 
   // update CEF image frame
   ICefViewRenderer::FrameData data;
-  data.image.buffer = buffer;
-  data.image.width = width;
-  data.image.height = height;
-  ICefViewRenderer::FrameDataType dataType = ICefViewRenderer::FrameDataType::CpuImage;
+  data.pixelInfo.buffer = buffer;
+  data.pixelInfo.width = width;
+  data.pixelInfo.height = height;
+  ICefViewRenderer::FrameDataType dataType = ICefViewRenderer::FrameDataType::CpuPixel;
   pCefViewPrivate->osr.pRenderer_->updateFrameData(type,       //
                                                    dirtyRects, //
                                                    dataType,   //
@@ -125,7 +125,7 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
 
   // update CEF image texture2d
   ICefViewRenderer::FrameData data;
-  data.texture.handle = shared_handle;
+  data.textureInfo.handle = shared_handle;
   ICefViewRenderer::FrameDataType dataType = ICefViewRenderer::FrameDataType::GpuTexture;
   pCefViewPrivate->osr.pRenderer_->updateFrameData(type,       //
                                                    dirtyRects, //
@@ -145,20 +145,20 @@ CCefClientDelegate::onAcceleratedPaint(CefRefPtr<CefBrowser>& browser,
   // update CEF image texture2d
   ICefViewRenderer::FrameData data;
 #if defined(OS_WINDOWS)
-  data.texture.handle = info.shared_texture_handle;
+  data.textureInfo.handle = info.shared_texture_handle;
 #elif defined(OS_MACOS)
-  data.texture.handle = info.shared_texture_io_surface;
+  data.textureInfo.handle = info.shared_texture_io_surface;
 #elif defined(OS_LINUX)
   if (info.plane_count) {
-    data.texture.handle = reinterpret_cast<void*>(info.planes[0].fd);
-    data.texture.size = info.planes[0].size;
+    data.textureInfo.handle = reinterpret_cast<void*>(info.planes[0].fd);
+    data.textureInfo.size = info.planes[0].size;
   } else {
-    data.texture.handle = nullptr;
+    data.textureInfo.handle = nullptr;
   }
 #else
 #error "Unsupported platform"
 #endif
-  data.texture.format = info.format;
+  data.textureInfo.format = info.format;
   ICefViewRenderer::FrameDataType dataType = ICefViewRenderer::FrameDataType::GpuTexture;
   pCefViewPrivate->osr.pRenderer_->updateFrameData(type,       //
                                                    dirtyRects, //
