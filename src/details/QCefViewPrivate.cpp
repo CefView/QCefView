@@ -633,7 +633,13 @@ QCefViewPrivate::onStartDragging(CefRefPtr<CefDragData>& dragData, CefRenderHand
       int h = 0;
       if (auto pngData = image->GetAsPNG(1.0, true, w, h)) {
         QPixmap pixmap;
+#if CEF_VERSION_MAJOR >= 119
         pixmap.loadFromData((const uchar*)(pngData->GetRawData()), (int)(pngData->GetSize()));
+#else
+        std::vector<uchar> buffer(pngData->GetSize());
+        pngData->GetData(buffer.data(), buffer.size(), 0);
+        pixmap.loadFromData(buffer.data(), static_cast<uint>(buffer.size()));
+#endif
         pixmap.setDevicePixelRatio(scaleFactor());
         drag.setPixmap(pixmap);
       }
