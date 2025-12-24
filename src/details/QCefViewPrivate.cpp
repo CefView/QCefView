@@ -1289,6 +1289,8 @@ QCefViewPrivate::onContextMenuEvent(const QPoint& pos)
 void
 QCefViewPrivate::onDragEnter(QDragEnterEvent* event)
 {
+  FLog();
+
   if (isOSRModeEnabled_ && pCefBrowser_ && pCefBrowser_->GetHost()) {
     osr.allowedDragOperations_ = 0;
 
@@ -1326,6 +1328,8 @@ QCefViewPrivate::onDragEnter(QDragEnterEvent* event)
 void
 QCefViewPrivate::onDragMove(QDragMoveEvent* event)
 {
+  FLog();
+
   if (isOSRModeEnabled_ && pCefBrowser_ && pCefBrowser_->GetHost()) {
     CefMouseEvent e;
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -1358,6 +1362,8 @@ QCefViewPrivate::onDragMove(QDragMoveEvent* event)
 void
 QCefViewPrivate::onDragLeave(QDragLeaveEvent* event)
 {
+  FLog();
+
   if (isOSRModeEnabled_ && pCefBrowser_ && pCefBrowser_->GetHost()) {
     osr.allowedDragOperations_ = 0;
 
@@ -1368,6 +1374,8 @@ QCefViewPrivate::onDragLeave(QDragLeaveEvent* event)
 void
 QCefViewPrivate::onDrop(QDropEvent* event)
 {
+  FLog();
+
   if (isOSRModeEnabled_ && pCefBrowser_ && pCefBrowser_->GetHost()) {
 
     CefMouseEvent e;

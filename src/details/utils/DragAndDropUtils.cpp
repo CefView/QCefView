@@ -203,7 +203,13 @@ CreateCefDragDataFromQMimeData(const QMimeData& mime)
   CefRefPtr<CefDragData> dragData = CefDragData::Create();
 
   if (mime.hasUrls() && !mime.urls().isEmpty()) {
-    dragData->SetLinkURL(mime.urls().takeFirst().toString().toStdString());
+    for (const QUrl& url : mime.urls()) {
+      if (url.isLocalFile()) {
+        dragData->AddFile(url.toLocalFile().toStdString(), url.fileName().toStdString());
+      } else {
+        dragData->SetLinkURL(mime.urls().takeFirst().toString().toStdString());
+      }
+    }
   }
 
   if (mime.hasText()) {

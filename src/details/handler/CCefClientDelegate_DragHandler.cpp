@@ -4,6 +4,7 @@
 #include <QSharedPointer>
 #include <QThread>
 
+#include "../utils/CommonUtils.h"
 #include "details/QCefViewPrivate.h"
 
 bool
@@ -11,6 +12,8 @@ CCefClientDelegate::onDragEnter(CefRefPtr<CefBrowser>& browser,
                                 CefRefPtr<CefDragData>& dragData,
                                 CefDragHandler::DragOperationsMask mask)
 {
+  FLog();
+
   AcquireAndValidateCefViewPrivateWithReturn(pCefViewPrivate, true);
 
   bool allowDrop = false;
