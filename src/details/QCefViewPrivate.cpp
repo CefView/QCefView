@@ -214,7 +214,7 @@ QCefViewPrivate::destroyCefBrowser()
 
   qDebug() << "destroy browser from native";
 
-  if (!isOSRModeEnabled_) {
+  if (!isOSRModeEnabled_ && ncw.qBrowserWidget_) {
     // remove from parent, prevent from being destroyed
     ncw.qBrowserWidget_->setParent(nullptr);
     ncw.qBrowserWidget_->deleteLater();
